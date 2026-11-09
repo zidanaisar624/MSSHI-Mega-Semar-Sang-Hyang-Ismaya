@@ -8,14 +8,17 @@ import os
 import re
 import shutil
 import stat
+import sys
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX = ROOT / "configs" / "bot_role_and_skill_matrix.json"
 TITLE = "MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage"
-HOSTS = ("hermes", "openclaw", "claude", "antigravity")
+HOSTS = ("hermes", "openclaw", "claude", "codex", "antigravity")
 MUZA_TEAM = ("yukino", "shizuka", "val", "kiki-chii", "shikaku")
+UNIVERSAL_BRIDGE = "cli-anything-universal-bridge"
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 WINDOWS_RESERVED = {
     "con", "prn", "aux", "nul",
@@ -53,13 +56,13 @@ def absolute(path):
     return Path(os.path.abspath(os.path.expanduser(os.fspath(path))))
 
 
-def local_file(value, suffix):
+def local_file(value, suffix, root=ROOT):
     if not isinstance(value, str) or "\\" in value or ":" in value:
         raise ValueError(f"Path relatif paket tidak valid: {value!r}")
     path = Path(value)
     if path.is_absolute() or not path.parts or ".." in path.parts or path.suffix.lower() != suffix:
         raise ValueError(f"Path relatif paket tidak valid: {value!r}")
-    source = ROOT / path
+    source = root / path
     reject_links(source)
     if not source.is_file():
         raise ValueError(f"File paket tidak ditemukan: {value}")
@@ -85,7 +88,7 @@ def names(values, label):
     return list(dict.fromkeys(safe_slug(value, label) for value in values))
 
 
-def read_matrix(path):
+def read_matrix(path, root=ROOT):
     data = read_json(path)
     if not isinstance(data, dict) or data.get("schema_version") != 1:
         raise ValueError("Matriks harus memakai schema_version 1.")
@@ -96,10 +99,14 @@ def read_matrix(path):
             raise ValueError(f"Skill duplikat atau status tidak dikenal: {slug}")
         catalog[slug] = None
         if entry["status"] == "bundled":
-            source = local_file(entry["path"], ".md")
-            if source.name != "SKILL.md" or source.parent.name != slug or source.parent.parent != ROOT / "skills":
+            source = local_file(entry["path"], ".md", root)
+            if source.name != "SKILL.md" or source.parent.name != slug or source.parent.parent != root / "skills":
                 raise ValueError(f"Skill {slug} harus berada di skills/{slug}/SKILL.md.")
             catalog[slug] = source.parent
+    bridge = f"skills/{UNIVERSAL_BRIDGE}/SKILL.md"
+    if catalog.get(UNIVERSAL_BRIDGE) is None and (root / bridge).is_file():
+        # Old custom matrices can omit the bridge introduced in v2.1.
+        catalog[UNIVERSAL_BRIDGE] = local_file(bridge, ".md", root).parent
     packs = {}
     for pack, slugs in data["packs"].items():
         pack = safe_slug(pack, "paket")
@@ -127,6 +134,7 @@ def host_roots(home):
         "hermes": [path / "skills" for path in choices] or [home / ".hermes" / "skills"],
         "openclaw": [openclaw / "skills"],
         "claude": [claude / "skills"],
+        "codex": [home / ".agents" / "skills"],
         "antigravity": [home / ".gemini" / "config" / "skills"],
     }
 
@@ -199,6 +207,14 @@ def skill_plan(root, selected, catalog):
     return copies, preserved, external
 
 
+def mandatory_skills(catalog):
+    return (UNIVERSAL_BRIDGE,) if catalog.get(UNIVERSAL_BRIDGE) is not None else ()
+
+
+def include_mandatory(values, catalog):
+    return list(dict.fromkeys((*values, *mandatory_skills(catalog))))
+
+
 def team_plan(data, mode, catalog):
     bots = {}
     for bot in data["bots"]:
@@ -208,10 +224,18 @@ def team_plan(data, mode, catalog):
         label = bot.get("label", bot_id)
         if not isinstance(label, str) or not label.strip() or "\n" in label or "\r" in label:
             raise ValueError(f"Label bot tidak valid: {bot_id}")
-        skills = names(bot["required_skills"], "required_skills") + names(bot["optional_skills"], "optional_skills")
+        skills = include_mandatory(
+            names(bot["required_skills"], "required_skills") + names(bot["optional_skills"], "optional_skills"),
+            catalog,
+        )
         if unknown := set(skills) - catalog.keys():
             raise ValueError(f"Skill tidak dikenal untuk {bot_id}: {', '.join(sorted(unknown))}")
-        persona = local_file(bot["persona_file"], ".md")
+        if mode == "custom-bots" and "persona_text" in bot:
+            persona = bot["persona_text"]
+            if not isinstance(persona, str) or not persona.strip():
+                raise ValueError(f"Persona kosong: {bot_id}")
+        else:
+            persona = local_file(bot["persona_file"], ".md").read_text(encoding="utf-8-sig")
         bots[bot_id] = (label, skills, persona)
     order = MUZA_TEAM if mode == "muza-preset" else bots
     if missing := set(order) - bots.keys():
@@ -221,23 +245,38 @@ def team_plan(data, mode, catalog):
     return [(bot_id, *bots[bot_id]) for bot_id in order]
 
 
-def selected_skills(args, catalog, packs):
+def resolve_skills(values, catalog, aliases):
+    selected = list(dict.fromkeys(aliases.get(value, value) for value in values))
+    if missing := set(selected) - catalog.keys():
+        raise ValueError(f"Skill tidak dikenal: {', '.join(sorted(missing))}")
+    return selected
+
+
+def selected_skills(args, catalog, packs, aliases):
     if args.mode == "solo":
         return list(catalog)
+    if args.skills:
+        return include_mandatory(resolve_skills(args.skills, catalog, aliases), catalog)
     picks = [pack.strip() for item in (args.packs or []) for pack in item.split(",") if pack.strip()]
     if not picks:
-        raise ValueError("Mode selective perlu --packs, misalnya --packs core,filmmaking.")
+        raise ValueError("Mode selective perlu --skills atau --packs, misalnya --packs core,filmmaking.")
     if picks == ["all"]:
         picks = list(packs)
     if unknown := set(picks) - packs.keys():
         raise ValueError(f"Paket tidak dikenal: {', '.join(sorted(unknown))}. Pilihan: {', '.join(packs)}.")
-    return [slug for pack in picks for slug in packs[pack]]
+    return include_mandatory((slug for pack in picks for slug in packs[pack]), catalog)
 
 
 def copy_skill(source, destination):
-    reject_links(destination.parent)
+    reject_links(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(source, destination)
+    with TemporaryDirectory(prefix=".msshi-stage-", dir=destination.parent.parent) as work:
+        candidate = Path(work) / destination.name
+        shutil.copytree(source, candidate, symlinks=True, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+        validate_tree(candidate)
+        if existing(destination):
+            raise FileExistsError(f"Skill muncul saat persiapan: {destination}")
+        candidate.rename(destination)
 
 
 def create_text(path, content):
@@ -260,18 +299,24 @@ def print_plan(copies, preserved, external):
 
 
 def main(argv=None):
+    from msshi_sources import data_root, fetch_upstreams, upstream_entries
+
     parser = argparse.ArgumentParser(description=TITLE + " — M.S.S.H.I. (Multi-Agent Sovereign Sage & Hermes Intelligence)")
     parser.add_argument("--mode", choices=("solo", "custom-bots", "selective", "muza-preset"), default="solo")
     parser.add_argument("--platform", choices=("auto", *HOSTS, "chatgpt", "manual"), default="auto")
-    parser.add_argument("--packs", nargs="+", metavar="PAKET", help="Daftar paket selective, dipisah koma atau spasi.")
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--packs", nargs="+", metavar="PAKET", help="Daftar paket selective, dipisah koma atau spasi.")
+    selection.add_argument("--skills", nargs="+", metavar="SKILL", help="Daftar slug skill selective, dipisah spasi.")
     parser.add_argument("--matrix", type=Path, default=MATRIX, help="Matriks kustom. Path aset di dalam JSON relatif ke repo.")
     parser.add_argument("--target-dir", type=Path, help="Folder skill (solo/selective) atau induk workspace bot (mode tim).")
+    parser.add_argument("--pull-upstreams", action="store_true", help="Ambil sumber eksternal ke cache terpisah saat --apply.")
+    parser.add_argument("--upstreams-dir", type=Path, default=data_root() / "upstreams", help="Folder cache sumber eksternal.")
     action = parser.add_mutually_exclusive_group()
     action.add_argument("--dry-run", action="store_true", help="Tampilkan rencana saja (default).")
     action.add_argument("--apply", action="store_true", help="Tulis hanya file baru sesuai rencana.")
     args = parser.parse_args(argv)
-    if args.packs and args.mode != "selective":
-        parser.error("--packs hanya untuk --mode selective.")
+    if (args.packs or args.skills) and args.mode != "selective":
+        parser.error("--packs dan --skills hanya untuk --mode selective.")
     try:
         data, catalog, packs = read_matrix(args.matrix.expanduser())
         host, detected = detect_host(args.platform)
@@ -288,14 +333,16 @@ def main(argv=None):
         print(f"{TITLE}\nMode: {args.mode} | Platform: {host} | Target: {target}")
         if not args.apply:
             print("Simulasi. Tambahkan --apply setelah meninjau rencana.")
+        if args.pull_upstreams:
+            manifest = ROOT / "configs" / "upstreams.json"
+            print(f"Sumber eksternal: {len(upstream_entries(manifest))} entri -> {absolute(args.upstreams_dir)}")
         if is_team:
             plans = []
-            for bot_id, label, skills, persona in team_plan(data, args.mode, catalog):
+            for bot_id, label, skills, soul in team_plan(data, args.mode, catalog):
                 bot_dir = target / bot_id
                 reject_links(bot_dir)
                 if existing(bot_dir) and not bot_dir.is_dir():
                     raise ValueError(f"Target bot bukan folder: {bot_dir}")
-                soul = persona.read_text(encoding="utf-8-sig")
                 copies, preserved, external = skill_plan(bot_dir / "skills", skills, catalog)
                 print(f"\n{label} ({bot_id})")
                 print_plan(copies, preserved, external)
@@ -319,7 +366,9 @@ def main(argv=None):
                     )
             print("Workspace tim portabel. Daftarkan tiap bot di platform Anda bila diperlukan.")
         else:
-            copies, preserved, external = skill_plan(target, selected_skills(args, catalog, packs), catalog)
+            copies, preserved, external = skill_plan(
+                target, selected_skills(args, catalog, packs, data.get("aliases", {})), catalog,
+            )
             print_plan(copies, preserved, external)
             if args.apply:
                 for source, destination in copies:
@@ -327,11 +376,16 @@ def main(argv=None):
             if host == "chatgpt":
                 print("Gunakan panduan docs/platforms.md untuk menambahkan instruksi dan referensi ke ChatGPT.")
         print("Selesai menyiapkan file." if args.apply else "Tidak ada file yang ditulis.")
+        if args.pull_upstreams and args.apply:
+            rows = fetch_upstreams(manifest, args.upstreams_dir)
+            if any(row["status"] == "failed" for row in rows.values()):
+                return 1
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
         parser.exit(2, f"Kesalahan: {exc}\n")
     return 0
 
 
 if __name__ == "__main__":
+    sys.dont_write_bytecode = True
     raise SystemExit(main())
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "External integration inventory for MSSHI Stage 1; documentation and routing only.",
+  "purpose": "External MSSHI integration inventory with opt-in source-cache refresh and separate runtime setup.",
   "checked_on": "2026-11-09",
   "defaults": {
     "install_external": false,
@@ -10,7 +10,7 @@
     "jev_model_routing": false,
     "provider_or_model_mutation": false
   },
-  "cli_anything_bridge": "skills/persona-shizuka-yukino-shikaku/scripts/cli_anything_sovereign_hub.py",
+  "cli_anything_bridge": "scripts/cli_anything_sovereign_hub.py",
   "entries": [
     {
       "id": "higgsfield-skills",

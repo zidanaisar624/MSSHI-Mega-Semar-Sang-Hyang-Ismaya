@@ -5,10 +5,10 @@
 | Platform | Jalur yang tersedia di paket |
 |---|---|
 | Hermes Agent | Salin ke folder skill profil aktif. Deteksi mempertimbangkan HERMES_HOME, folder profil pengguna, dan D:/HermesData jika ditemukan pada Windows. Gunakan --target-dir untuk memilih profil tertentu. |
-| OpenClaw | Salin ke ~/.openclaw/skills atau ke folder skills workspace OpenClaw Anda. openclaw_manifest.json adalah indeks paket untuk manusia dan alat MSSHI. |
+| OpenClaw | Pasang pintu masuk dengan `openclaw skills install git:zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya --global`. Untuk seluruh katalog, ikuti jalur Skills CLI di [Quick Start](../README.md). |
 | Claude Code | Salin ke ~/.claude/skills atau instal plugin dari marketplace lokal. Pengguna Claude Desktop dapat memakai jalur plugin ini pada Claude Code di desktop jika tersedia. |
-| Google Antigravity | Salin ke ~/.gemini/config/skills agar tersedia bagi App dan CLI. Pada Windows, ~ mengikuti profil pengguna. |
-| ChatGPT Projects | Tambah panduan sebagai sumber dan salin instruksi pilihan ke Project settings. |
+| Google Antigravity | Pakai `msshi setup --platform antigravity` atau salin ke `~/.gemini/config/skills`. Untuk opsi Skills CLI, cek lokasi tujuan yang dicetak sesuai versinya. |
+| ChatGPT Projects | Tambah [Knowledge Bundle](../portable/MSSHI_ChatGPT_Knowledge_Bundle.md) sebagai sumber dan salin [instruksi pilihan](../portable/CHATGPT_CUSTOM_INSTRUCTIONS.md) ke Project settings. |
 | Custom GPT | Salin instruksi ke GPT Builder dan unggah materi pilihan ke Knowledge. |
 | CLI-Anything | Gunakan harness dari paket atau upstream yang Anda pasang secara terpisah. Periksa aplikasi dan dependensinya sebelum memanggil harness. |
 
@@ -38,7 +38,7 @@ claude plugin marketplace add .
 claude plugin install msshi@msshi-marketplace
 ~~~
 
-Marketplace menunjuk ke root paket, tempat direktori skills berada. Pengguna Claude Desktop di mode chat dapat memakai instruksi dan referensi secara manual. MCP Anthropic membutuhkan server MCP yang terpisah dengan transport dan konfigurasi yang sesuai. Paket skill ini menyediakan instruksi lokal.
+Marketplace menunjuk ke root paket, tempat direktori skills berada. Untuk Claude.ai Web/Desktop di mode chat, unggah [portable/msshi.zip](../portable/msshi.zip) melalui **Customize → Skills → + → Upload a skill**. ZIP itu memuat satu skill portabel beserta panduan 50 skill inti. **Code → Download ZIP** memberi salinan lengkap repositori. Ekstrak salinan itu dan ambil `portable/msshi.zip` untuk diunggah. MCP Anthropic membutuhkan server MCP yang terpisah dengan transport dan konfigurasi yang sesuai. Paket skill ini menyediakan instruksi lokal.
 
 Referensi: [Marketplace Claude Code](https://code.claude.com/docs/en/plugin-marketplaces), [Claude Code plugins reference](https://code.claude.com/docs/en/plugins-reference).
 
@@ -61,3 +61,10 @@ Untuk Actions, sediakan reverse proxy HTTPS sendiri pada host yang sama dengan s
 
 Referensi: [ChatGPT Projects](https://help.openai.com/en/articles/10169521-projects-in-chatgpt), [GPT Knowledge](https://help.openai.com/en/articles/8554397-creating-and-editing-gpts), [GPT Actions](https://help.openai.com/en/articles/9442513-configuring-actions-in-gpts), [CLI-Anything](https://github.com/HKUDS/CLI-Anything).
 
+
+
+## Impor ZIP melalui OpenClaw
+
+Jika gateway mendukung arsip dan kanalnya meneruskan lampiran, kirim ZIP skill ke chat Telegram, Discord, atau Web lalu ketik `install this skill`. Agen harus bisa membaca lampiran dan memiliki izin memasang skill. Untuk impor arsip terkelola, gateway perlu mengizinkan `skills.install.allowUploadedArchives` dan menjalankan alur staging serta tinjauan host. Jika unggahan chat tidak tersedia, gunakan instalasi Git di tabel. CLI OpenClaw menerima sumber Git atau direktori hasil ekstrak.
+
+[Instalasi dan arsip privat OpenClaw](https://docs.openclaw.ai/tools/skills) · [Skill khusus Claude](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills) · [ID agen Skills CLI](https://github.com/vercel-labs/skills/blob/main/docs/agents.md).

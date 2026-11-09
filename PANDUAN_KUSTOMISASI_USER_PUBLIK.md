@@ -11,6 +11,8 @@ Buka terminal di folder hasil ekstrak yang berisi `README.md`. Gunakan Python 3.
 
 Gunakan `--platform openclaw`, `claude`, `antigravity`, `chatgpt`, atau `manual` sesuai kebutuhan. Tanpa tujuan eksplisit, installer memilih folder skill yang terdeteksi atau folder ekspor di lokasi kerja. Pada Windows, `D:\HermesData` merupakan salah satu kandidat Hermes. Lokasi lain dapat dipilih dengan `HERMES_HOME` atau `--target-dir`. Saat mode tim aktif, `--target-dir` menunjuk ke induk workspace, bukan folder skill global. [Panduan platform](docs/platforms.md).
 
+Setelah memasang ke Hermes, jalankan `msshi connect --mode auto-reconnect --dry-run` untuk melihat rute aplikasi yang ditemukan. Instalasi skill dan registrasi rute dapat dikerjakan terpisah. [Panduan koneksi](docs/CLI_ANYTHING_BRIDGE.md).
+
 ## Mencoba di folder lokal
 
 ```sh

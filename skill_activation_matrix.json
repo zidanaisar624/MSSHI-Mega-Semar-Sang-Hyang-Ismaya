@@ -5,7 +5,10 @@
     "auto_open_on_boot": false,
     "auto_open_on_hermes_startup": false,
     "lazy_execution_mode": "ON_DEMAND_ONLY",
-    "jev_model_routing": false
+    "jev_model_routing": false,
+    "bridge_skill": "cli-anything-universal-bridge",
+    "registry_scope": "hermes_profile",
+    "open_requires_explicit_request": true
   },
   "triggers": [
     {

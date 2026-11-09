@@ -8,3 +8,15 @@
 | `configs/upstreams.json` dan [katalog integrasi](INTEGRASI.md) | 37 tautan rujukan dan petunjuk setup. | Tinjau lisensi pada revisi proyek yang benar-benar digunakan. Periksa syarat akun, model, atau hasil media secara terpisah. |
 
 [Lisensi MIT](../LICENSE) berlaku untuk materi orisinal MSSHI sejauh haknya dimiliki oleh para kontributor. Nama karakter rujukan, merek, dan komponen pihak ketiga mengikuti hak atau ketentuan masing-masing. Inventaris ini membantu meninjau cakupan tersebut sebelum publikasi. [Checklist sebelum publikasi](STATUS_PUBLIKASI.md).
+
+## Kredit kolaborasi
+
+[![MuZA × Google Gemini × OpenAI ChatGPT](https://img.shields.io/badge/Project%20credits-MuZA%20%C3%97%20Gemini%20%C3%97%20ChatGPT-5648b3)](#kredit-kolaborasi)
+
+- **Muhammad Zidan Aisar (MuZA)** — Creator, System Visionary & Chief Architect.
+- **Google Gemini** — Co-Architect untuk riset kurikulum S1–S2–Ph.D., sintesis 50 skill dan 37 sumber, rancangan CLI-Anything dan TokenShield, serta topologi komando lima bot.
+- **OpenAI ChatGPT** — Co-Architect untuk visual SVG, pengemasan repositori Tahap 1 dan Tahap 2, manifest upstream, serta skema lintas platform.
+
+Kredit ini mencatat peran dalam pengerjaan MSSHI. [Lisensi materi orisinal](../LICENSE).
+
+Atribusi ini mendeskripsikan kontribusi MuZA dan bantuan dari produk AI dalam pengerjaan. MSSHI adalah proyek independen. Nama layanan tetap mengikuti hak pemilik merek masing-masing.

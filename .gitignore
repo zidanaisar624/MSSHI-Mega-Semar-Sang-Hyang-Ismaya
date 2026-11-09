@@ -11,7 +11,7 @@ curiosity_ledger/sandbox_tests/*.wav
 curiosity_ledger/sandbox_tests/*.png
 __pycache__/
 *.pyc
-
+
 *.env
 .env.*
 !.env.example
@@ -25,6 +25,7 @@ __pycache__/
 .msshi-backup-*/
 .msshi-stage-*/
 *.zip
+!/portable/msshi.zip
 curiosity_ledger/
 matrix-lokal.json
 msshi-agents/
@@ -38,3 +39,7 @@ references/voice-*-id.md
 .pytest_cache/
 *.p12
 *.pfx
+
+# Local application route registries
+msshi-bridge/
+bridge-profiles/

@@ -1,12 +1,12 @@
 # Pemeriksaan sebelum publikasi
 
-Paket ini adalah kandidat rilis MSSHI Tahap 1. Ekstrak ke folder baru, masuk ke folder yang memuat README, lalu jalankan pemeriksaan lokal dengan Python 3.10 atau lebih baru.
+Paket ini adalah kandidat rilis MSSHI v2.1. Ekstrak ke folder baru, masuk ke folder yang memuat README, lalu jalankan pemeriksaan lokal dengan Python 3.10 atau lebih baru.
 
 ```sh
 python scripts/check_release.py --smoke
 ```
 
-Pemeriksaan membaca struktur, matriks, audit, tautan lokal, metadata skill, serta SVG. Opsi `--smoke` menguji keempat mode installer, ketiga mode updater, dan aturan akses API katalog dengan data uji sementara. Jalankan dari salinan bersih sebelum membuat commit. Hak penggunaan materi tetap ditinjau oleh pemilik sebelum publikasi.
+Pemeriksaan membaca struktur, matriks, audit, tautan lokal, metadata skill, serta SVG. Opsi `--smoke` menguji mode installer, updater, registrasi rute CLI-Anything, dan aturan akses API katalog dengan data uji sementara. Jalankan dari salinan bersih sebelum membuat commit. Hak penggunaan materi tetap ditinjau oleh pemilik sebelum publikasi.
 
 | Pemeriksaan pemilik | Yang perlu dipastikan |
 | --- | --- |
@@ -16,3 +16,5 @@ Pemeriksaan membaca struktur, matriks, audit, tautan lokal, metadata skill, sert
 | Integrasi eksternal | Verifikasi akun, dependensi, biaya dan izin jika akan mengklaim sebuah integrasi sudah berjalan. README memisahkan rujukan, pemasangan dan pengujian. |
 
 Tujuh SVG di paket ini adalah aset visual rilis. Tiga di antaranya menggantikan PNG dari arsip sumber. Panduan asal materi ada di [catatan provenance](PROVENANCE.md). Untuk memeriksa cara GitHub mendeteksi dan menampilkan lisensi, lihat [panduan lisensi GitHub](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
+
+Arsip publik memuat 50 skill inti, tujuh wrapper integrasi, dan satu pintu masuk di root. Panduan dan installer pribadi MuZA disimpan terpisah.

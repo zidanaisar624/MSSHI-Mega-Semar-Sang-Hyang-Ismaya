@@ -9,21 +9,31 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import stat
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
 from urllib.parse import unquote, urlsplit
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 sys.dont_write_bytecode = True
 
 from catalog_api import catalog_handler
+import msshi_cli
+import msshi_sources
+from install_msshi import UNIVERSAL_BRIDGE
 
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX = ROOT / "configs" / "bot_role_and_skill_matrix.json"
-LOCAL_FILES = re.compile(r"(?:^|/)(?:\.env(?:\.[^/]+)?|[^/]+\.(?:pem|key|p12)|"
-                         r"(?:curiosity_ledger|\.msshi-backup-[^/]*|\.msshi-stage-[^/]*))(?:/|$)", re.I)
+LOCAL_FILES = re.compile(
+    r"(?:^|/)(?:\.env(?:\.[^/]+)?|[^/]+\.(?:pem|key|p12)|"
+    r"curiosity_ledger|\.msshi-backup-[^/]*|\.msshi-stage-[^/]*|msshi-bridge|bridge-profiles|msshi-private|"
+    r"Install_Tahap2_MuZA_Hermes_Full\.ps1|Audit_Dry_Run_MuZA\.txt|PANDUAN_INSTAL_MUZA\.md)(?:/|$)",
+    re.I,
+)
 SECRET = re.compile(r"(?<![\w-])(?:sk-[a-zA-Z0-9_-]{24,}|gh[pousr]_[a-zA-Z0-9]{30,}|"
                     r"github_pat_[a-zA-Z0-9_]{30,}|AIza[a-zA-Z0-9_-]{35})"
                     r"|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")
@@ -83,11 +93,31 @@ def static_checks():
     shipped = {path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md")}
     require(expected == shipped and len(shipped) == version["bundled_skills"],
             "Bundled skill folders, matrix, and VERSION.json disagree")
+    require(read_json(ROOT / "package.json")["version"] == version["version"],
+            "npm and VERSION.json versions disagree")
+    aliases = matrix.get("aliases", {})
+    require(all(alias not in shipped and slug in shipped for alias, slug in aliases.items()),
+            "Aliases collide with bundled skill names or point outside the bundle")
     sources = {row["source"] for row in upstreams["entries"]}
     require(len(sources) == len(upstreams["entries"]) == version["external_sources"],
             "Upstream inventory and VERSION.json disagree")
     require(len(matrix["bots"]) == 5 and len(matrix["packs"]) == 6,
             "Preset must describe five bots and six packs")
+
+    wrappers = {row["slug"] for row in matrix["skills"] if row.get("kind") == "integration-wrapper"}
+    require(wrappers <= expected and len(wrappers) == version["integration_wrappers"]
+            and len(expected - wrappers) == version["core_skills"],
+            "Core and wrapper counts disagree with the release matrix")
+    require(all(UNIVERSAL_BRIDGE in bot["required_skills"] for bot in matrix["bots"]),
+            "The universal bridge is not assigned to all five profiles")
+    policies = read_json(ROOT / "skill_activation_matrix.json")["app_connection_policy"]
+    require(policies.get("auto_open_on_boot") is False,
+            "The activation policy must keep application launch on demand")
+    for file in (
+        "scripts/cli_anything_sovereign_hub.py", "scripts/setup_cli_anything_hermes.py",
+        f"skills/{UNIVERSAL_BRIDGE}/scripts/setup_cli_anything_hermes.py",
+    ):
+        require((ROOT / file).is_file(), f"Missing standalone bridge component: {file}")
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     visual_count = links = file_count = 0
@@ -105,7 +135,8 @@ def static_checks():
             ast.parse(text, filename=str(rel), feature_version=(3, 10))
         if path.name == "SKILL.md":
             header = re.match(r"\A---\s*\n(.*?)\n---(?:\n|$)", text, re.S)
-            require(header and re.search(rf"^name:\s*{re.escape(path.parent.name)}\s*$", header[1], re.M)
+            name = "msshi" if path.parent == ROOT else path.parent.name
+            require(header and re.search(rf"^name:\s*{re.escape(name)}\s*$", header[1], re.M)
                     and re.search(r"^description:\s*\S", header[1], re.M),
                     f"Missing or mismatched skill metadata in {rel}")
         if suffix == ".md" and (len(rel.parts) == 1 or rel.parts[0] in {"docs", "assets"}):
@@ -123,10 +154,11 @@ def static_checks():
           f"{len(sources)} upstream sources, {visual_count} SVGs, {links} local links")
 
 
-def run_cli(script, *args, ok=True):
+def run_cli(script, *args, ok=True, env=None, input_text=None):
     result = subprocess.run(
         [sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / script), *map(str, args)],
-        cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=60,
+        cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=90,
+        env=env, input=input_text,
     )
     require((result.returncode == 0) == ok,
             f"{script} returned {result.returncode}: {(result.stderr or result.stdout)[-400:]}")
@@ -143,7 +175,8 @@ def installer_smoke(work):
     sentinel = b"provider: preserve-me\nmodel: preserve-me\n"
     config.write_bytes(sentinel)
     run_cli("install_msshi.py", "--mode", "solo", *options, target, "--apply")
-    require(len(list(target.glob("*/SKILL.md"))) == 50, "Solo did not install all bundled skills")
+    require(len(list(target.glob("*/SKILL.md"))) == read_json(ROOT / "VERSION.json")["bundled_skills"],
+            "Solo did not install all bundled skills")
     existing = target / "academic-plotting" / "SKILL.md"
     existing.write_text("custom content", encoding="utf-8")
     run_cli("install_msshi.py", "--mode", "solo", *options, target, "--apply")
@@ -154,20 +187,32 @@ def installer_smoke(work):
             *options, selective, "--apply")
     require((selective / "business-sage" / "SKILL.md").is_file()
             and not (selective / "academic-plotting").exists(), "Selective pack leaked unrelated skills")
+    require((selective / UNIVERSAL_BRIDGE / "SKILL.md").is_file(),
+            "Selective install omitted the universal bridge")
     team = work / "preset"
     run_cli("install_msshi.py", "--mode", "muza-preset", *options, team, "--apply")
     require(len(list(team.glob("*/SOUL.md"))) == 5 and len(list(team.glob("*/AGENTS.md"))) == 5,
             "Preset did not write five workspaces")
+    require(len(list(team.glob(f"*/skills/{UNIVERSAL_BRIDGE}/SKILL.md"))) == 5,
+            "The preset omitted the bridge from one or more bots")
     matrix = read_json(MATRIX)
     custom = matrix["bots"][0]
     custom["id"] = "test-bot"
     custom["label"] = "Test Bot"
+    custom["required_skills"].remove(UNIVERSAL_BRIDGE)
     matrix["bots"] = [custom]
+    matrix["skills"] = [entry for entry in matrix["skills"] if entry["slug"] != UNIVERSAL_BRIDGE]
+    for pack in matrix["packs"].values():
+        if UNIVERSAL_BRIDGE in pack:
+            pack.remove(UNIVERSAL_BRIDGE)
     matrix_path = work / "matrix.json"
     matrix_path.write_text(json.dumps(matrix), encoding="utf-8")
     run_cli("install_msshi.py", "--mode", "custom-bots", "--matrix", matrix_path,
             *options, work / "team", "--apply")
-    require((work / "team" / "test-bot" / "SOUL.md").is_file(), "Custom bot workspace missing")
+    custom_root = work / "team" / "test-bot"
+    require((custom_root / "SOUL.md").is_file(), "Custom bot workspace missing")
+    require((custom_root / "skills" / UNIVERSAL_BRIDGE / "SKILL.md").is_file(),
+            "Legacy custom matrix omitted the universal bridge")
     run_cli("install_msshi.py", "--mode", "selective", "--packs", "unknown",
             *options, work / "invalid", "--apply", ok=False)
     require(not (work / "invalid").exists(), "Invalid pack wrote output")
@@ -203,6 +248,171 @@ def updater_smoke(work):
             "Auto update missed a skill or overwrote local content")
 
 
+def global_smoke(work):
+    home, profile = work / "state", work / "profile"
+    target = profile / "skills"
+    env = {**os.environ, "MSSHI_HOME": str(home)}
+    run_cli("msshi_cli.py", "setup", "--platform", "manual", "--target-dir", target,
+            env=env, input_text="3\nbusiness\ny\n")
+    state = msshi_cli.read_state(home)
+    managed = state["targets"][str(target)]
+    require(len(managed) >= 3 and UNIVERSAL_BRIDGE in managed,
+            "Global setup did not register the bridge and selected skills")
+    changed, custom = sorted(managed.keys() - {UNIVERSAL_BRIDGE})[:2]
+    # Simulate a managed profile from the prior installer, before the bridge existed.
+    old_target = work / "old-profile" / "skills"
+    old_target.mkdir(parents=True)
+    state["targets"][str(old_target)] = {}
+    (target / custom / "SKILL.md").write_text("local skill customization", encoding="utf-8")
+    soul = profile / "SOUL.md"
+    dna = profile / "user_creative_dna.json"
+    soul.write_text("local persona", encoding="utf-8")
+    dna.write_text('{"style":"local"}', encoding="utf-8")
+    source = work / "latest"
+    source.mkdir()
+    for name in ("configs", "skills", "scripts"):
+        shutil.copytree(ROOT / name, source / name, ignore=shutil.ignore_patterns("__pycache__"))
+    version = read_json(ROOT / "VERSION.json")
+    (source / "VERSION.json").write_text(json.dumps({**version, "version": "99.0.0"}), encoding="utf-8")
+    for slug in (changed, custom):
+        with (source / "skills" / slug / "SKILL.md").open("a", encoding="utf-8") as file:
+            file.write("\nFixture update.\n")
+    require(msshi_cli.update(SimpleNamespace(skip_upstreams=True), home, state, source, "a" * 40) == 0,
+            "Global update failed")
+    require((target / changed / "SKILL.md").read_bytes() == (source / "skills" / changed / "SKILL.md").read_bytes()
+            and (target / custom / "SKILL.md").read_text(encoding="utf-8") == "local skill customization",
+            "Global update failed to update a managed skill or preserve a customization")
+    require((old_target / UNIVERSAL_BRIDGE / "SKILL.md").is_file()
+            and UNIVERSAL_BRIDGE in state["targets"][str(old_target)],
+            "Global update did not install and register the bridge for the existing profile")
+    backups = list((home / "backups").glob("*/files.json"))
+    require(len(backups) == 1, "Protected backup missing")
+    require({Path(item["original"]): (backups[0].parent / item["backup"]).read_bytes()
+             for item in read_json(backups[0])} == {soul: soul.read_bytes(), dna: dna.read_bytes()},
+            "Protected backup did not retain the original persona and DNA")
+    aliases = read_json(MATRIX)["aliases"]
+    spelling = "auto-curiosity-for-film-making"
+    run_cli("msshi_cli.py", "select", "--local", "--platform", "manual", "--target-dir", target,
+            env=env, input_text=f"s\n{spelling}\ny\n")
+    require((target / aliases[spelling] / "SKILL.md").is_file(), "Global select did not resolve skill alias")
+    responses = (json.dumps({"version": "99.0.0"}).encode(), b"# Changelog fixture")
+    with patch.object(msshi_cli, "download", side_effect=responses) as get:
+        msshi_cli.check_release()
+        require(get.call_count == 2, "Global check did not query VERSION.json and CHANGELOG.md")
+
+
+def version_migration_smoke(work):
+    order = msshi_cli.version_key
+    require(order("2.1.0-stage1.2") < order("2.2.0-stage2") < order("2.1.0") < order("2.2.0"),
+            "Stage 1, old preview, v2.1, and later release are not ordered correctly")
+    home = work / "v"
+    old_id = "d" * 24
+    old = home / "releases" / old_id
+    (old / "scripts").mkdir(parents=True)
+    (old / "VERSION.json").write_text('{"version":"2.2.0-stage2"}', encoding="utf-8")
+    (old / "scripts" / "msshi_cli.py").write_text(
+        'raise SystemExit("Migration unexpectedly invoked the preview launcher")\n', encoding="utf-8",
+    )
+    (home / "state.json").write_text(
+        json.dumps({"schema_version": 1, "current": old_id, "targets": {}}), encoding="utf-8",
+    )
+    env = {**os.environ, "MSSHI_HOME": str(home)}
+    run_cli("msshi_cli.py", "bootstrap", "--no-path", env=env)
+    active = msshi_cli.active_script(home)
+    require(active is not None and msshi_cli.release_version(active.parents[1]) == msshi_cli.release_version(ROOT),
+            "Reinstall did not migrate the installed preview to the public v2.1 release")
+    require("connect" in run_cli(active, "--help", env=env),
+            "The migrated CLI has no connect command")
+
+
+def bridge_smoke(work):
+    home = work / "hermes"
+    selected_home = home / "profiles" / "test-bot"
+    selected_home.mkdir(parents=True)
+    marker = "fixture-secret-never-expose"
+    settings = {
+        selected_home / "config.yaml": (
+            "provider: preserve-me\nmodel: preserve-me\nmcp_servers:\n"
+            f"  filmcraft:\n    command: '{marker}'\n"
+            f"  lightcraft:\n    enabled: false\n    url: 'https://example.invalid/{marker}'\n"
+        ).encode(),
+        selected_home / "mcp_config.json": json.dumps({
+            "mcpServers": {"blender": {"command": marker}},
+        }).encode(),
+    }
+    for file, contents in settings.items():
+        file.write_bytes(contents)
+
+    env = {**os.environ, "MSSHI_HOME": str(work / "connect-state")}
+    base = ("connect", "--hermes-home", home, "--profile", "test-bot", "--json")
+
+    def connect(*flags, ok=True):
+        output = run_cli("msshi_cli.py", *base, *flags, env=env, ok=ok)
+        require(marker not in output, "Connector settings or tokens were disclosed")
+        return json.loads(output) if ok else None
+
+    before = set(selected_home.rglob("*"))
+    preview = connect("--mode", "auto-reconnect", "--dry-run")
+    require(preview.get("auto_open_on_boot") is False, "Preview would open applications at startup")
+    require(set(selected_home.rglob("*")) == before, "Auto-reconnect preview wrote into the profile")
+    require(not connect("--status")["connections"], "Auto-reconnect preview registered connections")
+
+    connect("--mode", "auto-reconnect")
+    status = connect("--status")
+    rows = {row["id"]: row for row in status["connections"]}
+    require({"filmcraft", "blender"} <= rows.keys()
+            and rows["filmcraft"]["readiness"] == "configured"
+            and rows["blender"]["readiness"] == "configured",
+            "Auto-reconnect did not detect configured MCP routes from both config files")
+    require(status.get("auto_open_on_boot") is False,
+            "Auto-reconnect enabled application startup")
+
+    manual_state = ("connect", "--hermes-home", home, "--profile", "default", "--json")
+    run_cli("msshi_cli.py", *manual_state, "--mode", "select", "--targets",
+            "gdrive-web,youtube-chrome", env=env)
+    run_cli("msshi_cli.py", *manual_state, "--add", "tiktok", env=env)
+    run_cli("msshi_cli.py", *manual_state, "--remove", "youtube-chrome", env=env)
+    selected = json.loads(run_cli("msshi_cli.py", *manual_state, "--status", env=env))
+    require({row["id"] for row in selected["connections"]} == {"gdrive-web", "tiktok"},
+            "Select/add/remove did not preserve the selected routes")
+    require({row["id"] for row in connect("--status")["connections"]} == rows.keys(),
+            "A route change leaked into a different Hermes profile")
+    connect("--add", "../untrusted", ok=False)
+    connect("--open", "gdrive-web", "--dry-run", ok=False)
+
+    manual = ("connect", "--hermes-home", home, "--profile", "manual")
+    run_cli("msshi_cli.py", *manual, env=env, input_text="2\n2,5\n")
+    menu_report = json.loads(run_cli("msshi_cli.py", *manual, "--status", "--json", env=env))
+    require({row["id"] for row in menu_report["connections"]} == {"gdrive-web", "tiktok"},
+            "Interactive target selection did not register both requested routes")
+    require(all(file.read_bytes() == contents for file, contents in settings.items()),
+            "Bridge modified Hermes configuration")
+
+    standalone = selected_home / "skills" / UNIVERSAL_BRIDGE
+    standalone.parent.mkdir()
+    shutil.copytree(ROOT / "skills" / UNIVERSAL_BRIDGE, standalone)
+    output = run_cli(standalone / "scripts" / "setup_cli_anything_hermes.py",
+                     "--hermes-home", home, "--profile", "test-bot", "--status", "--json", env=env)
+    require({row["id"] for row in json.loads(output)["connections"]} == rows.keys(),
+            "The skill-local bridge could not run without the repository or global CLI")
+
+
+def upstream_smoke(work):
+    def clone(url, destination, *, metadata_only=False):
+        require(url.endswith(".git") and metadata_only, "Upstream must use a metadata-only Git snapshot")
+        destination.mkdir()
+        return "a" * 40
+
+    cache = work / "upstreams"
+    with patch.object(msshi_sources, "clone", side_effect=clone) as git, \
+            patch.object(msshi_sources, "download", return_value=b"public source metadata") as get:
+        rows = msshi_sources.fetch_upstreams(ROOT / "configs" / "upstreams.json", cache)
+        require(len(rows) == 37 and git.call_count == 35 and get.call_count == 2,
+                "Manifest fetch did not cover the 37 source entries")
+        require(all(item["status"] == "cached" for item in rows.values())
+                and read_json(cache / "last-fetch.json") == rows, "Upstream cache report is incomplete")
+
+
 def catalog_smoke():
     # Exercise the real HTTP handler without binding a network port.
     handler = catalog_handler(read_json(MATRIX), "local-test")
@@ -236,8 +446,12 @@ def main():
             with TemporaryDirectory(prefix=".msshi-check-", dir=ROOT) as scratch:
                 installer_smoke(Path(scratch))
                 updater_smoke(Path(scratch))
+                global_smoke(Path(scratch))
+                version_migration_smoke(Path(scratch))
+                bridge_smoke(Path(scratch))
+                upstream_smoke(Path(scratch))
             catalog_smoke()
-            print("Smoke tests passed: four installer modes, three updater modes and catalog guardrails")
+            print("Smoke tests passed: installer, updater, global CLI, v2.1 migration, application routes, upstream cache and catalog guardrails")
         if not (ROOT / "LICENSE").is_file():
             print("Publication review: LICENSE is missing. Check the release license and provenance.")
     except (ValueError, OSError, SyntaxError, ET.ParseError, subprocess.TimeoutExpired) as exc:

@@ -1,8 +1,8 @@
-# Integrasi eksternal MSSHI Tahap 1
+# Integrasi eksternal MSSHI Tahap 2
 
 Katalog memuat **37 tautan sumber** dari brief. Itu terdiri dari 35 repositori GitHub, satu kartu model Hugging Face dan satu situs katalog. Masing-masing dicocokkan dengan paket, peran, kegunaan, prasyarat dan lisensinya. Inventaris mesin tersedia di [configs/upstreams.json](../configs/upstreams.json).
 
-Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan dipasang atau dijalankan. Pemeriksaan dokumentasi tidak menguji seluruh runtime pada tiap host. Tahap ini menyiapkan rute dan rujukan. Pemilihan akun, penggunaan provider/model, pemasangan pihak ketiga dan aktivasi layanan berada di luar eksekusi Tahap 1.
+Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan dipasang atau dijalankan. Pemeriksaan dokumentasi tidak menguji seluruh runtime pada tiap host. Refresh upstream menyimpan sumber ke cache untuk ditinjau. Manifest memiliki 35 repositori Git, satu kartu model, dan satu situs katalog. Runtime, bobot model, aplikasi, kredensial, dan aktivasi layanan mengikuti panduan tiap sumber.
 
 ## Memilih dan memeriksa integrasi
 
@@ -24,23 +24,7 @@ Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan di
 
 ## Bridge CLI-Anything sesuai permintaan
 
-Pembantu lokal adalah [cli_anything_sovereign_hub.py](../skills/persona-shizuka-yukino-shikaku/scripts/cli_anything_sovereign_hub.py). Default manifest `auto_open_on_boot: false`. Jalankan preview dari akar repo untuk memeriksa rute.
-
-```console
-python skills/persona-shizuka-yukino-shikaku/scripts/cli_anything_sovereign_hub.py --json bridge --target perplexity --query "pertanyaan publik"
-```
-
-| Target | Rute | Prasyarat atau batas |
-|---|---|---|
-| `gdrive-web` | Google Drive di browser | Membuka situs/pencarian. Login, akses file dan API diurus terpisah. |
-| `perplexity` | Desktop bila ditemukan dan memori memadai, atau web | Periksa rute preview. Query web memakai URL pencarian. |
-| `youtube-chrome` | YouTube di browser | Gunakan browser desktop yang tersedia. Fitur ini bukan konektor akun atau downloader. |
-| `tiktok` | TikTok di browser | Gunakan situs resmi dengan sesi yang diizinkan pengguna. |
-| `antigravity` | Antigravity yang ditemukan di mesin | Isi direktori proyek melalui `--query`. Tinjau path sebelum meluncurkan. |
-
-Tambahkan `--open` hanya atas permintaan eksplisit untuk membuka target. Periksa apakah query boleh dikirim. Untuk eksekusi harness, pilih versi dan tinjau kode pada tahap terpisah. [Dokumentasi CLI-Anything](https://github.com/HKUDS/CLI-Anything)
-
-Hermes Steel merupakan opsi browser cloud terpisah. Simpan `STEEL_API_KEY` di konfigurasi rahasia lokal, pilih backend hanya atas permintaan, lalu cek data dan biaya layanan. [Dokumentasi Hermes Steel](https://github.com/steel-dev/hermes-steel)
+Jalankan `msshi connect --mode auto-reconnect --dry-run` untuk melihat rute yang dapat didaftarkan. Gunakan `msshi connect --catalog` untuk memilih rute per aplikasi. Hermes memakai tool native untuk MCP dan MSSHI menjalankan harness lokal saat diminta. [Panduan koneksi dan contoh](CLI_ANYTHING_BRIDGE.md).
 
 ## Inventaris 37 sumber
 

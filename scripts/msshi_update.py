@@ -11,6 +11,11 @@ import stat
 import sys
 from tempfile import mkdtemp
 
+sys.dont_write_bytecode = True
+
+from install_msshi import copy_skill, existing, read_json, safe_slug
+from msshi_sources import data_root, fetch_upstreams, upstream_entries
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
@@ -96,7 +101,12 @@ def run(args: argparse.Namespace) -> dict:
             raise ValueError("Folder instalasi harus terpisah dari folder skill sumber dan baseline.")
     upstream = source / "skills"
     validate_path(upstream)
-    selected = set(args.skills or ())
+    aliases = {}
+    matrix = source / "configs" / "bot_role_and_skill_matrix.json"
+    if matrix.is_file():
+        validate_path(matrix)
+        aliases = read_json(matrix).get("aliases", {})
+    selected = {safe_slug(aliases.get(name, name), "skill") for name in (args.skills or ())}
     if selected and args.mode != "select":
         raise ValueError("--skills hanya berlaku untuk --mode select.")
     if args.mode == "select" and not selected:
@@ -108,13 +118,18 @@ def run(args: argparse.Namespace) -> dict:
     names = selected or {path.name for path in upstream.iterdir()
                          if SLUG.fullmatch(path.name) and (destination / path.name).is_dir()}
     rows = []
-    pending = []
+    pending, additions = [], []
     for name in sorted(names):
         incoming, target = upstream / name, destination / name
-        source_files, target_files = inventory(incoming), inventory(target)
-        if "SKILL.md" not in source_files or "SKILL.md" not in target_files:
+        source_files = inventory(incoming)
+        if "SKILL.md" not in source_files:
             raise ValueError(f"SKILL.md hilang: {name}")
-        if source_files == target_files:
+        if not existing(target):
+            additions.append((incoming, target))
+            status = "install_available"
+        elif "SKILL.md" not in (target_files := inventory(target)):
+            raise ValueError(f"SKILL.md hilang: {target}")
+        elif source_files == target_files:
             status = "current"
         elif args.replace_custom or (baseline and (old := baseline / "skills" / name).is_dir()
                                       and inventory(old) == target_files):
@@ -124,24 +139,28 @@ def run(args: argparse.Namespace) -> dict:
             status = "different_needs_baseline_or_review"
         rows.append({"skill": name, "status": status})
     backup_root = None
-    if args.apply and pending:
+    if args.apply and (pending or additions):
         lock = destination / ".msshi-update-lock"
         try:
             lock.mkdir()
         except FileExistsError as exc:
             raise ValueError(f"Ada pembaruan lain atau lock tersisa: {lock}") from exc
         try:
-            backup_root = Path(mkdtemp(prefix=".msshi-backup-", dir=destination.parent))
+            if pending:
+                backup_root = Path(mkdtemp(prefix=".msshi-backup-", dir=destination.parent))
             for incoming, target, source_files, target_files in pending:
                 update_skill(incoming, target, backup_root, source_files, target_files)
                 next(row for row in rows if row["skill"] == target.name)["status"] = "updated"
+            for incoming, target in additions:
+                copy_skill(incoming, target)
+                next(row for row in rows if row["skill"] == target.name)["status"] = "installed"
         finally:
             lock.rmdir()
     return {"mode": args.mode, "baseline_version": installed_version, "source_version": available,
             "backup": str(backup_root) if backup_root else None, "skills": rows}
 
 
-def main() -> int:
+def main(argv=None) -> int:
     parser = argparse.ArgumentParser(
         prog="msshi-update",
         description="MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage")
@@ -153,13 +172,28 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true", help="Terapkan perubahan dengan cadangan")
     parser.add_argument("--replace-custom", action="store_true",
                         help="Izinkan menimpa isi berbeda setelah meninjau dan mencadangkannya")
-    args = parser.parse_args()
+    parser.add_argument("--pull-upstreams", action="store_true",
+                        help="Ambil sumber eksternal ke cache terpisah saat --apply")
+    parser.add_argument("--upstreams-dir", type=Path, default=data_root() / "upstreams")
+    args = parser.parse_args(argv)
     try:
-        print(json.dumps(run(args), ensure_ascii=False, indent=2))
+        if args.pull_upstreams:
+            manifest = args.source.absolute() / "configs" / "upstreams.json"
+            entries = upstream_entries(manifest)
+        result = run(args)
+        failed = False
+        if args.pull_upstreams:
+            if args.apply:
+                rows = fetch_upstreams(manifest, args.upstreams_dir)
+                result["upstreams"] = rows
+                failed = any(row["status"] == "failed" for row in rows.values())
+            else:
+                result["upstreams"] = {"status": "planned", "count": len(entries)}
+        print(json.dumps(result, ensure_ascii=False, indent=2))
     except (OSError, ValueError, KeyError) as error:
         print(f"msshi-update: {error}", file=sys.stderr)
         return 1
-    return 0
+    return int(failed)
 
 
 if __name__ == "__main__":

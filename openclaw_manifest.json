@@ -16,5 +16,6 @@
       "muza-preset"
     ]
   },
-  "documentation": "https://docs.openclaw.ai/tools/skills"
+  "documentation": "https://docs.openclaw.ai/tools/skills",
+  "entrypoint": "SKILL.md"
 }

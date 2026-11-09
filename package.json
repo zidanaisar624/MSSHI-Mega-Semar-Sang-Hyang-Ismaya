@@ -1,0 +1,39 @@
+{
+  "name": "msshi-sovereign-sage",
+  "version": "2.1.0",
+  "description": "MSSHI Agent Skills and setup CLI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git"
+  },
+  "bin": {
+    "msshi": "./scripts/msshi-node.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "scripts",
+    "skills",
+    "configs",
+    "docs",
+    "assets",
+    "adapters",
+    "business-sage",
+    ".claude-plugin",
+    "portable",
+    "VERSION.json",
+    "CHANGELOG.md",
+    "README_EN.md",
+    "INSTALL_FOR_AGENTS.md",
+    "SKILL.md",
+    "*.json",
+    "*.ps1",
+    "*.sh",
+    "*.md",
+    "!**/__pycache__/**",
+    "!**/*.pyc",
+    "!**/*.local.*"
+  ]
+}

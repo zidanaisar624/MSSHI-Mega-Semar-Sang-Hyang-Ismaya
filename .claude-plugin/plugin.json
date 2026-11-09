@@ -1,4 +1,8 @@
 {
   "name": "msshi",
-  "description": "Bundled MSSHI skills for research, creative production, business, and engineering."
+  "version": "2.1.0",
+  "description": "MSSHI Agent Skills for research, creative production, business, and engineering.",
+  "skills": [
+    "./"
+  ]
 }

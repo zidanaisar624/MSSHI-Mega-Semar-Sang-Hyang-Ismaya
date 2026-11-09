@@ -19,10 +19,13 @@
         "business-sage",
         "chatgpt-hermes-portability-kit",
         "cli-anything-business-sage",
+        "cli-anything-universal-bridge",
         "creative-thinking-for-research",
         "deep-research",
         "focus-my-energy",
         "generate-fresh-ideas",
+        "humanizer-en",
+        "humanizer-indonesia",
         "idea-generation",
         "literature-review",
         "match-my-writing-style",
@@ -35,7 +38,8 @@
         "prep-for-meetings",
         "prep-for-meetings-2",
         "rebuttal-writing",
-        "research-paper-writing"
+        "research-paper-writing",
+        "unlimited-ocr-2"
       ],
       "optional_skills": [
         "anti-slop",
@@ -44,14 +48,11 @@
         "graphify",
         "hermes-jev-skills",
         "hermes-steel",
-        "humanizer-en",
-        "humanizer-indonesia",
         "remote-jobs",
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr",
-        "unlimited-ocr-2"
+        "unlimited-ocr"
       ],
       "academic_engines": [
         "gap-kebaruan",
@@ -79,8 +80,11 @@
         "business-sage",
         "chatgpt-hermes-portability-kit",
         "cli-anything-business-sage",
+        "cli-anything-universal-bridge",
         "deep-research",
         "get-more-perspectives",
+        "humanizer-en",
+        "humanizer-indonesia",
         "literature-review",
         "match-my-writing-style",
         "notebooklm-thinking-datascience",
@@ -91,6 +95,7 @@
         "persona-shizuka-yukino-shikaku",
         "rebuttal-writing",
         "research-paper-writing",
+        "unlimited-ocr-2",
         "wise-judgment-and-sovereign-orchestrator"
       ],
       "optional_skills": [
@@ -100,14 +105,11 @@
         "graphify",
         "hermes-jev-skills",
         "hermes-steel",
-        "humanizer-en",
-        "humanizer-indonesia",
         "remote-jobs",
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr",
-        "unlimited-ocr-2"
+        "unlimited-ocr"
       ],
       "academic_engines": [
         "gap-kebaruan",
@@ -137,6 +139,7 @@
         "business-sage",
         "chatgpt-hermes-portability-kit",
         "cli-anything-business-sage",
+        "cli-anything-universal-bridge",
         "data-analysis",
         "deep-research",
         "firecrawl-competitive-intel",
@@ -145,6 +148,8 @@
         "firecrawl-knowledge-base",
         "firecrawl-research-papers",
         "github-research",
+        "humanizer-en",
+        "humanizer-indonesia",
         "literature-review",
         "match-my-writing-style",
         "math-reasoning",
@@ -158,7 +163,8 @@
         "rebuttal-writing",
         "research-paper-writing",
         "symbolic-equation",
-        "table-generation"
+        "table-generation",
+        "unlimited-ocr-2"
       ],
       "optional_skills": [
         "anti-slop",
@@ -168,14 +174,11 @@
         "graphify",
         "hermes-jev-skills",
         "hermes-steel",
-        "humanizer-en",
-        "humanizer-indonesia",
         "remote-jobs",
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr",
-        "unlimited-ocr-2"
+        "unlimited-ocr"
       ],
       "academic_engines": [
         "gap-kebaruan",
@@ -204,11 +207,17 @@
         "auto-curiousity-for-film-making",
         "business-sage",
         "cli-anything-business-sage",
+        "cli-anything-universal-bridge",
         "filmmaking-videography-photography-s2",
+        "higgsfield-skills",
+        "humanizer-en",
+        "humanizer-indonesia",
         "match-my-writing-style",
+        "motion-graphics-suite",
         "parenting-6d-gad-mdd",
         "persona-shizuka-yukino-shikaku",
-        "slide-generation"
+        "slide-generation",
+        "unlimited-ocr-2"
       ],
       "optional_skills": [
         "anti-slop",
@@ -245,13 +254,10 @@
         "higgsfield-generate",
         "higgsfield-marketplace-cards",
         "higgsfield-product-photoshoot",
-        "higgsfield-skills",
         "higgsfield-soul-id",
         "higgsfield-video-explainer",
         "higgsfield-websites",
         "higgsfield-youtube-thumbnail",
-        "humanizer-en",
-        "humanizer-indonesia",
         "motion-primitives",
         "paper-shaders",
         "remote-jobs",
@@ -260,8 +266,7 @@
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr",
-        "unlimited-ocr-2"
+        "unlimited-ocr"
       ],
       "academic_engines": [
         "metode-analisis",
@@ -285,16 +290,21 @@
         "ai-research-explore",
         "ai-research-reproduction",
         "analyze-project",
+        "antigravity-webdev-cybersec",
+        "cli-anything-universal-bridge",
         "evaluating-code-models",
         "evaluating-llms-harness",
         "explore-code",
         "explore-run",
+        "humanizer-en",
+        "humanizer-indonesia",
         "langsmith-observability",
         "match-my-writing-style",
         "nemo-evaluator-sdk",
         "parenting-6d-gad-mdd",
         "persona-shizuka-yukino-shikaku",
-        "phoenix-observability"
+        "phoenix-observability",
+        "unlimited-ocr-2"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -313,8 +323,6 @@
         "hermes-jev-skills",
         "hermes-steel",
         "higgsfield-websites",
-        "humanizer-en",
-        "humanizer-indonesia",
         "mindrally-skills",
         "motion-primitives",
         "paper-shaders",
@@ -329,8 +337,7 @@
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr",
-        "unlimited-ocr-2"
+        "unlimited-ocr"
       ],
       "academic_engines": [
         "metode-analisis"
@@ -388,6 +395,21 @@
       "purpose": "Memeriksa klise, struktur antarmuka, dan pola kode yang berulang.",
       "scope": "all",
       "source": "https://github.com/miqdadbadjuber/anti-slop"
+    },
+    {
+      "slug": "antigravity-webdev-cybersec",
+      "status": "bundled",
+      "path": "skills/antigravity-webdev-cybersec/SKILL.md",
+      "purpose": "Hubungkan pengerjaan web dan evaluasi keamanan terotorisasi dengan Antigravity, Goose, dan alat lokal.",
+      "scope": "web",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "goose",
+        "strix",
+        "cybersecurity-library",
+        "reverse-engineer-anything",
+        "rea"
+      ]
     },
     {
       "slug": "artcraft-cadcraft",
@@ -613,6 +635,18 @@
       "purpose": "Direktori untuk menemukan adapter CLI yang relevan dengan tugas.",
       "scope": "all",
       "source": "https://clianything.cc/"
+    },
+    {
+      "slug": "cli-anything-universal-bridge",
+      "status": "bundled",
+      "path": "skills/cli-anything-universal-bridge/SKILL.md",
+      "purpose": "Daftarkan, periksa, dan jalankan rute aplikasi, browser, harness CLI-Anything, atau MCP Hermes saat tugas membutuhkannya.",
+      "scope": "all",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "cli-anything",
+        "cli-anything-catalog"
+      ]
     },
     {
       "slug": "creative-thinking-for-research",
@@ -854,11 +888,15 @@
     },
     {
       "slug": "higgsfield-skills",
-      "status": "external",
-      "path": null,
-      "purpose": "Katalog integrasi Higgsfield untuk produksi visual dan video.",
+      "status": "bundled",
+      "path": "skills/higgsfield-skills/SKILL.md",
+      "purpose": "Rutekan kebutuhan produksi kreatif ke modul Higgsfield yang sesuai setelah konsep disetujui.",
       "scope": "creative",
-      "source": "https://github.com/higgsfield-ai/skills"
+      "source": "https://github.com/higgsfield-ai/skills",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
     },
     {
       "slug": "higgsfield-soul-id",
@@ -906,19 +944,27 @@
     },
     {
       "slug": "humanizer-en",
-      "status": "external",
-      "path": null,
-      "purpose": "Menyunting naskah bahasa Inggris dengan menjaga arti dan sitasi.",
+      "status": "bundled",
+      "path": "skills/humanizer-en/SKILL.md",
+      "purpose": "Sunting prosa bahasa Inggris agar terasa alami sambil menjaga makna, suara penulis, dan sitasi.",
       "scope": "all",
-      "source": "https://github.com/blader/humanizer"
+      "source": "https://github.com/blader/humanizer",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "humanizer-en"
+      ]
     },
     {
       "slug": "humanizer-indonesia",
-      "status": "external",
-      "path": null,
-      "purpose": "Menyunting bahasa Indonesia dengan EYD/KBBI dan metrik jika tersedia.",
+      "status": "bundled",
+      "path": "skills/humanizer-indonesia/SKILL.md",
+      "purpose": "Sunting prosa bahasa Indonesia sesuai ragam pembaca sambil menjaga makna, istilah, dan sitasi.",
       "scope": "all",
-      "source": "https://github.com/adhiprib/humanizer-indonesia"
+      "source": "https://github.com/adhiprib/humanizer-indonesia",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "humanizer-indonesia"
+      ]
     },
     {
       "slug": "idea-generation",
@@ -962,6 +1008,20 @@
       "purpose": "Menemukan panduan implementasi relevan di katalog eksternal.",
       "scope": "engineering",
       "source": "https://github.com/mindrally/skills"
+    },
+    {
+      "slug": "motion-graphics-suite",
+      "status": "bundled",
+      "path": "skills/motion-graphics-suite/SKILL.md",
+      "purpose": "Pilih dan hubungkan empat rujukan motion graphics untuk komposisi yang tetap dapat diedit.",
+      "scope": "creative",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "bang-motion",
+        "remotion-skills",
+        "barty-motion-graphics",
+        "charlie-motion-graphics"
+      ]
     },
     {
       "slug": "motion-primitives",
@@ -1200,11 +1260,15 @@
     },
     {
       "slug": "unlimited-ocr-2",
-      "status": "external",
-      "path": null,
-      "purpose": "Menyiapkan ekstraksi dokumen/gambar berhalaman bila bobot dan perangkat tersedia.",
+      "status": "bundled",
+      "path": "skills/unlimited-ocr-2/SKILL.md",
+      "purpose": "Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti.",
       "scope": "all",
-      "source": "https://huggingface.co/baidu/Unlimited-OCR-2"
+      "source": "https://huggingface.co/baidu/Unlimited-OCR-2",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "unlimited-ocr-2"
+      ]
     },
     {
       "slug": "wise-judgment-and-sovereign-orchestrator",
@@ -1219,22 +1283,28 @@
       "autoresearch",
       "brainstorming-research-ideas",
       "chatgpt-hermes-portability-kit",
+      "cli-anything-universal-bridge",
       "creative-thinking-for-research",
       "focus-my-energy",
       "generate-fresh-ideas",
       "get-more-perspectives",
+      "humanizer-en",
+      "humanizer-indonesia",
       "idea-generation",
       "match-my-writing-style",
       "parenting-6d-gad-mdd",
       "persona-shizuka-yukino-shikaku",
       "prep-for-meetings",
       "prep-for-meetings-2",
+      "unlimited-ocr-2",
       "wise-judgment-and-sovereign-orchestrator"
     ],
     "filmmaking": [
       "academic-plotting",
       "auto-curiousity-for-film-making",
       "filmmaking-videography-photography-s2",
+      "higgsfield-skills",
+      "motion-graphics-suite",
       "slide-generation"
     ],
     "business": [
@@ -1280,14 +1350,16 @@
     ],
     "webdev": [
       "analyze-project",
+      "antigravity-webdev-cybersec",
+      "evaluating-code-models",
       "explore-code",
-      "explore-run",
-      "evaluating-code-models"
+      "explore-run"
     ],
     "cybersec": [
+      "ai-research-reproduction",
       "analyze-project",
-      "evaluating-code-models",
-      "ai-research-reproduction"
+      "antigravity-webdev-cybersec",
+      "evaluating-code-models"
     ]
   },
   "routes": [
@@ -1318,17 +1390,21 @@
       "ai-research-explore",
       "ai-research-reproduction",
       "analyze-project",
+      "antigravity-webdev-cybersec",
       "evaluating-code-models",
       "evaluating-llms-harness",
       "explore-code",
       "explore-run",
       "filmmaking-videography-photography-s2",
+      "humanizer-en",
+      "humanizer-indonesia",
       "langsmith-observability",
       "match-my-writing-style",
       "nemo-evaluator-sdk",
       "parenting-6d-gad-mdd",
       "persona-shizuka-yukino-shikaku",
-      "phoenix-observability"
+      "phoenix-observability",
+      "unlimited-ocr-2"
     ],
     "external_skills": [
       "addy-agent-skills",
@@ -1347,8 +1423,6 @@
       "hermes-jev-skills",
       "hermes-steel",
       "higgsfield-websites",
-      "humanizer-en",
-      "humanizer-indonesia",
       "mindrally-skills",
       "motion-primitives",
       "paper-shaders",
@@ -1363,8 +1437,7 @@
       "token-monitor",
       "tokenshield",
       "tokentracker",
-      "unlimited-ocr",
-      "unlimited-ocr-2"
+      "unlimited-ocr"
     ]
   },
   "academic_engines": [
@@ -1430,5 +1503,36 @@
       "label": "Prefix dan anggaran",
       "description": "Instruksi stabil, estimasi biaya, dan pencatatan cache jika host mendukung."
     }
-  ]
+  ],
+  "aliases": {
+    "auto-curiosity-for-film-making": "auto-curiousity-for-film-making"
+  },
+  "shared_foundation": {
+    "bundled": [
+      "humanizer-en",
+      "humanizer-indonesia",
+      "unlimited-ocr-2",
+      "persona-shizuka-yukino-shikaku",
+      "cli-anything-universal-bridge"
+    ],
+    "external": [
+      "anti-slop",
+      "graphify",
+      "hermes-jev-skills",
+      "cli-anything"
+    ],
+    "budget": {
+      "policy": "TokenShield v2.0",
+      "reserve_usd": 1
+    },
+    "jev_model_routing": false,
+    "auto_open_on_boot": false,
+    "context_layers": [
+      "peta-lokal",
+      "ekstraksi-berhalaman",
+      "pilih-padatkan",
+      "memori-proyek",
+      "prefix-anggaran"
+    ]
+  }
 }
