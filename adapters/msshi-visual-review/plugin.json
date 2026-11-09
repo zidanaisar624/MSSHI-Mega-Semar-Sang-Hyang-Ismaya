@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "msshi-visual-review",
+  "version": "0.2.0",
+  "description": "Review seven MSSHI README diagrams against the bot matrix and workflow guides.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "MSSHI Visual Review",
+        "shortDescription": "Review MSSHI diagrams and bot roles.",
+        "longDescription": "Review the seven MSSHI setup, team, production, research, context and integration diagrams before publication.",
+        "brandColor": "#7462B8"
+      }
+    }
+  }
+}

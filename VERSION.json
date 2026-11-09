@@ -1,0 +1,16 @@
+{
+  "suite_name": "MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage",
+  "technical_name": "Multi-Agent Sovereign Sage & Hermes Intelligence",
+  "short_code": "MSSHI",
+  "version": "2.1.0-stage1.2",
+  "release_date": "2026-11-09",
+  "bundled_skills": 50,
+  "external_sources": 37,
+  "update_modes": [
+    "check",
+    "auto",
+    "select"
+  ],
+  "release_status": "prepublication_review",
+  "license": "MIT"
+}

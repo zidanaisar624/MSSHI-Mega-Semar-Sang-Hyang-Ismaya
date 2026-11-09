@@ -1,0 +1,1434 @@
+{
+  "schema_version": 1,
+  "suite_name": "MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage",
+  "preset": "muza-preset",
+  "documentation": "docs/ALUR_PRESET_MUZA.md",
+  "audit": "docs/AUDIT_SKILLS_PER_BOT.md",
+  "academic_workflow": "docs/TUJUH_MESIN_AKADEMIK.md",
+  "context_workflow": "docs/LIMA_LAPIS_KONTEKS.md",
+  "bots": [
+    {
+      "id": "yukino",
+      "label": "Yukino Yukinoshita",
+      "role": "Partner ideasi awal dan penampung ide",
+      "output": "Ide mentah, prioritas, energi, pilihan, dan pertanyaan untuk Shizuka.",
+      "persona_file": "configs/personas/yukino.md",
+      "required_skills": [
+        "backward-traceability",
+        "brainstorming-research-ideas",
+        "business-sage",
+        "chatgpt-hermes-portability-kit",
+        "cli-anything-business-sage",
+        "creative-thinking-for-research",
+        "deep-research",
+        "focus-my-energy",
+        "generate-fresh-ideas",
+        "idea-generation",
+        "literature-review",
+        "match-my-writing-style",
+        "notebooklm-thinking-datascience",
+        "novelty-assessment",
+        "paper-revision",
+        "paper-writing-section",
+        "parenting-6d-gad-mdd",
+        "persona-shizuka-yukino-shikaku",
+        "prep-for-meetings",
+        "prep-for-meetings-2",
+        "rebuttal-writing",
+        "research-paper-writing"
+      ],
+      "optional_skills": [
+        "anti-slop",
+        "cli-anything",
+        "cli-anything-catalog",
+        "graphify",
+        "hermes-jev-skills",
+        "hermes-steel",
+        "humanizer-en",
+        "humanizer-indonesia",
+        "remote-jobs",
+        "token-monitor",
+        "tokenshield",
+        "tokentracker",
+        "unlimited-ocr",
+        "unlimited-ocr-2"
+      ],
+      "academic_engines": [
+        "gap-kebaruan",
+        "tulis-sunting",
+        "ritme-kerja",
+        "simulasi-sidang"
+      ],
+      "context_layers": [
+        "peta-lokal",
+        "ekstraksi-berhalaman",
+        "pilih-padatkan",
+        "memori-proyek",
+        "prefix-anggaran"
+      ]
+    },
+    {
+      "id": "shizuka",
+      "label": "Sensei Shizuka Hiratsuka",
+      "role": "Mastermind dan penerjemah hasil riset Val",
+      "output": "Strategi, delegasi, pemilihan alur kerja, dan penjelasan akhir kepada pengguna.",
+      "persona_file": "configs/personas/shizuka.md",
+      "required_skills": [
+        "autoresearch",
+        "backward-traceability",
+        "business-sage",
+        "chatgpt-hermes-portability-kit",
+        "cli-anything-business-sage",
+        "deep-research",
+        "get-more-perspectives",
+        "literature-review",
+        "match-my-writing-style",
+        "notebooklm-thinking-datascience",
+        "novelty-assessment",
+        "paper-revision",
+        "paper-writing-section",
+        "parenting-6d-gad-mdd",
+        "persona-shizuka-yukino-shikaku",
+        "rebuttal-writing",
+        "research-paper-writing",
+        "wise-judgment-and-sovereign-orchestrator"
+      ],
+      "optional_skills": [
+        "anti-slop",
+        "cli-anything",
+        "cli-anything-catalog",
+        "graphify",
+        "hermes-jev-skills",
+        "hermes-steel",
+        "humanizer-en",
+        "humanizer-indonesia",
+        "remote-jobs",
+        "token-monitor",
+        "tokenshield",
+        "tokentracker",
+        "unlimited-ocr",
+        "unlimited-ocr-2"
+      ],
+      "academic_engines": [
+        "gap-kebaruan",
+        "baca-jejak-bukti",
+        "metode-analisis",
+        "revisi-pembimbing",
+        "tulis-sunting",
+        "ritme-kerja",
+        "simulasi-sidang"
+      ],
+      "context_layers": [
+        "peta-lokal",
+        "ekstraksi-berhalaman",
+        "pilih-padatkan",
+        "memori-proyek",
+        "prefix-anggaran"
+      ]
+    },
+    {
+      "id": "val",
+      "label": "Val",
+      "role": "Spesialis riset murni, literatur S1–S3, dan intelijen data",
+      "output": "Bukti, metode, batas kepastian, serta dossier untuk Shizuka.",
+      "persona_file": "configs/personas/val.md",
+      "required_skills": [
+        "backward-traceability",
+        "business-sage",
+        "chatgpt-hermes-portability-kit",
+        "cli-anything-business-sage",
+        "data-analysis",
+        "deep-research",
+        "firecrawl-competitive-intel",
+        "firecrawl-dashboard-reporting",
+        "firecrawl-deep-research",
+        "firecrawl-knowledge-base",
+        "firecrawl-research-papers",
+        "github-research",
+        "literature-review",
+        "match-my-writing-style",
+        "math-reasoning",
+        "notebooklm-thinking-datascience",
+        "novelty-assessment",
+        "paper-context-resolver",
+        "paper-revision",
+        "paper-writing-section",
+        "parenting-6d-gad-mdd",
+        "persona-shizuka-yukino-shikaku",
+        "rebuttal-writing",
+        "research-paper-writing",
+        "symbolic-equation",
+        "table-generation"
+      ],
+      "optional_skills": [
+        "anti-slop",
+        "cli-anything",
+        "cli-anything-catalog",
+        "gpt-researcher",
+        "graphify",
+        "hermes-jev-skills",
+        "hermes-steel",
+        "humanizer-en",
+        "humanizer-indonesia",
+        "remote-jobs",
+        "token-monitor",
+        "tokenshield",
+        "tokentracker",
+        "unlimited-ocr",
+        "unlimited-ocr-2"
+      ],
+      "academic_engines": [
+        "gap-kebaruan",
+        "baca-jejak-bukti",
+        "metode-analisis",
+        "revisi-pembimbing",
+        "tulis-sunting",
+        "simulasi-sidang"
+      ],
+      "context_layers": [
+        "peta-lokal",
+        "ekstraksi-berhalaman",
+        "pilih-padatkan",
+        "memori-proyek",
+        "prefix-anggaran"
+      ]
+    },
+    {
+      "id": "kiki-chii",
+      "label": "Kiki-Chii",
+      "role": "One-Woman Creative Studio",
+      "output": "Konsep, produksi kreatif, identitas visual, dan penyerahan aset.",
+      "persona_file": "configs/personas/kiki-chii.md",
+      "required_skills": [
+        "academic-plotting",
+        "auto-curiousity-for-film-making",
+        "business-sage",
+        "cli-anything-business-sage",
+        "filmmaking-videography-photography-s2",
+        "match-my-writing-style",
+        "parenting-6d-gad-mdd",
+        "persona-shizuka-yukino-shikaku",
+        "slide-generation"
+      ],
+      "optional_skills": [
+        "anti-slop",
+        "artcraft-cadcraft",
+        "artcraft-craftanything",
+        "artcraft-deckcraft",
+        "artcraft-designcraft",
+        "artcraft-effectcraft",
+        "artcraft-figcraft",
+        "artcraft-filmcraft",
+        "artcraft-gridcraft",
+        "artcraft-lightcraft",
+        "artcraft-pdfcraft",
+        "artcraft-photocraft",
+        "artcraft-solidcraft",
+        "artcraft-soundcraft",
+        "artcraft-vectorcraft",
+        "artcraft-wordcraft",
+        "bang-motion",
+        "barty-motion-graphics",
+        "better-design",
+        "blender-mcp",
+        "canvas-ui",
+        "charlie-motion-graphics",
+        "cli-anything",
+        "cli-anything-catalog",
+        "cursify",
+        "design-taste",
+        "graphify",
+        "hermes-jev-skills",
+        "hermes-steel",
+        "higgsfield-brandkit",
+        "higgsfield-faceless-video",
+        "higgsfield-generate",
+        "higgsfield-marketplace-cards",
+        "higgsfield-product-photoshoot",
+        "higgsfield-skills",
+        "higgsfield-soul-id",
+        "higgsfield-video-explainer",
+        "higgsfield-websites",
+        "higgsfield-youtube-thumbnail",
+        "humanizer-en",
+        "humanizer-indonesia",
+        "motion-primitives",
+        "paper-shaders",
+        "remote-jobs",
+        "remotion-skills",
+        "superdesign-skill",
+        "token-monitor",
+        "tokenshield",
+        "tokentracker",
+        "unlimited-ocr",
+        "unlimited-ocr-2"
+      ],
+      "academic_engines": [
+        "metode-analisis",
+        "simulasi-sidang"
+      ],
+      "context_layers": [
+        "peta-lokal",
+        "ekstraksi-berhalaman",
+        "pilih-padatkan",
+        "memori-proyek",
+        "prefix-anggaran"
+      ]
+    },
+    {
+      "id": "shikaku",
+      "label": "Shikaku Nara",
+      "role": "Spesialis pemrograman, vibecoding, dan keamanan siber",
+      "output": "Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizinkan.",
+      "persona_file": "configs/personas/shikaku.md",
+      "required_skills": [
+        "ai-research-explore",
+        "ai-research-reproduction",
+        "analyze-project",
+        "evaluating-code-models",
+        "evaluating-llms-harness",
+        "explore-code",
+        "explore-run",
+        "langsmith-observability",
+        "match-my-writing-style",
+        "nemo-evaluator-sdk",
+        "parenting-6d-gad-mdd",
+        "persona-shizuka-yukino-shikaku",
+        "phoenix-observability"
+      ],
+      "optional_skills": [
+        "addy-agent-skills",
+        "anti-slop",
+        "awesome-copilot",
+        "bang-motion",
+        "better-design",
+        "canvas-ui",
+        "cli-anything",
+        "cli-anything-catalog",
+        "cursify",
+        "cybersecurity-library",
+        "design-taste",
+        "goose",
+        "graphify",
+        "hermes-jev-skills",
+        "hermes-steel",
+        "higgsfield-websites",
+        "humanizer-en",
+        "humanizer-indonesia",
+        "mindrally-skills",
+        "motion-primitives",
+        "paper-shaders",
+        "playwright-best-practices",
+        "ponytail",
+        "rea",
+        "remotion-skills",
+        "reverse-engineer-anything",
+        "strix",
+        "superdesign-skill",
+        "superpowers",
+        "token-monitor",
+        "tokenshield",
+        "tokentracker",
+        "unlimited-ocr",
+        "unlimited-ocr-2"
+      ],
+      "academic_engines": [
+        "metode-analisis"
+      ],
+      "context_layers": [
+        "peta-lokal",
+        "ekstraksi-berhalaman",
+        "pilih-padatkan",
+        "memori-proyek",
+        "prefix-anggaran"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "slug": "academic-plotting",
+      "status": "bundled",
+      "path": "skills/academic-plotting/SKILL.md",
+      "purpose": "Menghasilkan figur publikasi dari data dan spesifikasi yang disepakati.",
+      "scope": "creative"
+    },
+    {
+      "slug": "addy-agent-skills",
+      "status": "external",
+      "path": null,
+      "purpose": "Menerapkan praktik engineering pada implementasi dan review.",
+      "scope": "engineering",
+      "source": "https://github.com/addyosmani/agent-skills"
+    },
+    {
+      "slug": "ai-research-explore",
+      "status": "bundled",
+      "path": "skills/ai-research-explore/SKILL.md",
+      "purpose": "Merancang eksperimen kandidat yang terpisah dari baseline.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "ai-research-reproduction",
+      "status": "bundled",
+      "path": "skills/ai-research-reproduction/SKILL.md",
+      "purpose": "Menetapkan target reproduksi penelitian yang dapat dibuktikan.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "analyze-project",
+      "status": "bundled",
+      "path": "skills/analyze-project/SKILL.md",
+      "purpose": "Memetakan struktur proyek, konfigurasi, titik masuk, dan risiko perubahan.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "anti-slop",
+      "status": "external",
+      "path": null,
+      "purpose": "Memeriksa klise, struktur antarmuka, dan pola kode yang berulang.",
+      "scope": "all",
+      "source": "https://github.com/miqdadbadjuber/anti-slop"
+    },
+    {
+      "slug": "artcraft-cadcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan teknis.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-craftanything",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk otomasi kreatif lintas alat.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-deckcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk presentasi kreatif.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-designcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk desain aset visual.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-effectcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk efek visual dan compositing.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-figcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan UI dan prototipe.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-filmcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk perencanaan adegan dan shot.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-gridcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk tabel dan perencanaan produksi.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-lightcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan pencahayaan.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-pdfcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk paket dokumen PDF.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-photocraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk pengolahan dan evaluasi foto.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-solidcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk model bentuk padat.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-soundcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan suara dan mixing.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-vectorcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk aset vektor.",
+      "scope": "creative"
+    },
+    {
+      "slug": "artcraft-wordcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk dokumen produksi.",
+      "scope": "creative"
+    },
+    {
+      "slug": "auto-curiousity-for-film-making",
+      "status": "bundled",
+      "path": "skills/auto-curiousity-for-film-making/SKILL.md",
+      "purpose": "Menguji kemampuan alat kreatif dan teknik produksi dalam eksperimen terpisah.",
+      "scope": "creative"
+    },
+    {
+      "slug": "autoresearch",
+      "status": "bundled",
+      "path": "skills/autoresearch/SKILL.md",
+      "purpose": "Mengoordinasikan siklus eksperimen dan sintesis dengan batas berhenti.",
+      "scope": "orchestration"
+    },
+    {
+      "slug": "awesome-copilot",
+      "status": "external",
+      "path": null,
+      "purpose": "Memilih contoh instruksi dan praktik pengembangan yang dapat diadaptasi.",
+      "scope": "engineering",
+      "source": "https://github.com/github/awesome-copilot"
+    },
+    {
+      "slug": "backward-traceability",
+      "status": "bundled",
+      "path": "skills/backward-traceability/SKILL.md",
+      "purpose": "Menautkan angka dan hasil laporan kembali ke data, skrip, atau perhitungan.",
+      "scope": "academic"
+    },
+    {
+      "slug": "bang-motion",
+      "status": "external",
+      "path": null,
+      "purpose": "Memandu motion graphics berbasis kode sesuai brief.",
+      "scope": "web",
+      "source": "https://github.com/bangtutorial/bang-motion"
+    },
+    {
+      "slug": "barty-motion-graphics",
+      "status": "external",
+      "path": null,
+      "purpose": "Memandu komposisi grafis gerak dan animasi berbasis kode.",
+      "scope": "creative",
+      "source": "https://github.com/Barty-Bart/motion-graphics"
+    },
+    {
+      "slug": "better-design",
+      "status": "external",
+      "path": null,
+      "purpose": "Membantu tinjauan kualitas dan hierarki desain.",
+      "scope": "web",
+      "source": "https://github.com/marvkr/better-design"
+    },
+    {
+      "slug": "blender-mcp",
+      "status": "external",
+      "path": null,
+      "purpose": "Menghubungkan tahap komposisi 3D, render, dan pemeriksaan adegan dengan adapter Blender yang tersedia.",
+      "scope": "creative"
+    },
+    {
+      "slug": "brainstorming-research-ideas",
+      "status": "bundled",
+      "path": "skills/brainstorming-research-ideas/SKILL.md",
+      "purpose": "Memakai kerangka ideasi terstruktur untuk menemukan pertanyaan layak.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "business-sage",
+      "status": "bundled",
+      "path": "skills/business-sage/SKILL.md",
+      "purpose": "Menyusun analisis usaha, skenario finansial, dan pertanyaan verifikasi aturan yang relevan.",
+      "scope": "business"
+    },
+    {
+      "slug": "canvas-ui",
+      "status": "external",
+      "path": null,
+      "purpose": "Menelaah komponen visual berbasis kanvas untuk interaksi khusus.",
+      "scope": "web",
+      "source": "https://github.com/DavidHDev/canvas-ui"
+    },
+    {
+      "slug": "charlie-motion-graphics",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyusun pendekatan motion graphics dan urutan gerak dari storyboard.",
+      "scope": "creative",
+      "source": "https://github.com/charlie947/motion-graphics-skills"
+    },
+    {
+      "slug": "chatgpt-hermes-portability-kit",
+      "status": "bundled",
+      "path": "skills/chatgpt-hermes-portability-kit/SKILL.md",
+      "purpose": "Memandu adaptasi metode dan profil ke platform lain menggunakan sumber yang sah.",
+      "scope": "strategy"
+    },
+    {
+      "slug": "cli-anything",
+      "status": "external",
+      "path": null,
+      "purpose": "Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif.",
+      "scope": "all",
+      "source": "https://github.com/HKUDS/CLI-Anything"
+    },
+    {
+      "slug": "cli-anything-business-sage",
+      "status": "bundled",
+      "path": "skills/cli-anything-business-sage/SKILL.md",
+      "purpose": "Menjalankan perhitungan bisnis terstruktur melalui harness lokal yang tersedia.",
+      "scope": "business"
+    },
+    {
+      "slug": "cli-anything-catalog",
+      "status": "external",
+      "path": null,
+      "purpose": "Direktori untuk menemukan adapter CLI yang relevan dengan tugas.",
+      "scope": "all",
+      "source": "https://clianything.cc/"
+    },
+    {
+      "slug": "creative-thinking-for-research",
+      "status": "bundled",
+      "path": "skills/creative-thinking-for-research/SKILL.md",
+      "purpose": "Mencoba reframing, analogi, dan kombinasi konsep untuk membuka pilihan.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "cursify",
+      "status": "external",
+      "path": null,
+      "purpose": "Memilih interaksi kursor yang sesuai dengan kebutuhan antarmuka.",
+      "scope": "web",
+      "source": "https://github.com/ui-layouts/cursify"
+    },
+    {
+      "slug": "cybersecurity-library",
+      "status": "external",
+      "path": null,
+      "purpose": "Menemukan panduan keamanan sesuai lingkup audit yang sah.",
+      "scope": "engineering",
+      "source": "https://github.com/mukul975/anthropic-cybersecurity-skills"
+    },
+    {
+      "slug": "data-analysis",
+      "status": "bundled",
+      "path": "skills/data-analysis/SKILL.md",
+      "purpose": "Memeriksa kualitas data, asumsi, uji statistik, dan ketidakpastian.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "deep-research",
+      "status": "bundled",
+      "path": "skills/deep-research/SKILL.md",
+      "purpose": "Menyusun pertanyaan, menelusuri literatur, dan mensintesis bukti yang dapat diperiksa.",
+      "scope": "academic"
+    },
+    {
+      "slug": "design-taste",
+      "status": "external",
+      "path": null,
+      "purpose": "Memilih gaya visual, tipografi, dan komposisi yang sesuai.",
+      "scope": "web",
+      "source": "https://github.com/madebymustafa/design-taste"
+    },
+    {
+      "slug": "evaluating-code-models",
+      "status": "bundled",
+      "path": "skills/evaluating-code-models/SKILL.md",
+      "purpose": "Menguji keluaran model kode dengan tugas dan tolok ukur yang relevan.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "evaluating-llms-harness",
+      "status": "bundled",
+      "path": "skills/evaluating-llms-harness/SKILL.md",
+      "purpose": "Mengatur dan menilai evaluasi LLM dengan harness pengujian yang kompatibel.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "explore-code",
+      "status": "bundled",
+      "path": "skills/explore-code/SKILL.md",
+      "purpose": "Mengembangkan perubahan eksperimen dalam ruang kerja terisolasi.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "explore-run",
+      "status": "bundled",
+      "path": "skills/explore-run/SKILL.md",
+      "purpose": "Menjalankan uji terbatas dengan anggaran dan catatan hasil yang jelas.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "filmmaking-videography-photography-s2",
+      "status": "bundled",
+      "path": "skills/filmmaking-videography-photography-s2/SKILL.md",
+      "purpose": "Menyatukan konsep, pengarahan, kamera, foto, penyuntingan, warna, dan suara.",
+      "scope": "creative"
+    },
+    {
+      "slug": "firecrawl-competitive-intel",
+      "status": "bundled",
+      "path": "skills/firecrawl-competitive-intel/SKILL.md",
+      "purpose": "Membandingkan perubahan produk, harga, dan fitur dengan bukti bertanggal.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "firecrawl-dashboard-reporting",
+      "status": "bundled",
+      "path": "skills/firecrawl-dashboard-reporting/SKILL.md",
+      "purpose": "Mengambil dan memeriksa indikator dasbor untuk pelaporan.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "firecrawl-deep-research",
+      "status": "bundled",
+      "path": "skills/firecrawl-deep-research/SKILL.md",
+      "purpose": "Mengumpulkan bukti web untuk sintesis dengan atribusi.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "firecrawl-knowledge-base",
+      "status": "bundled",
+      "path": "skills/firecrawl-knowledge-base/SKILL.md",
+      "purpose": "Menyiapkan koleksi dokumen, potongan, serta metadata asalnya.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "firecrawl-research-papers",
+      "status": "bundled",
+      "path": "skills/firecrawl-research-papers/SKILL.md",
+      "purpose": "Menemukan dan memeriksa makalah pada sumber akademik yang relevan.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "focus-my-energy",
+      "status": "bundled",
+      "path": "skills/focus-my-energy/SKILL.md",
+      "purpose": "Menyesuaikan beban tugas dan langkah awal dengan energi yang dilaporkan pengguna.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "generate-fresh-ideas",
+      "status": "bundled",
+      "path": "skills/generate-fresh-ideas/SKILL.md",
+      "purpose": "Menghasilkan alternatif dari beberapa lensa kreatif untuk disaring pengguna.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "get-more-perspectives",
+      "status": "bundled",
+      "path": "skills/get-more-perspectives/SKILL.md",
+      "purpose": "Menguji keputusan dari beberapa sudut pandang sebelum memilih.",
+      "scope": "orchestration"
+    },
+    {
+      "slug": "github-research",
+      "status": "bundled",
+      "path": "skills/github-research/SKILL.md",
+      "purpose": "Menelaah lisensi, rancangan, pemeliharaan, dan kesiapan repositori.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "goose",
+      "status": "external",
+      "path": null,
+      "purpose": "Menjalankan siklus perubahan kode dan pengujian bila harness Goose tersedia.",
+      "scope": "engineering",
+      "source": "https://github.com/aaif-goose/goose"
+    },
+    {
+      "slug": "gpt-researcher",
+      "status": "external",
+      "path": null,
+      "purpose": "Mengumpulkan dan menyusun bahan riset; Val memeriksa sumber sebelum penyerahan.",
+      "scope": "evidence",
+      "source": "https://github.com/assafelovic/gpt-researcher"
+    },
+    {
+      "slug": "graphify",
+      "status": "external",
+      "path": null,
+      "purpose": "Membuat peta struktur proyek untuk penelusuran konteks.",
+      "scope": "all",
+      "source": "https://github.com/Graphify-Labs/graphify"
+    },
+    {
+      "slug": "hermes-jev-skills",
+      "status": "external",
+      "path": null,
+      "purpose": "Memilih skill dari konteks dengan pengalihan model dinonaktifkan.",
+      "scope": "all",
+      "source": "https://github.com/kerpopule/hermes-jev-skills"
+    },
+    {
+      "slug": "hermes-steel",
+      "status": "external",
+      "path": null,
+      "purpose": "Membuka peramban untuk langkah yang diminta jika plugin tersedia.",
+      "scope": "all",
+      "source": "https://github.com/steel-dev/hermes-steel"
+    },
+    {
+      "slug": "higgsfield-brandkit",
+      "status": "external",
+      "path": null,
+      "purpose": "Menerapkan sistem visual merek pada produksi aset.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-faceless-video",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyiapkan video tanpa tampil wajah dari skrip, tempo, dan aset.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-generate",
+      "status": "external",
+      "path": null,
+      "purpose": "Menghasilkan atau mengolah media setelah konsep dan parameter disetujui.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-marketplace-cards",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyusun kartu promosi produk dengan pesan dan spesifikasi kanal.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-product-photoshoot",
+      "status": "external",
+      "path": null,
+      "purpose": "Mengatur konsep foto produk, pencahayaan, dan framing.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-skills",
+      "status": "external",
+      "path": null,
+      "purpose": "Katalog integrasi Higgsfield untuk produksi visual dan video.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills"
+    },
+    {
+      "slug": "higgsfield-soul-id",
+      "status": "external",
+      "path": null,
+      "purpose": "Mengelola konsistensi subjek dengan referensi yang diizinkan.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-video-explainer",
+      "status": "external",
+      "path": null,
+      "purpose": "Mengubah penjelasan konsep menjadi urutan adegan.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-websites",
+      "status": "external",
+      "path": null,
+      "purpose": "Memetakan brief produk ke konsep situs dan aset pendukung.",
+      "scope": "web",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "higgsfield-youtube-thumbnail",
+      "status": "external",
+      "path": null,
+      "purpose": "Membuat konsep thumbnail sesuai isi video dan identitas kanal.",
+      "scope": "creative",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "integration_ids": [
+        "higgsfield-skills"
+      ]
+    },
+    {
+      "slug": "humanizer-en",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyunting naskah bahasa Inggris dengan menjaga arti dan sitasi.",
+      "scope": "all",
+      "source": "https://github.com/blader/humanizer"
+    },
+    {
+      "slug": "humanizer-indonesia",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyunting bahasa Indonesia dengan EYD/KBBI dan metrik jika tersedia.",
+      "scope": "all",
+      "source": "https://github.com/adhiprib/humanizer-indonesia"
+    },
+    {
+      "slug": "idea-generation",
+      "status": "bundled",
+      "path": "skills/idea-generation/SKILL.md",
+      "purpose": "Mengembangkan dan menyaring gagasan penelitian dalam beberapa putaran.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "langsmith-observability",
+      "status": "bundled",
+      "path": "skills/langsmith-observability/SKILL.md",
+      "purpose": "Memandu observabilitas dan evaluasi LangSmith pada lingkungan yang disetujui.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "literature-review",
+      "status": "bundled",
+      "path": "skills/literature-review/SKILL.md",
+      "purpose": "Membangun tinjauan pustaka dengan beberapa perspektif dan jejak sumber.",
+      "scope": "academic"
+    },
+    {
+      "slug": "match-my-writing-style",
+      "status": "bundled",
+      "path": "skills/match-my-writing-style/SKILL.md",
+      "purpose": "Menerapkan Voice Card yang disediakan pengguna sesuai audiens dan jenis tulisan.",
+      "scope": "all"
+    },
+    {
+      "slug": "math-reasoning",
+      "status": "bundled",
+      "path": "skills/math-reasoning/SKILL.md",
+      "purpose": "Memeriksa langkah penalaran matematika dan syarat berlakunya.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "mindrally-skills",
+      "status": "external",
+      "path": null,
+      "purpose": "Menemukan panduan implementasi relevan di katalog eksternal.",
+      "scope": "engineering",
+      "source": "https://github.com/mindrally/skills"
+    },
+    {
+      "slug": "motion-primitives",
+      "status": "external",
+      "path": null,
+      "purpose": "Merancang gerak antarmuka memakai komponen animasi.",
+      "scope": "web",
+      "source": "https://github.com/ibelick/motion-primitives"
+    },
+    {
+      "slug": "nemo-evaluator-sdk",
+      "status": "bundled",
+      "path": "skills/nemo-evaluator-sdk/SKILL.md",
+      "purpose": "Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "notebooklm-thinking-datascience",
+      "status": "bundled",
+      "path": "skills/notebooklm-thinking-datascience/SKILL.md",
+      "purpose": "Mengadaptasi metode berpikir sistem dan data science dari indeks sumber milik pengguna.",
+      "scope": "academic"
+    },
+    {
+      "slug": "novelty-assessment",
+      "status": "bundled",
+      "path": "skills/novelty-assessment/SKILL.md",
+      "purpose": "Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian.",
+      "scope": "academic"
+    },
+    {
+      "slug": "paper-context-resolver",
+      "status": "bundled",
+      "path": "skills/paper-context-resolver/SKILL.md",
+      "purpose": "Mengikat klaim reproduksi pada bagian, gambar, tabel, atau lampiran makalah.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "paper-revision",
+      "status": "bundled",
+      "path": "skills/paper-revision/SKILL.md",
+      "purpose": "Memetakan catatan revisi ke perubahan konkret dan bukti perbaikan.",
+      "scope": "academic"
+    },
+    {
+      "slug": "paper-shaders",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyiapkan efek shader yang terukur dan sesuai perangkat.",
+      "scope": "web",
+      "source": "https://github.com/paper-design/shaders"
+    },
+    {
+      "slug": "paper-writing-section",
+      "status": "bundled",
+      "path": "skills/paper-writing-section/SKILL.md",
+      "purpose": "Menyusun dan menyunting bagian naskah akademik dengan dua tahap pemeriksaan.",
+      "scope": "academic"
+    },
+    {
+      "slug": "parenting-6d-gad-mdd",
+      "status": "bundled",
+      "path": "skills/parenting-6d-gad-mdd/SKILL.md",
+      "purpose": "Memandu percakapan dengan empati, struktur, dan dukungan otonomi.",
+      "scope": "all"
+    },
+    {
+      "slug": "persona-shizuka-yukino-shikaku",
+      "status": "bundled",
+      "path": "skills/persona-shizuka-yukino-shikaku/SKILL.md",
+      "purpose": "Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot.",
+      "scope": "all"
+    },
+    {
+      "slug": "phoenix-observability",
+      "status": "bundled",
+      "path": "skills/phoenix-observability/SKILL.md",
+      "purpose": "Memandu tracing dan evaluasi Phoenix tanpa memindahkan data di luar lingkup.",
+      "scope": "engineering"
+    },
+    {
+      "slug": "playwright-best-practices",
+      "status": "external",
+      "path": null,
+      "purpose": "Menguji jalur pengguna dan memperbaiki kestabilan tes E2E.",
+      "scope": "engineering",
+      "source": "https://github.com/currents-dev/playwright-best-practices-skill"
+    },
+    {
+      "slug": "ponytail",
+      "status": "external",
+      "path": null,
+      "purpose": "Mengurangi kerumitan solusi dan memilih perubahan yang sesuai kebutuhan.",
+      "scope": "engineering",
+      "source": "https://github.com/dietrichgebert/ponytail"
+    },
+    {
+      "slug": "prep-for-meetings",
+      "status": "bundled",
+      "path": "skills/prep-for-meetings/SKILL.md",
+      "purpose": "Menyusun ringkasan pertemuan dari catatan dan tujuan yang tersedia.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "prep-for-meetings-2",
+      "status": "bundled",
+      "path": "skills/prep-for-meetings-2/SKILL.md",
+      "purpose": "Memadatkan bahan pertemuan menjadi pokok bahasan dan kartu pengingat.",
+      "scope": "ideation"
+    },
+    {
+      "slug": "rea",
+      "status": "external",
+      "path": null,
+      "purpose": "Mendukung langkah forensik yang diizinkan dan mencatat hasil.",
+      "scope": "engineering",
+      "source": "https://github.com/morluto/rea"
+    },
+    {
+      "slug": "rebuttal-writing",
+      "status": "bundled",
+      "path": "skills/rebuttal-writing/SKILL.md",
+      "purpose": "Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer.",
+      "scope": "academic"
+    },
+    {
+      "slug": "remote-jobs",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyaring perusahaan remote, lalu memeriksa syarat lokasi dan lowongan langsung.",
+      "scope": "business",
+      "source": "https://github.com/remoteintech/remote-jobs"
+    },
+    {
+      "slug": "remotion-skills",
+      "status": "external",
+      "path": null,
+      "purpose": "Merancang komposisi video sebagai kode dan merendernya bila runtime tersedia.",
+      "scope": "web",
+      "source": "https://github.com/remotion-dev/skills"
+    },
+    {
+      "slug": "research-paper-writing",
+      "status": "bundled",
+      "path": "skills/research-paper-writing/SKILL.md",
+      "purpose": "Memeriksa struktur argumen dan hubungan antara klaim, bukti, serta pembahasan.",
+      "scope": "academic"
+    },
+    {
+      "slug": "reverse-engineer-anything",
+      "status": "external",
+      "path": null,
+      "purpose": "Memeriksa artefak insiden secara forensik dalam mandat yang jelas.",
+      "scope": "engineering",
+      "source": "https://github.com/NabilRFG12/Reverse-Engineer-anything"
+    },
+    {
+      "slug": "slide-generation",
+      "status": "bundled",
+      "path": "skills/slide-generation/SKILL.md",
+      "purpose": "Menyusun presentasi dari argumen, hasil, dan visual yang dapat diverifikasi.",
+      "scope": "creative"
+    },
+    {
+      "slug": "strix",
+      "status": "external",
+      "path": null,
+      "purpose": "Menguji keamanan target yang lingkup dan izin aksesnya telah disetujui.",
+      "scope": "engineering",
+      "source": "https://github.com/usestrix/strix"
+    },
+    {
+      "slug": "superdesign-skill",
+      "status": "external",
+      "path": null,
+      "purpose": "Menilai tata letak, token desain, dan konsistensi antarmuka.",
+      "scope": "web",
+      "source": "https://github.com/superdesigndev/superdesign-skill"
+    },
+    {
+      "slug": "superpowers",
+      "status": "external",
+      "path": null,
+      "purpose": "Menata perencanaan, implementasi, dan validasi perubahan kode.",
+      "scope": "engineering",
+      "source": "https://github.com/obra/superpowers"
+    },
+    {
+      "slug": "symbolic-equation",
+      "status": "bundled",
+      "path": "skills/symbolic-equation/SKILL.md",
+      "purpose": "Mencari kandidat persamaan yang dapat ditafsirkan dan diuji.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "table-generation",
+      "status": "bundled",
+      "path": "skills/table-generation/SKILL.md",
+      "purpose": "Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan.",
+      "scope": "evidence"
+    },
+    {
+      "slug": "token-monitor",
+      "status": "external",
+      "path": null,
+      "purpose": "Sumber status kuota tambahan untuk kebijakan anggaran.",
+      "scope": "all",
+      "source": "https://github.com/Javis603/token-monitor"
+    },
+    {
+      "slug": "tokenshield",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyatukan estimasi biaya, pembacaan penggunaan, dan batas cadangan berdasarkan data aktual.",
+      "scope": "all",
+      "integration_ids": [
+        "tokentracker",
+        "token-monitor"
+      ]
+    },
+    {
+      "slug": "tokentracker",
+      "status": "external",
+      "path": null,
+      "purpose": "Sumber data penggunaan lokal untuk kebijakan anggaran.",
+      "scope": "all",
+      "source": "https://github.com/xiufengsun/TokenTracker"
+    },
+    {
+      "slug": "unlimited-ocr",
+      "status": "external",
+      "path": null,
+      "purpose": "Memandu runtime OCR lokal dan indeks halaman.",
+      "scope": "all",
+      "source": "https://github.com/baidu/Unlimited-OCR"
+    },
+    {
+      "slug": "unlimited-ocr-2",
+      "status": "external",
+      "path": null,
+      "purpose": "Menyiapkan ekstraksi dokumen/gambar berhalaman bila bobot dan perangkat tersedia.",
+      "scope": "all",
+      "source": "https://huggingface.co/baidu/Unlimited-OCR-2"
+    },
+    {
+      "slug": "wise-judgment-and-sovereign-orchestrator",
+      "status": "bundled",
+      "path": "skills/wise-judgment-and-sovereign-orchestrator/SKILL.md",
+      "purpose": "Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val.",
+      "scope": "orchestration"
+    }
+  ],
+  "packs": {
+    "core": [
+      "autoresearch",
+      "brainstorming-research-ideas",
+      "chatgpt-hermes-portability-kit",
+      "creative-thinking-for-research",
+      "focus-my-energy",
+      "generate-fresh-ideas",
+      "get-more-perspectives",
+      "idea-generation",
+      "match-my-writing-style",
+      "parenting-6d-gad-mdd",
+      "persona-shizuka-yukino-shikaku",
+      "prep-for-meetings",
+      "prep-for-meetings-2",
+      "wise-judgment-and-sovereign-orchestrator"
+    ],
+    "filmmaking": [
+      "academic-plotting",
+      "auto-curiousity-for-film-making",
+      "filmmaking-videography-photography-s2",
+      "slide-generation"
+    ],
+    "business": [
+      "business-sage",
+      "cli-anything-business-sage"
+    ],
+    "thesis": [
+      "academic-plotting",
+      "auto-curiousity-for-film-making",
+      "autoresearch",
+      "backward-traceability",
+      "brainstorming-research-ideas",
+      "chatgpt-hermes-portability-kit",
+      "creative-thinking-for-research",
+      "data-analysis",
+      "deep-research",
+      "filmmaking-videography-photography-s2",
+      "firecrawl-competitive-intel",
+      "firecrawl-dashboard-reporting",
+      "firecrawl-deep-research",
+      "firecrawl-knowledge-base",
+      "firecrawl-research-papers",
+      "focus-my-energy",
+      "generate-fresh-ideas",
+      "get-more-perspectives",
+      "github-research",
+      "idea-generation",
+      "literature-review",
+      "math-reasoning",
+      "notebooklm-thinking-datascience",
+      "novelty-assessment",
+      "paper-context-resolver",
+      "paper-revision",
+      "paper-writing-section",
+      "prep-for-meetings",
+      "prep-for-meetings-2",
+      "rebuttal-writing",
+      "research-paper-writing",
+      "slide-generation",
+      "symbolic-equation",
+      "table-generation",
+      "wise-judgment-and-sovereign-orchestrator"
+    ],
+    "webdev": [
+      "analyze-project",
+      "explore-code",
+      "explore-run",
+      "evaluating-code-models"
+    ],
+    "cybersec": [
+      "analyze-project",
+      "evaluating-code-models",
+      "ai-research-reproduction"
+    ]
+  },
+  "routes": [
+    {
+      "request": "ideation",
+      "lead": "yukino",
+      "then": "shizuka"
+    },
+    {
+      "request": "research",
+      "lead": "val",
+      "then": "shizuka"
+    },
+    {
+      "request": "creative",
+      "lead": "kiki-chii",
+      "then": "shizuka"
+    },
+    {
+      "request": "engineering",
+      "lead": "shikaku",
+      "then": "shizuka"
+    }
+  ],
+  "antigravity": {
+    "role": "Target kerja Shikaku dengan dukungan kreatif Kiki-Chii",
+    "bundled_skills": [
+      "ai-research-explore",
+      "ai-research-reproduction",
+      "analyze-project",
+      "evaluating-code-models",
+      "evaluating-llms-harness",
+      "explore-code",
+      "explore-run",
+      "filmmaking-videography-photography-s2",
+      "langsmith-observability",
+      "match-my-writing-style",
+      "nemo-evaluator-sdk",
+      "parenting-6d-gad-mdd",
+      "persona-shizuka-yukino-shikaku",
+      "phoenix-observability"
+    ],
+    "external_skills": [
+      "addy-agent-skills",
+      "anti-slop",
+      "awesome-copilot",
+      "bang-motion",
+      "better-design",
+      "canvas-ui",
+      "cli-anything",
+      "cli-anything-catalog",
+      "cursify",
+      "cybersecurity-library",
+      "design-taste",
+      "goose",
+      "graphify",
+      "hermes-jev-skills",
+      "hermes-steel",
+      "higgsfield-websites",
+      "humanizer-en",
+      "humanizer-indonesia",
+      "mindrally-skills",
+      "motion-primitives",
+      "paper-shaders",
+      "playwright-best-practices",
+      "ponytail",
+      "rea",
+      "remotion-skills",
+      "reverse-engineer-anything",
+      "strix",
+      "superdesign-skill",
+      "superpowers",
+      "token-monitor",
+      "tokenshield",
+      "tokentracker",
+      "unlimited-ocr",
+      "unlimited-ocr-2"
+    ]
+  },
+  "academic_engines": [
+    {
+      "id": "gap-kebaruan",
+      "label": "Gap dan kebaruan",
+      "description": "Matriks studi, celah terukur, dan kandidat pertanyaan riset."
+    },
+    {
+      "id": "baca-jejak-bukti",
+      "label": "Bacaan dan jejak bukti",
+      "description": "Indeks halaman, kutipan yang diperiksa, dan peta klaim–bukti."
+    },
+    {
+      "id": "metode-analisis",
+      "label": "Metode dan analisis",
+      "description": "Rencana metode, uji asumsi, pemeriksaan kebocoran, serta hasil yang bisa diulang."
+    },
+    {
+      "id": "revisi-pembimbing",
+      "label": "Revisi pembimbing",
+      "description": "Daftar perubahan, bukti revisi, dan draf tanggapan untuk ditinjau."
+    },
+    {
+      "id": "tulis-sunting",
+      "label": "Tulis dan sunting akademik",
+      "description": "Draf per bagian, rujukan terverifikasi, serta revisi Indonesia atau Inggris."
+    },
+    {
+      "id": "ritme-kerja",
+      "label": "Ritme kerja",
+      "description": "Tugas mikro dan langkah berikut yang disepakati pengguna."
+    },
+    {
+      "id": "simulasi-sidang",
+      "label": "Simulasi sidang",
+      "description": "Narasi presentasi, pertanyaan uji, dan daftar bukti pendukung."
+    }
+  ],
+  "context_layers": [
+    {
+      "id": "peta-lokal",
+      "label": "Peta lokal",
+      "description": "Indeks dokumen dan struktur proyek yang dapat ditelusuri dari path sumber."
+    },
+    {
+      "id": "ekstraksi-berhalaman",
+      "label": "Ekstraksi berhalaman",
+      "description": "Potongan teks/OCR bertanda halaman serta mutu ekstraksi."
+    },
+    {
+      "id": "pilih-padatkan",
+      "label": "Pilih dan padatkan",
+      "description": "Peringkat potongan dan paket konteks dengan batas ukuran eksplisit."
+    },
+    {
+      "id": "memori-proyek",
+      "label": "Memori proyek",
+      "description": "Keputusan, sumber, dan pertanyaan terbuka yang disetujui untuk disimpan."
+    },
+    {
+      "id": "prefix-anggaran",
+      "label": "Prefix dan anggaran",
+      "description": "Instruksi stabil, estimasi biaya, dan pencatatan cache jika host mendukung."
+    }
+  ]
+}

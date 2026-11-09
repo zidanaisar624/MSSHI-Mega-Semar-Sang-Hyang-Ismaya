@@ -1,0 +1,667 @@
+{
+  "schema_version": 1,
+  "purpose": "External integration inventory for MSSHI Stage 1; documentation and routing only.",
+  "checked_on": "2026-11-09",
+  "defaults": {
+    "install_external": false,
+    "auto_open_on_boot": false,
+    "allow_remote_execution": false,
+    "copy_upstream_assets": false,
+    "jev_model_routing": false,
+    "provider_or_model_mutation": false
+  },
+  "cli_anything_bridge": "skills/persona-shizuka-yukino-shikaku/scripts/cli_anything_sovereign_hub.py",
+  "entries": [
+    {
+      "id": "higgsfield-skills",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "hosted_service_skills",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Pilih generasi gambar/video/foto produk atau brand kit dari treatment Kiki-Chii.",
+      "requires": "Skill lokal yang ditinjau, akun dan akses Higgsfield, anggaran, aset yang boleh dikirim.",
+      "license": "MIT untuk skill; akun, kredit dan hasil media tunduk pada ketentuan layanan."
+    },
+    {
+      "id": "remotion-skills",
+      "source": "https://github.com/remotion-dev/skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "skill_pack",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Pilih video yang memerlukan timing, rendering terprogram atau subtitle yang dapat diedit.",
+      "requires": "Skill yang relevan dan proyek Node/Remotion yang sudah dipilih.",
+      "license": "Lisensi paket skill perlu diperiksa pada revisi; lisensi runtime Remotion terpisah."
+    },
+    {
+      "id": "barty-motion-graphics",
+      "source": "https://github.com/Barty-Bart/motion-graphics",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "skill_pack",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Pilih iklan motion dari kode dan sound pass terstruktur.",
+      "requires": "Pilih skill dan aset yang dibutuhkan, cek runtime render dari resep.",
+      "license": "MIT; Geist OFL, ikon Lucide ISC, SFX tertentu CC0. Ikuti notice per aset."
+    },
+    {
+      "id": "charlie-motion-graphics",
+      "source": "https://github.com/charlie947/motion-graphics-skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "skill_pack",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Pilih motion peluncuran yang seluruh frame-nya dibangun dengan kode.",
+      "requires": "Tinjau resep skill dan siapkan runtime/render proyek yang dipilih.",
+      "license": "MIT."
+    },
+    {
+      "id": "bang-motion",
+      "source": "https://github.com/bangtutorial/bang-motion",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "skill_pack",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Pilih opener, promo, teks bergerak atau explainer HTML.",
+      "requires": "Browser untuk HTML. Node, Puppeteer dan FFmpeg bila perlu MP4.",
+      "license": "MIT; periksa izin aset dan CDN yang dipakai proyek."
+    },
+    {
+      "id": "humanizer-en",
+      "source": "https://github.com/blader/humanizer",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "writing",
+      "kind": "skill_pack",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Sunting tulisan Inggris sambil menjaga fakta, kutipan dan suara penulis.",
+      "requires": "Skill yang direview; salinan teks yang pengguna izinkan untuk disunting.",
+      "license": "MIT."
+    },
+    {
+      "id": "humanizer-indonesia",
+      "source": "https://github.com/adhiprib/humanizer-indonesia",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "writing",
+      "kind": "skill_pack",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Sunting tulisan Indonesia menurut ragam akademik, ajar atau semiformal.",
+      "requires": "Skill dan referensi suara milik sendiri. Cek opsi scripts/metrik.py pada revisi yang dipakai.",
+      "license": "MIT. Jangan sertakan sampel suara pribadi di repo publik."
+    },
+    {
+      "id": "anti-slop",
+      "source": "https://github.com/miqdadbadjuber/anti-slop",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "writing",
+      "kind": "skill_pack",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Tinjau kebiasaan generik pada prose, UI atau kode sesuai output yang diminta.",
+      "requires": "Pilih aturan untuk target proyek, bukan seluruh aturan lintas domain.",
+      "license": "MIT."
+    },
+    {
+      "id": "goose",
+      "source": "https://github.com/aaif-goose/goose",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "local_agent",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Delegasikan vibecoding pada workspace yang dipilih.",
+      "requires": "Goose lokal dan konfigurasi provider pengguna. Batasi direktori kerja dan izin tool.",
+      "license": "Apache-2.0. Kebijakan provider dan ekstensi terpisah."
+    },
+    {
+      "id": "superpowers",
+      "source": "https://github.com/obra/superpowers",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Gunakan planning, debugging dan verifikasi untuk perubahan bertahap.",
+      "requires": "Pilih skill atau plugin yang kompatibel dengan host. Tinjau hook bootstrap sebelum mengaktifkan plugin.",
+      "license": "MIT."
+    },
+    {
+      "id": "ponytail",
+      "source": "https://github.com/dietrichgebert/ponytail",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Tinjau solusi yang terlalu kompleks dan kurangi perubahan yang tidak perlu.",
+      "requires": "Skill/instruksi yang cocok dengan host dan aturan repo.",
+      "license": "MIT."
+    },
+    {
+      "id": "addy-agent-skills",
+      "source": "https://github.com/addyosmani/agent-skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Pilih playbook coding, delivery, atau review sesuai fase.",
+      "requires": "Salin skill yang diperlukan dengan referensinya; dependensi bervariasi per skill.",
+      "license": "MIT."
+    },
+    {
+      "id": "graphify",
+      "source": "https://github.com/Graphify-Labs/graphify",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "local_cli",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Petakan kode, dokumentasi dan dependensi sebelum membuka banyak file.",
+      "requires": "CLI dan parser lokal sesuai format. Periksa tahap mana yang memakai model/API.",
+      "license": "Repo menampilkan Apache-2.0 dan MIT; cek cakupan per file dan revisi."
+    },
+    {
+      "id": "mindrally-skills",
+      "source": "https://github.com/mindrally/skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Muat keahlian framework atau bahasa yang cocok dengan proyek.",
+      "requires": "Pilih satu playbook berdasarkan stack; cek runtime masing-masing.",
+      "license": "Apache-2.0."
+    },
+    {
+      "id": "playwright-best-practices",
+      "source": "https://github.com/currents-dev/playwright-best-practices-skill",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Rancang tes E2E dengan locator, isolasi dan debugging yang dapat diulang.",
+      "requires": "Proyek Playwright dan browser test. Gunakan lingkungan dan akun uji yang diizinkan.",
+      "license": "MIT."
+    },
+    {
+      "id": "awesome-copilot",
+      "source": "https://github.com/github/awesome-copilot",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Cari agen, instruksi atau skill Copilot yang sesuai dengan tugas.",
+      "requires": "Ambil entry yang relevan; terjemahkan fitur yang khusus Copilot bila host berbeda.",
+      "license": "MIT; periksa atribusi dan dependensi entry pilihan."
+    },
+    {
+      "id": "superdesign-skill",
+      "source": "https://github.com/superdesigndev/superdesign-skill",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Tetapkan gaya, alur antarmuka dan standar visual sebelum implementasi.",
+      "requires": "Skill yang dipilih, brief dan proyek UI. Fitur layanan perlu akun jika dipakai.",
+      "license": "MIT untuk repo; layanan eksternal terpisah."
+    },
+    {
+      "id": "better-design",
+      "source": "https://github.com/marvkr/better-design",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "mcp_and_registry",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Cari tema, token desain, atau komponen UI siap adaptasi.",
+      "requires": "Server MCP atau registry yang ditinjau. Pin versi; cek dependency dan lisensi komponen yang diambil.",
+      "license": "MIT untuk repo; cek dependensi dan merek pihak ketiga."
+    },
+    {
+      "id": "design-taste",
+      "source": "https://github.com/madebymustafa/design-taste",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "skill_pack",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Pilih identitas visual yang cocok dengan brief dan konsistensi antarlayar.",
+      "requires": "Gunakan satu profil genre atau pola yang relevan.",
+      "license": "MIT."
+    },
+    {
+      "id": "paper-shaders",
+      "source": "https://github.com/paper-design/shaders",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "project_dependency",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Gunakan shader canvas untuk elemen visual saat efek tersebut diperlukan.",
+      "requires": "Paket npm sesuai framework dan kemampuan GPU/WebGL. Uji fallback dan aksesibilitas.",
+      "license": "Apache-2.0."
+    },
+    {
+      "id": "canvas-ui",
+      "source": "https://github.com/DavidHDev/canvas-ui",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "project_dependency",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Gunakan komponen WebGL/canvas pada UI dengan anggaran performa yang sesuai.",
+      "requires": "Framework target dan browser WebGL. Baca batas Commons Clause sebelum distribusi.",
+      "license": "MIT + Commons Clause menurut upstream; pembatasan menjual library. Tidak disalin ke MSSHI."
+    },
+    {
+      "id": "motion-primitives",
+      "source": "https://github.com/ibelick/motion-primitives",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "project_dependency",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Pilih komponen animasi UI yang bisa disunting dan diuji.",
+      "requires": "Framework dan motion runtime yang diminta komponen. Tambahkan reduced-motion.",
+      "license": "MIT."
+    },
+    {
+      "id": "cursify",
+      "source": "https://github.com/ui-layouts/cursify",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "web_design",
+      "kind": "project_dependency",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "shikaku-nara",
+        "antigravity"
+      ],
+      "use_when": "Pilih efek kursor React/Next.js bila menambah nilai interaksi.",
+      "requires": "React/Next.js, tes pointer, sentuhan dan reduced-motion.",
+      "license": "Lisensi belum terkonfirmasi dari sumber yang dibaca. Jangan vendor sebelum dicek."
+    },
+    {
+      "id": "strix",
+      "source": "https://github.com/usestrix/strix",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "cybersec",
+      "kind": "security_runtime",
+      "pack": "cybersec",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Tinjau keamanan aplikasi hanya pada target dan metode yang telah diotorisasi.",
+      "requires": "Scope tertulis, target uji, runtime lokal sesuai docs, isolasi dan model milik pengguna bila perlu.",
+      "license": "Apache-2.0 untuk repo; platform cloud dan biaya terpisah."
+    },
+    {
+      "id": "cybersecurity-library",
+      "source": "https://github.com/mukul975/anthropic-cybersecurity-skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "cybersec",
+      "kind": "reference_catalog",
+      "pack": "cybersec",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Cari satu playbook sesuai hardening, forensik, deteksi atau audit.",
+      "requires": "Indeks lokal dan tools sesuai playbook; review scope sebelum eksekusi.",
+      "license": "Apache-2.0. Proyek komunitas; bukan produk resmi Anthropic."
+    },
+    {
+      "id": "reverse-engineer-anything",
+      "source": "https://github.com/NabilRFG12/Reverse-Engineer-anything?tab=readme-ov-file",
+      "source_type": "git",
+      "verification": "canonical repository URL checked without tab query; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "cybersec",
+      "kind": "forensic_reference",
+      "pack": "cybersec",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Rujuk alur pemeriksaan artefak pada scope yang disetujui.",
+      "requires": "Salinan artefak lokal, izin analisis, alat platform yang relevan. Periksa hubungan fork/revisi.",
+      "license": "MIT menurut LICENSE repo; lisensi debugger dan alat dekompilasi terpisah."
+    },
+    {
+      "id": "rea",
+      "source": "https://github.com/morluto/rea",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "cybersec",
+      "kind": "forensic_reference",
+      "pack": "cybersec",
+      "roles": [
+        "shikaku-nara"
+      ],
+      "use_when": "Gunakan upstream untuk analisis perilaku, file atau binary dalam scope.",
+      "requires": "Artefak milik pengguna/diotorisasi; pilih alat sesuai platform dan batas pemeriksaan.",
+      "license": "MIT; alat eksternal dapat berlisensi terpisah."
+    },
+    {
+      "id": "unlimited-ocr-2",
+      "source": "https://huggingface.co/baidu/Unlimited-OCR-2",
+      "source_type": "model-card",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "ocr",
+      "kind": "model_weights",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Baca PDF scan/buku/gambar panjang dalam jendela halaman, simpan jejak halaman.",
+      "requires": "Checkpoint yang dipin, runtime kompatibel, ruang disk/VRAM yang cukup dan review kode model.",
+      "license": "MIT menurut model card. Review custom code dan dependency sebelum menjalankan.",
+      "notes": "Model card mencontohkan Transformers dengan trust_remote_code. Review dan pin kode, jalankan hanya pada lingkungan lokal yang disetujui."
+    },
+    {
+      "id": "unlimited-ocr",
+      "source": "https://github.com/baidu/Unlimited-OCR",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "ocr",
+      "kind": "model_runtime",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Jalankan pipeline OCR untuk model yang sesuai versi dokumentasinya.",
+      "requires": "Dependensi dan hardware sesuai upstream. Cocokkan versi repo, checkpoint dan format PDF/gambar.",
+      "license": "MIT."
+    },
+    {
+      "id": "tokentracker",
+      "source": "https://github.com/xiufengsun/TokenTracker",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "budget",
+      "kind": "local_meter",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Ambil perkiraan pemakaian token dan biaya dari runtime yang didukung.",
+      "requires": "Aplikasi/sumber data yang tersedia. Rekonsiliasi dengan biaya provider dan saldo resmi bila ada.",
+      "license": "MIT. Catatan token bukan bukti saldo tersisa.",
+      "notes": "Sinyal untuk TokenShield v2.0; tidak diklaim sebagai integrasi API saldo yang telah berjalan."
+    },
+    {
+      "id": "token-monitor",
+      "source": "https://github.com/Javis603/token-monitor",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "budget",
+      "kind": "local_meter",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Gunakan data biaya atau aktivitas sesi sebagai masukan meter lokal.",
+      "requires": "Widget/ekspor atau API yang benar-benar tersedia; matikan sinkronisasi bila tidak dibutuhkan.",
+      "license": "MIT. Catatan biaya bukan jaminan saldo.",
+      "notes": "Sinyal untuk TokenShield v2.0; tidak diklaim sebagai integrasi API saldo yang telah berjalan."
+    },
+    {
+      "id": "hermes-jev-skills",
+      "source": "https://github.com/kerpopule/hermes-jev-skills",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "context",
+      "kind": "hermes_plugin",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Pilih kemampuan skill selection hanya bila versi host mendukung dan pengguna mengaktifkan.",
+      "requires": "Hermes kompatibel; konfirmasi nama opsi upstream. Routing model MSSHI dinonaktifkan.",
+      "license": "MIT. Jangan aktifkan mutasi model/provider melalui konfigurasi paket.",
+      "notes": "jev_model_routing:false merupakan intent di manifest MSSHI. Verifikasi skema versi upstream sebelum menyalin setelan ke Hermes."
+    },
+    {
+      "id": "cli-anything",
+      "source": "https://github.com/HKUDS/CLI-Anything",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "automation",
+      "kind": "local_cli_registry",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Cari harness resmi yang cocok, lalu rencanakan perintah dan jalur kerja.",
+      "requires": "Harness telah diaudit dan terpasang, aplikasi target, path yang dipilih pengguna.",
+      "license": "Apache-2.0 untuk framework. Lisensi aplikasi dan harness yang berbeda perlu diperiksa.",
+      "notes": "Bridge MSSHI hanya merencanakan/membuka aplikasi yang dipilih; bukan konektor akun atau pemasangan harness upstream."
+    },
+    {
+      "id": "cli-anything-catalog",
+      "source": "https://clianything.cc/",
+      "source_type": "registry-site",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "automation",
+      "kind": "reference_site",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Temukan harness dan dokumentasi upstream, kemudian tinjau commit dan lisensinya.",
+      "requires": "Akses web untuk pencarian dokumentasi. Registry tidak membuktikan tool sudah terpasang.",
+      "license": "Situs referensi. Lisensi framework tidak otomatis mencakup paket pihak ketiga."
+    },
+    {
+      "id": "hermes-steel",
+      "source": "https://github.com/steel-dev/hermes-steel",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "automation",
+      "kind": "hosted_browser_plugin",
+      "pack": "core",
+      "roles": [
+        "all"
+      ],
+      "use_when": "Pilih browser cloud hanya bila cakupan data dan biaya disetujui.",
+      "requires": "Plugin Hermes, konfigurasi browser eksplisit dan STEEL_API_KEY dari secret store lokal.",
+      "license": "MIT untuk plugin; layanan Steel, jaringan, proxy dan biaya terpisah."
+    },
+    {
+      "id": "gpt-researcher",
+      "source": "https://github.com/assafelovic/gpt-researcher",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "research",
+      "kind": "research_runtime",
+      "pack": "thesis",
+      "roles": [
+        "val"
+      ],
+      "use_when": "Susun riset mendalam dengan pencarian, ekstraksi dan daftar sumber.",
+      "requires": "Runtime dan penyedia model/pencarian yang dipilih. Batasi durasi dan biaya.",
+      "license": "Apache-2.0 untuk repo; API eksternal terpisah."
+    },
+    {
+      "id": "remote-jobs",
+      "source": "https://github.com/remoteintech/remote-jobs",
+      "source_type": "git",
+      "verification": "upstream-documentation-read; not runtime-tested",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "career",
+      "kind": "data_directory",
+      "pack": "business",
+      "roles": [
+        "shizuka-hiratsuka",
+        "val",
+        "kiki-chii",
+        "yukino-yukinoshita"
+      ],
+      "use_when": "Cari perusahaan remote, lalu verifikasi lowongan aktif di laman resmi perusahaan.",
+      "requires": "Akses direktori dan laman karier. Cek lokasi, zona waktu dan hak kerja per posisi.",
+      "license": "ISC menurut README upstream. Hak atas nama, merek, serta data pihak ketiga terpisah."
+    }
+  ]
+}

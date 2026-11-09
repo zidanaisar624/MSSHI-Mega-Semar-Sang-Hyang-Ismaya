@@ -1,0 +1,16 @@
+# Tujuh mesin pendamping skripsi, tesis, dan disertasi
+
+Ketujuh mesin adalah alur kerja berbasis skill. Aktifkan alur yang menjawab hambatan saat ini. Shizuka mengatur pekerjaan, Val menjaga mutu bukti, dan spesialis lain membantu pada bagian yang sesuai. Gunakan dokumen dan data yang boleh dibagikan. Periksa setiap kutipan, angka, gambar, dan rujukan sebelum penyerahan akademik.
+
+| Mesin | Masukan minimum dan langkah | Keluaran dan pemeriksaan |
+| --- | --- | --- |
+| 1. Gap dan kebaruan | Pertanyaan awal, bidang, rentang waktu, dan kriteria pencarian. Yukino menata pilihan. Val membandingkan studi dengan `literature-review` dan `novelty-assessment`. | Matriks studi berisi metode, data, hasil, keterbatasan, dan kandidat gap. Klaim kebaruan menyebut ruang lingkup pencarian dan studi terdekat. |
+| 2. Bacaan dan jejak bukti | PDF atau teks berizin, pertanyaan, serta aturan kutipan. Utamakan teks asli. Pakai OCR lokal yang tersedia untuk halaman pindai, lalu cek cuplikan terhadap halaman asli. | Indeks dokumen/halaman, kutipan yang telah diperiksa, catatan halaman gagal, serta peta klaim–sumber. Simpan versi dokumen. |
+| 3. Metode dan analisis | Rancangan studi, kamus data, hipotesis, serta kriteria evaluasi. Val memeriksa asumsi dengan `data-analysis` dan `math-reasoning`. Shikaku menguji ulang pipeline, Kiki-Chii menyiapkan grafik bila perlu. | Tabel uji asumsi, hasil, ukuran efek dan ketidakpastian bila relevan. Untuk ML, pemisahan data mendahului fitting, sampling, dan penyetelan. Catat versi, seed, dan perintah. |
+| 4. Revisi pembimbing | Catatan yang diizinkan, versi naskah, dan tenggat. Pecah masukan menjadi perubahan terukur menggunakan `paper-revision` dan `rebuttal-writing`. | Tabel masukan → bagian → perubahan → bukti, serta pertanyaan untuk catatan ambigu. Draf tanggapan ditinjau penulis sebelum dikirim. |
+| 5. Tulis dan sunting | Kerangka, catatan bukti, batas kata, dan gaya sitasi. Susun klaim–bukti–alasan, lalu sunting struktur dan bahasa. Pilih `humanizer-indonesia` untuk naskah Indonesia atau `humanizer-en` untuk Inggris bila tersedia. | Draf yang mempertahankan istilah, sitasi, dan makna. Periksa fakta, paraphrase, serta kepatuhan pada kebijakan kampus. Simpan riwayat revisi. |
+| 6. Ritme kerja | Pilih hasil kecil untuk sesi ini dan sesuaikan dengan waktu serta energi yang dilaporkan. Yukino menggunakan `focus-my-energy` dan pendekatan 6D untuk menata tugas. | Satu tugas 2–15 menit, definisi selesai, dan opsi lanjut atau jeda. Catat progres tanpa penilaian klinis atau asumsi pribadi. |
+| 7. Simulasi sidang | Slide, batas durasi, metode, dan kontribusi utama. Shizuka menyusun pertanyaan penguji; Val memeriksa bukti dan Kiki-Chii merapikan visual. | Latihan presentasi, daftar pertanyaan beserta rujukan slide/halaman, dan revisi untuk klaim yang lemah. Mulai dari kelemahan metode dan interpretasi hasil. |
+
+Pada S1, utamakan pertanyaan terukur dan analisis yang dapat diulang. Pada S2, bandingkan metode dan jelaskan dampak pilihan. Pada S3, buat catatan pembuktian kontribusi, pencarian novelty, dan keterbatasan lintas eksperimen. Gunakan [lima lapis konteks](LIMA_LAPIS_KONTEKS.md) untuk mengelola bukti yang panjang. [Audit bot dan skill](AUDIT_SKILLS_PER_BOT.md) menjelaskan mana yang tersedia di paket.
+

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "matrix": "configs/bot_role_and_skill_matrix.json",
+  "app_connection_policy": {
+    "auto_open_on_boot": false,
+    "auto_open_on_hermes_startup": false,
+    "lazy_execution_mode": "ON_DEMAND_ONLY",
+    "jev_model_routing": false
+  },
+  "triggers": [
+    {
+      "id": "session",
+      "activation": "instructions_only",
+      "rules": [
+        "Gunakan persona dan batas proyek untuk sesi berjalan."
+      ]
+    },
+    {
+      "id": "context",
+      "activation": "select_relevant_skills",
+      "rules": [
+        "Muat instruksi skill bundel yang sesuai topik dan peran.",
+        "Periksa ketersediaan rujukan eksternal sebelum dipakai."
+      ]
+    },
+    {
+      "id": "task",
+      "activation": "on_demand_only",
+      "rules": [
+        "Buka adapter hanya untuk tugas yang sedang diminta.",
+        "Pertahankan konfigurasi provider dan model host.",
+        "Periksa izin, kemampuan, dan biaya sebelum eksekusi."
+      ]
+    }
+  ],
+  "budget_policy": {
+    "reserve_usd": 1,
+    "automatic_billing_guarantee": false,
+    "estimated_or_stale_balance": "pause_paid_automation_and_report"
+  },
+  "incident_policy": {
+    "default": "explicit_authorization",
+    "preauthorized_emergency": "alert_then_act_within_scope_then_report",
+    "requires_preapproved_scope": true
+  },
+  "priority": [
+    "user_authorization",
+    "project_scope",
+    "available_capabilities",
+    "bot_routing"
+  ]
+}

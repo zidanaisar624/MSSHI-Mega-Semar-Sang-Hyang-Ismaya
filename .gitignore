@@ -1,0 +1,40 @@
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Local sandbox test outputs
+curiosity_ledger/sandbox_tests/*.mp4
+curiosity_ledger/sandbox_tests/*.wav
+curiosity_ledger/sandbox_tests/*.png
+__pycache__/
+*.pyc
+
+*.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.local.md
+*.local.json
+/local/
+/output/
+/my-msshi-team/
+.msshi-backup-*/
+.msshi-stage-*/
+*.zip
+curiosity_ledger/
+matrix-lokal.json
+msshi-agents/
+msshi-skills/
+references/voice-*-id.md
+!references/voice-namaanda-id.example.md
+
+# Release verification and update locks
+.msshi-check-*/
+.msshi-update-lock/
+.pytest_cache/
+*.p12
+*.pfx
