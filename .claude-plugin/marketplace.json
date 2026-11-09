@@ -1,0 +1,13 @@
+{
+  "name": "msshi-marketplace",
+  "owner": {
+    "name": "MSSHI project"
+  },
+  "plugins": [
+    {
+      "name": "msshi",
+      "source": "./",
+      "description": "MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage. A collection of bundled Agent Skills."
+    }
+  ]
+}

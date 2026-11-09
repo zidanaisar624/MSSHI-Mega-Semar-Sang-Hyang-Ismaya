@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage",
+  "format": "msshi-agent-skills-index",
+  "runtime_plugin": false,
+  "skill_root": "skills",
+  "team_matrix": "configs/bot_role_and_skill_matrix.json",
+  "install": {
+    "script": "scripts/install_msshi.py",
+    "platform": "openclaw",
+    "preview_is_default": true,
+    "modes": [
+      "solo",
+      "custom-bots",
+      "selective",
+      "muza-preset"
+    ]
+  },
+  "documentation": "https://docs.openclaw.ai/tools/skills",
+  "entrypoint": "SKILL.md"
+}

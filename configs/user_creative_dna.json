@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "example": true,
+  "owner_label": null,
+  "storage": {
+    "scope": "local-project",
+    "sync": false
+  },
+  "learning": {
+    "enabled": false,
+    "require_approval_per_change": true
+  },
+  "preferences": {
+    "genres": [],
+    "tone": [],
+    "visual_references": [],
+    "color_palettes": [],
+    "camera_and_lighting": [],
+    "editing_pace": [],
+    "sound_and_music": [],
+    "typography": [],
+    "delivery_formats": [],
+    "avoid": []
+  },
+  "decision_log": []
+}

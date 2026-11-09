@@ -1,0 +1,254 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MSSHI Read-Only Skill Catalogue",
+    "version": "1.0.0",
+    "description": "GET-only catalogue of public skill metadata and pack names. Replace the reserved HTTPS hostname with your own authenticated deployment of scripts/catalog_api.py before importing into GPT Builder."
+  },
+  "servers": [
+    {
+      "url": "https://msshi-catalog.example.invalid",
+      "description": "Placeholder; replace with your own public HTTPS host"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/skills": {
+      "get": {
+        "operationId": "listSkills",
+        "summary": "List bundled and external MSSHI skills",
+        "x-openai-isConsequential": false,
+        "parameters": [
+          {
+            "name": "pack",
+            "in": "query",
+            "required": false,
+            "description": "Optional pack ID. Discover pack IDs with listPacks.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Catalogue result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid pack parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pack, skill or route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/{slug}": {
+      "get": {
+        "operationId": "getSkill",
+        "summary": "Look up one MSSHI skill by slug",
+        "x-openai-isConsequential": false,
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Catalogue result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pack, skill or route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/packs": {
+      "get": {
+        "operationId": "listPacks",
+        "summary": "List the selectable MSSHI packs",
+        "x-openai-isConsequential": false,
+        "responses": {
+          "200": {
+            "description": "Catalogue result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pack, skill or route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Skill": {
+        "type": "object",
+        "required": [
+          "slug",
+          "status",
+          "purpose"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "bundled",
+              "external"
+            ]
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      },
+      "SkillList": {
+        "type": "object",
+        "required": [
+          "skills"
+        ],
+        "properties": {
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Skill"
+            }
+          }
+        }
+      },
+      "PackList": {
+        "type": "object",
+        "required": [
+          "packs"
+        ],
+        "properties": {
+          "packs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "skills"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "skills": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
