@@ -1,5 +1,5 @@
 {
-  "reviewed_at": "2026-11-12",
+  "reviewed_at": "2026-11-13",
   "entries": [
     {
       "id": "higgsfield-skills",
@@ -347,16 +347,14 @@
     {
       "id": "rea",
       "source": "https://github.com/morluto/rea",
-      "revision": "95ebd38d3faae013a7dbf85814efa30a5c6fcf56",
+      "revision": "a8527d43b8439476f5c9d1497315dfe7dd5e1f38",
       "license": "MIT",
       "copyright_lines": [
-        "Copyright (c) 2026 morluto",
-        "The above copyright notice and this permission notice shall be included in all",
-        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+        "Copyright (c) 2026 morluto"
       ],
-      "license_url": "https://raw.githubusercontent.com/morluto/rea/95ebd38d3faae013a7dbf85814efa30a5c6fcf56/LICENSE",
+      "license_url": "https://raw.githubusercontent.com/morluto/rea/a8527d43b8439476f5c9d1497315dfe7dd5e1f38/LICENSE",
       "license_sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b",
-      "status": "license_read"
+      "status": "primary-license-reviewed"
     },
     {
       "id": "unlimited-ocr-2",
@@ -603,6 +601,57 @@
       "model_revision": "1d952420fba87f3c6dee4f240de0f1a0fbc790e3",
       "status": "pinned-code-model-licenses-reviewed",
       "note": "TimesFM3 downloaded weights have separate noncommercial/nonproduction terms; not installed."
+    },
+    {
+      "id": "unslop",
+      "source": "https://github.com/heydamir/unslop",
+      "revision": "97daa3eb365670ea3f87ed85356cbfcee18105a5",
+      "license": "CC-BY-4.0",
+      "license_url": "https://github.com/heydamir/unslop/blob/97daa3eb365670ea3f87ed85356cbfcee18105a5/LICENSE",
+      "copyright_lines": [
+        "Damir Sokolovsky (@heydamir)"
+      ],
+      "status": "primary-license-reviewed",
+      "note": "Original contextual UI adaptation with upstream attribution. License normalized to exact upstream Git blob, not Windows checkout newline conversion.",
+      "license_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+    },
+    {
+      "id": "brag",
+      "source": "https://github.com/latent-spaces/brag",
+      "revision": "669ab9286aa28b6c3ee30e75f181ee74319d012a",
+      "license": "MIT; music and SFX have separate licenses and are not bundled",
+      "license_url": "https://github.com/latent-spaces/brag/blob/669ab9286aa28b6c3ee30e75f181ee74319d012a/LICENSE",
+      "copyright_lines": [
+        "2026 Shunit Haviv Hakimi"
+      ],
+      "status": "primary-license-reviewed",
+      "note": "Original MSSHI routing wrapper; upstream code/assets are not blanket relicensed under MIT."
+    },
+    {
+      "id": "scrapling",
+      "source": "https://github.com/D4Vinci/Scrapling",
+      "revision": "3a4bb5b0a008233c85269a0a38a6d08edd4ce329",
+      "license": "BSD-3-Clause",
+      "license_url": "https://github.com/D4Vinci/Scrapling/blob/3a4bb5b0a008233c85269a0a38a6d08edd4ce329/LICENSE",
+      "copyright_lines": [
+        "Copyright (c) 2024, Karim shoair"
+      ],
+      "status": "primary-license-reviewed",
+      "note": "Original MSSHI routing wrapper; upstream code/assets are not blanket relicensed under MIT.",
+      "license_sha256": "5c782ef0346e4fbfe0dc76fd435f181a0f1e4a1a7a6b13c169c6e74314ff5964"
+    },
+    {
+      "id": "harness2",
+      "source": "https://github.com/google-research/harness2",
+      "revision": "6868817518876de8fd170c6a8354daca273b6191",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/google-research/harness2/blob/6868817518876de8fd170c6a8354daca273b6191/LICENSE",
+      "copyright_lines": [
+        "2026 Google LLC"
+      ],
+      "status": "primary-license-reviewed",
+      "note": "Original MSSHI routing wrapper; upstream code/assets are not blanket relicensed under MIT.",
+      "license_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
     }
   ],
   "additional_runtime_terms": {

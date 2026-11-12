@@ -2,15 +2,15 @@
 
 Sumber: [matriks bot](../configs/bot_role_and_skill_matrix.json). Jalankan `python scripts/render_bot_audit.py` setelah mengubah matriks.
 
-Katalog berisi **58 skill bundel** dan **59 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
+Katalog berisi **62 skill bundel** dan **59 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
 
 | Bot | Mandat | Bundel | Rujukan eksternal |
 | --- | --- | ---: | ---: |
 | Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 26 | 11 |
 | Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 22 | 11 |
-| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 31 | 12 |
-| Kiki-Chii | One-Woman Creative Studio | 15 | 47 |
-| Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 18 | 31 |
+| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 34 | 12 |
+| Kiki-Chii | One-Woman Creative Studio | 17 | 47 |
+| Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 21 | 31 |
 
 ## Yukino Yukinoshita
 
@@ -133,6 +133,9 @@ Bukti, metode, batas kepastian, serta dossier untuk Shizuka. [Baca persona](../c
 | [`table-generation`](../skills/table-generation/SKILL.md) | Bundel | Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan. |
 | [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md) | Bundel | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. |
 | [`timesfm-forecasting`](../skills/timesfm-forecasting/SKILL.md) | Bundel | Prediksi deret waktu numerik lokal dengan TimesFM 2.5, validasi data dan evaluasi terpisah. |
+| [`unslop`](../skills/unslop/SKILL.md) | Bundel | Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi. |
+| [`scrapling`](../skills/scrapling/SKILL.md) | Bundel | Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi. |
+| [`harness2`](../skills/harness2/SKILL.md) | Bundel | Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`cli-anything`](https://github.com/HKUDS/CLI-Anything) | Eksternal | Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif. |
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
@@ -167,6 +170,8 @@ Konsep, produksi kreatif, identitas visual, dan penyerahan aset. [Baca persona](
 | [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md) | Bundel | Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot. |
 | [`slide-generation`](../skills/slide-generation/SKILL.md) | Bundel | Menyusun presentasi dari argumen, hasil, dan visual yang dapat diverifikasi. |
 | [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md) | Bundel | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. |
+| [`unslop`](../skills/unslop/SKILL.md) | Bundel | Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi. |
+| [`brag`](../skills/brag/SKILL.md) | Bundel | Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | `artcraft-cadcraft` | Eksternal | Nama adapter opsional dalam rancangan ArtCraft untuk rancangan teknis. |
 | `artcraft-craftanything` | Eksternal | Nama adapter opsional dalam rancangan ArtCraft untuk otomasi kreatif lintas alat. |
@@ -239,6 +244,9 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 | [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md) | Bundel | Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot. |
 | [`phoenix-observability`](../skills/phoenix-observability/SKILL.md) | Bundel | Memandu tracing dan evaluasi Phoenix tanpa memindahkan data di luar lingkup. |
 | [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md) | Bundel | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. |
+| [`unslop`](../skills/unslop/SKILL.md) | Bundel | Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi. |
+| [`scrapling`](../skills/scrapling/SKILL.md) | Bundel | Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi. |
+| [`harness2`](../skills/harness2/SKILL.md) | Bundel | Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia. |
 | [`addy-agent-skills`](https://github.com/addyosmani/agent-skills) | Eksternal | Menerapkan praktik engineering pada implementasi dan review. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`awesome-copilot`](https://github.com/github/awesome-copilot) | Eksternal | Memilih contoh instruksi dan praktik pengembangan yang dapat diadaptasi. |
@@ -260,7 +268,7 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 | [`paper-shaders`](https://github.com/paper-design/shaders) | Eksternal | Menyiapkan efek shader yang terukur dan sesuai perangkat. |
 | [`playwright-best-practices`](https://github.com/currents-dev/playwright-best-practices-skill) | Eksternal | Menguji jalur pengguna dan memperbaiki kestabilan tes E2E. |
 | [`ponytail`](https://github.com/dietrichgebert/ponytail) | Eksternal | Mengurangi kerumitan solusi dan memilih perubahan yang sesuai kebutuhan. |
-| [`rea`](https://github.com/morluto/rea) | Eksternal | Mendukung langkah forensik yang diizinkan dan mencatat hasil. |
+| [`rea`](https://github.com/morluto/rea) | Eksternal | Opsional: analisis reverse engineering lokal melalui CLI dengan bukti dan batas provider native. |
 | [`remotion-skills`](https://github.com/remotion-dev/skills) | Eksternal | Merancang komposisi video sebagai kode dan merendernya bila runtime tersedia. |
 | [`reverse-engineer-anything`](https://github.com/NabilRFG12/Reverse-Engineer-anything) | Eksternal | Memeriksa artefak insiden secara forensik dalam mandat yang jelas. |
 | [`strix`](https://github.com/usestrix/strix) | Eksternal | Menguji keamanan target yang lingkup dan izin aksesnya telah disetujui. |
@@ -282,10 +290,12 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 - **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val** — [`backward-traceability`](../skills/backward-traceability/SKILL.md), [`chatgpt-hermes-portability-kit`](../skills/chatgpt-hermes-portability-kit/SKILL.md), [`deep-research`](../skills/deep-research/SKILL.md), [`literature-review`](../skills/literature-review/SKILL.md), [`notebooklm-thinking-datascience`](../skills/notebooklm-thinking-datascience/SKILL.md), [`novelty-assessment`](../skills/novelty-assessment/SKILL.md), [`paper-revision`](../skills/paper-revision/SKILL.md), [`paper-writing-section`](../skills/paper-writing-section/SKILL.md), [`rebuttal-writing`](../skills/rebuttal-writing/SKILL.md), [`research-paper-writing`](../skills/research-paper-writing/SKILL.md)
 - **Kiki-Chii, Shikaku Nara** — [`bang-motion`](https://github.com/bangtutorial/bang-motion), [`better-design`](https://github.com/marvkr/better-design), [`canvas-ui`](https://github.com/DavidHDev/canvas-ui), [`cursify`](https://github.com/ui-layouts/cursify), [`design-taste`](https://github.com/madebymustafa/design-taste), [`higgsfield-websites`](https://github.com/higgsfield-ai/skills), [`motion-primitives`](https://github.com/ibelick/motion-primitives), [`paper-shaders`](https://github.com/paper-design/shaders), [`remotion-skills`](https://github.com/remotion-dev/skills), [`superdesign-skill`](https://github.com/superdesigndev/superdesign-skill)
 - **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val, Kiki-Chii** — [`business-sage`](../skills/business-sage/SKILL.md), [`cli-anything-business-sage`](../skills/cli-anything-business-sage/SKILL.md), [`remote-jobs`](https://github.com/remoteintech/remote-jobs)
+- **Val, Shikaku Nara** — [`harness2`](../skills/harness2/SKILL.md), [`scrapling`](../skills/scrapling/SKILL.md)
+- **Val, Kiki-Chii, Shikaku Nara** — [`unslop`](../skills/unslop/SKILL.md)
 
 ### Khusus satu bot
 
-- **Kiki-Chii** — [`academic-plotting`](../skills/academic-plotting/SKILL.md), `artcraft-cadcraft`, `artcraft-craftanything`, `artcraft-deckcraft`, `artcraft-designcraft`, `artcraft-effectcraft`, `artcraft-figcraft`, `artcraft-filmcraft`, `artcraft-gridcraft`, `artcraft-lightcraft`, `artcraft-pdfcraft`, `artcraft-photocraft`, `artcraft-solidcraft`, `artcraft-soundcraft`, `artcraft-vectorcraft`, `artcraft-wordcraft`, [`auto-curiousity-for-film-making`](../skills/auto-curiousity-for-film-making/SKILL.md), [`barty-motion-graphics`](https://github.com/Barty-Bart/motion-graphics), `blender-mcp`, [`charlie-motion-graphics`](https://github.com/charlie947/motion-graphics-skills), [`filmmaking-videography-photography-s2`](../skills/filmmaking-videography-photography-s2/SKILL.md), [`higgsfield-brandkit`](https://github.com/higgsfield-ai/skills), [`higgsfield-faceless-video`](https://github.com/higgsfield-ai/skills), [`higgsfield-generate`](https://github.com/higgsfield-ai/skills), [`higgsfield-marketplace-cards`](https://github.com/higgsfield-ai/skills), [`higgsfield-product-photoshoot`](https://github.com/higgsfield-ai/skills), [`higgsfield-skills`](../skills/higgsfield-skills/SKILL.md), [`higgsfield-soul-id`](https://github.com/higgsfield-ai/skills), [`higgsfield-video-explainer`](https://github.com/higgsfield-ai/skills), [`higgsfield-youtube-thumbnail`](https://github.com/higgsfield-ai/skills), [`motion-graphics-suite`](../skills/motion-graphics-suite/SKILL.md), [`slide-generation`](../skills/slide-generation/SKILL.md)
+- **Kiki-Chii** — [`academic-plotting`](../skills/academic-plotting/SKILL.md), `artcraft-cadcraft`, `artcraft-craftanything`, `artcraft-deckcraft`, `artcraft-designcraft`, `artcraft-effectcraft`, `artcraft-figcraft`, `artcraft-filmcraft`, `artcraft-gridcraft`, `artcraft-lightcraft`, `artcraft-pdfcraft`, `artcraft-photocraft`, `artcraft-solidcraft`, `artcraft-soundcraft`, `artcraft-vectorcraft`, `artcraft-wordcraft`, [`auto-curiousity-for-film-making`](../skills/auto-curiousity-for-film-making/SKILL.md), [`barty-motion-graphics`](https://github.com/Barty-Bart/motion-graphics), `blender-mcp`, [`brag`](../skills/brag/SKILL.md), [`charlie-motion-graphics`](https://github.com/charlie947/motion-graphics-skills), [`filmmaking-videography-photography-s2`](../skills/filmmaking-videography-photography-s2/SKILL.md), [`higgsfield-brandkit`](https://github.com/higgsfield-ai/skills), [`higgsfield-faceless-video`](https://github.com/higgsfield-ai/skills), [`higgsfield-generate`](https://github.com/higgsfield-ai/skills), [`higgsfield-marketplace-cards`](https://github.com/higgsfield-ai/skills), [`higgsfield-product-photoshoot`](https://github.com/higgsfield-ai/skills), [`higgsfield-skills`](../skills/higgsfield-skills/SKILL.md), [`higgsfield-soul-id`](https://github.com/higgsfield-ai/skills), [`higgsfield-video-explainer`](https://github.com/higgsfield-ai/skills), [`higgsfield-youtube-thumbnail`](https://github.com/higgsfield-ai/skills), [`motion-graphics-suite`](../skills/motion-graphics-suite/SKILL.md), [`slide-generation`](../skills/slide-generation/SKILL.md)
 - **Shikaku Nara** — [`addy-agent-skills`](https://github.com/addyosmani/agent-skills), [`ai-research-explore`](../skills/ai-research-explore/SKILL.md), [`ai-research-reproduction`](../skills/ai-research-reproduction/SKILL.md), [`analyze-project`](../skills/analyze-project/SKILL.md), [`antigravity-webdev-cybersec`](../skills/antigravity-webdev-cybersec/SKILL.md), [`awesome-copilot`](https://github.com/github/awesome-copilot), [`cybersecurity-library`](https://github.com/mukul975/anthropic-cybersecurity-skills), [`evaluating-code-models`](../skills/evaluating-code-models/SKILL.md), [`evaluating-llms-harness`](../skills/evaluating-llms-harness/SKILL.md), [`explore-code`](../skills/explore-code/SKILL.md), [`explore-run`](../skills/explore-run/SKILL.md), [`goose`](https://github.com/aaif-goose/goose), [`langsmith-observability`](../skills/langsmith-observability/SKILL.md), [`mindrally-skills`](https://github.com/mindrally/skills), [`nemo-evaluator-sdk`](../skills/nemo-evaluator-sdk/SKILL.md), [`phoenix-observability`](../skills/phoenix-observability/SKILL.md), [`playwright-best-practices`](https://github.com/currents-dev/playwright-best-practices-skill), [`ponytail`](https://github.com/dietrichgebert/ponytail), [`rea`](https://github.com/morluto/rea), [`reverse-engineer-anything`](https://github.com/NabilRFG12/Reverse-Engineer-anything), [`strix`](https://github.com/usestrix/strix), [`superpowers`](https://github.com/obra/superpowers)
 - **Sensei Shizuka Hiratsuka** — [`autoresearch`](../skills/autoresearch/SKILL.md), [`get-more-perspectives`](../skills/get-more-perspectives/SKILL.md), [`wise-judgment-and-sovereign-orchestrator`](../skills/wise-judgment-and-sovereign-orchestrator/SKILL.md)
 - **Yukino Yukinoshita** — [`brainstorming-research-ideas`](../skills/brainstorming-research-ideas/SKILL.md), [`creative-thinking-for-research`](../skills/creative-thinking-for-research/SKILL.md), [`focus-my-energy`](../skills/focus-my-energy/SKILL.md), [`generate-fresh-ideas`](../skills/generate-fresh-ideas/SKILL.md), [`idea-generation`](../skills/idea-generation/SKILL.md), [`prep-for-meetings`](../skills/prep-for-meetings/SKILL.md), [`prep-for-meetings-2`](../skills/prep-for-meetings-2/SKILL.md)

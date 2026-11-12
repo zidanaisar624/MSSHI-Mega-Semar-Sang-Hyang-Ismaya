@@ -43,3 +43,9 @@ Voice, local models, scheduled memory proposals, and command execution require i
 ## Val and TimesFM
 
 For numeric time-series forecasts, load `skills/timesfm-forecasting/SKILL.md` and delegate research/evaluation to Val. The optional CPU runtime/model lives outside skills and does not replace the conversational provider. Start with `msshi timesfm status`; forecast only on an active task with validated data. See [TimesFM setup](docs/TIMESFM.md), [Steel approval policy](docs/STEEL_BROWSER_POLICY.md), [web service connections](docs/SERVICE_CONNECTIONS.md) and [managed updates](docs/MANAGED_UPDATES.md).
+
+## v3.1 contextual integrations
+
+Read the corresponding skill only when relevant: `unslop` for UI cleanup (Kiki/Val/Shikaku), `brag` for launch videos (Kiki), `scrapling` for local HTML extraction (Val/Shikaku), `harness2` for deterministic harness evaluation/proposals (Val/Shikaku). Preserve personas/models and human review. No automatic live-harness promotion, paid benchmark calls, browser startup, or personal-session transfer. Dependencies are separate from portable knowledge files; ChatGPT web Knowledge upload does not install Python/Node runtimes. See docs/V3_1_UPDATE.md.
+
+REA is separate and disabled by default. Offer optional/rea only after explicit selection; ordinary MSSHI installation does not enable it. Use the default-off guidance in INSTALL_FOR_AGENTS.md.

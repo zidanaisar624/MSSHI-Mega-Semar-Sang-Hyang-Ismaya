@@ -105,3 +105,7 @@ msshi trim --status --profile default
 ```
 
 Ganti `default` dengan ID profil bot yang diperiksa. Status membaca penghitung agregat tanpa chat atau panggilan model. Pemrosesan file khusus tersedia sebagai opsi terpisah, `msshi trim --input request.json --output request-ringkas.json`.
+
+## Tambahan v3.1
+
+`msshi brag doctor` memeriksa alur video; `msshi scrapling status` memeriksa parser; `msshi harness2 status` memeriksa demo harness. Subperintah setup/pemakaian ada pada [panduan v3.1](V3_1_UPDATE.md). Unslop adalah skill instruksi UI sesuai konteks dan tidak membutuhkan server/CLI baru.

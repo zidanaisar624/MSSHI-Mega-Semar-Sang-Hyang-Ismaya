@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "integration": "Original MSSHI BRAG instructions and Python helper; upstream source and media are not redistributed",
+  "scope": ["kiki-chii"],
+  "upstream": {
+    "repository": "https://github.com/latent-spaces/brag",
+    "commit": "669ab9286aa28b6c3ee30e75f181ee74319d012a",
+    "code_license": "MIT",
+    "copyright": "Copyright (c) 2026 Shunit Haviv Hakimi",
+    "model_weights": "none supplied by the BRAG repository or installed by this integration",
+    "music": "Separate CC BY 4.0 notice for Sascha Ende tracks; not bundled",
+    "sfx": "README credits Kenney; asset-level license not independently established; not bundled"
+  },
+  "renderer": {
+    "npm_package": "hyperframes",
+    "version": "0.9.38",
+    "npm_integrity": "sha512-3KC2Nrl5IduLXVdEJhaS5BP5rAX48nIjioaNxRkNGyVsTIffs5pl/0hJFFksI71DreR+2i0DrIWhfluzQMrWcA==",
+    "repository": "https://github.com/heygen-com/hyperframes",
+    "npm_git_head": "1ec03c4e190fb7262c8ad65884dfd576a81f1ebd",
+    "package_license": "Apache-2.0",
+    "minimum_node": "22",
+    "install_lifecycle_scripts": false,
+    "vendored_gsap": "Separate GSAP terms apply; keep within the private installed runtime and review before redistribution",
+    "paid_services": "Not invoked; local rendering does not enable or verify cloud/generation services"
+  }
+}

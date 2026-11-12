@@ -138,3 +138,7 @@ Skills CLI requires Node.js 22.20 or newer. A plain `npx skills add zidanaisar62
 | `msshi select` | Choose packs or individual skills and review the change before applying. |
 
 Choose one installation manager per destination. Native marketplaces and Skills CLI track their own installs, while MSSHI tracks the targets registered with its setup or selection wizard. If you have custom skill files in a destination, preserve a copy before reinstalling there with Skills CLI.
+
+## REA is optional and OFF by default
+
+The REA wrapper lives in `optional/rea`, outside the standard `skills` directory. Do not interpret a request to install MSSHI or all standard packs as permission to enable REA. Offer it as a separate default-No choice; use `--with-rea` or `msshi optional enable rea --target-dir ...` only after the user explicitly selects it. Runtime setup never authorizes MCP/global agent registration, model changes, personal browser sessions, or paid native engines.

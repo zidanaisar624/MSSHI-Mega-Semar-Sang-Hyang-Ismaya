@@ -94,5 +94,61 @@
     "runtime": "isolated_local_cpu",
     "daemon": false,
     "cloud_inference": false
+  },
+  "v3_1_contextual_policy": {
+    "unslop": {
+      "roles": [
+        "kiki-chii",
+        "val",
+        "shikaku"
+      ],
+      "activation": "on_relevant_task",
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi."
+    },
+    "brag": {
+      "roles": [
+        "kiki-chii"
+      ],
+      "activation": "on_relevant_task",
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia."
+    },
+    "scrapling": {
+      "roles": [
+        "val",
+        "shikaku"
+      ],
+      "activation": "on_relevant_task",
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi."
+    },
+    "harness2": {
+      "roles": [
+        "val",
+        "shikaku"
+      ],
+      "activation": "on_relevant_task",
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
+      "live_harness_promotion": false,
+      "paid_benchmarks_default": false,
+      "human_review_required": true
+    },
+    "rea": {
+      "roles": [
+        "shikaku"
+      ],
+      "activation": "on_authorized_reverse_engineering_task_after_explicit_enable",
+      "public_default": false,
+      "auto_open_on_boot": false,
+      "mcp_registration": false,
+      "preferred_over_legacy_generic_rea_setup": true,
+      "provider_model_mutation": false
+    }
   }
 }

@@ -25,7 +25,7 @@ import tempfile
 import time
 import uuid
 
-VERSION = "3.0.0"
+VERSION = "3.1.0"
 DISABLED_MCP = {
     "blender", "wordcraft", "lightcraft", "cadcraft", "craftanything",
     "deckcraft", "designcraft", "effectcraft", "figcraft", "filmcraft",

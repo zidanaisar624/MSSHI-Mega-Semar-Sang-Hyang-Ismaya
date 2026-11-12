@@ -165,7 +165,10 @@
         "symbolic-equation",
         "table-generation",
         "unlimited-ocr-2",
-        "timesfm-forecasting"
+        "timesfm-forecasting",
+        "unslop",
+        "scrapling",
+        "harness2"
       ],
       "optional_skills": [
         "anti-slop",
@@ -218,7 +221,9 @@
         "parenting-6d-gad-mdd",
         "persona-shizuka-yukino-shikaku",
         "slide-generation",
-        "unlimited-ocr-2"
+        "unlimited-ocr-2",
+        "unslop",
+        "brag"
       ],
       "optional_skills": [
         "anti-slop",
@@ -305,7 +310,10 @@
         "parenting-6d-gad-mdd",
         "persona-shizuka-yukino-shikaku",
         "phoenix-observability",
-        "unlimited-ocr-2"
+        "unlimited-ocr-2",
+        "unslop",
+        "scrapling",
+        "harness2"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -1137,9 +1145,12 @@
       "slug": "rea",
       "status": "external",
       "path": null,
-      "purpose": "Mendukung langkah forensik yang diizinkan dan mencatat hasil.",
+      "purpose": "Opsional: analisis reverse engineering lokal melalui CLI dengan bukti dan batas provider native.",
       "scope": "engineering",
-      "source": "https://github.com/morluto/rea"
+      "source": "https://github.com/morluto/rea",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/rea/SKILL.md",
+      "public_default": false
     },
     {
       "slug": "rebuttal-writing",
@@ -1289,6 +1300,54 @@
       "integration_ids": [
         "timesfm"
       ]
+    },
+    {
+      "slug": "unslop",
+      "status": "bundled",
+      "path": "skills/unslop/SKILL.md",
+      "purpose": "Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi.",
+      "scope": "contextual",
+      "source": "https://github.com/heydamir/unslop",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "unslop"
+      ]
+    },
+    {
+      "slug": "brag",
+      "status": "bundled",
+      "path": "skills/brag/SKILL.md",
+      "purpose": "Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia.",
+      "scope": "contextual",
+      "source": "https://github.com/latent-spaces/brag",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "brag"
+      ]
+    },
+    {
+      "slug": "scrapling",
+      "status": "bundled",
+      "path": "skills/scrapling/SKILL.md",
+      "purpose": "Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi.",
+      "scope": "contextual",
+      "source": "https://github.com/D4Vinci/Scrapling",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "scrapling"
+      ]
+    },
+    {
+      "slug": "harness2",
+      "status": "bundled",
+      "path": "skills/harness2/SKILL.md",
+      "purpose": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
+      "scope": "contextual",
+      "source": "https://github.com/google-research/harness2",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "harness2"
+      ]
     }
   ],
   "packs": {
@@ -1318,7 +1377,9 @@
       "filmmaking-videography-photography-s2",
       "higgsfield-skills",
       "motion-graphics-suite",
-      "slide-generation"
+      "slide-generation",
+      "unslop",
+      "brag"
     ],
     "business": [
       "business-sage",
@@ -1360,14 +1421,20 @@
       "symbolic-equation",
       "table-generation",
       "wise-judgment-and-sovereign-orchestrator",
-      "timesfm-forecasting"
+      "timesfm-forecasting",
+      "unslop",
+      "scrapling",
+      "harness2"
     ],
     "webdev": [
       "analyze-project",
       "antigravity-webdev-cybersec",
       "evaluating-code-models",
       "explore-code",
-      "explore-run"
+      "explore-run",
+      "unslop",
+      "scrapling",
+      "harness2"
     ],
     "cybersec": [
       "ai-research-reproduction",

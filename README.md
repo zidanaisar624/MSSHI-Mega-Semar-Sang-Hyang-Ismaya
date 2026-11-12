@@ -4,7 +4,7 @@
 
 [![MuZA × Google Gemini × OpenAI ChatGPT × Google Antigravity](https://img.shields.io/badge/Project%20credits-MuZA%20%C3%97%20Gemini%20%C3%97%20ChatGPT-5648b3)](docs/PROVENANCE.md#kredit-kolaborasi)
 
-**MSSHI v3.0 adalah Multi-Agent Skill Suite & Persona Framework lintas platform.** Isinya 50 skill inti berbentuk direktori `SKILL.md`, delapan wrapper integrasi, preset satu atau lima peran, dan CLI opsional untuk mengelola pemasangan. Claude Code bisa membacanya sebagai plugin. ChatGPT web memakai panduan dan instruksi portabel. Aplikasi eksternal, akun, model, dan kredit disiapkan sesuai alat yang dipilih.
+**MSSHI v3.1 adalah Multi-Agent Skill Suite & Persona Framework lintas platform.** Isinya 50 skill inti berbentuk direktori `SKILL.md`, dua belas wrapper integrasi, preset satu atau lima peran, dan CLI opsional untuk mengelola pemasangan. Claude Code bisa membacanya sebagai plugin. ChatGPT web memakai panduan dan instruksi portabel. Aplikasi eksternal, akun, model, dan kredit disiapkan sesuai alat yang dipilih.
 
 **v3.0 menambahkan Hermes Ultimate Optimizer.** Migrasi profil, tiket tugas aplikasi, pemulihan Desktop, dan integrasi opsional bekerja lewat CLI lokal. Hasil nyata dan prasyarat runtime dicatat dalam audit. Mulai melalui MULAI_DI_SINI_PEMULA.bat atau baca [panduan migrasi v3](docs/V3_MIGRATION.md).
 
@@ -12,7 +12,7 @@ Pengguna v2.1 cukup menjalankan UPDATE_OTOMATIS_KE_V3.bat dari paket v3 sekali a
 
 Migrasi ini menghapus MCP aplikasi desktop serta mengganti MCP lokal Hersona/llmtrim dengan CLI. GitLab dan Tinyfish tetap menjadi konektor MCP yang mengakses layanan web. [Hersona CLI](docs/HERSONA_CLI.md) dipanggil untuk tugas persona yang relevan dan menghasilkan katalog atau draf; persona native Hermes dan `SOUL.md` tetap menjadi sumber perilaku bot.
 
-[Plugin Llmtrim otomatis](hermes_plugins/msshi-auto-trim/README.md) memakai hook native `transform_tool_result` untuk menjalankan `llmtrim compress` pada hasil tool JSON valid yang cukup besar. Hasil ringkas dipakai hanya jika data JSON tetap persis sama; kegagalan mempertahankan hasil asli. Percakapan, kode, file, konfigurasi, persona, dan error dilewati. Periksa penghitung tanpa chat dengan `msshi trim --status --profile default` dan ganti `default` dengan ID profil bot yang diperiksa. Penghematan bergantung pada keluaran yang memenuhi syarat. Perintah file `msshi trim --input request.json --output request-ringkas.json` tersedia sebagai opsi tambahan. Kedua utilitas eksternal ini terpisah dari inventaris 45 sumber dan tidak dibundel sebagai kode upstream.
+[Plugin Llmtrim otomatis](hermes_plugins/msshi-auto-trim/README.md) memakai hook native `transform_tool_result` untuk menjalankan `llmtrim compress` pada hasil tool JSON valid yang cukup besar. Hasil ringkas dipakai hanya jika data JSON tetap persis sama; kegagalan mempertahankan hasil asli. Percakapan, kode, file, konfigurasi, persona, dan error dilewati. Periksa penghitung tanpa chat dengan `msshi trim --status --profile default` dan ganti `default` dengan ID profil bot yang diperiksa. Penghematan bergantung pada keluaran yang memenuhi syarat. Perintah file `msshi trim --input request.json --output request-ringkas.json` tersedia sebagai opsi tambahan. Kedua utilitas eksternal ini terpisah dari inventaris 49 sumber dan tidak dibundel sebagai kode upstream.
 
 **Integrasi v3:** [TimesFM untuk Val](docs/TIMESFM.md) menambahkan peramalan numerik lokal melalui `msshi timesfm`. [Steel](docs/STEEL_BROWSER_POLICY.md) menjadi jalur browsing umum dengan guard tanpa fallback diam-diam; koneksi memerlukan endpoint/API key. Browser personal perlu persetujuan situs, akun, tujuan dan cakupan. [GitLab/Tinyfish](docs/SERVICE_CONNECTIONS.md) memakai MCP web dan memisahkan status registrasi, discovery, autentikasi, dan operasi. BrightData tetap opsional/nonaktif tanpa kredensial.
 
@@ -48,15 +48,29 @@ curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang
 
 Installer PowerShell atau Bash memasang perintah `msshi` untuk akun pengguna dan membuka wizard setup. Siapkan Git dan Python 3.10+. Buka terminal baru bila perintah belum muncul. Jalur `npx` memerlukan Node.js 22.20+ dan npm. Perintah berbasis URL `main` mengambil versi yang sudah dipublikasikan di GitHub. Untuk memasang salinan lokal, jalankan installer dari paket tersebut. Metadata rilis dicatat di `VERSION.json`.
 
-`msshi check` atau `msshi status` membandingkan versi, menampilkan changelog, dan merangkum rute aplikasi. `msshi update` memperbarui pemasangan terkelola dan cache 45 sumber. `msshi select` memilih paket atau skill. `msshi connect` membuka menu aplikasi. `msshi setup` membuka empat mode pemasangan.
+`msshi check` atau `msshi status` membandingkan versi, menampilkan changelog, dan merangkum rute aplikasi. `msshi update` memperbarui pemasangan terkelola dan cache 49 sumber. `msshi select` memilih paket atau skill. `msshi connect` membuka menu aplikasi. `msshi setup` membuka empat mode pemasangan.
 
 [Panduan chat agen](INSTALL_FOR_AGENTS.md) · [Jalur per platform dan ZIP OpenClaw](docs/platforms.md) · [CLI dan pemulihan](docs/CLI.md) · [Koneksi aplikasi CLI-Anything](docs/CLI_ANYTHING_BRIDGE.md)
 
-![MSSHI dengan 50 skill inti, delapan wrapper, enam paket pilihan, dan lima peran MuZA](assets/msshi-hero-banner.svg)
+![MSSHI dengan 50 skill inti, dua belas wrapper, enam paket pilihan, dan lima peran MuZA](assets/msshi-hero-banner.svg)
 
 MSSHI membantu agen menyusun ide, menelusuri bukti, mengerjakan bagian teknis atau kreatif, dan menyerahkan hasil yang bisa kamu periksa. Kamu bisa memakai satu agen untuk seluruh alur atau membagi tugas di antara beberapa bot. Skill bawaan berbentuk instruksi kerja. Alat seperti Blender, ArtCraft, Higgsfield, dan Gemini Notebook tersedia sesuai pemasangan dan akses masing-masing.
 
 **Langsung ke** [setup](#1-pilih-mode-setup) · [peta lima bot](#2-lihat-cara-lima-bot-bekerja) · [video dan produksi](#3-produksi-bersama-kiki-chii) · [riset](#4-skripsi-tesis-dan-disertasi) · [konteks](#5-kelola-konteks-proyek-panjang) · [integrasi dan biaya](#6-integrasi-dan-biaya) · [audit skill](#7-audit-skill-dan-kustomisasi)
+
+## v3.1 - Lima integrasi sesuai tugas
+
+![Lima integrasi v3.1 dan pemetaan perannya](assets/msshi-v31-integrations.svg)
+
+| Integrasi | Bot | Fungsi |
+| --- | --- | --- |
+| [Unslop](docs/UNSLOP.md) | Kiki-Chii, Val, Shikaku | Audit/perbaikan UI, termasuk dashboard ilmiah; bukan humanizer prosa. |
+| [BRAG](docs/BRAG.md) | Kiki-Chii | Video peluncuran dengan Hyperframes, Concepting First, dan review setiap tahap. |
+| [Scrapling](docs/SCRAPLING.md) | Val, Shikaku | Parser HTML lokal CSS/XPath; wrapper tidak membuka browser atau mengirim data. |
+| [Harness²](docs/HARNESS2.md) | Val, Shikaku | Demo evaluasi harness lokal dan rencana perbaikan; tanpa promosi otomatis ke bot aktif. |
+| [REA (opsional)](docs/REA.md) | Shikaku | Reverse engineering lokal melalui CLI; pemasangan publik default nonaktif dan perlu dipilih secara sengaja. |
+
+Bundel kini berisi **62 folder skill standar: 50 inti + 12 wrapper**, ditambah REA yang diaktifkan terpisah, dengan **49 sumber eksternal**. Skill dipakai saat tugasnya relevan. Runtime berada di luar folder pemindai skill. Provider/model, persona, persetujuan browser, dan pilihan BrightData nonaktif tetap dijaga. Benchmark Harness² berbasis model memerlukan lingkungan dan anggaran terpisah; tidak dijalankan otomatis. [Setup, verifikasi, dan batas v3.1](docs/V3_1_UPDATE.md).
 
 ## 1. Pilih mode setup
 
@@ -72,7 +86,7 @@ python scripts/install_msshi.py --mode solo --platform hermes
 
 | Kebutuhanmu | Mode | Hasil |
 | --- | --- | --- |
-| Satu agen untuk semua bidang | `solo` | Semua 50 skill inti dan delapan wrapper masuk ke satu folder tujuan. |
+| Satu agen untuk semua bidang | `solo` | Semua 50 skill inti dan dua belas wrapper masuk ke satu folder tujuan. |
 | Tim dengan nama dan peran sendiri | `custom-bots` | Workspace per bot berdasarkan matriks kustom. |
 | Hanya bidang tertentu | `selective --packs core,filmmaking` | Hanya skill bawaan dari paket yang dipilih. Pilihan lain tersedia untuk bisnis, akademik, web, dan keamanan. |
 | Ikuti pembagian peran MuZA | `muza-preset` | Lima workspace berisi persona, aturan kerja, dan skill masing-masing. |
@@ -154,7 +168,7 @@ Untuk riset di **Gemini Notebook**, buka sesi Google yang sudah masuk, pilih not
 
 Sebelum menjalankan operasi berbayar, TokenShield menghitung proyeksi saldo dari nilai yang kamu masukkan. CLI-Anything Universal Bridge menyiapkan koneksi dengan Auto-Reconnect atau pilihan satu per satu. Pada instalasi v3 yang sudah dimigrasikan, buat tiket melalui `msshi runtime ticket`, lalu jalankan aplikasi dengan `msshi runtime run`. Jalur `connect --open` dan `connect --run` hanya berlaku untuk instalasi v2 yang belum dimigrasikan. [Contoh tiket v3](skills/cli-anything-universal-bridge/SKILL.md#jalankan-tugas-melalui-tiket-v3). Hermes memakai tool native untuk rute MCP. [Panduan koneksi](docs/CLI_ANYTHING_BRIDGE.md). Gunakan `msshi update` untuk rilis terkelola. Gunakan skrip `msshi_update.py` untuk membandingkan atau menerapkan dua folder rilis lokal yang telah kamu tinjau. [Perintah CLI dan cadangan](docs/CLI.md).
 
-[Katalog 45 sumber](docs/INTEGRASI.md) mengelompokkan sumber berdasarkan tugas, dengan status, prasyarat, dan catatan lisensi. [Manifest sumber](configs/upstreams.json) memuat data lengkap untuk skrip dan audit.
+[Katalog 49 sumber](docs/INTEGRASI.md) mengelompokkan sumber berdasarkan tugas, dengan status, prasyarat, dan catatan lisensi. [Manifest sumber](configs/upstreams.json) memuat data lengkap untuk skrip dan audit.
 
 ## 7. Audit skill dan kustomisasi
 

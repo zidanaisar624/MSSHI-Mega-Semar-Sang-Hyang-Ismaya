@@ -32,7 +32,7 @@ SEMVER = re.compile(r"(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?")
 PLATFORMS = (*installer.HOSTS, "manual")
 MODES = ("solo", "custom-bots", "selective", "muza-preset")
 RELEASE_DIRS = ("scripts", "configs", "skills", "docs", "portable", "assets", "adapters",
-                "business-sage", ".claude-plugin", "hermes_plugins")
+                "business-sage", ".claude-plugin", "hermes_plugins", "optional")
 RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md", "INSTALL_FOR_AGENTS.md",
                  "LICENSE", "SKILL.md", "install.ps1", "install.sh", "package.json",
                  "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat", "MULAI_DI_SINI_PEMULA.bat",
@@ -376,6 +376,16 @@ def setup(args, home, state):
         profile_home = Path(os.environ.get("HERMES_HOME") or Path.home() / ".hermes").absolute()
         print(json.dumps(kat(profile_home, modes[choice]), ensure_ascii=False, indent=2))
         print("ArtCraft bersifat opsional. Aplikasi yang dilewati tidak menggagalkan setup.")
+    with_rea = getattr(args, 'with_rea', False)
+    if not with_rea and sys.stdin.isatty():
+        try:
+            with_rea = input("Pasang wrapper REA opsional (runtime terpisah)? [y/N]: ").strip().lower() in {"y", "yes", "ya"}
+        except EOFError:
+            with_rea = False
+    if with_rea:
+        from msshi_optional import enable, setup_targets
+        for folder in setup_targets(mode, selections, source=ROOT):
+            print(json.dumps(enable('rea', folder, source=ROOT, home=home), ensure_ascii=False, indent=2))
 
 
 def confirmed():
@@ -520,7 +530,7 @@ def main(argv=None):
     updater.add_argument("--skip-upstreams", action="store_true", help="Hanya perbarui MSSHI dan skill bundel.")
     updater.add_argument("--hermes-home", type=Path, help="Folder Hermes untuk migrasi v3.")
     updater.add_argument("--source", type=Path, help="Pakai kandidat lokal yang sudah diperiksa.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea"):
         command = subparsers.add_parser(verb, add_help=False, help=f"MSSHI v3 {verb}.")
         command.add_argument("arguments", nargs=argparse.REMAINDER)
     for verb in ("dream", "voice", "kat"):
@@ -530,12 +540,14 @@ def main(argv=None):
         wizard = subparsers.add_parser(action, help="Buka wizard empat mode." if action == "setup" else "Pilih skill atau paket.")
         wizard.add_argument("--platform", choices=PLATFORMS)
         wizard.add_argument("--target-dir", type=Path)
+        if action == "setup":
+            wizard.add_argument("--with-rea", action="store_true", help="Explicitly enable the optional REA wrapper in the selected skill directories; runtime stays separate.")
         if action == "select":
             wizard.add_argument("--local", action="store_true", help="Pilih dari rilis lokal tanpa mengakses GitHub.")
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -556,10 +568,11 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
-                       "desktop": "msshi_desktop.py", "audit": "check_release_v3.py", "assets": "find_muza_assets.py",
+        entrypoints = {"rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+                       "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
-                       "managed": "msshi_managed.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",
+                       "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",
+                       "brag": "../skills/brag/scripts/msshi_brag.py", "scrapling": "msshi_scrapling.py", "harness2": "msshi_harness2.py",
                        "dream": "msshi_integrations.py", "voice": "msshi_integrations.py", "kat": "msshi_integrations.py"}
         if args.command in entrypoints:
             prefix = [args.command] if args.command in {"dream", "voice", "kat"} else []

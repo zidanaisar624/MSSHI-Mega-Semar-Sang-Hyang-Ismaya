@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 870" role="img" aria-labelledby="title desc">
+<title id="title">MSSHI v3.1 contextual integrations</title><desc id="desc">Unslop for Kiki, Val and Shikaku; BRAG for Kiki; Scrapling and Harness2 for Val and Shikaku; REA is an optional public integration for Shikaku. Local runtimes, human review, and preserved model settings.</desc>
+<rect width="1100" height="870" rx="22" fill="#11162b"/>
+<g font-family="Segoe UI,Arial,sans-serif">
+<text x="48" y="60" fill="#ffdb82" font-size="20" font-weight="700">MSSHI / v3.1</text>
+<text x="48" y="109" fill="#f5f3ff" font-size="35" font-weight="750">Five tools. Different jobs.</text>
+<text x="48" y="143" fill="#bfc9e3" font-size="18">Choose by task. Keep native personas and model settings.</text>
+<g fill="#222943" stroke="#625a9b"><rect x="48" y="181" width="490" height="184" rx="16"/><rect x="562" y="181" width="490" height="184" rx="16"/><rect x="48" y="389" width="490" height="184" rx="16"/><rect x="562" y="389" width="490" height="184" rx="16"/></g>
+<g fill="#cabaff" font-size="28" font-weight="700"><text x="74" y="225">Unslop</text><text x="588" y="225">BRAG</text><text x="74" y="433">Scrapling</text><text x="588" y="433">Harness²</text></g>
+<g fill="#f3f3fc" font-size="21"><text x="74" y="264">UI review and cleanup</text><text x="588" y="264">Product launch videos</text><text x="74" y="472">Local HTML / CSS / XPath</text><text x="588" y="472">Harness evaluation and proposals</text></g>
+<g fill="#ffdb82" font-size="18" font-weight="600"><text x="74" y="304">Kiki · Val · Shikaku</text><text x="588" y="304">Kiki-Chii</text><text x="74" y="512">Val · Shikaku</text><text x="588" y="512">Val · Shikaku</text></g>
+<g fill="#bdc7de" font-size="16"><text x="74" y="337">Direction → focused passes → review</text><text x="588" y="337">Concept → preview → human review</text><text x="74" y="545">No browser or network verb in parser</text><text x="588" y="545">Demo → evidence → human decision</text></g>
+<rect x="306" y="597" width="490" height="170" rx="16" fill="#222943" stroke="#ffdb82" stroke-dasharray="6 5"/>
+<text x="332" y="639" fill="#cabaff" font-size="28" font-weight="700">REA · opt-in</text><text x="332" y="678" fill="#f3f3fc" font-size="21">Local reverse engineering</text><text x="332" y="717" fill="#ffdb82" font-size="18">Shikaku · Public default: OFF</text><text x="332" y="747" fill="#bdc7de" font-size="16">Explicit enable · No automatic MCP setup</text>
+<rect x="48" y="799" width="1004" height="43" rx="12" fill="#2b3150"/>
+<text x="550" y="827" text-anchor="middle" fill="#e4ddff" font-size="17">On relevant tasks · Runtimes outside skills · No startup apps · No automatic live promotion</text>
+</g></svg>

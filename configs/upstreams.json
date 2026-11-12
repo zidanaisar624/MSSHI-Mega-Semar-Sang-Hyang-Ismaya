@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "External MSSHI integration inventory with opt-in source-cache refresh and separate runtime setup.",
-  "checked_on": "2026-11-12",
+  "checked_on": "2026-11-13",
   "defaults": {
     "install_external": false,
     "auto_open_on_boot": false,
@@ -472,18 +472,22 @@
       "id": "rea",
       "source": "https://github.com/morluto/rea",
       "source_type": "git",
-      "verification": "upstream-documentation-read; not runtime-tested",
+      "verification": "pinned-primary-source-reviewed; see REA documentation for tested operations",
       "status": "external-opt-in",
       "auto_start": false,
       "domain": "cybersec",
       "kind": "forensic_reference",
       "pack": "cybersec",
       "roles": [
-        "shikaku-nara"
+        "shikaku"
       ],
-      "use_when": "Gunakan upstream untuk analisis perilaku, file atau binary dalam scope.",
+      "use_when": "Coder investigates authorized local JavaScript/apps/artifacts; native engines require existing supported provider.",
       "requires": "Artefak milik pengguna/diotorisasi; pilih alat sesuai platform dan batas pemeriksaan.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "a8527d43b8439476f5c9d1497315dfe7dd5e1f38",
+      "public_default_enabled": false,
+      "optional_skill_path": "optional/rea/SKILL.md",
+      "installation": "Explicit opt-in only; no automatic npm runtime, MCP setup, or global agent changes."
     },
     {
       "id": "unlimited-ocr-2",
@@ -808,6 +812,82 @@
       "use_when": "Data numerik terurut waktu, forecasting dan baseline evaluasi; bukan chatbot atau model provider Hermes.",
       "requires": "Explicit isolated Python CPU runtime installation and TimesFM2.5 pinned model download.",
       "license": "Apache-2.0 code and selected TimesFM2.5 weights; TimesFM3 weights noncommercial/nonproduction excluded"
+    },
+    {
+      "id": "unslop",
+      "source": "https://github.com/heydamir/unslop",
+      "source_type": "git",
+      "revision": "97daa3eb365670ea3f87ed85356cbfcee18105a5",
+      "verification": "pinned-primary-source-reviewed; see dedicated integration docs and private audit for exact runtime tests",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "research-and-development",
+      "kind": "contextual-skill-integration",
+      "pack": "webdev",
+      "roles": [
+        "kiki-chii",
+        "val",
+        "shikaku"
+      ],
+      "use_when": "Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi.",
+      "requires": "Sumber UI atau URL yang diakses dengan izin; tidak memasang browser/snapshot scripts upstream.",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "id": "brag",
+      "source": "https://github.com/latent-spaces/brag",
+      "source_type": "git",
+      "revision": "669ab9286aa28b6c3ee30e75f181ee74319d012a",
+      "verification": "pinned-primary-source-reviewed; see dedicated integration docs and private audit for exact runtime tests",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "contextual-skill-integration",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia.",
+      "requires": "Node22+, runtime Hyperframes terpisah, FFmpeg, aset berizin; tidak mengganti model Kiki.",
+      "license": "MIT; music and SFX have separate licenses and are not bundled"
+    },
+    {
+      "id": "scrapling",
+      "source": "https://github.com/D4Vinci/Scrapling",
+      "source_type": "git",
+      "revision": "3a4bb5b0a008233c85269a0a38a6d08edd4ce329",
+      "verification": "pinned-primary-source-reviewed; see dedicated integration docs and private audit for exact runtime tests",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "research-and-development",
+      "kind": "contextual-skill-integration",
+      "pack": "thesis",
+      "roles": [
+        "val",
+        "shikaku"
+      ],
+      "use_when": "Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi.",
+      "requires": "Setup parser terisolasi; wrapper tidak mengaktifkan browser, stealth, CAPTCHA, atau akses akun.",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "harness2",
+      "source": "https://github.com/google-research/harness2",
+      "source_type": "git",
+      "revision": "6868817518876de8fd170c6a8354daca273b6191",
+      "verification": "pinned-primary-source-reviewed; see dedicated integration docs and private audit for exact runtime tests",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "research-and-development",
+      "kind": "contextual-skill-integration",
+      "pack": "thesis",
+      "roles": [
+        "val",
+        "shikaku"
+      ],
+      "use_when": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
+      "requires": "Python3.12 runtime terpisah; benchmark model berbayar dan promosi harness aktual tidak dijalankan wrapper.",
+      "license": "Apache-2.0"
     }
   ]
 }

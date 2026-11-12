@@ -48,7 +48,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
         checks[name] = {"status": "PASS" if passed else "NEEDS_ATTENTION", "evidence": evidence}
     version = read(repo / "VERSION.json")
     rows = read(repo / "configs/upstreams.json")["entries"]
-    record("package_version", version["version"] == "3.0.0",
+    record("package_version", version["version"].split(".")[0] == "3",
            {"version": version["version"], "sources": len(rows)})
     record("source_manifest", len(rows) == version["external_sources"] and len({row["source"] for row in rows}) == version["external_sources"],
            {"entries": len(rows)})
@@ -153,7 +153,7 @@ def main(argv=None):
     try:
         checks = audit(args.repo, args.home, args.package_only, args.baseline)
         failures = [name for name, row in checks.items() if row["status"] != "PASS"]
-        result = {"version": "3.0.0", "scope": "Observed local/package checks only. This verdict is not full compliance with every PDF performance or security claim.",
+        result = {"version": read(args.repo / "VERSION.json")["version"], "scope": "Observed local/package checks only. This verdict is not full compliance with every PDF performance or security claim.",
                   "known_limitations": [
                       "The <5 MiB guardian target is not certified; the local observation was about 21 MiB working set.",
                       "The US$1 policy is not proof of a provider-side hard spending cap or current balance.",

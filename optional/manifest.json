@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "rea",
+      "path": "optional/rea",
+      "public_default": false,
+      "roles": [
+        "shikaku"
+      ],
+      "source_id": "rea"
+    }
+  ]
+}

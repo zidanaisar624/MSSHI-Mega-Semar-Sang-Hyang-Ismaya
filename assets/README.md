@@ -11,3 +11,5 @@
 | [Integrasi](msshi-integration-map.svg) | Apa yang sudah ada, perlu dipasang, atau perlu akun? | [Katalog integrasi](../docs/INTEGRASI.md) dan [panduan CLI](../docs/CLI.md) |
 
 Edit SVG sebagai teks atau buka di editor vektor. Jaga `viewBox`, judul dan deskripsi aksesibel, serta label yang singkat. Cocokkan teks README dengan diagram. Tabel README menyediakan padanan jika SVG sulit dibaca pada layar kecil. [Panduan review lokal](../adapters/msshi-visual-review/README.md).
+
+Peta tambahan v3.1: [empat integrasi dan peran](msshi-v31-integrations.svg), berdasarkan [panduan v3.1](../docs/V3_1_UPDATE.md).

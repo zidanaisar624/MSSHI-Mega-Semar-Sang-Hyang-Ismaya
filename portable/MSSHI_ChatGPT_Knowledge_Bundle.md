@@ -108,3 +108,9 @@ Val handles numeric time-series forecasting with the timesfm-forecasting wrapper
 ## v3 browsing and updater boundaries
 
 General web uses the native Steel guard only after endpoint/key setup and task approval; no silent Chrome fallback. Personal browser access needs scoped human approval. Never transfer login cookies/profiles automatically. GitLab/Tinyfish remain web services with authentication and task-specific permissions. `msshi managed status` lists only enrolled hash-proven MSSHI bundles; it does not claim every third-party skill is updated.
+
+## v3.1 contextual integrations
+
+Read the corresponding skill only when relevant: `unslop` for UI cleanup (Kiki/Val/Shikaku), `brag` for launch videos (Kiki), `scrapling` for local HTML extraction (Val/Shikaku), `harness2` for deterministic harness evaluation/proposals (Val/Shikaku). Preserve personas/models and human review. No automatic live-harness promotion, paid benchmark calls, browser startup, or personal-session transfer. Dependencies are separate from portable knowledge files; ChatGPT web Knowledge upload does not install Python/Node runtimes. See docs/V3_1_UPDATE.md.
+
+REA is an optional local reverse-engineering integration. It is not activated by this knowledge file or by ordinary MSSHI installation. Explicit selection and a separate local runtime are required.

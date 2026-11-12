@@ -1,5 +1,14 @@
 # Changelog MSSHI
 
+## v3.1.0 - 2026-11-13
+
+- Added four standard contextual wrappers: Unslop UI improvement (Kiki/Val/Shikaku), BRAG launch video (Kiki), Scrapling local HTML parser (Val/Shikaku), and Harness² deterministic harness evaluation (Val/Shikaku).
+- Added REA as a separate default-off opt-in for public installs; MuZA explicitly enables it for Coder.
+- Expanded the original default bundle to 62 skills (50 core + 12 wrappers) and 49 pinned source references, with separate licenses and runtime prerequisites.
+- Kept live persona/model routing and v3.0 browser/MCP safeguards; no automatic model-backed benchmarks or live harness promotion.
+- Added standalone runtime commands, local guard tests, updated role documentation, and a visual integration map.
+
+
 ## v3.0.0 - 2026-11-12
 
 - Added Val's TimesFM 2.5 local numeric forecasting wrapper; 58 bundled skills and 45 external sources. Heavy model files stay outside skill scanner roots.

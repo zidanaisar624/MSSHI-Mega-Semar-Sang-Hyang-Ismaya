@@ -1,6 +1,6 @@
 # Third-party source notices
 
-MSSHI's original integration code is MIT. External components retain their own licenses and notices. These 45 source entries are references and cached opt-in dependencies. A source listing does not relicense its content or prove that its runtime is installed.
+MSSHI's original integration code is MIT. External components retain their own licenses and notices. These 49 source entries are references and cached opt-in dependencies. A source listing does not relicense its content or prove that its runtime is installed.
 
 Retain MIT copyright and permission notices when distributing copies. Retain Apache-2.0 license, copyright and applicable NOTICE files, and mark modifications. CC0 applies only to an explicitly CC0-designated asset. No blanket CC0 grant is inferred for any repository or media service. Upstream accounts, commercial services, model weights, font files and generated media may carry additional terms.
 
@@ -65,9 +65,9 @@ Any reported token saving or throughput is an upstream benchmark from a specific
 
 CC0 applies only to assets with an explicit CC0 license file. Academic references and public theories do not grant a blanket license to copy their source texts.
 
-## Existing local CLI utilities outside the 45-source inventory
+## Existing local CLI utilities outside the 49-source inventory
 
-The MSSHI adapters may invoke two separately installed utilities. Their upstream source code and binaries are not bundled in this public package, and they do not add entries to the 45-source manifest.
+The MSSHI adapters may invoke two separately installed utilities. Their upstream source code and binaries are not bundled in this public package, and they do not add entries to the 49-source manifest.
 
 - [Llmtrim](https://github.com/fkiene/llmtrim) is licensed under [MPL-2.0](https://github.com/fkiene/llmtrim/blob/main/LICENSE). MSSHI invokes its local compress command; the native automatic hook is original MSSHI adapter code. Retain the upstream license and applicable source notices when distributing upstream files or modifications.
 - [Hersona](https://github.com/shiro-0x/hersona) is licensed under [MIT](https://github.com/shiro-0x/hersona/blob/main/LICENSE), copyright 2026 Hersona contributors. Retain its copyright and license notices when distributing copies or substantial upstream portions.
@@ -79,3 +79,14 @@ Additional source 45: [Google Research TimesFM](https://github.com/google-resear
 ## TimesFM
 
 Google Research TimesFM source is Apache-2.0. The selected `google/timesfm-2.5-200m-pytorch` model is Apache-2.0 and downloaded separately into a private runtime. The MSSHI archive contains an original wrapper, not model weights or the upstream implementation. TimesFM 3.0 downloaded weights use separate noncommercial/nonproduction terms and are excluded. See [setup and pinned revisions](docs/TIMESFM.md). Forecast accuracy must be evaluated on held-out data; forecast output is not a financial or other domain guarantee.
+
+## v3.1 additions
+
+- **Unslop**, Damir Sokolovsky (@heydamir), CC-BY-4.0, [source](https://github.com/heydamir/unslop), pin `97daa3eb365670ea3f87ed85356cbfcee18105a5`. MSSHI uses a contextual, role-specific adaptation; no upstream images or executables are bundled. Its attribution/license is retained in the skill folder.
+- **BRAG**, copyright 2026 Shunit Haviv Hakimi, MIT, [source](https://github.com/latent-spaces/brag), pin `669ab9286aa28b6c3ee30e75f181ee74319d012a`. The original MSSHI adapter preserves model selection and review gates. Upstream music/SFX are excluded; their licenses are separate.
+- **Scrapling**, BSD-3-Clause, [source](https://github.com/D4Vinci/Scrapling), release `v0.5.1`, pin `3a4bb5b0a008233c85269a0a38a6d08edd4ce329`. The parser and pinned binary wheels are installed privately; the public archive contains the MSSHI wrapper and notice, not the dependency tree.
+- **Harness²**, copyright 2026 Google LLC, Apache-2.0, [source](https://github.com/google-research/harness2), pin `6868817518876de8fd170c6a8354daca273b6191`. Benchmarks, datasets and third-party code retain their own terms. MSSHI does not enable the upstream model-backed unrestricted executor. Local Windows demo compatibility is limited and documented.
+
+### REA optional runtime
+
+REA already belongs to the source inventory. The v3.1 optional adapter references morluto/rea at `a8527d43b8439476f5c9d1497315dfe7dd5e1f38`, MIT, copyright 2026 morluto. It is disabled by default in public installers. The npm runtime is separate; native provider engines keep their own licenses and are not automatically acquired.

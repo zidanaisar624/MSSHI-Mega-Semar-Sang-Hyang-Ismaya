@@ -148,7 +148,7 @@ def static_checks():
                     and svg.findtext("svg:desc", namespaces=SVG_NS),
                     f"Missing SVG accessibility text in {rel}")
             require(f"({rel.as_posix()})" in readme, f"SVG is unused in README: {rel}")
-    require(visual_count == 7, "Expected seven README diagrams")
+    require(visual_count == version.get("visual_assets", 7), "SVG inventory and VERSION.json visual_assets disagree")
     run_cli("render_bot_audit.py", "--check")
     print(f"Static checks passed: {file_count} files, {len(shipped)} skills, "
           f"{len(sources)} upstream sources, {visual_count} SVGs, {links} local links")
