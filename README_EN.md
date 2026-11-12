@@ -2,9 +2,21 @@
 
 # MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage
 
-[![MuZA × Google Gemini × OpenAI ChatGPT](https://img.shields.io/badge/Project%20credits-MuZA%20%C3%97%20Gemini%20%C3%97%20ChatGPT-5648b3)](docs/PROVENANCE.md#kredit-kolaborasi)
+[![MuZA × Google Gemini × OpenAI ChatGPT × Google Antigravity](https://img.shields.io/badge/Project%20credits-MuZA%20%C3%97%20Gemini%20%C3%97%20ChatGPT-5648b3)](docs/PROVENANCE.md#kredit-kolaborasi)
 
-**MSSHI v2.1 is a cross-platform Multi-Agent Skill Suite & Persona Framework.** It includes 50 core `SKILL.md` folders, seven integration wrappers, solo and team presets, and an optional installation CLI. Claude Code can load it as a plugin. ChatGPT web uses portable instructions and reference material. External apps, accounts, models, and credits are set up through their respective services.
+**MSSHI v3.0 is a cross-platform Multi-Agent Skill Suite & Persona Framework.** It includes 50 core `SKILL.md` folders, eight integration wrappers, solo and team presets, and an optional installation CLI. Claude Code can load it as a plugin. ChatGPT web uses portable instructions and reference material. External apps, accounts, models, and credits are set up through their respective services.
+
+**v3.0 adds Hermes Ultimate Optimizer.** Profile migration, task tickets, Desktop recovery, and optional integrations run through local commands. The audit reports actual readiness and missing runtime requirements. Start with MULAI_DI_SINI_PEMULA.bat or read the [migration guide](docs/V3_MIGRATION.md).
+
+Existing v2.1 users run UPDATE_OTOMATIS_KE_V3.bat from the v3 package once to install the migration path. Subsequent upgrades use msshi update. The old v2.1 updater downloads new files but does not invoke v3 profile migration.
+
+This migration removes desktop-application MCP registrations and replaces the local Hersona/llmtrim MCP registrations with CLI execution. GitLab and Tinyfish remain web-facing MCP connectors. [Hersona CLI](docs/HERSONA_CLI.md) runs for a relevant persona task and returns catalogue entries or drafts; native Hermes personas and `SOUL.md` remain the source of bot behavior.
+
+[The automatic Llmtrim plugin](hermes_plugins/msshi-auto-trim/README.md) uses the native `transform_tool_result` hook to run `llmtrim compress` on sufficiently large, valid JSON tool results. A candidate is accepted only when its decoded JSON data is exactly equal; failures keep the original result. Conversations, code, files, configuration, personas, and errors are skipped. Inspect counters without chat using `msshi trim --status --profile default`, choosing the actual bot profile ID instead of `default` when needed. Savings depend on eligible output. The file command `msshi trim --input request.json --output request-ringkas.json` is an additional option. These external utilities are separate from the 45-source inventory; their upstream code is not bundled.
+
+**v3 integrations:** [TimesFM for Val](docs/TIMESFM.md) adds local numeric forecasting through `msshi timesfm`. [Steel](docs/STEEL_BROWSER_POLICY.md) handles general browsing with a guard against silent fallback; an endpoint/API key is required. Personal browser access requires approval scoped to site, account, purpose, and access. [GitLab/Tinyfish](docs/SERVICE_CONNECTIONS.md) remain web MCP services with separate registration, discovery, authentication, and operation status. BrightData stays optional/off without credentials.
+
+**Managed updates:** `msshi managed register --skills-dir SKILLS_PATH --apply` enrolls only hash-proven bundled copies. `msshi managed status` shows coverage. `msshi update` refreshes enrolled bundles and source caches while preserving custom and unmanaged third-party skills. [Shared junction protection and rollback](docs/MANAGED_UPDATES.md).
 
 ## 🚀 30-Second Quick Start (Choose Your Agent)
 
@@ -34,9 +46,9 @@ irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-
 curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
 ```
 
-The PowerShell or Bash installer adds `msshi` for the current user and opens the setup wizard. Install Git and Python 3.10+ first. Open a new terminal if the command is missing. `npx` requires Node.js 22.20+ and npm. The `main` URLs serve v2.1 after these changes are published.
+The PowerShell or Bash installer adds `msshi` for the current user and opens the setup wizard. Install Git and Python 3.10+ first. Open a new terminal if the command is missing. `npx` requires Node.js 22.20+ and npm. Commands using the `main` URLs retrieve the version already published on GitHub. Run the installer from a local package to install that copy. `VERSION.json` records release metadata.
 
-`msshi check` or `msshi status` compares versions, shows the changelog, and summarizes app routes. `msshi update` updates managed installations and the 37-source cache. `msshi select` chooses packs or skills. `msshi connect` opens the app menu. `msshi setup` opens the four setup modes.
+`msshi check` or `msshi status` compares versions, shows the changelog, and summarizes app routes. `msshi update` updates managed installations and the 45-source cache. `msshi select` chooses packs or skills. `msshi connect` opens the app menu. `msshi setup` opens the four setup modes.
 
 [Agent chat guide](INSTALL_FOR_AGENTS.md) · [Platform and OpenClaw ZIP routes](docs/platforms.md) · [CLI and recovery](docs/CLI.md) · [CLI-Anything application routes](docs/CLI_ANYTHING_BRIDGE.md)
 
@@ -48,7 +60,7 @@ The PowerShell or Bash installer adds `msshi` for the current user and opens the
 
 | Mode | Result |
 | --- | --- |
-| Solo 1-Bot | All 50 core skills and seven wrappers in a single skill directory. |
+| Solo 1-Bot | All 50 core skills and eight wrappers in a single skill directory. |
 | Custom Multi-Bot | Name your bots and assign skills per workspace. |
 | Selective Packs | Choose from `core`, `filmmaking`, `business`, `thesis`, `webdev`, and `cybersec`. |
 | MuZA 5-Bot Preset | Export the five role workspaces, skills, and editable persona instructions. |
@@ -97,7 +109,7 @@ Index the available sources, extract text with page references, select evidence,
 | Local dependencies | Configure apps and adapters such as Blender, ArtCraft MCP, OCR, and CLI-Anything. |
 | Account-backed services | Use your own access for Higgsfield, Gemini Notebook, and other services. Their quotas and terms apply. |
 
-The upstream refresh caches 37 sources (35 Git repositories, one model-card source, and one registry). Use the appropriate runtime guide to activate an external integration. TokenShield can evaluate a USD 1.00 reserve using an observed balance and an estimated cost. It relies on those inputs. The CLI-Anything Universal Bridge registers detected or selected routes. Open desktop and web targets with `--open` and invoke installed harnesses with `--run` for an explicit task. Hermes calls native MCP tools for MCP routes. [Connection guide](docs/CLI_ANYTHING_BRIDGE.md). Provider and model choices stay with the user. [Integration inventory](docs/INTEGRASI.md) · [CLI, backups, and recovery](docs/CLI.md).
+The upstream refresh caches 45 sources (41 Git repositories, two model-card sources, and one registry). Use the appropriate runtime guide to activate an external integration. TokenShield can evaluate a USD 1.00 reserve using an observed balance and an estimated cost. It relies on those inputs. The CLI-Anything Universal Bridge registers detected or selected routes. On a migrated v3 installation, create a ticket with `msshi runtime ticket`, then invoke the application with `msshi runtime run`. The old `connect --open` and `connect --run` paths remain available only on unmigrated v2 installations. [v3 ticket example](skills/cli-anything-universal-bridge/SKILL.md#jalankan-tugas-melalui-tiket-v3). Hermes calls native MCP tools for MCP routes. [Connection guide](docs/CLI_ANYTHING_BRIDGE.md). Provider and model choices stay with the user. [Integration inventory](docs/INTEGRASI.md) · [CLI, backups, and recovery](docs/CLI.md).
 
 ## 7. Audit and customize
 
@@ -108,9 +120,17 @@ The preset assigns all 50 original skills across the five roles and includes the
 - **Muhammad Zidan Aisar (MuZA)** — Creator, System Visionary & Chief Architect.
 - **Google Gemini** — Co-Architect for S1–S2–Ph.D. curriculum research, the 50-skill and 37-source synthesis, CLI-Anything and TokenShield architecture, and the five-bot command topology.
 - **OpenAI ChatGPT** — Co-Architect for SVG visual engineering, Stage 1 and Stage 2 repository packaging, upstream manifests, and cross-platform schema design.
+- **Google Antigravity** — Development environment and assistant in MuZA's workflow.
 
 These credits record contributions to the project. [Provenance and attribution scope](docs/PROVENANCE.md).
 
 ## License
 
 The [MIT License](LICENSE) covers original MSSHI materials within the rights of the contributors. Third-party materials, characters, brands, runtimes, and services are subject to their respective terms. [Release checks](docs/STATUS_PUBLIKASI.md) · [Source and rights notes](docs/PROVENANCE.md).
+
+[Proposed Steel-first browsing policy and approval flow](docs/STEEL_BROWSER_POLICY.md). The route assessor does not activate the plugin, endpoint, or account transfer automatically.
+
+
+## Windows Desktop rendering
+
+If the gateway is ready but Desktop stays gray, fully quit Desktop and try `msshi desktop --software-rendering`. This uses Hermes' supported `HERMES_DESKTOP_DISABLE_GPU=1` only for the Desktop child. After a successful test, the launcher can read `{"software_rendering": true}` from `<HERMES_HOME>/tools/msshi/desktop-preferences.json`. Other applications and system graphics settings are unchanged.

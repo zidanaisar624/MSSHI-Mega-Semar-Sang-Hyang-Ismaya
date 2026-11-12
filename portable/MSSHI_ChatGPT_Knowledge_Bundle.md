@@ -96,3 +96,15 @@ Gunakan panduan ini saat host memiliki alat yang sesuai. Setiap wrapper menyedia
 - **`motion-graphics-suite`** · Buat komposisi yang bisa diedit, review animatik, lalu pindahkan render atau aset ke alat finishing yang kompatibel.
 - **`antigravity-webdev-cybersec`** · Petakan proyek, lakukan perubahan terkecil yang teruji, dan gunakan alat keamanan hanya pada lingkup defensif yang diizinkan.
 - **`cli-anything-universal-bridge`** · Bedakan rute yang terdaftar, prasyarat alat, dan hasil pemanggilan. Pada host dengan terminal, daftarkan target sesuai pilihan dan jalankan hanya saat diminta.
+
+## v3 execution and browsing policy
+
+Treat desktop tools as on-demand capabilities and use a valid scoped task ticket in a migrated Hermes runtime. Preserve GitLab/Tinyfish as web-facing MCP connectors. Hersona and llmtrim move from local stdio MCP to CLI execution. Hersona previews persona catalogue entries and drafts only for a relevant task, preserving native personas and SOUL.md. In Hermes, the native msshi-auto-trim plugin automatically runs llmtrim compress on sufficiently large valid JSON tool results, accepts only exact decoded-data equality, and keeps the original on failure. It skips conversations, code, files, configuration, personas, and errors. Counters are available with msshi trim --status --profile default; optional file processing uses msshi trim --input request.json --output request-ringkas.json. This does not create a whole-chat proxy or change the main provider/model. Preserve the user's primary model/provider. Prefer a verified Hermes-Steel endpoint for general browsing. Personal browser sessions need account-specific approval, and any transfer of login data needs separate consent. A web-only assistant applies the planning and evidence methods within its available tools. Model weights, voice synthesis, schedules, and native app execution require the corresponding host runtime.
+
+## TimesFM v3 - Val
+
+Val handles numeric time-series forecasting with the timesfm-forecasting wrapper. Validate units, chronological order, frequency, missing data and horizon, then compare holdout error with naive baselines. Local Hermes uses `msshi timesfm status` and `msshi timesfm forecast --input data.json --output new-result.json --horizon 12`. This Knowledge file does not install or execute TimesFM inside ChatGPT web. Use an explicitly available execution environment or give the local Hermes task to Val. The selected TimesFM2.5 model is Apache-2.0; downloaded TimesFM3 weights have separate noncommercial/nonproduction restrictions. No LLM routing changes, cloud billing, model daemon, or guaranteed forecast accuracy.
+
+## v3 browsing and updater boundaries
+
+General web uses the native Steel guard only after endpoint/key setup and task approval; no silent Chrome fallback. Personal browser access needs scoped human approval. Never transfer login cookies/profiles automatically. GitLab/Tinyfish remain web services with authentication and task-specific permissions. `msshi managed status` lists only enrolled hash-proven MSSHI bundles; it does not claim every third-party skill is updated.

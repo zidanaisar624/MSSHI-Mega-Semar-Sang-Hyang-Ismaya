@@ -51,5 +51,48 @@
     "project_scope",
     "available_capabilities",
     "bot_routing"
-  ]
+  ],
+  "browser_policy": {
+    "schema": 1,
+    "preferred_provider": "hermes-steel",
+    "native_setting": "browser.cloud_provider=steel",
+    "activation": "on_task",
+    "auto_open_on_boot": false,
+    "fallback": {
+      "providers": [
+        "chrome",
+        "edge",
+        "other_user_browser"
+      ],
+      "approval_required": true,
+      "personal_account_required": true
+    },
+    "account_transfer": {
+      "approval_required": true,
+      "scope": [
+        "source_browser",
+        "destination",
+        "account",
+        "data",
+        "duration"
+      ],
+      "automatic_cookie_extraction": false,
+      "implementation": "review supported Steel session or manual login before transfer"
+    },
+    "cloud_usage": {
+      "requires_user_account": true,
+      "budget_check_before_paid_session": true,
+      "free_usage_not_guaranteed": true
+    }
+  },
+  "timesfm_policy": {
+    "owner": "val",
+    "activation": "contextual_on_forecasting_task",
+    "auto_open_on_boot": false,
+    "llm_provider_model_mutation": false,
+    "input_validation_required": true,
+    "runtime": "isolated_local_cpu",
+    "daemon": false,
+    "cloud_inference": false
+  }
 }

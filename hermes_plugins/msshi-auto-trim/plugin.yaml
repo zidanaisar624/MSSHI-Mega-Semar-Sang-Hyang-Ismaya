@@ -1,0 +1,29 @@
+name: msshi-auto-trim
+version: "0.1.0"
+description: "Automatically compact eligible large JSON tool results through local Llmtrim, accepting only exact data-preserving output. No MCP or LLM calls."
+author: "Muhammad Zidan Aisar (MuZA), assisted by OpenAI ChatGPT"
+license: MIT
+requires_hermes: ">=0.22.5"
+provides_hooks:
+  - transform_tool_result
+config_schema:
+  enabled:
+    type: bool
+    default: true
+    description: "Automatically process eligible large JSON tool results."
+  binary:
+    type: str
+    default: ""
+    description: "Absolute path to local llmtrim executable; otherwise search PATH."
+  min_chars:
+    type: int
+    default: 2048
+    description: "Skip short results to avoid unnecessary subprocess overhead."
+  max_chars:
+    type: int
+    default: 262144
+    description: "Bound the size processed by each local compressor call."
+  timeout_seconds:
+    type: float
+    default: 3.0
+    description: "Fail open to the original result if compression exceeds this time."

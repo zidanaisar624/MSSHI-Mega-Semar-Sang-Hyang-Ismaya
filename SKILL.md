@@ -31,3 +31,15 @@ Ask before publishing, sending material outside the workspace, running a paid pr
 For application connections in a local Hermes profile, use `msshi connect` or the `cli-anything-universal-bridge` skill. Verify the active profile and open registered tools only for the requested task.
 
 For installation, see [INSTALL_FOR_AGENTS.md](INSTALL_FOR_AGENTS.md) if present or the [published installation guide](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/INSTALL_FOR_AGENTS.md).
+
+## MSSHI v3 local runtime
+
+A migrated Hermes installation uses task tickets for desktop execution. Read cli-anything-universal-bridge and the runtime help before opening applications. Preserve the web-facing GitLab and Tinyfish MCP connectors. Hersona and llmtrim move from local stdio MCP registrations to CLI execution. Hersona provides read-only persona catalogue and draft operations on a relevant task without replacing native personas or SOUL.md. The native msshi-auto-trim plugin automatically calls llmtrim compress on sufficiently large valid JSON tool results; accept only exact decoded-data equality and keep the original on failure. Conversations, code, file/config/persona tools, and errors are skipped. Use msshi trim --status --profile default for counters. The optional msshi trim file command is separate from this automatic hook; no whole-chat proxy is used. Keep the user's main LLM provider and model choices.
+
+Prefer Hermes-Steel for ordinary browsing after checking its plugin and endpoint. Use a personal browser only for an account-specific task with explicit user approval. Moving login/session data needs separate approval and a supported method. With no Steel setup and no approved account-specific fallback, report the missing setup.
+
+Voice, local models, scheduled memory proposals, and command execution require installed runtimes. Check status and report any missing requirements. Cloud LLM calls, media generation, and paid browsing need a verified budget.
+
+## Val and TimesFM
+
+For numeric time-series forecasts, load `skills/timesfm-forecasting/SKILL.md` and delegate research/evaluation to Val. The optional CPU runtime/model lives outside skills and does not replace the conversational provider. Start with `msshi timesfm status`; forecast only on an active task with validated data. See [TimesFM setup](docs/TIMESFM.md), [Steel approval policy](docs/STEEL_BROWSER_POLICY.md), [web service connections](docs/SERVICE_CONNECTIONS.md) and [managed updates](docs/MANAGED_UPDATES.md).

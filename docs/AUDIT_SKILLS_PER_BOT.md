@@ -2,13 +2,13 @@
 
 Sumber: [matriks bot](../configs/bot_role_and_skill_matrix.json). Jalankan `python scripts/render_bot_audit.py` setelah mengubah matriks.
 
-Katalog berisi **57 skill bundel** dan **59 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
+Katalog berisi **58 skill bundel** dan **59 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
 
 | Bot | Mandat | Bundel | Rujukan eksternal |
 | --- | --- | ---: | ---: |
 | Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 26 | 11 |
 | Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 22 | 11 |
-| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 30 | 12 |
+| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 31 | 12 |
 | Kiki-Chii | One-Woman Creative Studio | 15 | 47 |
 | Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 18 | 31 |
 
@@ -132,6 +132,7 @@ Bukti, metode, batas kepastian, serta dossier untuk Shizuka. [Baca persona](../c
 | [`symbolic-equation`](../skills/symbolic-equation/SKILL.md) | Bundel | Mencari kandidat persamaan yang dapat ditafsirkan dan diuji. |
 | [`table-generation`](../skills/table-generation/SKILL.md) | Bundel | Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan. |
 | [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md) | Bundel | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. |
+| [`timesfm-forecasting`](../skills/timesfm-forecasting/SKILL.md) | Bundel | Prediksi deret waktu numerik lokal dengan TimesFM 2.5, validasi data dan evaluasi terpisah. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`cli-anything`](https://github.com/HKUDS/CLI-Anything) | Eksternal | Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif. |
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
@@ -288,7 +289,7 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 - **Shikaku Nara** — [`addy-agent-skills`](https://github.com/addyosmani/agent-skills), [`ai-research-explore`](../skills/ai-research-explore/SKILL.md), [`ai-research-reproduction`](../skills/ai-research-reproduction/SKILL.md), [`analyze-project`](../skills/analyze-project/SKILL.md), [`antigravity-webdev-cybersec`](../skills/antigravity-webdev-cybersec/SKILL.md), [`awesome-copilot`](https://github.com/github/awesome-copilot), [`cybersecurity-library`](https://github.com/mukul975/anthropic-cybersecurity-skills), [`evaluating-code-models`](../skills/evaluating-code-models/SKILL.md), [`evaluating-llms-harness`](../skills/evaluating-llms-harness/SKILL.md), [`explore-code`](../skills/explore-code/SKILL.md), [`explore-run`](../skills/explore-run/SKILL.md), [`goose`](https://github.com/aaif-goose/goose), [`langsmith-observability`](../skills/langsmith-observability/SKILL.md), [`mindrally-skills`](https://github.com/mindrally/skills), [`nemo-evaluator-sdk`](../skills/nemo-evaluator-sdk/SKILL.md), [`phoenix-observability`](../skills/phoenix-observability/SKILL.md), [`playwright-best-practices`](https://github.com/currents-dev/playwright-best-practices-skill), [`ponytail`](https://github.com/dietrichgebert/ponytail), [`rea`](https://github.com/morluto/rea), [`reverse-engineer-anything`](https://github.com/NabilRFG12/Reverse-Engineer-anything), [`strix`](https://github.com/usestrix/strix), [`superpowers`](https://github.com/obra/superpowers)
 - **Sensei Shizuka Hiratsuka** — [`autoresearch`](../skills/autoresearch/SKILL.md), [`get-more-perspectives`](../skills/get-more-perspectives/SKILL.md), [`wise-judgment-and-sovereign-orchestrator`](../skills/wise-judgment-and-sovereign-orchestrator/SKILL.md)
 - **Yukino Yukinoshita** — [`brainstorming-research-ideas`](../skills/brainstorming-research-ideas/SKILL.md), [`creative-thinking-for-research`](../skills/creative-thinking-for-research/SKILL.md), [`focus-my-energy`](../skills/focus-my-energy/SKILL.md), [`generate-fresh-ideas`](../skills/generate-fresh-ideas/SKILL.md), [`idea-generation`](../skills/idea-generation/SKILL.md), [`prep-for-meetings`](../skills/prep-for-meetings/SKILL.md), [`prep-for-meetings-2`](../skills/prep-for-meetings-2/SKILL.md)
-- **Val** — [`data-analysis`](../skills/data-analysis/SKILL.md), [`firecrawl-competitive-intel`](../skills/firecrawl-competitive-intel/SKILL.md), [`firecrawl-dashboard-reporting`](../skills/firecrawl-dashboard-reporting/SKILL.md), [`firecrawl-deep-research`](../skills/firecrawl-deep-research/SKILL.md), [`firecrawl-knowledge-base`](../skills/firecrawl-knowledge-base/SKILL.md), [`firecrawl-research-papers`](../skills/firecrawl-research-papers/SKILL.md), [`github-research`](../skills/github-research/SKILL.md), [`gpt-researcher`](https://github.com/assafelovic/gpt-researcher), [`math-reasoning`](../skills/math-reasoning/SKILL.md), [`paper-context-resolver`](../skills/paper-context-resolver/SKILL.md), [`symbolic-equation`](../skills/symbolic-equation/SKILL.md), [`table-generation`](../skills/table-generation/SKILL.md)
+- **Val** — [`data-analysis`](../skills/data-analysis/SKILL.md), [`firecrawl-competitive-intel`](../skills/firecrawl-competitive-intel/SKILL.md), [`firecrawl-dashboard-reporting`](../skills/firecrawl-dashboard-reporting/SKILL.md), [`firecrawl-deep-research`](../skills/firecrawl-deep-research/SKILL.md), [`firecrawl-knowledge-base`](../skills/firecrawl-knowledge-base/SKILL.md), [`firecrawl-research-papers`](../skills/firecrawl-research-papers/SKILL.md), [`github-research`](../skills/github-research/SKILL.md), [`gpt-researcher`](https://github.com/assafelovic/gpt-researcher), [`math-reasoning`](../skills/math-reasoning/SKILL.md), [`paper-context-resolver`](../skills/paper-context-resolver/SKILL.md), [`symbolic-equation`](../skills/symbolic-equation/SKILL.md), [`table-generation`](../skills/table-generation/SKILL.md), [`timesfm-forecasting`](../skills/timesfm-forecasting/SKILL.md)
 
 ## Pemetaan untuk Antigravity
 

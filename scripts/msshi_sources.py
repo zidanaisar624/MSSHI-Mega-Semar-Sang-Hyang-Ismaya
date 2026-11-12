@@ -80,11 +80,16 @@ def git(*args, cwd=None):
     return result.stdout.strip()
 
 
-def clone(url, destination, branch=None, *, metadata_only=False):
+def clone(url, destination, branch=None, *, metadata_only=False, revision=None):
     options = ["--branch", branch] if branch else []
     if metadata_only:
         options += ["--filter=blob:none", "--no-checkout"]
     git("clone", "--template=", "--depth", "1", "--no-tags", *options, "--", url, destination)
+    if revision:
+        if not COMMIT.fullmatch(revision):
+            raise ValueError("Pinned upstream revision must be a complete Git commit.")
+        git("fetch", "--no-tags", "--depth", "1", "--filter=blob:none", "origin", revision, cwd=destination)
+        git("update-ref", "HEAD", revision, cwd=destination)
     commit = git("rev-parse", "HEAD", cwd=destination)
     if not COMMIT.fullmatch(commit):
         raise ValueError("Commit Git tidak valid.")
@@ -119,6 +124,7 @@ def upstream_entries(manifest):
 def fetch_upstreams(manifest, cache, packs=None):
     """Store commit-addressed snapshots, the model card and a registry page."""
     items = upstream_entries(manifest)
+    revisions = {row["id"]: row.get("revision") for row in read_json(manifest)["entries"]}
     cache = absolute(cache)
     reject_links(cache)
     cache.mkdir(parents=True, exist_ok=True)
@@ -137,7 +143,7 @@ def fetch_upstreams(manifest, cache, packs=None):
                 if kind == "git":
                     with TemporaryDirectory(prefix=".msshi-stage-", dir=folder) as staging:
                         source = Path(staging) / "repo"
-                        commit = clone(url, source, metadata_only=True)
+                        commit = clone(url, source, metadata_only=True, revision=revisions.get(name))
                         destination = folder / commit
                         reject_links(destination)
                         if destination.exists():

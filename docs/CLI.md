@@ -11,7 +11,7 @@ Pemeriksaan standar memvalidasi struktur paket. Gunakan `python scripts/check_re
 
 ## Perintah global untuk akun pengguna
 
-Pasang lewat [Quick Start](../README.md#-quick-start-30-detik-pilih-agen-anda) atau jalankan dari salinan v2.1 yang sudah diperiksa.
+Pasang lewat [Quick Start](../README.md#-quick-start-30-detik-pilih-agen-anda) atau jalankan dari salinan kandidat v3 yang sudah diperiksa. Perintah berbasis URL GitHub mengambil versi yang sudah dipublikasikan, sedangkan `-SourcePath .` memakai paket lokal.
 
 ```powershell
 .\install.ps1 -SourcePath .
@@ -21,15 +21,15 @@ Pasang lewat [Quick Start](../README.md#-quick-start-30-detik-pilih-agen-anda) a
 bash install.sh --source-dir .
 ```
 
-Installer menyiapkan perintah `msshi` di PATH akun. Buka terminal baru jika perubahan belum terbaca. Opsi instalasi `-NoSetup` (PowerShell) atau `--no-setup` (Bash) hanya menyiapkan CLI. Opsi `-NoPath` atau `--no-path` menyediakan launcher tanpa memperbarui PATH. Sebagai alternatif, jalankan `npm install --global .` dari root repo, lalu `msshi setup`. Pembungkus npm tetap membutuhkan Python 3.10+.
+Installer menyiapkan perintah `msshi` di PATH akun. Buka terminal baru jika perubahan belum terbaca. Opsi instalasi `-NoSetup` (PowerShell) atau `--no-setup` (Bash) melewati wizard interaktif. Bootstrap tetap dapat memigrasikan profil Hermes yang terdeteksi; opsi ini bukan mode read-only. Opsi `-NoPath` atau `--no-path` menyediakan launcher tanpa memperbarui PATH. Sebagai alternatif, jalankan `npm install --global .` dari root repo, lalu `msshi setup`. Pembungkus npm tetap membutuhkan Python 3.10+.
 
 | Perintah | Cara kerja |
 | --- | --- |
 | `msshi setup` | Pilih mode Solo, Custom Multi-Bot, Selective Packs, atau Preset MuZA. Tinjau target dan file sebelum menerapkan. |
 | `msshi check` / `msshi status` | Bandingkan versi paket aktif dengan `VERSION.json` dari GitHub `main`, tampilkan changelog, dan ringkas rute aplikasi. |
-| `msshi update` | Ambil `main` dari GitHub, lalu segarkan skill terkelola yang masih cocok dengan versi pemasangan. Gunakan setup atau select untuk menambah skill baru. Simpan cadangan SOUL dan Creative DNA yang ditemukan. Setelah itu segarkan cache 37 sumber. |
-| `msshi update --skip-upstreams` | Perbarui rilis dan skill terkelola tanpa mengambil sumber eksternal. |
-| `msshi connect` | Daftarkan rute aplikasi dari hasil deteksi atau pilihan pengguna. |
+| `msshi update` | Ambil `main` dari GitHub, lalu segarkan skill terkelola yang masih cocok dengan versi pemasangan. Gunakan setup atau select untuk menambah skill baru. Simpan cadangan SOUL dan Creative DNA yang ditemukan. Jalankan migrasi profil v3 yang tersedia, lalu segarkan cache 45 sumber dan integrasi terpilih. Provider/model utama serta skill yang dikustomisasi dijaga oleh pemeriksaan dan cadangan. |
+| `msshi update --skip-upstreams` | Perbarui rilis, skill terkelola, dan migrasi profil tanpa mengambil sumber eksternal. |
+| `msshi connect` | Baca menu dan status rute aplikasi. Pada profil v3, eksekusi memakai `msshi runtime ticket` dan `msshi runtime run`. |
 | `msshi select` | Pilih paket atau slug dengan angka/nama dan tinjau rencana. Gunakan `msshi select --local` untuk memakai versi yang sudah ada di perangkat. |
 
 Status versi paket dapat berbeda dari versi skill tertentu setelah pembaruan selektif atau ketika file hasil kustomisasi dipertahankan. Pemasangan melalui marketplace atau Skills CLI dikelola melalui host tersebut. Dalam CLI MSSHI, `msshi select` juga dapat menambahkan skill atau paket baru ke target yang dipilih. Satu target dapat dipilih secara eksplisit dengan `--platform` dan `--target-dir`.
@@ -38,7 +38,7 @@ Cache dan metadata biasanya berada di `%LOCALAPPDATA%\MSSHI` di Windows atau `$X
 
 ### Pengambilan upstream
 
-`msshi update` mencoba 35 repositori Git, satu kartu model, dan satu situs katalog. Git menyimpan snapshot ringan tanpa checkout dan mencatat SHA. Baca file pilihan dengan `git -C <lokasi-snapshot> show HEAD:<path>`; Git akan mengambil isi yang belum tersedia di cache bila diperlukan. Lihat `upstreams/last-fetch.json` untuk sumber yang berhasil dan yang perlu dicoba ulang. Jika ada sumber gagal, perintah mengembalikan status 1 dan mempertahankan pembaruan yang sudah berhasil. Refresh cache tidak memasang runtime, menyalin skill pihak ketiga ke profil, menjalankan skripnya, atau mengunduh bobot OCR.
+`msshi update` mencoba 41 repositori Git, dua kartu model, dan satu situs katalog sesuai manifest 45 sumber. Git menyimpan snapshot ringan tanpa checkout dan mencatat SHA. Baca file pilihan dengan `git -C <lokasi-snapshot> show HEAD:<path>`; Git akan mengambil isi yang belum tersedia di cache bila diperlukan. Lihat `upstreams/last-fetch.json` untuk sumber yang berhasil dan yang perlu dicoba ulang. Jika ada sumber gagal, perintah mengembalikan status 1 dan mempertahankan pembaruan yang sudah berhasil. Tahap fetch cache sendiri tidak memasang runtime, menyalin skill ke profil, menjalankan skrip upstream, atau mengunduh bobot OCR. Jalur global `msshi update` v3 juga memanggil installer integrasi terpilih setelah fetch; pemasangan tersebut memiliki receipt terpisah dan dapat menyalin skill terpilih ke profil. Model, akun, dan layanan tetap memerlukan prasyaratnya.
 
 Skrip langsung berikut juga mendukung fetch. Berikan folder cache yang terpisah dan gunakan `--apply` setelah meninjau rencana.
 
@@ -49,9 +49,9 @@ python scripts/msshi_update.py --mode auto --source ./rilis-baru --baseline ./ri
 
 ### Windows untuk Hermes dan Antigravity
 
-Jalankan `./Install_Overhaul_Hermes_dan_Antigravity.ps1` dari akar repo untuk melihat tujuan di kedua aplikasi. Tambahkan `-Apply` setelah memeriksa tujuan. Pilih `-ConnectMode auto-reconnect` atau `-ConnectMode select -Targets gdrive-web,antigravity` untuk mengikutsertakan rute Hermes. Installer global di Quick Start menyediakan perintah `msshi`.
+Untuk migrasi v3, baca [panduan migrasi](V3_MIGRATION.md), lalu gunakan `msshi runtime migrate --home PATH_HERMES` pada home yang telah diperiksa. Rute aplikasi desktop dan utilitas Hersona/Llmtrim menggunakan CLI; eksekusi aplikasi memerlukan tiket. GDrive pada setup MuZA tetap dinonaktifkan. `Install_Overhaul_Hermes_dan_Antigravity.ps1` merupakan jalur installer lama; tinjau scope dan opsinya sebelum dipakai pada pemasangan yang belum dimigrasikan.
 
-Jika sebelumnya memakai kandidat lokal bernomor `2.2.0-stage2`, jalankan bootstrap dari paket v2.1 sekali untuk mengganti kode pembanding versi. Setelah itu pembaruan dapat dilakukan melalui `msshi update`.
+Pengguna CLI v2.1 atau kandidat lama menjalankan installer/BAT dari paket v3 yang telah diperiksa sekali agar jalur migrasi baru tersedia. Setelah itu gunakan `msshi update`. Validasi menolak sumber dengan versi lebih rendah daripada versi lokal.
 
 ## Hubungkan aplikasi
 
@@ -92,4 +92,16 @@ python skills/persona-shizuka-yukino-shikaku/scripts/cli_anything_sovereign_hub.
 
 Gunakan saldo dan estimasi biaya yang sudah diperiksa. Contoh TokenShield di atas memproyeksikan saldo USD 1,10 dan mengembalikan exit 0. Cadangan minimal USD 1,00. Jika masukan belum lengkap atau proyeksi di bawah cadangan, perintah mengembalikan exit 2. Cek ulang sebelum menjalankan operasi berbayar karena status tagihan tetap berasal dari provider.
 
-Contoh bridge mencetak rute tanpa membuka aplikasi. Tambahkan `--open` saat memang akan membuka target. Halaman web memakai browser sistem dan sesi akun pengguna. Target desktop memerlukan aplikasi terpasang dan terdeteksi.
+Contoh bridge lama di atas hanya untuk pratinjau. Pada profil v3, gunakan dispatcher `msshi runtime ticket` dan `msshi runtime run` untuk eksekusi. Jangan memakai helper lama sebagai jalan pintas melewati tiket. Untuk browsing, ikuti [kebijakan Steel dan persetujuan akun](STEEL_BROWSER_POLICY.md); penilai rute tidak mengaktifkan Steel atau memindahkan login secara otomatis.
+
+## Utilitas lokal dan penghematan otomatis v3
+
+Hersona memakai CLI untuk katalog dan draf persona saat tugas memerlukannya. Persona native Hermes dan `SOUL.md` tetap aktif tanpa pemanggilan katalog pada setiap balasan. Lihat [Hersona CLI](HERSONA_CLI.md).
+
+Plugin native [msshi-auto-trim](../hermes_plugins/msshi-auto-trim/README.md) memanggil Llmtrim otomatis pada hook `transform_tool_result` untuk hasil alat JSON valid yang cukup besar. Hasil diterima hanya bila data JSON tetap sama; bila kompresi gagal, hasil asli dipertahankan. Percakapan, kode, file, konfigurasi, persona, dan error dilewati. Ini tidak membuat proxy seluruh chat atau menjamin penghematan setiap giliran.
+
+```powershell
+msshi trim --status --profile default
+```
+
+Ganti `default` dengan ID profil bot yang diperiksa. Status membaca penghitung agregat tanpa chat atau panggilan model. Pemrosesan file khusus tersedia sebagai opsi terpisah, `msshi trim --input request.json --output request-ringkas.json`.

@@ -1,6 +1,6 @@
 {
   "name": "msshi-sovereign-sage",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "MSSHI Agent Skills and setup CLI",
   "license": "MIT",
   "repository": {
@@ -15,6 +15,7 @@
   },
   "files": [
     "scripts",
+    "hermes_plugins",
     "skills",
     "configs",
     "docs",
@@ -34,6 +35,7 @@
     "*.md",
     "!**/__pycache__/**",
     "!**/*.pyc",
-    "!**/*.local.*"
+    "!**/*.local.*",
+    "*.bat"
   ]
 }

@@ -1,8 +1,8 @@
-# Integrasi eksternal MSSHI Tahap 2
+# Integrasi eksternal MSSHI v3.0
 
-Katalog memuat **37 tautan sumber** dari brief. Itu terdiri dari 35 repositori GitHub, satu kartu model Hugging Face dan satu situs katalog. Masing-masing dicocokkan dengan paket, peran, kegunaan, prasyarat dan lisensinya. Inventaris mesin tersedia di [configs/upstreams.json](../configs/upstreams.json).
+Katalog v3 memuat **45 sumber**, terdiri dari 42 repositori GitHub, dua kartu model Hugging Face dan satu situs katalog. Delapan sumber v3 memperluas 37 sumber Tahap 2. Steel sudah termasuk sumber sebelumnya; TimesFM ditambahkan untuk Val. Masing-masing dicocokkan dengan paket, peran, kegunaan, prasyarat dan lisensinya. Inventaris mesin tersedia di [configs/upstreams.json](../configs/upstreams.json).
 
-Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan dipasang atau dijalankan. Pemeriksaan dokumentasi tidak menguji seluruh runtime pada tiap host. Refresh upstream menyimpan sumber ke cache untuk ditinjau. Manifest memiliki 35 repositori Git, satu kartu model, dan satu situs katalog. Runtime, bobot model, aplikasi, kredensial, dan aktivasi layanan mengikuti panduan tiap sumber.
+Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan dipasang atau dijalankan. Pemeriksaan dokumentasi tidak menguji seluruh runtime pada tiap host. Refresh upstream menyimpan sumber ke cache untuk ditinjau. Manifest memiliki 41 repositori Git, dua kartu model, dan satu situs katalog. Runtime, bobot model, aplikasi, kredensial, dan aktivasi layanan mengikuti panduan tiap sumber.
 
 ## Memilih dan memeriksa integrasi
 
@@ -26,7 +26,7 @@ Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan di
 
 Jalankan `msshi connect --mode auto-reconnect --dry-run` untuk melihat rute yang dapat didaftarkan. Gunakan `msshi connect --catalog` untuk memilih rute per aplikasi. Hermes memakai tool native untuk MCP dan MSSHI menjalankan harness lokal saat diminta. [Panduan koneksi dan contoh](CLI_ANYTHING_BRIDGE.md).
 
-## Inventaris 37 sumber
+## Inventaris 45 sumber
 
 Lisensi yang tercatat berasal dari README, metadata atau kartu model. Periksa `LICENSE` pada commit terpilih sebelum mendistribusikan kode, contoh, font, suara, bobot, merek atau dependensi.
 
@@ -53,7 +53,7 @@ Lisensi yang tercatat berasal dari README, metadata atau kartu model. Periksa `L
 | [`design-taste`](https://github.com/madebymustafa/design-taste) | Pilih identitas visual yang cocok dengan brief dan konsistensi antarlayar. | MIT. |
 | [`paper-shaders`](https://github.com/paper-design/shaders) | Gunakan shader canvas untuk elemen visual saat efek tersebut diperlukan. | Apache-2.0. |
 | [`canvas-ui`](https://github.com/DavidHDev/canvas-ui) | Gunakan komponen WebGL/canvas pada UI dengan anggaran performa yang sesuai. | MIT + Commons Clause menurut upstream; pembatasan menjual library. Tidak disalin ke MSSHI. |
-| [`motion-primitives`](https://github.com/ibelick/motion-primitives) | Pilih komponen animasi UI yang bisa disunting dan diuji. | MIT. |
+| [`motion-primitives`](https://github.com/ibelick/motion-primitives) | Pilih komponen animasi UI yang bisa disunting dan diuji. | Lisensi belum terkonfirmasi pada revisi audit. Jangan redistribusikan sebelum memperoleh hak yang sesuai. |
 | [`cursify`](https://github.com/ui-layouts/cursify) | Pilih efek kursor React/Next.js bila menambah nilai interaksi. | Lisensi belum terkonfirmasi dari sumber yang dibaca. Jangan vendor sebelum dicek. |
 | [`strix`](https://github.com/usestrix/strix) | Tinjau keamanan aplikasi hanya pada target dan metode yang telah diotorisasi. | Apache-2.0 untuk repo; platform cloud dan biaya terpisah. |
 | [`cybersecurity-library`](https://github.com/mukul975/anthropic-cybersecurity-skills) | Cari satu playbook sesuai hardening, forensik, deteksi atau audit. | Apache-2.0. Proyek komunitas; bukan produk resmi Anthropic. |
@@ -69,3 +69,21 @@ Lisensi yang tercatat berasal dari README, metadata atau kartu model. Periksa `L
 | [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Pilih browser cloud hanya bila cakupan data dan biaya disetujui. | MIT untuk plugin; layanan Steel, jaringan, proxy dan biaya terpisah. |
 | [`gpt-researcher`](https://github.com/assafelovic/gpt-researcher) | Susun riset mendalam dengan pencarian, ekstraksi dan daftar sumber. | Apache-2.0 untuk repo; API eksternal terpisah. |
 | [`remote-jobs`](https://github.com/remoteintech/remote-jobs) | Cari perusahaan remote, lalu verifikasi lowongan aktif di laman resmi perusahaan. | ISC menurut README upstream. Hak atas nama, merek, serta data pihak ketiga terpisah. |
+
+### Tujuh sumber tambahan v3
+
+| ID dan sumber | Fungsi saat dipilih | Lisensi atau catatan distribusi |
+|---|---|---|
+| [`caveman`](https://github.com/JuliusBrussee/caveman) | Ringkas handoff internal dan data terstruktur, sambil mempertahankan gaya percakapan persona. | Apache-2.0. Persentase penghematan upstream tidak dijamin untuk semua tugas. |
+| [`hyperframes`](https://github.com/heygen-com/hyperframes) | Pilih skill HTML/motion untuk Kiki-Chii dan Shikaku. Runtime render diaktifkan dan diuji terpisah. | Apache-2.0; lisensi aset dan layanan eksternal terpisah. |
+| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Cari pola UI/UX menggunakan katalog dan pencarian BM25 lokal. | MIT. |
+| [`anthropic-skills`](https://github.com/anthropics/skills) | Gunakan paket terpilih docx, pdf, pptx, xlsx, canvas-design, skill-creator, claude-api, dan webapp-testing. | Apache-2.0 pada masing-masing skill yang dipilih; pertahankan LICENSE/NOTICE per folder. |
+| [`hermes-omnivoice`](https://github.com/ThaungThanHan/hermes-omnivoice) | Suara lokal on-demand setelah dependensi, model, dan uji sintesis siap. | Plugin menyatakan Apache-2.0 dalam pyproject.toml. Bobot k2-fsa/OmniVoice memakai CC-BY-NC dan memerlukan hak yang sesuai untuk penggunaan komersial. |
+| [`hermes-dreaming`](https://github.com/itpartypattaya/hermes-dreaming/tree/21878d3ec8752283dd7ee69a803c63bb989c1740) | Konsolidasi deterministik menjadi usulan yang ditinjau, tanpa membangunkan agen LLM. | MIT pada revisi yang dipin. Batas input berbeda dari batas working set proses. |
+| [`kat-coder-v2-5-dev`](https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev) | Opsi subagen coder yang memerlukan runtime lokal atau endpoint terverifikasi. Dapat dilewati. | Apache-2.0 menurut model card. Ukuran kuantisasi dan kecukupan perangkat harus diverifikasi. |
+
+Audit revisi dan cakupan lisensi terbaru tercantum di [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) dan [inventaris lisensi mesin](../configs/upstream_license_audit.json). Lisensi ringkas di tabel ini tidak menggantikan berkas hukum pada revisi sumber yang dipakai.
+
+## TimesFM untuk Val
+
+[TimesFM](TIMESFM.md) menambahkan forecasting numerik lokal melalui runtime CPU terpisah. [Steel](STEEL_BROWSER_POLICY.md) memakai guard native yang menghentikan fallback lokal; sesi cloud tetap memerlukan kredensial dan persetujuan anggaran. [GitLab/Tinyfish](SERVICE_CONNECTIONS.md) adalah MCP layanan web yang dipertahankan.

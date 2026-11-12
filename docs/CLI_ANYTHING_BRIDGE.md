@@ -1,5 +1,25 @@
 # CLI-Anything Universal Bridge
 
+## Eksekusi v3 melalui tiket tugas
+
+Pada profil yang sudah dimigrasikan ke MSSHI v3, gunakan dispatcher lokal. Registrasi MCP aplikasi desktop dihapus. Utilitas lokal Hersona/llmtrim juga beralih dari MCP stdio ke CLI. GitLab/Tinyfish tetap menjadi konektor MCP layanan web. Hersona dipanggil melalui tiket saat tugas persona memerlukannya, sedangkan Llmtrim berjalan otomatis melalui hook hasil tool JSON yang memenuhi syarat. [Hersona CLI](HERSONA_CLI.md) · [Plugin Llmtrim otomatis](../hermes_plugins/msshi-auto-trim/README.md). Status membaca metadata tanpa membuka aplikasi. Rute Google Drive mengikuti kebijakan profil; pada setup MuZA rute desktop dan web dinonaktifkan.
+
+```powershell
+msshi runtime status
+msshi connect --status
+msshi trim --status --profile default
+msshi runtime ticket --profile kiki-chii --target ffmpeg --task "Periksa versi FFmpeg untuk proyek video aktif" --source context --ttl 120
+msshi runtime run --profile kiki-chii --ticket TICKET_ID ffmpeg -- -version
+```
+
+Untuk penghitung Llmtrim, ganti default dengan ID profil yang diperiksa. Penghitung dibaca tanpa chat atau panggilan model. Ganti TICKET_ID dengan ID yang dicetak perintah ticket. Tiket berlaku untuk satu profil, satu target, satu eksekusi, dan waktu yang terbatas. Periksa profil dan argumen sebelum menjalankannya. Jalur `connect --open` dan `connect --run` di referensi v2.1 di bawah ditolak pada profil v3; gunakan `runtime run`.
+
+Migrasi dijalankan melalui paket v3 atau `msshi runtime migrate` pada folder Hermes yang dipilih. Native CLI aplikasi harus tersedia; koneksi MCP desktop bukan fallback. [Migrasi v3](V3_MIGRATION.md) · [Skill dan contoh dispatcher](../skills/cli-anything-universal-bridge/SKILL.md).
+
+## Referensi v2.1 sebelum migrasi
+
+Bagian berikut menjelaskan bridge v2.1 untuk pemasangan yang belum memiliki kebijakan runtime v3. Jalur MCP desktop dan peluncuran `--open`/`--run` di sini tidak berlaku setelah migrasi.
+
 MSSHI v2.1 menyimpan rute aplikasi per profil Hermes. Bridge mendeteksi konektor yang dideklarasikan dan aplikasi atau harness yang tersedia. Hermes tetap menangani koneksi serta tool MCP. Harness CLI-Anything dijalankan sebagai proses lokal setelah dipilih untuk tugas.
 
 ## Pilih cara koneksi

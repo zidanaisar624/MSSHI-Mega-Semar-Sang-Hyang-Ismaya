@@ -186,7 +186,8 @@ def canonical(target):
 
 def allowed_id(target):
     return bool(
-        target in (*hub.WEB_TARGETS, "antigravity", "blender", *hub.ARTCRAFT, *hub.HARNESS, *hub.NATIVE)
+        target in (*hub.WEB_TARGETS, "antigravity", "blender", *hub.ARTCRAFT, *hub.HARNESS, *hub.NATIVE,
+                   "git", "gitlab", "node", "python", "graphify", "whatsapp-web", "materialcraft", "texturecraft", "hersona", "llmtrim")
         or target.startswith("mcp:") and CONNECTOR.fullmatch(target[4:])
         or hub.GENERIC_CLI.fullmatch(target)
     )
@@ -199,7 +200,7 @@ def read_registry(destination):
     try:
         raw = json.loads(read_text(destination))
         values = raw["targets"]
-        if (raw.get("schema_version") != 1 or not isinstance(values, list)
+        if (raw.get("schema_version") not in {1,3} or not isinstance(values, list)
                 or not all(isinstance(item, str) and allowed_id(item) and canonical(item) == item for item in values)):
             raise ValueError("Invalid route registry")
         return set(values)
@@ -255,10 +256,14 @@ def current_capability(target, candidates):
 
 
 def report(destination, registered, candidates, warnings, selected=None):
-    ids = sorted(registered) if selected is None else selected
+    declared_remote = {key for key,row in candidates.items() if row.get("registration_source") == "hermes-config"}
+    ids = sorted(registered | declared_remote) if selected is None else selected
+    schema = json.loads(read_text(destination)).get("schema_version",1) if destination.is_file() else 1
     return {
-        "schema_version": 1, "auto_open_on_boot": False, "registry": str(destination),
-        "connections": [{"id": key, **current_capability(key, candidates), "registered": key in registered}
+        "schema_version": schema, "auto_open_on_boot": False, "registry": str(destination),
+        "connections": [{"id": key, **current_capability(key, candidates),
+                         "registered": (current_capability(key,candidates)["readiness"] == "configured"
+                                        if key in declared_remote else key in registered)}
                         for key in ids],
         "warnings": warnings,
     }
@@ -365,6 +370,7 @@ def configure_parser(parser):
     parser.add_argument("--dry-run", action="store_true", help="Pratinjau perubahan tanpa menulis registri.")
     parser.add_argument("--targets", help="ID target dipisah koma untuk --mode select.")
     parser.add_argument("--query", help="Kueri web atau path workspace Antigravity saat --open.")
+    parser.add_argument("--ticket", help="One-use task ticket from msshi runtime ticket.")
     operation = parser.add_mutually_exclusive_group()
     operation.add_argument("--mode", choices=("auto-reconnect", "select"), help="Pilih mode koneksi.")
     operation.add_argument("--catalog", action="store_true", help="Lihat pilihan target yang dikenal.")
@@ -396,6 +402,22 @@ def run(args, default_state_dir=None):
                           extension="cli:<slug> resolves cli-anything-<slug> on PATH")
         emit(result, args.json)
         return 0
+    installation = home.parent.parent if home.parent.name.casefold() == "profiles" else home
+    runtime_state = installation / "msshi-runtime"
+    if (runtime_state / "policy.json").is_file():
+        if args.open or args.run:
+            if not getattr(args, "ticket", None):
+                raise ValueError("MSSHI v3 requires a one-use task ticket. Use msshi runtime ticket, then msshi runtime run.")
+            target = canonical(args.open or args.run).removeprefix("mcp:")
+            arguments = args.command_args[1:] if args.command_args[:1] == ["--"] else args.command_args
+            if args.query:
+                raise ValueError("Use the registered web destination through msshi runtime run; query routing is not configured.")
+            runtime = runtime_state / "runtime.py"
+            if not runtime.is_file():
+                raise ValueError("MSSHI v3 runtime is missing. Run msshi runtime migrate.")
+            return subprocess.call([sys.executable, "-B", str(runtime), "run", "--home", str(installation),
+                                    "--profile", "default" if home == installation else home.name,
+                                    "--ticket", args.ticket, target, "--", *arguments])
     if args.open or args.run:
         target = canonical(args.open or args.run)
         if target not in read_registry(destination):
@@ -436,6 +458,10 @@ def run(args, default_state_dir=None):
                 destination, candidates, warnings, "select" if args.add else mode, [args.add] if args.add else targets,
             )
         if not args.dry_run:
+            if (runtime_state / "policy.json").is_file():
+                registry = json.loads(data)
+                registry.update(schema_version=3,execution="msshi-runtime-ticket",auto_open_on_boot=False)
+                data = (json.dumps(registry,indent=2)+"\n").encode("utf-8")
             write_registry(destination, data)
     result["mode"] = "Pratinjau. Registri tetap." if args.dry_run else "Registri disimpan. Semua rute on-demand."
     emit(result, args.json)

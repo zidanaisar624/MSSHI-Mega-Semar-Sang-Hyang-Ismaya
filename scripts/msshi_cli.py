@@ -32,9 +32,10 @@ SEMVER = re.compile(r"(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?")
 PLATFORMS = (*installer.HOSTS, "manual")
 MODES = ("solo", "custom-bots", "selective", "muza-preset")
 RELEASE_DIRS = ("scripts", "configs", "skills", "docs", "portable", "assets", "adapters",
-                "business-sage", ".claude-plugin")
+                "business-sage", ".claude-plugin", "hermes_plugins")
 RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md", "INSTALL_FOR_AGENTS.md",
                  "LICENSE", "SKILL.md", "install.ps1", "install.sh", "package.json",
+                 "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat", "MULAI_DI_SINI_PEMULA.bat",
                  "install_business_sage.ps1", "install_business_sage.sh", "Install_Overhaul_Hermes_dan_Antigravity.ps1",
                  "00_PANDUAN_INSTAL_AUTO_UPDATE_DAN_PROMPT_MULTI_AGENT.md", "PANDUAN_KUSTOMISASI_USER_PUBLIK.md",
                  "openai_custom_gpt_schema.json", "openclaw_manifest.json", "skill_activation_matrix.json")
@@ -327,6 +328,10 @@ def setup(args, home, state):
     with TemporaryDirectory(prefix=".msshi-stage-", dir=home) as scratch:
         if mode == "custom-bots":
             data = custom_matrix(data, catalog)
+        elif mode == "muza-preset" and input("Custom display names? [y/N]: ").strip().lower() in {"y", "yes", "ya"}:
+            data = {**data, "bots": [{**bot, "label": input(f"{bot['label']} [{bot['id']}]: ").strip() or bot["label"]}
+                                    for bot in data["bots"]]}
+        if team:
             matrix = Path(scratch) / "matrix.json"
             write_json(matrix, data)
             command.extend(("--matrix", str(matrix)))
@@ -357,6 +362,20 @@ def setup(args, home, state):
                         managed[slug] = fingerprint(files)
         write_json(home / STATE_FILE, state)
     print(f"Target terdaftar untuk pembaruan MSSHI: {len(selections)}.")
+    if platform == "hermes":
+        print("Subagen KAT opsional. Model utama tetap memakai konfigurasi pengguna.")
+        print("1. Lokal ringan IQ2_XS/IQ3_XXS (verifikasi RAM dan file model diperlukan)")
+        print("2. Lokal Q4_K_M (verifikasi RAM dan file model diperlukan)")
+        print("3. Cloud/API (perlu endpoint dan izin biaya)")
+        print("4. Lewati")
+        choice = input("Pilihan KAT [4]: ").strip() or "4"
+        modes = {"1": "light", "2": "ideal", "3": "cloud", "4": "skip"}
+        if choice not in modes:
+            raise ValueError("Pilihan KAT harus 1-4.")
+        from msshi_integrations import kat
+        profile_home = Path(os.environ.get("HERMES_HOME") or Path.home() / ".hermes").absolute()
+        print(json.dumps(kat(profile_home, modes[choice]), ensure_ascii=False, indent=2))
+        print("ArtCraft bersifat opsional. Aplikasi yang dilewati tidak menggagalkan setup.")
 
 
 def confirmed():
@@ -395,6 +414,35 @@ def select(args, home, state, source, commit):
     write_json(home / STATE_FILE, state)
 
 
+def migrate_runtime(source, hermes_home=None):
+    """Invoke the incoming migration so upgrades from v2 use the new implementation."""
+    candidate = Path(hermes_home or os.environ.get("HERMES_HOME") or Path.home() / ".hermes").absolute()
+    if not (candidate / "config.yaml").is_file():
+        print("Hermes profile not detected. Public skills updated. Run msshi setup to choose a host.")
+        return 0
+    script = source / "scripts" / "msshi_runtime.py"
+    if not script.is_file():
+        return 0
+    outcome = subprocess.call([sys.executable, "-B", "-X", "utf8", str(script),
+                               "migrate", "--home", str(candidate)])
+    if outcome:
+        return outcome
+    # Refresh an explicitly enrolled policy only. Fresh installations select
+    # Steel with msshi browser --install; no surprise browser account access.
+    from msshi_runtime import profiles, yaml_read
+    helper = source / 'scripts/msshi_browser_policy.py'
+    for folder in profiles(candidate).values():
+        config = yaml_read((folder / 'config.yaml').read_bytes())
+        if 'msshi-steel-policy' not in ((config.get('plugins') or {}).get('enabled') or []):
+            continue
+        if helper.is_file():
+            outcome = subprocess.call([sys.executable, '-B', '-X', 'utf8', str(helper),
+                                       '--install', '--hermes-home', str(folder)])
+            if outcome:
+                return outcome
+    return 0
+
+
 def update(args, home, state, source, commit):
     current = release_version(ROOT)
     _, catalog, _ = validate_release(source, current)
@@ -414,15 +462,33 @@ def update(args, home, state, source, commit):
                               apply=True, install_missing=required)
             finally:
                 write_json(home / STATE_FILE, state)
+    from msshi_managed import refresh as refresh_managed
+    managed_result = refresh_managed(home, source, apply=True)
+    print(json.dumps(managed_result, ensure_ascii=False, indent=2))
+    # refresh() checkpoints its fingerprints; retain them in the caller state.
+    state['managed_bindings'] = read_state(home).get('managed_bindings', [])
+    if any(row.get('status') == 'blocked' for row in managed_result['results']):
+        print('Registered shared skill link changed; review msshi managed status before retrying.')
+        return 1
+    migration = migrate_runtime(source, getattr(args, 'hermes_home', None))
+    if migration:
+        print("Migration needs attention. The previous active release remains selected.")
+        return migration
     state.update(current=release_id, git_commit=commit)
     write_json(home / STATE_FILE, state)
     print(f"Rilis MSSHI: {current} -> {release_version(source)} ({commit[:12]}).")
-    if not state["targets"]:
+    if not state["targets"] and not state.get("managed_bindings"):
         print("Belum ada target. Jalankan msshi setup untuk memasang dan mendaftarkan skills.")
     if args.skip_upstreams:
         return 0
     rows = fetch_upstreams(source / UPSTREAMS, home / "upstreams")
-    return int(any(row["status"] == "failed" for row in rows.values()))
+    failed = int(any(row["status"] == "failed" for row in rows.values()))
+    candidate = Path(getattr(args, 'hermes_home', None) or os.environ.get("HERMES_HOME") or Path.home() / ".hermes").absolute()
+    integration = source / "scripts" / "msshi_integrations.py"
+    if (candidate / "config.yaml").is_file() and integration.is_file():
+        failed = max(failed, subprocess.call([sys.executable, "-B", "-X", "utf8", str(integration),
+                                             "install", "--home", str(candidate)]))
+    return failed
 
 
 def active_script(home):
@@ -452,6 +518,14 @@ def main(argv=None):
     connections.configure_parser(connect)
     updater = subparsers.add_parser("update", help="Perbarui rilis, skill yang dikelola, dan cache upstream.")
     updater.add_argument("--skip-upstreams", action="store_true", help="Hanya perbarui MSSHI dan skill bundel.")
+    updater.add_argument("--hermes-home", type=Path, help="Folder Hermes untuk migrasi v3.")
+    updater.add_argument("--source", type=Path, help="Pakai kandidat lokal yang sudah diperiksa.")
+    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm"):
+        command = subparsers.add_parser(verb, add_help=False, help=f"MSSHI v3 {verb}.")
+        command.add_argument("arguments", nargs=argparse.REMAINDER)
+    for verb in ("dream", "voice", "kat"):
+        command = subparsers.add_parser(verb, add_help=False, help=f"MSSHI v3 {verb}.")
+        command.add_argument("arguments", nargs=argparse.REMAINDER)
     for action in ("setup", "select"):
         wizard = subparsers.add_parser(action, help="Buka wizard empat mode." if action == "setup" else "Pilih skill atau paket.")
         wizard.add_argument("--platform", choices=PLATFORMS)
@@ -460,30 +534,54 @@ def main(argv=None):
             wizard.add_argument("--local", action="store_true", help="Pilih dari rilis lokal tanpa mengakses GitHub.")
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
-    args = parser.parse_args(argv)
+    effective = list(sys.argv[1:] if argv is None else argv)
+    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm"}
+    if effective and effective[0] in passthrough:
+        args = parser.parse_args([effective[0], "--", *effective[1:]])
+        args.arguments = args.arguments[1:]
+    else:
+        args = parser.parse_args(effective)
     home = data_root()
     try:
-        if args.command != "bootstrap":
+        if args.command != "bootstrap" and not (args.command == "update" and args.source):
             active = active_script(home)
             if active and active != Path(__file__).resolve():
                 return subprocess.call([sys.executable, "-B", "-X", "utf8", str(active),
                                         *(sys.argv[1:] if argv is None else argv)])
         if args.command in {"check", "status"}:
             connection_summary(args, home)
+            bindings = read_state(home).get('managed_bindings', [])
+            print(f'MSSHI managed bundles: {len(bindings)} registered logical references. Details: msshi managed status')
             check_release()
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
+        entrypoints = {"runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+                       "desktop": "msshi_desktop.py", "audit": "check_release_v3.py", "assets": "find_muza_assets.py",
+                       "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
+                       "managed": "msshi_managed.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",
+                       "dream": "msshi_integrations.py", "voice": "msshi_integrations.py", "kat": "msshi_integrations.py"}
+        if args.command in entrypoints:
+            prefix = [args.command] if args.command in {"dream", "voice", "kat"} else []
+            return subprocess.call([sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / entrypoints[args.command]),
+                                    *prefix, *args.arguments])
         with locked(home):
             state = read_state(home)
             if args.command == "bootstrap":
                 current = active_script(home)
                 validate_release(ROOT, release_version(current.parents[1] if current else ROOT))
+                migration = migrate_runtime(ROOT)
+                if migration:
+                    return migration
                 bootstrap(home, stage_release(ROOT, home), state, args.no_path)
             elif args.command == "setup":
                 setup(args, home, state)
             elif args.command == "select" and args.local:
                 select(args, home, state, ROOT, state.get("git_commit"))
+            elif args.command == "update" and args.source:
+                source = installer.absolute(args.source)
+                commit = "local-candidate"
+                return update(args, home, state, source, commit)
             else:
                 with TemporaryDirectory(prefix=".msshi-stage-", dir=home) as scratch:
                     source, commit = remote_release(Path(scratch))

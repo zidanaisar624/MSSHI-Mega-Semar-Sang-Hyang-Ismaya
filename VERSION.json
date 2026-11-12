@@ -1,20 +1,33 @@
 {
-  "suite_name": "MSSHI — Mega Semar Sang Hyang Ismaya: Sovereign Sage",
+  "suite_name": "MSSHI — Hermes Ultimate Optimizer & Sovereign Sage Suite",
   "technical_name": "Multi-Agent Sovereign Sage & Hermes Intelligence",
   "short_code": "MSSHI",
-  "version": "2.1.0",
-  "release_date": "2026-11-10",
-  "bundled_skills": 57,
-  "external_sources": 37,
+  "version": "3.0.0",
+  "release_date": "2026-11-12",
+  "bundled_skills": 58,
+  "external_sources": 45,
   "update_modes": [
     "check",
     "update",
     "select",
     "connect",
-    "setup"
+    "setup",
+    "runtime",
+    "desktop",
+    "integrations",
+    "dream",
+    "voice",
+    "kat",
+    "audit",
+    "compact",
+    "browser",
+    "trim",
+    "managed",
+    "services",
+    "timesfm"
   ],
-  "release_status": "v2.1_candidate",
+  "release_status": "release",
   "license": "MIT",
   "core_skills": 50,
-  "integration_wrappers": 7
+  "integration_wrappers": 8
 }

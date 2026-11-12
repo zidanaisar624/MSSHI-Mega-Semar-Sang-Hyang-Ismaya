@@ -164,7 +164,8 @@
         "research-paper-writing",
         "symbolic-equation",
         "table-generation",
-        "unlimited-ocr-2"
+        "unlimited-ocr-2",
+        "timesfm-forecasting"
       ],
       "optional_skills": [
         "anti-slop",
@@ -1276,6 +1277,18 @@
       "path": "skills/wise-judgment-and-sovereign-orchestrator/SKILL.md",
       "purpose": "Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val.",
       "scope": "orchestration"
+    },
+    {
+      "slug": "timesfm-forecasting",
+      "status": "bundled",
+      "path": "skills/timesfm-forecasting/SKILL.md",
+      "purpose": "Prediksi deret waktu numerik lokal dengan TimesFM 2.5, validasi data dan evaluasi terpisah.",
+      "scope": "research",
+      "source": "https://github.com/google-research/timesfm",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "timesfm"
+      ]
     }
   ],
   "packs": {
@@ -1346,7 +1359,8 @@
       "slide-generation",
       "symbolic-equation",
       "table-generation",
-      "wise-judgment-and-sovereign-orchestrator"
+      "wise-judgment-and-sovereign-orchestrator",
+      "timesfm-forecasting"
     ],
     "webdev": [
       "analyze-project",

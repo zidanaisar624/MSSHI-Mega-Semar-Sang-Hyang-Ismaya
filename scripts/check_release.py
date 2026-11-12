@@ -158,7 +158,7 @@ def run_cli(script, *args, ok=True, env=None, input_text=None):
     result = subprocess.run(
         [sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / script), *map(str, args)],
         cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=90,
-        env=env, input=input_text,
+        env={**os.environ, **(env or {}), "HERMES_HOME": str(ROOT / ".msshi-check-no-hermes")}, input=input_text,
     )
     require((result.returncode == 0) == ok,
             f"{script} returned {result.returncode}: {(result.stderr or result.stdout)[-400:]}")
@@ -277,7 +277,7 @@ def global_smoke(work):
     for slug in (changed, custom):
         with (source / "skills" / slug / "SKILL.md").open("a", encoding="utf-8") as file:
             file.write("\nFixture update.\n")
-    require(msshi_cli.update(SimpleNamespace(skip_upstreams=True), home, state, source, "a" * 40) == 0,
+    require(msshi_cli.update(SimpleNamespace(skip_upstreams=True, hermes_home=work / 'no-hermes'), home, state, source, "a" * 40) == 0,
             "Global update failed")
     require((target / changed / "SKILL.md").read_bytes() == (source / "skills" / changed / "SKILL.md").read_bytes()
             and (target / custom / "SKILL.md").read_text(encoding="utf-8") == "local skill customization",
@@ -398,7 +398,7 @@ def bridge_smoke(work):
 
 
 def upstream_smoke(work):
-    def clone(url, destination, *, metadata_only=False):
+    def clone(url, destination, *, metadata_only=False, **kwargs):
         require(url.endswith(".git") and metadata_only, "Upstream must use a metadata-only Git snapshot")
         destination.mkdir()
         return "a" * 40
@@ -407,8 +407,10 @@ def upstream_smoke(work):
     with patch.object(msshi_sources, "clone", side_effect=clone) as git, \
             patch.object(msshi_sources, "download", return_value=b"public source metadata") as get:
         rows = msshi_sources.fetch_upstreams(ROOT / "configs" / "upstreams.json", cache)
-        require(len(rows) == 37 and git.call_count == 35 and get.call_count == 2,
-                "Manifest fetch did not cover the 37 source entries")
+        kinds = [entry["source_type"] for entry in read_json(ROOT / "configs" / "upstreams.json")["entries"]]
+        require(len(rows) == len(kinds) and git.call_count == kinds.count("git")
+                and get.call_count == len(kinds) - kinds.count("git"),
+                "Manifest fetch did not cover all declared source entries")
         require(all(item["status"] == "cached" for item in rows.values())
                 and read_json(cache / "last-fetch.json") == rows, "Upstream cache report is incomplete")
 
@@ -450,6 +452,9 @@ def main():
                 version_migration_smoke(Path(scratch))
                 bridge_smoke(Path(scratch))
                 upstream_smoke(Path(scratch))
+            require(subprocess.run([sys.executable, '-B', '-X', 'utf8', str(ROOT / 'scripts/check_managed.py')],
+                                   capture_output=True, text=True, timeout=60).returncode == 0,
+                    'Managed shared-skill update regression failed')
             catalog_smoke()
             print("Smoke tests passed: installer, updater, global CLI, v2.1 migration, application routes, upstream cache and catalog guardrails")
         if not (ROOT / "LICENSE").is_file():

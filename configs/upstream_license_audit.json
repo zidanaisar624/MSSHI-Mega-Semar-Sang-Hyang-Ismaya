@@ -1,0 +1,617 @@
+{
+  "reviewed_at": "2026-11-12",
+  "entries": [
+    {
+      "id": "higgsfield-skills",
+      "source": "https://github.com/higgsfield-ai/skills",
+      "revision": "27000402070db19d958789d05b3b52b6f4718d7c",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Higgsfield AI",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/higgsfield-ai/skills/27000402070db19d958789d05b3b52b6f4718d7c/LICENSE",
+      "license_sha256": "9da656d6226936542be59478dbf775057dfdeade2629d35e0832108c2b7aecc0",
+      "status": "license_read"
+    },
+    {
+      "id": "remotion-skills",
+      "source": "https://github.com/remotion-dev/skills",
+      "revision": "1af7e69a2a613437d46095924057970a6a7df40d",
+      "status": "root_license_missing",
+      "license": "Unresolved at audited revision; do not redistribute without permission"
+    },
+    {
+      "id": "barty-motion-graphics",
+      "source": "https://github.com/Barty-Bart/motion-graphics",
+      "revision": "3d83d987d658601d8a1269eb691622bdcd427335",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Bart",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/Barty-Bart/motion-graphics/3d83d987d658601d8a1269eb691622bdcd427335/LICENSE",
+      "license_sha256": "40a5f89f85b8345b3af943b0e2d28dc7199ff83ddf9d905cded0abcc38431672",
+      "status": "license_read"
+    },
+    {
+      "id": "charlie-motion-graphics",
+      "source": "https://github.com/charlie947/motion-graphics-skills",
+      "revision": "229022ebca76972e119e36ada23a1648d51665ab",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Charlie Hills",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/charlie947/motion-graphics-skills/229022ebca76972e119e36ada23a1648d51665ab/LICENSE",
+      "license_sha256": "ed17713237d18555a34c208bf0cb1ce347faa937731d509e265ce91be660e218",
+      "status": "license_read"
+    },
+    {
+      "id": "bang-motion",
+      "source": "https://github.com/bangtutorial/bang-motion",
+      "revision": "c1aa65e921c970d858705fcb4a53a8294d1a4131",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Bang Tutorial",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/bangtutorial/bang-motion/c1aa65e921c970d858705fcb4a53a8294d1a4131/LICENSE",
+      "license_sha256": "5baa6f2a531baa97eb2d3dea7778990fb244d5c6627025b5c2a5bdebd8d1bf5c",
+      "status": "license_read"
+    },
+    {
+      "id": "humanizer-en",
+      "source": "https://github.com/blader/humanizer",
+      "revision": "b48c832f0f809c1b5658edbb838c2521b72f2413",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2025 Siqi Chen",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/blader/humanizer/b48c832f0f809c1b5658edbb838c2521b72f2413/LICENSE",
+      "license_sha256": "4ac4810254ab36d45419141aeb8e69bf50652cfafe5b2dab947d06d44e5cbf96",
+      "status": "license_read"
+    },
+    {
+      "id": "humanizer-indonesia",
+      "source": "https://github.com/adhiprib/humanizer-indonesia",
+      "revision": "62fe1aed5932c26cfcfc7ed096415e59aae5b0db",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Pribadi Mumpuni Adhi",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/adhiprib/humanizer-indonesia/62fe1aed5932c26cfcfc7ed096415e59aae5b0db/LICENSE",
+      "license_sha256": "40442f03258c81f5e71735e7c93a38f90fe701539ef2d7e89511363490c75c51",
+      "status": "license_read"
+    },
+    {
+      "id": "anti-slop",
+      "source": "https://github.com/miqdadbadjuber/anti-slop",
+      "revision": "3b75daa1fb6bb4c2b8a3807f82eed50914dee6b2",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Miqdad Badjuber (antislop)",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/miqdadbadjuber/anti-slop/3b75daa1fb6bb4c2b8a3807f82eed50914dee6b2/LICENSE",
+      "license_sha256": "9fd83fb1fda52ca0094b96e2ed5a3d6c42a81b95a6c6326553f5bbe570f443de",
+      "status": "license_read"
+    },
+    {
+      "id": "goose",
+      "source": "https://github.com/aaif-goose/goose",
+      "revision": "72b8db883ff827f5aa0a0955e2007d1407f5d9b9",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/aaif-goose/goose/72b8db883ff827f5aa0a0955e2007d1407f5d9b9/LICENSE",
+      "license_sha256": "44459b86c2e96fdbfd8a6b5c33d30d4b04b5293fcb2ec96fe4dcc4e0f90b8962",
+      "status": "license_read"
+    },
+    {
+      "id": "superpowers",
+      "source": "https://github.com/obra/superpowers",
+      "revision": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2025 Jesse Vincent",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/obra/superpowers/22f0b463e7a5e579904dd6211a520321035526f7/LICENSE",
+      "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+      "status": "license_read"
+    },
+    {
+      "id": "ponytail",
+      "source": "https://github.com/dietrichgebert/ponytail",
+      "revision": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 DietrichGebert",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/dietrichgebert/ponytail/96608e078b2d5ea607c5c3b8b5a54d1c1fba6846/LICENSE",
+      "license_sha256": "fb1bc6909ac3ef82d5c22106e32ef682b0cff66788fa915fb9b53b15c9d2f3ab",
+      "status": "license_read"
+    },
+    {
+      "id": "addy-agent-skills",
+      "source": "https://github.com/addyosmani/agent-skills",
+      "revision": "301b02b12bff98e4688e6984af6556802322bbde",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2025 Addy Osmani",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/addyosmani/agent-skills/301b02b12bff98e4688e6984af6556802322bbde/LICENSE",
+      "license_sha256": "6f202f8bd568cd730dbb2b0d1f8e243bc74c2fa1f64dbce9b2c7ea08bd5c9fd7",
+      "status": "license_read"
+    },
+    {
+      "id": "graphify",
+      "source": "https://github.com/Graphify-Labs/graphify",
+      "revision": "5eedffa87476a063a05bed96f17275ed63f05c1a",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/Graphify-Labs/graphify/5eedffa87476a063a05bed96f17275ed63f05c1a/LICENSE",
+      "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "status": "license_read"
+    },
+    {
+      "id": "mindrally-skills",
+      "source": "https://github.com/mindrally/skills",
+      "revision": "7682ca77710e0971eab4e0ae5dddfa281aea0ba5",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/mindrally/skills/7682ca77710e0971eab4e0ae5dddfa281aea0ba5/LICENSE",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "status": "license_read"
+    },
+    {
+      "id": "playwright-best-practices",
+      "source": "https://github.com/currents-dev/playwright-best-practices-skill",
+      "revision": "0b75b5835a87de1fdd202ba965f3bc5a27738fdf",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright © 2026 Currents Software Inc.",
+        "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
+        "THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYR"
+      ],
+      "license_url": "https://raw.githubusercontent.com/currents-dev/playwright-best-practices-skill/0b75b5835a87de1fdd202ba965f3bc5a27738fdf/LICENSE.md",
+      "license_sha256": "2b98cdd2800845a1230f2ad4b310901e3c9ae9364ddebb01e90a2ebe6d953d82",
+      "status": "license_read"
+    },
+    {
+      "id": "awesome-copilot",
+      "source": "https://github.com/github/awesome-copilot",
+      "revision": "227949a7542a55d2155c00e7cdb998d9a0fee4f3",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright GitHub, Inc.",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/github/awesome-copilot/227949a7542a55d2155c00e7cdb998d9a0fee4f3/LICENSE",
+      "license_sha256": "e32449d23085399adc1222f7a17408b730550258e51627c153cb108ca9955823",
+      "status": "license_read"
+    },
+    {
+      "id": "superdesign-skill",
+      "source": "https://github.com/superdesigndev/superdesign-skill",
+      "revision": "f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Superdesign (superdesign.dev)",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/superdesigndev/superdesign-skill/f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b/LICENSE",
+      "license_sha256": "40ef0633533bfca94a5152b8ecc9032beb30533cab3575e4f14f324ecd94afab",
+      "status": "license_read"
+    },
+    {
+      "id": "better-design",
+      "source": "https://github.com/marvkr/better-design",
+      "revision": "175e7ba49bcf83857abc32933686b5aa3abb197e",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Marvin Kaunda",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/marvkr/better-design/175e7ba49bcf83857abc32933686b5aa3abb197e/LICENSE",
+      "license_sha256": "5546dea80062ab23224f8f2dcc84792f9a584998763b66f487cf3904ee249777",
+      "status": "license_read"
+    },
+    {
+      "id": "design-taste",
+      "source": "https://github.com/madebymustafa/design-taste",
+      "revision": "c4a6bff0871eb4b15371b0e7d2751628b0ed4608",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Mustafa",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/madebymustafa/design-taste/c4a6bff0871eb4b15371b0e7d2751628b0ed4608/LICENSE",
+      "license_sha256": "7a0f09be6768f60fd7c01ecab6af369614c224061ffc76792ef06881493bb4a2",
+      "status": "license_read"
+    },
+    {
+      "id": "paper-shaders",
+      "source": "https://github.com/paper-design/shaders",
+      "revision": "b6e6e7f73faf614f0c9f4e635451d4c3ed47bad0",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/paper-design/shaders/b6e6e7f73faf614f0c9f4e635451d4c3ed47bad0/LICENSE",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "status": "license_read"
+    },
+    {
+      "id": "canvas-ui",
+      "source": "https://github.com/DavidHDev/canvas-ui",
+      "revision": "a0be3b7e1f42d0d1bafde470b6794b39f6729502",
+      "license": "MIT + Commons Clause",
+      "copyright_lines": [
+        "Copyright (c) 2026 David Haz",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/DavidHDev/canvas-ui/a0be3b7e1f42d0d1bafde470b6794b39f6729502/LICENSE.md",
+      "license_sha256": "2a9a221a47f581d7984ca3a568e38fb17d5b6e43164db3f3482b4767c8e8e5b3",
+      "status": "license_read"
+    },
+    {
+      "id": "motion-primitives",
+      "source": "https://github.com/ibelick/motion-primitives",
+      "revision": "120f64f6ca60348e251f929e9c81f11ccbe45eda",
+      "status": "root_license_missing",
+      "license": "Unresolved at audited revision; do not redistribute without permission"
+    },
+    {
+      "id": "cursify",
+      "source": "https://github.com/ui-layouts/cursify",
+      "revision": "b3a173c33f12e74550389c9555f9ce85c30c46f6",
+      "status": "root_license_missing",
+      "license": "Unresolved at audited revision; do not redistribute without permission"
+    },
+    {
+      "id": "strix",
+      "source": "https://github.com/usestrix/strix",
+      "revision": "e05948080bdccd2af47c922f70503005c17747b4",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/usestrix/strix/e05948080bdccd2af47c922f70503005c17747b4/LICENSE",
+      "license_sha256": "7db9697134251e314bd8d39257fe170c98b3e2ad9b2ed67e97acaf9613e7b9e3",
+      "status": "license_read"
+    },
+    {
+      "id": "cybersecurity-library",
+      "source": "https://github.com/mukul975/anthropic-cybersecurity-skills",
+      "revision": "54a798831d2266a3ca61ce68a7acb80b81160d57",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/mukul975/anthropic-cybersecurity-skills/54a798831d2266a3ca61ce68a7acb80b81160d57/LICENSE",
+      "license_sha256": "a941b58ef0ba43a31e24ae7ece1b743a585efed9e37792b9ca063e0798be1cbe",
+      "status": "license_read"
+    },
+    {
+      "id": "reverse-engineer-anything",
+      "source": "https://github.com/NabilRFG12/Reverse-Engineer-anything",
+      "revision": "e762e32afbba3fd32532fd42a3f4fdcd05252ad3",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 morluto",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/NabilRFG12/Reverse-Engineer-anything/e762e32afbba3fd32532fd42a3f4fdcd05252ad3/LICENSE",
+      "license_sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b",
+      "status": "license_read"
+    },
+    {
+      "id": "rea",
+      "source": "https://github.com/morluto/rea",
+      "revision": "95ebd38d3faae013a7dbf85814efa30a5c6fcf56",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 morluto",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/morluto/rea/95ebd38d3faae013a7dbf85814efa30a5c6fcf56/LICENSE",
+      "license_sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b",
+      "status": "license_read"
+    },
+    {
+      "id": "unlimited-ocr-2",
+      "source": "https://huggingface.co/baidu/Unlimited-OCR-2",
+      "status": "model_card_terms",
+      "revision": null,
+      "license": "MIT according to official model card"
+    },
+    {
+      "id": "unlimited-ocr",
+      "source": "https://github.com/baidu/Unlimited-OCR",
+      "revision": "64e6f066023b305ab03860603a9cf358a8b70148",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Baidu",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/baidu/Unlimited-OCR/64e6f066023b305ab03860603a9cf358a8b70148/LICENSE",
+      "license_sha256": "d985048c6d69429d685fdbe7557340aa0897c0fd8dc038299b148b9c75dc3383",
+      "status": "license_read"
+    },
+    {
+      "id": "tokentracker",
+      "source": "https://github.com/xiufengsun/TokenTracker",
+      "revision": "fba54de8e8fc96301ad3607e911181040b86fdb6",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 xiufengsun",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/xiufengsun/TokenTracker/fba54de8e8fc96301ad3607e911181040b86fdb6/LICENSE",
+      "license_sha256": "68ac17897749fe5e75b07e386f3842c0da65599dd0a8f562a7cc7b49df098065",
+      "status": "license_read"
+    },
+    {
+      "id": "token-monitor",
+      "source": "https://github.com/Javis603/token-monitor",
+      "revision": "43e21135d97afd875ede123ffd8a9de801275782",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Javis",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/Javis603/token-monitor/43e21135d97afd875ede123ffd8a9de801275782/LICENSE",
+      "license_sha256": "250136de456c31d659e54c1804c43a27dadad175336b67226e9509d6310f923c",
+      "status": "license_read"
+    },
+    {
+      "id": "hermes-jev-skills",
+      "source": "https://github.com/kerpopule/hermes-jev-skills",
+      "revision": "8316358bf60e98a21477582af829ef11c9cf52fb",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Steve Darlow",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/kerpopule/hermes-jev-skills/8316358bf60e98a21477582af829ef11c9cf52fb/LICENSE",
+      "license_sha256": "52284e0902df9f7587c25c58a04502c4f9c0a4fb6e7403d324a873f3f565f582",
+      "status": "license_read"
+    },
+    {
+      "id": "cli-anything",
+      "source": "https://github.com/HKUDS/CLI-Anything",
+      "revision": "34f519533bc175d2fe287ab8316b0dd99bb9cc43",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/HKUDS/CLI-Anything/34f519533bc175d2fe287ab8316b0dd99bb9cc43/LICENSE",
+      "license_sha256": "0cff1a8ac2a381870a2c57cbe9b25f95bea0925b39b7fbf6a04ec23df7c77760",
+      "status": "license_read"
+    },
+    {
+      "id": "cli-anything-catalog",
+      "source": "https://clianything.cc",
+      "status": "external_terms",
+      "revision": null,
+      "license": "External registry terms; no blanket sublicense"
+    },
+    {
+      "id": "hermes-steel",
+      "source": "https://github.com/steel-dev/hermes-steel",
+      "revision": "d8a1e39657d3e3deaa59da37e857be3f14b9dc5b",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Nen Labs"
+      ],
+      "license_url": "https://raw.githubusercontent.com/steel-dev/hermes-steel/d8a1e39657d3e3deaa59da37e857be3f14b9dc5b/LICENSE",
+      "license_sha256": "cb0c1678e3f0556a7a6527ba1df72bded906a9b4e5617a09c7c30c292dfd4d68",
+      "status": "license_read"
+    },
+    {
+      "id": "gpt-researcher",
+      "source": "https://github.com/assafelovic/gpt-researcher",
+      "revision": "ddd4db36208d9c8e49f3b2436efda97baecb5433",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/ddd4db36208d9c8e49f3b2436efda97baecb5433/LICENSE",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "status": "license_read"
+    },
+    {
+      "id": "remote-jobs",
+      "source": "https://github.com/remoteintech/remote-jobs",
+      "revision": "fa2253f1ed02cc4d8f59ab3ccc831b008cdd7189",
+      "license": "ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts)",
+      "copyright_lines": [
+        "Copyright (c) 2024 Lene Saile",
+        "Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.",
+        "Copyright (c) 2024 Set Studio"
+      ],
+      "license_url": "https://raw.githubusercontent.com/remoteintech/remote-jobs/fa2253f1ed02cc4d8f59ab3ccc831b008cdd7189/LICENSE",
+      "license_sha256": "91cde5c61d3e1306fb4df12b310d820b666ae7e797c34bccc029194e76d2a297",
+      "status": "license_read"
+    },
+    {
+      "id": "caveman",
+      "source": "https://github.com/JuliusBrussee/caveman",
+      "revision": "3dc497a7f858c774d6e15b25e8c6120ef3a0eda8",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/JuliusBrussee/caveman/3dc497a7f858c774d6e15b25e8c6120ef3a0eda8/LICENSE",
+      "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "status": "license_read"
+    },
+    {
+      "id": "hyperframes",
+      "source": "https://github.com/heygen-com/hyperframes",
+      "revision": "3ad7611f9fd36c1cef589c59b116ad7043c3b041",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "\"Licensor\" shall mean the copyright owner or entity authorized by",
+        "the copyright owner that is granting the License.",
+        "copyright notice that is included in or attached to the work"
+      ],
+      "license_url": "https://raw.githubusercontent.com/heygen-com/hyperframes/3ad7611f9fd36c1cef589c59b116ad7043c3b041/LICENSE",
+      "license_sha256": "4259155fb06f127687ee7b0a8a3682d45132db0f2da26cbc0b7a2d1e796436b8",
+      "status": "license_read"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "6ae86f61f520d6ca229d2f40e070410638c908c5",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2024 Next Level Builder",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/6ae86f61f520d6ca229d2f40e070410638c908c5/LICENSE",
+      "license_sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+      "status": "license_read"
+    },
+    {
+      "id": "anthropic-skills",
+      "source": "https://github.com/anthropics/skills",
+      "revision": "2c5958ecac7cee2b583967a2c4981d0f4a75c579",
+      "status": "selected_file_licenses",
+      "license": "Apache-2.0 for each selected skill",
+      "license_files": [
+        {
+          "path": "skills\\canvas-design\\LICENSE.txt",
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        },
+        {
+          "path": "skills\\claude-api\\LICENSE.txt",
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        },
+        {
+          "path": "skills\\docx\\LICENSE.txt",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+        },
+        {
+          "path": "skills\\pdf\\LICENSE.txt",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+        },
+        {
+          "path": "skills\\pptx\\LICENSE.txt",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+        },
+        {
+          "path": "skills\\skill-creator\\LICENSE.txt",
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        },
+        {
+          "path": "skills\\webapp-testing\\LICENSE.txt",
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        },
+        {
+          "path": "skills\\xlsx\\LICENSE.txt",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+        }
+      ]
+    },
+    {
+      "id": "hermes-omnivoice",
+      "source": "https://github.com/ThaungThanHan/hermes-omnivoice",
+      "revision": "21d2900c392247dc52d706fee956f08dbfc3c5ea",
+      "status": "declaration_only",
+      "license": "Apache-2.0 declared by pyproject.toml; no standalone LICENSE"
+    },
+    {
+      "id": "hermes-dreaming",
+      "source": "https://github.com/itpartypattaya/hermes-dreaming",
+      "revision": "21878d3ec8752283dd7ee69a803c63bb989c1740",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Anton Vaskov",
+        "The above copyright notice and this permission notice shall be included in all",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+      ],
+      "license_url": "https://raw.githubusercontent.com/itpartypattaya/hermes-dreaming/21878d3ec8752283dd7ee69a803c63bb989c1740/LICENSE",
+      "license_sha256": "2999fedf7fc3054ef531bf3e7550496e5fe903dbe4d4fc0bf3d3d58ac4e614c0",
+      "status": "license_read"
+    },
+    {
+      "id": "kat-coder-v2-5-dev",
+      "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "status": "model_card_terms",
+      "revision": null,
+      "license": "Apache-2.0 according to official model card"
+    },
+    {
+      "id": "timesfm",
+      "source": "https://github.com/google-research/timesfm",
+      "revision": "e51928e27119cb17bebc005be2696b75e0a9e688",
+      "license": "Apache-2.0 code and selected TimesFM2.5 weights",
+      "license_url": "https://github.com/google-research/timesfm/blob/e51928e27119cb17bebc005be2696b75e0a9e688/LICENSE",
+      "model": "google/timesfm-2.5-200m-pytorch",
+      "model_revision": "1d952420fba87f3c6dee4f240de0f1a0fbc790e3",
+      "status": "pinned-code-model-licenses-reviewed",
+      "note": "TimesFM3 downloaded weights have separate noncommercial/nonproduction terms; not installed."
+    }
+  ],
+  "additional_runtime_terms": {
+    "k2-fsa/OmniVoice": {
+      "source": "https://huggingface.co/k2-fsa/OmniVoice",
+      "revision": "c5fdb5ccb189668d56333f77ba2629f4cd7535f4",
+      "runtime_code": "Apache-2.0",
+      "pretrained_weights": "CC-BY-NC",
+      "commercial_use": "requires compatible rights"
+    }
+  }
+}

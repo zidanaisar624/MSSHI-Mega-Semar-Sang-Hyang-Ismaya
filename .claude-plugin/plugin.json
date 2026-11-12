@@ -1,6 +1,6 @@
 {
   "name": "msshi",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "MSSHI Agent Skills for research, creative production, business, and engineering.",
   "skills": [
     "./"

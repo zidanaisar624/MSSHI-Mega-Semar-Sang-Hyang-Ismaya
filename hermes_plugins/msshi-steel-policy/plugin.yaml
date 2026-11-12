@@ -1,0 +1,10 @@
+name: msshi-steel-policy
+version: "0.1.0"
+description: "Strict on-task Steel routing, scoped personal-browser approval, no silent local fallback or profile copy."
+author: "Muhammad Zidan Aisar (MuZA), assisted by OpenAI ChatGPT"
+license: MIT
+requires_hermes: ">=0.22.5"
+provides_hooks:
+  - pre_tool_call
+provides_tools:
+  - msshi_personal_browser

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import ctypes
+import json
 import os
 import re
 import shutil
@@ -229,8 +230,29 @@ def installed_extension_ids():
     return sorted(result)
 
 
+def migrated_state(hermes_home=None):
+    base = Path(hermes_home or os.environ.get("HERMES_HOME", "~/.hermes")).expanduser()
+    profile = base.name if base.parent.name.casefold() == "profiles" else "default"
+    installation = base.parent.parent if profile != "default" else base
+    state = installation / "msshi-runtime"
+    return state, profile
+
+
 def capabilities(connectors, hermes_home=None):
     """Return sanitized, current readiness and the internal route hints."""
+    state, profile = migrated_state(hermes_home)
+    routes = state / "profiles" / profile / "routes.json"
+    if (state / "policy.json").is_file() and routes.is_file():
+        data = json.loads(routes.read_text(encoding="utf-8"))
+        rows = {key: {"route": row["kind"], "readiness": row["readiness"],
+                      "require_task_ticket": True}
+                for key,row in data["targets"].items()}
+        for name,enabled in connectors.items():
+            if normalized(name) in {"gitlab", "tinyfish"}:
+                rows[mcp_id(name)] = {"route": "hermes-mcp", "readiness": "configured" if enabled else "disabled",
+                                     "connector": name, "registration_source": "hermes-config",
+                                     "require_task_ticket": False}
+        return rows
     rows = {}
     for target in (*WEB_TARGETS, "antigravity"):
         if target == "gdrive-web":
@@ -265,6 +287,9 @@ def safe_process(path, args, wait):
 
 
 def open_target(target, query=None):
+    state, _ = migrated_state()
+    if (state / "policy.json").is_file():
+        raise ValueError("MSSHI v3 execution requires msshi runtime run and a one-use task ticket.")
     if target == "antigravity":
         if not (app := app_executable(target)):
             raise ValueError("Antigravity IDE belum terdeteksi.")
@@ -298,6 +323,9 @@ def open_target(target, query=None):
 
 
 def run_target(target, argv, hermes_home=None):
+    state, _ = migrated_state(hermes_home)
+    if (state / "policy.json").is_file():
+        raise ValueError("MSSHI v3 execution requires msshi runtime run and a one-use task ticket.")
     if target not in (*HARNESS, *NATIVE) and not GENERIC_CLI.fullmatch(target):
         raise ValueError("Rute ini dipakai melalui tool MCP Hermes atau perintah --open.")
     if not (app := harness_executable(target, hermes_home)):

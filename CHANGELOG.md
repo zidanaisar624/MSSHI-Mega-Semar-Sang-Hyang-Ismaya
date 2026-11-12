@@ -1,5 +1,23 @@
 # Changelog MSSHI
 
+## v3.0.0 - 2026-11-12
+
+- Added Val's TimesFM 2.5 local numeric forecasting wrapper; 58 bundled skills and 45 external sources. Heavy model files stay outside skill scanner roots.
+- Installed task-scoped Steel browser routing with no silent local fallback, separate scoped personal-browser approval, and no automatic cookie/profile transfer. Cloud credentials remain required.
+- Added GitLab/Tinyfish setup, safe discovery/auth reporting and same-user shared OAuth cache support across five native profiles; no desktop MCPs restored.
+- Added hash/provenance-based enrollment of existing MSSHI skills, shared-junction updates, custom-content preservation and retarget detection.
+- Preserved the software-rendering Desktop launcher, automatic lossless JSON Llmtrim hook, native Hersona CLI, voice runtime, protected LLM routing, and BrightData-off choice.
+
+
+## 3.0.0 — 2026-11-11
+
+- Added protected Hermes profile migration, on-demand desktop task tickets, hardware tiers, and local runtime audit.
+- Added Desktop recovery for the Windows pending-update startup loop and local Chrome Remotion launch handling.
+- Added Caveman, Hyperframes, UI UX Pro Max, Anthropic skills, OmniVoice, pinned Dreaming, and optional KAT source entries.
+- Added beginner and update launchers, task-scoped application execution, and expanded source notices.
+- Added voice persona settings and zero-LLM local Dreaming proposals with explicit runtime readiness reports.
+
+
 ## 2.1.0 — 2026-11-10
 
 - Added bilingual quick starts, agent-chat installation instructions, a root entrypoint, and portable Claude and ChatGPT materials.
