@@ -18,6 +18,8 @@ Migrasi ini menghapus MCP aplikasi desktop serta mengganti MCP lokal Hersona/llm
 
 **Updater pribadi:** `msshi managed register --skills-dir PATH_SKILLS --apply` hanya mendaftarkan salinan bundel yang hash-nya terbukti cocok. `msshi managed status` menunjukkan cakupannya. `msshi update` memperbarui paket terdaftar dan cache sumber; kustomisasi serta skill pihak ketiga yang tidak terkelola dipertahankan. [Perlindungan junction dan rollback](docs/MANAGED_UPDATES.md).
 
+**Arti pilihan installer:** setiap mode, paket, skill, KAT, REA, dan koneksi aplikasi menampilkan fungsi singkat saat dipilih di terminal. Baca [panduan pilihan](docs/OPTION_GUIDE.md), atau jalankan `msshi choices rea`, `msshi choices --kind packs`, dan `msshi choices --kind skills`. REA tetap default OFF; aplikasi/runtime/model/akun dipasang terpisah.
+
 ## 🚀 Quick Start 30 Detik (Pilih Agen Anda)
 
 **Paling mudah lewat chat agen.** Salin kalimat ini ke Hermes Agent, OpenClaw, Claude Code, atau Antigravity yang dapat mengakses web, terminal, dan folder skill lokal.

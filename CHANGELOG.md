@@ -2,6 +2,8 @@
 
 ## v3.1.0 - 2026-11-13
 
+- Clarified terminal setup, pack/skill, optional REA/KAT and app choices with bilingual function/prerequisite help, a read-only `msshi choices` command, and a complete choice guide. Version and activation defaults remain unchanged.
+
 - Added four standard contextual wrappers: Unslop UI improvement (Kiki/Val/Shikaku), BRAG launch video (Kiki), Scrapling local HTML parser (Val/Shikaku), and Harness² deterministic harness evaluation (Val/Shikaku).
 - Added REA as a separate default-off opt-in for public installs; MuZA explicitly enables it for Coder.
 - Expanded the original default bundle to 62 skills (50 core + 12 wrappers) and 49 pinned source references, with separate licenses and runtime prerequisites.

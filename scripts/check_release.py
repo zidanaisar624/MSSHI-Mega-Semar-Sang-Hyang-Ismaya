@@ -103,6 +103,23 @@ def static_checks():
             "Upstream inventory and VERSION.json disagree")
     require(len(matrix["bots"]) == 5 and len(matrix["packs"]) == 6,
             "Preset must describe five bots and six packs")
+    option_help = read_json(ROOT / 'configs/option_help.json')
+    require(option_help.get('schema_version') == 1
+            and set(option_help['skills']) == {row['slug'] for row in matrix['skills']}
+            and set(option_help['packs']) == set(matrix['packs'])
+            and set(option_help['modes']) == set(msshi_cli.MODES)
+            and set(option_help['platforms']) == set(msshi_cli.PLATFORMS),
+            'Every public skill, pack, setup mode and platform must have choice help')
+    app_help = read_json(ROOT / f'skills/{UNIVERSAL_BRIDGE}/scripts/connection_help.json')
+    hub = msshi_cli.connections._bridge['hub']
+    known_apps = {*hub.ARTCRAFT, *hub.HARNESS, *hub.NATIVE, *hub.WEB_TARGETS,
+                  'existing', 'artcraft', 'antigravity', 'blender'}
+    require(known_apps <= app_help['targets'].keys(), 'A known app choice lacks a function description')
+    groups = [option_help[name] for name in ('skills', 'packs', 'modes', 'platforms', 'features')]
+    groups += [app_help[name] for name in ('targets', 'modes', 'fallbacks', 'notes')]
+    require(all(isinstance(row.get(lang), str) and row[lang].strip()
+                for group in groups for row in group.values() for lang in ('id', 'en')),
+            'Choice help must contain nonempty Indonesian and English explanations')
 
     wrappers = {row["slug"] for row in matrix["skills"] if row.get("kind") == "integration-wrapper"}
     require(wrappers <= expected and len(wrappers) == version["integration_wrappers"]

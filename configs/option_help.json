@@ -1,0 +1,661 @@
+{
+  "schema_version": 1,
+  "skills": {
+    "academic-plotting": {
+      "id": "Menghasilkan figur publikasi dari data dan spesifikasi yang disepakati.",
+      "en": "Create publication figures from agreed data and visual specifications."
+    },
+    "addy-agent-skills": {
+      "id": "Menerapkan praktik engineering pada implementasi dan review.",
+      "en": "Apply software engineering practices to implementation and code review."
+    },
+    "ai-research-explore": {
+      "id": "Merancang eksperimen kandidat yang terpisah dari baseline.",
+      "en": "Plan candidate research experiments separately from the baseline."
+    },
+    "ai-research-reproduction": {
+      "id": "Menetapkan target reproduksi penelitian yang dapat dibuktikan.",
+      "en": "Define a small, verifiable target for reproducing a research result."
+    },
+    "analyze-project": {
+      "id": "Memetakan struktur proyek, konfigurasi, titik masuk, dan risiko perubahan.",
+      "en": "Map project structure, configuration, entry points and change risks."
+    },
+    "anti-slop": {
+      "id": "Memeriksa klise, struktur antarmuka, dan pola kode yang berulang.",
+      "en": "Check repetitive cliches, interface patterns and code structures."
+    },
+    "antigravity-webdev-cybersec": {
+      "id": "Hubungkan pengerjaan web dan evaluasi keamanan terotorisasi dengan Antigravity, Goose, dan alat lokal.",
+      "en": "Coordinate web development and authorized security review with Antigravity and available local tools."
+    },
+    "artcraft-cadcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk gambar teknis dan pengerjaan CAD.",
+      "en": "Use an available app adapter for technical drawings and CAD work."
+    },
+    "artcraft-craftanything": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk mengoordinasikan pekerjaan kreatif lintas alat.",
+      "en": "Use an available app adapter to coordinate creative work across tools."
+    },
+    "artcraft-deckcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk membuat dan menyunting presentasi.",
+      "en": "Use an available app adapter to build and edit presentations."
+    },
+    "artcraft-designcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk membuat dan menyunting desain visual.",
+      "en": "Use an available app adapter to create and edit visual designs."
+    },
+    "artcraft-effectcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk efek visual dan compositing.",
+      "en": "Use an available app adapter for visual effects and compositing."
+    },
+    "artcraft-figcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk desain antarmuka dan prototipe.",
+      "en": "Use an available app adapter for interface designs and prototypes."
+    },
+    "artcraft-filmcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk merencanakan adegan dan shot.",
+      "en": "Use an available app adapter to plan scenes and shots."
+    },
+    "artcraft-gridcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk tabel dan perencanaan produksi.",
+      "en": "Use an available app adapter for tables and production planning."
+    },
+    "artcraft-lightcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk mengolah, memotong, dan mengekspor foto.",
+      "en": "Use an available app adapter to develop, crop and export photos."
+    },
+    "artcraft-pdfcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk menyiapkan dokumen PDF.",
+      "en": "Use an available app adapter to prepare PDF documents."
+    },
+    "artcraft-photocraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk mengolah dan meninjau foto.",
+      "en": "Use an available app adapter to process and review photos."
+    },
+    "artcraft-solidcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk membuat model bentuk padat.",
+      "en": "Use an available app adapter to work with solid models."
+    },
+    "artcraft-soundcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk rancangan suara dan mixing.",
+      "en": "Use an available app adapter for sound design and mixing."
+    },
+    "artcraft-vectorcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk membuat dan menyunting aset vektor.",
+      "en": "Use an available app adapter to create and edit vector assets."
+    },
+    "artcraft-wordcraft": {
+      "id": "Gunakan adapter aplikasi yang tersedia untuk menulis dokumen produksi.",
+      "en": "Use an available app adapter to write production documents."
+    },
+    "auto-curiousity-for-film-making": {
+      "id": "Menguji kemampuan alat kreatif dan teknik produksi dalam eksperimen terpisah.",
+      "en": "Explore creative tools and production techniques in separate, reviewable experiments."
+    },
+    "autoresearch": {
+      "id": "Mengoordinasikan siklus eksperimen dan sintesis dengan batas berhenti.",
+      "en": "Coordinate experiment and synthesis cycles with a defined stopping point."
+    },
+    "awesome-copilot": {
+      "id": "Memilih contoh instruksi dan praktik pengembangan yang dapat diadaptasi.",
+      "en": "Find adaptable examples of agent instructions and development practices."
+    },
+    "backward-traceability": {
+      "id": "Menautkan angka dan hasil laporan kembali ke data, skrip, atau perhitungan.",
+      "en": "Trace reported numbers and findings back to data, scripts or calculations."
+    },
+    "bang-motion": {
+      "id": "Memandu motion graphics berbasis kode sesuai brief.",
+      "en": "Plan code-based motion graphics from a creative brief."
+    },
+    "barty-motion-graphics": {
+      "id": "Memandu komposisi grafis gerak dan animasi berbasis kode.",
+      "en": "Plan motion graphic compositions and code-based animation."
+    },
+    "better-design": {
+      "id": "Membantu tinjauan kualitas dan hierarki desain.",
+      "en": "Review design quality, hierarchy and visual consistency."
+    },
+    "blender-mcp": {
+      "id": "Koordinasikan adegan 3D dan render melalui adapter Blender yang tersedia; setup desktop memakai CLI native.",
+      "en": "Coordinate 3D scenes and rendering through an available Blender adapter; desktop setup uses native CLI."
+    },
+    "brainstorming-research-ideas": {
+      "id": "Memakai kerangka ideasi terstruktur untuk menemukan pertanyaan layak.",
+      "en": "Use structured prompts to find feasible research questions."
+    },
+    "business-sage": {
+      "id": "Menyusun analisis usaha, skenario finansial, dan pertanyaan verifikasi aturan yang relevan.",
+      "en": "Explore business plans, financial scenarios and facts that require current verification."
+    },
+    "canvas-ui": {
+      "id": "Menelaah komponen visual berbasis kanvas untuk interaksi khusus.",
+      "en": "Review canvas-based interface components for custom interactions."
+    },
+    "charlie-motion-graphics": {
+      "id": "Menyusun pendekatan motion graphics dan urutan gerak dari storyboard.",
+      "en": "Translate a storyboard into motion graphics and animation sequences."
+    },
+    "chatgpt-hermes-portability-kit": {
+      "id": "Memandu adaptasi metode dan profil ke platform lain menggunakan sumber yang sah.",
+      "en": "Adapt workflows and agent profiles to other platforms using authorized source material."
+    },
+    "cli-anything": {
+      "id": "Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif.",
+      "en": "Call an available application CLI adapter for the active task."
+    },
+    "cli-anything-business-sage": {
+      "id": "Menjalankan perhitungan bisnis terstruktur melalui harness lokal yang tersedia.",
+      "en": "Run structured business calculations through the available local harness."
+    },
+    "cli-anything-catalog": {
+      "id": "Direktori untuk menemukan adapter CLI yang relevan dengan tugas.",
+      "en": "Find CLI adapters relevant to the current task."
+    },
+    "cli-anything-universal-bridge": {
+      "id": "Daftarkan, periksa, dan jalankan rute aplikasi, browser, serta alat agen yang tersedia saat dibutuhkan.",
+      "en": "Register, check and run available application, browser and agent-tool routes on demand."
+    },
+    "creative-thinking-for-research": {
+      "id": "Mencoba reframing, analogi, dan kombinasi konsep untuk membuka pilihan.",
+      "en": "Use reframing, analogy and combinations of ideas to open new research directions."
+    },
+    "cursify": {
+      "id": "Memilih interaksi kursor yang sesuai dengan kebutuhan antarmuka.",
+      "en": "Choose cursor interactions suited to an interface's purpose."
+    },
+    "cybersecurity-library": {
+      "id": "Menemukan panduan keamanan sesuai lingkup audit yang sah.",
+      "en": "Find security guidance within an authorized audit scope."
+    },
+    "data-analysis": {
+      "id": "Memeriksa kualitas data, asumsi, uji statistik, dan ketidakpastian.",
+      "en": "Check data quality, statistical assumptions, tests and uncertainty."
+    },
+    "deep-research": {
+      "id": "Menyusun pertanyaan, menelusuri literatur, dan mensintesis bukti yang dapat diperiksa.",
+      "en": "Frame questions, search the literature and synthesize checkable evidence."
+    },
+    "design-taste": {
+      "id": "Memilih gaya visual, tipografi, dan komposisi yang sesuai.",
+      "en": "Choose visual style, typography and composition for the brief."
+    },
+    "evaluating-code-models": {
+      "id": "Menguji keluaran model kode dengan tugas dan tolok ukur yang relevan.",
+      "en": "Evaluate code-model outputs using relevant tasks and benchmarks."
+    },
+    "evaluating-llms-harness": {
+      "id": "Rencanakan evaluasi LLM memakai harness yang kompatibel dan anggaran yang disepakati.",
+      "en": "Plan LLM evaluations with a compatible test harness and explicit budget."
+    },
+    "explore-code": {
+      "id": "Mengembangkan perubahan eksperimen dalam ruang kerja terisolasi.",
+      "en": "Implement experimental changes in an isolated workspace."
+    },
+    "explore-run": {
+      "id": "Menjalankan uji terbatas dengan anggaran dan catatan hasil yang jelas.",
+      "en": "Run bounded experiments with a budget and recorded results."
+    },
+    "filmmaking-videography-photography-s2": {
+      "id": "Menyatukan konsep, pengarahan, kamera, foto, penyuntingan, warna, dan suara.",
+      "en": "Plan concepts, direction, camera work, photography, editing, color and sound."
+    },
+    "firecrawl-competitive-intel": {
+      "id": "Membandingkan perubahan produk, harga, dan fitur dengan bukti bertanggal.",
+      "en": "Compare dated evidence of changes in products, pricing and features."
+    },
+    "firecrawl-dashboard-reporting": {
+      "id": "Mengambil dan memeriksa indikator dasbor untuk pelaporan.",
+      "en": "Extract and check dashboard indicators for a report."
+    },
+    "firecrawl-deep-research": {
+      "id": "Mengumpulkan bukti web untuk sintesis dengan atribusi.",
+      "en": "Collect attributed web evidence for a research synthesis."
+    },
+    "firecrawl-knowledge-base": {
+      "id": "Menyiapkan koleksi dokumen, potongan, serta metadata asalnya.",
+      "en": "Organize documents, chunks and source metadata into a knowledge base."
+    },
+    "firecrawl-research-papers": {
+      "id": "Menemukan dan memeriksa makalah pada sumber akademik yang relevan.",
+      "en": "Find and verify papers from relevant academic sources."
+    },
+    "focus-my-energy": {
+      "id": "Menyesuaikan beban tugas dan langkah awal dengan energi yang dilaporkan pengguna.",
+      "en": "Match workload and a manageable first step to the energy the user reports."
+    },
+    "generate-fresh-ideas": {
+      "id": "Menghasilkan alternatif dari beberapa lensa kreatif untuk disaring pengguna.",
+      "en": "Generate alternative content ideas from several creative perspectives."
+    },
+    "get-more-perspectives": {
+      "id": "Menguji keputusan dari beberapa sudut pandang sebelum memilih.",
+      "en": "Stress-test a decision from several perspectives before choosing."
+    },
+    "github-research": {
+      "id": "Menelaah lisensi, rancangan, pemeliharaan, dan kesiapan repositori.",
+      "en": "Review a repository's license, design, maintenance and integration readiness."
+    },
+    "goose": {
+      "id": "Menjalankan siklus perubahan kode dan pengujian bila harness Goose tersedia.",
+      "en": "Run code-change and test cycles when the separate Goose harness is available."
+    },
+    "gpt-researcher": {
+      "id": "Mengumpulkan dan menyusun bahan riset; Val memeriksa sumber sebelum penyerahan.",
+      "en": "Collect research material for Val to verify before handing over findings."
+    },
+    "graphify": {
+      "id": "Membuat peta struktur proyek untuk penelusuran konteks.",
+      "en": "Build a structural map of a project for finding relevant context."
+    },
+    "hermes-jev-skills": {
+      "id": "Memilih skill dari konteks dengan pengalihan model dinonaktifkan.",
+      "en": "Choose skills from context while keeping model routing disabled."
+    },
+    "hermes-steel": {
+      "id": "Gunakan integrasi browser Steel yang tersedia untuk tugas penjelajahan yang diizinkan.",
+      "en": "Use an available Steel browser integration for an authorized browsing task."
+    },
+    "higgsfield-brandkit": {
+      "id": "Menerapkan sistem visual merek pada produksi aset.",
+      "en": "Apply a consistent brand identity to creative assets."
+    },
+    "higgsfield-faceless-video": {
+      "id": "Menyiapkan video tanpa tampil wajah dari skrip, tempo, dan aset.",
+      "en": "Plan videos without an on-camera presenter using scripts, pacing and assets."
+    },
+    "higgsfield-generate": {
+      "id": "Menghasilkan atau mengolah media setelah konsep dan parameter disetujui.",
+      "en": "Generate or process media after the concept and parameters are approved."
+    },
+    "higgsfield-marketplace-cards": {
+      "id": "Menyusun kartu promosi produk dengan pesan dan spesifikasi kanal.",
+      "en": "Plan product promotional cards for a specific channel and message."
+    },
+    "higgsfield-product-photoshoot": {
+      "id": "Mengatur konsep foto produk, pencahayaan, dan framing.",
+      "en": "Plan product photographs, lighting and framing."
+    },
+    "higgsfield-skills": {
+      "id": "Rutekan kebutuhan produksi kreatif ke modul Higgsfield yang sesuai setelah konsep disetujui.",
+      "en": "Route an approved creative concept to the relevant Higgsfield module."
+    },
+    "higgsfield-soul-id": {
+      "id": "Mengelola konsistensi subjek dengan referensi yang diizinkan.",
+      "en": "Keep a subject visually consistent using authorized references."
+    },
+    "higgsfield-video-explainer": {
+      "id": "Mengubah penjelasan konsep menjadi urutan adegan.",
+      "en": "Turn an explanation into a sequence of scenes."
+    },
+    "higgsfield-websites": {
+      "id": "Memetakan brief produk ke konsep situs dan aset pendukung.",
+      "en": "Translate a product brief into a website concept and supporting assets."
+    },
+    "higgsfield-youtube-thumbnail": {
+      "id": "Membuat konsep thumbnail sesuai isi video dan identitas kanal.",
+      "en": "Design thumbnail concepts that match the video and channel identity."
+    },
+    "humanizer-en": {
+      "id": "Sunting prosa bahasa Inggris agar terasa alami sambil menjaga makna, suara penulis, dan sitasi.",
+      "en": "Edit English prose for natural wording while preserving meaning, author voice and citations."
+    },
+    "humanizer-indonesia": {
+      "id": "Sunting prosa bahasa Indonesia sesuai ragam pembaca sambil menjaga makna, istilah, dan sitasi.",
+      "en": "Edit Indonesian prose for its audience while preserving meaning, terminology and citations."
+    },
+    "idea-generation": {
+      "id": "Mengembangkan dan menyaring gagasan penelitian dalam beberapa putaran.",
+      "en": "Develop and filter research ideas through several review rounds."
+    },
+    "langsmith-observability": {
+      "id": "Memandu observabilitas dan evaluasi LangSmith pada lingkungan yang disetujui.",
+      "en": "Plan LangSmith tracing and evaluations in an approved environment."
+    },
+    "literature-review": {
+      "id": "Membangun tinjauan pustaka dengan beberapa perspektif dan jejak sumber.",
+      "en": "Build a literature review using multiple perspectives and source traceability."
+    },
+    "match-my-writing-style": {
+      "id": "Menerapkan Voice Card yang disediakan pengguna sesuai audiens dan jenis tulisan.",
+      "en": "Apply the user's Voice Card to the audience and type of writing."
+    },
+    "math-reasoning": {
+      "id": "Memeriksa langkah penalaran matematika dan syarat berlakunya.",
+      "en": "Check mathematical reasoning steps and the conditions under which they hold."
+    },
+    "mindrally-skills": {
+      "id": "Menemukan panduan implementasi relevan di katalog eksternal.",
+      "en": "Find relevant implementation guidance in an external skill catalog."
+    },
+    "motion-graphics-suite": {
+      "id": "Pilih dan hubungkan empat rujukan motion graphics untuk komposisi yang tetap dapat diedit.",
+      "en": "Choose among four motion-graphics references for compositions that remain editable."
+    },
+    "motion-primitives": {
+      "id": "Merancang gerak antarmuka memakai komponen animasi.",
+      "en": "Design interface motion with reusable animation components."
+    },
+    "nemo-evaluator-sdk": {
+      "id": "Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia.",
+      "en": "Plan model evaluations with NeMo Evaluator SDK when its dependencies are available."
+    },
+    "notebooklm-thinking-datascience": {
+      "id": "Terapkan metode berpikir sistem dan data science dari indeks sumber milik pengguna.",
+      "en": "Apply systems-thinking and data-science methods from the user's source index."
+    },
+    "novelty-assessment": {
+      "id": "Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian.",
+      "en": "Test novelty claims against the closest studies and search limits."
+    },
+    "paper-context-resolver": {
+      "id": "Mengikat klaim reproduksi pada bagian, gambar, tabel, atau lampiran makalah.",
+      "en": "Tie reproduction decisions to paper sections, figures, tables or appendices."
+    },
+    "paper-revision": {
+      "id": "Memetakan catatan revisi ke perubahan konkret dan bukti perbaikan.",
+      "en": "Map reviewer comments to concrete edits and evidence of improvement."
+    },
+    "paper-shaders": {
+      "id": "Menyiapkan efek shader yang terukur dan sesuai perangkat.",
+      "en": "Choose shader effects suited to the design and device budget."
+    },
+    "paper-writing-section": {
+      "id": "Menyusun dan menyunting bagian naskah akademik dengan dua tahap pemeriksaan.",
+      "en": "Draft and edit an academic section with two review passes."
+    },
+    "parenting-6d-gad-mdd": {
+      "id": "Dukung percakapan dengan empati, struktur, dan otonomi; panduan ini tidak menggantikan perawatan klinis.",
+      "en": "Support discussion with empathy, structure and respect for autonomy; this does not replace clinical care."
+    },
+    "persona-shizuka-yukino-shikaku": {
+      "id": "Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot.",
+      "en": "Keep five-bot character voices, handoffs and task ownership consistent."
+    },
+    "phoenix-observability": {
+      "id": "Memandu tracing dan evaluasi Phoenix tanpa memindahkan data di luar lingkup.",
+      "en": "Plan Phoenix tracing and evaluations within the approved data scope."
+    },
+    "playwright-best-practices": {
+      "id": "Menguji jalur pengguna dan memperbaiki kestabilan tes E2E.",
+      "en": "Test user journeys and improve end-to-end test reliability."
+    },
+    "ponytail": {
+      "id": "Mengurangi kerumitan solusi dan memilih perubahan yang sesuai kebutuhan.",
+      "en": "Reduce unnecessary complexity and choose changes proportionate to the task."
+    },
+    "prep-for-meetings": {
+      "id": "Menyusun ringkasan pertemuan dari catatan dan tujuan yang tersedia.",
+      "en": "Prepare a meeting brief from available notes and goals."
+    },
+    "prep-for-meetings-2": {
+      "id": "Memadatkan bahan pertemuan menjadi pokok bahasan dan kartu pengingat.",
+      "en": "Condense meeting material into key points and a quick reminder card."
+    },
+    "rea": {
+      "id": "Analisis statis JavaScript atau arsip milik pengguna lewat CLI lokal; format native memerlukan engine terpisah.",
+      "en": "Optionally analyze owned JavaScript or archives through a local static-analysis CLI; native formats need separate engines."
+    },
+    "rebuttal-writing": {
+      "id": "Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer.",
+      "en": "Draft point-by-point responses to supervisor or reviewer feedback."
+    },
+    "remote-jobs": {
+      "id": "Menyaring perusahaan remote, lalu memeriksa syarat lokasi dan lowongan langsung.",
+      "en": "Shortlist remote employers, then verify location requirements and current vacancies."
+    },
+    "remotion-skills": {
+      "id": "Merancang komposisi video sebagai kode dan merendernya bila runtime tersedia.",
+      "en": "Build editable video compositions as code and render them when the runtime is available."
+    },
+    "research-paper-writing": {
+      "id": "Memeriksa struktur argumen dan hubungan antara klaim, bukti, serta pembahasan.",
+      "en": "Review argument structure and the links between claims, evidence and discussion."
+    },
+    "reverse-engineer-anything": {
+      "id": "Memeriksa artefak insiden secara forensik dalam mandat yang jelas.",
+      "en": "Inspect incident artifacts within an explicit forensic mandate."
+    },
+    "slide-generation": {
+      "id": "Menyusun presentasi dari argumen, hasil, dan visual yang dapat diverifikasi.",
+      "en": "Build a presentation from checkable arguments, results and visuals."
+    },
+    "strix": {
+      "id": "Menguji keamanan target yang lingkup dan izin aksesnya telah disetujui.",
+      "en": "Review the security of targets with an agreed scope and authorization."
+    },
+    "superdesign-skill": {
+      "id": "Menilai tata letak, token desain, dan konsistensi antarmuka.",
+      "en": "Review layout, design tokens and interface consistency."
+    },
+    "superpowers": {
+      "id": "Menata perencanaan, implementasi, dan validasi perubahan kode.",
+      "en": "Structure planning, implementation and validation for a code change."
+    },
+    "symbolic-equation": {
+      "id": "Mencari kandidat persamaan yang dapat ditafsirkan dan diuji.",
+      "en": "Search for interpretable equations that can be tested against data."
+    },
+    "table-generation": {
+      "id": "Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan.",
+      "en": "Build academic tables from verified results, units and notes."
+    },
+    "token-monitor": {
+      "id": "Sumber status kuota tambahan untuk kebijakan anggaran.",
+      "en": "Read additional quota status for budget decisions when a compatible source is available."
+    },
+    "tokenshield": {
+      "id": "Gabungkan data penggunaan, estimasi biaya, dan pemeriksaan anggaran; ini bukan batas tagihan keras dari provider.",
+      "en": "Combine usage readings, cost estimates and budget checks without claiming a provider-enforced spending cap."
+    },
+    "tokentracker": {
+      "id": "Sumber data penggunaan lokal untuk kebijakan anggaran.",
+      "en": "Read available local usage data for budget decisions."
+    },
+    "unlimited-ocr": {
+      "id": "Memandu runtime OCR lokal dan indeks halaman.",
+      "en": "Plan a separately installed local OCR runtime and page index."
+    },
+    "unlimited-ocr-2": {
+      "id": "Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti.",
+      "en": "Route document and image extraction to available OCR with page-linked evidence."
+    },
+    "wise-judgment-and-sovereign-orchestrator": {
+      "id": "Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val.",
+      "en": "Coordinate workflow choices, budgets, approvals, delegation and synthesis of Val's findings."
+    },
+    "timesfm-forecasting": {
+      "id": "Prediksi deret waktu numerik secara lokal memakai TimesFM 2.5 setelah setup runtime dan bobot terpisah.",
+      "en": "Forecast numeric time series locally with TimesFM 2.5 after separate runtime and weight setup."
+    },
+    "unslop": {
+      "id": "Tinjau dan perbaiki desain antarmuka; skill ini mengubah UI, bukan gaya prosa bot.",
+      "en": "Review and improve interface design; it changes UI, not the bot's prose style."
+    },
+    "brag": {
+      "id": "Rancang video peluncuran produk yang dapat diedit dengan Hyperframes, dimulai dari konsep dan review manusia.",
+      "en": "Plan editable product-launch videos with Hyperframes, starting with concepts and human review."
+    },
+    "scrapling": {
+      "id": "Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi.",
+      "en": "Extract CSS/XPath data from saved local HTML in an isolated parser runtime."
+    },
+    "harness2": {
+      "id": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
+      "en": "Explore harness improvements through deterministic demonstrations and human-reviewed proposals."
+    }
+  },
+  "packs": {
+    "core": {
+      "id": "Fondasi ideasi, gaya tulisan, persona, OCR, koordinasi, dan akses alat sesuai tugas.",
+      "en": "Foundations for ideation, writing style, persona, OCR, coordination and task-based tool access."
+    },
+    "filmmaking": {
+      "id": "Perencanaan film/foto, visual, motion graphics, dan video; produksi memakai alat yang disiapkan terpisah.",
+      "en": "Film/photo planning, visuals, motion graphics and video; production uses separately configured tools."
+    },
+    "business": {
+      "id": "Analisis usaha, skenario keuangan, dan perhitungan bisnis lewat harness lokal.",
+      "en": "Business analysis, financial scenarios and calculations through a local harness."
+    },
+    "thesis": {
+      "id": "Ide penelitian, literatur, metode, analisis data, penulisan, revisi, dan presentasi skripsi.",
+      "en": "Research ideas, literature, methods, data analysis, writing, revision and thesis presentations."
+    },
+    "webdev": {
+      "id": "Pemetaan proyek, pengembangan web/UI, eksperimen kode, dan pengujian.",
+      "en": "Project mapping, web/UI development, code experiments and testing."
+    },
+    "cybersec": {
+      "id": "Pemetaan kode dan panduan audit keamanan pada target yang izinnya jelas; engine dipasang terpisah.",
+      "en": "Code mapping and security-audit guidance for authorized targets; engines are installed separately."
+    }
+  },
+  "modes": {
+    "solo": {
+      "id": "Pasang semua skill standar pada satu agen; REA tetap terpisah dan tidak aktif secara default.",
+      "en": "Install all standard skills for one agent; REA stays separate and OFF by default."
+    },
+    "custom-bots": {
+      "id": "Buat jumlah, nama, dan peran bot sendiri, lalu pilih skill masing-masing.",
+      "en": "Choose the number, names and roles of bots, then select each bot's skills."
+    },
+    "selective": {
+      "id": "Pasang hanya kategori pilihan beserta skill fondasi yang diwajibkan paket.",
+      "en": "Install selected categories plus the package's mandatory foundation skills."
+    },
+    "muza-preset": {
+      "id": "Buat tim Yukino untuk ide, Shizuka untuk koordinasi, Val untuk riset, Kiki untuk kreatif, dan Shikaku untuk kode.",
+      "en": "Create a team: Yukino for ideas, Shizuka for coordination, Val for research, Kiki for creative work and Shikaku for code."
+    }
+  },
+  "platforms": {
+    "hermes": {
+      "id": "Pasang ke folder skill Hermes Agent; akun dan model utama tetap milik pengguna.",
+      "en": "Install into the Hermes Agent skills folder; the user retains control of accounts and the main model."
+    },
+    "openclaw": {
+      "id": "Pasang instruksi skill untuk OpenClaw; koneksi layanan mengikuti setup OpenClaw pengguna.",
+      "en": "Install skill instructions for OpenClaw; service connections depend on the user's OpenClaw setup."
+    },
+    "claude": {
+      "id": "Pasang ke folder skill Claude Code; untuk Claude.ai gunakan jalur unggah ZIP yang dijelaskan di README.",
+      "en": "Install into the Claude Code skills folder; for Claude.ai use the README's ZIP-upload route."
+    },
+    "codex": {
+      "id": "Pasang ke folder skill Codex; ini bukan unggahan Knowledge ke ChatGPT.",
+      "en": "Install into the Codex skills folder; this does not upload Knowledge to ChatGPT."
+    },
+    "antigravity": {
+      "id": "Pasang instruksi skill ke lokasi Antigravity yang dipilih tanpa mengganti model IDE.",
+      "en": "Install skill instructions into the selected Antigravity location without changing the IDE's model."
+    },
+    "manual": {
+      "id": "Pilih sendiri folder tujuan untuk agen lain yang mendukung SKILL.md.",
+      "en": "Choose the destination folder for another agent that supports SKILL.md."
+    }
+  },
+  "features": {
+    "rea": {
+      "id": "Analisis statis JavaScript/arsip milik pengguna melalui CLI; berguna untuk memahami aplikasi dan artefak. Default Tidak; pilihan ini hanya memasang wrapper, bukan runtime atau engine native.",
+      "en": "Static CLI analysis of owned JavaScript/archives, useful for understanding applications and artifacts. Default No; this installs only the wrapper, not the runtime or native engines."
+    },
+    "rea-runtime": {
+      "id": "Pasang dependency npm REA ke runtime terisolasi; memerlukan Node/npm yang kompatibel dan unduhan internet. Engine seperti Ghidra dipasang terpisah; tidak menambahkan server MCP.",
+      "en": "Install REA npm dependencies into an isolated runtime; compatible Node/npm and an internet download are required. Engines such as Ghidra are separate; no MCP server is registered."
+    },
+    "pull-upstreams": {
+      "id": "Unduh repositori referensi eksternal ke cache untuk modul tambahan. Memakai internet dan ruang disk; tidak otomatis menjalankan kode atau menjamin dependency/akun siap.",
+      "en": "Download external reference repositories into a cache for additional modules. Uses internet and disk space; it does not automatically run their code or make dependencies/accounts ready."
+    },
+    "custom-display-names": {
+      "id": "Ubah nama tampilan bot pada preset; pembagian peran dan ID folder tetap sama.",
+      "en": "Change display names in the preset while keeping role assignments and folder IDs the same."
+    },
+    "artcraft": {
+      "id": "Aplikasi kreatif opsional untuk foto, video, audio, desain, dan dokumen melalui adapter yang tersedia. Boleh dilewati; aplikasi, lisensi, atau akun layanan disiapkan terpisah dan tidak dibuka saat boot.",
+      "en": "Optional creative apps for photo, video, audio, design and documents through available adapters. You may skip them; apps, licenses or service accounts are separate and do not open at boot."
+    },
+    "kat": {
+      "id": "Subagen coding tambahan untuk pekerjaan kode, terpisah dari model utama. Pilihan di sini hanya menyimpan preferensi kesiapan; tidak mengunduh model dan belum mengaktifkan subagen.",
+      "en": "An additional coding subagent, separate from the main model. This choice only saves readiness preferences; it does not download a model or enable the subagent yet."
+    },
+    "kat-light": {
+      "id": "Rencana KAT lokal dengan kuantisasi IQ2_XS/IQ3_XXS untuk jejak memori lebih kecil. Perlu file model dan pemeriksaan RAM nyata; memilihnya tidak mengunduh atau memuat model.",
+      "en": "Plan local KAT with IQ2_XS/IQ3_XXS quantization for a smaller memory footprint. Requires model files and a real RAM check; selection does not download or load the model."
+    },
+    "kat-ideal": {
+      "id": "Rencana KAT lokal dengan kuantisasi Q4_K_M yang umumnya lebih berat dari opsi ringan. Perlu file model dan RAM cukup; memilihnya tidak mengunduh atau memuat model.",
+      "en": "Plan local KAT with Q4_K_M quantization, generally heavier than the light option. Requires model files and enough RAM; selection does not download or load the model."
+    },
+    "kat-cloud": {
+      "id": "Rencana memakai endpoint API terpisah untuk subagen coding. Perlu akun/endpoint dan persetujuan biaya; pilihan ini tidak membuat panggilan API atau mengganti model utama.",
+      "en": "Plan a separate API endpoint for the coding subagent. Requires an account/endpoint and cost approval; this choice makes no API call and does not replace the main model."
+    },
+    "kat-skip": {
+      "id": "Lewati konfigurasi KAT; coding tetap dapat memakai agen dan model utama yang sudah diatur.",
+      "en": "Skip KAT configuration; coding can still use the agent and main model already configured."
+    },
+    "skill-vs-pack": {
+      "id": "Paket memilih kelompok skill sesuai bidang; skill individual memberi kontrol satu per satu. Skill fondasi wajib tetap disertakan, dan referensi eksternal belum tentu siap dijalankan.",
+      "en": "Packs select skill groups by subject; individual skills give one-by-one control. Mandatory foundations remain included, and external references are not necessarily ready to run."
+    },
+    "voice": {
+      "id": "Suara lokal OmniVoice untuk audio atau baca-nyaring yang diminta; tidak otomatis menyuarakan setiap chat. Perlu bobot, RAM, dan setup audio; lisensi bobot membatasi penggunaan komersial.",
+      "en": "Local OmniVoice speech for requested audio or read-aloud, not every chat automatically. Requires weights, RAM and audio setup; the weights license restricts commercial use."
+    },
+    "dream": {
+      "id": "Buat proposal rangkuman/pelajaran secara lokal dan deterministik dari bahan terpilih. Tidak memanggil LLM atau otomatis memasukkan proposal ke memori aktif.",
+      "en": "Create deterministic local summary/learning proposals from selected material. Does not call an LLM or automatically promote proposals into active memory."
+    },
+    "steel": {
+      "id": "Browser utama untuk penjelajahan umum jika key/endpoint sudah disiapkan; layanan dapat berbiaya. Akses akun personal perlu persetujuan sesuai tugas, dan login browser lain tidak disalin otomatis.",
+      "en": "Primary browser for general browsing once a key/endpoint is configured; service use may cost money. Personal-account access needs task-scoped approval, and other browser logins are not copied automatically."
+    },
+    "gitlab": {
+      "id": "Akses proyek GitLab melalui MCP web dengan autentikasi dan izin akun yang sesuai. Baca hanya data dalam lingkup tugas; perubahan proyek memerlukan instruksi yang jelas.",
+      "en": "Access GitLab projects through web MCP with appropriate account authentication and permissions. Read only task-scoped data; project changes need explicit instructions."
+    },
+    "tinyfish": {
+      "id": "Cari atau ambil informasi web melalui MCP web setelah login layanan. Operasi dapat memakai kuota/kredit; registrasi koneksi saja tidak membuktikan autentikasi atau tugas berhasil.",
+      "en": "Search or fetch web information through web MCP after service login. Operations may consume quota/credits; registration alone does not prove authentication or successful operation."
+    },
+    "brightdata": {
+      "id": "Layanan pengambilan data web opsional; tetap nonaktif tanpa akun dan API key. Pemakaian perlu setup layanan dan pemeriksaan biaya/kuota sebelum dijalankan.",
+      "en": "Optional web-data service; remains disabled without an account and API key. Use requires service setup and a cost/quota check before running."
+    },
+    "llmtrim": {
+      "id": "Padatkan keluaran JSON besar yang memenuhi syarat tanpa kehilangan nilai, dengan pemeriksaan kesetaraan. Tidak memadatkan semua chat atau menjamin persentase penghematan tagihan tertentu.",
+      "en": "Compact eligible large JSON outputs without losing values, with an equality check. Does not compress every chat or guarantee a particular billing reduction."
+    },
+    "hersona": {
+      "id": "Cari referensi persona dan siapkan draf penyesuaian karakter melalui CLI. Persona aktif tetap mengikuti SOUL native; draf tidak otomatis menimpa pengaturan pengguna.",
+      "en": "Find persona references and prepare character-adjustment drafts through the CLI. Active persona still follows native SOUL; drafts do not automatically overwrite user settings."
+    },
+    "timesfm-runtime": {
+      "id": "Siapkan dependency dan bobot TimesFM untuk prediksi deret waktu lokal. Memerlukan unduhan, ruang disk, dan RAM cukup; uji kecil bukan jaminan akurasi pada data pengguna.",
+      "en": "Set up TimesFM dependencies and weights for local time-series forecasts. Requires downloads, disk space and enough RAM; a small test does not guarantee accuracy on user data."
+    },
+    "brag-runtime": {
+      "id": "Siapkan Hyperframes untuk memvalidasi dan merender video lokal dari komposisi HTML yang dapat diedit. Perlu Node, browser/FFmpeg yang sesuai, RAM/disk, dan hak aset; font dapat memerlukan unduhan.",
+      "en": "Set up Hyperframes to validate and render local video from editable HTML compositions. Needs Node, a compatible browser/FFmpeg, RAM/disk and asset rights; fonts may need downloads."
+    },
+    "scrapling-runtime": {
+      "id": "Siapkan parser terisolasi untuk ekstraksi CSS/XPath dari file HTML lokal. Memerlukan dependency Python yang kompatibel; opsi ini tidak menyediakan browser stealth atau crawler jaringan.",
+      "en": "Set up an isolated parser for CSS/XPath extraction from local HTML files. Requires compatible Python dependencies; this option supplies no stealth browser or network crawler."
+    },
+    "harness2-runtime": {
+      "id": "Siapkan framework untuk demo perbaikan harness yang deterministik dan proposal eksperimen. Perlu Python/dependency yang kompatibel; benchmark berbasis model dan promosi perubahan ke bot tidak otomatis aktif.",
+      "en": "Set up the framework for deterministic harness-improvement demos and experiment proposals. Needs compatible Python/dependencies; model-backed benchmarks and promotion into the bot are not automatically enabled."
+    },
+    "managed-update": {
+      "id": "Perbarui salinan skill yang terdaftar dan fingerprint-nya cocok; pertahankan edit lokal yang berbeda. Pendaftaran ini bukan izin mengganti SOUL, provider/model, atau semua dependency runtime.",
+      "en": "Update registered skill copies whose fingerprints match, preserving differing local edits. Enrollment does not authorize replacing SOUL, provider/model or every runtime dependency."
+    },
+    "upstream-cache": {
+      "id": "Simpan checkout referensi eksternal di luar folder skill agar dapat diperiksa atau diintegrasikan terpisah. Cache memakai internet/disk dan tidak sama dengan fitur yang sudah terpasang atau aktif.",
+      "en": "Keep external reference checkouts outside skill folders for separate review or integration. The cache uses internet/disk and is not the same as an installed or active capability."
+    }
+  }
+}

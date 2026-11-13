@@ -27,7 +27,7 @@ Installer menyiapkan perintah `msshi` di PATH akun. Buka terminal baru jika peru
 | --- | --- |
 | `msshi setup` | Pilih mode Solo, Custom Multi-Bot, Selective Packs, atau Preset MuZA. Tinjau target dan file sebelum menerapkan. |
 | `msshi check` / `msshi status` | Bandingkan versi paket aktif dengan `VERSION.json` dari GitHub `main`, tampilkan changelog, dan ringkas rute aplikasi. |
-| `msshi update` | Ambil `main` dari GitHub, lalu segarkan skill terkelola yang masih cocok dengan versi pemasangan. Gunakan setup atau select untuk menambah skill baru. Simpan cadangan SOUL dan Creative DNA yang ditemukan. Jalankan migrasi profil v3 yang tersedia, lalu segarkan cache 45 sumber dan integrasi terpilih. Provider/model utama serta skill yang dikustomisasi dijaga oleh pemeriksaan dan cadangan. |
+| `msshi update` | Ambil `main` dari GitHub, lalu segarkan skill terkelola yang masih cocok dengan versi pemasangan. Gunakan setup atau select untuk menambah skill baru. Simpan cadangan SOUL dan Creative DNA yang ditemukan. Jalankan migrasi profil v3 yang tersedia, lalu segarkan cache 49 sumber dan integrasi terpilih. Provider/model utama serta skill yang dikustomisasi dijaga oleh pemeriksaan dan cadangan. |
 | `msshi update --skip-upstreams` | Perbarui rilis, skill terkelola, dan migrasi profil tanpa mengambil sumber eksternal. |
 | `msshi connect` | Baca menu dan status rute aplikasi. Pada profil v3, eksekusi memakai `msshi runtime ticket` dan `msshi runtime run`. |
 | `msshi select` | Pilih paket atau slug dengan angka/nama dan tinjau rencana. Gunakan `msshi select --local` untuk memakai versi yang sudah ada di perangkat. |
@@ -38,7 +38,7 @@ Cache dan metadata biasanya berada di `%LOCALAPPDATA%\MSSHI` di Windows atau `$X
 
 ### Pengambilan upstream
 
-`msshi update` mencoba 41 repositori Git, dua kartu model, dan satu situs katalog sesuai manifest 45 sumber. Git menyimpan snapshot ringan tanpa checkout dan mencatat SHA. Baca file pilihan dengan `git -C <lokasi-snapshot> show HEAD:<path>`; Git akan mengambil isi yang belum tersedia di cache bila diperlukan. Lihat `upstreams/last-fetch.json` untuk sumber yang berhasil dan yang perlu dicoba ulang. Jika ada sumber gagal, perintah mengembalikan status 1 dan mempertahankan pembaruan yang sudah berhasil. Tahap fetch cache sendiri tidak memasang runtime, menyalin skill ke profil, menjalankan skrip upstream, atau mengunduh bobot OCR. Jalur global `msshi update` v3 juga memanggil installer integrasi terpilih setelah fetch; pemasangan tersebut memiliki receipt terpisah dan dapat menyalin skill terpilih ke profil. Model, akun, dan layanan tetap memerlukan prasyaratnya.
+`msshi update` mencoba 46 repositori Git, dua kartu model, dan satu situs katalog sesuai manifest 49 sumber. Git menyimpan snapshot ringan tanpa checkout dan mencatat SHA. Baca file pilihan dengan `git -C <lokasi-snapshot> show HEAD:<path>`; Git akan mengambil isi yang belum tersedia di cache bila diperlukan. Lihat `upstreams/last-fetch.json` untuk sumber yang berhasil dan yang perlu dicoba ulang. Jika ada sumber gagal, perintah mengembalikan status 1 dan mempertahankan pembaruan yang sudah berhasil. Tahap fetch cache sendiri tidak memasang runtime, menyalin skill ke profil, menjalankan skrip upstream, atau mengunduh bobot OCR. Jalur global `msshi update` v3 juga memanggil installer integrasi terpilih setelah fetch; pemasangan tersebut memiliki receipt terpisah dan dapat menyalin skill terpilih ke profil. Model, akun, dan layanan tetap memerlukan prasyaratnya.
 
 Skrip langsung berikut juga mendukung fetch. Berikan folder cache yang terpisah dan gunakan `--apply` setelah meninjau rencana.
 
@@ -109,3 +109,19 @@ Ganti `default` dengan ID profil bot yang diperiksa. Status membaca penghitung a
 ## Tambahan v3.1
 
 `msshi brag doctor` memeriksa alur video; `msshi scrapling status` memeriksa parser; `msshi harness2 status` memeriksa demo harness. Subperintah setup/pemakaian ada pada [panduan v3.1](V3_1_UPDATE.md). Unslop adalah skill instruksi UI sesuai konteks dan tidak membutuhkan server/CLI baru.
+
+## Penjelasan langsung saat memilih
+
+`msshi setup` dan `msshi select` menampilkan fungsi setiap mode, paket, dan skill di samping ID-nya. Nama alternatif ditandai sebagai alias; instruksi bawaan dibedakan dari referensi eksternal. Skill fondasi wajib tetap disertakan. `--lang en` mengganti bahasa penjelasan, bukan ID/format jawaban. Daftar seluruh fungsi: [Panduan pilihan](OPTION_GUIDE.md) / [English](OPTION_GUIDE_EN.md).
+
+```sh
+msshi choices rea
+msshi choices kat
+msshi choices --kind skills
+msshi choices --kind apps --lang en
+msshi setup --lang en
+msshi select --local --lang en
+msshi optional list
+```
+
+`msshi choices` dan `msshi optional list` hanya membaca bantuan, tanpa login, unduhan, aplikasi atau kredit LLM. Menu KAT menjelaskan bahwa pilihannya baru menyimpan preferensi; ia belum memasang/mengaktifkan model. REA hanya ditambahkan bila dipilih secara eksplisit, dengan runtime terpisah. Menu `msshi connect` menjelaskan fungsi aplikasi dan bahwa registrasi tidak sama dengan koneksi/autentikasi yang sudah teruji. Opsi yang dilewati dapat ditambahkan nanti.

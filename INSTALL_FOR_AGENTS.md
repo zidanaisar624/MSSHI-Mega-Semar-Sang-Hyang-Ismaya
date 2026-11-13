@@ -17,6 +17,10 @@ Paste this message into Hermes Agent, OpenClaw, Claude Code, or Antigravity if t
 5. Verify the actual files and, where available, the host's skill list. Report the version, path, count, and what still depends on host setup. Use a fresh session to refresh discovery. If shell, GitHub, attachments, or an install action is unavailable, give the matching manual route and say which step remains.
 6. Keep upstream repositories separate from the installed skill folders. Download external references only when the user requests an update or upstream fetch. A downloaded repository needs its own review and setup before use. Keep paid jobs and app startup on demand.
 
+### Explain choices before selection
+
+Use [the choice guide](docs/OPTION_GUIDE_EN.md) / [panduan Indonesia](docs/OPTION_GUIDE.md) or `msshi choices <id>` to explain each option in one or two sentences: its function, when useful, what is installed, and any separate runtime/account/model/cost prerequisites. Surface these explanations when offering setup modes, packs, skills, REA, KAT or app connections. Honor choices and authorization already given; do not add redundant confirmation rounds. Keep unselected optional features at their existing defaults (REA OFF, KAT Skip). Installing instructions is distinct from activating a runtime or service.
+
 ### Connect apps in Hermes
 
 If the user asks to connect apps, offer **Auto-Reconnect All** or **Pick apps**. Inspect the selected Hermes profile with `msshi connect --mode auto-reconnect --dry-run` or list targets with `msshi connect --catalog`. Apply the chosen scope. The bridge registers routes per profile and leaves app launching until an explicit task. Use Hermes native tools for MCP routes. If the global CLI is unavailable, the standalone bridge skill includes the same connector commands. [Connection guide](docs/CLI_ANYTHING_BRIDGE.md).

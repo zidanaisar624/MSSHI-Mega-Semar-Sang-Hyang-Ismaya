@@ -30,6 +30,41 @@ LIMIT_BYTES = 8 * 1024 * 1024
 MCP_FILES = ("mcp_config.json", "mcp.json", ".mcp.json", "config.yaml")
 
 
+def help_language():
+    """Keep copied skill help usable without global MSSHI modules."""
+    value = os.environ.get("MSSHI_LANG") or os.environ.get("LANG", "id")
+    return "en" if value.lower().startswith("en") else "id"
+
+
+def connection_help():
+    path = Path(__file__).with_name("connection_help.json")
+    try:
+        if path.stat().st_size > 256 * 1024:
+            return {}
+        document = json.loads(path.read_text(encoding="utf-8-sig"))
+        return document if isinstance(document, dict) and document.get("schema_version") == 1 else {}
+    except (OSError, ValueError, RecursionError):
+        # Older standalone copies may not have the new, optional help resource.
+        return {}
+
+
+def description(key, section="targets"):
+    """Describe choices only; never probe, launch, or change a route."""
+    document, language = connection_help(), help_language()
+    entries = document.get(section, {})
+    entry = entries.get(key, {}) if isinstance(entries, dict) else {}
+    if not entry and section == "targets":
+        kind = "mcp" if key.startswith("mcp:") else "cli_extension" if hub.GENERIC_CLI.fullmatch(key) else "unknown"
+        fallbacks = document.get("fallbacks", {})
+        entry = fallbacks.get(kind, {}) if isinstance(fallbacks, dict) else {}
+    text = entry.get(language) or entry.get("id") if isinstance(entry, dict) else None
+    if not isinstance(text, str) or not text.strip():
+        text = ("Route registration only; apps, runtimes, authentication and permissions are separate. No tool is executed."
+                if language == "en" else
+                "Hanya registrasi rute; aplikasi, runtime, autentikasi, dan izin diperiksa terpisah. Tidak menjalankan alat.")
+    return " ".join(text.split())
+
+
 def absolute(path):
     return Path(os.path.abspath(Path(path).expanduser()))
 
@@ -261,7 +296,7 @@ def report(destination, registered, candidates, warnings, selected=None):
     schema = json.loads(read_text(destination)).get("schema_version",1) if destination.is_file() else 1
     return {
         "schema_version": schema, "auto_open_on_boot": False, "registry": str(destination),
-        "connections": [{"id": key, **current_capability(key, candidates),
+        "connections": [{"id": key, **current_capability(key, candidates), "description": description(key),
                          "registered": (current_capability(key,candidates)["readiness"] == "configured"
                                         if key in declared_remote else key in registered)}
                         for key in ids],
@@ -334,9 +369,13 @@ def emit(result, as_json):
     for row in result.get("connections", []):
         state = "terdaftar" if row["registered"] else "tersedia di katalog"
         print(f"  {row['id']} | {row['route']} | {row['readiness']} | {state}")
+        print(f"    {row.get('description') or description(row['id'])}")
     if result.get("groups"):
         print("Kelompok pilihan: " + ", ".join(result["groups"]))
+        for key in result["groups"]:
+            print(f"  {key} - {description(key)}")
         print(f"CLI-Hub: {hub.CATALOG_URL}")
+        print(description("registration", "notes"))
     for warning in result.get("warnings", []):
         print(f"  {warning}")
 
@@ -346,7 +385,8 @@ def select_menu(candidates):
                "blender", "blender-cli", "ffmpeg", "cli-hub"]
     options.extend(key for key in candidates if key not in options)
     for index, key in enumerate(options, 1):
-        print(f" {index:>2}. {key}")
+        print(f" {index:>2}. {key} - {description(key)}")
+    print(description("registration", "notes"))
     value = input("Masukkan nomor atau ID target, dipisah koma: ").strip()
     if not value:
         raise ValueError("Tidak ada target yang dipilih.")
@@ -435,7 +475,8 @@ def run(args, default_state_dir=None):
         emit(result, args.json)
         return 0
     if not (mode or args.add or args.remove):
-        print("1. Auto-Reconnect Semua\n2. Pilih Connect Satu-Satu")
+        print("1. Auto-Reconnect Semua - " + description("auto-reconnect", "modes"))
+        print("2. Pilih Connect Satu-Satu - " + description("select", "modes"))
         choice = input("Pilih 1 atau 2: ").strip()
         if choice not in {"1", "2"}:
             raise ValueError("Pilih 1 atau 2.")

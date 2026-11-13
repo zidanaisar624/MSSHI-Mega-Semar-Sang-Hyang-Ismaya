@@ -19,6 +19,7 @@ sys.dont_write_bytecode = True
 
 import install_msshi as installer
 import setup_cli_anything_hermes as connections
+import msshi_choices as choice_help
 from msshi_sources import RAW, REPOSITORY, clone, data_root, download, fetch_upstreams, write_json
 from msshi_update import inventory, release_version, update_skill
 
@@ -254,13 +255,16 @@ def update_target(target, choices, catalog, managed, *, apply, install_missing=(
         managed[folder.name] = fingerprint(source_files)
 
 
-def choose_targets(home, platform=None, target_dir=None, team=False):
+def choose_targets(home, platform=None, target_dir=None, team=False, lang='id'):
     if not platform:
         detected, _ = installer.detect_host("auto")
+        for name in PLATFORMS:
+            print(f"  {name}: {choice_help.describe('platforms', name, lang=lang)}")
         platform = (input(f"Platform [{'/'.join(PLATFORMS)}] ({detected}): ").strip()
                     or detected)
     if platform not in PLATFORMS:
         raise ValueError(f"Platform tidak dikenal: {platform}")
+    print(f"{platform}: {choice_help.describe('platforms', platform, lang=lang)}")
     _, detected = installer.detect_host(platform)
     default = (Path.cwd() / "msshi-agents" if team else detected or Path.cwd() / "msshi-skills")
     if not target_dir:
@@ -270,9 +274,10 @@ def choose_targets(home, platform=None, target_dir=None, team=False):
     return platform, target
 
 
-def checklist(items, label):
+def checklist(items, label, descriptions=None):
     for index, item in enumerate(items, 1):
-        print(f"  [ ] {index:2d}. {item}")
+        detail = (descriptions or {}).get(item, '')
+        print(f"  [ ] {index:2d}. {item}" + (f" - {detail}" if detail else ''))
     value = input(f"Pilih {label} (angka/nama, pisahkan koma, atau all): ").strip().lower()
     if value == "all":
         return list(items)
@@ -292,7 +297,7 @@ def checklist(items, label):
     return list(dict.fromkeys(picked))
 
 
-def custom_matrix(data, catalog):
+def custom_matrix(data, catalog, lang='id'):
     count = int(input("Jumlah bot: ").strip())
     if count < 1:
         raise ValueError("Siapkan minimal satu bot.")
@@ -302,9 +307,9 @@ def custom_matrix(data, catalog):
         slug = installer.safe_slug(input(f"ID bot {index} (huruf kecil dan tanda hubung): ").strip(), "bot")
         label = input(f"Nama tampilan [{slug}]: ").strip() or slug
         role = input("Peran utama: ").strip() or "Asisten proyek"
-        print("Masukkan slug skill, atau pilih semua dengan all.")
-        value = input(f"Skill untuk {label} (dipisah koma): ").strip()
-        names = list(catalog) if value == "all" else [name.strip() for name in value.split(",") if name.strip()]
+        items = [*catalog, *aliases]
+        names = checklist(items, f"skill untuk {label}",
+                          choice_help.menu_descriptions(items, 'skills', lang=lang, aliases=aliases))
         skills = installer.resolve_skills(names, catalog, aliases)
         bots.append({
             "id": slug, "label": label, "persona_text": f"# {label}\n\nPeran: {role}.\n",
@@ -315,22 +320,28 @@ def custom_matrix(data, catalog):
 
 
 def setup(args, home, state):
-    print("1. Solo 1-Bot\n2. Custom Multi-Bot\n3. Selective Packs\n4. Preset 5-Bot MuZA")
+    lang = getattr(args, 'lang', 'id')
+    for index, mode_name in enumerate(MODES, 1):
+        print(f"{index}. {mode_name} - {choice_help.describe('modes', mode_name, lang=lang)}")
     pick = input("Mode [1]: ").strip() or "1"
     if pick not in {"1", "2", "3", "4"}:
         raise ValueError("Mode harus 1, 2, 3, atau 4.")
     mode = MODES[int(pick) - 1]
     team = mode in {"custom-bots", "muza-preset"}
-    platform, target = choose_targets(home, args.platform, args.target_dir, team)
+    platform, target = choose_targets(home, args.platform, args.target_dir, team, lang)
+    print('Instruksi skill, aplikasi, runtime, model, dan akun dipasang terpisah; opsi dapat ditambahkan nanti.'
+          if lang == 'id' else 'Skill instructions, apps, runtimes, models and accounts are separate; skipped options can be added later.')
     data, catalog, packs = installer.read_matrix(ROOT / MATRIX)
     command = ["--mode", mode, "--platform", platform, "--target-dir", str(target)]
     selections = {}
     with TemporaryDirectory(prefix=".msshi-stage-", dir=home) as scratch:
         if mode == "custom-bots":
-            data = custom_matrix(data, catalog)
-        elif mode == "muza-preset" and input("Custom display names? [y/N]: ").strip().lower() in {"y", "yes", "ya"}:
-            data = {**data, "bots": [{**bot, "label": input(f"{bot['label']} [{bot['id']}]: ").strip() or bot["label"]}
-                                    for bot in data["bots"]]}
+            data = custom_matrix(data, catalog, lang)
+        elif mode == "muza-preset":
+            choice_help.feature('custom-display-names', lang=lang)
+            if input("Custom display names? [y/N]: ").strip().lower() in {"y", "yes", "ya"}:
+                data = {**data, "bots": [{**bot, "label": input(f"{bot['label']} [{bot['id']}]: ").strip() or bot["label"]}
+                                        for bot in data["bots"]]}
         if team:
             matrix = Path(scratch) / "matrix.json"
             write_json(matrix, data)
@@ -339,7 +350,7 @@ def setup(args, home, state):
             for bot_id, _, skills, _ in installer.team_plan(data, mode, catalog):
                 selections[target / bot_id / "skills"] = skills
         elif mode == "selective":
-            chosen = checklist(list(packs), "paket")
+            chosen = checklist(list(packs), "paket", choice_help.menu_descriptions(packs, 'packs', lang=lang))
             command.extend(("--packs", *chosen))
             selections[target] = installer.include_mandatory(
                 (slug for pack in chosen for slug in packs[pack]), catalog,
@@ -363,11 +374,9 @@ def setup(args, home, state):
         write_json(home / STATE_FILE, state)
     print(f"Target terdaftar untuk pembaruan MSSHI: {len(selections)}.")
     if platform == "hermes":
-        print("Subagen KAT opsional. Model utama tetap memakai konfigurasi pengguna.")
-        print("1. Lokal ringan IQ2_XS/IQ3_XXS (verifikasi RAM dan file model diperlukan)")
-        print("2. Lokal Q4_K_M (verifikasi RAM dan file model diperlukan)")
-        print("3. Cloud/API (perlu endpoint dan izin biaya)")
-        print("4. Lewati")
+        choice_help.feature('kat', lang=lang)
+        for index, name in enumerate(('kat-light', 'kat-ideal', 'kat-cloud', 'kat-skip'), 1):
+            print(f"{index}. {choice_help.describe('features', name, lang=lang)}")
         choice = input("Pilihan KAT [4]: ").strip() or "4"
         modes = {"1": "light", "2": "ideal", "3": "cloud", "4": "skip"}
         if choice not in modes:
@@ -375,8 +384,9 @@ def setup(args, home, state):
         from msshi_integrations import kat
         profile_home = Path(os.environ.get("HERMES_HOME") or Path.home() / ".hermes").absolute()
         print(json.dumps(kat(profile_home, modes[choice]), ensure_ascii=False, indent=2))
-        print("ArtCraft bersifat opsional. Aplikasi yang dilewati tidak menggagalkan setup.")
+        choice_help.feature('artcraft', lang=lang)
     with_rea = getattr(args, 'with_rea', False)
+    choice_help.feature('rea', lang=lang)
     if not with_rea and sys.stdin.isatty():
         try:
             with_rea = input("Pasang wrapper REA opsional (runtime terpisah)? [y/N]: ").strip().lower() in {"y", "yes", "ya"}
@@ -394,15 +404,18 @@ def confirmed():
 
 def select(args, home, state, source, commit):
     data, catalog, packs = validate_release(source, release_version(ROOT))
-    _, target = choose_targets(home, args.platform, args.target_dir)
+    lang = getattr(args, 'lang', 'id')
+    _, target = choose_targets(home, args.platform, args.target_dir, lang=lang)
     ensure_target(target, home, source)
+    choice_help.feature('skill-vs-pack', source=source, lang=lang)
     kind = input("Pilih (p)aket atau (s)kill individual? [p]: ").strip().lower() or "p"
     if kind == "p":
-        names = [slug for pack in checklist(list(packs), "paket") for slug in packs[pack]]
+        names = [slug for pack in checklist(list(packs), "paket", choice_help.menu_descriptions(packs, 'packs', source=source, lang=lang)) for slug in packs[pack]]
     elif kind == "s":
         aliases = data.get("aliases", {})
         bundled = {slug: path for slug, path in catalog.items() if path}
-        names = installer.resolve_skills(checklist([*bundled, *aliases], "skill"), bundled, aliases)
+        items = [*bundled, *aliases]
+        names = installer.resolve_skills(checklist(items, "skill", choice_help.menu_descriptions(items, 'skills', source=source, lang=lang, aliases=aliases)), bundled, aliases)
     else:
         raise ValueError("Masukkan p atau s.")
     names = installer.include_mandatory(names, catalog)
@@ -530,24 +543,48 @@ def main(argv=None):
     updater.add_argument("--skip-upstreams", action="store_true", help="Hanya perbarui MSSHI dan skill bundel.")
     updater.add_argument("--hermes-home", type=Path, help="Folder Hermes untuk migrasi v3.")
     updater.add_argument("--source", type=Path, help="Pakai kandidat lokal yang sudah diperiksa.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea"):
-        command = subparsers.add_parser(verb, add_help=False, help=f"MSSHI v3 {verb}.")
+    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices"):
+        descriptions = {
+            'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
+            'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
+            'desktop': 'Status dan peluncur Hermes Desktop.',
+            'audit': 'Periksa paket/profil dan bukti tanpa chat LLM.',
+            'assets': 'Cari bahan persona pribadi di lokasi yang dipilih.',
+            'compact': 'Padatkan data internal sesuai format yang didukung.',
+            'browser': 'Periksa kebijakan Steel dan persetujuan browser personal.',
+            'trim': 'Ringkas JSON yang memenuhi syarat tanpa kehilangan nilai.',
+            'managed': 'Kelola pembaruan salinan skill yang cocok dengan fingerprint.',
+            'services': 'Status dan penyiapan MCP web GitLab/Tinyfish.',
+            'timesfm': 'Peramalan deret waktu lokal; runtime/model terpisah.',
+            'brag': 'Konsep dan video HTML/MP4; runtime dan aset terpisah.',
+            'scrapling': 'Ekstrak CSS/XPath dari HTML lokal tanpa crawler jaringan.',
+            'harness2': 'Demo deterministik dan proposal eksperimen harness.',
+            'optional': 'Lihat atau pasang opsi tambahan; default OFF.',
+            'rea': 'Analisis statis JavaScript/arsip; opsi Coder, runtime terpisah.',
+            'choices': 'Baca fungsi dan prasyarat setiap pilihan tanpa memasang apa pun.',
+        }
+        command = subparsers.add_parser(verb, add_help=False, help=descriptions[verb])
         command.add_argument("arguments", nargs=argparse.REMAINDER)
     for verb in ("dream", "voice", "kat"):
-        command = subparsers.add_parser(verb, add_help=False, help=f"MSSHI v3 {verb}.")
+        command = subparsers.add_parser(verb, add_help=False, help={
+            'dream': 'Proposal pelajaran lokal untuk ditinjau, bukan promosi memori otomatis.',
+            'voice': 'Status/setup OmniVoice lokal untuk audio yang diminta.',
+            'kat': 'Catat preferensi subagen coding; model/endpoint belum otomatis aktif.',
+        }[verb])
         command.add_argument("arguments", nargs=argparse.REMAINDER)
     for action in ("setup", "select"):
         wizard = subparsers.add_parser(action, help="Buka wizard empat mode." if action == "setup" else "Pilih skill atau paket.")
         wizard.add_argument("--platform", choices=PLATFORMS)
         wizard.add_argument("--target-dir", type=Path)
+        wizard.add_argument("--lang", choices=('id', 'en'), default='id', help="Bahasa penjelasan pilihan (id/en); format input tetap sama.")
         if action == "setup":
-            wizard.add_argument("--with-rea", action="store_true", help="Explicitly enable the optional REA wrapper in the selected skill directories; runtime stays separate.")
+            wizard.add_argument("--with-rea", action="store_true", help="Opt-in analisis statis JavaScript/arsip: pasang instruksi REA; runtime Node/npm dan engine native terpisah. Default OFF.")
         if action == "select":
             wizard.add_argument("--local", action="store_true", help="Pilih dari rilis lokal tanpa mengakses GitHub.")
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -568,7 +605,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",

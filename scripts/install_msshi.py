@@ -302,14 +302,16 @@ def main(argv=None):
     from msshi_sources import data_root, fetch_upstreams, upstream_entries
 
     parser = argparse.ArgumentParser(description=TITLE + " — M.S.S.H.I. (Multi-Agent Sovereign Sage & Hermes Intelligence)")
-    parser.add_argument("--mode", choices=("solo", "custom-bots", "selective", "muza-preset"), default="solo")
-    parser.add_argument("--platform", choices=("auto", *HOSTS, "chatgpt", "manual"), default="auto")
+    parser.add_argument("--mode", choices=("solo", "custom-bots", "selective", "muza-preset"), default="solo",
+                        help="solo: satu agen; custom-bots: tim buatan Anda; selective: kategori pilihan; muza-preset: lima peran bawaan.")
+    parser.add_argument("--platform", choices=("auto", *HOSTS, "chatgpt", "manual"), default="auto",
+                        help="Pilih host dan lokasi skill; auto mendeteksi, manual memakai folder pilihan, chatgpt memakai panduan portabel.")
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument("--packs", nargs="+", metavar="PAKET", help="Daftar paket selective, dipisah koma atau spasi.")
     selection.add_argument("--skills", nargs="+", metavar="SKILL", help="Daftar slug skill selective, dipisah spasi.")
     parser.add_argument("--matrix", type=Path, default=MATRIX, help="Matriks kustom. Path aset di dalam JSON relatif ke repo.")
     parser.add_argument("--target-dir", type=Path, help="Folder skill (solo/selective) atau induk workspace bot (mode tim).")
-    parser.add_argument("--pull-upstreams", action="store_true", help="Ambil sumber eksternal ke cache terpisah saat --apply.")
+    parser.add_argument("--pull-upstreams", action="store_true", help="Unduh repositori referensi ke cache terpisah saat --apply; perlu internet/disk, tidak mengaktifkan aplikasi, model, akun atau runtime otomatis.")
     parser.add_argument("--upstreams-dir", type=Path, default=data_root() / "upstreams", help="Folder cache sumber eksternal.")
     action = parser.add_mutually_exclusive_group()
     action.add_argument("--dry-run", action="store_true", help="Tampilkan rencana saja (default).")

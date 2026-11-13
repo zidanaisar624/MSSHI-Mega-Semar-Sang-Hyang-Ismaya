@@ -18,6 +18,8 @@ This migration removes desktop-application MCP registrations and replaces the lo
 
 **Managed updates:** `msshi managed register --skills-dir SKILLS_PATH --apply` enrolls only hash-proven bundled copies. `msshi managed status` shows coverage. `msshi update` refreshes enrolled bundles and source caches while preserving custom and unmanaged third-party skills. [Shared junction protection and rollback](docs/MANAGED_UPDATES.md).
 
+**Installer choice guide:** setup modes, packs, individual skills, KAT, REA and app connections explain their function directly in the terminal. Read the [choice guide](docs/OPTION_GUIDE_EN.md), or run `msshi choices rea`, `msshi choices --kind packs`, and `msshi choices --kind skills --lang en`. REA stays OFF by default; apps/runtimes/models/accounts are separate.
+
 ## 🚀 30-Second Quick Start (Choose Your Agent)
 
 **Start in your agent's chat.** Paste this into Hermes Agent, OpenClaw, Claude Code, or Antigravity with access to the web, a terminal, and the local skill directory.
