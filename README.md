@@ -1,46 +1,153 @@
 [🇮🇩 Bahasa Indonesia](./README.md) | [🌐 English](./README_EN.md)
 
-# 🌐 MSSHI v3.1.0 — Mega Semar Sang Hyang Ismaya: Hermes Ultimate Optimizer & Sovereign Sage
+<div align="center">
 
-> *63 Skill Modular (51 Inti + 12 Wrapper) + 49 Sumber Upstream + 5 Persona Bot + CLI-Anything Anti-Grey Screen + MuZA Skripsi Starter v1.1 (Drag-and-Drop) untuk Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT.*
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.1.0 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
-[![Version](https://img.shields.io/badge/Release-MSSHI%20v3.1.0-6d4aff?style=for-the-badge)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-63%20Bundled%20(51%20Core%20%2B%2012%20Wrappers)-0ea5e9?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-49%20Verified%20Sources-10b981?style=for-the-badge)](configs/upstreams.json)
-[![MuZA Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-ec4899?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
-[![Credits](https://img.shields.io/badge/Credits-MuZA%20%C3%97%20Gemini%20%C3%97%20ChatGPT%20%C3%97%20Antigravity-5648b3?style=for-the-badge)](docs/PROVENANCE.md#kredit-kolaborasi)
-[![License](https://img.shields.io/badge/License-MIT-f59e0b?style=for-the-badge)](LICENSE)
+# 🌐 MSSHI v3.1.0 — Mega Semar Sang Hyang Ismaya
+### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · MuZA Skripsi Drag-and-Drop v1.1*
 
-| | |
-| :---: | :--- |
-| <img src="assets/pp-tiktok/hero-sovereign-orchestrator.jpg" width="240" alt="MSSHI Sovereign Orchestrator Character"> | **MSSHI v3.1.0** mengubah AI chat biasa menjadi **tim spesialis 5 persona terstruktur** sekaligus **Hermes Ultimate Optimizer** yang enteng dipakai bahkan di laptop Windows 10 RAM 4 GB sekalipun.<br><br>Kini hadir dengan **MuZA Skripsi Starter v1.1 (Drag-and-Drop + Google Colab)**: meriset ratusan jurnal ilmiah di `MuZA_Search`, mengambil otomatis logo & pejabat kampus, mengekstrak aturan pedoman PDF, lalu merakit `.docx` siap pakai dalam 1 klik! Dipadukan lengkap dengan **Film/Video MFA, Bisnis Modal Rp0 & Pajak RI PP 20/2026, Vibecoding `KAT-Coder-V2.5-Dev`, Cybersec Defense & `OmniVoice` TTS.** |
+[![Release](https://img.shields.io/badge/Release-v3.1.0%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
+[![Skills](https://img.shields.io/badge/Skills-63%20Bundled%20(51%20Core%20%2B%2012%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-49%20Verified%20Sources-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
+[![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
+[![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
+
+> *"Satu ekosistem berdaulat untuk Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT — mengubah laptop pas-pasan RAM 4 GB dan saldo `$1` menjadi markas riset akademik S1–S3, studio film MFA, penasihat bisnis/pajak RI, dan devops full-stack anti lemot."*
+
+</div>
 
 ---
+
+<table>
+<tr>
+<td width="245" align="center" valign="middle">
+  <img src="assets/avatars/muza-noir-fullbody.png" width="225" alt="MuZA Sovereign Architect Character">
+  <br><sub><b>Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
+</td>
+<td valign="top">
+  <h3>🎭 Dari Chat AI Biasa Menjadi Markas Operasi Cyber-Noir 5 Spesialis</h3>
+  <p>Bosan menghadapi laptop <b>Windows 10 RAM 4 GB nge-freeze (Grey Screen)</b> gara-gara 22 MCP lokal nyala barengan? Atau kesal karena skrip otomasi langsung error di laptop yang <b>cuma punya Drive <code>C:</code></b>?</p>
+  <p><b>MSSHI v3.1.0</b> merombak total fondasi agen AI Anda tanpa menyentuh konfigurasi provider/model pribadi (<code>jev_model_routing: false</code> terkunci penuh):</p>
+  <ul>
+    <li>⚡ <b>CLI-Anything Universal Bridge</b> — Memutus ketergantungan 22 MCP berat; membuka Blender, ArtCraft &amp; browser hanya lewat tiket tugas on-demand (<code>msshi runtime ticket</code>).</li>
+    <li>🛡️ <b>$1 Zero-Waste Token Shield + Auto-Trim + Caveman</b> — Meringkas payload JSON besar secara lossless lewat hook <code>transform_tool_result</code> dan menghentikan langkah berbiaya jika saldo proyeksi &lt; <b>$1.00</b>.</li>
+    <li>🎓 <b>MuZA Skripsi Starter v1.1 (Drag-and-Drop + Colab)</b> — Seret file <code>.zip</code> riset + PDF pedoman kampus ke <code>MULAI_SKRIPSI_DRAG_AND_DROP.bat</code>, atau ketik di chat: <i>"Buatkan aku template skripsi!"</i></li>
+    <li>💾 <b>Direktori Adaptif C: vs D:</b> — Otomatis memakai <code>D:\HermesData</code> bila Drive D: ada, atau fallback bersih ke <code>%USERPROFILE%\HermesData</code> / <code>Documents\MuZA_Skripsi_Output</code>.</li>
+  </ul>
+</td>
+</tr>
+</table>
+
+---
+
+<div align="center">
 
 ## 📥 Pusat Unduhan Buku Panduan PDF Per Versi (1-Click Auto-Download)
 
-Baru pertama kali buka MSSHI dan pengen baca panduan lengkap berbahasa Indonesia dari nol sampai mahir? Tinggal **1x klik tombol Auto-Download**, atau baca langsung secara online di GitHub!
+*Baru pertama kali mengenal MSSHI atau ingin panduan lengkap dari nol sampai mahir? Klik tombol <b>Download PDF</b> di bawah untuk unduhan langsung, atau baca online di GitHub!*
 
-| Versi / Kanal | Buku Panduan & Cakupan | Detail | 1-Klik Auto-Download PDF | Baca Online |
+| Versi / Kanal | Judul Dokumen &amp; Cakupan | Detail | 1-Klik Auto-Download PDF | Baca Online |
 | :---: | :--- | :---: | :---: | :---: |
-| **`latest`** | **Buku Panduan Master Klien Hermes & MSSHI v3.1.0 (Edisi Terbaru)** — Selalu mengarah ke rilis paling baru (*auto-updated link*). | 130 hal · ~3.65 MB | [![Download Latest PDF](https://img.shields.io/badge/1--Click%20Download-Latest%20PDF-16a34a?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) | [Baca di GitHub](docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) |
-| **`v3.1.0` (`pdf-guides`)** | **Panduan Master MSSHI v3.1.0 (Tag `v3.1.0` Direct Release Link)** — 63 skill, MuZA Skripsi v1.1, BRAG, Unslop, Scrapling, Harness², Opt-in REA & Drive adaptif `C:`/`D:`. | 130 hal · ~3.65 MB | [![Download Direct v3.1.0](https://img.shields.io/badge/1--Click%20Download-v3.1.0%20Master%20PDF-0284c7?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf) | [Lihat di Tag `v3.1.0`](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/v3.1.0/docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf) |
-| **`v3.1.0` (`manuals`)** | **Buku Panduan Master Klien Hermes & MSSHI v3.1.0 (Edisi Sabtu Zoom)** — Arsip lengkap CLI & klien Zoom. | 130 hal · ~3.65 MB | [![Download v3.1.0 PDF](https://img.shields.io/badge/1--Click%20Download-Sabtu%20Zoom%20PDF-2563eb?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) | [Baca di GitHub](docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) |
-| **`v3.0`** | **Spesifikasi Lengkap Settings MSSHI v3.0 — Hermes Ultimate Optimizer** — Cetak biru arsitektur Optimizer v3.0, migrasi 22 MCP ke CLI-Anything, Hermes-Dreaming (`21878d3`), OmniVoice & Caveman. | 50 hal · ~1.47 MB | [![Download v3.0 PDF](https://img.shields.io/badge/1--Click%20Download-v3.0%20Spec%20PDF-7c3aed?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) | [Baca di GitHub](docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) |
+| **`v3.1.0` (Master Klien)** | **Buku Panduan Master Klien Hermes &amp; MSSHI v3.1.0** — Panduan menyeluruh 63 skill, 5 bot, CLI-Anything, OmniVoice, Skripsi v1.1 &amp; Drive adaptif. | 130 hal · ~3.65 MB | [![Download Master PDF](https://img.shields.io/badge/Download%20PDF-Master%20v3.1.0-FF6B1A?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0.pdf) | [Lihat di GitHub](docs/pdf-guides/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0.pdf) |
+| **`v3.1.0` (Laporan Eksekusi)** | **Laporan Eksekusi Hydrogen MSSHI v3.1.0 (Memeable &amp; Skripsi)** — Audit restrukturisasi GitHub/lokal, katalog 19 visual, integrasi Colab/Word &amp; log verifikasi. | Laporan Resmi | [![Download Report PDF](https://img.shields.io/badge/Download%20PDF-Laporan%20Hydrogen-2CE8C6?style=for-the-badge&logo=adobeacrobatreader&logoColor=black)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) | [Lihat di GitHub](docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) |
+| **`v3.0` (Optimizer Spec)** | **Spesifikasi Lengkap Settings MSSHI v3.0 — Hermes Ultimate Optimizer** — Cetak biru migrasi 22 MCP ke CLI-Anything, `hermes-dreaming`, OmniVoice &amp; Caveman. | 50 hal · ~1.47 MB | [![Download v3.0 Spec PDF](https://img.shields.io/badge/Download%20PDF-Spec%20v3.0-8B5CF6?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) | [Lihat di GitHub](docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) |
+| **`latest` (Auto-Track)** | **Kanal Otomatis `latest` (Selalu Menunjuk Rilis Terbaru)** — Kompatibel dengan CLI `msshi manual download --version latest` &amp; installer 1-klik. | 130 hal · ~3.65 MB | [![Download Latest Channel](https://img.shields.io/badge/1--Click%20Download-Channel%20Latest-10B981?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) | [Baca di `manuals/`](docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) |
 
-> **💡 Bonus di Installer & CLI:** Saat menjalankan `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `UPDATE_OTOMATIS_KE_V3.bat`, `msshi setup`, atau `msshi update`, sistem akan bertanya apakah Anda ingin sekalian mengunduh PDF panduan versi tersebut (`--download-pdf` / `--no-pdf`). Atau unduh kapan saja lewat terminal: `msshi manual download --version v3.1.0`! Katalog metadata mesin tersedia di [pdf_catalog.json](docs/manuals/pdf_catalog.json).
+> 💡 **Pilihan PDF Otomatis di Installer &amp; CLI:** Saat menjalankan `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `UPDATE_OTOMATIS_KE_V3.bat`, `msshi setup`, atau `msshi update`, Anda bisa langsung memilih untuk mengunduh PDF panduan sesuai versi (`--download-pdf` / `--no-pdf`), atau panggil `msshi manual download --version v3.1.0`. Katalog JSON mesin: [`docs/manuals/pdf_catalog.json`](docs/manuals/pdf_catalog.json) · Link langsung `v3.1.0` ringkas: [`docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf`](docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf) · Arsip Zoom: [`docs/manuals/v3.1.0/`](docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) &amp; [`docs/manuals/v3.0/`](docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf).
+
+</div>
 
 ---
 
-## 🎓 MuZA Skripsi Starter v1.1 (Drag-and-Drop Edition & Google Colab)
+## 🕰️ Timeline Evolusi MSSHI (`v1.0` → `v3.1.0`): Dari Kurikulum Eksperimental Hingga Mesin Skripsi Drag-and-Drop
 
-Lelah mengatur margin `4-4-3-3` di Microsoft Word, mencari logo kampus pecah di Google, mengetik manual tabel **Penelitian Terdahulu Bab 2**, atau pusing memformat ratusan **Daftar Pustaka**? Kenalkan **Skill ke-63 MSSHI**: [`muza-skripsi-template`](skills/muza-skripsi-template/SKILL.md)!
+Perjalanan **MSSHI** lahir dari frustrasi nyata menghadapi AI yang boros token, setup berantakan, dan laptop kentang yang menjerit saat 22 MCP dinyalakan bersamaan:
 
-| Tahap & Mesin | Link Cepat Google Colab & File Repo | Fungsi Utama |
-| :--- | :---: | :--- |
-| **1. `MuZA_Search v1.1`** *(Riset Jurnal & GAP)* | [![Open MuZA_Search in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)<br>[`notebooks/skripsi/MuZA_Search.ipynb`](notebooks/skripsi/MuZA_Search.ipynb) | Menggali paper ilmiah lintas database (OpenAlex/CrossRef/Semantic Scholar), menyusun matriks *Research Gap*, serta mengekspor **`.ris` Zotero**, **Tabel Bab 2 `.csv`/`.xlsx`**, dan **`.zip` bundel siap rakit**. |
-| **2. `MuZA_Skripsi_Builder v1.1`** *(Rakit `.docx`)* | [![Open MuZA_Skripsi_Builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rrl38cwQZ0CA00cMyQvfjJUf1CSEtJpS)<br>[`notebooks/skripsi/MuZA_Skripsi_Builder.ipynb`](notebooks/skripsi/MuZA_Skripsi_Builder.ipynb) | Mendeteksi otomatis aturan PDF pedoman kampus, mengunduh **logo PNG & pejabat resmi (Rektor/Dekan/Kaprodi)** via Wikipedia/Wikidata/ROR/`*.ac.id`, memilih **5 preset metodologi** (`Informatika`, `Kuantitatif`, `Kualitatif`, `R&D`, `PTK`), menyuntik hasil `MuZA_Search`, lalu mencetak **`Template_Skripsi_<Kampus>.docx`**! |
-| **3. Zero-Friction Drag-and-Drop Lokal** *(Windows & CLI)* | [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat)<br>`msshi skripsi` | **Cukup tarik (drag)** file `.zip` dari `MuZA_Search` dan/atau `.pdf`/`.docx` Pedoman Kampus ke atas ikon `MULAI_SKRIPSI_DRAG_AND_DROP.bat`! Output otomatis tersimpan adaptif di `D:\HermesData\Skripsi_Output` atau `%USERPROFILE%\Documents\MuZA_Skripsi_Output`. |
+<div align="center">
+
+<table>
+<tr>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-01-era-v1.png" width="95%" alt="Panel 1 Komik Evolusi MSSHI v1.0">
+  <br><b>Fase 1 · Era Eksperimen (<code>v1.0</code>)</b>
+  <br><sub>Awalnya cuma <b>47 skill inti</b> S1–S2 MFA Filmmaking, Videografi, Fotografi &amp; <code>Auto-Curiosity</code> — lalu saat 22 MCP lokal nyala semua, laptop langsung panas &amp; build menjerit!</sub>
+</td>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-02-era-v2.png" width="95%" alt="Panel 2 Komik Evolusi MSSHI v2.0 - v2.2">
+  <br><b>Fase 2 · Stage 1 &amp; 2 Sovereign Suite (<code>v2.0 – v2.2</code>)</b>
+  <br><sub>Lahirnya <b>Business Sage</b> (BBA/MBA + Pajak RI <code>PP 20/2026</code> + Modal Rp0), hirarki <b>5 Bot MuZA</b>, <code>TokenShield</code>, <code>Unlimited-OCR-2</code>, <code>humanizer-indonesia</code> &amp; <code>Universal Bridge</code>.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-03-era-v30.png" width="95%" alt="Panel 3 Komik Evolusi MSSHI v3.0 Optimizer">
+  <br><b>Fase 3 · Lompatan Optimizer (<code>v3.0</code> · Tag <code>a8400c8</code>)</b>
+  <br><sub><b>22 MCP berat diputus total</b> dan diganti <b>CLI-Anything</b> + plugin native <code>msshi-auto-trim</code> + <code>caveman</code>! Plus hadirnya prosodi suara <b>OmniVoice</b>, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b>, &amp; <b>TimesFM</b>. RAM 4 GB akhirnya bernapas lega!</sub>
+</td>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Komik Evolusi MSSHI v3.1.0 + Skripsi v1.1">
+  <br><b>Fase 4 · Rilis Matang Saat Ini (<code>v3.1.0 + Skripsi v1.1</code>)</b>
+  <br><sub>Genap <b>63 skill (51 inti + 12 wrapper) + 49 upstreams</b>: hadir <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; path adaptif <code>C:/D:</code>. Santai menikmati kopi sementara sistem bekerja presisi.</sub>
+</td>
+</tr>
+</table>
+
+</div>
+
+```mermaid
+flowchart LR
+    V1["<b>Fase Awal · v1.0</b><br/>47 Skill Inti<br/>Kurikulum S1–S2 MFA Film &amp; Foto<br/>Auto-Curiosity &amp; Creative DNA"] --> V2["<b>Tahap 1 &amp; 2 · v2.0–v2.2</b><br/>Business Sage + Pajak RI PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
+    V2 --> V3["<b>Lompatan Optimizer · v3.0</b><br/>Migrasi 22 MCP &rarr; CLI-Anything<br/>OmniVoice + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
+    V3 --> V31["<b>Rilis Matang · v3.1.0 + Skripsi v1.1</b><br/>63 Skill (51 Inti + 12 Wrapper) + 49 Upstreams<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
+```
+
+---
+
+## 🎭 Mengenal 5 Persona Bot Hirarki (Bukan Sekadar Hiasan Prompt!)
+
+Setiap bot punya berkas [`SOUL.md`](configs/personas/shizuka.md), batasan otoritas, profil prosodi **`OmniVoice`**, serta distribusi skill terkurasi yang diverifikasi otomatis lewat [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
+
+| Avatar | Bot &amp; Gelar | Peran &amp; Mandat Eksekusi | Skill &amp; Fitur Andalan `v3.1.0` |
+| :---: | :--- | :--- | :--- |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)* | Menguji ide mentah pengguna agar tajam sebelum masuk produksi; mengatur ritme energi kerja &amp; mengekstrak *brief* jernih untuk Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Pemimpin orkestrasi tim: merancang strategi Bisnis/BBA/MBA/Pajak RI, menjaga guardrail `TokenShield` (`$1.00`), mendelegasikan tugas, &amp; merangkum hasil akhir untuk manusia. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Mesin kecerdasan akademik: memetakan *research gap*, mencari paper primer, merakit template skripsi Word otomatis, meramal deret waktu **`TimesFM`**, &amp; `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) · **Mesin Skripsi #8 (`muza-skripsi-template`)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Sutradara kreatif **Concepting First**: merancang storyboard, produksi film/dokumenter 10–40 menit per bab, video peluncuran **`BRAG`** (**Hyperframes**), &amp; **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Architect, Coder &amp; Cybersec)* | Arsitek full-stack (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, evaluasi **`Harness²`**, parser lokal **`Scrapling`**, defensive cybersecurity, serta **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
+
+> 🦀 **Shared Foundation Across All 5 Bots:** Seluruh 5 persona memakai [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md) (pengganti 22 MCP lokal berat — aplikasi dibuka **hanya** saat ada tiket `msshi runtime ticket`), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, dan proteksi hook lossless [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
+
+---
+
+## 🎓 Fitur Unggulan v3.1.0: MuZA Skripsi Starter v1.1 (Zero-Friction Drag & Drop + Colab)
+
+<table>
+<tr>
+<td width="42%" align="center" valign="middle">
+  <img src="assets/memes/meme-05-skripsi-drop.png" width="100%" alt="Pusing skripsi terpecahkan oleh MuZA Skripsi Drag-and-Drop">
+  <br><sub><i>Kondisi kepala sebelum ketemu <b>MuZA Skripsi Drag-and-Drop v1.1</b> — sekarang margin 4-4-3-3, logo kampus &amp; Bab 2 selesai dalam hitungan detik!</i></sub>
+</td>
+<td valign="top">
+  <h3>🚀 Merakit Template Skripsi <code>.docx</code> Kampus Resmi Tanpa Ketik Perintah Rumit</h3>
+  <ol>
+    <li><b>Langkah 1 — Riset Jurnal &amp; Gap Otomatis di Google Colab:</b><br>
+      Buka [![Open MuZA_Search in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv) (file repo: <a href="notebooks/skripsi/MuZA_Search.ipynb"><code>MuZA_Search.ipynb</code></a>), cari paper ilmiah OpenAlex/CrossRef/Semantic Scholar, lalu ekspor bundel <b><code>.zip</code></b> (sudah berisi file <b><code>.ris</code> Zotero</b> &amp; <b>Tabel Bab 2 <code>.csv</code></b>).
+    </li>
+    <li><b>Langkah 2 — Pilih Jalur Tanpa Coding (2 Opsi Sama Praktisnya):</b>
+      <ul>
+        <li><b>Opsi A (Cloud 100% Gratis):</b> Klik [![Open MuZA_Skripsi_Builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rrl38cwQZ0CA00cMyQvfjJUf1CSEtJpS) (<a href="notebooks/skripsi/MuZA_Skripsi_Builder.ipynb"><code>MuZA_Skripsi_Builder.ipynb</code></a>) &rarr; langsung jadi di browser!</li>
+        <li><b>Opsi B (Offline/Lokal Windows Drag-and-Drop):</b> Cukup <b>seret (drag-and-drop)</b> file <code>.zip</code> riset + PDF Pedoman Kampus Anda ke atas ikon <a href="MULAI_SKRIPSI_DRAG_AND_DROP.bat"><code>MULAI_SKRIPSI_DRAG_AND_DROP.bat</code></a> (atau jalankan <code>msshi skripsi</code>)!</li>
+      </ul>
+    </li>
+    <li><b>Langkah 3 — Lookup Otomatis Logo PNG &amp; Pejabat Kampus + 5 Preset:</b><br>
+      Mesin <a href="skills/muza-skripsi-template/SKILL.md"><code>muza-skripsi-template</code></a> (11 file) mengekstrak aturan kertas/margin PDF (<code>extract_guideline.py</code>), mengunduh logo resmi + nama &amp; NIP Rektor/Dekan/Kaprodi (<code>campus_lookup.py</code>), menerapkan 5 preset (<i>Informatika, Kuantitatif, Kualitatif, R&amp;D, PTK</i>), dan menyimpannya adaptif ke <code>D:\HermesData\Skripsi_Output</code> atau <code>%USERPROFILE%\Documents\MuZA_Skripsi_Output</code>!
+    </li>
+  </ol>
+</td>
+</tr>
+</table>
 
 ```mermaid
 flowchart LR
@@ -49,205 +156,152 @@ flowchart LR
     S3 --> S4["<b>4. Output Word Siap Sidang</b><br/>Template_Skripsi_Kampus.docx<br/>Daftar Isi Otomatis + Tinggal Ctrl+H"]
 ```
 
-> **🤖 Dipanggil Lewat Chat AI (Kontekstual maupun Langsung)? Bisa!**
-> Saat MSSHI terpasang di **Google Antigravity, Hermes Agent, Claude Code, atau OpenClaw**, cukup ketik di chat:
-> **`"Buatkan aku template skripsi!"`** *(atau panggil `/muza-skripsi-template`)* — bot akan otomatis mengaktifkan skill [`muza-skripsi-template`](skills/muza-skripsi-template/SKILL.md) dan memandu **Proses 5 Tahap**: *(1) Tanya Kampus/Fakultas/Prodi/Pedoman -> (2) Lookup Logo/Pejabat & Ekstrak Aturan -> (3) Konfirmasi Ringkasan `[Dari Pedoman]` vs `[*Default]` -> (4) Build `.docx` + Suntik `.zip` -> (5) Audit & Panduan `Ctrl+H`!*
+> 🤖 **Bisa Dipanggil Kontekstual Langsung Lewat Chat AI!**
+> Setelah MSSHI terpasang di **Google Antigravity, Hermes Agent, Claude Code, atau OpenClaw**, Anda tidak perlu menghafal path skrip apa pun. Cukup kirim pesan alami seperti:
+> **`"Buatkan aku template skripsi!"`** *(atau panggil `/muza-skripsi-template`)* — skill ke-63 akan otomatis terpanggil dan memandu **Proses 5 Tahap Terverifikasi**:
+> 1. Mengumpulkan Universitas, Fakultas, Prodi, Jenis Metodologi, &amp; file Pedoman / `.zip` `MuZA_Search`.
+> 2. Mengekstrak aturan fisik PDF (`extract_guideline.py`) &amp; melakukan lookup logo PNG + pejabat (`campus_lookup.py`).
+> 3. Menampilkan konfirmasi ringkasan berlabel transparan (`[Dari Pedoman]` vs `[*Default]` — nol data pejabat karangan!).
+> 4. Menjalankan `build_template.py` untuk membangun `.docx` ber-OOXML rapi &amp; menyuntik sitasi `MuZA_Search`.
+> 5. Menyampaikan lokasi output `.docx` adaptif + panduan cepat **`Ctrl+H`** untuk mengisi `{name}`, `{nim}`, &amp; `{title}`.
 
 ---
 
-## 😭 Sebelum vs 😎 Sesudah Memakai MSSHI v3.1.0
+## 💰 Hidup Hemat dengan $1 Zero-Waste Token Shield &amp; Kompatibilitas Laptop Drive `C:`
 
-| 😭 Sebelum MSSHI v3.1.0 (*The Pain*) | 😎 Sesudah MSSHI v3.1.0 (*Pure Bliss*) |
-| :---: | :---: |
-| <img src="assets/pp-tiktok/traffic-cone-freeze.jpg" width="230" alt="Freeze karena 22 MCP"> <img src="assets/memes/dev-cat-laptop.jpg" width="230" alt="Kucing pusing menatap laptop"> | <img src="assets/pp-tiktok/install-thumbs-up.jpg" width="230" alt="Instalasi 1 klik berhasil"> <img src="assets/memes/ram4gb-bliss-dog.jpg" width="230" alt="Laptop RAM 4 GB bernapas lega"> |
-| **RAM 95% & Hermes Desktop *Grey Screen*** gegara 22 MCP desktop berat nyala semua di background! | **RAM tetap lega di laptop 4 GB** lewat **CLI-Anything Universal Bridge** + tiket `msshi runtime` on-demand + `msshi desktop --software-rendering`. |
-| **Chat kepanjangan & boros kuota API**, satu JSON tool hasil scrape memakan ribuan token sia-sia. | **Auto-Trim (`msshi-auto-trim`) + `caveman`** memadatkan JSON tanpa kehilangan satu byte data valid, sambil menjaga `TokenShield` minimal saldo `$1.00`. |
-| **Laptop cuma punya Drive `C:`** lalu skrip gagal karena maksa cari path hardcoded `D:\`. | **Direktori adaptif otomatis:** mendeteksi `D:\HermesData` bila tersedia, atau otomatis fallback ke `%USERPROFILE%\HermesData` / `%USERPROFILE%\Documents\MuZA_Skripsi_Output`! |
-
-| Perbandingan Dunia Nyata (*22 MCP Lokal vs CLI-Anything*) | Jangan Asal Bakar Kuota / Pasang REA! |
-| :---: | :---: |
-| <img src="assets/memes/hydrogen-bomb-vs-coughing-baby.jpg" width="320" alt="Hydrogen Bomb vs Coughing Baby meme"> | <img src="assets/memes/wait-cat-tokenshield.jpg" width="260" alt="Wait cat TokenShield guardrail"> |
-| **22 MCP berat** = *Coughing Baby* saat buka laptop spek pas-pasan.<br>**MSSHI v3.1.0 + CLI-Anything + `msshi-auto-trim`** = *Hydrogen Bomb* yang hanya menyalakan alat ketika ada tiket tugas resmi! | **Guardrail Keras Aktif:** TokenShield pause otomatis bila proyeksi saldo di bawah **`$1.00`**, `jev_model_routing: false` terkunci demi jaga API pribadi, Steel anti fallback liar, dan **`REA` default OFF**! |
-
-![Banner ringkasan paket MSSHI 63 skill, lima bot, dan CLI-Anything](assets/diagrams/msshi-hero-banner.svg)
-
----
-
-## 📈 Timeline & Evolusi Perjalanan MSSHI (Dari Eksperimen Awal hingga v3.1.0)
-
-Perjalanan **MSSHI** lahir dari kebutuhan nyata mahasiswa, kreator film, konsultan bisnis, dan developer yang lelah mengganti-ganti puluhan prompt mentah dan menghadapi *hang* pada mesin lokal:
-
-```mermaid
-flowchart LR
-    V1["<b>Fase Awal · v1.0</b><br/>47 Skill Inti<br/>Kurikulum S1–S2 MFA Film &amp; Foto<br/>Auto-Curiosity &amp; Thesis Draft"] --> V2["<b>Tahap 1 &amp; 2 · v2.0–v2.2</b><br/>Business Sage + Pajak RI PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
-    V2 --> V3["<b>Lompatan Optimizer · v3.0</b><br/>Migrasi 22 MCP &rarr; CLI-Anything<br/>OmniVoice Prosody + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
-    V3 --> V31["<b>Rilis Matang · v3.1.0 + MuZA Skripsi v1.1</b><br/>63 Skill (51 Inti + 12 Wrapper) + 49 Upstreams<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
-```
-
-| Fase & Versi | Tonggak Sejarah (*Milestone*) | Perubahan Besar yang Dihadirkan |
-| :--- | :--- | :--- |
-| **🌱 Fase Awal (`v1.0`)** | *Lahirnya Fondasi Kreator & Riset* | Eksperimen kurikulum **S1–S2 MFA Filmmaking, Videografi, & Fotografi**, sistem `Auto-Curiosity` untuk film/riset, mesin penulisan akademik awal (**47 skill dasar**), serta konsep *Creative DNA*. |
-| **🏢 Tahap 1 & 2 (`v2.0 – v2.2`)** | *Sovereign 5-Bot Suite & Business Sage* | Lahirnya **`Business Sage`** (S1 BBA, S2 MBA, Pajak RI PP 20/2026, & Bisnis Modal Rp0), hirarki resmi **5 Persona Bot** (`Yukino`, `Shizuka`, `Val`, `Kiki-Chii`, `Shikaku`), **`TokenShield`**, **`Unlimited-OCR-2`**, **`humanizer-indonesia`**, **`Universal Bridge`**, dan installer CLI (`v2.1.0`, commit `fa4bf83`). |
-| **⚡ Lompatan Besar (`v3.0`)** | *Hermes Ultimate Optimizer* (Tag [`v3.0.0`](CHANGELOG.md), `a8400c8`) | **Pemutusan total 22 MCP berat** (18 Craft + utilitas lokal) ke **`CLI-Anything`** (Anti *Grey Screen* & hemat RAM Windows 10 4 GB), plugin native **`msshi-auto-trim`** (`llmtrim`), **`Hersona CLI`**, integrasi prosodi suara **`hermes-omnivoice`**, memori **`hermes-dreaming`** (`21878d3`), Sub-Agent **`KAT-Coder-V2.5-Dev`**, **`caveman`**, **`hyperframes`**, **`ui-ux-pro-max-skill`**, **`anthropics/skills`**, plus **`TimesFM`** & kebijakan **`Steel`**. |
-| **🌟 Rilis Matang (`v3.1.0`)** | *Contextual Suite + MuZA Skripsi v1.1* (`v3.1.0`) | Bertambah menjadi **63 skill terbundel (51 inti + 12 wrapper) + 49 sumber upstream**, hadirnya **MuZA Skripsi Starter v1.1 (Drag-and-Drop + Colab)**, **`BRAG`**, **`Unslop`**, **`Scrapling`**, **`Harness²`**, **`Opt-in REA`**, **`msshi doctor`**, **`msshi skripsi`**, **`msshi choices`**, **`msshi services --share-oauth`**, **`msshi manual`**, PDF per versi, & direktori adaptif `C:`/`D:`. |
-
-> **Pasrah karena laptop lemot pas masih pakai setup v2 lama?** <br>
-> <img src="assets/memes/pasrah-dev-ape.jpg" width="220" alt="Pasrah aku tapi tetap kuusahakan meme"> <br>
-> Tenang! Jalankan **`UPDATE_OTOMATIS_KE_V3.bat`** sekali saja dari paket ini untuk memigrasikan profil lama ke v3.1.0 dengan backup otomatis `SOUL.md` dan `Creative DNA`.
+<table>
+<tr>
+<td valign="top">
+  <h3>🔥 Kenapa MSSHI Aman di Saldo Cekak &amp; Laptop Pas-Pasan?</h3>
+  <ul>
+    <li><b>Proteksi Saldo <code>TokenShield</code> ($1.00 Hard Floor):</b> Mengecek proyeksi biaya sebelum pekerjaan besar jalan; bila proyeksi sisa &lt; <b>$1.00</b>, sistem berhenti dengan exit code peringatan sehingga kuota API tidak pernah kebablasan.</li>
+    <li><b>Hook Lossless <code>msshi-auto-trim</code> + <code>caveman</code>:</b> Memadatkan payload tool JSON besar lewat hook lokal hanya bila struktur data valid tetap 100% sama.</li>
+    <li><b>Provider Asli User Tidak Disentuh:</b> Konfigurasi DataByte, YupiAI, Gemini, Claude, DeepSeek, Kimi, Qwen, atau GPT milik Anda tetap utuh (<code>jev_model_routing: false</code> terkunci).</li>
+    <li><b>Support Penuh Laptop Drive <code>C:</code> Saja &amp; Drive <code>D:</code>:</b> Deteksi otomatis di installer PS1, SH, BAT, dan skrip Python (<code>D:\HermesData</code> vs fallback <code>%USERPROFILE%\HermesData</code>).</li>
+  </ul>
+</td>
+<td width="40%" align="center" valign="middle">
+  <img src="assets/memes/meme-06-budget-dan-cdrive.png" width="100%" alt="Pasrah tapi tetap kuusahakan saat kuota $1 dan cuma Drive C:">
+  <br><sub><i>Saat saldo API tinggal <b>$1</b> dan laptop cuma punya Drive <code>C:</code> RAM 4 GB — "Pasrah aku... tapi MSSHI v3.1.0 siap mengusahakan!"</i></sub>
+</td>
+</tr>
+</table>
 
 ---
 
-## 🚀 Quick Start 30 Detik (Pilih Agen Anda)
+## 🖼️ Galeri Showcase &amp; Museum Meme MSSHI (Arsip Visual Terstandardisasi)
 
-**Cara Paling Santai (Cukup Paste ke Chat Agen Anda):** buka Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity yang punya akses web dan terminal, lalu kirim kalimat ini:
+<details>
+<summary><b>👉 Klik untuk membuka Galeri Arsitektur Showcase &amp; Ekstra Meme Reaksi (Koleksi Arsip Visual Lokal Terkurasi)</b></summary>
+<br>
 
-> `Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI untukku!`
+<div align="center">
+  <img src="assets/showcases/showcase-hermes-ecosystem.png" width="48%" alt="Auto-Curiosity Research Loop Showcase">
+  <img src="assets/showcases/showcase-creative-convergence.png" width="48%" alt="Creative Convergence Keyart Showcase">
+  <br><sub><b>Kiri:</b> Siklus Riset &amp; Produksi <i>Auto-Curiosity</i> (Discover &rarr; Deconstruct &rarr; Verify &rarr; Hand Off) · <b>Kanan:</b> Konvergensi Studio Kreatif &amp; Orkestrasi Multi-Agen.</sub>
+</div>
 
-**Atau Instal Langsung via Terminal (Sekalian Punya Opsi Download PDF Panduan):**
+<br>
 
-**Windows PowerShell** *(tambah `-DownloadPdf` jika ingin langsung mengunduh PDF v3.1.0)*
+<div align="center">
+<table>
+<tr>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-01.png" width="100%" alt="Deep Thinking Cat"><br><sub>Mode inspeksi kode ala Shikaku Nara</sub></td>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-02.png" width="100%" alt="Contemplating Cat"><br><sub>Kontemplasi membaca PDF spec 130 hal.</sub></td>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-03.png" width="100%" alt="Low Spec Matrix Hacker"><br><sub>Vibecoding tetap jalan di laptop kentang</sub></td>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-04.png" width="100%" alt="Cozy Chaos Engineering"><br><sub><i>"Cozy chaos, my favorite."</i></sub></td>
+</tr>
+</table>
+</div>
 
-```powershell
-irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
-```
+</details>
 
-**macOS / Linux Bash** *(tambah `-s -- --download-pdf` atau `--no-pdf` setelah mengunduh skrip)*
+---
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
-```
+## 🚀 Quick Start 30 Detik (Pilih Gaya Pemasangan Anda)
 
-**Windows Pengguna Pemula (Tanpa Ngetik Perintah):**
-- Klik dua kali [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) di folder paket (menu no. 5 untuk download PDF Panduan).
-- Mau langsung merakit template skripsi Word? Tarik `.zip`/`.pdf` ke [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat) (atau double-click!).
-- Pengguna lama v2.1 cukup jalankan [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) sekali untuk migrasi bersih ke v3.1.0.
-- Cek kesehatan instalasi kapan saja lewat terminal: **`python scripts/msshi_cli.py doctor`**.
+### Cara Paling Santai (Cukup Copy-Paste ke Chat Agen AI Anda)
+Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya akses terminal &amp; web, lalu kirim pesan ini:
+
+> `Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI v3.1.0 untukku tanpa mengubah provider/model asliku!`
+
+### Atau Pasang Langsung via Terminal &amp; Peluncur 1-Klik
+
+- **Windows Pemula (Klik 2x):** Jalankan [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (menu interaktif lengkap termasuk unduhan PDF panduan!).
+- **Migrasi Pengguna Lama `v2.x` ke `v3.1.0`:** Jalankan [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) sekali (cadangan `SOUL.md` &amp; `Creative DNA` dibuat otomatis).
+- **Windows PowerShell** *(tambah `-DownloadPdf` jika ingin langsung mengunduh PDF v3.1.0)*:
+  ```powershell
+  irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
+  ```
+- **macOS / Linux Bash** *(dukung `--download-pdf` / `--no-pdf`)*:
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
+  ```
 
 | Platform / Agen Tujuan | Cara Pasang Tercepat |
 | :--- | :--- |
 | **Hermes Agent** | `npx skills add https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/main/skills --global --agent hermes-agent` atau `hermes skills tap add zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya` |
-| **OpenClaw** | `openclaw skills install git:zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya --global` or `npx skills add .../skills --global --agent openclaw` |
+| **OpenClaw** | `openclaw skills install git:zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya --global` atau `npx skills add .../skills --global --agent openclaw` |
 | **Claude Code** | `/plugin marketplace add zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya` lalu `/plugin install msshi@msshi-marketplace` |
-| **Claude.ai Web / Desktop** | Buka **Customize → Skills → + → Upload a skill**, unggah [`portable/msshi.zip`](portable/msshi.zip) |
+| **Claude.ai Web / Desktop** | Buka **Customize &rarr; Skills &rarr; + &rarr; Upload a skill**, unggah [`portable/msshi.zip`](portable/msshi.zip) |
 | **ChatGPT Projects / Custom GPT** | Unggah [`portable/MSSHI_ChatGPT_Knowledge_Bundle.md`](portable/MSSHI_ChatGPT_Knowledge_Bundle.md) dan salin [`portable/CHATGPT_CUSTOM_INSTRUCTIONS.md`](portable/CHATGPT_CUSTOM_INSTRUCTIONS.md) |
 | **Codex CLI** | `npx skills add https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/main/skills --global --agent codex` |
-| **Google Antigravity IDE** | `msshi setup --platform antigravity` setelah pasang CLI (atau via Skills CLI). Lihat [Panduan Agen Lengkap](docs/guides/INSTALL_FOR_AGENTS.md#google-antigravity-ide). |
+| **Google Antigravity IDE** | `msshi setup --platform antigravity` setelah pasang CLI ([Panduan Lengkap](docs/guides/INSTALL_FOR_AGENTS.md#google-antigravity-ide)) |
 
-> 🔍 **Bingung memilih mode, pack, REA, atau KAT-Coder?** Jalankan **`msshi choices`** sebelum menekan `y`! Baca juga [Panduan Penjelasan Opsi](docs/OPTION_GUIDE.md), [Panduan Agen](docs/guides/INSTALL_FOR_AGENTS.md), [Panduan Kustomisasi Publik](docs/guides/PANDUAN_KUSTOMISASI_USER_PUBLIK.md), [Panduan Platform](docs/platforms.md), dan [Referensi CLI Lengkap](docs/CLI.md).
-
----
-
-## 🎭 Mengenal 5 Persona Bot Hirarki & Sub-Agent Optimizer
-
-Setiap bot punya **SOUL**, disiplin keahlian, prosodi suara **`OmniVoice`**, dan batas keamanan yang jelas — bukan sekadar nama hiasan!
-
-| <img src="assets/memes/council-thinking.jpg" width="260" alt="5-Bot Council Brainstorming"> | **Kerja Tim Tanpa Asal Tabrak!**<br>Ide masuk lewat **Yukino** &rarr; diarahkan oleh **Sensei Shizuka** &rarr; bukti & template skripsi dikumpulkan **Val** &rarr; eksekusi kreatif oleh **Kiki-Chii** atau teknis oleh **Shikaku Nara** &rarr; dirangkum **Shizuka** untuk Anda setujui! |
-| :---: | :--- |
-
-| Karakter & Visual | Bot & Posisi | Mandat Utama, Skill Andalan & Fitur v3.1 |
-| :---: | :--- | :--- |
-| <img src="assets/pp-tiktok/shizuka-yukino-duo.jpg" width="160" alt="Sensei Shizuka Hiratsuka & Yukino Yukinoshita"> | **1. Yukino Yukinoshita** &<br>**2. Sensei Shizuka Hiratsuka**<br>*(Idea Sparring & Sovereign Orchestrator)* | **Yukino** menajamkan ide mentah menjadi brief kritis. **Shizuka** memimpin alur tim, memverifikasi strategi Bisnis/MBA/Pajak RI (`Business Sage`), menjaga `TokenShield`, mengoordinasi **`muza-skripsi-template`**, lalu merangkum keputusan akhir untuk klien. |
-| <img src="assets/pp-tiktok/val-dreaming-horned.jpg" width="160" alt="Val Analyst & Hermes Dreaming"> | **3. Val**<br>*(Deep Research, Thesis S1–S3, TimesFM & `hermes-dreaming`)* | Spesialis riset literatur, `Auto-Curiosity`, 8 mesin akademik + **`muza-skripsi-template`** (`campus_lookup.py` + `MuZA_Search`), peramalan numerik **`TimesFM`**, ekstraksi **`Scrapling`**, review bukti dashboard ilmiah (**`Unslop`**), dan **`hermes-dreaming`** (`21878d3`). |
-| <img src="assets/pp-tiktok/kiki-chii-panic.jpg" width="160" alt="Kiki-Chii Creative Studio Director"> | **4. Kiki-Chii**<br>*(MFA Filmmaking, Motion Graphics & Creative Lead)* | Menangani alur **Concepting First**, storyboard hingga video panjang 10–40 menit per bab, **`BRAG`** (Launch Video HTML/MP4 via **`Hyperframes`**), **`UI/UX Pro Max`**, polish **`Unslop`**, foto, audio & `Creative DNA`. *(Tenang, gak perlu panik deadline lagi!)* |
-| <img src="assets/pp-tiktok/shikaku-flame-skull.jpg" width="160" alt="Shikaku Nara Coder"> | **5a. Shikaku Nara & `KAT-Coder-V2.5-Dev`**<br>*(Principal Engineering, Architecture & Vibecoding)* | Menguasai full-stack vibecoding, Next.js/Go/Python/Flutter, perbaikan UI terukur (**`Unslop`**), evaluasi **`Harness²`**, parsing HTML lokal (**`Scrapling`**), serta **Opt-in `REA`** bila diaktifkan Coder. |
-| <img src="assets/pp-tiktok/cybersec-pirate.jpg" width="160" alt="24/7 Cybersecurity Guardian"> | **5b. Shikaku Cybersec Guardian**<br>*(Defensive Security & OAuth Guard)* | Audit kerentanan berizin (authorized pentest/hardening saja), validasi dependensi dan skrip mencurigakan, perlindungan sesi browser personal, serta kontrol ketat kredensial. |
-| <img src="assets/pp-tiktok/cli-anything-crab.jpg" width="160" alt="CLI-Anything Universal Bridge"> | **Jembatan `CLI-Anything` Universal Bridge**<br>*(Semua 5 Bot)* | Pengganti 22 MCP lokal berat! Mendaftarkan rute aplikasi secara *lazy*, hanya membuka Blender/ArtCraft/browser saat dipanggil lewat tiket `msshi runtime ticket` &rarr; `msshi runtime run` ([Panduan Bridge](docs/CLI_ANYTHING_BRIDGE.md)). |
-
-<p align="center">
-  <img src="assets/memes/nerd-cat-spec.jpg" width="210" alt="Membaca spesifikasi lengkap sebelum eksekusi">
-  <img src="assets/memes/let-mi-ting-cat.jpg" width="210" alt="Val berpikir mendalam">
-  <img src="assets/memes/deep-research-cat.jpg" width="210" alt="Deep research mode">
-  <img src="assets/memes/suspicious-dog-rea.jpg" width="210" alt="Audit keamanan REA">
-</p>
-<p align="center"><sub><i>Dari kiri ke kanan: Baca spec 130 halaman → Mode Let Mi Ting → Val Deep Research + MuZA_Search + TimesFM → Shikaku ngecek arsip mencurigakan sebelum Opt-in REA</i></sub></p>
-
-![Peta alur delegasi dan pengembalian hasil lima bot MSSHI](assets/diagrams/msshi-architecture-map.svg)
+> 🔍 **Bingung memilih mode, pack, REA, atau KAT-Coder?** Jalankan `msshi choices` sebelum menekan `y`! Cek kesehatan instalasi &amp; Drive C:/D: lewat **`python scripts/msshi_cli.py doctor`**. Baca juga [Panduan Penjelasan Opsi](docs/OPTION_GUIDE.md), [Panduan Kustomisasi Publik](docs/guides/PANDUAN_KUSTOMISASI_USER_PUBLIK.md), [Panduan Platform](docs/platforms.md), dan [Referensi CLI Lengkap](docs/CLI.md).
 
 ---
 
-## ⚙️ Integrasi Kontekstual v3.1 & Arsitektur Sistem
+## ⚙️ Integrasi Kontekstual v3.1.0, 4 Mode Setup &amp; 8 Diagram Arsitektur
 
-![Lima integrasi kontekstual v3.1 dan perannya](assets/diagrams/msshi-v31-integrations.svg)
-
-| Integrasi / Fitur Baru | Pemegang Peran | Apa yang Dikerjakan & Batasannya |
+| Integrasi / Fitur `v3.1.0` | Pemegang Peran | Apa yang Dikerjakan &amp; Batasannya |
 | :--- | :--- | :--- |
-| [**`muza-skripsi-template` (`v1.1`)**](skills/muza-skripsi-template/SKILL.md) | Val, Shizuka, Yukino, Solo, Antigravity | Merakit `Template_Skripsi_<Kampus>.docx` sesuai pedoman PDF/DOCX kampus (`extract_guideline.py`), lookup logo & pejabat resmi (`campus_lookup.py`), dan suntik riset `MuZA_Search` lewat proses 5 tahap atau *drag-and-drop*. |
-| [**Unslop**](docs/UNSLOP.md) | Kiki-Chii, Val, Shikaku | Merapikan desain UI bertahap (*AI slop polish*); Val mengecek kejelasan metrik & unit ilmiah. Bukan humanizer teks prosa. |
-| [**BRAG**](docs/BRAG.md) | Kiki-Chii | Alur video peluncuran produk memakai HTML/MP4 (**Hyperframes**) lewat gerbang konsep & review manusia sebelum render penuh. |
-| [**Scrapling**](docs/SCRAPLING.md) | Val, Shikaku | Ekstraksi CSS/XPath super cepat dari **HTML lokal** tanpa crawler liar, tanpa browser stealth, dan tanpa sentuh profil Chrome personal. |
-| [**Harness²**](docs/HARNESS2.md) | Val, Shikaku | Demo evaluasi harness deterministik dan usulan perbaikan (*tidak* promosi otomatis ke bot produksi atau bakar benchmark berbayar). |
-| [**REA (`opt-in`)**](docs/REA.md) | Shikaku *(opsional)* | Reverse engineering arsitektur JS/arsip lokal lewat `optional/rea/`. **Default OFF** demi keamanan — nyalakan hanya dengan `--with-rea` atau `msshi optional enable rea`. |
-| [**OmniVoice & Auto-Trim**](hermes_plugins/msshi-auto-trim/README.md) | 5 Bot *(runtime lokal)* | `msshi voice` memakai prosodi suara lokal sesuai karakter 5 bot. Plugin `msshi-auto-trim` memadatkan output JSON besar via hook `transform_tool_result` tanpa proxy chat penuh. |
-| [**TimesFM, Steel & GitLab/Tinyfish**](docs/TIMESFM.md) | Val & 5 Bot | [TimesFM](docs/TIMESFM.md) memprediksi deret waktu lokal via CPU; [Kebijakan Steel Browser](docs/STEEL_BROWSER_POLICY.md) mencegah fallback diam-diam; [OAuth Services](docs/SERVICE_CONNECTIONS.md) tetap memakai autentikasi terpisah (`msshi services --share-oauth`). |
+| [**`muza-skripsi-template` (`v1.1`)**](skills/muza-skripsi-template/SKILL.md) | Val, Shizuka, Yukino, Solo, Antigravity | Merakit `Template_Skripsi_<Kampus>.docx` dari PDF pedoman, logo &amp; pejabat kampus, dan riset `MuZA_Search` lewat 5 tahap tervalidasi atau *drag-and-drop*. |
+| [**`CLI-Anything` Universal Bridge**](docs/CLI_ANYTHING_BRIDGE.md) | Seluruh 5 Bot | Pengganti 22 MCP lokal berat: mendaftarkan rute aplikasi secara lazy, hanya menyala saat dipanggil lewat `msshi runtime ticket` &rarr; `msshi runtime run`. |
+| [**`Unslop`**](docs/UNSLOP.md) | Kiki-Chii, Val, Shikaku | Merapikan desain UI bertahap (*AI slop polish*); Val mengaudit kejelasan unit &amp; metrik ilmiah. Terpisah dari humanizer prosa Indonesia/Inggris. |
+| [**`BRAG`**](docs/BRAG.md) | Kiki-Chii | Alur video peluncuran produk memakai HTML/MP4 (**Hyperframes**) lewat gerbang konsep &amp; review manusia sebelum render penuh. |
+| [**`Scrapling`**](docs/SCRAPLING.md) | Val, Shikaku | Ekstraksi CSS/XPath super cepat dari **HTML lokal** tanpa crawler liar, tanpa browser stealth, dan tanpa sentuh profil Chrome personal. |
+| [**`Harness²`**](docs/HARNESS2.md) | Val, Shikaku | Demo evaluasi harness deterministik dan usulan perbaikan (*tidak* promosi otomatis ke bot produksi atau bakar benchmark berbayar). |
+| [**`REA` (`opt-in`)**](docs/REA.md) | Shikaku *(opsional)* | Reverse engineering arsitektur JS/arsip lokal lewat `optional/rea/`. **Default OFF** demi keamanan — nyalakan hanya dengan `--with-rea` atau `msshi optional enable rea`. |
+| [**`OmniVoice`, `Auto-Trim`, `TimesFM` &amp; `Steel`**](docs/TIMESFM.md) | 5 Bot &amp; Val | `msshi voice` mengikuti prosodi 5 bot; [Auto-Trim](hermes_plugins/msshi-auto-trim/README.md) memadatkan JSON lossless; [TimesFM](docs/TIMESFM.md) meramal deret waktu lokal via CPU; [Kebijakan Steel Browser](docs/STEEL_BROWSER_POLICY.md) &amp; [OAuth Services](docs/SERVICE_CONNECTIONS.md) menjaga sesi privat (`msshi services --share-oauth`). |
+
+<details>
+<summary><b>📊 Buka 8 Diagram Arsitektur Teknis &amp; Alur Kerja MSSHI (SVG Interaktif)</b></summary>
+<br>
+
+- **Peta Utama Paket 63 Skill &amp; 5 Bot:**
+  ![Banner ringkasan paket MSSHI 63 skill, lima bot, dan CLI-Anything](assets/diagrams/msshi-hero-banner.svg)
+- **Topologi Delegasi 5 Persona Bot:**
+  ![Peta alur delegasi dan pengembalian hasil lima bot MSSHI](assets/diagrams/msshi-architecture-map.svg)
+- **Peta Integrasi Kontekstual v3.1:**
+  ![Lima integrasi kontekstual v3.1 dan perannya](assets/diagrams/msshi-v31-integrations.svg)
+- **Empat Mode Setup (`msshi setup`: Solo, Custom, Selective Packs, MuZA 5-Bot Preset):**
+  ![Empat mode setup MSSHI dari Solo hingga Preset MuZA](assets/diagrams/msshi-setup-map.svg)
+- **Produksi Kreatif &amp; Film 10–40 Menit (`Concepting First` &amp; [Creative DNA](docs/ALUR_PRESET_MUZA.md#concepting-first-dan-creative-dna)):**
+  ![Alur kerja kreatif dari Concepting First sampai ekspor final](assets/diagrams/msshi-workflow-diagrams.svg)
+- **Delapan Mesin Akademik S1–S3 ([Detail Mesin Akademik](docs/TUJUH_MESIN_AKADEMIK.md)):**
+  ![Tujuh mesin akademik dari gap riset sampai simulasi sidang](assets/diagrams/msshi-academic-map.svg)
+- **Lima Lapis Konteks Proyek Panjang ([Panduan 5 Lapis Konteks](docs/LIMA_LAPIS_KONTEKS.md)):**
+  ![Lima lapis konteks dari indeks dokumen hingga paket bukti](assets/diagrams/msshi-context-layers.svg)
+- **Pemisahan Bundel, Runtime Perangkat &amp; Layanan Akun Eksternal ([Katalog 49 Sumber](docs/INTEGRASI.md), [Managed Updates](docs/MANAGED_UPDATES.md), [Status Publikasi](docs/STATUS_PUBLIKASI.md)):**
+  ![Tiga jalur integrasi MSSHI: Bundel ZIP, Alat Perangkat, dan Layanan Akun](assets/diagrams/msshi-integration-map.svg)
+
+</details>
 
 ---
 
-## 🛠️ Mode Setup, Produksi Kreatif, Akademik & Manajemen Konteks
+## 📁 Struktur Repositori Bersih (`Clean Root Architecture`)
 
-### 1. Empat Mode Setup (`msshi setup`)
-
-![Empat mode setup MSSHI dari Solo hingga Preset MuZA](assets/diagrams/msshi-setup-map.svg)
-
-| Mode Setup | Hasil Pemasangan |
+| Folder / File | Isi &amp; Fungsi |
 | :--- | :--- |
-| **1. Solo 1-Bot** | Memasang seluruh **51 skill inti + 12 wrapper (63 skill)** ke dalam satu agen tunggal (paling praktis untuk mulai cepat, termasuk `muza-skripsi-template`). |
-| **2. Custom Multi-Bot** | Bebas memberi nama bot sendiri, memilih peran, dan membagikan skill per workspace. |
-| **3. Selective Packs** | Pilih paket tematik saja: `core`, `filmmaking`, `business`, `thesis`, `webdev`, atau `cybersec`. |
-| **4. MuZA 5-Bot Preset** | Mengekspor lengkap kelima persona (`yukino`, `shizuka`, `val`, `kiki-chii`, `shikaku`) beserta `SOUL.md`, `AGENTS.md`, dan `skills/`. |
-
-> Pelajari selengkapnya di [Panduan Kustomisasi Publik](docs/guides/PANDUAN_KUSTOMISASI_USER_PUBLIK.md), [Alur Preset MuZA](docs/ALUR_PRESET_MUZA.md), dan [Audit Skill Per Bot](docs/AUDIT_SKILLS_PER_BOT.md).
-
-### 2. Produksi Kreatif & Film 10–40 Menit bersama Kiki-Chii
-
-![Alur kerja kreatif dari Concepting First sampai ekspor final](assets/diagrams/msshi-workflow-diagrams.svg)
-
-| Tahap | Video Pendek (&lt; 5 Menit) | Film / Dokumenter Panjang (10–40 Menit) |
-| :--- | :--- | :--- |
-| **Rencanakan** | Satu pesan inti + storyboard singkat. | Bagi pembuka, bab (mis. 6–8–7 mnt), transisi & penutup dengan target durasi tiap bab. |
-| **Buat Draf** | Rakit satu komposisi yang tetap bisa diedit. | Pisahkan aset, naskah, audio stem & draft per segmen dalam timeline master. |
-| **Review** | Catatan koreksi di preview sebelum render akhir. | Review per bab memakai timecode; cek ritme, audio, subtitle & kontinuitas. |
-| **Finalisasi** | Simpan file proyek editabel + hasil ekspor. | Simpan master timeline + daftar revisi + ekspor final terverifikasi ([Creative DNA](docs/ALUR_PRESET_MUZA.md#concepting-first-dan-creative-dna)). |
-
-### 3. Delapan Mesin Akademik S1–S3 (Skripsi, Tesis, Disertasi & MuZA Builder)
-
-![Tujuh mesin akademik dari gap riset sampai simulasi sidang](assets/diagrams/msshi-academic-map.svg)
-
-Mulai dari hambatan riset Anda: memetakan *research gap* & kebaruan, audit sitasi primer dengan penomoran halaman, desain metodologi, penulisan bab demi bab yang lolos humanisasi akademik, revisi penguji, simulasi sidang, hingga **Mesin Ke-8: Perakitan Template Kampus Otomatis (`muza-skripsi-template` + `MuZA_Search`)** ([Detail Mesin Akademik](docs/TUJUH_MESIN_AKADEMIK.md)).
-
-### 4. Kelola Konteks Proyek Panjang (Anti Meledak Token!)
-
-![Lima lapis konteks dari indeks dokumen hingga paket bukti](assets/diagrams/msshi-context-layers.svg)
-
-Daripada memasukkan ratusan halaman PDF ke jendela chat sekaligus, MSSHI memecahnya ke **5 Lapis Konteks** lokal: Indeks dokumen &rarr; Ekstrak halaman relevan &rarr; Kurasi petikan bukti berlabel (`metode-v2#p12:par3`) &rarr; Catatan keputusan &rarr; Anggaran konteks + filter `caveman` ([Panduan 5 Lapis Konteks](docs/LIMA_LAPIS_KONTEKS.md)).
-
-### 5. Pemisahan Bundel, Alat Lokal & Layanan Akun
-
-![Tiga jalur integrasi MSSHI: Bundel ZIP, Alat Perangkat, dan Layanan Akun](assets/diagrams/msshi-integration-map.svg)
-
-| Lapisan | Apa Isinya | Cara Pengaturan |
-| :--- | :--- | :--- |
-| **Dalam Bundel Paket** | 63 skill (`51 inti + 12 wrapper`), 5 template persona, 2 Colab notebooks (`notebooks/skripsi/`), CLI Python/Node (`msshi doctor` & `msshi skripsi`), API katalog lokal & buku panduan PDF. | Otomatis tersedia saat clone / install paket ini ([Katalog 49 Sumber](docs/INTEGRASI.md)). |
-| **Runtime / Alat Perangkat** | Python 3.10+, Node 22+, `python-docx`/`lxml` (`skripsi-pylibs`), Blender, ArtCraft, Hyperframes, OmniVoice CPU, CLI-Anything adapter. | Terpisah dari folder `skills/` agar tidak memberatkan scanner & tetap aman dari `msshi update`. |
-| **Layanan Akun Eksternal** | Higgsfield, Google Colab / Gemini Notebook, GitLab, Tinyfish, API Provider LLM pilihan Anda. | Tetap menggunakan akun, login, provider/model & kuota milik pengguna masing-masing (`jev_model_routing: false`)! |
-
-Lihat juga [Panduan Pembaruan Terkelola & Rollback](docs/MANAGED_UPDATES.md), [Daftar Perintah & Pemulihan CLI](docs/CLI.md), dan [Checklist Publikasi](docs/STATUS_PUBLIKASI.md).
-
----
-
-## 📁 Arsitektur Repositori Bersih (`Clean Root Architecture`)
-
-Akar repositori dirapikan berstandar *enterprise open-source*:
-
-| Folder / File | Isi & Fungsi |
-| :--- | :--- |
-| **Root (`/`)** | File inti & peluncur 1-klik: `README.md`, `README_EN.md`, `LICENSE`, `CHANGELOG.md`, `CREDITS.md`, `THIRD_PARTY_NOTICES.md`, `VERSION.json`, `SKILL.md`, `package.json`, `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `MULAI_SKRIPSI_DRAG_AND_DROP.bat`, `UPDATE_OTOMATIS_KE_V3.bat`. |
-| **`notebooks/skripsi/`** | Notebook Google Colab resmi: [`MuZA_Search.ipynb`](notebooks/skripsi/MuZA_Search.ipynb) & [`MuZA_Skripsi_Builder.ipynb`](notebooks/skripsi/MuZA_Skripsi_Builder.ipynb). |
-| **`docs/pdf-guides/` & `docs/manuals/`** | Panduan PDF versi rilis terbaru (`Panduan_Master_MSSHI_v3.1.0.pdf`, `v3.1.0/`, `v3.0/`, `latest/`) dan [`pdf_catalog.json`](docs/manuals/pdf_catalog.json). |
-| **`docs/guides/`** | Panduan tambahan untuk agen & publik (`INSTALL_FOR_AGENTS.md`, `PANDUAN_KUSTOMISASI_USER_PUBLIK.md`, `00_PANDUAN_INSTAL_AUTO_UPDATE_DAN_PROMPT_MULTI_AGENT.md`). |
-| **`scripts/installers/`** | Skrip installer khusus/legacy (`Install_Overhaul_Hermes_dan_Antigravity.ps1`, `install_business_sage.ps1`, `install_business_sage.sh`). |
-| **`configs/manifests/`** | Skema lintas platform (`openai_custom_gpt_schema.json`, `openclaw_manifest.json`, `skill_activation_matrix.json`) + `configs/github_about.txt`. |
-| **`assets/`** | `diagrams/` (8 diagram SVG arsitektur), `visuals/` (10 aset showcase terkurasi), `pp-tiktok/` (9 ilustrasi karakter), `memes/` (10 reaksi jenaka), dan [`assets/README.md`](assets/README.md). |
-| **`skills/` & `optional/rea/`** | **63 folder skill aktif standar (`51 inti + 12 wrapper`)** termasuk `skills/muza-skripsi-template/` (11 file) dan 1 wrapper opt-in `rea`. |
+| **Root (`/`)** | Berkas inti &amp; peluncur 1-klik: [`README.md`](README.md), [`README_EN.md`](README_EN.md), [`VERSION.json`](VERSION.json), [`CHANGELOG.md`](CHANGELOG.md), [`LICENSE`](LICENSE), [`CREDITS.md`](CREDITS.md), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md), [`SKILL.md`](SKILL.md), `package.json`, `install.ps1`, `install.sh`, [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat), [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat), [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat). |
+| **`notebooks/skripsi/`** | Notebook Google Colab resmi: [`MuZA_Search.ipynb`](notebooks/skripsi/MuZA_Search.ipynb) &amp; [`MuZA_Skripsi_Builder.ipynb`](notebooks/skripsi/MuZA_Skripsi_Builder.ipynb). |
+| **`docs/pdf-guides/` &amp; `docs/manuals/`** | Buku Panduan Master PDF v3.1.0, Laporan Eksekusi Hydrogen PDF, Spesifikasi Settings v3.0, rilis `latest/`, dan [`pdf_catalog.json`](docs/manuals/pdf_catalog.json). |
+| **`docs/guides/`** | Panduan agen &amp; publik: [`INSTALL_FOR_AGENTS.md`](docs/guides/INSTALL_FOR_AGENTS.md), [`PANDUAN_KUSTOMISASI_USER_PUBLIK.md`](docs/guides/PANDUAN_KUSTOMISASI_USER_PUBLIK.md), dan panduan auto-update. |
+| **`assets/`** | `avatars/` (Hero banner dual-tone, fullbody Noir &amp; 5 avatar karakter seragam), `memes/` (komik evolusi 2x2 &amp; meme reaksi), `showcases/`, `diagrams/` (8 SVG arsitektur), serta [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json) &amp; [`assets/README.md`](assets/README.md). |
+| **`scripts/`** | Mesin CLI `msshi_cli.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`, `prepare_github_visuals.py`, `secret_scan.py`, `generate_hydrogen_report_pdf.py`, &amp; `check_release*.py`. |
+| **`configs/`** | Matriks skill (`bot_role_and_skill_matrix.json`, `upstreams.json`, `skill_activation_matrix.json`), persona 5 bot (`configs/personas/`), &amp; [`configs/github_about.txt`](configs/github_about.txt). |
+| **`skills/` &amp; `optional/rea/`** | **63 folder skill aktif terbundel (`51 inti + 12 wrapper`)** termasuk 11-file `skills/muza-skripsi-template/`, plus 1 wrapper opt-in `rea`. |
 
 ---
 
@@ -259,19 +313,19 @@ Jika Gateway sudah aktif tetapi layar **Hermes Desktop** masih abu-abu (*Grey Sc
 msshi desktop --software-rendering
 ```
 
-Perintah ini menyalakan `HERMES_DESKTOP_DISABLE_GPU=1` khusus untuk proses Hermes Desktop tanpa mengubah setelan grafis aplikasi Windows lainnya. Launcher akan mengingat `{"software_rendering": true}` di `<HERMES_HOME>/tools/msshi/desktop-preferences.json`.
+Perintah ini menyalakan `HERMES_DESKTOP_DISABLE_GPU=1` khusus untuk proses Hermes Desktop tanpa memengaruhi aplikasi Windows lain, serta menyimpan preferensi aman di `<HERMES_HOME>/tools/msshi/desktop-preferences.json`.
 
 ---
 
-## 🤝 Kredit Kolaborasi & Lisensi
+## 🤝 Kredit Kolaborasi &amp; Lisensi
 
-- **Muhammad Zidan Aisar (MuZA)** — Creator, System Visionary & Chief Architect.
-- **Google Gemini** — Co-Architect riset kurikulum S1–S2–Ph.D., sintesis 50+ skill & sumber awal, rancangan CLI-Anything, TokenShield & topologi komando 5 bot.
-- **OpenAI ChatGPT** — Co-Architect visual SVG, pengemasan repositori Tahap 1–2, manifest upstream, skema lintas platform & implementasi migrasi v3.
-- **Google Antigravity** — Lingkungan pengembangan, orkestrasi agen & penyempurnaan arsitektur MSSHI v3.1.0 + MuZA Skripsi Drag-and-Drop v1.1.
+- **Muhammad Zidan Aisar (MuZA)** — Creator, System Visionary &amp; Chief Architect.
+- **Google Gemini** — Co-Architect riset kurikulum S1–S2–Ph.D., sintesis 50+ skill &amp; sumber awal, rancangan CLI-Anything, TokenShield &amp; topologi komando 5 bot.
+- **OpenAI ChatGPT** — Co-Architect visual SVG, pengemasan repositori Tahap 1–2, manifest upstream, skema lintas platform &amp; implementasi migrasi v3.
+- **Google Antigravity** — Lingkungan pengembangan, orkestrasi agen &amp; penyempurnaan arsitektur MSSHI v3.1.0 + MuZA Skripsi Drag-and-Drop v1.1 + kurasi Cyber-Noir Editorial.
 
-Materi orisinal MSSHI tersedia dengan [**Lisensi MIT**](LICENSE). Komponen pihak ketiga, model, nama karakter rujukan, dan aset eksternal mengikuti ketentuan lisensi masing-masing di [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) dan [docs/PROVENANCE.md](docs/PROVENANCE.md).
+Materi orisinal MSSHI dirilis di bawah [**Lisensi MIT**](LICENSE). Komponen pihak ketiga, model, nama karakter rujukan, dan aset eksternal mengikuti ketentuan lisensi masing-masing di [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) dan [docs/PROVENANCE.md](docs/PROVENANCE.md).
 
 <br>
 
-> **Review Visual & Audit Otomatis:** [adapters/msshi-visual-review/README.md](adapters/msshi-visual-review/README.md) · Validasi paket: `python scripts/msshi_cli.py doctor`, `python scripts/check_release.py --smoke`, dan `python scripts/check_release_v31.py --package-only`.
+> **Verifikasi &amp; Audit Paket:** [`adapters/msshi-visual-review/README.md`](adapters/msshi-visual-review/README.md) · `python scripts/secret_scan.py` · `python scripts/msshi_cli.py doctor` · `python scripts/check_release.py --smoke` · `python scripts/check_release_v31.py --package-only`

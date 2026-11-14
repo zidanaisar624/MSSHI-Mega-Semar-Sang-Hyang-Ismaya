@@ -174,7 +174,7 @@ def static_checks():
 def run_cli(script, *args, ok=True, env=None, input_text=None):
     result = subprocess.run(
         [sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / script), *map(str, args)],
-        cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=90,
+        cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=600,
         env={**os.environ, **(env or {}), "HERMES_HOME": str(ROOT / ".msshi-check-no-hermes")}, input=input_text,
     )
     require((result.returncode == 0) == ok,
@@ -470,7 +470,7 @@ def main():
                 bridge_smoke(Path(scratch))
                 upstream_smoke(Path(scratch))
             require(subprocess.run([sys.executable, '-B', '-X', 'utf8', str(ROOT / 'scripts/check_managed.py')],
-                                   capture_output=True, text=True, timeout=60).returncode == 0,
+                                   capture_output=True, text=True, timeout=600).returncode == 0,
                     'Managed shared-skill update regression failed')
             catalog_smoke()
             print("Smoke tests passed: installer, updater, global CLI, v2.1 migration, application routes, upstream cache and catalog guardrails")

@@ -1,46 +1,151 @@
 [🇮🇩 Bahasa Indonesia](./README.md) | [🌐 English](./README_EN.md)
 
-# 🌐 MSSHI v3.1.0 — Mega Semar Sang Hyang Ismaya: Hermes Ultimate Optimizer & Sovereign Sage
+<div align="center">
 
-> *63 Modular AI Agent Skills (51 Core + 12 Wrappers) + 49 Verified Upstreams + 5 Role Personas + Low-RAM CLI-Anything Bridge + MuZA Skripsi Starter v1.1 (Drag-and-Drop) for Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT.*
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.1.0 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
-[![Version](https://img.shields.io/badge/Release-MSSHI%20v3.1.0-6d4aff?style=for-the-badge)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-63%20Bundled%20(51%20Core%20%2B%2012%20Wrappers)-0ea5e9?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-49%20Verified%20Sources-10b981?style=for-the-badge)](configs/upstreams.json)
-[![MuZA Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-ec4899?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
-[![Credits](https://img.shields.io/badge/Credits-MuZA%20%C3%97%20Gemini%20%C3%97%20ChatGPT%20%C3%97%20Antigravity-5648b3?style=for-the-badge)](docs/PROVENANCE.md#kredit-kolaborasi)
-[![License](https://img.shields.io/badge/License-MIT-f59e0b?style=for-the-badge)](LICENSE)
+# 🌐 MSSHI v3.1.0 — Mega Semar Sang Hyang Ismaya
+### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · MuZA Skripsi Drag-and-Drop v1.1*
 
-| | |
-| :---: | :--- |
-| <img src="assets/pp-tiktok/hero-sovereign-orchestrator.jpg" width="240" alt="MSSHI Sovereign Orchestrator Character"> | **MSSHI v3.1.0** turns plain single-prompt chat into a **five-role sovereign specialist suite** plus the **Hermes Ultimate Optimizer** engineered to stay responsive even on modest **4 GB RAM Windows 10** machines.<br><br>Now featuring **MuZA Skripsi Starter v1.1 (Drag-and-Drop + Google Colab)**: automate academic literature synthesis in `MuZA_Search`, look up official university logos and leadership (`campus_lookup.py`), extract campus PDF formatting rules, and generate ready-to-use `.docx` thesis templates in one click — alongside **MFA Filmmaking, BBA/MBA & Indonesian Tax (`PP 20/2026`), `KAT-Coder-V2.5-Dev`, Defensive Cybersec, and `OmniVoice` TTS.** |
+[![Release](https://img.shields.io/badge/Release-v3.1.0%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
+[![Skills](https://img.shields.io/badge/Skills-63%20Bundled%20(51%20Core%20%2B%2012%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-49%20Verified%20Sources-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
+[![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
+[![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
+
+> *"A sovereign multi-agent ecosystem for Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT — engineered to run smoothly on 4 GB RAM Windows 10 laptops and `$1` API budgets across S1–S3 academic research, MFA filmmaking, BBA/MBA advisory, and full-stack cybersecurity engineering."*
+
+</div>
 
 ---
 
-## 📥 Versioned PDF Handbooks (1-Click Auto-Download)
+<table>
+<tr>
+<td width="245" align="center" valign="middle">
+  <img src="assets/avatars/muza-noir-fullbody.png" width="225" alt="MuZA Sovereign Architect Character">
+  <br><sub><b>Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
+</td>
+<td valign="top">
+  <h3>🎭 Turn Plain AI Chat into a 5-Specialist Cyber-Noir Command Suite</h3>
+  <p>Tired of watching a <b>4 GB RAM Windows 10 laptop freeze (Grey Screen)</b> under 22 background local MCP servers — or having scripts break on <b><code>C:</code>-drive-only machines</b>?</p>
+  <p><b>MSSHI v3.1.0</b> overhauls agent reliability while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
+  <ul>
+    <li>⚡ <b>CLI-Anything Universal Bridge</b> — Replaces 22 heavyweight MCP processes with lazy on-demand app tickets (<code>msshi runtime ticket</code> / <code>run</code>).</li>
+    <li>🛡️ <b>$1 Zero-Waste Token Shield + Auto-Trim + Caveman</b> — Lossless JSON compression via <code>transform_tool_result</code> plus hard budget stops below a <b>$1.00</b> projected reserve.</li>
+    <li>🎓 <b>MuZA Skripsi Starter v1.1 (Drag-and-Drop + Colab)</b> — Drop a <code>MuZA_Search .zip</code> and/or campus guideline PDF onto <code>MULAI_SKRIPSI_DRAG_AND_DROP.bat</code>, or ask in chat: <i>"Buatkan aku template skripsi!"</i></li>
+    <li>💾 <b>Adaptive C: / D: Storage Detection</b> — Uses <code>D:\HermesData</code> if available or falls back seamlessly to <code>%USERPROFILE%\HermesData</code> and <code>Documents\MuZA_Skripsi_Output</code>.</li>
+  </ul>
+</td>
+</tr>
+</table>
 
-Prefer reading an end-to-end handbook before installing? Click any download badge below for an immediate raw file download, or read online directly on GitHub:
+---
 
-| Version / Channel | Handbook Title & Coverage | Size | 1-Click Auto-Download | View Online |
+<div align="center">
+
+## 📥 Versioned PDF Handbooks & Reports (1-Click Auto-Download)
+
+*Prefer an end-to-end handbook or release audit report? Click any download badge below for a direct raw PDF download, or read online in GitHub.*
+
+| Version / Channel | Document Title &amp; Scope | Details | 1-Click Auto-Download | View Online |
 | :---: | :--- | :---: | :---: | :---: |
-| **`latest`** | **Hermes & MSSHI v3.1.0 Client Master Handbook (Latest)** — Always tracks the newest release PDF. | 130 pp · ~3.65 MB | [![Download Latest PDF](https://img.shields.io/badge/1--Click%20Download-Latest%20PDF-16a34a?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) | [Open on GitHub](docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) |
-| **`v3.1.0` (`pdf-guides`)** | **MSSHI v3.1.0 Master PDF Guide (`v3.1.0` Tag Direct Link)** — 63 skills, MuZA Skripsi v1.1, BRAG, Unslop, Scrapling, Harness², Opt-in REA & adaptive `C:`/`D:` paths. | 130 pp · ~3.65 MB | [![Download Direct v3.1.0](https://img.shields.io/badge/1--Click%20Download-v3.1.0%20Master%20PDF-0284c7?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf) | [Open on `v3.1.0` Tag](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/v3.1.0/docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf) |
-| **`v3.1.0` (`manuals`)** | **Hermes & MSSHI v3.1.0 Master Client Guide (Saturday Zoom Edition)** — Complete client & Zoom archive. | 130 pp · ~3.65 MB | [![Download v3.1.0 PDF](https://img.shields.io/badge/1--Click%20Download-v3.1.0%20PDF-2563eb?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) | [Open on GitHub](docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) |
-| **`v3.0`** | **MSSHI v3.0 Full Settings Specification — Hermes Ultimate Optimizer** — Optimizer architecture, 22-MCP to CLI-Anything migration, Hermes-Dreaming (`21878d3`), OmniVoice & Caveman. | 50 pp · ~1.47 MB | [![Download v3.0 PDF](https://img.shields.io/badge/1--Click%20Download-v3.0%20Spec%20PDF-7c3aed?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) | [Open on GitHub](docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) |
+| **`v3.1.0` (Client Handbook)** | **Hermes &amp; MSSHI v3.1.0 Client Master Handbook** — Complete beginner-to-pro guide covering 63 skills, 5 bots, CLI-Anything, OmniVoice, Skripsi v1.1 &amp; adaptive paths. | 130 pp · ~3.65 MB | [![Download Master PDF](https://img.shields.io/badge/Download%20PDF-Master%20v3.1.0-FF6B1A?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0.pdf) | [Open on GitHub](docs/pdf-guides/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0.pdf) |
+| **`v3.1.0` (Execution Report)** | **MSSHI v3.1.0 Hydrogen Execution Report (Memeable &amp; Skripsi)** — Full audit of repo restructuring, 19 standardized visuals, Skripsi `.docx` integration &amp; release verification. | Official Report | [![Download Report PDF](https://img.shields.io/badge/Download%20PDF-Hydrogen%20Report-2CE8C6?style=for-the-badge&logo=adobeacrobatreader&logoColor=black)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) | [Open on GitHub](docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) |
+| **`v3.0` (Optimizer Spec)** | **MSSHI v3.0 Full Settings Specification — Hermes Ultimate Optimizer** — Architecture blueprint for 22-MCP removal, `hermes-dreaming`, OmniVoice &amp; Caveman. | 50 pp · ~1.47 MB | [![Download v3.0 Spec PDF](https://img.shields.io/badge/Download%20PDF-Spec%20v3.0-8B5CF6?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.0/docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) | [Open on GitHub](docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) |
+| **`latest` (Auto-Track)** | **Stable `latest` Channel (Always Tracks Newest Release)** — Used automatically by `msshi manual download --version latest` &amp; interactive installers. | 130 pp · ~3.65 MB | [![Download Latest Channel](https://img.shields.io/badge/1--Click%20Download-Channel%20Latest-10B981?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) | [View in `manuals/`](docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) |
 
-> **💡 Interactive Installer Option:** Running `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `UPDATE_OTOMATIS_KE_V3.bat`, `msshi setup`, or `msshi update` offers an optional prompt to save the PDF handbook for your installed version (`--download-pdf` / `--no-pdf`), or download anytime via `msshi manual download --version v3.1.0`. Machine-readable catalog: [pdf_catalog.json](docs/manuals/pdf_catalog.json).
+> 💡 **Interactive Installer Support:** Running `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `UPDATE_OTOMATIS_KE_V3.bat`, `msshi setup`, or `msshi update` offers a built-in prompt (`--download-pdf` / `--no-pdf`), or run `msshi manual download --version v3.1.0`. Machine catalog: [`docs/manuals/pdf_catalog.json`](docs/manuals/pdf_catalog.json) · Compact v3.1 link: [`docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf`](docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf) · Version archives: [`docs/manuals/v3.1.0/`](docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf) &amp; [`docs/manuals/v3.0/`](docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf).
+
+</div>
 
 ---
 
-## 🎓 MuZA Skripsi Starter v1.1 (Drag-and-Drop & Google Colab Edition)
+## 🕰️ Evolution Timeline (`v1.0` → `v3.1.0`): From Early Experiments to Drag-and-Drop Thesis Assembly
 
-Introducing MSSHI's **63rd bundled skill**: [`muza-skripsi-template`](skills/muza-skripsi-template/SKILL.md) — a zero-friction academic thesis (`.docx`) assembly pipeline:
+<div align="center">
 
-| Stage & Tool | 1-Click Google Colab & Repo Files | Key Capabilities |
-| :--- | :---: | :--- |
-| **1. `MuZA_Search v1.1`** *(Literature & Research Gap)* | [![Open MuZA_Search in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)<br>[`notebooks/skripsi/MuZA_Search.ipynb`](notebooks/skripsi/MuZA_Search.ipynb) | Discovers scholarly literature across OpenAlex/CrossRef/Semantic Scholar, generates Research Gap matrices, and exports **Zotero `.ris`**, **Chapter 2 synthesis tables (`.csv`/`.xlsx`)**, and a ready-to-inject **`.zip` research package**. |
-| **2. `MuZA_Skripsi_Builder v1.1`** *(OOXML `.docx` Builder)* | [![Open MuZA_Skripsi_Builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rrl38cwQZ0CA00cMyQvfjJUf1CSEtJpS)<br>[`notebooks/skripsi/MuZA_Skripsi_Builder.ipynb`](notebooks/skripsi/MuZA_Skripsi_Builder.ipynb) | Extracts formatting rules from campus PDF/DOCX guidelines (`extract_guideline.py`), retrieves official **university PNG logos & verified leadership names/IDs** via Wikipedia/Wikidata/ROR/`*.ac.id` (`campus_lookup.py`), applies **5 methodology presets**, injects `MuZA_Search` citations, and produces **`Template_Skripsi_<Campus>.docx`**. |
-| **3. Local Drag-and-Drop Launcher** *(Windows & CLI)* | [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat)<br>`msshi skripsi` | **Drag & drop** a `MuZA_Search .zip` and/or campus guideline `.pdf`/`.docx` directly onto `MULAI_SKRIPSI_DRAG_AND_DROP.bat`! Outputs adaptively to `D:\HermesData\Skripsi_Output` or falls back cleanly to `%USERPROFILE%\Documents\MuZA_Skripsi_Output`. |
+<table>
+<tr>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-01-era-v1.png" width="95%" alt="Panel 1 Evolution MSSHI v1.0">
+  <br><b>Phase 1 · Early Experiments (<code>v1.0</code>)</b>
+  <br><sub>Started with <b>47 core skills</b> for S1–S2 MFA Filmmaking, Videography, Photography &amp; <code>Auto-Curiosity</code> — back when 22 local MCP servers cooked laptops alive.</sub>
+</td>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-02-era-v2.png" width="95%" alt="Panel 2 Evolution MSSHI v2.0 - v2.2">
+  <br><b>Phase 2 · Stage 1 &amp; 2 Sovereign Suite (<code>v2.0 – v2.2</code>)</b>
+  <br><sub>Introduced <b>Business Sage</b> (BBA/MBA + Indonesian Tax <code>PP 20/2026</code>), the <b>5-Bot Hierarchy</b>, <code>TokenShield</code>, <code>Unlimited-OCR-2</code>, <code>humanizer-indonesia</code> &amp; <code>Universal Bridge</code>.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-03-era-v30.png" width="95%" alt="Panel 3 Evolution MSSHI v3.0 Optimizer">
+  <br><b>Phase 3 · The Optimizer Leap (<code>v3.0</code> · Tag <code>a8400c8</code>)</b>
+  <br><sub><b>Eliminated 22 heavy MCPs</b> in favor of <b>CLI-Anything</b> + native lossless <code>msshi-auto-trim</code> + <code>caveman</code>! Added <b>OmniVoice</b> prosody, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b> &amp; <b>TimesFM</b>. Pure 4 GB RAM bliss.</sub>
+</td>
+<td width="50%" align="center" valign="top">
+  <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Evolution MSSHI v3.1.0 + Skripsi v1.1">
+  <br><b>Phase 4 · Mature Release (<code>v3.1.0 + Skripsi v1.1</code>)</b>
+  <br><sub>Now <b>63 bundled skills (51 core + 12 wrappers) + 49 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
+</td>
+</tr>
+</table>
+
+</div>
+
+```mermaid
+flowchart LR
+    V1["<b>Phase 0 · v1.0</b><br/>47 Core Skills<br/>S1–S2 MFA Filmmaking, Video &amp; Photo<br/>Auto-Curiosity &amp; Creative DNA"] --> V2["<b>Stages 1–2 · v2.0–v2.2</b><br/>Business Sage + Tax PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
+    V2 --> V3["<b>Optimizer Leap · v3.0</b><br/>22 MCPs Replaced by CLI-Anything<br/>OmniVoice + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
+    V3 --> V31["<b>Mature Release · v3.1.0 + Skripsi v1.1</b><br/>63 Bundled Skills (51 Core + 12 Wrappers)<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
+```
+
+---
+
+## 🎭 Meet the 5-Bot Hierarchy (Disciplined Specialist Team)
+
+Every bot carries its own persona instructions, domain guardrails, local **`OmniVoice`** prosody, and verified skill allocation audited in [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
+
+| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.1.0` Stack |
+| :---: | :--- | :--- | :--- |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)* | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
+
+> 🦀 **Shared Foundation Across All 5 Bots:** Every persona inherits [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, and lossless JSON compression via [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
+
+---
+
+## 🎓 Spotlight Feature v3.1.0: MuZA Skripsi Starter v1.1 (Drag & Drop + Colab)
+
+<table>
+<tr>
+<td width="42%" align="center" valign="middle">
+  <img src="assets/memes/meme-05-skripsi-drop.png" width="100%" alt="Thesis stress solved by MuZA Skripsi Drag-and-Drop">
+  <br><sub><i>Your brain before <b>MuZA Skripsi Drag-and-Drop v1.1</b> — now margins, official university logos &amp; Chapter 2 synthesis tables assemble in seconds!</i></sub>
+</td>
+<td valign="top">
+  <h3>🚀 Print-Ready University Thesis <code>.docx</code> Assembly With Zero Terminal Friction</h3>
+  <ol>
+    <li><b>Step 1 — Scholarly Discovery in Google Colab:</b><br>
+      Open [![Open MuZA_Search in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv) (<a href="notebooks/skripsi/MuZA_Search.ipynb"><code>MuZA_Search.ipynb</code></a>), query OpenAlex/CrossRef/Semantic Scholar, and export your <b><code>.zip</code> bundle</b> containing Zotero <b><code>.ris</code></b> and Chapter 2 synthesis tables.
+    </li>
+    <li><b>Step 2 — Pick Cloud Colab or Windows Drag-and-Drop:</b>
+      <ul>
+        <li><b>Cloud Colab:</b> Launch [![Open MuZA_Skripsi_Builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rrl38cwQZ0CA00cMyQvfjJUf1CSEtJpS) (<a href="notebooks/skripsi/MuZA_Skripsi_Builder.ipynb"><code>MuZA_Skripsi_Builder.ipynb</code></a>).</li>
+        <li><b>Local Windows Drag-and-Drop:</b> Simply <b>drag &amp; drop</b> your <code>.zip</code> + campus guideline <code>.pdf</code> onto <a href="MULAI_SKRIPSI_DRAG_AND_DROP.bat"><code>MULAI_SKRIPSI_DRAG_AND_DROP.bat</code></a> (or run <code>msshi skripsi</code>)!</li>
+      </ul>
+    </li>
+    <li><b>Step 3 — Campus Lookup + Guideline Extraction + 5 Presets:</b><br>
+      Powered by <a href="skills/muza-skripsi-template/SKILL.md"><code>muza-skripsi-template</code></a> (11 files): extracts PDF paper/margin rules (<code>extract_guideline.py</code>), retrieves official PNG university crests &amp; verified leadership names (<code>campus_lookup.py</code>), applies methodology presets, and outputs adaptively to <code>D:\HermesData\Skripsi_Output</code> or <code>%USERPROFILE%\Documents\MuZA_Skripsi_Output</code>.
+    </li>
+  </ol>
+</td>
+</tr>
+</table>
 
 ```mermaid
 flowchart LR
@@ -49,168 +154,150 @@ flowchart LR
     S3 --> S4["<b>4. Print-Ready Word Template</b><br/>Template_Skripsi_Campus.docx<br/>Auto TOC + Three-Line Tables + Ctrl+H"]
 ```
 
-> **🤖 Contextual or Direct Invocation in Agent Chat:** In Antigravity, Hermes, Claude Code, or OpenClaw, asking naturally (*"Buatkan aku template skripsi!"* / `/muza-skripsi-template`) triggers [`muza-skripsi-template`](skills/muza-skripsi-template/SKILL.md) and walks you through its **5-stage gated process** without skipping campus rule checks or fabricating officials.
+> 🤖 **Contextual Activation in Any Connected AI Chat:** Simply ask naturally (*"Buatkan aku template skripsi!"* / `/muza-skripsi-template`) and [`muza-skripsi-template`](skills/muza-skripsi-template/SKILL.md) walks you through its **5-stage verified process**, clearly tagging `[Dari Pedoman]` vs `[*Default]` rules and never inventing unverified campus officials.
 
 ---
 
-## 😭 Before vs 😎 After MSSHI v3.1.0
+## 💰 $1 Zero-Waste Token Shield &amp; Adaptive `C:` vs `D:` Storage
 
-| 😭 Without Optimizer (*Legacy Overload*) | 😎 With MSSHI v3.1.0 (*CLI-Anything + Auto-Trim*) |
-| :---: | :---: |
-| <img src="assets/pp-tiktok/traffic-cone-freeze.jpg" width="230" alt="22 MCP freeze cone head"> <img src="assets/memes/dev-cat-laptop.jpg" width="230" alt="Staring at frozen laptop"> | <img src="assets/pp-tiktok/install-thumbs-up.jpg" width="230" alt="1-click setup success"> <img src="assets/memes/ram4gb-bliss-dog.jpg" width="230" alt="4 GB RAM peaceful dog"> |
-| **95% RAM saturation & Hermes Desktop Grey Screen** from 22 heavyweight local MCP servers running continuously. | **Low-RAM responsive execution** via lazy **CLI-Anything** task tickets (`msshi runtime ticket` / `run`) and `msshi desktop --software-rendering`. |
-| **Bloated JSON payloads & token burn** blowing past your API balance silently. | **Native `msshi-auto-trim` + `caveman`** compresses eligible JSON tool outputs with exact equality verification while **`TokenShield`** guards a strict `$1.00` minimum reserve. |
-| **Hardcoded `D:\` path failures** on `C:`-drive-only student or client laptops. | **Adaptive directory detection:** uses `D:\HermesData` if present or falls back seamlessly to `%USERPROFILE%\HermesData` / `%USERPROFILE%\Documents\MuZA_Skripsi_Output`. |
-
-| 22 Heavyweight MCPs vs CLI-Anything Bridge | Guardrails Always On |
-| :---: | :---: |
-| <img src="assets/memes/hydrogen-bomb-vs-coughing-baby.jpg" width="320" alt="Hydrogen Bomb vs Coughing Baby"> | <img src="assets/memes/wait-cat-tokenshield.jpg" width="260" alt="Wait cat TokenShield"> |
-| **22 heavy background MCP servers** vs **MSSHI v3.1.0 on-demand CLI tickets + lossless auto-trim**! | **Safety First:** `jev_model_routing: false` protects user providers/models, TokenShield pauses paid steps below `$1.00`, Steel blocks silent fallbacks, and **`REA` stays OFF by default**. |
-
-![MSSHI hero diagram showing 63 bundled skills, 5 roles, and v3.1 optimizer](assets/diagrams/msshi-hero-banner.svg)
-
----
-
-## 📈 Evolution Timeline (`v1.0` → `v3.1.0`)
-
-```mermaid
-flowchart LR
-    V1["<b>Phase 0 · v1.0</b><br/>47 Core Skills<br/>S1–S2 MFA Filmmaking, Video &amp; Photo<br/>Auto-Curiosity &amp; Academic Foundations"] --> V2["<b>Stages 1–2 · v2.0–v2.2</b><br/>Business Sage + Indonesian Tax PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
-    V2 --> V3["<b>Optimizer Leap · v3.0</b><br/>22 MCPs Replaced by CLI-Anything<br/>OmniVoice Prosody + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
-    V3 --> V31["<b>Mature Release · v3.1.0</b><br/>63 Bundled Skills (51 Core + 12 Wrappers)<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi v1.1 + msshi doctor"]
-```
-
-| Version | Release Stage | Key Milestones |
-| :--- | :--- | :--- |
-| **`v1.0`** | *Early Experiments* | S1–S2 MFA Filmmaking, Videography & Photography curriculum, `Auto-Curiosity`, `Creative DNA`, and 47 foundational research/creative skills. |
-| **`v2.0 – v2.2`** | *Stage 1 & 2 Sovereign Suite* | `Business Sage` (BBA/MBA, Indonesian Tax `PP 20/2026`, zero-capital playbooks), 5-Bot Command Hierarchy, `TokenShield`, `Unlimited-OCR-2`, `humanizer-indonesia`, `Universal Bridge`, and cross-host packaging (`v2.1.0`). |
-| **`v3.0`** | *Hermes Ultimate Optimizer* (`a8400c8`) | Eliminated 22 local desktop/utility MCPs in favor of **`CLI-Anything`** + **`Hersona CLI`** + **`msshi-auto-trim`**, integrated **`hermes-omnivoice`**, **`hermes-dreaming`** (`21878d3`), **`KAT-Coder-V2.5-Dev`**, **`caveman`**, **`hyperframes`**, **`ui-ux-pro-max-skill`**, **`TimesFM`**, and **`Steel`**. |
-| **`v3.1.0`** | *Contextual Integrations + MuZA Skripsi v1.1* | Expanded to **63 bundled skills (51 core + 12 wrappers) + 49 upstreams**, adding **MuZA Skripsi Starter v1.1 (Drag-and-Drop + Colab)**, **`BRAG`**, **`Unslop`**, **`Scrapling`**, **`Harness²`**, **`Opt-in REA`**, `msshi doctor`, `msshi skripsi`, `msshi choices`, `msshi services --share-oauth`, `msshi managed`, `msshi manual`, clean root layout, and adaptive `C:`/`D:` paths. |
-
-> **Still stuck on an older v2 setup?** <br>
-> <img src="assets/memes/pasrah-dev-ape.jpg" width="210" alt="Accepting fate meme"> <br>
-> Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once from this release to migrate safely while backing up `SOUL.md` and `user_creative_dna.json`.
+<table>
+<tr>
+<td valign="top">
+  <h3>🔥 Built for Tight Budgets &amp; Real Student Hardware</h3>
+  <ul>
+    <li><b><code>TokenShield</code> `$1.00` Floor Guard:</b> Checks projected balances before paid multi-step operations so quotas never drain silently.</li>
+    <li><b>Lossless <code>msshi-auto-trim</code> + <code>caveman</code>:</b> Compresses large JSON tool responses in-place only when exact data equivalence holds.</li>
+    <li><b>Personal Provider &amp; Model Preservation:</b> Never alters your DataByte, YupiAI, Gemini, Claude, DeepSeek, Kimi, Qwen, or GPT settings (<code>jev_model_routing: false</code> locked).</li>
+    <li><b>Zero Hardcoded <code>D:\</code> Failures:</b> Automatically selects <code>D:\HermesData</code> when present or falls back cleanly to <code>%USERPROFILE%\HermesData</code> on single-drive <code>C:</code> laptops.</li>
+  </ul>
+</td>
+<td width="40%" align="center" valign="middle">
+  <img src="assets/memes/meme-06-budget-dan-cdrive.png" width="100%" alt="Accepting fate meme on $1 API budget and C-drive laptop">
+  <br><sub><i>When your API balance is down to <b>$1</b> on a 4 GB RAM <code>C:</code>-drive laptop — "Pasrah aku... yet MSSHI v3.1.0 makes it work!"</i></sub>
+</td>
+</tr>
+</table>
 
 ---
 
-## 🚀 30-Second Quick Start (Choose Your Agent)
+## 🖼️ Showcase Gallery &amp; Standardized Meme Collection
 
-**Start directly in agent chat** — paste this into Hermes Agent, OpenClaw, Claude Code, or Antigravity:
+<details>
+<summary><b>👉 Click to Expand Architecture Showcases &amp; Extra Reaction Memes</b></summary>
+<br>
 
-> Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI for me!
+<div align="center">
+  <img src="assets/showcases/showcase-hermes-ecosystem.png" width="48%" alt="Auto-Curiosity Research Loop Showcase">
+  <img src="assets/showcases/showcase-creative-convergence.png" width="48%" alt="Creative Convergence Keyart Showcase">
+  <br><sub><b>Left:</b> <i>Auto-Curiosity</i> Loop (Discover &rarr; Deconstruct &rarr; Verify &rarr; Hand Off) · <b>Right:</b> Creative Convergence Studio.</sub>
+</div>
 
-**Or install via CLI (includes optional PDF handbook download):**
+<br>
 
-**Windows PowerShell** *(add `-DownloadPdf` to auto-download the v3.1.0 handbook)*
+<div align="center">
+<table>
+<tr>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-01.png" width="100%" alt="Deep Thinking Cat"><br><sub>Code review mode</sub></td>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-02.png" width="100%" alt="Contemplating Cat"><br><sub>Reading the 130-page PDF</sub></td>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-03.png" width="100%" alt="Low Spec Matrix Hacker"><br><sub>Vibecoding on modest hardware</sub></td>
+<td align="center" width="25%"><img src="assets/memes/gallery-extra-04.png" width="100%" alt="Cozy Chaos Engineering"><br><sub><i>"Cozy chaos, my favorite."</i></sub></td>
+</tr>
+</table>
+</div>
 
-```powershell
-irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
-```
+</details>
 
-**macOS / Linux** *(pass `--download-pdf` or `--no-pdf` when invoking directly)*
+---
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
-```
+## 🚀 30-Second Quick Start
 
-**Windows Beginners:**
-- Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 to download versioned PDF manuals!).
-- Want an instant university thesis `.docx`? Drag your `MuZA_Search .zip` and/or campus `.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat)!
-- Prior v2.1 users run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once, and check system readiness anytime via **`python scripts/msshi_cli.py doctor`**.
+**Fastest Option (Paste into Agent Chat):**
 
-| Agent | Install Route |
+> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.1.0 for me without overriding my existing LLM provider/model!`
+
+- **Windows Beginners:** Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 for versioned PDF manuals), or drag `.zip`/`.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat).
+- **v2.x Upgrade:** Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once (backs up `SOUL.md` &amp; `Creative DNA` automatically).
+- **Windows PowerShell** *(add `-DownloadPdf` to fetch the v3.1.0 manual)*:
+  ```powershell
+  irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
+  ```
+- **macOS / Linux Bash** *(supports `--download-pdf` / `--no-pdf`)*:
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
+  ```
+
+| Agent / Host | Fast Install Route |
 | :--- | :--- |
 | **Hermes Agent** | `npx skills add https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/main/skills --global --agent hermes-agent` or `hermes skills tap add zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya` |
 | **OpenClaw** | `openclaw skills install git:zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya --global` or `npx skills add .../skills --global --agent openclaw` |
 | **Claude Code** | `/plugin marketplace add zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya` then `/plugin install msshi@msshi-marketplace` |
-| **Claude.ai Web / Desktop** | Open **Customize → Skills → + → Upload a skill** and upload [`portable/msshi.zip`](portable/msshi.zip) |
+| **Claude.ai Web / Desktop** | Open **Customize &rarr; Skills &rarr; + &rarr; Upload a skill** and upload [`portable/msshi.zip`](portable/msshi.zip) |
 | **ChatGPT Projects / Custom GPT** | Upload [`portable/MSSHI_ChatGPT_Knowledge_Bundle.md`](portable/MSSHI_ChatGPT_Knowledge_Bundle.md) and paste [`portable/CHATGPT_CUSTOM_INSTRUCTIONS.md`](portable/CHATGPT_CUSTOM_INSTRUCTIONS.md) |
 | **Codex CLI** | `npx skills add https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/main/skills --global --agent codex` |
-| **Google Antigravity IDE** | `msshi setup --platform antigravity` after installing the CLI ([IDE & Skills CLI notes](docs/guides/INSTALL_FOR_AGENTS.md#google-antigravity-ide)) |
+| **Google Antigravity IDE** | `msshi setup --platform antigravity` ([Agent Setup Guide](docs/guides/INSTALL_FOR_AGENTS.md#google-antigravity-ide)) |
 
-> Run `msshi choices` anytime to inspect every mode, pack, skill, REA, KAT, or app route before installing. See [Choice Guide](docs/OPTION_GUIDE_EN.md) · [Agent Install Guide](docs/guides/INSTALL_FOR_AGENTS.md) · [Platforms & OpenClaw](docs/platforms.md) · [CLI & Recovery](docs/CLI.md).
-
----
-
-## 🎭 Meet the 5-Bot Hierarchy & Sub-Agent Optimizer
-
-| <img src="assets/memes/council-thinking.jpg" width="260" alt="5-Bot Council Brainstorming"> | **Coordinated Specialist Flow:**<br>Raw ideas enter via **Yukino** &rarr; routed by **Sensei Shizuka** &rarr; researched & templated by **Val** &rarr; built by **Kiki-Chii** or **Shikaku Nara** &rarr; synthesized back by **Shizuka** for human approval! |
-| :---: | :--- |
-
-| Character | Persona & Role | Core Mandate & v3.1 Stack |
-| :---: | :--- | :--- |
-| <img src="assets/pp-tiktok/shizuka-yukino-duo.jpg" width="160" alt="Yukino & Sensei Shizuka"> | **1. Yukino Yukinoshita** &<br>**2. Sensei Shizuka Hiratsuka**<br>*(Idea Sparring & Sovereign Orchestrator)* | **Yukino** stress-tests raw ideas into sharp briefs. **Shizuka** leads client synthesis, **Business Sage** (BBA/MBA/Tax), `TokenShield` budget gating, coordinates **`muza-skripsi-template`**, and delivers final human-ready summaries. |
-| <img src="assets/pp-tiktok/val-dreaming-horned.jpg" width="160" alt="Val Deep Research"> | **3. Val**<br>*(S1–S3 Thesis Research, TimesFM & `hermes-dreaming`)* | Handles `Auto-Curiosity`, 8 thesis workflows including **`muza-skripsi-template`** (`campus_lookup.py` + `MuZA_Search`), CPU **`TimesFM`** forecasting, local HTML parsing (**`Scrapling`**), dashboard evidence review (**`Unslop`**), and **`hermes-dreaming`** (`21878d3`). |
-| <img src="assets/pp-tiktok/kiki-chii-panic.jpg" width="160" alt="Kiki-Chii Creative Director"> | **4. Kiki-Chii**<br>*(MFA Film, Video, Photo & Motion Lead)* | Owns **Concepting First**, short-form to 10–40 min multi-chapter timelines, **`BRAG`** (**`Hyperframes`** launch videos), **`UI/UX Pro Max`**, **`Unslop`** polish, and `Creative DNA`. |
-| <img src="assets/pp-tiktok/shikaku-flame-skull.jpg" width="160" alt="Shikaku Nara Coder"> | **5a. Shikaku Nara & `KAT-Coder-V2.5-Dev`**<br>*(Principal Architecture & Vibecoding)* | Full-stack engineering, Next.js/Go/Python/Flutter, iterative UI refinement (**`Unslop`**), **`Harness²`** verification, **`Scrapling`**, and optional **`Opt-in REA`**. |
-| <img src="assets/pp-tiktok/cybersec-pirate.jpg" width="160" alt="Shikaku Cybersec Guardian"> | **5b. Shikaku Cybersec Guardian**<br>*(Defensive Security & Session Guard)* | Authorized security auditing, dependency/script verification, OAuth isolation (`msshi services --share-oauth`), and personal-browser boundary checks. |
-| <img src="assets/pp-tiktok/cli-anything-crab.jpg" width="160" alt="CLI-Anything Universal Bridge"> | **CLI-Anything Universal Bridge**<br>*(Shared Across All 5 Bots)* | Replaces 22 heavyweight MCPs with lazy profile-scoped app routes invoked explicitly via `msshi runtime ticket` &rarr; `msshi runtime run` ([Bridge Guide](docs/CLI_ANYTHING_BRIDGE.md)). |
-
-<p align="center">
-  <img src="assets/memes/nerd-cat-spec.jpg" width="210" alt="Reading the 130-page handbook">
-  <img src="assets/memes/let-mi-ting-cat.jpg" width="210" alt="Let mi ting cat">
-  <img src="assets/memes/deep-research-cat.jpg" width="210" alt="Deep research cat">
-  <img src="assets/memes/suspicious-dog-rea.jpg" width="210" alt="Suspicious dog checking Opt-in REA">
-</p>
-
-![Five-role delegation and return flow](assets/diagrams/msshi-architecture-map.svg)
+> Run `msshi choices` anytime before installing to inspect modes, packs, skills, REA, KAT &amp; apps, and run `python scripts/msshi_cli.py doctor` for full C:/D: health verification. Further reading: [Choice Guide EN](docs/OPTION_GUIDE_EN.md) · [Platforms](docs/platforms.md) · [CLI &amp; Recovery](docs/CLI.md) · [Managed Updates](docs/MANAGED_UPDATES.md).
 
 ---
 
-## ⚙️ v3.1 Contextual Integrations & Workflows
+## ⚙️ Contextual Integrations &amp; Architecture Diagrams
 
-![Five v3.1 contextual integrations and roles](assets/diagrams/msshi-v31-integrations.svg)
-
-| Integration | Assigned Roles | Scope & Guardrails |
+| Component | Role Owners | Scope &amp; Guardrails |
 | :--- | :--- | :--- |
-| [**`muza-skripsi-template` (`v1.1`)**](skills/muza-skripsi-template/SKILL.md) | Val, Shizuka, Yukino, Solo, Antigravity | Contextual & explicit thesis Word template builder (`extract_guideline.py`, `campus_lookup.py`, `build_template.py`, `MuZA_Search` injection) following a strict 5-stage process. |
-| [**Unslop**](docs/UNSLOP.md) | Kiki-Chii, Val, Shikaku | Scoped UI polish; Val audits scientific dashboard clarity. Separate from prose humanizers. |
-| [**BRAG**](docs/BRAG.md) | Kiki-Chii | **Hyperframes** HTML/MP4 launch-video workflow with concept and human-review gates. |
-| [**Scrapling**](docs/SCRAPLING.md) | Val, Shikaku | Local HTML CSS/XPath parsing without network crawlers, stealth browsers, or Chrome profile access. |
-| [**Harness²**](docs/HARNESS2.md) | Val, Shikaku | Deterministic harness evaluation & reviewable proposals without auto-promotion or unbudgeted eval runs. |
-| [**Opt-in REA**](docs/REA.md) | Shikaku *(opt-in only)* | Local reverse engineering in `optional/rea/`. Stays **OFF by default** unless enabled via `--with-rea` or `msshi optional enable rea`. |
+| [**`muza-skripsi-template` (`v1.1`)**](skills/muza-skripsi-template/SKILL.md) | Val, Shizuka, Yukino, Solo, Antigravity | Contextual &amp; drag-and-drop thesis `.docx` generator (`extract_guideline.py`, `campus_lookup.py`, `build_template.py`, `MuZA_Search` injection). |
+| [**`CLI-Anything` Universal Bridge**](docs/CLI_ANYTHING_BRIDGE.md) | All 5 Bots | Replaces 22 local MCPs with lazy profile-scoped app tickets (`msshi runtime ticket` &rarr; `msshi runtime run`). |
+| [**`Unslop`**](docs/UNSLOP.md) | Kiki-Chii, Val, Shikaku | Scoped UI polish; Val checks scientific metric &amp; unit clarity. Distinct from prose humanizers. |
+| [**`BRAG`**](docs/BRAG.md) | Kiki-Chii | **Hyperframes** HTML/MP4 launch-video workflow behind concept &amp; human review gates. |
+| [**`Scrapling`**](docs/SCRAPLING.md) | Val, Shikaku | Fast local HTML CSS/XPath parsing without network crawlers or Chrome profile access. |
+| [**`Harness²`**](docs/HARNESS2.md) | Val, Shikaku | Deterministic harness evaluation &amp; proposals without live auto-promotion. |
+| [**`Opt-in REA`**](docs/REA.md) | Shikaku *(opt-in)* | Local JS/archive inspection in `optional/rea/`. **Default OFF** (`--with-rea` / `msshi optional enable rea`). |
+| [**`OmniVoice`, `Auto-Trim`, `TimesFM` &amp; `Steel`**](docs/TIMESFM.md) | 5 Bots &amp; Val | Prosody TTS, [lossless JSON trimming](hermes_plugins/msshi-auto-trim/README.md), CPU forecasting, [Steel policy](docs/STEEL_BROWSER_POLICY.md) &amp; [OAuth service sharing](docs/SERVICE_CONNECTIONS.md). |
 
+<details>
+<summary><b>📊 Click to View All 8 Technical Architecture SVG Diagrams</b></summary>
+<br>
+
+![MSSHI hero diagram showing 63 bundled skills, 5 roles, and v3.1 optimizer](assets/diagrams/msshi-hero-banner.svg)
+![Five-role delegation and return flow](assets/diagrams/msshi-architecture-map.svg)
+![Five v3.1 contextual integrations and roles](assets/diagrams/msshi-v31-integrations.svg)
 ![Four setup modes diagram](assets/diagrams/msshi-setup-map.svg)
+![Kiki-Chii creative production workflow](assets/diagrams/msshi-workflow-diagrams.svg)
+![Seven academic thesis engines](assets/diagrams/msshi-academic-map.svg)
+![Five context management layers](assets/diagrams/msshi-context-layers.svg)
+![Bundled, local runtime, and account services map](assets/diagrams/msshi-integration-map.svg)
 
-| Workflow Diagram | Guide |
-| :--- | :--- |
-| Creative Production (`Concepting First` + 10–40 min chapters) | ![Kiki-Chii creative production workflow](assets/diagrams/msshi-workflow-diagrams.svg) · [Creative DNA Guide](docs/ALUR_PRESET_MUZA.md#concepting-first-dan-creative-dna) |
-| Eight Academic Thesis Engines (`S1–S3` + `MuZA Skripsi v1.1`) | ![Seven academic thesis engines](assets/diagrams/msshi-academic-map.svg) · [Academic Workflows](docs/TUJUH_MESIN_AKADEMIK.md) |
-| Five Context Layers (Long Projects) | ![Five context management layers](assets/diagrams/msshi-context-layers.svg) · [Context Layering](docs/LIMA_LAPIS_KONTEKS.md) |
-| Bundled vs Local vs Account Boundaries | ![Bundled, local runtime, and account services map](assets/diagrams/msshi-integration-map.svg) · [49-Upstream Catalog](docs/INTEGRASI.md) · [Public Setup Guide](docs/guides/PANDUAN_KUSTOMISASI_USER_PUBLIK.md) |
+</details>
 
 ---
 
 ## 📁 Clean Root Architecture
 
-- **Root (`/`)**: Standard repository core (`README.md`, `README_EN.md`, `LICENSE`, `CHANGELOG.md`, `CREDITS.md`, `THIRD_PARTY_NOTICES.md`, `VERSION.json`, `SKILL.md`, `package.json`, `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `MULAI_SKRIPSI_DRAG_AND_DROP.bat`, `UPDATE_OTOMATIS_KE_V3.bat`).
+- **Root (`/`)**: Core repository files &amp; 1-click launchers (`README.md`, `README_EN.md`, [`VERSION.json`](VERSION.json), [`CHANGELOG.md`](CHANGELOG.md), [`LICENSE`](LICENSE), [`CREDITS.md`](CREDITS.md), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md), [`SKILL.md`](SKILL.md), `package.json`, `install.ps1`, `install.sh`, [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat), [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat), [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat)).
 - **`notebooks/skripsi/`**: Official Google Colab notebooks (`MuZA_Search.ipynb`, `MuZA_Skripsi_Builder.ipynb`).
-- **`docs/pdf-guides/` & `docs/manuals/`**: Release-linked PDF handbooks (`Panduan_Master_MSSHI_v3.1.0.pdf`, `v3.1.0/`, `v3.0/`, `latest/`) + [`pdf_catalog.json`](docs/manuals/pdf_catalog.json).
-- **`docs/guides/`**: Extended setup guides (`INSTALL_FOR_AGENTS.md`, `PANDUAN_KUSTOMISASI_USER_PUBLIK.md`, `00_PANDUAN_INSTAL_AUTO_UPDATE_DAN_PROMPT_MULTI_AGENT.md`).
-- **`scripts/installers/`**: Legacy/specialized platform installers (`Install_Overhaul_Hermes_dan_Antigravity.ps1`, `install_business_sage.ps1`, `install_business_sage.sh`).
-- **`configs/manifests/`**: Cross-platform schemas (`openai_custom_gpt_schema.json`, `openclaw_manifest.json`, `skill_activation_matrix.json`) + `configs/github_about.txt`.
-- **`assets/`**: [`diagrams/`](assets/README.md) (8 SVG architecture maps), `visuals/` (10 curated showcase images), `pp-tiktok/` (9 character portraits), `memes/` (10 reaction memes).
-- **`skills/` & `optional/rea/`**: **63 bundled active skill folders (`51 core + 12 wrappers`)** including 11-file `muza-skripsi-template/`, plus 1 opt-in `rea`.
+- **`docs/pdf-guides/` &amp; `docs/manuals/`**: Release-versioned PDF handbooks, Hydrogen execution report PDF, `latest/`, and [`pdf_catalog.json`](docs/manuals/pdf_catalog.json).
+- **`assets/`**: Standardized `avatars/`, `memes/`, `showcases/`, 8 SVG [`diagrams/`](assets/README.md), and [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json).
+- **`scripts/`**: CLI (`msshi_cli.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, `generate_hydrogen_report_pdf.py`, and release auditors (`check_release*.py`).
+- **`skills/` &amp; `optional/rea/`**: **63 bundled active skill folders (`51 core + 12 wrappers`)** including 11-file `muza-skripsi-template/`, plus opt-in `rea`.
 
 ---
 
-## 💻 Windows Hermes Desktop Recovery
+## 💻 Windows Hermes Desktop Gray-Screen Recovery
 
-If the gateway is running but Hermes Desktop displays a gray screen, quit Desktop completely and run:
+If the gateway is running cleanly but **Hermes Desktop** opens with a gray screen, quit Desktop completely and run:
 
 ```powershell
 msshi desktop --software-rendering
 ```
 
-This applies `HERMES_DESKTOP_DISABLE_GPU=1` exclusively to the Hermes Desktop child process and remembers `{"software_rendering": true}` in `<HERMES_HOME>/tools/msshi/desktop-preferences.json`.
+This sets `HERMES_DESKTOP_DISABLE_GPU=1` exclusively for the Hermes Desktop process and saves `{"software_rendering": true}` in `<HERMES_HOME>/tools/msshi/desktop-preferences.json`.
 
 ---
 
-## 🤝 Credits & License
+## 🤝 Credits &amp; License
 
-- **Muhammad Zidan Aisar (MuZA)** — Creator, System Visionary & Chief Architect.
-- **Google Gemini** — Co-Architect for S1–S3 curriculum research, core skill synthesis, CLI-Anything, TokenShield & 5-bot topology.
-- **OpenAI ChatGPT** — Co-Architect for SVG architecture maps, Stage 1–2 packaging, upstream manifests & v3 migration implementation.
-- **Google Antigravity** — IDE environment, agent orchestration & v3.1.0 + MuZA Skripsi Drag-and-Drop v1.1 engineering.
+- **Muhammad Zidan Aisar (MuZA)** — Creator, System Visionary &amp; Chief Architect.
+- **Google Gemini** — Co-Architect for S1–S3 curriculum research, core skill synthesis, CLI-Anything, TokenShield &amp; 5-bot topology.
+- **OpenAI ChatGPT** — Co-Architect for SVG architecture maps, Stage 1–2 packaging, upstream manifests &amp; v3 migration implementation.
+- **Google Antigravity** — Development environment, agent orchestration, Cyber-Noir editorial restructuring &amp; MuZA Skripsi Drag-and-Drop v1.1 integration.
 
-Original MSSHI assets are licensed under the [**MIT License**](LICENSE). Third-party components retain their respective terms documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [docs/PROVENANCE.md](docs/PROVENANCE.md). Related docs: [Auto-Trim Plugin](hermes_plugins/msshi-auto-trim/README.md) · [Steel Policy](docs/STEEL_BROWSER_POLICY.md) · [Managed Updates](docs/MANAGED_UPDATES.md) · [Bot Skill Audit](docs/AUDIT_SKILLS_PER_BOT.md) · [Visual Review](adapters/msshi-visual-review/README.md) · [Publication Checklist](docs/STATUS_PUBLIKASI.md).
+Original MSSHI materials are licensed under the [**MIT License**](LICENSE). Third-party components retain their respective terms documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [docs/PROVENANCE.md](docs/PROVENANCE.md). Related docs: [Creative DNA Guide](docs/ALUR_PRESET_MUZA.md) · [49-Upstream Catalog](docs/INTEGRASI.md) · [Visual Review](adapters/msshi-visual-review/README.md) · [Publication Checklist](docs/STATUS_PUBLIKASI.md).
