@@ -127,7 +127,7 @@ def static_checks():
             "Core and wrapper counts disagree with the release matrix")
     require(all(UNIVERSAL_BRIDGE in bot["required_skills"] for bot in matrix["bots"]),
             "The universal bridge is not assigned to all five profiles")
-    policies = read_json(ROOT / "skill_activation_matrix.json")["app_connection_policy"]
+    policies = read_json(ROOT / "configs" / "manifests" / "skill_activation_matrix.json")["app_connection_policy"]
     require(policies.get("auto_open_on_boot") is False,
             "The activation policy must keep application launch on demand")
     for file in (

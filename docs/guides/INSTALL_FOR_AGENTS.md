@@ -6,7 +6,7 @@ MSSHI bundles reusable Agent Skills and a public installer. Choose the route tha
 
 Paste this message into Hermes Agent, OpenClaw, Claude Code, or Antigravity if the session can read the link and use a terminal on the target machine.
 
-> Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI untukku!
+> Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI untukku!
 
 ### Agent runbook
 
@@ -19,11 +19,11 @@ Paste this message into Hermes Agent, OpenClaw, Claude Code, or Antigravity if t
 
 ### Explain choices before selection
 
-Use [the choice guide](docs/OPTION_GUIDE_EN.md) / [panduan Indonesia](docs/OPTION_GUIDE.md) or `msshi choices <id>` to explain each option in one or two sentences: its function, when useful, what is installed, and any separate runtime/account/model/cost prerequisites. Surface these explanations when offering setup modes, packs, skills, REA, KAT or app connections. Honor choices and authorization already given; do not add redundant confirmation rounds. Keep unselected optional features at their existing defaults (REA OFF, KAT Skip). Installing instructions is distinct from activating a runtime or service.
+Use [the choice guide](../OPTION_GUIDE_EN.md) / [panduan Indonesia](../OPTION_GUIDE.md) or `msshi choices <id>` to explain each option in one or two sentences: its function, when useful, what is installed, and any separate runtime/account/model/cost prerequisites. Surface these explanations when offering setup modes, packs, skills, REA, KAT or app connections. Honor choices and authorization already given; do not add redundant confirmation rounds. Keep unselected optional features at their existing defaults (REA OFF, KAT Skip). Installing instructions is distinct from activating a runtime or service.
 
 ### Connect apps in Hermes
 
-If the user asks to connect apps, offer **Auto-Reconnect All** or **Pick apps**. Inspect the selected Hermes profile with `msshi connect --mode auto-reconnect --dry-run` or list targets with `msshi connect --catalog`. Apply the chosen scope. The bridge registers routes per profile and leaves app launching until an explicit task. Use Hermes native tools for MCP routes. If the global CLI is unavailable, the standalone bridge skill includes the same connector commands. [Connection guide](docs/CLI_ANYTHING_BRIDGE.md).
+If the user asks to connect apps, offer **Auto-Reconnect All** or **Pick apps**. Inspect the selected Hermes profile with `msshi connect --mode auto-reconnect --dry-run` or list targets with `msshi connect --catalog`. Apply the chosen scope. The bridge registers routes per profile and leaves app launching until an explicit task. Use Hermes native tools for MCP routes. If the global CLI is unavailable, the standalone bridge skill includes the same connector commands. [Connection guide](../CLI_ANYTHING_BRIDGE.md).
 
 ### Reviewable local setup
 
@@ -76,7 +76,7 @@ openclaw skills install git:zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya --g
 npx skills add https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/main/skills --global --agent openclaw
 ```
 
-For Telegram, Discord, or Web chat, attach [msshi.zip](portable/msshi.zip) and type **install this skill** if your OpenClaw agent can read that attachment and is authorized to install it. A GitHub source ZIP can also be used by an agent that can extract and inspect the repository. ZIP handling depends on the channel and Gateway permissions. If chat cannot install it, use **Plugins → Skills → Import** in the Control UI for an identified Gateway profile. The compact ZIP is one master skill with a method reference. An identified operator can also run `openclaw skills library import ./msshi.zip --slug msshi`. For a local shared install without the library, extract the ZIP and run `openclaw skills install ./msshi --global` from the parent folder. Use `openclaw skills list` on the intended Gateway to verify file-backed discovery. [OpenClaw Skills CLI](https://docs.openclaw.ai/cli/skills) · [OpenClaw skill scopes and imports](https://docs.openclaw.ai/tools/skills).
+For Telegram, Discord, or Web chat, attach [msshi.zip](../../portable/msshi.zip) and type **install this skill** if your OpenClaw agent can read that attachment and is authorized to install it. A GitHub source ZIP can also be used by an agent that can extract and inspect the repository. ZIP handling depends on the channel and Gateway permissions. If chat cannot install it, use **Plugins → Skills → Import** in the Control UI for an identified Gateway profile. The compact ZIP is one master skill with a method reference. An identified operator can also run `openclaw skills library import ./msshi.zip --slug msshi`. For a local shared install without the library, extract the ZIP and run `openclaw skills install ./msshi --global` from the parent folder. Use `openclaw skills list` on the intended Gateway to verify file-backed discovery. [OpenClaw Skills CLI](https://docs.openclaw.ai/cli/skills) · [OpenClaw skill scopes and imports](https://docs.openclaw.ai/tools/skills).
 
 ### Claude Code
 
@@ -97,11 +97,11 @@ npx skills add https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Isma
 
 ### Claude.ai web or Claude Desktop chat
 
-Download [msshi.zip](portable/msshi.zip). In Claude, go to **Customize → Skills → + → Upload a skill** and select that ZIP. Enable **Code execution and file creation** if Claude requires it for custom skills on your account. If you already used **Code → Download ZIP** on GitHub, extract it and upload `portable/msshi.zip` from inside. The compact ZIP has the required `msshi/SKILL.md` layout and a readable reference, with the folder matching its frontmatter name. [Claude custom skill packaging](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills).
+Download [msshi.zip](../../portable/msshi.zip). In Claude, go to **Customize → Skills → + → Upload a skill** and select that ZIP. Enable **Code execution and file creation** if Claude requires it for custom skills on your account. If you already used **Code → Download ZIP** on GitHub, extract it and upload `portable/msshi.zip` from inside. The compact ZIP has the required `msshi/SKILL.md` layout and a readable reference, with the folder matching its frontmatter name. [Claude custom skill packaging](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills).
 
 ### ChatGPT web or desktop
 
-For a **ChatGPT Project**, upload [MSSHI_ChatGPT_Knowledge_Bundle.md](portable/MSSHI_ChatGPT_Knowledge_Bundle.md) under **Sources**, and paste one mode from [CHATGPT_CUSTOM_INSTRUCTIONS.md](portable/CHATGPT_CUSTOM_INSTRUCTIONS.md) into **Project instructions**. In a **Custom GPT** editor, where available, use **Knowledge** and **Instructions** for the same two parts. Five Persona mode applies five roles within a conversation. Actual delegation needs a host that supports separate agents and exposes their tools. [ChatGPT Projects](https://learn.chatgpt.com/docs/projects) · [Custom GPT knowledge and instructions](https://learn.chatgpt.com/docs/migrate-custom-gpts).
+For a **ChatGPT Project**, upload [MSSHI_ChatGPT_Knowledge_Bundle.md](../../portable/MSSHI_ChatGPT_Knowledge_Bundle.md) under **Sources**, and paste one mode from [CHATGPT_CUSTOM_INSTRUCTIONS.md](../../portable/CHATGPT_CUSTOM_INSTRUCTIONS.md) into **Project instructions**. In a **Custom GPT** editor, where available, use **Knowledge** and **Instructions** for the same two parts. Five Persona mode applies five roles within a conversation. Actual delegation needs a host that supports separate agents and exposes their tools. [ChatGPT Projects](https://learn.chatgpt.com/docs/projects) · [Custom GPT knowledge and instructions](https://learn.chatgpt.com/docs/migrate-custom-gpts).
 
 ### Codex CLI
 

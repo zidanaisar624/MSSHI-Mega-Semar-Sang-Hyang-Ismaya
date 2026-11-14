@@ -49,7 +49,7 @@ python scripts/msshi_update.py --mode auto --source ./rilis-baru --baseline ./ri
 
 ### Windows untuk Hermes dan Antigravity
 
-Untuk migrasi v3, baca [panduan migrasi](V3_MIGRATION.md), lalu gunakan `msshi runtime migrate --home PATH_HERMES` pada home yang telah diperiksa. Rute aplikasi desktop dan utilitas Hersona/Llmtrim menggunakan CLI; eksekusi aplikasi memerlukan tiket. GDrive pada setup MuZA tetap dinonaktifkan. `Install_Overhaul_Hermes_dan_Antigravity.ps1` merupakan jalur installer lama; tinjau scope dan opsinya sebelum dipakai pada pemasangan yang belum dimigrasikan.
+Untuk migrasi v3, baca [panduan migrasi](V3_MIGRATION.md), lalu gunakan `msshi runtime migrate --home PATH_HERMES` pada home yang telah diperiksa. Rute aplikasi desktop dan utilitas Hersona/Llmtrim menggunakan CLI; eksekusi aplikasi memerlukan tiket. GDrive pada setup MuZA tetap dinonaktifkan. `scripts/installers/Install_Overhaul_Hermes_dan_Antigravity.ps1` merupakan jalur installer lama; tinjau scope dan opsinya sebelum dipakai pada pemasangan yang belum dimigrasikan.
 
 Pengguna CLI v2.1 atau kandidat lama menjalankan installer/BAT dari paket v3 yang telah diperiksa sekali agar jalur migrasi baru tersedia. Setelah itu gunakan `msshi update`. Validasi menolak sumber dengan versi lebih rendah daripada versi lokal.
 

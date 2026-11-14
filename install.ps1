@@ -2,11 +2,14 @@
 param(
     [string]$SourcePath,
     [switch]$NoSetup,
-    [switch]$NoPath
+    [switch]$NoPath,
+    [switch]$DownloadPdf,
+    [switch]$NoPdf,
+    [string]$PdfVersion
 )
 
 & {
-    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath)
+    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion)
     $ErrorActionPreference = 'Stop'
     $repository = 'https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git'
     $scratch = $null
@@ -69,11 +72,24 @@ param(
         if (-not $MsshiNoPath -and ($env:Path -split ';') -notcontains $binDir) {
             $env:Path = "$binDir;$env:Path"
         }
+        $setupArgs = @('setup')
+        if ($MsshiDownloadPdf) { $setupArgs += '--download-pdf' }
+        if ($MsshiNoPdf) { $setupArgs += '--no-pdf' }
+        if ($MsshiPdfVersion) { $setupArgs += @('--pdf-version', $MsshiPdfVersion) }
         if (-not $MsshiNoSetup -and -not [Console]::IsInputRedirected) {
-            & $runtime @pythonArgs -B -X utf8 $cli setup
+            & $runtime @pythonArgs -B -X utf8 $cli @setupArgs
             if ($LASTEXITCODE -ne 0) { throw 'MSSHI setup was interrupted or failed. Run msshi setup again.' }
         } elseif (-not $MsshiNoSetup) {
+            if ($MsshiDownloadPdf -or $MsshiPdfVersion) {
+                $manualCli = Join-Path $source 'scripts\msshi_manuals.py'
+                $dlArgs = @('download', '--version', $(if ($MsshiPdfVersion) { $MsshiPdfVersion } else { 'latest' }))
+                & $runtime @pythonArgs -B -X utf8 $manualCli @dlArgs
+            }
             Write-Host 'Run msshi setup from an interactive terminal.'
+        } elseif ($MsshiDownloadPdf -or $MsshiPdfVersion) {
+            $manualCli = Join-Path $source 'scripts\msshi_manuals.py'
+            $dlArgs = @('download', '--version', $(if ($MsshiPdfVersion) { $MsshiPdfVersion } else { 'latest' }))
+            & $runtime @pythonArgs -B -X utf8 $manualCli @dlArgs
         }
     } finally {
         if ($scratch -and (Test-Path -LiteralPath $scratch -PathType Container)) {
@@ -84,4 +100,4 @@ param(
             }
         }
     }
-} $SourcePath $NoSetup $NoPath
+} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion

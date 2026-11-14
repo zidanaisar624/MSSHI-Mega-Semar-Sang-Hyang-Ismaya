@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "latest_version": "v3.1.0",
+  "repository": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya",
+  "manuals": [
+    {
+      "version": "latest",
+      "maps_to": "v3.1.0",
+      "title_id": "Buku Panduan Master Klien Hermes & MSSHI v3.1.0 (Edisi Terbaru)",
+      "title_en": "Hermes & MSSHI v3.1.0 Client Master Handbook (Latest)",
+      "filename": "Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "rel_path": "docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "pages": 130,
+      "size_bytes": 3824080,
+      "sha256": "86aefb79ad0078d91b4eabaa8f196a8d2ce587255a921e87f3fc8634e9b34162",
+      "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/latest/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "description_id": "Tautan stabil ke panduan PDF edisi terbaru (otomatis menunjuk v3.1.0, 130 halaman)."
+    },
+    {
+      "version": "v3.1.0",
+      "title_id": "Buku Panduan Master Klien Hermes & MSSHI v3.1.0 (Edisi Sabtu Zoom)",
+      "title_en": "Hermes & MSSHI v3.1.0 Master Client Guide (Saturday Zoom Edition)",
+      "filename": "Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "rel_path": "docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "pages": 130,
+      "size_bytes": 3824080,
+      "sha256": "86aefb79ad0078d91b4eabaa8f196a8d2ce587255a921e87f3fc8634e9b34162",
+      "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/v3.1.0/Buku_Panduan_Master_Klien_Hermes_dan_MSSHI_v3.1.0_Edisi_Sabtu_Zoom.pdf",
+      "description_id": "Panduan lengkap dari nol untuk pemula hingga 62 skill, BRAG, Unslop, Scrapling, Harness2, Opt-in REA, CLI-Anything, OmniVoice & Drive adaptif C:/D:."
+    },
+    {
+      "version": "v3.0",
+      "title_id": "Spesifikasi Lengkap Settings MSSHI v3.0 — Hermes Ultimate Optimizer",
+      "title_en": "MSSHI v3.0 Full Settings Specification — Hermes Ultimate Optimizer",
+      "filename": "Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf",
+      "rel_path": "docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf",
+      "pages": 50,
+      "size_bytes": 1542301,
+      "sha256": "3bb8bdbd2b34cab504d78badc38ca5f9b979c034515c965faf35649dd7f56f0d",
+      "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf",
+      "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf",
+      "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf",
+      "description_id": "Dokumentasi arsitektur Optimizer v3.0, migrasi 22 MCP ke CLI-Anything, Hermes-Dreaming, OmniVoice prosody, KAT-Coder & Caveman context compaction."
+    }
+  ]
+}

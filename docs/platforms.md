@@ -46,7 +46,7 @@ Referensi: [Marketplace Claude Code](https://code.claude.com/docs/en/plugin-mark
 
 Untuk Projects, gunakan Project settings dan Add sources. Untuk Custom GPT, gunakan Instructions untuk aturan kerja dan Knowledge untuk referensi. Pilih materi yang relevan sesuai batas akun dan unggah hanya file yang boleh dibagikan. Skrip dan direktori skill tetap tersedia untuk runtime lokal.
 
-File openai_custom_gpt_schema.json menjelaskan tiga operasi katalog baca saja yang dilayani scripts/catalog_api.py. Uji dari root paket pada komputer Anda.
+File `configs/manifests/openai_custom_gpt_schema.json` menjelaskan tiga operasi katalog baca saja yang dilayani scripts/catalog_api.py. Uji dari root paket pada komputer Anda.
 
 ~~~text
 python scripts/catalog_api.py --port 8765

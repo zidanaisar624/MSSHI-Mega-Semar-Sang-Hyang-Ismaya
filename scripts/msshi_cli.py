@@ -34,12 +34,9 @@ PLATFORMS = (*installer.HOSTS, "manual")
 MODES = ("solo", "custom-bots", "selective", "muza-preset")
 RELEASE_DIRS = ("scripts", "configs", "skills", "docs", "portable", "assets", "adapters",
                 "business-sage", ".claude-plugin", "hermes_plugins", "optional")
-RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md", "INSTALL_FOR_AGENTS.md",
+RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md",
                  "LICENSE", "SKILL.md", "install.ps1", "install.sh", "package.json",
-                 "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat", "MULAI_DI_SINI_PEMULA.bat",
-                 "install_business_sage.ps1", "install_business_sage.sh", "Install_Overhaul_Hermes_dan_Antigravity.ps1",
-                 "00_PANDUAN_INSTAL_AUTO_UPDATE_DAN_PROMPT_MULTI_AGENT.md", "PANDUAN_KUSTOMISASI_USER_PUBLIK.md",
-                 "openai_custom_gpt_schema.json", "openclaw_manifest.json", "skill_activation_matrix.json")
+                 "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat", "MULAI_DI_SINI_PEMULA.bat")
 
 
 @contextmanager
@@ -396,6 +393,8 @@ def setup(args, home, state):
         from msshi_optional import enable, setup_targets
         for folder in setup_targets(mode, selections, source=ROOT):
             print(json.dumps(enable('rea', folder, source=ROOT, home=home), ensure_ascii=False, indent=2))
+    from msshi_manuals import prompt_manual_download
+    prompt_manual_download(args, source_root=ROOT, lang=lang)
 
 
 def confirmed():
@@ -502,6 +501,11 @@ def update(args, home, state, source, commit):
     print(f"Rilis MSSHI: {current} -> {release_version(source)} ({commit[:12]}).")
     if not state["targets"] and not state.get("managed_bindings"):
         print("Belum ada target. Jalankan msshi setup untuk memasang dan mendaftarkan skills.")
+    has_manual_catalog = (source / "docs" / "manuals" / "pdf_catalog.json").is_file()
+    explicit_pdf = bool(getattr(args, "download_pdf", False) or getattr(args, "pdf_version", None))
+    if explicit_pdf or (has_manual_catalog and sys.stdin.isatty() and not getattr(args, "no_pdf", False)):
+        from msshi_manuals import prompt_manual_download
+        prompt_manual_download(args, source_root=source)
     if args.skip_upstreams:
         return 0
     rows = fetch_upstreams(source / UPSTREAMS, home / "upstreams")
@@ -543,7 +547,11 @@ def main(argv=None):
     updater.add_argument("--skip-upstreams", action="store_true", help="Hanya perbarui MSSHI dan skill bundel.")
     updater.add_argument("--hermes-home", type=Path, help="Folder Hermes untuk migrasi v3.")
     updater.add_argument("--source", type=Path, help="Pakai kandidat lokal yang sudah diperiksa.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices"):
+    updater.add_argument("--download-pdf", action="store_true", help="Unduh Buku Panduan PDF lengkap untuk versi ini.")
+    updater.add_argument("--no-pdf", action="store_true", help="Lewati pertanyaan unduh Buku Panduan PDF.")
+    updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
+    updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
+    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
@@ -562,6 +570,7 @@ def main(argv=None):
             'optional': 'Lihat atau pasang opsi tambahan; default OFF.',
             'rea': 'Analisis statis JavaScript/arsip; opsi Coder, runtime terpisah.',
             'choices': 'Baca fungsi dan prasyarat setiap pilihan tanpa memasang apa pun.',
+            'manual': 'Lihat atau unduh Buku Panduan PDF Lengkap per versi.',
         }
         command = subparsers.add_parser(verb, add_help=False, help=descriptions[verb])
         command.add_argument("arguments", nargs=argparse.REMAINDER)
@@ -579,12 +588,16 @@ def main(argv=None):
         wizard.add_argument("--lang", choices=('id', 'en'), default='id', help="Bahasa penjelasan pilihan (id/en); format input tetap sama.")
         if action == "setup":
             wizard.add_argument("--with-rea", action="store_true", help="Opt-in analisis statis JavaScript/arsip: pasang instruksi REA; runtime Node/npm dan engine native terpisah. Default OFF.")
+            wizard.add_argument("--download-pdf", action="store_true", help="Sekalian unduh Buku Panduan PDF Lengkap untuk versi ini.")
+            wizard.add_argument("--no-pdf", action="store_true", help="Lewati pertanyaan unduh Buku Panduan PDF.")
+            wizard.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
+            wizard.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
         if action == "select":
             wizard.add_argument("--local", action="store_true", help="Pilih dari rilis lokal tanpa mengakses GitHub.")
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -605,7 +618,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"choices": "msshi_choices.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",

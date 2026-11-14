@@ -5,11 +5,17 @@ repository=https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.g
 source_dir=
 no_setup=0
 no_path=0
+download_pdf=0
+no_pdf=0
+pdf_version=
 while [ "$#" -gt 0 ]; do
     case "$1" in
         --source-dir) source_dir=${2:?--source-dir requires a path}; shift ;;
         --no-setup) no_setup=1 ;;
         --no-path) no_path=1 ;;
+        --download-pdf) download_pdf=1 ;;
+        --no-pdf) no_pdf=1 ;;
+        --pdf-version) pdf_version=${2:?--pdf-version requires a version}; shift ;;
         *) printf 'Unknown option: %s\n' "$1" >&2; exit 2 ;;
     esac
     shift
@@ -47,11 +53,20 @@ set -- bootstrap
 if [ "$no_path" -eq 1 ]; then set -- "$@" --no-path; fi
 "$python" -B -X utf8 "$cli" "$@"
 if [ "$no_setup" -eq 0 ]; then
+    set -- setup
+    if [ "$download_pdf" -eq 1 ]; then set -- "$@" --download-pdf; fi
+    if [ "$no_pdf" -eq 1 ]; then set -- "$@" --no-pdf; fi
+    if [ -n "$pdf_version" ]; then set -- "$@" --pdf-version "$pdf_version"; fi
     if [ -t 0 ]; then
-        "$python" -B -X utf8 "$cli" setup
+        "$python" -B -X utf8 "$cli" "$@"
     elif ( : </dev/tty ) 2>/dev/null; then
-        "$python" -B -X utf8 "$cli" setup </dev/tty
+        "$python" -B -X utf8 "$cli" "$@" </dev/tty
     else
+        if [ "$download_pdf" -eq 1 ] || [ -n "$pdf_version" ]; then
+            "$python" -B -X utf8 "$source_dir/scripts/msshi_manuals.py" download --version "${pdf_version:-latest}"
+        fi
         printf 'Run msshi setup from an interactive terminal.\n'
     fi
+elif [ "$download_pdf" -eq 1 ] || [ -n "$pdf_version" ]; then
+    "$python" -B -X utf8 "$source_dir/scripts/msshi_manuals.py" download --version "${pdf_version:-latest}"
 fi

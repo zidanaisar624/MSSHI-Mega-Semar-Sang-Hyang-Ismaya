@@ -1,7 +1,8 @@
 # Public, two-host installer. Preview both destinations before applying.
 $ErrorActionPreference = 'Stop'
-$installer = Join-Path $PSScriptRoot 'scripts\install_msshi.py'
-$bridge = Join-Path $PSScriptRoot 'scripts\setup_cli_anything_hermes.py'
+$repoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
+$installer = Join-Path $repoRoot 'scripts\install_msshi.py'
+$bridge = Join-Path $repoRoot 'scripts\setup_cli_anything_hermes.py'
 $python = $null
 $pythonPrefix = @()
 foreach ($candidate in @('py', 'python', 'python3')) {
