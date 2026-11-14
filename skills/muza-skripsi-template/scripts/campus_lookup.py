@@ -22,10 +22,18 @@ import json
 import os
 import re
 import ssl
+import sys
 import urllib.parse
 import urllib.request
 import warnings
 from typing import Any, Dict, List, Optional, Tuple
+
+for _pylibs_cand in (
+    os.path.join(os.path.expanduser("~"), "HermesData", "skripsi-pylibs"),
+    r"D:\HermesData\skripsi-pylibs",
+):
+    if os.path.isdir(_pylibs_cand) and _pylibs_cand not in sys.path:
+        sys.path.insert(0, _pylibs_cand)
 
 try:
     import requests
@@ -164,10 +172,12 @@ ALIAS_TO_UNIVERSITY: Dict[str, str] = {
 }
 
 ACADEMIC_DEGREE_RULES: List[Tuple[Tuple[str, ...], str]] = [
-    (("informatika", "ilmu komputer", "sistem informasi", "teknologi informasi", "rekayasa perangkat lunak", "sains data", "data science", "kecerdasan buatan", "sistem komputer", "komputer"), "Sarjana Komputer (S.Kom.)"),
-    (("teknik elektro", "teknik mesin", "teknik sipil", "teknik kimia", "teknik industri", "arsitektur", "teknik lingkungan", "teknik geologi", "teknik pertambangan", "teknik geofisika", "teknik material", "teknik metalurgi", "perencanaan wilayah"), "Sarjana Teknik (S.T.)"),
     (("kedokteran gigi", "pendidikan dokter gigi"), "Sarjana Kedokteran Gigi (S.KG.)"),
     (("kedokteran", "pendidikan dokter"), "Sarjana Kedokteran (S.Ked.)"),
+    (("pendidikan jasmani", "pendidikan olahraga", "pendidikan kepelatihan", "ilmu keolahragaan"), "Sarjana Pendidikan (S.Pd.)"),
+    (("pendidikan", "pgsd", "pgpaud", "bimbingan dan konseling", "tadris"), "Sarjana Pendidikan (S.Pd.)"),
+    (("informatika", "ilmu komputer", "sistem informasi", "teknologi informasi", "rekayasa perangkat lunak", "sains data", "data science", "kecerdasan buatan", "sistem komputer", "komputer"), "Sarjana Komputer (S.Kom.)"),
+    (("teknik elektro", "teknik mesin", "teknik sipil", "teknik kimia", "teknik industri", "arsitektur", "teknik lingkungan", "teknik geologi", "teknik pertambangan", "teknik geofisika", "teknik material", "teknik metalurgi", "perencanaan wilayah"), "Sarjana Teknik (S.T.)"),
     (("keperawatan", "ilmu keperawatan"), "Sarjana Keperawatan (S.Kep.)"),
     (("kesehatan masyarakat",), "Sarjana Kesehatan Masyarakat (S.K.M.)"),
     (("farmasi",), "Sarjana Farmasi (S.Farm.)"),
@@ -178,7 +188,6 @@ ACADEMIC_DEGREE_RULES: List[Tuple[Tuple[str, ...], str]] = [
     (("akuntansi",), "Sarjana Akuntansi (S.Ak.)"),
     (("manajemen",), "Sarjana Manajemen (S.M.)"),
     (("ekonomi", "pembangunan"), "Sarjana Ekonomi (S.E.)"),
-    (("pendidikan", "pgsd", "pgpaud", "bimbingan dan konseling"), "Sarjana Pendidikan (S.Pd.)"),
     (("ilmu komunikasi", "komunikasi", "jurnalistik", "hubungan masyarakat"), "Sarjana Ilmu Komunikasi (S.I.Kom.)"),
     (("hubungan internasional", "ilmu politik", "administrasi publik", "administrasi negara", "sosiologi", "antropologi", "ilmu pemerintahan", "kesejahteraan sosial"), "Sarjana Ilmu Sosial (S.Sos.)"),
     (("administrasi bisnis", "administrasi niaga"), "Sarjana Administrasi Bisnis (S.A.B.)"),
@@ -357,6 +366,47 @@ def _extract_domain(url: str) -> str:
         return ""
 
 
+_DEGREE_LETTER_TOKENS = {
+    "ST", "MT", "MM", "MH", "MA", "MS", "MSc", "MHA", "MARS", "MKM", "MPA", "MBA", "MPD", "MKOM",
+    "SE", "SH", "SS", "SP", "SKM", "SIP", "SE", "SOS", "IPM", "IPU", "CA", "CPA", "AK", "PHD",
+}
+_CAMPUS_OR_GENERIC_TOKENS = {
+    "unnes", "undip", "unwahas", "polines", "udinus", "unika", "unissula", "usm", "unimus", "unisbank",
+    "walisongo", "soegijapranata", "diponegoro", "semarang", "indonesia", "jawa", "tengah",
+    "teknik", "informatika", "komputer", "kedokteran", "hukum", "ekonomi", "psikologi", "pendidikan",
+    "akademik", "mahasiswa", "sistem", "informasi", "berita", "artikel", "staff", "dosen", "tenaga",
+    "kependidikan", "kepala", "rektorat", "dekanat", "senat", "kampus", "portal", "website", "resmi",
+    "profil", "visi", "misi", "sambutan", "fakultas", "program", "studi", "jurusan", "departemen",
+    "universitas", "institut", "politeknik", "sekolah", "tinggi", "negeri", "swasta", "sains", "matematika",
+    "ketua", "sekretaris", "koordinator", "rektor", "dekan", "kaprodi", "direktur", "wakil", "pembantu",
+    "utama", "bidang", "harian", "pelaksana", "tugas",
+}
+_HAS_TITLE_OR_DEGREE_RE = re.compile(
+    r"(?:^|\s)(?:Prof|Dr|Ir|H|Hj|Drs|Dra|KH|K\.H|Ns|Apt|dr|drg)\."
+    r"|,\s*(?:[SMBD]\.|Ph\.?\s*D|ST|MT|MM|MH|MSc|MA|SE|SH|IPM|IPU|Sp\.)",
+    re.I,
+)
+
+
+def _has_academic_titles(name: str) -> bool:
+    return bool(name and _HAS_TITLE_OR_DEGREE_RE.search(name))
+
+
+def _prefer_richer_person_name(existing: str, candidate: str) -> str:
+    """Keep the candidate with fuller academic prefixes/degrees when both refer to an official."""
+    if not existing:
+        return candidate
+    if not candidate:
+        return existing
+    ex_titled = _has_academic_titles(existing)
+    ca_titled = _has_academic_titles(candidate)
+    if ca_titled and not ex_titled:
+        return candidate
+    if ex_titled and not ca_titled:
+        return existing
+    return candidate if len(candidate) > len(existing) + 4 else existing
+
+
 def _is_plausible_person_name(name: str) -> bool:
     if not name:
         return False
@@ -369,29 +419,68 @@ def _is_plausible_person_name(name: str) -> bool:
         "telepon", "telp", "fax", "halaman", "skripsi", "tugas akhir", "pedoman",
         "kalender", "akademik", "visiting", "download", "berita", "pengumuman",
         "mahasiswa", "alumni", "kurikulum", "visi misi", "akreditasi",
+        "sambutan", "tenaga kependidikan", "staff pengajar", "tentang kami",
+        "senat", "majelis wali amanat", "layanan", "hubungi kami", "kontak kami",
     )
     if any(bw in low for bw in bad_words):
         return False
     if "@" in name or re.search(r"https?://", low):
         return False
-    # Buang angka panjang di nama
     if re.search(r"\d{4,}", name):
         return False
-    tokens = [t for t in re.split(r"[\s,]+", name) if re.search(r"[A-Za-z]", t)]
-    if len(tokens) < 2 or len(tokens) > 14:
+    raw_tokens = [t.strip(".,;:") for t in re.split(r"[\s,]+", name) if re.search(r"[A-Za-z]", t)]
+    if len(raw_tokens) < 2 or len(raw_tokens) > 14:
+        return False
+
+    # Reject campus acronyms / faculty / city phrases posing as a person name
+    title_deg_clean = {
+        "prof", "dr", "ir", "h", "hj", "drs", "dra", "kh", "ns", "apt", "drg",
+        "rer", "nat", "eng", "phd", "dsc", "edd", "ipm", "ipu", "ca", "cpa", "ak", "asean",
+        "kom", "si", "pd", "psi", "sos", "hum", "kes", "ked", "kep", "farm", "gz", "keb",
+        "tr", "ab", "hn", "ti", "mat", "fis", "kim", "bio", "stat",
+    }
+    name_words: List[str] = []
+    for tok in raw_tokens:
+        tl = tok.lower().replace(".", "")
+        if re.match(r"^(?:[smb][a-z]{1,5}|sp[a-z]*|ph\.?d|m\.?sc|d\.?sc|ed\.?d)$", tl):
+            continue
+        if tl in title_deg_clean or tok.upper() in _DEGREE_LETTER_TOKENS:
+            continue
+        if tl in _CAMPUS_OR_GENERIC_TOKENS or tok.upper() in set(COMMON_ACRONYMS.values()):
+            return False
+        # Reject ALL-CAPS >=2 char tokens inside person name body (e.g., UNNES, UNDIP, LPPM, FT)
+        if len(tok) >= 2 and tok.isupper() and tok.isalpha():
+            return False
+        name_words.append(tok)
+
+    if not name_words:
+        return False
+    # Need either >=2 personal name words, or 1 substantial word (>=4 chars) when academic title/degree is present
+    if len(name_words) == 1 and not (_has_academic_titles(name) and len(name_words[0]) >= 4):
+        return False
+    if not any(len(w) >= 3 for w in name_words):
         return False
     return True
 
 
 def _clean_person_name(raw: str) -> str:
     s = _clean_text(raw)
-    s = re.sub(r"^(?:Prof\.?|Dr\.?|Ir\.?|H\.?|Hj\.?|Drs\.?|Dra\.?)\s+", lambda m: m.group(0), s)
-    # Strip trailing role words or periods/years
-    s = re.split(r"\s+(?:menjabat|sebagai|periode|NIP\.?|NIDN\.?|NIK\.?)\b", s, maxsplit=1, flags=re.I)[0]
+    role_pre_re = re.compile(
+        r"^(?:Pimpinan(?:\s+Utama)?|Utama|Rektor|Dekan|Kaprodi|Ka\.?\s*Prodi|"
+        r"Ketua(?:\s+Program\s+Studi|\s+Departemen|\s+Jurusan)?|Koordinator(?:\s+Program\s+Studi)?|"
+        r"Direktur|Plt\.?\s*Direktur|Dean(?:\s+of)?|Head(?:\s+of)?)\s*[:\-|]*\s*",
+        re.I,
+    )
+    for _ in range(2):
+        s2 = role_pre_re.sub("", s).strip()
+        if s2 == s:
+            break
+        s = s2
+    s = re.split(r"\s+(?:menjabat|sebagai|periode|NIP\.?|NIDN\.?|NIK\.?|NUPTK)\b", s, maxsplit=1, flags=re.I)[0]
     s = re.sub(r"\(\d{4}\s*[–\-−]\s*(?:\d{4}|sekarang|present)?\)", "", s, flags=re.I)
+    s = re.sub(r"\s*\((?:Plt\.?|Pj\.?|Pgs\.?)\)\s*", " ", s, flags=re.I)
     s = re.sub(r"\s*[|•/–—-]\s*$", "", s)
     s = re.sub(r"\s+", " ", s).strip(" ,;:-")
-    # Preserve trailing dot after degree like M.T. or S.Kom.
     return s
 
 
@@ -468,13 +557,24 @@ def _wikipedia_lookup(universitas: str) -> Dict[str, Any]:
             if qid and not result.get("qid"):
                 result["qid"] = qid
 
-            # Extract rector from infobox
+            # Extract rector from infobox, and upgrade untitled infobox names from article intro when available
             for rk in ("rektor", "rector", "president", "chancellor", "direktur", "director", "ketua"):
                 if rk in infobox and not result.get("rector"):
                     cand = _clean_person_name(_strip_wikitext(infobox[rk]))
                     if _is_plausible_person_name(cand):
                         result["rector"] = cand
                         result["rector_source"] = page_url
+            if result.get("rector") and not _has_academic_titles(result["rector"]):
+                intro_txt = page.get("extract") or ""
+                last_tok = re.split(r"\s+", result["rector"].strip())[-1]
+                if len(last_tok) >= 4:
+                    for pat in (_ACADEMIC_NAME_RE, _PREFIXED_NAME_RE):
+                        for m in pat.finditer(intro_txt):
+                            cand_full = _clean_person_name(m.group(0))
+                            if last_tok.lower() in cand_full.lower() and _is_plausible_person_name(cand_full):
+                                result["rector"] = _prefer_richer_person_name(result["rector"], cand_full)
+                                result["rector_source"] = page_url
+                                break
 
             # Extract acronym / short name
             for ak in ("singkatan", "akronim", "acronym", "nickname", "nama_lain"):
@@ -848,14 +948,13 @@ def _scrape_site_logo_candidates(website: str) -> List[str]:
 
 
 def _save_valid_logo_png(raw: bytes, out_path: str) -> Tuple[bool, int, int]:
-    """Validate raw image bytes via Pillow and write crisp PNG (max 600px side)."""
+    """Validate raw image bytes via Pillow, flatten alpha onto white RGB canvas, and save crisp 300-DPI PNG."""
     if not raw or len(raw) < 400:
         return False, 0, 0
     low_head = raw[:200].lstrip().lower()
     if low_head.startswith(b"<svg") or b"<!doctype html" in low_head or b"<html" in low_head:
         return False, 0, 0
     if not HAS_PIL:
-        # Basic PNG/JPG magic check
         if raw.startswith(b"\x89PNG\r\n\x1a\n") or raw.startswith(b"\xff\xd8"):
             os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
             with open(out_path, "wb") as f:
@@ -871,13 +970,26 @@ def _save_valid_logo_png(raw: bytes, out_path: str) -> Tuple[bool, int, int]:
         ratio = w / max(1, h)
         if ratio < 0.25 or ratio > 4.0:
             return False, 0, 0
-        if im.mode not in ("RGBA", "RGB"):
-            im = im.convert("RGBA")
+        # Composite any alpha/palette transparency onto crisp solid white RGB canvas so Word Protected View & Print always render reliably
+        if im.mode in ("RGBA", "LA") or ("transparency" in im.info and im.mode in ("P", "RGB", "L")):
+            rgba = im.convert("RGBA")
+            canvas = Image.new("RGB", rgba.size, (255, 255, 255))
+            canvas.paste(rgba, mask=rgba.split()[3])
+            im = canvas
+        elif im.mode != "RGB":
+            im = im.convert("RGB")
+        # Ensure minimum sharp dimension (>=180px shortest side for crisp cover rendering) and cap <=640px
         if max(w, h) > 640:
             im.thumbnail((640, 640), Image.Resampling.LANCZOS)
             w, h = im.size
+        elif max(w, h) < 240:
+            scale = 360.0 / max(w, h)
+            im = im.resize((max(1, int(round(w * scale))), max(1, int(round(h * scale)))), Image.Resampling.LANCZOS)
+            w, h = im.size
         os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
-        im.save(out_path, format="PNG")
+        # Strip custom ancillary chunks (icc_profile etc.) and stamp 300 DPI pHYs chunk
+        clean_im = Image.frombytes("RGB", im.size, im.tobytes())
+        clean_im.save(out_path, format="PNG", dpi=(300, 300))
         return True, w, h
     except Exception:
         return False, 0, 0
@@ -893,8 +1005,8 @@ def _score_logo_filename(fn: str, universitas: str, from_curated_infobox: bool =
         score += 12
     faculty_or_weak_tags = (
         "feb", "filkom", "fmipa", "ft_", "fk_", "fh_", "fisip", "fia", "fib", "fapet", "faperta",
-        "fkg", "fkm", "vokasi", "pascasarjana", "wordmark", "banner", "hanya_teks", "text_only",
-        "teks_saja", "monochrome", "white", "putih",
+        "fkg", "fkm", "vokasi", "pascasarjana", "wordmark", "banner", "header", "horizontal", "landscape",
+        "hanya_teks", "text_only", "teks_saja", "monochrome", "white", "putih",
     )
     if any(t in low for t in faculty_or_weak_tags):
         score -= 55
@@ -977,18 +1089,20 @@ def cari_dan_unduh_logo_kampus(
         for img_url in _scrape_site_logo_candidates(target_site):
             attempts.append(("Situs Resmi Kampus", img_url, target_site))
 
+    fallback_banner: Optional[Tuple[Dict[str, Any], str]] = None
+    tmp_cand_path = f"{out_path}.cand.png"
     for method, dl_url, src_url in attempts:
         status, raw, final_url = _http_get(
             dl_url,
             headers={"User-Agent": USER_AGENT if "wikimedia" in dl_url or "wikipedia" in dl_url else BROWSER_UA},
-            timeout=14,
+            timeout=10,
             binary=True,
         )
         if status == 200 and isinstance(raw, (bytes, bytearray)):
-            ok, w, h = _save_valid_logo_png(bytes(raw), out_path)
+            ok, w, h = _save_valid_logo_png(bytes(raw), tmp_cand_path)
             if ok:
                 sha = hashlib.sha256(bytes(raw)).hexdigest()[:16]
-                return {
+                cand_res = {
                     "ok": True,
                     "path": out_path,
                     "width": w,
@@ -998,6 +1112,24 @@ def cari_dan_unduh_logo_kampus(
                     "source_url": src_url,
                     "sha256": sha,
                 }
+                ratio = (w / max(1, h)) if (w and h) else 1.0
+                # Prefer emblem/crest aspect ratio (not wide wordmark banners); keep wide banner only as fallback
+                if 0.45 <= ratio <= 1.75:
+                    os.replace(tmp_cand_path, out_path)
+                    return cand_res
+                if fallback_banner is None:
+                    fallback_data_path = f"{out_path}.banner.png"
+                    os.replace(tmp_cand_path, fallback_data_path)
+                    fallback_banner = (cand_res, fallback_data_path)
+    if os.path.exists(tmp_cand_path):
+        try:
+            os.remove(tmp_cand_path)
+        except OSError:
+            pass
+    if fallback_banner is not None:
+        cand_res, bpath = fallback_banner
+        os.replace(bpath, out_path)
+        return cand_res
 
     return {
         "ok": False,
@@ -1011,6 +1143,153 @@ def cari_dan_unduh_logo_kampus(
     }
 
 
+def _decode_yahoo_url(raw_href: str) -> str:
+    m = re.search(r"/RU=([^/]+)/RK=", raw_href or "")
+    if m:
+        try:
+            return urllib.parse.unquote(m.group(1))
+        except Exception:
+            pass
+    return raw_href or ""
+
+
+def _bing_rss_search(query: str, max_results: int = 8) -> List[Dict[str, str]]:
+    """Query Bing RSS (`format=rss`) with clean un-quoted keywords so direct links & snippets return fast."""
+    import xml.etree.ElementTree as ET
+
+    q = re.sub(r"\bsite:([^\s]+)", r"\1", query or "", flags=re.I)
+    q = re.sub(r"\bfiletype:pdf\b", "pdf", q, flags=re.I)
+    q = re.sub(r'\bOR\b', " ", q)
+    q = re.sub(r'["()]', " ", q)
+    q = re.sub(r"\s+", " ", q).strip()
+    if not q:
+        return []
+    status, text, _ = _http_get(
+        "https://www.bing.com/search",
+        params={"q": q, "format": "rss"},
+        headers={
+            "User-Agent": BROWSER_UA,
+            "Accept": "application/rss+xml,application/xml,text/xml,*/*",
+            "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
+        },
+        timeout=7,
+    )
+    if status != 200 or not text or "<item>" not in text:
+        return []
+    results: List[Dict[str, str]] = []
+    seen = set()
+    try:
+        root = ET.fromstring(text.encode("utf-8", "ignore"))
+        for it in root.findall(".//item"):
+            u = _clean_text(it.findtext("link") or "")
+            if not u.startswith("http") or "bing.com" in u or u in seen:
+                continue
+            title = _clean_text(it.findtext("title") or "")
+            snip = _clean_text(it.findtext("description") or "")
+            seen.add(u)
+            results.append({"title": title, "url": u, "snippet": snip})
+            if len(results) >= max_results:
+                return results
+    except Exception:
+        for it_m in re.finditer(r"<item>(.*?)</item>", text, flags=re.S | re.I):
+            blk = it_m.group(1)
+            l_m = re.search(r"<link>(.*?)</link>", blk, flags=re.S | re.I)
+            t_m = re.search(r"<title>(.*?)</title>", blk, flags=re.S | re.I)
+            d_m = re.search(r"<description>(.*?)</description>", blk, flags=re.S | re.I)
+            u = _clean_text(html.unescape(l_m.group(1))) if l_m else ""
+            if not u.startswith("http") or "bing.com" in u or u in seen:
+                continue
+            seen.add(u)
+            results.append({
+                "title": _clean_text(html.unescape(t_m.group(1))) if t_m else "",
+                "url": u,
+                "snippet": _clean_text(html.unescape(d_m.group(1))) if d_m else "",
+            })
+            if len(results) >= max_results:
+                break
+    return results
+
+
+def _google_news_rss_search(query: str, max_results: int = 6) -> List[Dict[str, str]]:
+    """Query Google News ID RSS for verified academic leadership announcements when portals use WAF."""
+    import xml.etree.ElementTree as ET
+
+    q = re.sub(r"\bsite:([^\s]+)", r"\1", query or "", flags=re.I).strip()
+    if not q:
+        return []
+    status, text, _ = _http_get(
+        "https://news.google.com/rss/search",
+        params={"q": q, "hl": "id", "gl": "ID", "ceid": "ID:id"},
+        headers={"User-Agent": BROWSER_UA},
+        timeout=7,
+    )
+    if status != 200 or not text or "<item>" not in text:
+        return []
+    results: List[Dict[str, str]] = []
+    try:
+        root = ET.fromstring(text.encode("utf-8", "ignore"))
+        for it in root.findall(".//item")[:max_results]:
+            title = _clean_text(it.findtext("title") or "")
+            u = _clean_text(it.findtext("link") or "")
+            pub = _clean_text(it.findtext("pubDate") or "")
+            if title and u:
+                results.append({"title": title, "url": u, "snippet": pub, "is_news": True})
+    except Exception:
+        pass
+    return results
+
+
+def _yahoo_search(query: str, max_results: int = 8) -> List[Dict[str, str]]:
+    """Query id.search.yahoo.com HTML results cleanly (avoiding `site:` which causes HTTP 500 on Yahoo)."""
+    q = re.sub(r"\bsite:([^\s]+)", r"\1", query or "", flags=re.I)
+    q = re.sub(r"\bfiletype:pdf\b", "pdf", q, flags=re.I).strip()
+    if not q:
+        return []
+    status, text, _ = _http_get(
+        "https://id.search.yahoo.com/search",
+        params={"p": q},
+        headers={
+            "User-Agent": BROWSER_UA,
+            "Accept": "text/html,application/xhtml+xml",
+            "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
+        },
+        timeout=6,
+    )
+    if status != 200 or not text:
+        return []
+
+    results: List[Dict[str, str]] = []
+    seen = set()
+    block_re = re.compile(
+        r'class="[^"]*\bcompTitle\b[^"]*"[^>]*>.*?<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>.*?'
+        r'(?:class="[^"]*\bcompText\b[^"]*"[^>]*>(.*?)</div>)?',
+        re.I | re.S,
+    )
+    for m in block_re.finditer(text):
+        u = _decode_yahoo_url(html.unescape(m.group(1)))
+        if not u.startswith("http") or "yahoo.com" in u or u in seen:
+            continue
+        title = _clean_text(re.sub(r"<[^>]+>", " ", m.group(2) or ""))
+        snip = _clean_text(re.sub(r"<[^>]+>", " ", m.group(3) or ""))
+        if len(title) < 4:
+            continue
+        seen.add(u)
+        results.append({"title": title, "url": u, "snippet": snip})
+        if len(results) >= max_results:
+            return results
+
+    parsed = _parse_html_elements(text)
+    for href_raw, title in parsed.anchors:
+        u = _decode_yahoo_url(href_raw)
+        if not u.startswith("http") or "yahoo.com" in u or u in seen or len(title) < 6:
+            continue
+        seen.add(u)
+        results.append({"title": title, "url": u, "snippet": ""})
+        if len(results) >= max_results:
+            break
+    return results
+
+
 def _duckduckgo_search(query: str, max_results: int = 8) -> List[Dict[str, str]]:
     """Query DuckDuckGo HTML search endpoint without requiring API key (O(N) HTML parsing)."""
     results: List[Dict[str, str]] = []
@@ -1022,7 +1301,7 @@ def _duckduckgo_search(query: str, max_results: int = 8) -> List[Dict[str, str]]
             "Accept": "text/html,application/xhtml+xml",
             "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
         },
-        timeout=8,
+        timeout=5,
     )
     if status != 200 or not text:
         return results
@@ -1043,6 +1322,41 @@ def _duckduckgo_search(query: str, max_results: int = 8) -> List[Dict[str, str]]
     return results
 
 
+_SEARCH_NOISE_DOMAINS = (
+    "youtube.com", "music.youtube.com", "families.youtube.com",
+    "support.microsoft.com", "support.google.com", "elevenforum.com",
+    "zhihu.com", "muslima.com", "singlemuslim.com", "glints.com",
+    "kbbi.co.id", "duniadosen.com", "cakrawala.ac.id",
+)
+
+
+def _web_search(query: str, max_results: int = 8, target_domain: str = "") -> List[Dict[str, str]]:
+    """Multi-engine search (Yahoo -> Bing RSS -> DuckDuckGo) merging snippets & filtering off-topic noise."""
+    by_url: Dict[str, Dict[str, str]] = {}
+    merged: List[Dict[str, str]] = []
+    td = (target_domain or "").lower().strip()
+    for fn in (_yahoo_search, _bing_rss_search):
+        for h in fn(query, max_results=max_results):
+            u = h.get("url", "")
+            u_low = u.lower()
+            if not u or any(nd in u_low for nd in _SEARCH_NOISE_DOMAINS):
+                continue
+            if u in by_url:
+                if len((h.get("snippet") or "").strip()) > len((by_url[u].get("snippet") or "").strip()):
+                    by_url[u]["snippet"] = h["snippet"]
+                continue
+            item = dict(h)
+            by_url[u] = item
+            merged.append(item)
+        if td and any(td in _extract_domain(h.get("url", "")) and len((h.get("snippet") or "").strip()) >= 15 for h in merged):
+            return merged[:max_results]
+        if not td and len(merged) >= 3 and any(".ac.id" in h.get("url", "").lower() and len((h.get("snippet") or "").strip()) >= 15 for h in merged):
+            return merged[:max_results]
+    if not merged:
+        return _duckduckgo_search(query, max_results=max_results)
+    return merged[:max_results]
+
+
 def _html_to_lines(html_text: str) -> List[str]:
     txt = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", " ", html_text or "", flags=re.I | re.S)
     txt = re.sub(r"</?(?:p|div|li|tr|td|th|h[1-6]|br|section|article|span)[^>]*>", "\n", txt, flags=re.I)
@@ -1052,19 +1366,24 @@ def _html_to_lines(html_text: str) -> List[str]:
     return [ln for ln in lines if ln]
 
 
-# Pattern nama akademisi bergelar Indonesia (termasuk nama tunggal bergelar seperti "Prof. Dr. Suharnomo, S.E., M.Si.")
+# Pattern nama akademisi bergelar Indonesia (mendukung inisial seperti "Prof. Dr. S Martono, M.Si." & tanpa koma spt "Fatah Syukur M.Ag")
+_NAME_CORE = r"(?:[A-Z]\.?\s+){0,2}[A-Z][a-zA-Z'`\-]+(?:\s+(?:[A-Z][a-zA-Z'`\-\.]+|[A-Z]\.?)){0,5}"
+_DEGREE_PART = (
+    r"(?:(?:,\s*|\s+(?=(?:[SMB]\.[A-Za-z]|Ph\.?\s*D|D\.?\s*Sc|Ed\.?\s*D|Dr\.?(?:\s*Eng\.?)?|Sp\.|ST\.?|MT\.?|SE\.?|SH\.?|MM\.?|MH\.?)))(?:"
+    r"S\.?\s*[A-Za-z\.]{1,8}|M\.?\s*[A-Za-z\.]{1,8}|B\.?\s*[A-Za-z\.]{1,8}"
+    r"|Ph\.?\s*D\.?|D\.?\s*Sc\.?|Ed\.?\s*D\.?|Dr\.?(?:\s*Eng\.?)?|Sp\.\s*[A-Za-z\.]+"
+    r"|ST\.?|MT\.?|SE\.?|SH\.?|MM\.?|MH\.?|MSc\.?|MA\.?|MS\.?|MBA\.?|MKM\.?|IPM|IPU|ASEAN\s*Eng\.?|CPMA|Ak\.?|CPA|CA"
+    r"))"
+)
+_TITLE_PRE = r"(?:(?:Prof\.|Dr\.|Dr\.\s*rer\.?\s*nat\.?|Dr\.?\s*Eng\.?|Ir\.|H\.|Hj\.|Drs\.|Dra\.|Ns\.|Apt\.|drg?\.|K\.?H\.)\s+)"
+_PRE_ACADEMIC_NAME_RE = re.compile(
+    rf"{_TITLE_PRE}{{1,4}}{_NAME_CORE}{_DEGREE_PART}+"
+)
 _ACADEMIC_NAME_RE = re.compile(
-    r"(?:"
-    r"(?:(?:Prof\.|Dr\.|Dr\.\s*rer\.?\s*nat\.?|Ir\.|H\.|Hj\.|Drs\.|Dra\.|Ns\.|Apt\.|drg?\.|K\.?H\.?)\s+){1,4}"
-    r"[A-Z][a-zA-Z'`\-]+(?:\s+[A-Z][a-zA-Z'`\-\.]+){0,5}"
-    r"|"
-    r"[A-Z][a-zA-Z'`\-]+(?:\s+[A-Z][a-zA-Z'`\-\.]+){1,5}"
-    r")"
-    r"(?:,\s*(?:S\.\s*[A-Za-z\.]+|M\.\s*[A-Za-z\.]+|B\.\s*[A-Za-z\.]+|Ph\.?\s*D\.?|D\.?\s*Sc\.?|Ed\.?\s*D\.?|Dr\.|Sp\.\s*[A-Za-z\.]+|IPM|ASEAN\s*Eng\.?|CPMA|Ak\.?|CA|MM|MT|MH|MSc|MA))+",
+    rf"{_NAME_CORE}{_DEGREE_PART}+"
 )
 _PREFIXED_NAME_RE = re.compile(
-    r"(?:Prof\.|Dr\.|Ir\.)\s+(?:(?:Dr\.|Dr\.\s*rer\.?\s*nat\.?|Ir\.|H\.|Hj\.)\s+)?[A-Z][a-zA-Z'`\-]+(?:\s+[A-Z][a-zA-Z'`\-\.]+){1,4}"
-    r"(?:,\s*[A-Za-z\.\s]{2,14})*"
+    rf"(?:Prof\.|Dr\.|Ir\.)\s+(?:{_TITLE_PRE}{{0,3}}){_NAME_CORE}(?:{_DEGREE_PART})*"
 )
 _NIP_RE = re.compile(r"\b(?:NIP|NIP\.|NIDN|NIDN\.|NIK|NIK\.|NUPTK)\s*[:.]?\s*([0-9][0-9\s\-]{7,23}[0-9])\b", re.I)
 
@@ -1080,26 +1399,37 @@ def _extract_official_from_text_window(
     """Find best verified Indonesian academic name + optional NIP/NIDN near a leadership title line."""
     excl = exclude_patterns or []
     is_dean_search = any("dekan" in rp.lower() or "dean" in rp.lower() for rp in role_patterns)
-    is_rector_search = any("rektor" in rp.lower() or "rector" in rp.lower() for rp in role_patterns)
-    is_head_search = any(k in rp.lower() for rp in role_patterns for k in ("kaprodi", "program", "departemen", "chair"))
+    is_rector_search = any("rektor" in rp.lower() or "rector" in rp.lower() or "direktur" in rp.lower() for rp in role_patterns)
+    is_head_search = any(k in rp.lower() for rp in role_patterns for k in ("kaprodi", "prodi", "program", "departemen", "jurusan", "chair"))
+    _PAST_BIO_RE = re.compile(
+        r"\b(?:sebelum\s+menjabat|selama\s+menjabat|pernah\s+menjabat|sempat\s+menjabat|mantan\s+(?:dekan|rektor|kaprodi|direktur)|periode\s+20(?:0\d|1\d))\b",
+        flags=re.I,
+    )
     for idx, ln in enumerate(lines):
         if excl and any(re.search(ep, ln, flags=re.I) for ep in excl):
+            continue
+        if len(ln) > 95 and _PAST_BIO_RE.search(ln):
             continue
         if not any(re.search(rp, ln, flags=re.I) for rp in role_patterns):
             continue
         win_start = max(0, idx - 3)
         win_end = min(len(lines), idx + 6)
         window_text = "\n".join(lines[win_start:win_end])
+        tight_ctx = "\n".join(lines[max(0, idx - 1):min(len(lines), idx + 2)]).lower()
+        if is_dean_search and len(ln) > 95 and re.search(r"\b(?:wakil\s+rektor|vice\s+rector)\b", tight_ctx):
+            continue
         if context_keywords:
-            tight_ctx = "\n".join(lines[max(0, idx - 1):min(len(lines), idx + 2)]).lower()
-            w_low = tight_ctx if is_head_search else window_text.lower()
+            w_low = tight_ctx if (is_head_search or is_dean_search) else window_text.lower()
             if not any(kw in w_low for kw in context_keywords):
                 continue
 
-        # Reject explicit different-faculty mention (e.g. "Dekan Fakultas Kedokteran" when looking for Ilmu Komputer)
+        # Reject explicit different-faculty mention (e.g. "Dekan Fakultas Kedokteran" or "Dekan FIPH" when looking for Teknik/Ilmu Komputer)
         if is_dean_search and faculty_kws:
             fac_mentions = re.findall(r"\b(?:Dekan|Dean\s+of)\s+(?:Fakultas|Faculty\s+of)\s+([A-Za-z\s,&\-]{3,45})", ln, flags=re.I)
             if fac_mentions and not any(any(fk in fm.lower() for fk in faculty_kws) for fm in fac_mentions):
+                continue
+            fac_acro = re.findall(r"\b(?:Dekan|Dean)\s+(F[A-Z]{1,10})\b", ln)
+            if fac_acro and not any(any(fk == fa.lower() for fk in faculty_kws) for fa in fac_acro):
                 continue
         # Reject explicit different-prodi mention (e.g. "Ketua Program Studi Pendidikan Matematika" when looking for Teknologi Informasi)
         if is_head_search and program_kws:
@@ -1111,9 +1441,34 @@ def _extract_official_from_text_window(
             if prodi_mentions and not any(any(pk in pm.lower() for pk in program_kws) for pm in prodi_mentions):
                 continue
 
-        # Search current line, previous 2 lines, and next 3 lines (skipping lines mentioning Wakil/Vice/Secretary)
+        # Layout-aware neighbor order: avoid stealing the previous card's person on Role->Name lists,
+        # while still handling Name->Role cards when the card above isn't preceded by another bare role header.
+        _ROLE_HDR_RE = re.compile(
+            r"^\s*(?:Rektor|Wakil\s+Rektor|Dekan|Wakil\s+Dekan|Direktur|Wakil\s+Direktur|Ketua|Kaprodi|Koordinator|Sekretaris)\b",
+            flags=re.I,
+        )
+        _MULTI_ROLE_HDR_RE = re.compile(
+            r"\b(?:Rektor|Dekan|Direktur|Ketua|Kaprodi|Koordinator|Sekretaris)\s*(?:&|dan|/|,)\s*(?:Wakil\s+|Ketua\s+|Sekretaris\b|Dekan\b|Direktur\b|Rektor\b)",
+            flags=re.I,
+        )
+        prev2_is_bare_role = bool(
+            idx >= 2
+            and _ROLE_HDR_RE.match(lines[idx - 2])
+            and not _MULTI_ROLE_HDR_RE.search(lines[idx - 2])
+            and not _PRE_ACADEMIC_NAME_RE.search(lines[idx - 2])
+            and not _ACADEMIC_NAME_RE.search(lines[idx - 2])
+        )
+        prev1_has_name = bool(idx >= 1 and (_PRE_ACADEMIC_NAME_RE.search(lines[idx - 1]) or _ACADEMIC_NAME_RE.search(lines[idx - 1])))
+        next2_is_role = bool(idx + 2 < len(lines) and _ROLE_HDR_RE.match(lines[idx + 2]) and not _MULTI_ROLE_HDR_RE.search(lines[idx + 2]))
+        if prev2_is_bare_role and prev1_has_name:
+            offsets = (1, 2, 3)
+        elif prev1_has_name and next2_is_role:
+            offsets = (-1, 1, -2, 2, 3)
+        else:
+            offsets = (1, -1, 2, -2, 3)
+
         search_order = [ln]
-        for off in (-1, 1, -2, 2, 3):
+        for off in offsets:
             pos = idx + off
             if 0 <= pos < len(lines):
                 cand = lines[pos]
@@ -1123,7 +1478,7 @@ def _extract_official_from_text_window(
 
         for cand_line in search_order:
             role_spans = [(mr.start(), mr.end()) for rp in role_patterns for mr in re.finditer(rp, cand_line, flags=re.I)]
-            for pat in (_ACADEMIC_NAME_RE, _PREFIXED_NAME_RE):
+            for pat in (_PRE_ACADEMIC_NAME_RE, _ACADEMIC_NAME_RE, _PREFIXED_NAME_RE):
                 for m in pat.finditer(cand_line):
                     name = _clean_person_name(m.group(0))
                     # On multi-person paragraphs, only accept name close to the matching role token
@@ -1176,9 +1531,10 @@ def _extract_links(html_text: str, base_url: str, root_domain: str) -> List[Tupl
 
 
 _COMMON_FACULTY_SUBDOMAINS: List[Tuple[Tuple[str, ...], List[str]]] = [
-    (("ilmu komputer", "informatika", "teknologi informasi", "fakultas ilmu komputer"), ["filkom", "cs", "fasilkom", "ilkom", "fti"]),
-    (("teknik", "engineering", "sekolah teknik elektro"), ["ft", "stei", "teknik"]),
-    (("matematika", "ilmu pengetahuan alam", "sains", "mipa"), ["fmipa", "mipa", "fsains", "fst"]),
+    (("ilmu komputer", "informatika", "teknologi informasi", "fakultas ilmu komputer"), ["fik", "filkom", "fasilkom", "ilkom", "fti", "ftik", "cs"]),
+    (("teknik", "engineering", "sekolah teknik elektro"), ["ft", "teknik", "ftik", "fti", "stei"]),
+    (("sains dan teknologi", "saintek"), ["fst", "saintek", "fsains", "fmipa", "mipa"]),
+    (("matematika", "ilmu pengetahuan alam", "sains", "mipa"), ["fmipa", "mipa", "fst", "fsm", "fsains"]),
     (("ekonomi", "bisnis"), ["feb", "fe"]),
     (("hukum",), ["fh", "hukum"]),
     (("kedokteran",), ["fk", "kedokteran"]),
@@ -1190,6 +1546,62 @@ _COMMON_FACULTY_SUBDOMAINS: List[Tuple[Tuple[str, ...], List[str]]] = [
     (("psikologi",), ["fpsi", "psikologi"]),
 ]
 
+_GENERIC_UNIT_WORDS = {
+    "fakultas", "program", "studi", "prodi", "jurusan", "departemen",
+    "ilmu", "teknik", "sains", "teknologi", "pendidikan", "pengetahuan",
+    "alam", "terapan", "sarjana", "magister", "doktor", "dan", "serta",
+    "the", "of", "and", "study",
+}
+
+
+def _extract_unit_keywords(text: str, strip_prefix_re: str, is_faculty: bool = False) -> List[str]:
+    """Extract specific unit tokens (filtering generic words like 'teknik'/'ilmu' when specific tokens exist)."""
+    low_raw = (text or "").strip().lower()
+    cleaned = re.sub(strip_prefix_re, "", low_raw, flags=re.I)
+    raw_tokens = [re.sub(r"[^a-z0-9]", "", w) for w in cleaned.split()]
+    raw_tokens = [t for t in raw_tokens if len(t) > 2 and t not in {"dan", "the", "and", "of", "for"}]
+    specific = [t for t in raw_tokens if len(t) > 3 and t not in _GENERIC_UNIT_WORDS]
+    kws = list(specific if specific else [t for t in raw_tokens if len(t) > 3])
+
+    if is_faculty:
+        aliases: List[str] = []
+        if any(k in low_raw for k in ("matematika", "pengetahuan alam", "mipa", "fmipa", "fsm")):
+            aliases.extend(["mipa", "fmipa", "fsm", "mathematics"])
+        if any(k in low_raw for k in ("sains dan teknologi", "saintek", "fst")):
+            aliases.extend(["fst", "saintek"])
+        if any(k in low_raw for k in ("ilmu komputer", "filkom", "fik", "fasilkom")):
+            aliases.extend(["fik", "filkom", "fasilkom", "ilkom", "computer"])
+        if "teknik" in low_raw and not specific:
+            aliases.extend(["teknik", "ft", "engineering", "ftik"])
+        if "ekonomi" in low_raw:
+            aliases.append("feb")
+        for a in aliases:
+            if a not in kws:
+                kws.append(a)
+    else:
+        if "komputer" in low_raw and "ilkom" not in kws:
+            kws.append("ilkom")
+    return kws
+
+
+_NEWS_URL_RE = re.compile(
+    r"/20\d{2}/|/berita/|/news/|/artikel/|/siaran-pers|/berkunjung|/kunjungan|/event/"
+    r"|berganti|pelantikan|lantik|silaturahmi|wisuda|ucapan|dies-natalis|pengabdian",
+    re.I,
+)
+
+
+def _is_news_url(url: str) -> bool:
+    if not url:
+        return False
+    if _NEWS_URL_RE.search(url):
+        return True
+    path = urllib.parse.urlparse(url).path.rstrip("/")
+    slug = path.rsplit("/", 1)[-1]
+    if slug.count("-") >= 5 and not any(k in slug.lower() for k in ("pimpinan", "rektor", "dekan", "prodi", "program-studi", "departemen", "struktur")):
+        return True
+    return False
+
 
 def _guess_faculty_urls(root_domain: str, fakultas: str) -> List[str]:
     if not root_domain or not fakultas.strip():
@@ -1198,9 +1610,103 @@ def _guess_faculty_urls(root_domain: str, fakultas: str) -> List[str]:
     urls: List[str] = []
     for kws, subs in _COMMON_FACULTY_SUBDOMAINS:
         if any(k in low for k in kws):
-            for s in subs:
+            for s in subs[:5]:
                 urls.append(f"https://{s}.{root_domain}")
-    return urls[:4]
+                urls.append(f"https://{root_domain}/{s}")
+    return urls[:10]
+
+
+def _discover_wp_api_pages(
+    site_url: str,
+    search_terms: List[str],
+    per_page: int = 5,
+) -> List[Tuple[str, str]]:
+    """Query WordPress REST API (`/wp-json/wp/v2/pages`) to get (url, html_body) directly in one lightweight call."""
+    out: List[Tuple[str, str]] = []
+    if not site_url:
+        return out
+    parsed = urllib.parse.urlparse(site_url)
+    base_prefix = f"{parsed.scheme}://{parsed.netloc}"
+    path_parts = [p for p in parsed.path.strip("/").split("/") if p]
+    bases = [site_url.rstrip("/")]
+    if path_parts and path_parts[0] not in ("id", "en"):
+        sub_base = f"{base_prefix}/{path_parts[0]}"
+        if sub_base not in bases:
+            bases.append(sub_base)
+    if base_prefix not in bases:
+        bases.append(base_prefix)
+
+    seen_u = set()
+    for base in bases[:2]:
+        for term in search_terms[:2]:
+            api_u = f"{base}/wp-json/wp/v2/pages"
+            st, body, _ = _http_get(
+                api_u,
+                params={"search": term, "per_page": str(per_page), "_fields": "link,title,content"},
+                headers={"User-Agent": BROWSER_UA, "Accept": "application/json"},
+                timeout=3.5,
+            )
+            if st != 200 or not body or not body.lstrip().startswith("["):
+                continue
+            try:
+                rows = json.loads(body)
+            except Exception:
+                continue
+            for row in rows:
+                link = (row.get("link") or "").strip()
+                if not link or link in seen_u or _is_news_url(link):
+                    continue
+                title_html = (row.get("title") or {}).get("rendered", "")
+                cont_html = (row.get("content") or {}).get("rendered", "")
+                if title_html or cont_html:
+                    seen_u.add(link)
+                    out.append((link, f"<h1>{title_html}</h1>\n{cont_html}"))
+        if out:
+            break
+    return out
+
+
+def _discover_sitemap_urls(
+    site_url: str,
+    root_dom: str,
+    fk_kws: List[str],
+    ps_kws: List[str],
+) -> Tuple[List[str], List[str], List[str]]:
+    """Parse WordPress/XML sitemaps (`/page-sitemap.xml`) to locate exact leadership, faculty, and prodi pages."""
+    uni_urls: List[str] = []
+    fac_urls: List[str] = []
+    prodi_urls: List[str] = []
+    parsed_u = urllib.parse.urlparse(site_url)
+    base_prefix = f"{parsed_u.scheme}://{parsed_u.netloc}"
+    path_seg = parsed_u.path.strip("/").split("/")[0]
+    cand_sitemaps = [f"{site_url.rstrip('/')}/page-sitemap.xml", f"{site_url.rstrip('/')}/wp-sitemap-posts-page-1.xml"]
+    if path_seg and f"{base_prefix}/page-sitemap.xml" not in cand_sitemaps:
+        cand_sitemaps.append(f"{base_prefix}/page-sitemap.xml")
+
+    locs: List[str] = []
+    for sm in cand_sitemaps:
+        st, body, _ = _http_get(sm, headers={"User-Agent": BROWSER_UA}, timeout=4)
+        if st == 200 and body and "<loc>" in body:
+            locs = re.findall(r"<loc>\s*(https?://[^<\s]+)\s*</loc>", body, flags=re.I)
+            if locs:
+                break
+    if not locs:
+        return uni_urls, fac_urls, prodi_urls
+
+    for u in locs:
+        if _is_news_url(u) or (root_dom and root_dom not in _extract_domain(u)):
+            continue
+        ul = u.lower()
+        is_leader = any(k in ul for k in ("pimpinan", "rektor", "direktur", "dekan", "dekanat", "struktur", "leadership", "management", "pengelola"))
+        if ps_kws and any(pk in ul for pk in ps_kws) and ("prodi" in ul or "program" in ul or "departemen" in ul or "-s1" in ul or "pimpinan" in ul):
+            prodi_urls.append(u)
+        elif is_leader and any(k in ul for k in ("departemen", "prodi", "jurusan")):
+            prodi_urls.append(u)
+        elif is_leader and (not fk_kws or any(fk in ul for fk in fk_kws) or _extract_domain(u) != root_dom or path_seg):
+            fac_urls.append(u)
+        elif is_leader or "fakultas-dan-departemen" in ul:
+            uni_urls.append(u)
+    return uni_urls[:6], fac_urls[:6], prodi_urls[:6]
 
 
 def _follow_meta_refresh(html_text: str, base_url: str) -> Optional[str]:
@@ -1219,7 +1725,7 @@ def _crawl_campus_official_pages(
     program_studi: str = "",
 ) -> Tuple[Dict[str, Dict[str, str]], List[Dict[str, str]]]:
     """
-    Crawl official .ac.id homepage + faculty portal (1-2 hops, bounded concurrency)
+    Crawl official .ac.id homepage + faculty portal (1-2 hops, bounded concurrency, WP-JSON + sitemaps)
     to extract verified officials (Rektor, Dekan, Kaprodi + NIP) and official Pedoman PDFs.
     """
     found: Dict[str, Dict[str, str]] = {}
@@ -1237,21 +1743,27 @@ def _crawl_campus_official_pages(
     home_url = final_home or base_site
     root_dom = _extract_domain(home_url) or domain
     home_links = _extract_links(home_html, home_url, root_dom)
+    if not any(k in f"{u} {t}".lower() for u, t in home_links for k in ("pimpinan", "rektor", "direktur", "struktur", "leadership")):
+        for loc_u in (home_url.rstrip("/") + "/beranda/", home_url.rstrip("/") + "/id/"):
+            lst, lhtml, lfu = _http_get(loc_u, headers={"User-Agent": BROWSER_UA}, timeout=4)
+            if lst == 200 and lhtml and (lfu or loc_u).rstrip("/") != home_url.rstrip("/"):
+                for item in _extract_links(lhtml, lfu or loc_u, root_dom):
+                    if item[0] not in {hl[0] for hl in home_links}:
+                        home_links.append(item)
+                break
 
-    fk_short = re.sub(r"^fakultas\s+", "", fakultas.strip(), flags=re.I)
-    fk_kws = [w.lower() for w in fk_short.split() if len(w) > 3]
-    ps_short = re.sub(r"^(?:program\s+studi|prodi|s1|d3|d4)\s+", "", program_studi.strip(), flags=re.I)
-    ps_kws = [w.lower() for w in ps_short.split() if len(w) > 3]
+    fk_kws = _extract_unit_keywords(fakultas, r"^fakultas\s+", is_faculty=True)
+    ps_kws = _extract_unit_keywords(program_studi, r"^(?:program\s+studi|prodi|s1|d3|d4|diploma\s+[ivx0-9]+)\s+", is_faculty=False)
 
     faculty_subdomains: List[str] = []
     faculty_root_links: List[str] = []
+    uni_anchor_pages: List[str] = []
     uni_leader_pages: List[str] = [home_url]
-    for suffix in ("/pimpinan", "/id/pimpinan", "/profil/pimpinan", "/en/leadership"):
-        u_root_p = home_url.rstrip("/") + suffix
-        if u_root_p not in uni_leader_pages:
-            uni_leader_pages.append(u_root_p)
+    sm_uni, sm_fac, sm_prodi = _discover_sitemap_urls(home_url, root_dom, fk_kws, ps_kws)
+    for u in sm_uni:
+        if u not in uni_anchor_pages:
+            uni_anchor_pages.append(u)
     seen_pdf = set()
-    _NEWS_RE = re.compile(r"/20\d{2}/|/berita/|/news/|/artikel/|/siaran-pers|/berkunjung|/kunjungan|/event/", re.I)
 
     for u, txt in home_links:
         ul = u.lower()
@@ -1261,17 +1773,36 @@ def _crawl_campus_official_pages(
                 seen_pdf.add(u)
                 pdfs.append({"title": txt or os.path.basename(u), "url": u, "snippet": f"Tautan langsung di {home_url}"})
             continue
-        if _NEWS_RE.search(ul):
+        if _is_news_url(ul):
             continue
-        if fk_kws and (all(k in f"{ul} {tl}" for k in fk_kws[:2]) or any(k in tl and ("fakultas" in tl or "faculty" in tl) for k in fk_kws)):
+        if fk_kws and (
+            all(k in f"{ul} {tl}" for k in fk_kws[:2])
+            or any(k in tl and ("fakultas" in tl or "faculty" in tl) for k in fk_kws)
+            or any(re.search(rf"(?:^|[/\.\-]){re.escape(k)}(?:$|[/\.\-])", ul) for k in fk_kws if k in ("mipa", "fmipa", "fst", "fsm", "fik", "ft", "feb", "fh", "fk", "fisip", "fkip"))
+        ):
             if _extract_domain(u) != root_dom:
                 if u not in faculty_subdomains:
                     faculty_subdomains.append(u)
             elif u not in faculty_root_links:
                 faculty_root_links.append(u)
-        if any(k in f"{ul} {tl}" for k in ("pimpinan", "leadership", "rektor", "rector", "profil", "profile", "struktur", "manajemen")):
-            if len(uni_leader_pages) < 7 and u not in uni_leader_pages:
-                uni_leader_pages.append(u)
+        if ps_kws and any(pk in f"{ul} {tl}" for pk in ps_kws) and any(k in f"{ul} {tl}" for k in ("prodi", "program-studi", "program studi", "departemen", "s1", "-d4", "-d3")):
+            if u not in sm_prodi:
+                sm_prodi.append(u)
+        if any(k in f"{ul} {tl}" for k in ("pimpinan", "leadership", "rektor", "rector", "direktur", "struktur", "manajemen", "our-team")):
+            if len(uni_anchor_pages) < 12 and u not in uni_anchor_pages:
+                uni_anchor_pages.append(u)
+
+    def _is_numbered_dup(u: str) -> bool:
+        return bool(re.search(r"-\d+/?$", (u or "").strip()))
+
+    uni_anchor_pages.sort(key=lambda u: (1 if _is_numbered_dup(u) else 0, 0 if any(k in u.lower() for k in ("pimpinan", "rektor", "direktur", "struktur", "leadership")) else 1, len(u)))
+    for u in uni_anchor_pages:
+        if u not in uni_leader_pages:
+            uni_leader_pages.append(u)
+    for suffix in ("/tentang/pimpinan", "/profil/pimpinan", "/id/pimpinan", "/pimpinan", "/pimpinan-universitas", "/struktur-organisasi", "/en/leadership"):
+        u_root_p = home_url.rstrip("/") + suffix
+        if u_root_p not in uni_leader_pages:
+            uni_leader_pages.append(u_root_p)
 
     faculty_portals: List[str] = list(faculty_subdomains)
     for gu in _guess_faculty_urls(root_dom, fakultas):
@@ -1282,23 +1813,25 @@ def _crawl_campus_official_pages(
             faculty_portals.append(fu_l)
 
     faculty_portal_roots: List[str] = []
-    faculty_pages: List[str] = []
-    prodi_pages: List[str] = []
+    faculty_pages: List[str] = list(sm_fac)
+    faculty_probes: List[str] = []
+    prodi_pages: List[str] = list(sm_prodi)
+    wp_inline_pages: List[Tuple[str, str]] = []
 
-    def _fetch_one(target_u: str) -> Tuple[str, int, str, str]:
-        s, body, fu = _http_get(target_u, headers={"User-Agent": BROWSER_UA}, timeout=5)
+    def _fetch_one(target_u: str, tout: float = 5.0) -> Tuple[str, int, str, str]:
+        s, body, fu = _http_get(target_u, headers={"User-Agent": BROWSER_UA}, timeout=tout)
         if s == 200 and body and len(body) < 4096:
             ref = _follow_meta_refresh(body, fu or target_u)
             if ref:
-                s, body, fu = _http_get(ref, headers={"User-Agent": BROWSER_UA}, timeout=5)
+                s, body, fu = _http_get(ref, headers={"User-Agent": BROWSER_UA}, timeout=tout)
         return target_u, s, body or "", fu or target_u
 
     if faculty_portals:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
-            for _, s, body, fu in ex.map(_fetch_one, faculty_portals[:6]):
-                if s != 200 or not body or len(body) < 2000:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex:
+            for _, s, body, fu in ex.map(lambda u_x: _fetch_one(u_x, 2.8), faculty_portals[:10]):
+                if s != 200 or not body or len(body) < 2000 or _is_news_url(fu):
                     continue
-                if _extract_domain(fu) != root_dom or any(kw in fu.lower() for kw in fk_kws):
+                if _extract_domain(fu) != root_dom or any(kw in fu.lower() for kw in fk_kws) or any(f"/{sub}" in fu.lower() for _, subs in _COMMON_FACULTY_SUBDOMAINS for sub in subs[:3]):
                     if fu not in faculty_portal_roots:
                         faculty_portal_roots.append(fu)
                 if fu not in faculty_pages:
@@ -1312,69 +1845,122 @@ def _crawl_campus_official_pages(
                             seen_pdf.add(u)
                             pdfs.append({"title": txt or os.path.basename(u), "url": u, "snippet": f"Tautan langsung di {fu}"})
                         continue
-                    if _NEWS_RE.search(ul):
+                    if _is_news_url(ul):
                         continue
-                    if any(k in f"{ul} {tl}" for k in ("pimpinan", "dekan", "dean", "leadership", "management", "struktur", "pengelola", "organisasi", "about", "tentang", "profil")):
-                        if u not in faculty_pages:
+                    if any(k in f"{ul} {tl}" for k in ("pimpinan", "dekan", "dean", "leadership", "management", "struktur", "pengelola", "organisasi", "our-team")):
+                        if any(k in f"{ul} {tl}" for k in ("departemen", "prodi", "jurusan")) and ps_kws:
+                            if any(pk in f"{ul} {tl}" for pk in ps_kws) and u not in prodi_pages:
+                                prodi_pages.append(u)
+                        elif u not in faculty_pages:
                             faculty_pages.append(u)
-                    if ps_kws and any(k in f"{ul} {tl}" for k in ps_kws) and any(k in f"{ul} {tl}" for k in ("prodi", "program-studi", "program studi", "departemen", "jurusan", "sarjana", "s1", "ilkom", "informatika", "komputer")):
+                    if ps_kws and any(pk in f"{ul} {tl}" for pk in ps_kws) and (
+                        _extract_domain(u) != _extract_domain(fu)
+                        or any(k in f"{ul} {tl}" for k in ("prodi", "program-studi", "program studi", "departemen", "jurusan", "sarjana", "s1", "-d4", "ilkom", "informatika", "komputer"))
+                    ):
                         if u not in prodi_pages:
                             prodi_pages.append(u)
                 parsed_f = urllib.parse.urlparse(fu)
                 f_root = f"{parsed_f.scheme}://{parsed_f.netloc}"
-                for suffix in ("/pimpinan", "/id/pimpinan", "/id/profil/pimpinan", "/en/profile/leadership", "/profil/pimpinan", "/dekanat", "/struktur-organisasi"):
+                for suffix in ("/pimpinan", "/id/pimpinan", "/id/struktur-organisasi", "/struktur-organisasi", "/pimpinan-fakultas", "/dekanat", "/our-team"):
                     probe_u = f_root + suffix
-                    if probe_u not in faculty_pages:
-                        faculty_pages.append(probe_u)
+                    if probe_u not in faculty_pages and probe_u not in faculty_probes:
+                        faculty_probes.append(probe_u)
 
+    # Bounded WordPress REST API + Sitemap scan on verified faculty portals + homepage
+    wp_targets = list(faculty_portal_roots[:2])
+    if home_url not in wp_targets:
+        wp_targets.append(home_url)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
+        wp_terms = ["pimpinan", ps_kws[0]] if ps_kws else ["pimpinan"]
+        for rows in ex.map(lambda b_u: _discover_wp_api_pages(b_u, wp_terms, per_page=8), wp_targets):
+            for wp_u, wp_body in rows:
+                wp_inline_pages.append((wp_u, wp_body))
+        for f_sm_u, f_sm_f, f_sm_p in ex.map(lambda b_u: _discover_sitemap_urls(b_u, root_dom, fk_kws, ps_kws), faculty_portal_roots[:2]):
+            for u_sm in f_sm_f + f_sm_u:
+                if u_sm not in faculty_pages:
+                    faculty_pages.append(u_sm)
+            for u_sm in f_sm_p:
+                if u_sm not in prodi_pages:
+                    prodi_pages.append(u_sm)
+
+    faculty_pages.sort(key=lambda u: (1 if _is_numbered_dup(u) else 0, 0 if any(k in u.lower() for k in ("pimpinan", "struktu", "dekan", "organisasi", "team")) else 1, len(u)))
     all_inspect: List[str] = []
-    for u in (prodi_pages[:4] + faculty_pages[:8] + uni_leader_pages[:5]):
-        if u not in all_inspect and not u.lower().endswith((".pdf", ".jpg", ".png", ".zip")):
+    for u in (prodi_pages[:6] + faculty_pages[:8] + uni_leader_pages[:8] + faculty_probes[:4]):
+        if u not in all_inspect and not u.lower().endswith((".pdf", ".jpg", ".png", ".zip")) and not _is_news_url(u):
             all_inspect.append(u)
-    all_inspect = all_inspect[:12]
+    all_inspect = all_inspect[:26]
 
     role_specs = [
-        ("rector", [r"^\s*Rektor(?:\s+[A-Z0-9\.\-]{2,20})?\s*$|\bRektor\s+Universitas\b|\bRektor\s+mengemban\b|\bRector\b"], [r"Wakil\s+Rektor|Vice\s+Rector|Sekretaris|Senat|Mantan|Sambutan|Ketua\s+MWA|membantu\s+Rektor|oleh\s+Rektor|bersama\s+Rektor|tugas\s+Rektor|kepada\s+Rektor"], []),
-        ("dean", [r"\bDekan\b|\bDean\s+of\b"], [r"Wakil\s+Dekan|Vice\s+Dean|Pembantu\s+Dekan|Plt\.?\s*Wakil|Mantan"], []),
-        ("head_program", [r"\b(?:Ketua\s+Program\s+Studi|Kaprodi|Koordinator\s+Program\s+Studi|Ketua\s+Departemen|Head\s+of\s+(?:Study\s+Program|Department)|Chair\s+of)\b"], [r"Sekretaris\s+(?:Program|Departemen)|Wakil"], ps_kws),
+        ("rector", [r"^\s*(?:Rektor|Direktur)(?:\s+[A-Z0-9\.\-]{2,20})?\s*$|\bRektor\s+(?:Universitas|Institut)\b|\bPlt\.?\s*Direktur\b|\bDirektur\s+Politeknik\b|\bRektor\s+mengemban\b|\bRector\b"], [r"^(?!.*\bRektor\b).*Senat|Wakil\s+Rektor|Vice\s+Rector|Sekretaris|Mantan|Sambutan|Ketua\s+MWA|membantu\s+Rektor|oleh\s+Rektor|bersama\s+Rektor|tugas\s+Rektor|kepada\s+Rektor"], []),
+        ("dean", [r"\b(?:Dekan|Dean(?:\s+of)?)\b"], [r"Wakil\s+Dekan|Vice\s+Dean|Pembantu\s+Dekan|Plt\.?\s*Wakil|Mantan|Sebelum\s+menjabat|Selama\s+menjabat|Pernah\s+menjabat|Sempat\s+menjabat"], []),
+        ("head_program", [r"\b(?:Ketua\s+Program\s+Studi|Kaprodi|Ka\.?\s*Prodi|Koordinator\s+Program\s+Studi|Koorprodi|Ketua\s+Departemen|Kadep|Ketua\s+Jurusan|Kajur|Head\s+of\s+(?:Study\s+Program|Department)|Chair\s+of)\b"], [r"^(?!.*\b(?:Ketua|Kaprodi|Ka\.?\s*Prodi|Koordinator)\b).*Sekretaris\s+(?:Program|Departemen)|Wakil\s+Ketua"], ps_kws),
     ]
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
-        for _, s, body, fu in ex.map(_fetch_one, all_inspect):
-            if s != 200 or not body:
-                continue
-            for lu, ltxt in _extract_links(body, fu, root_dom):
-                lul = lu.lower()
-                ltl = ltxt.lower()
-                if lul.endswith(".pdf") and any(k in f"{lul} {ltl}" for k in ("pedoman", "panduan", "skripsi", "tugas-akhir", "tugas akhir")):
-                    if lu not in seen_pdf:
-                        seen_pdf.add(lu)
-                        pdfs.append({"title": ltxt or os.path.basename(lu), "url": lu, "snippet": f"Ditemukan di {fu}"})
-            if _NEWS_RE.search(fu):
-                continue
-            lines = _html_to_lines(body)
-            is_dedicated_faculty = (
-                _extract_domain(fu) != root_dom
-                or any(fu == fp or fu.startswith(fp.rstrip("/") + "/") for fp in faculty_portal_roots)
+    discovered_subprodi: List[str] = []
+    visited_inspect = set(all_inspect)
+
+    def _inspect_html(body: str, fu: str) -> None:
+        if _is_news_url(fu):
+            return
+        for lu, ltxt in _extract_links(body, fu, root_dom):
+            lul = lu.lower()
+            ltl = ltxt.lower()
+            if lul.endswith(".pdf") and any(k in f"{lul} {ltl}" for k in ("pedoman", "panduan", "skripsi", "tugas-akhir", "tugas akhir")):
+                if lu not in seen_pdf:
+                    seen_pdf.add(lu)
+                    pdfs.append({"title": ltxt or os.path.basename(lu), "url": lu, "snippet": f"Ditemukan di {fu}"})
+            elif not _is_news_url(lu) and lu not in visited_inspect and len(discovered_subprodi) < 5:
+                if ps_kws and (fu in prodi_pages or any(pk in fu.lower() for pk in ps_kws)) and any(k in f"{lul} {ltl}" for k in ("pimpinan", "ketua", "kaprodi", "struktur", "pengelola")):
+                    discovered_subprodi.append(lu)
+                    visited_inspect.add(lu)
+        lines = _html_to_lines(body)
+        is_dedicated_faculty = (
+            _extract_domain(fu) != root_dom
+            or any(fu == fp or fu.startswith(fp.rstrip("/") + "/") for fp in faculty_portal_roots)
+        )
+        is_dedicated_prodi = (fu in prodi_pages or fu in discovered_subprodi) and (
+            not ps_kws or any(pk in fu.lower() for pk in ps_kws) or any(pk in " ".join(lines[:40]).lower() for pk in ps_kws)
+        )
+        for role, rpats, epats, ckws in role_specs:
+            if role == "dean":
+                use_ckws = [] if is_dedicated_faculty else fk_kws
+            elif role == "head_program":
+                use_ckws = [] if is_dedicated_prodi else ps_kws
+            else:
+                use_ckws = ckws
+            res = _extract_official_from_text_window(
+                lines, rpats, use_ckws, exclude_patterns=epats,
+                faculty_kws=fk_kws if role == "dean" else None,
+                program_kws=ps_kws if role == "head_program" else None,
             )
-            for role, rpats, epats, ckws in role_specs:
-                if role in found:
-                    continue
-                if role == "dean":
-                    use_ckws = [] if is_dedicated_faculty else fk_kws
-                elif role == "head_program":
-                    use_ckws = [] if fu in prodi_pages else ps_kws
-                else:
-                    use_ckws = ckws
-                res = _extract_official_from_text_window(
-                    lines, rpats, use_ckws, exclude_patterns=epats,
-                    faculty_kws=fk_kws if role == "dean" else None,
-                    program_kws=ps_kws if role == "head_program" else None,
-                )
-                if res:
-                    res["source_url"] = fu
-                    res["source_label"] = "Situs Resmi Kampus"
+            if res:
+                res["source_url"] = fu
+                res["source_label"] = "Situs Resmi Kampus"
+                if role not in found:
                     found[role] = res
+                elif _is_numbered_dup(fu) and not _is_numbered_dup(found[role].get("source_url", "")):
+                    # Stale WordPress duplicate page (-2) must not overwrite an active canonical URL unless only adding NIP
+                    if res.get("nip") and not found[role].get("nip") and res["name"].split(",")[0].lower() == found[role]["name"].split(",")[0].lower():
+                        found[role]["nip"] = res["nip"]
+                elif _is_numbered_dup(found[role].get("source_url", "")) and not _is_numbered_dup(fu):
+                    found[role] = res
+                elif _prefer_richer_person_name(found[role]["name"], res["name"]) != found[role]["name"]:
+                    found[role] = res
+
+    for wp_u, wp_body in wp_inline_pages:
+        _inspect_html(wp_body, wp_u)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+        for _, s, body, fu in ex.map(_fetch_one, all_inspect):
+            if s == 200 and body:
+                _inspect_html(body, fu)
+
+    # One bounded micro-hop for department sub-links (e.g. if.undip.ac.id -> /pimpinan-departemen-prodi/)
+    if "head_program" not in found and discovered_subprodi:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
+            for _, s, body, fu in ex.map(_fetch_one, discovered_subprodi[:4]):
+                if s == 200 and body:
+                    _inspect_html(body, fu)
 
     return found, pdfs
 
@@ -1384,63 +1970,137 @@ def _search_officials_on_web(
     universitas: str,
     fakultas: str = "",
     program_studi: str = "",
+    roles_wanted: Optional[List[str]] = None,
 ) -> Dict[str, Dict[str, str]]:
-    """Search official .ac.id pages via DuckDuckGo Lite/HTML fallback when direct site crawl didn't find them."""
+    """Search official .ac.id pages, Bing/Yahoo snippets, and Google News ID (last-resort WAF fallback)."""
     found: Dict[str, Dict[str, str]] = {}
-    site_filter = f"site:{domain}" if domain else f'"{universitas}"'
+    wanted = set(roles_wanted or ("rector", "dean", "head_program"))
+    dom_tok = domain.strip() if domain else f'"{universitas}"'
+    uni_short = _infer_short_name(universitas)
+    uni_tokens = [t for t in (dom_tok, uni_short.lower(), universitas.lower()) if t]
+    fk_kws = _extract_unit_keywords(fakultas, r"^fakultas\s+", is_faculty=True) if fakultas.strip() else []
+    ps_kws = _extract_unit_keywords(program_studi, r"^(?:program\s+studi|prodi|s1|d3|d4|diploma\s+[ivx0-9]+)\s+", is_faculty=False) if program_studi.strip() else []
 
-    queries: List[Tuple[str, str, List[str], List[str], List[str]]] = []
-    if fakultas.strip():
-        fk_short = re.sub(r"^fakultas\s+", "", fakultas.strip(), flags=re.I)
-        fk_kws = [w.lower() for w in fk_short.split() if len(w) > 3]
+    queries: List[Tuple[str, List[str], List[str], List[str], List[str]]] = []
+    if "rector" in wanted:
+        r_pats = [r"\b(?:Rektor|Plt\.?\s*Direktur|Direktur|Rector)\b"]
+        r_excl = [r"^(?!.*\bRektor\b).*Senat|Wakil\s+Rektor|Vice\s+Rector|Sekretaris|Mantan|Sambutan"]
+        r_q = [
+            f"{dom_tok} pimpinan rektor prof",
+            f'{dom_tok} pimpinan rektor "Prof." OR "Dr."',
+        ]
+        if any(k in universitas.lower() for k in ("politeknik", "polines")):
+            r_q.insert(0, f"{dom_tok} direktur pimpinan prof dr")
+        queries.append(("rector", r_q, r_pats, r_excl, [w for w in universitas.lower().split() if len(w) > 3]))
+    if "dean" in wanted and fakultas.strip():
         queries.append((
             "dean",
-            f'{site_filter} "Dekan" "{fakultas.strip()}"',
-            [r"\bDekan\b"],
-            [r"Wakil\s+Dekan|Pembantu\s+Dekan"],
+            [
+                f"{dom_tok} pimpinan dekan {' '.join(fk_kws[:2])}".strip(),
+                f'{dom_tok} "Dekan" "{fakultas.strip()}"',
+            ],
+            [r"\b(?:Dekan|Dean(?:\s+of)?)\b"],
+            [r"Wakil\s+Dekan|Pembantu\s+Dekan|Mantan|Sebelum\s+menjabat|Selama\s+menjabat|Pernah\s+menjabat|Sempat\s+menjabat"],
             fk_kws,
         ))
-    if program_studi.strip():
+    if "head_program" in wanted and program_studi.strip():
         ps_clean = re.sub(r"^(?:program\s+studi|prodi|s1|d3|d4)\s+", "", program_studi.strip(), flags=re.I)
-        ps_kws = [w.lower() for w in ps_clean.split() if len(w) > 3]
         queries.append((
             "head_program",
-            f'{site_filter} ("Ketua Program Studi" OR "Kaprodi" OR "Koordinator Program Studi") "{ps_clean}"',
-            [r"\b(?:Ketua\s+Program\s+Studi|Kaprodi|Koordinator\s+Program\s+Studi|Ketua\s+Jurusan)\b"],
-            [r"Sekretaris\s+Program"],
+            [
+                f"{dom_tok} kaprodi {ps_clean}",
+                f'{dom_tok} ("Ketua Program Studi" OR "Kaprodi" OR "Ka. Prodi" OR "Koordinator Program Studi") "{ps_clean}"',
+            ],
+            [r"\b(?:Ketua\s+Program\s+Studi|Kaprodi|Ka\.?\s*Prodi|Koordinator\s+Program\s+Studi|Koorprodi|Ketua\s+Departemen|Ketua\s+Jurusan)\b"],
+            [r"^(?!.*\b(?:Ketua|Kaprodi|Ka\.?\s*Prodi|Koordinator)\b).*Sekretaris\s+(?:Program|Departemen)|Wakil\s+Ketua"],
             ps_kws,
         ))
 
     visited_urls: Dict[str, List[str]] = {}
-    for role, q, role_pats, excl_pats, ctx_kws in queries:
-        hits = _duckduckgo_search(q, max_results=3)
-        for h in hits[:2]:
-            u = h["url"]
-            if domain and domain not in _extract_domain(u):
+    uni_kw_tokens = [w for w in universitas.lower().split() if len(w) > 3 and w not in ("universitas", "institut", "politeknik", "sekolah", "tinggi", "negeri", "semarang", "indonesia")]
+    for role, q_list, role_pats, excl_pats, ctx_kws in queries:
+        for q in q_list:
+            if role in found and _has_academic_titles(found[role]["name"]):
+                break
+            hits = _web_search(q, max_results=5, target_domain=domain)
+            for h in hits[:4]:
+                u = h["url"]
+                u_dom = _extract_domain(u)
+                u_low = u.lower()
+                if "wikipedia.org/wiki/dekan" in u_low or "wikipedia.org/wiki/rektor" in u_low or "wikipedia.org/wiki/universitas" == u_low.rstrip("/"):
+                    continue
+                is_same_campus_dom = bool(domain and (u_dom == domain or u_dom.endswith("." + domain)))
+                is_uni_wiki = ".wikipedia.org" in u_dom and (not uni_kw_tokens or any(ut in f"{u_low} {h.get('title', '').lower()}" for ut in uni_kw_tokens))
+                if domain:
+                    if not is_same_campus_dom and not is_uni_wiki:
+                        continue
+                elif ".ac.id" not in u_dom and not is_uni_wiki:
+                    continue
+                if re.search(r"/20(?:0\d|1[0-8])/\d{2}/", u_low) and not re.search(r"\b202[0-9]\b", f"{h.get('title', '')} {h.get('snippet', '')}"):
+                    continue
+                if _is_news_url(u):
+                    continue
+                # 1) Try direct fetch of non-news official page
+                if u not in visited_urls:
+                    st, body, fu = _http_get(u, headers={"User-Agent": BROWSER_UA}, timeout=5)
+                    if st == 200 and body and not _is_news_url(fu or u):
+                        visited_urls[u] = _html_to_lines(body)
+                    else:
+                        visited_urls[u] = []
+                lines = visited_urls[u]
+                if lines:
+                    res = _extract_official_from_text_window(
+                        lines, role_pats, ctx_kws, exclude_patterns=excl_pats,
+                        faculty_kws=ctx_kws if role == "dean" else None,
+                        program_kws=ctx_kws if role == "head_program" else None,
+                    )
+                    if res:
+                        res["source_url"] = u
+                        res["source_label"] = "Situs Resmi Kampus"
+                        found[role] = res
+                        break
+                # 2) Fallback: parse search snippet directly (handles WAF-protected portals like HTTP 403/468 cleanly!)
+                raw_snip_text = f"{h.get('title', '')}\n{h.get('snippet', '')}"
+                snip_lines = [re.sub(r"\s+", " ", s).strip() for s in re.split(r"[\n;•|]+|\s{2,}", raw_snip_text) if s.strip()]
+                snip_blob = f"{u} {raw_snip_text}".lower()
+                if any(ut in snip_blob for ut in uni_tokens) and not _is_news_url(u):
+                    res_sn = _extract_official_from_text_window(
+                        snip_lines, role_pats, [] if (domain and domain in u_dom) else ctx_kws,
+                        exclude_patterns=excl_pats,
+                        faculty_kws=ctx_kws if role == "dean" else None,
+                        program_kws=ctx_kws if role == "head_program" else None,
+                    )
+                    if res_sn:
+                        res_sn["source_url"] = u
+                        res_sn["source_label"] = "Indeks Situs Resmi"
+                        found[role] = res_sn
+                        break
+
+    # 3) Last-resort Google News headline fallback ONLY for still-missing Rector/Dean on WAF-blocked campuses
+    news_bad = ("berpulang", "wafat", "meninggal", "mantan", "periode 201", "kontak", "demo", "kasus", "dugaan", "palsu")
+    for role in ("rector", "dean"):
+        if role not in wanted or role in found:
+            continue
+        if role == "dean" and not fakultas.strip():
+            continue
+        role_lbl = "Direktur" if (role == "rector" and any(k in universitas.lower() for k in ("politeknik", "polines"))) else ("Rektor" if role == "rector" else "Dekan")
+        nq = f'"{role_lbl}" "{uni_short or universitas}" {"Prof OR Dr" if role == "rector" else fakultas.strip()}'
+        for it in _google_news_rss_search(nq, max_results=5):
+            tl = it["title"].lower()
+            if any(bw in tl for bw in news_bad):
                 continue
-            if u not in visited_urls:
-                st, body, _ = _http_get(u, headers={"User-Agent": BROWSER_UA}, timeout=7)
-                visited_urls[u] = _html_to_lines(body) if st == 200 and body else []
-            lines = visited_urls[u]
-            if lines:
-                res = _extract_official_from_text_window(
-                    lines, role_pats, ctx_kws, exclude_patterns=excl_pats,
-                    faculty_kws=ctx_kws if role == "dean" else None,
-                )
-                if res:
-                    res["source_url"] = u
-                    res["source_label"] = "Situs Resmi Kampus"
-                    found[role] = res
-                    break
-            snip_lines = [h.get("title", ""), h.get("snippet", "")]
-            res_sn = _extract_official_from_text_window(
-                snip_lines, role_pats, ctx_kws, exclude_patterns=excl_pats,
-                faculty_kws=ctx_kws if role == "dean" else None,
+            if not any(ut in tl for ut in (uni_short.lower(), universitas.lower())):
+                continue
+            pats = [rf"\b{role_lbl}\b"]
+            res_n = _extract_official_from_text_window(
+                [it["title"]], pats, fk_kws if role == "dean" else [],
+                exclude_patterns=[r"Wakil\s+(?:Rektor|Dekan|Direktur)|Mantan|Sekretaris"],
+                faculty_kws=fk_kws if role == "dean" else None,
             )
-            if res_sn:
-                res_sn["source_url"] = u
-                res_sn["source_label"] = "Indeks Situs Resmi"
-                found[role] = res_sn
+            if res_n and _has_academic_titles(res_n["name"]):
+                res_n["source_url"] = it["url"]
+                res_n["source_label"] = "Berita Pelantikan/Pers Resmi"
+                found[role] = res_n
                 break
     return found
 
@@ -1459,14 +2119,14 @@ def cari_pedoman_kampus_online(
     if fakultas.strip():
         parts.append(f'"{fakultas.strip()}"')
     q_base = " ".join(parts)
-    queries = [f'filetype:pdf ("pedoman penulisan skripsi" OR "panduan tugas akhir" OR "pedoman tugas akhir") {q_base}']
+    queries = [f'"pedoman penulisan skripsi" OR "panduan tugas akhir" OR "pedoman tugas akhir" {q_base} pdf']
     if domain:
-        queries.append(f'site:{domain} filetype:pdf ("pedoman" OR "panduan") ("skripsi" OR "tugas akhir")')
+        queries.append(f'{domain} pedoman panduan skripsi OR "tugas akhir" pdf')
 
     seen = set()
     pdfs: List[Dict[str, str]] = []
     for q in queries:
-        for h in _duckduckgo_search(q, max_results=limit + 3):
+        for h in _web_search(q, max_results=limit + 4):
             u = h["url"]
             if u in seen:
                 continue
@@ -1569,28 +2229,43 @@ def cari_identitas_dan_pejabat_kampus(
     elif wiki.get("rector"):
         _set_field("rector", wiki["rector"], True, "Wikipedia Infobox", wiki.get("rector_source") or wiki.get("wikipedia_url", ""))
 
-    # Deep search on official campus domain for Dean, Head of Program, and Rector confirmation
+    # Deep search on official campus domain for Dean, Head of Program, and Rector confirmation/title enrichment
     web_officials: Dict[str, Dict[str, str]] = {}
     site_pdfs: List[Dict[str, str]] = []
     if deep_official_search and (website or domain or univ_in):
         site_officials, site_pdfs = _crawl_campus_official_pages(website, domain, fakultas=fakultas, program_studi=program_studi)
         web_officials.update(site_officials)
+        cur_rector = (web_officials.get("rector", {}) or {}).get("name") or fields.get("rector", {}).get("value", "")
         missing_roles = [r for r in ("dean", "head_program") if r not in web_officials]
+        if not cur_rector or not _has_academic_titles(cur_rector):
+            missing_roles.append("rector")
         if missing_roles:
-            ddg_off = _search_officials_on_web(domain, official_univ, fakultas=fakultas, program_studi=program_studi)
-            for k, v in ddg_off.items():
-                if k not in web_officials:
+            web_hits = _search_officials_on_web(
+                domain, official_univ, fakultas=fakultas, program_studi=program_studi, roles_wanted=missing_roles
+            )
+            for k, v in web_hits.items():
+                if k not in web_officials or _prefer_richer_person_name(web_officials[k]["name"], v["name"]) != web_officials[k]["name"]:
                     web_officials[k] = v
         if "rector" in web_officials:
             r_info = web_officials["rector"]
-            _set_field("rector", r_info["name"], True, r_info["source_label"], r_info["source_url"], r_info.get("snippet", ""))
+            cur_val = fields.get("rector", {}).get("value", "")
+            is_dup_slug = bool(re.search(r"-\d+/?$", r_info.get("source_url", "")))
+            if not (is_dup_slug and _has_academic_titles(cur_val) and r_info["name"].lower() not in cur_val.lower() and cur_val.lower() not in r_info["name"].lower()):
+                best_r = _prefer_richer_person_name(cur_val, r_info["name"])
+                if best_r == r_info["name"]:
+                    _set_field("rector", r_info["name"], True, r_info["source_label"], r_info["source_url"], r_info.get("snippet", ""))
             if r_info.get("nip"):
                 _set_field("id_rector", r_info["nip"], True, r_info["source_label"], r_info["source_url"])
         if "dean" in web_officials:
             d_info = web_officials["dean"]
-            _set_field("dean", d_info["name"], True, d_info["source_label"], d_info["source_url"], d_info.get("snippet", ""))
-            if d_info.get("nip"):
-                _set_field("id_dean", d_info["nip"], True, d_info["source_label"], d_info["source_url"])
+            r_name = (fields.get("rector") or {}).get("value", "")
+            r_core = {w for w in re.findall(r"[a-z]{3,}", r_name.split(",")[0].lower()) if w not in ("prof", "dr", "drs", "dra", "ir", "hj", "kh", "plt")}
+            d_core = {w for w in re.findall(r"[a-z]{3,}", d_info["name"].split(",")[0].lower()) if w not in ("prof", "dr", "drs", "dra", "ir", "hj", "kh", "plt")}
+            is_stale_rector_dean = bool(r_core and len(r_core & d_core) >= min(2, len(r_core)) and "plt" not in d_info.get("snippet", "").lower())
+            if not is_stale_rector_dean:
+                _set_field("dean", d_info["name"], True, d_info["source_label"], d_info["source_url"], d_info.get("snippet", ""))
+                if d_info.get("nip"):
+                    _set_field("id_dean", d_info["nip"], True, d_info["source_label"], d_info["source_url"])
         if "head_program" in web_officials:
             h_info = web_officials["head_program"]
             _set_field("head_program", h_info["name"], True, h_info["source_label"], h_info["source_url"], h_info.get("snippet", ""))

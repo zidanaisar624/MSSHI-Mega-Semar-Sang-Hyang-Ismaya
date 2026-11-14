@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-MuZA_Skripsi_Template v1.0 — Thesis & Skripsi Word (.docx) Builder (MuZA Project).
+MuZA_Skripsi_Template v1.1 — Thesis & Skripsi Word (.docx) Builder (MuZA Project).
 
 Turns a JSON spec (extracted from a campus thesis guideline, optionally merged
-with a methodology preset and MuZA_Search v1.0 research outputs) into a
+with a methodology preset and MuZA_Search v1.1 research outputs) into a
 finished-looking .docx template with:
   - Redesigned tutorial & cheat-sheet guide page
   - Indonesian academic Three-Line (booktabs) tables with repeat headers
@@ -11,10 +11,10 @@ finished-looking .docx template with:
   - Blockquote ('Kutipan Langsung') & centered Equation ('Rumus') styles/blocks
   - Live Word SEQ captions + auto-filled Daftar Isi/Tabel/Gambar/Lampiran
     (via LibreOffice render OR Analytical Fallback Page Estimator)
-  - Direct injection of MuZA_Search v1.0 Bab 2 synthesis tables & APA/IEEE references
+  - Direct injection of MuZA_Search v1.1 Bab 2 synthesis tables & APA/IEEE references
 
 Usage:
-    python build_template.py spec.json Output.docx [--muza-zip file.zip] [--preset informatika_ilkom] [--logo logo.png]
+    python build_template.py spec.json Output.docx --auto-online [--universitas "..."] [--fakultas "..."] [--prodi "..."] [--muza-zip file.zip]
 """
 import argparse
 import copy
@@ -62,17 +62,17 @@ PAPER = {
 }
 GREY = RGBColor(0x80, 0x80, 0x80)
 BLACK = RGBColor(0, 0, 0)
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PRESETS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "assets", "presets")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else os.getcwd()
+PRESETS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "assets", "presets") if "__file__" in globals() else SCRIPT_DIR
 
 DEFAULT_PLACEHOLDERS = [
     {"key": "title", "sample": "JUDUL SKRIPSI DITULIS DI SINI MENGGUNAKAN HURUF KAPITAL", "label": "Judul skripsi"},
     {"key": "name", "sample": "NAMA LENGKAP MAHASISWA", "label": "Nama lengkap mahasiswa (isi sendiri setelah unduh template)"},
     {"key": "nim", "sample": "0000000000", "label": "NIM mahasiswa (isi sendiri setelah unduh template)"},
-    {"key": "supervisor1", "sample": "Nama Pembimbing I, Gelar", "label": "Nama pembimbing I"},
-    {"key": "id1", "sample": "0000000001", "label": "NIDN/NIP pembimbing I"},
-    {"key": "supervisor2", "sample": "Nama Pembimbing II, Gelar", "label": "Nama pembimbing II"},
-    {"key": "id2", "sample": "0000000002", "label": "NIDN/NIP pembimbing II"},
+    {"key": "supervisor1", "sample": "Nama Pembimbing I, Gelar", "label": "Nama Pembimbing I (isi sendiri via Ctrl+H — berbeda tiap mahasiswa)"},
+    {"key": "id1", "sample": "0000000001", "label": "NIDN/NIP Pembimbing I (isi sendiri via Ctrl+H)"},
+    {"key": "supervisor2", "sample": "Nama Pembimbing II, Gelar", "label": "Nama Pembimbing II (isi sendiri via Ctrl+H — berbeda tiap mahasiswa)"},
+    {"key": "id2", "sample": "0000000002", "label": "NIDN/NIP Pembimbing II (isi sendiri via Ctrl+H)"},
     {"key": "dean", "sample": "Nama Dekan Fakultas, Gelar", "label": "Nama Dekan fakultas"},
     {"key": "id_dean", "sample": "0000000000", "label": "NIP / NIDN Dekan"},
     {"key": "head_program", "sample": "Nama Ketua Program Studi, Gelar", "label": "Nama Ketua Program Studi / Kaprodi"},
@@ -346,9 +346,9 @@ def make_logo_placeholder(path, label="LOGO\nKAMPUS"):
     except ImportError:
         return False
     size = 800
-    img = Image.new("RGBA", (size, size), (255, 255, 255, 0))
+    img = Image.new("RGB", (size, size), (255, 255, 255))
     d = ImageDraw.Draw(img)
-    d.ellipse([24, 24, size - 24, size - 24], fill=(244, 244, 248, 255), outline=(140, 140, 160, 255), width=14)
+    d.ellipse([24, 24, size - 24, size - 24], fill=(244, 244, 248), outline=(140, 140, 160), width=14)
     font_path = _pick_system_font(bold=True)
     if font_path:
         font = ImageFont.truetype(font_path, 96)
@@ -357,12 +357,75 @@ def make_logo_placeholder(path, label="LOGO\nKAMPUS"):
         font = small = ImageFont.load_default()
     bbox = d.multiline_textbbox((0, 0), label, font=font, align="center", spacing=18)
     w, h = bbox[2] - bbox[0], bbox[3] - bbox[1]
-    d.multiline_text(((size - w) / 2, (size - h) / 2 - 42), label, font=font, fill=(95, 95, 115, 255), align="center", spacing=18)
+    d.multiline_text(((size - w) / 2, (size - h) / 2 - 42), label, font=font, fill=(95, 95, 115), align="center", spacing=18)
     hint = "klik kanan > Ubah Gambar"
     bb = d.textbbox((0, 0), hint, font=small)
-    d.text(((size - (bb[2] - bb[0])) / 2, size / 2 + h / 2 + 8), hint, font=small, fill=(135, 135, 150, 255))
-    img.save(path)
+    d.text(((size - (bb[2] - bb[0])) / 2, size / 2 + h / 2 + 8), hint, font=small, fill=(135, 135, 150))
+    img.save(path, format="PNG", dpi=(300, 300))
     return True
+
+
+def _normalize_image_for_word(src_path, dst_path):
+    """Normalize any local/downloaded logo onto crisp opaque white RGB PNG at 300 DPI for Word compatibility."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return src_path, 0, 0
+    try:
+        with Image.open(src_path) as im:
+            im.load()
+            w, h = im.size
+            if im.mode in ("RGBA", "LA") or ("transparency" in im.info and im.mode in ("P", "RGB", "L")):
+                rgba = im.convert("RGBA")
+                canvas = Image.new("RGB", rgba.size, (255, 255, 255))
+                canvas.paste(rgba, mask=rgba.split()[3])
+                out_im = canvas
+            elif im.mode != "RGB":
+                out_im = im.convert("RGB")
+            else:
+                out_im = im.copy()
+            clean = Image.frombytes("RGB", out_im.size, out_im.tobytes())
+            clean.save(dst_path, format="PNG", dpi=(300, 300))
+            return dst_path, w, h
+    except Exception:
+        return src_path, 0, 0
+
+
+def _harden_drawing_xml(run, pic_id, name_label):
+    """Match Microsoft Word native DrawingML attributes (`noProof`, `effectExtent`, `picLocks`, `avLst`, unique `cNvPr`)."""
+    r_el = run._r
+    rpr = r_el.find(qn("w:rPr"))
+    if rpr is None:
+        rpr = OxmlElement("w:rPr")
+        r_el.insert(0, rpr)
+    if rpr.find(qn("w:noProof")) is None:
+        rpr.append(OxmlElement("w:noProof"))
+
+    wp_ns = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+    a_ns = "http://schemas.openxmlformats.org/drawingml/2006/main"
+    pic_ns = "http://schemas.openxmlformats.org/drawingml/2006/picture"
+    for inline in r_el.findall(f".//{{{wp_ns}}}inline"):
+        for attr in ("distT", "distB", "distL", "distR"):
+            if inline.get(attr) is None:
+                inline.set(attr, "0")
+        extent = inline.find(f"{{{wp_ns}}}extent")
+        if inline.find(f"{{{wp_ns}}}effectExtent") is None:
+            ee = OxmlElement("wp:effectExtent")
+            for attr in ("l", "t", "r", "b"):
+                ee.set(attr, "0")
+            if extent is not None:
+                extent.addnext(ee)
+        for cnv in inline.findall(f".//{{{pic_ns}}}cNvPr"):
+            cnv.set("id", str(pic_id))
+            cnv.set("name", name_label)
+        for cnv_p in inline.findall(f".//{{{pic_ns}}}cNvPicPr"):
+            if cnv_p.find(f"{{{a_ns}}}picLocks") is None:
+                pl = OxmlElement("a:picLocks")
+                pl.set("noChangeAspect", "1")
+                cnv_p.append(pl)
+        for geom in inline.findall(f".//{{{a_ns}}}prstGeom"):
+            if geom.find(f"{{{a_ns}}}avLst") is None:
+                geom.append(OxmlElement("a:avLst"))
 
 
 def make_figure_placeholder(path):
@@ -380,11 +443,11 @@ def make_figure_placeholder(path):
     text = "Contoh Gambar Penelitian\nklik kanan > Ubah Gambar / Change Picture"
     bb = d.multiline_textbbox((0, 0), text, font=font, align="center", spacing=20)
     d.multiline_text(((1200 - (bb[2] - bb[0])) / 2, (700 - (bb[3] - bb[1])) / 2), text, font=font, fill=(115, 120, 135), align="center", spacing=20)
-    img.save(path)
+    img.save(path, format="PNG", dpi=(300, 300))
     return True
 
 
-# --------------------------------------------------------------------------- MuZA_Search v1.0 integration helpers
+# --------------------------------------------------------------------------- MuZA_Search v1.1 integration helpers
 
 def _strip_tags_clean(s):
     return re.sub(r"\s+", " ", str(s or "")).strip()
@@ -726,12 +789,19 @@ def _resolve_preset_path(name_or_path):
 
 
 def apply_preset_to_spec(spec, preset_name):
-    ppath = _resolve_preset_path(preset_name)
-    if not ppath:
-        warn("Preset not found: %s" % preset_name)
+    if not preset_name:
         return spec
-    with open(ppath, "r", encoding="utf-8") as f:
-        pdata = json.load(f)
+    clean = re.sub(r"\.json$", "", str(preset_name).strip().lower())
+    key_map = {"r&d": "rnd", "informatika": "informatika_ilkom", "ilkom": "informatika_ilkom"}
+    key = key_map.get(clean, clean)
+    pdata = (globals().get("PRESETS") or {}).get(key)
+    if pdata is None:
+        ppath = _resolve_preset_path(preset_name)
+        if not ppath:
+            warn("Preset not found: %s" % preset_name)
+            return spec
+        with open(ppath, "r", encoding="utf-8") as f:
+            pdata = json.load(f)
     spec = json.loads(json.dumps(spec))
     if pdata.get("chapters"):
         spec.setdefault("body", {})["chapters"] = pdata["chapters"]
@@ -1342,13 +1412,19 @@ class Builder:
     def cover_lines(self, lines, auto=False, title_pt=0):
         if auto:
             lines = self.auto_space(lines, title_pt)
+        pending_logo_comment = None
         for item in lines:
             if item.get("type") == "fields":
                 self.fields_table(item.get("rows", []), item.get("label_width_cm", 3.5))
                 continue
             if item.get("type") == "logo":
-                p = self.doc.add_paragraph(style="Sampul")
+                # Keep logo paragraph on clean Normal style (avoid Sampul <w:caps/> & comment wrapper around drawing XML)
+                p = self.doc.add_paragraph()
                 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p.paragraph_format.first_line_indent = Cm(0)
+                p.paragraph_format.left_indent = Cm(0)
+                p.paragraph_format.right_indent = Cm(0)
+                p.paragraph_format.line_spacing = 1.0
                 p.paragraph_format.space_before = Pt(item.get("space_before", 0))
                 p.paragraph_format.space_after = Pt(item.get("space_after", 0))
                 path = self.logo_override or item.get("path")
@@ -1357,17 +1433,23 @@ class Builder:
                     if not os.path.exists(path) and not make_logo_placeholder(path):
                         self.add_text(p, "[ LOGO KAMPUS ]", hint=True)
                         continue
-                w = item.get("width_cm", 4)
+                norm_idx = getattr(self, "_pic_seq", 0) + 1
+                self._pic_seq = norm_idx
+                norm_path = os.path.join(self.workdir, f"word_ready_logo_{norm_idx}.png")
+                clean_path, w_px, h_px = _normalize_image_for_word(path, norm_path)
+                w = float(item.get("width_cm", 4))
                 h = item.get("height_cm")
+                if not h and w_px and h_px and (w_px / max(1, h_px) > 1.75):
+                    w = min(max(w, 5.5), self.lay.text_width * 0.55)
                 logo_run = p.add_run()
-                logo_run.add_picture(path, width=Cm(w), height=Cm(h) if h else None)
+                logo_run.add_picture(clean_path, width=Cm(w), height=Cm(h) if h else None)
+                _harden_drawing_xml(logo_run, 1000 + norm_idx, f"Logo_Kampus_{norm_idx}")
                 ov_logo = (self.spec.get("online_verification") or {}).get("logo") or {}
                 if ov_logo.get("ok") and not self._logo_comment_done:
                     self._logo_comment_done = True
-                    self.comment(
-                        [logo_run],
+                    pending_logo_comment = (
                         f"Logo kampus dipasang otomatis dari sumber resmi ({ov_logo.get('method', 'Online')}: "
-                        f"{ov_logo.get('source_url', '-')}). Klik kanan -> Change Picture jika perlu variasi logo fakultas.",
+                        f"{ov_logo.get('source_url', '-')}). Klik kanan -> Change Picture jika perlu variasi logo fakultas."
                     )
                 continue
             p = self.doc.add_paragraph(style="Sampul")
@@ -1379,8 +1461,11 @@ class Builder:
             raw_text = self.sub(item.get("text", ""))
             if item.get("inverted_pyramid"):
                 raw_text = _format_inverted_pyramid(raw_text)
-            self.add_text(p, raw_text, bold=item.get("bold", True), italic=item.get("italic"),
-                          size=item.get("size"), caps=item.get("caps"))
+            runs = self.add_text(p, raw_text, bold=item.get("bold", True), italic=item.get("italic"),
+                                 size=item.get("size"), caps=item.get("caps"))
+            if pending_logo_comment and runs:
+                self.comment(runs, pending_logo_comment, "Logo Kampus")
+                pending_logo_comment = None
 
     def tutorial_page(self):
         doc, spec = self.doc, self.spec
@@ -1423,17 +1508,17 @@ class Builder:
         )
         step2_body = (
             f"Logo {campus.get('university', 'kampus')} sudah diunduh dan dipasang otomatis di Sampul & Halaman Judul "
-            f"(sumber: {ov_logo.get('source_url') or 'file lokal'}). Jika prodi/fakultas memakai variasi logo khusus, "
-            "klik kanan gambar logo -> Change Picture."
+            f"(sumber: {ov_logo.get('source_url') or 'file lokal'}). Jika file terbuka di Word Protected View dan logo belum tampak, "
+            "klik Enable Editing di bilah atas; klik kanan gambar -> Change Picture jika perlu variasi logo fakultas."
             if has_real_logo
             else "Klik kanan gambar lingkaran LOGO KAMPUS -> pilih Change Picture / Ubah Gambar -> pilih logo resmimu. "
                  "Dimensi cm logo sudah disesuaikan dengan pedoman."
         )
         steps = [
-            ("1. Semua halaman wajib sudah jadi — isi Nama & NIM kamu sendiri via Ctrl+H",
+            ("1. Semua halaman wajib sudah jadi — isi Nama, NIM & Pembimbing sendiri via Ctrl+H",
              "Sampul, halaman judul, pengesahan, pernyataan keaslian, abstrak, kata pengantar, BAB I-V, daftar pustaka, "
-             "dan lampiran sudah terisi rapi. Nama Mahasiswa dan NIM sengaja dipertahankan sebagai contoh agar kamu "
-             "isi sendiri menggunakan Find & Replace (Ctrl+H) sesuai tabel di bawah."),
+             "dan lampiran sudah terisi rapi. Nama Mahasiswa, NIM, serta Dosen Pembimbing I & II sengaja dipertahankan "
+             "sebagai contoh agar kamu isi sendiri menggunakan Find & Replace (Ctrl+H) sesuai tabel di bawah."),
             (step2_title, step2_body),
             ("3. Petunjuk isi tiap sub-bab & sumber data pejabat ada di Komentar (Margin Review)",
              "Arahan pedoman kampus ditempatkan sebagai Word Comments dari MuZA Agent (tab Review). Komentar tidak ikut "
@@ -1514,8 +1599,11 @@ class Builder:
         for k in self.placeholders:
             if "{" + k + "}" in blob:
                 used.add(k)
-        # Keep student & unresolved/editable placeholders in Find & Replace table
-        verified_static = {k for k, v in ov_fields.items() if v.get("verified") and k in ("city", "university", "short", "ministry")}
+        # Keep student, advisor (pembimbing cannot be automated), and unresolved/editable placeholders in Find & Replace table
+        verified_static = {
+            k for k, v in ov_fields.items()
+            if v.get("verified") and k in ("city", "university", "short", "ministry", "rector", "id_rector", "dean", "id_dean", "head_program", "id_head")
+        }
         skip_replace = {"university", "short", "faculty", "program", "ministry"} | verified_static
         rows = [["Teks contoh di template", "Ganti dengan (via Find & Replace Ctrl+H)"]]
         rows += [
@@ -1706,7 +1794,11 @@ class Builder:
         p.paragraph_format.keep_with_next = True
         path = os.path.join(self.workdir, "figure_placeholder.png")
         if make_figure_placeholder(path):
-            p.add_run().add_picture(path, width=Cm(min(10, self.lay.text_width)))
+            fig_run = p.add_run()
+            fig_run.add_picture(path, width=Cm(min(10, self.lay.text_width)))
+            fig_id = getattr(self, "_pic_seq", 0) + 1
+            self._pic_seq = fig_id
+            _harden_drawing_xml(fig_run, 1000 + fig_id, f"Gambar_Contoh_{fig_id}")
         fcap = cap.get("figure_example", "Gambar %s.1 Contoh Judul Gambar" % n)
         fp, _, resolved_f = self.add_caption_with_seq(fcap, style="Judul Gambar", chapter_num=n)
         self.record("caption", "Judul Gambar", resolved_f, region="body", para_obj=fp)
@@ -1743,7 +1835,13 @@ class Builder:
             if pg.get("title"):
                 bp, runs = self.para(pg["title"], style="Judul Bagian" if in_toc else "Judul Bagian Tanpa Daftar Isi")
                 self.record("heading", "toc 1", pg["title"], toc=in_toc, region="body", para_obj=bp, page_prefix=prefix)
-                self.comment(runs, pg.get("hint"))
+                hint_txt = pg.get("hint")
+                if pg.get("kind") == "references" and hint_txt and "apa" in hint_txt.lower() and "apa" not in cite_style.lower():
+                    hint_txt = (
+                        f"Gaya {cite_style}, spasi 1, disusun rapi sesuai pedoman kampus. "
+                        "Otomatis terisi jika memakai --muza-zip MuZA_Search v1.1."
+                    )
+                self.comment(runs, hint_txt)
 
             kind = pg.get("kind", "page")
             if kind == "references":
@@ -1790,7 +1888,7 @@ class Builder:
             _insert_before(settings, uf, after)
 
         cp = self.doc.core_properties
-        cp.title = "Template Skripsi %s (MuZA_Skripsi_Template v1.0)" % self.spec.get("campus", {}).get("university", "")
+        cp.title = "Template Skripsi %s (MuZA_Skripsi_Template v1.1)" % self.spec.get("campus", {}).get("university", "")
         cp.author = "MuZA Agent — MuZA Project"
         return self.doc
 
@@ -2143,21 +2241,26 @@ def build_from_spec(spec, out_path, muza_zip=None, muza_bab2=None, muza_ris=None
     lookup_res = None
     if auto_online or (spec.get("auto_lookup") is True):
         try:
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            if script_dir not in sys.path:
-                sys.path.insert(0, script_dir)
-            from campus_lookup import cari_identitas_dan_pejabat_kampus, cari_pedoman_kampus_online
+            fn_lookup = globals().get("cari_identitas_dan_pejabat_kampus")
+            fn_pedoman = globals().get("cari_pedoman_kampus_online")
+            if fn_lookup is None or fn_pedoman is None:
+                if SCRIPT_DIR not in sys.path:
+                    sys.path.insert(0, SCRIPT_DIR)
+                from campus_lookup import (
+                    cari_identitas_dan_pejabat_kampus as fn_lookup,
+                    cari_pedoman_kampus_online as fn_pedoman,
+                )
             c = spec.get("campus") or {}
             uni_q = c.get("university", "")
             fac_q = c.get("faculty", "")
             prog_q = c.get("program", "")
             if uni_q and "contoh" not in uni_q.lower():
                 auto_logo_dest = None if (logo_path and os.path.exists(logo_path)) else os.path.join(work, "logo_kampus_resmi.png")
-                lookup_res = cari_identitas_dan_pejabat_kampus(
+                lookup_res = fn_lookup(
                     uni_q, fakultas=fac_q, program_studi=prog_q, download_logo_to=auto_logo_dest
                 )
                 if find_pedoman:
-                    ddg_p = cari_pedoman_kampus_online(uni_q, fakultas=fac_q, program_studi=prog_q, domain=lookup_res.get("domain", ""))
+                    ddg_p = fn_pedoman(uni_q, fakultas=fac_q, program_studi=prog_q, domain=lookup_res.get("domain", ""))
                     seen_u = {x["url"] for x in lookup_res.get("site_pedoman_pdfs", [])}
                     lookup_res["pedoman_candidates"] = list(lookup_res.get("site_pedoman_pdfs", [])) + [x for x in ddg_p if x["url"] not in seen_u]
         except Exception as e:
@@ -2209,7 +2312,7 @@ def main():
     parser = argparse.ArgumentParser(description="MuZA_Skripsi_Template v1.1 (.docx Builder)")
     parser.add_argument("spec_json", help="Path to spec.json")
     parser.add_argument("out_docx", help="Output .docx path")
-    parser.add_argument("--muza-zip", default=None, help="MuZA_Search v1.0 output .zip for auto Bab 2 & References")
+    parser.add_argument("--muza-zip", default=None, help="MuZA_Search v1.1 output .zip for auto Bab 2 & References")
     parser.add_argument("--muza-bab2", default=None, help="MuZA_Search 02_TABEL_PENELITIAN_TERDAHULU_BAB2 (.csv/.xlsx)")
     parser.add_argument("--muza-ris", default=None, help="MuZA_Search 01_IMPOR_KE_ZOTERO.ris")
     parser.add_argument("--preset", default=None, help="Methodology preset: kuantitatif|kualitatif|rnd|informatika_ilkom|ptk")
@@ -2230,6 +2333,16 @@ def main():
         spec.setdefault("campus", {})["faculty"] = args.fakultas
     if args.prodi:
         spec.setdefault("campus", {})["program"] = args.prodi
+    src_t = spec.get("source_document", {}).get("title", "")
+    if (args.universitas or args.fakultas or args.prodi) and (
+        "Universitas Contoh" in src_t or "Fakultas Ilmu Komputer" in src_t
+    ):
+        fac_s = spec.get("campus", {}).get("faculty", "")
+        uni_s = spec.get("campus", {}).get("university", "")
+        if "ilmu komputer" not in fac_s.lower():
+            spec.setdefault("source_document", {})["title"] = (
+                f"Preset Akademik {args.preset or 'skripsi'} — {fac_s} {uni_s}".strip()
+            )
 
     res = build_from_spec(
         spec,

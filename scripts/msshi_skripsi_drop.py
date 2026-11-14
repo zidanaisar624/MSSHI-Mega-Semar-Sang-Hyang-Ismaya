@@ -231,6 +231,7 @@ def run_pipeline(
 
     campus = spec.setdefault("campus", {})
     if universitas:
+        campus["university"] = universitas
         campus["name"] = universitas
         campus["short"] = short_campus_slug(universitas)
     if fakultas:
@@ -302,7 +303,7 @@ def run_pipeline(
 
         print(f"\n[Tahap 5/5] SELESAI! Template tersimpan di:\n  {dest_docx}")
         print(f"Ukuran file: {dest_docx.stat().st_size:,} bytes")
-        print("Tips Cepat: Buka di Microsoft Word -> tekan Ctrl+H -> ganti {name}, {nim}, dan {title}!")
+        print("Tips Cepat: Buka di Microsoft Word -> tekan Ctrl+H -> ganti {name}, {nim}, Pembimbing I/II, dan {title}!")
         if not no_open and os.name == "nt" and sys.stdin.isatty():
             try:
                 os.startfile(str(dest_docx))

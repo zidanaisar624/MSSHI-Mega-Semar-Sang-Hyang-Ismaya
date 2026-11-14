@@ -163,7 +163,7 @@ flowchart LR
 > 2. Mengekstrak aturan fisik PDF (`extract_guideline.py`) &amp; melakukan lookup logo PNG + pejabat (`campus_lookup.py`).
 > 3. Menampilkan konfirmasi ringkasan berlabel transparan (`[Dari Pedoman]` vs `[*Default]` — nol data pejabat karangan!).
 > 4. Menjalankan `build_template.py` untuk membangun `.docx` ber-OOXML rapi &amp; menyuntik sitasi `MuZA_Search`.
-> 5. Menyampaikan lokasi output `.docx` adaptif + panduan cepat **`Ctrl+H`** untuk mengisi `{name}`, `{nim}`, &amp; `{title}`.
+> 5. Menyampaikan lokasi output `.docx` adaptif + panduan cepat **`Ctrl+H`** untuk mengisi `{name}`, `{nim}`, Pembimbing I/II, &amp; `{title}` (sedangkan logo 300 DPI + Rektor/Dekan/Kaprodi diisi otomatis oleh `campus_lookup.py`).
 
 ---
 

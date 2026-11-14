@@ -1,5 +1,5 @@
 {
- "_note": "EXAMPLE ONLY (MuZA_Skripsi_Template v1.1). Generic values, not from any real campus. Set auto_lookup=true or pass --auto-online to auto-fetch logo, city, ministry, degree, and official names; {name} & {nim} remain student self-edit placeholders.",
+ "_note": "EXAMPLE ONLY (MuZA_Skripsi_Template v1.1). Generic values, not from any real campus. Set auto_lookup=true or pass --auto-online to auto-fetch logo, city, ministry, degree, and campus official names (Rektor/Dekan/Kaprodi); {name}, {nim}, {supervisor1}, {id1}, {supervisor2}, and {id2} remain self-edit Ctrl+H placeholders.",
  "auto_lookup": false,
  "campus": {
   "university": "Universitas Contoh",
@@ -31,7 +31,7 @@
   },
   {
    "key": "dean",
-   "sample": "Prof. Dr. Nama Dekan, M.Kom.",
+   "sample": "Nama Dekan Fakultas, Gelar",
    "label": "Nama dekan"
   },
   {
@@ -51,7 +51,7 @@
   },
   {
    "key": "rector",
-   "sample": "Prof. Dr. Nama Rektor",
+   "sample": "Nama Rektor Perguruan Tinggi, Gelar",
    "label": "Nama Rektor / Pimpinan PT"
   }
  ],
@@ -461,7 +461,7 @@
      {
       "level": 2,
       "title": "2.2 Penelitian Terdahulu",
-      "hint": "Jika Anda menghubungkan ZIP/CSV dari MuZA_Search v1.0, tabel penelitian terdahulu otomatis disisipkan di sub-bab ini."
+      "hint": "Jika Anda menghubungkan ZIP/CSV dari MuZA_Search v1.1, tabel penelitian terdahulu otomatis disisipkan di sub-bab ini."
      },
      {
       "level": 2,
