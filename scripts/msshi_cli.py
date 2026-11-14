@@ -33,10 +33,11 @@ SEMVER = re.compile(r"(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?")
 PLATFORMS = (*installer.HOSTS, "manual")
 MODES = ("solo", "custom-bots", "selective", "muza-preset")
 RELEASE_DIRS = ("scripts", "configs", "skills", "docs", "portable", "assets", "adapters",
-                "business-sage", ".claude-plugin", "hermes_plugins", "optional")
+                "business-sage", ".claude-plugin", "hermes_plugins", "optional", "notebooks")
 RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md",
                  "LICENSE", "SKILL.md", "install.ps1", "install.sh", "package.json",
-                 "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat", "MULAI_DI_SINI_PEMULA.bat")
+                 "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat",
+                 "MULAI_DI_SINI_PEMULA.bat", "MULAI_SKRIPSI_DRAG_AND_DROP.bat")
 
 
 @contextmanager
@@ -551,12 +552,14 @@ def main(argv=None):
     updater.add_argument("--no-pdf", action="store_true", help="Lewati pertanyaan unduh Buku Panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
             'desktop': 'Status dan peluncur Hermes Desktop.',
             'audit': 'Periksa paket/profil dan bukti tanpa chat LLM.',
+            'doctor': 'Cek kesehatan sistem, Drive C:/D:, dependensi skripsi & paritas MSSHI.',
+            'skripsi': 'Rakit template skripsi Word (.docx) drag-and-drop via MuZA Skripsi v1.1.',
             'assets': 'Cari bahan persona pribadi di lokasi yang dipilih.',
             'compact': 'Padatkan data internal sesuai format yang didukung.',
             'browser': 'Periksa kebijakan Steel dan persetujuan browser personal.',
@@ -597,7 +600,7 @@ def main(argv=None):
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -618,7 +621,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",

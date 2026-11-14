@@ -39,7 +39,8 @@
         "prep-for-meetings-2",
         "rebuttal-writing",
         "research-paper-writing",
-        "unlimited-ocr-2"
+        "unlimited-ocr-2",
+        "muza-skripsi-template"
       ],
       "optional_skills": [
         "anti-slop",
@@ -96,7 +97,8 @@
         "rebuttal-writing",
         "research-paper-writing",
         "unlimited-ocr-2",
-        "wise-judgment-and-sovereign-orchestrator"
+        "wise-judgment-and-sovereign-orchestrator",
+        "muza-skripsi-template"
       ],
       "optional_skills": [
         "anti-slop",
@@ -168,7 +170,8 @@
         "timesfm-forecasting",
         "unslop",
         "scrapling",
-        "harness2"
+        "harness2",
+        "muza-skripsi-template"
       ],
       "optional_skills": [
         "anti-slop",
@@ -1041,6 +1044,13 @@
       "source": "https://github.com/ibelick/motion-primitives"
     },
     {
+      "slug": "muza-skripsi-template",
+      "status": "bundled",
+      "path": "skills/muza-skripsi-template/SKILL.md",
+      "purpose": "Menyusun template Word (.docx) skripsi/tugas akhir sesuai pedoman kampus, lookup logo & pejabat resmi, ekstrak aturan PDF, serta injeksi hasil MuZA_Search v1.1.",
+      "scope": "evidence"
+    },
+    {
       "slug": "nemo-evaluator-sdk",
       "status": "bundled",
       "path": "skills/nemo-evaluator-sdk/SKILL.md",
@@ -1424,7 +1434,8 @@
       "timesfm-forecasting",
       "unslop",
       "scrapling",
-      "harness2"
+      "harness2",
+      "muza-skripsi-template"
     ],
     "webdev": [
       "analyze-project",
@@ -1485,7 +1496,8 @@
       "parenting-6d-gad-mdd",
       "persona-shizuka-yukino-shikaku",
       "phoenix-observability",
-      "unlimited-ocr-2"
+      "unlimited-ocr-2",
+      "muza-skripsi-template"
     ],
     "external_skills": [
       "addy-agent-skills",

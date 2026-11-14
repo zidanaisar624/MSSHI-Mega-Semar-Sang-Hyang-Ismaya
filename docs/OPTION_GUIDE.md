@@ -138,7 +138,7 @@ Nama aplikasi menjelaskan kegunaannya; deteksi atau registrasi saja tidak membuk
 
 ## Katalog skill individual
 
-Katalog berisi 121 nama kanonis: 62 folder instruksi bawaan dan 59 referensi eksternal. Ini bukan 121 repositori; manifest upstream tetap berisi 49 sumber. Alias adalah nama alternatif, bukan skill tambahan. “Dibundel” berarti instruksinya tersedia, bukan aplikasi, akun, atau runtime-nya sudah terpasang. REA terlihat dalam katalog tetapi tetap berada di luar paket standar dan default OFF.
+Katalog berisi 122 nama kanonis: 63 folder instruksi bawaan dan 59 referensi eksternal. Ini bukan 122 repositori; manifest upstream tetap berisi 49 sumber. Alias adalah nama alternatif, bukan skill tambahan. “Dibundel” berarti instruksinya tersedia, bukan aplikasi, akun, atau runtime-nya sudah terpasang. REA terlihat dalam katalog tetapi tetap berada di luar paket standar dan default OFF.
 
 | Skill | Status | Fungsi |
 | --- | --- | --- |
@@ -228,6 +228,7 @@ Katalog berisi 121 nama kanonis: 62 folder instruksi bawaan dan 59 referensi eks
 | mindrally-skills | Eksternal; setup terpisah | Menemukan panduan implementasi relevan di katalog eksternal. |
 | motion-graphics-suite | Instruksi dibundel | Pilih dan hubungkan empat rujukan motion graphics untuk komposisi yang tetap dapat diedit. |
 | motion-primitives | Eksternal; setup terpisah | Merancang gerak antarmuka memakai komponen animasi. |
+| muza-skripsi-template | Instruksi dibundel | Menyusun template Word (.docx) skripsi/tugas akhir sesuai pedoman kampus, lookup logo & pejabat resmi, ekstrak aturan PDF, serta injeksi hasil MuZA_Search v1.1. |
 | nemo-evaluator-sdk | Instruksi dibundel | Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia. |
 | notebooklm-thinking-datascience | Instruksi dibundel | Terapkan metode berpikir sistem dan data science dari indeks sumber milik pengguna. |
 | novelty-assessment | Instruksi dibundel | Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian. |

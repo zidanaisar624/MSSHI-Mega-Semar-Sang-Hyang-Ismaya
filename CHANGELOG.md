@@ -1,12 +1,13 @@
 # Changelog MSSHI
 
-## v3.1.0 - 2026-11-13
+## v3.1.0 - 2026-11-14
 
+- Added **MuZA Skripsi Starter v1.1 (Drag-and-Drop Edition)**: bundled `skills/muza-skripsi-template/` (11 files: `SKILL.md` with 5-stage contextual & explicit workflow gate, `campus_lookup.py`, `extract_guideline.py`, `build_template.py`, `spec_schema.md`, `example_spec.json`, 5 methodology presets), Colab notebooks (`notebooks/skripsi/MuZA_Search.ipynb` & `MuZA_Skripsi_Builder.ipynb`), `MULAI_SKRIPSI_DRAG_AND_DROP.bat`, `msshi skripsi`, and `msshi doctor`.
+- Expanded the default bundle to 63 skills (51 core + 12 wrappers) and 49 pinned source references, with separate licenses and runtime prerequisites.
+- Added curated `assets/visuals/`, `docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf`, `configs/github_about.txt`, and Mesin Ke-8 in `docs/TUJUH_MESIN_AKADEMIK.md`.
 - Clarified terminal setup, pack/skill, optional REA/KAT and app choices with bilingual function/prerequisite help, a read-only `msshi choices` command, and a complete choice guide. Version and activation defaults remain unchanged.
-
 - Added four standard contextual wrappers: Unslop UI improvement (Kiki/Val/Shikaku), BRAG launch video (Kiki), Scrapling local HTML parser (Val/Shikaku), and Harness² deterministic harness evaluation (Val/Shikaku).
 - Added REA as a separate default-off opt-in for public installs; MuZA explicitly enables it for Coder.
-- Expanded the original default bundle to 62 skills (50 core + 12 wrappers) and 49 pinned source references, with separate licenses and runtime prerequisites.
 - Kept live persona/model routing and v3.0 browser/MCP safeguards; no automatic model-backed benchmarks or live harness promotion.
 - Added standalone runtime commands, local guard tests, updated role documentation, and a visual integration map.
 

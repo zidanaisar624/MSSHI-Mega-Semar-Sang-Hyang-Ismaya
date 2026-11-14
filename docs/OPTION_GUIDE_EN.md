@@ -138,7 +138,7 @@ App names explain intended use; detection or registration alone is not proof of 
 
 ## Individual skill catalogue
 
-The catalogue has 121 canonical names: 62 bundled instruction folders and 59 external references. These are not 121 repositories; the upstream manifest still contains 49 sources. Aliases are alternate names, not extra skills. “Bundled” means instructions are included, not that apps, accounts or runtime dependencies are already installed. REA is listed for discovery but remains outside the standard bundle and default OFF.
+The catalogue has 122 canonical names: 63 bundled instruction folders and 59 external references. These are not 122 repositories; the upstream manifest still contains 49 sources. Aliases are alternate names, not extra skills. “Bundled” means instructions are included, not that apps, accounts or runtime dependencies are already installed. REA is listed for discovery but remains outside the standard bundle and default OFF.
 
 | Skill | Status | Function |
 | --- | --- | --- |
@@ -228,6 +228,7 @@ The catalogue has 121 canonical names: 62 bundled instruction folders and 59 ext
 | mindrally-skills | External; separate setup | Find relevant implementation guidance in an external skill catalog. |
 | motion-graphics-suite | Bundled instructions | Choose among four motion-graphics references for compositions that remain editable. |
 | motion-primitives | External; separate setup | Design interface motion with reusable animation components. |
+| muza-skripsi-template | Bundled instructions | Build a campus-compliant thesis/skripsi Word (.docx) template with official logo/leadership lookup, PDF guideline extraction, and MuZA_Search v1.1 injection. |
 | nemo-evaluator-sdk | Bundled instructions | Plan model evaluations with NeMo Evaluator SDK when its dependencies are available. |
 | notebooklm-thinking-datascience | Bundled instructions | Apply systems-thinking and data-science methods from the user's source index. |
 | novelty-assessment | Bundled instructions | Test novelty claims against the closest studies and search limits. |

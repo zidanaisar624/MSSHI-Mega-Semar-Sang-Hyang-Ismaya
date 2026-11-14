@@ -337,6 +337,10 @@
       "id": "Merancang gerak antarmuka memakai komponen animasi.",
       "en": "Design interface motion with reusable animation components."
     },
+    "muza-skripsi-template": {
+      "id": "Menyusun template Word (.docx) skripsi/tugas akhir sesuai aturan pedoman kampus, mencari logo & pejabat resmi otomatis, dan menyuntikkan hasil MuZA_Search.",
+      "en": "Build a campus-compliant thesis/skripsi Word (.docx) template with automated official logo/leadership lookup, PDF guideline extraction, and MuZA_Search integration."
+    },
     "nemo-evaluator-sdk": {
       "id": "Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia.",
       "en": "Plan model evaluations with NeMo Evaluator SDK when its dependencies are available."

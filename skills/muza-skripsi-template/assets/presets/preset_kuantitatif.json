@@ -1,0 +1,197 @@
+{
+  "preset_id": "kuantitatif",
+  "preset_name": "Skripsi Kuantitatif (Korelasi / Eksperimen / Regresi)",
+  "description": "Struktur Bab I-V standar penelitian kuantitatif Indonesia (asosiatif, komparatif, maupun eksperimen).",
+  "citation_style": "APA 7th",
+  "table_style": "three_line",
+  "chapters": [
+    {
+      "number": 1,
+      "label": "BAB I",
+      "title": "PENDAHULUAN",
+      "hint": "Bab pendahuluan menjelaskan kesenjangan antara kondisi ideal dan fakta empiris beserta urgensi penelitian kuantitatif.",
+      "sections": [
+        {
+          "level": 2,
+          "title": "1.1 Latar Belakang Masalah",
+          "hint": "Uraikan fenomena empiris, data pendukung, research gap dari literatur terdahulu, dan alasan pemilihan variabel penelitian."
+        },
+        {
+          "level": 2,
+          "title": "1.2 Identifikasi Masalah",
+          "hint": "Inventarisasi berbagai masalah yang muncul berdasarkan latar belakang sebelum dibatasi."
+        },
+        {
+          "level": 2,
+          "title": "1.3 Batasan Masalah",
+          "hint": "Tetapkan ruang lingkup variabel, objek, dan waktu penelitian agar fokus dan terukur."
+        },
+        {
+          "level": 2,
+          "title": "1.4 Rumusan Masalah",
+          "hint": "Susun dalam bentuk kalimat tanya operasional yang menghubungkan variabel X dan variabel Y."
+        },
+        {
+          "level": 2,
+          "title": "1.5 Tujuan Penelitian",
+          "hint": "Selaraskan butir tujuan dengan seluruh butir rumusan masalah."
+        },
+        {
+          "level": 2,
+          "title": "1.6 Manfaat Penelitian",
+          "placeholder": false
+        },
+        {
+          "level": 3,
+          "title": "1.6.1 Manfaat Teoretis",
+          "hint": "Kontribusi terhadap pengembangan teori atau keilmuan bidang terkait."
+        },
+        {
+          "level": 3,
+          "title": "1.6.2 Manfaat Praktis",
+          "hint": "Manfaat nyata bagi instansi, praktisi, masyarakat, dan peneliti berikutnya."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "label": "BAB II",
+      "title": "TINJAUAN PUSTAKA",
+      "hint": "Memuat grand theory, konsep tiap variabel, sintesis penelitian terdahulu (bisa diisi otomatis dari MuZA_Search v1.0), kerangka pikir, dan hipotesis.",
+      "sections": [
+        {
+          "level": 2,
+          "title": "2.1 Kajian Teori",
+          "hint": "Bahasan teori utama, definisi konseptual, dimensi, dan indikator masing-masing variabel X dan Y.",
+          "blocks": [
+            {
+              "type": "sample_paragraph",
+              "topic": "kajian teori variabel penelitian dan indikatornya"
+            },
+            {
+              "type": "blockquote",
+              "text": "Contoh kutipan langsung (>= 40 kata): penelitian kuantitatif menekankan pengukuran variabel secara objektif melalui instrumen terstandar sehingga hubungan kausal atau korelasional antarvariabel dapat diuji menggunakan analisis statistik inferensial secara transparan dan dapat direplikasi.",
+              "hint": "Format Kutipan Langsung panjang: spasi 1, menjorok kiri sesuai pedoman kampus."
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "title": "2.2 Penelitian Terdahulu",
+          "hint": "Uraikan perbandingan hasil penelitian relevan 5 tahun terakhir dan posisi kebaruan (novelty) penelitian ini. Gunakan MuZA_Search v1.0 untuk menyisipkan matriks tabel otomatis."
+        },
+        {
+          "level": 2,
+          "title": "2.3 Kerangka Berpikir",
+          "hint": "Sajikan alur logis hubungan antarvariabel dilengkapi bagan alur paradigma penelitian."
+        },
+        {
+          "level": 2,
+          "title": "2.4 Hipotesis Penelitian",
+          "hint": "Rumuskan dugaan sementara (H1 / Ha dan H0 bila diperlukan) yang akan diuji secara statistik."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "label": "BAB III",
+      "title": "METODE PENELITIAN",
+      "hint": "Jelaskan desain kuantitatif, populasi/sampel, teknik penyusunan instrumen, dan rumus uji statistik.",
+      "sections": [
+        {
+          "level": 2,
+          "title": "3.1 Jenis dan Desain Penelitian",
+          "hint": "Sebutkan metode (survei, korelasional, regresi, atau kuasi-eksperimen) beserta rancangannya."
+        },
+        {
+          "level": 2,
+          "title": "3.2 Tempat dan Waktu Penelitian"
+        },
+        {
+          "level": 2,
+          "title": "3.3 Populasi, Sampel, dan Teknik Sampling",
+          "hint": "Cantumkan jumlah populasi, rumus penentuan ukuran sampel (mis. Slovin / Krejcie-Morgan), dan teknik sampling."
+        },
+        {
+          "level": 2,
+          "title": "3.4 Definisi Operasional Variabel",
+          "hint": "Jabarkan indikator pengukuran dan skala data (Likert/nominal/ordinal/interval/rasio) tiap variabel."
+        },
+        {
+          "level": 2,
+          "title": "3.5 Instrumen, Uji Validitas, dan Uji Reliabilitas",
+          "hint": "Lampirkan kisi-kisi instrumen serta kriteria uji validitas (r hitung vs r tabel) dan reliabilitas (Cronbach Alpha >= 0,70)."
+        },
+        {
+          "level": 2,
+          "title": "3.6 Teknik Pengumpulan Data"
+        },
+        {
+          "level": 2,
+          "title": "3.7 Teknik Analisis Data dan Uji Hipotesis",
+          "hint": "Jelaskan statistik deskriptif, uji asumsi klasik (normalitas, linearitas, multikolinearitas, heteroskedastisitas), dan uji hipotesis (uji t / uji F / koefisien determinasi).",
+          "blocks": [
+            {
+              "type": "sample_paragraph",
+              "topic": "teknik analisis regresi dan pengujian hipotesis statistik"
+            },
+            {
+              "type": "equation",
+              "formula": "Y = a + b1X1 + b2X2 + e",
+              "number": "(3.1)",
+              "hint": "Contoh penulisan persamaan/rumus terpusat dengan nomor rata kanan."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "label": "BAB IV",
+      "title": "HASIL PENELITIAN DAN PEMBAHASAN",
+      "sample_captions": true,
+      "sections": [
+        {
+          "level": 2,
+          "title": "4.1 Gambaran Umum Objek dan Deskripsi Data",
+          "hint": "Sajikan karakteristik responden (usia, jenis kelamin, unit) dan statistik deskriptif (mean, SD, min, max)."
+        },
+        {
+          "level": 2,
+          "title": "4.2 Hasil Uji Asumsi Klasik / Prasyarat Analisis"
+        },
+        {
+          "level": 2,
+          "title": "4.3 Hasil Pengujian Hipotesis",
+          "hint": "Tampilkan tabel ringkasan koefisien, nilai t/F, signifikansi p-value, serta R-squared dengan format Tabel 3 Garis."
+        },
+        {
+          "level": 2,
+          "title": "4.4 Pembahasan",
+          "hint": "Interpretasikan temuan angka dengan membandingkan teori dan penelitian terdahulu pada Bab II."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "label": "BAB V",
+      "title": "PENUTUP",
+      "sections": [
+        {
+          "level": 2,
+          "title": "5.1 Kesimpulan",
+          "hint": "Ringkas jawaban langsung atas setiap butir rumusan masalah tanpa menyalin tabel mentah."
+        },
+        {
+          "level": 2,
+          "title": "5.2 Keterbatasan Penelitian"
+        },
+        {
+          "level": 2,
+          "title": "5.3 Saran",
+          "hint": "Rumuskan saran operasional bagi praktisi/objek penelitian serta peneliti selanjutnya."
+        }
+      ]
+    }
+  ]
+}

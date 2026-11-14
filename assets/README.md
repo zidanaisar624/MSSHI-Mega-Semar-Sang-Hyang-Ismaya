@@ -12,4 +12,4 @@
 
 Edit SVG sebagai teks atau buka di editor vektor. Jaga `viewBox`, judul dan deskripsi aksesibel, serta label yang singkat. Cocokkan teks README dengan diagram. Tabel README menyediakan padanan jika SVG sulit dibaca pada layar kecil. [Panduan review lokal](../adapters/msshi-visual-review/README.md).
 
-Peta tambahan v3.1: [empat integrasi dan peran](diagrams/msshi-v31-integrations.svg), berdasarkan [panduan v3.1](../docs/V3_1_UPDATE.md). Also see `assets/pp-tiktok/` (character portraits) and `assets/memes/` (meme reactions).
+Peta tambahan v3.1: [empat integrasi dan peran](diagrams/msshi-v31-integrations.svg), berdasarkan [panduan v3.1](../docs/V3_1_UPDATE.md). Lihat juga galeri showcase `assets/visuals/`, potret karakter `assets/pp-tiktok/`, dan koleksi meme `assets/memes/`.

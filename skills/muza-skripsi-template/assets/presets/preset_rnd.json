@@ -1,0 +1,164 @@
+{
+  "preset_id": "rnd",
+  "preset_name": "Skripsi Research & Development (R&D — Borg & Gall / ADDIE / 4D)",
+  "description": "Struktur Bab I-V untuk penelitian pengembangan produk pendidikan, media pembelajaran, modul, atau model R&D.",
+  "citation_style": "APA 7th",
+  "table_style": "three_line",
+  "chapters": [
+    {
+      "number": 1,
+      "label": "BAB I",
+      "title": "PENDAHULUAN",
+      "sections": [
+        {
+          "level": 2,
+          "title": "1.1 Latar Belakang Masalah",
+          "hint": "Jelaskan kebutuhan nyata di lapangan (needs assessment) mengapa produk/media baru perlu dikembangkan."
+        },
+        {
+          "level": 2,
+          "title": "1.2 Identifikasi dan Batasan Masalah"
+        },
+        {
+          "level": 2,
+          "title": "1.3 Rumusan Masalah",
+          "hint": "Cakup pertanyaan tentang rancangan produk, tingkat kevalidan (ahli), kepraktisan (pengguna), dan keefektifan produk."
+        },
+        {
+          "level": 2,
+          "title": "1.4 Tujuan Pengembangan"
+        },
+        {
+          "level": 2,
+          "title": "1.5 Spesifikasi Produk yang Dikembangkan",
+          "hint": "Rinci komponen fisik/digital, fitur utama, serta sasaran pengguna produk yang dihasilkan."
+        },
+        {
+          "level": 2,
+          "title": "1.6 Asumsi dan Keterbatasan Pengembangan"
+        },
+        {
+          "level": 2,
+          "title": "1.7 Manfaat Pengembangan"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "label": "BAB II",
+      "title": "LANDASAN TEORI DAN KAJIAN PUSTAKA",
+      "sections": [
+        {
+          "level": 2,
+          "title": "2.1 Kajian Teori Produk dan Pengembangan",
+          "blocks": [
+            {
+              "type": "sample_paragraph",
+              "topic": "konsep teoretis model pengembangan produk dan indikator kelayakan"
+            },
+            {
+              "type": "blockquote",
+              "text": "Contoh kutipan langsung (>= 40 kata): penelitian pengembangan (research and development) bertujuan menjembatani kesenjangan antara riset dasar dan praktik lapangan melalui siklus perancangan produk, validasi pakar, uji coba empiris bertahap, serta revisi sistematis.",
+              "hint": "Sesuaikan isi kutipan langsung dengan referensi utama model R&D yang digunakan."
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "title": "2.2 Penelitian Terdahulu yang Relevan",
+          "hint": "Bandingkan kelebihan dan celah produk-produk R&D terdahulu sebagai pijakan inovasi produk Anda."
+        },
+        {
+          "level": 2,
+          "title": "2.3 Kerangka Berpikir"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "label": "BAB III",
+      "title": "METODE PENELITIAN PENGEMBANGAN",
+      "sections": [
+        {
+          "level": 2,
+          "title": "3.1 Model Pengembangan",
+          "hint": "Sebutkan model yang diadaptasi (mis. ADDIE, 4-D Thiagarajan, atau Borg & Gall yang disederhanakan)."
+        },
+        {
+          "level": 2,
+          "title": "3.2 Prosedur Pengembangan",
+          "hint": "Jabarkan langkah demi langkah: Analisis Potensi & Masalah, Desain Produk, Validasi Desain, Revisi, Uji Coba Terbatas, dan Uji Lapangan."
+        },
+        {
+          "level": 2,
+          "title": "3.3 Subjek Uji Coba dan Desain Uji Coba Produk"
+        },
+        {
+          "level": 2,
+          "title": "3.4 Instrumen Pengumpulan Data",
+          "hint": "Jelaskan lembar validasi ahli materi & ahli media/desain, angket respon pengguna, serta tes hasil belajar/efektivitas."
+        },
+        {
+          "level": 2,
+          "title": "3.5 Teknik Analisis Data Kelayakan dan Keefektifan",
+          "blocks": [
+            {
+              "type": "sample_paragraph",
+              "topic": "perhitungan persentase kelayakan validator dan N-Gain efektivitas produk"
+            },
+            {
+              "type": "equation",
+              "formula": "P = (Skor Perolehan / Skor Maksimal) x 100%",
+              "number": "(3.1)",
+              "hint": "Cantumkan rumus skor kelayakan validator / kepraktisan pengguna dan tabel kriteria konversi skor."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "label": "BAB IV",
+      "title": "HASIL PENGEMBANGAN DAN PEMBAHASAN",
+      "sample_captions": true,
+      "sections": [
+        {
+          "level": 2,
+          "title": "4.1 Hasil Studi Pendahuluan / Potensi dan Masalah"
+        },
+        {
+          "level": 2,
+          "title": "4.2 Hasil Perancangan dan Pengembangan Produk Awal"
+        },
+        {
+          "level": 2,
+          "title": "4.3 Hasil Validasi Ahli dan Revisi Produk Tahap I",
+          "hint": "Tampilkan rekapitulasi skor ahli materi & ahli media beserta tabel revisi sebelum dan sesudah perbaikan."
+        },
+        {
+          "level": 2,
+          "title": "4.4 Hasil Uji Coba Produk dan Revisi Akhir"
+        },
+        {
+          "level": 2,
+          "title": "4.5 Kajian Produk Akhir dan Pembahasan"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "label": "BAB V",
+      "title": "PENUTUP",
+      "sections": [
+        {
+          "level": 2,
+          "title": "5.1 Kesimpulan Produk Akhir"
+        },
+        {
+          "level": 2,
+          "title": "5.2 Saran Pemanfaatan, Diseminasi, dan Pengembangan Lebih Lanjut"
+        }
+      ]
+    }
+  ]
+}

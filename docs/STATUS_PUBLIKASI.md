@@ -1,6 +1,6 @@
 # Pemeriksaan sebelum publikasi
 
-Rilis MSSHI v3.1.0 memuat 62 skill bundel (50 inti + 12 wrapper) dan manifest 49 sumber. Perubahan lokal tidak otomatis berarti GitHub sudah diperbarui: cocokkan HEAD dengan origin/main atau gunakan msshi status. Riwayat dan tag lama dipertahankan. PDF serta audit pribadi tidak masuk repo publik.
+Rilis MSSHI v3.1.0 memuat 63 skill bundel (51 inti + 12 wrapper) dan manifest 49 sumber. Perubahan lokal tidak otomatis berarti GitHub sudah diperbarui: cocokkan HEAD dengan origin/main atau gunakan msshi status. Riwayat dan tag lama dipertahankan. PDF serta audit pribadi tidak masuk repo publik.
 
 ```sh
 python scripts/check_release.py --smoke

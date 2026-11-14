@@ -1,0 +1,140 @@
+{
+  "preset_id": "kualitatif",
+  "preset_name": "Skripsi Kualitatif (Studi Kasus / Fenomenologi / Etnografi / Deskriptif)",
+  "description": "Struktur Bab I-V standar penelitian kualitatif Indonesia dengan fokus informan, triangulasi, dan model Miles-Huberman.",
+  "citation_style": "APA 7th",
+  "table_style": "three_line",
+  "chapters": [
+    {
+      "number": 1,
+      "label": "BAB I",
+      "title": "PENDAHULUAN",
+      "sections": [
+        {
+          "level": 2,
+          "title": "1.1 Konteks / Latar Belakang Penelitian",
+          "hint": "Gambarkan keunikan fenomena lapangan di lokasi studi beserta kesenjangan konseptual yang ingin dipahami secara mendalam."
+        },
+        {
+          "level": 2,
+          "title": "1.2 Fokus dan Pertanyaan Penelitian",
+          "hint": "Tetapkan batasan fokus kualitatif beserta pertanyaan eksploratif (bagaimana / mengapa)."
+        },
+        {
+          "level": 2,
+          "title": "1.3 Tujuan Penelitian"
+        },
+        {
+          "level": 2,
+          "title": "1.4 Manfaat Penelitian"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "label": "BAB II",
+      "title": "KAJIAN PUSTAKA",
+      "sections": [
+        {
+          "level": 2,
+          "title": "2.1 Landasan Teori dan Perspektif Konseptual",
+          "hint": "Dalam penelitian kualitatif, teori berfungsi sebagai lensa pemandu (sensitizing concept), bukan penguji hipotesis kaku.",
+          "blocks": [
+            {
+              "type": "sample_paragraph",
+              "topic": "perspektif teori yang memandu pemaknaan fenomena kualitatif"
+            },
+            {
+              "type": "blockquote",
+              "text": "Contoh kutipan langsung (>= 40 kata): pendekatan kualitatif menempatkan peneliti sebagai instrumen kunci yang menggali makna pengalaman partisipan dalam latar alamiah secara holistik, reflektif, dan mendalam sebelum menyusun kategori tematik.",
+              "hint": "Gunakan style Kutipan Langsung untuk petikan wawancara panjang atau kutipan buku >= 40 kata."
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "title": "2.2 Penelitian Terdahulu yang Relevan",
+          "hint": "Sajikan perbandingan studi kasus / studi kualitatif sebelumnya guna memperjelas posisi studi ini."
+        },
+        {
+          "level": 2,
+          "title": "2.3 Alur / Kerangka Pemikiran"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "label": "BAB III",
+      "title": "METODE PENELITIAN",
+      "sections": [
+        {
+          "level": 2,
+          "title": "3.1 Pendekatan dan Jenis Penelitian",
+          "hint": "Jelaskan jenis kualitatif yang dipilih (studi kasus, fenomenologi, etnografi, grounded theory, atau deskriptif kualitatif)."
+        },
+        {
+          "level": 2,
+          "title": "3.2 Kehadiran Peneliti, Lokasi, dan Waktu Penelitian",
+          "hint": "Jelaskan peran peneliti sebagai instrumen utama dan alasan pemilihan situs penelitian."
+        },
+        {
+          "level": 2,
+          "title": "3.3 Sumber Data dan Teknik Pemilihan Informan",
+          "hint": "Jelaskan teknik purposive sampling / snowball sampling, kriteria informan kunci & pendukung, serta sumber data sekunder/dokumen."
+        },
+        {
+          "level": 2,
+          "title": "3.4 Teknik Pengumpulan Data",
+          "hint": "Uraikan wawancara mendalam (in-depth interview), observasi partisipatif/non-partisipatif, dan studi dokumentasi."
+        },
+        {
+          "level": 2,
+          "title": "3.5 Uji Keabsahan Data",
+          "hint": "Jelaskan teknik kredibilitas (triangulasi sumber, teknik, waktu; member check), transferabilitas, dependabilitas, dan konfirmabilitas."
+        },
+        {
+          "level": 2,
+          "title": "3.6 Teknik Analisis Data",
+          "hint": "Misalnya model interaktif Miles, Huberman & Saldana: kondensasi data, penyajian data (display), serta penarikan & verifikasi kesimpulan."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "label": "BAB IV",
+      "title": "TEMUAN PENELITIAN DAN PEMBAHASAN",
+      "sample_captions": true,
+      "sections": [
+        {
+          "level": 2,
+          "title": "4.1 Gambaran Umum Lokasi dan Profil Informan"
+        },
+        {
+          "level": 2,
+          "title": "4.2 Paparan Data dan Temuan Penelitian",
+          "hint": "Sajikan tema-tema temuan beserta kutipan transkrip wawancara bermakna dan catatan observasi."
+        },
+        {
+          "level": 2,
+          "title": "4.3 Pembahasan Temuan",
+          "hint": "Dialogkan temuan lapangan dengan landasan teori dan studi terdahulu pada Bab II."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "label": "BAB V",
+      "title": "PENUTUP",
+      "sections": [
+        {
+          "level": 2,
+          "title": "5.1 Kesimpulan"
+        },
+        {
+          "level": 2,
+          "title": "5.2 Saran dan Rekomendasi"
+        }
+      ]
+    }
+  ]
+}

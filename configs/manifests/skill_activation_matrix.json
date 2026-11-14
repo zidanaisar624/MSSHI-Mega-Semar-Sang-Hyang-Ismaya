@@ -139,6 +139,36 @@
       "paid_benchmarks_default": false,
       "human_review_required": true
     },
+    "muza-skripsi-template": {
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "solo",
+        "antigravity"
+      ],
+      "pack": "thesis",
+      "activation": "contextual_or_explicit_command",
+      "trigger_examples": [
+        "Buatkan aku template skripsi",
+        "Buatkan aku templete skripsi",
+        "format skripsi",
+        "pedoman skripsi",
+        "template tugas akhir",
+        "muza-skripsi-template",
+        "/muza-skripsi-template"
+      ],
+      "mandatory_workflow_stages": [
+        "1_detect_context_and_intake_campus_or_guideline",
+        "2_lookup_campus_identity_logo_and_extract_rules",
+        "3_review_spec_rules_and_select_methodology_preset",
+        "4_build_docx_template_and_optional_muza_search_injection",
+        "5_audit_quality_and_deliver_with_ctrl_h_guide"
+      ],
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Merakit template Word (.docx) skripsi/tesis sesuai pedoman kampus, lookup logo & pejabat resmi, serta injeksi MuZA_Search v1.1."
+    },
     "rea": {
       "roles": [
         "shikaku"

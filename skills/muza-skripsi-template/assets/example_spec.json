@@ -1,0 +1,597 @@
+{
+ "_note": "EXAMPLE ONLY (MuZA_Skripsi_Template v1.1). Generic values, not from any real campus. Set auto_lookup=true or pass --auto-online to auto-fetch logo, city, ministry, degree, and official names; {name} & {nim} remain student self-edit placeholders.",
+ "auto_lookup": false,
+ "campus": {
+  "university": "Universitas Contoh",
+  "short": "UC",
+  "faculty": "Fakultas Ilmu Komputer dan Sains",
+  "program": "Teknik Informatika",
+  "degree": "Sarjana Komputer (S.Kom.)",
+  "ministry": "KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI",
+  "website": ""
+ },
+ "source_document": {
+  "title": "Pedoman Penulisan Skripsi Fakultas Ilmu Komputer Universitas Contoh 2025",
+  "url": ""
+ },
+ "language_code": "id-ID",
+ "citation_style": "APA 7th",
+ "table_style": "three_line",
+ "tiered_heading_indent": false,
+ "placeholders": [
+  {
+   "key": "city",
+   "sample": "Kota Contoh",
+   "label": "Kota kampus (dari pedoman)"
+  },
+  {
+   "key": "year",
+   "sample": "2026",
+   "label": "Tahun pengajuan"
+  },
+  {
+   "key": "dean",
+   "sample": "Prof. Dr. Nama Dekan, M.Kom.",
+   "label": "Nama dekan"
+  },
+  {
+   "key": "id_dean",
+   "sample": "0000000003",
+   "label": "NIDN/NIP dekan"
+  },
+  {
+   "key": "head_program",
+   "sample": "Nama Ketua Program Studi, Gelar",
+   "label": "Nama Ketua Program Studi / Kaprodi"
+  },
+  {
+   "key": "id_head",
+   "sample": "0000000004",
+   "label": "NIDN/NIP Kaprodi"
+  },
+  {
+   "key": "rector",
+   "sample": "Prof. Dr. Nama Rektor",
+   "label": "Nama Rektor / Pimpinan PT"
+  }
+ ],
+ "page": {
+  "paper": "A4",
+  "margins_cm": {
+   "top": 4,
+   "bottom": 3,
+   "left": 4,
+   "right": 3
+  },
+  "gutter_cm": 0,
+  "header_distance_cm": 1.25,
+  "footer_distance_cm": 1.25
+ },
+ "font": {
+  "name": "Times New Roman",
+  "size": 12
+ },
+ "body_text": {
+  "line_spacing": 1.5,
+  "align": "justify",
+  "first_indent_cm": 1.25
+ },
+ "styles": {
+  "chapter": {
+   "size": 12,
+   "bold": true,
+   "caps": true,
+   "align": "center",
+   "space_after": 24
+  },
+  "h2": {
+   "bold": true,
+   "hanging_indent": "auto"
+  },
+  "h3": {
+   "bold": true,
+   "hanging_indent": "auto"
+  },
+  "h4": {
+   "bold": true,
+   "hanging_indent": "auto"
+  },
+  "front_title": {
+   "bold": true,
+   "caps": true,
+   "align": "center",
+   "space_after": 24
+  },
+  "table_caption": {
+   "align": "center"
+  },
+  "figure_caption": {
+   "align": "center"
+  },
+  "caption_source": {
+   "size": 10,
+   "italic": true,
+   "line_spacing": 1.0,
+   "space_before": 3,
+   "space_after": 12
+  },
+  "blockquote": {
+   "line_spacing": 1.0,
+   "align": "justify",
+   "left_indent": 1.25,
+   "right_indent": 0,
+   "space_before": 6,
+   "space_after": 6
+  },
+  "equation": {
+   "line_spacing": 1.0,
+   "align": "left",
+   "space_before": 6,
+   "space_after": 6
+  },
+  "bibliography": {
+   "line_spacing": 1.0,
+   "hanging_indent": 1.25,
+   "space_after": 10
+  },
+  "abstract": {
+   "line_spacing": 1.0
+  },
+  "toc": {
+   "line_spacing": 1.0,
+   "space_after": 4,
+   "indent_step_cm": 0.75
+  }
+ },
+ "toc": {
+  "levels": 3
+ },
+ "cover": {
+  "lines": [
+   {
+    "text": "SKRIPSI",
+    "size": 14
+   },
+   {
+    "text": "{title}",
+    "size": 14,
+    "inverted_pyramid": true
+   },
+   {
+    "type": "logo",
+    "width_cm": 4
+   },
+   {
+    "text": "Oleh:",
+    "bold": false,
+    "caps": false
+   },
+   {
+    "text": "{name}\nNIM. {nim}"
+   },
+   {
+    "text": "PROGRAM STUDI TEKNIK INFORMATIKA\nFAKULTAS ILMU KOMPUTER DAN SAINS\nUNIVERSITAS CONTOH\n{city}\n{year}"
+   }
+  ]
+ },
+ "front_matter": {
+  "number_format": "lowerRoman",
+  "number_position": "bottom_center",
+  "start_at": 1,
+  "pages": [
+   {
+    "in_toc": false,
+    "show_number": false,
+    "lines": [
+     {
+      "text": "SKRIPSI",
+      "size": 14
+     },
+     {
+      "text": "{title}",
+      "size": 14,
+      "inverted_pyramid": true
+     },
+     {
+      "text": "Diajukan untuk Memenuhi Salah Satu Syarat Memperoleh Gelar Sarjana Komputer pada Program Studi Teknik Informatika",
+      "bold": false,
+      "caps": false
+     },
+     {
+      "type": "logo",
+      "width_cm": 4
+     },
+     {
+      "text": "Oleh:",
+      "bold": false,
+      "caps": false
+     },
+     {
+      "text": "{name}\nNIM. {nim}"
+     },
+     {
+      "text": "PROGRAM STUDI TEKNIK INFORMATIKA\nFAKULTAS ILMU KOMPUTER DAN SAINS\nUNIVERSITAS CONTOH\n{city}\n{year}"
+     }
+    ]
+   },
+   {
+    "title": "HALAMAN PERSETUJUAN",
+    "in_toc": true,
+    "blocks": [
+     {
+      "type": "fields",
+      "rows": [
+       ["Judul", "{title}"],
+       ["Nama", "{name}"],
+       ["NIM", "{nim}"],
+       ["Program Studi", "Teknik Informatika"]
+      ]
+     },
+     {
+      "type": "text",
+      "text": "Telah diperiksa dan disetujui untuk diajukan pada sidang skripsi.",
+      "align": "center",
+      "no_indent": true
+     },
+     {
+      "type": "blank",
+      "lines": 1
+     },
+     {
+      "type": "signature",
+      "columns": [
+       ["{city}, {date}", "Pembimbing I,", "", "", "", "{supervisor1}", "NIDN. {id1}"],
+       ["", "Pembimbing II,", "", "", "", "{supervisor2}", "NIDN. {id2}"]
+      ]
+     }
+    ]
+   },
+   {
+    "title": "HALAMAN PENGESAHAN",
+    "in_toc": true,
+    "blocks": [
+     {
+      "type": "text",
+      "text": "Skripsi dengan judul {title} yang disusun oleh {name}, NIM {nim}, telah dipertahankan di depan Tim Penguji dan dinyatakan lulus pada tanggal {date}."
+     },
+     {
+      "type": "blank",
+      "lines": 1
+     },
+     {
+      "type": "signature",
+      "columns": [
+       ["Mengesahkan,", "Dekan Fakultas Ilmu Komputer dan Sains", "", "", "", "{dean}", "NIDN. {id_dean}"]
+      ]
+     }
+    ]
+   },
+   {
+    "title": "PERNYATAAN KEASLIAN SKRIPSI",
+    "in_toc": true,
+    "blocks": [
+     {
+      "type": "text",
+      "text": "Saya yang bertanda tangan di bawah ini:",
+      "no_indent": true
+     },
+     {
+      "type": "fields",
+      "rows": [
+       ["Nama", "{name}"],
+       ["NIM", "{nim}"],
+       ["Program Studi", "Teknik Informatika"]
+      ]
+     },
+     {
+      "type": "text",
+      "text": "Menyatakan dengan sebenarnya bahwa skripsi yang saya tulis ini benar-benar merupakan hasil karya saya sendiri, bukan merupakan pengambilalihan tulisan atau pikiran orang lain. Apabila di kemudian hari terbukti skripsi ini hasil jiplakan, saya bersedia menerima sanksi atas perbuatan tersebut."
+     },
+     {
+      "type": "blank",
+      "lines": 1
+     },
+     {
+      "type": "signature",
+      "position": "right",
+      "columns": [
+       ["{city}, {date}", "Yang membuat pernyataan,", "", "{materai}", "", "{name}"]
+      ]
+     }
+    ]
+   },
+   {
+    "title": "ABSTRAK",
+    "in_toc": true,
+    "hint": "Maksimal 250 kata, satu paragraf, spasi tunggal.",
+    "blocks": [
+     {
+      "type": "text",
+      "text": "{name}. {year}. {title}. Skripsi. Program Studi Teknik Informatika. Pembimbing: (I) {supervisor1}, (II) {supervisor2}.",
+      "style": "Abstrak",
+      "no_indent": true
+     },
+     {
+      "type": "blank",
+      "lines": 1,
+      "style": "Abstrak"
+     },
+     {
+      "type": "sample_paragraph",
+      "topic": "abstrak (tujuan, metode, hasil, dan kesimpulan penelitian)",
+      "style": "Abstrak"
+     },
+     {
+      "type": "keywords",
+      "label": "Kata kunci: "
+     }
+    ]
+   },
+   {
+    "title": "ABSTRACT",
+    "in_toc": true,
+    "blocks": [
+     {
+      "type": "text",
+      "text": "This paragraph is a sample abstract in English. Replace it with the translation of your abstract, written in one paragraph with the same formatting.",
+      "style": "Abstrak",
+      "italic": true
+     },
+     {
+      "type": "keywords",
+      "label": "Keywords: ",
+      "text": "keyword one, keyword two, keyword three",
+      "italic": true
+     }
+    ]
+   },
+   {
+    "title": "KATA PENGANTAR",
+    "in_toc": true,
+    "blocks": [
+     {
+      "type": "text",
+      "text": "Puji syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas rahmat dan karunia-Nya sehingga penulis dapat menyelesaikan skripsi yang berjudul {title}."
+     },
+     {
+      "type": "text",
+      "text": "Penulis menyampaikan terima kasih kepada {supervisor1} selaku Pembimbing I dan {supervisor2} selaku Pembimbing II yang telah memberikan bimbingan selama penyusunan skripsi ini. Ganti dan lanjutkan paragraf ini dengan ucapan terima kasihmu."
+     },
+     {
+      "type": "blank",
+      "lines": 1
+     },
+     {
+      "type": "signature",
+      "position": "right",
+      "columns": [
+       ["{city}, {date}", "", "", "Penulis"]
+      ]
+     }
+    ]
+   },
+   {
+    "title": "DAFTAR ISI",
+    "kind": "toc",
+    "in_toc": true
+   },
+   {
+    "title": "DAFTAR TABEL",
+    "kind": "list_of_tables",
+    "in_toc": true
+   },
+   {
+    "title": "DAFTAR GAMBAR",
+    "kind": "list_of_figures",
+    "in_toc": true
+   },
+   {
+    "title": "DAFTAR LAMPIRAN",
+    "kind": "list_of_appendices",
+    "in_toc": true
+   }
+  ]
+ },
+ "body": {
+  "number_format": "decimal",
+  "start_at": 1,
+  "chapter_first_page_position": "bottom_center",
+  "other_pages_position": "top_right",
+  "chapter_heading_two_lines": true,
+  "chapters": [
+   {
+    "number": 1,
+    "label": "BAB I",
+    "title": "PENDAHULUAN",
+    "sections": [
+     {
+      "level": 2,
+      "title": "1.1 Latar Belakang Masalah",
+      "hint": "Uraikan masalah, fakta pendukung, dan alasan penelitian."
+     },
+     {
+      "level": 2,
+      "title": "1.2 Rumusan Masalah"
+     },
+     {
+      "level": 2,
+      "title": "1.3 Tujuan Penelitian"
+     },
+     {
+      "level": 2,
+      "title": "1.4 Manfaat Penelitian",
+      "placeholder": false
+     },
+     {
+      "level": 3,
+      "title": "1.4.1 Manfaat Teoretis"
+     },
+     {
+      "level": 3,
+      "title": "1.4.2 Manfaat Praktis"
+     }
+    ]
+   },
+   {
+    "number": 2,
+    "label": "BAB II",
+    "title": "TINJAUAN PUSTAKA",
+    "sections": [
+     {
+      "level": 2,
+      "title": "2.1 Landasan Teori",
+      "blocks": [
+       {
+        "type": "sample_paragraph",
+        "topic": "kajian teori utama yang mendukung penelitian"
+       },
+       {
+        "type": "blockquote",
+        "text": "Contoh kutipan langsung (>= 40 kata): setiap pustaka utama yang dikutip melebihi empat baris ditulis dengan spasi tunggal dan menjorok ke dalam agar terpisah jelas dari uraian narasi utama peneliti dalam tinjauan pustaka.",
+        "hint": "Gunakan style Kutipan Langsung untuk kutipan >= 40 kata atau >= 4 baris."
+       },
+       {
+        "type": "equation",
+        "formula": "Y = a + bX + e",
+        "number": "(2.1)",
+        "hint": "Contoh penulisan rumus menggunakan tab tengah dan nomor rumus rata kanan."
+       }
+      ]
+     },
+     {
+      "level": 2,
+      "title": "2.2 Penelitian Terdahulu",
+      "hint": "Jika Anda menghubungkan ZIP/CSV dari MuZA_Search v1.0, tabel penelitian terdahulu otomatis disisipkan di sub-bab ini."
+     },
+     {
+      "level": 2,
+      "title": "2.3 Kerangka Pemikiran"
+     }
+    ]
+   },
+   {
+    "number": 3,
+    "label": "BAB III",
+    "title": "METODE PENELITIAN",
+    "sections": [
+     {
+      "level": 2,
+      "title": "3.1 Jenis dan Desain Penelitian"
+     },
+     {
+      "level": 2,
+      "title": "3.2 Objek, Data, dan Waktu Penelitian"
+     },
+     {
+      "level": 2,
+      "title": "3.3 Teknik Pengumpulan Data"
+     },
+     {
+      "level": 2,
+      "title": "3.4 Teknik Analisis dan Evaluasi"
+     }
+    ]
+   },
+   {
+    "number": 4,
+    "label": "BAB IV",
+    "title": "HASIL PENELITIAN DAN PEMBAHASAN",
+    "sample_captions": true,
+    "sections": [
+     {
+      "level": 2,
+      "title": "4.1 Hasil Penelitian"
+     },
+     {
+      "level": 2,
+      "title": "4.2 Pembahasan"
+     }
+    ]
+   },
+   {
+    "number": 5,
+    "label": "BAB V",
+    "title": "PENUTUP",
+    "sections": [
+     {
+      "level": 2,
+      "title": "5.1 Kesimpulan"
+     },
+     {
+      "level": 2,
+      "title": "5.2 Saran"
+     }
+    ]
+   }
+  ]
+ },
+ "captions": {
+  "live_seq_fields": true,
+  "table_example": "Tabel 4.1 Contoh Judul Tabel Akademik",
+  "figure_example": "Gambar 4.1 Contoh Judul Gambar Penelitian",
+  "table_source": "Sumber: Data olahan penelitian ({year})"
+ },
+ "back_matter": {
+  "pages": [
+   {
+    "title": "DAFTAR PUSTAKA",
+    "kind": "references",
+    "numbering_mode": "continue",
+    "hint": "Gaya APA edisi 7, spasi 1, hanging indent 1,25 cm, urut abjad nama belakang penulis. Otomatis terisi jika memakai --muza-zip.",
+    "examples": [
+     "Creswell, J. W., & Creswell, J. D. (2018). Research design: Qualitative, quantitative, and mixed methods approaches (5th ed.). SAGE Publications.",
+     "Nama, A. B. (2023). Judul artikel jurnal ditulis di sini. Nama Jurnal, 10(2), 100–110. https://doi.org/10.0000/contoh"
+    ]
+   },
+   {
+    "title": "LAMPIRAN",
+    "kind": "appendices",
+    "numbering_mode": "continue",
+    "items": [
+     "Lampiran 1 Instrumen Penelitian",
+     "Lampiran 2 Data Hasil Penelitian",
+     "Lampiran 3 Dokumentasi Penelitian"
+    ]
+   }
+  ]
+ },
+ "format_summary": [
+  {
+   "item": "Kertas",
+   "value": "A4 (21 x 29,7 cm)",
+   "source": "hlm. 12",
+   "from_guideline": true
+  },
+  {
+   "item": "Margin",
+   "value": "atas 4, kiri 4, bawah 3, kanan 3 cm",
+   "source": "hlm. 12",
+   "from_guideline": true
+  },
+  {
+   "item": "Huruf",
+   "value": "Times New Roman 12 pt",
+   "source": "hlm. 13",
+   "from_guideline": true
+  },
+  {
+   "item": "Spasi isi",
+   "value": "1,5 spasi",
+   "source": "hlm. 13",
+   "from_guideline": true
+  },
+  {
+   "item": "Gaya Tabel",
+   "value": "3 Garis Horizontal Akademik (Booktabs) + Repeat Header",
+   "source": "Standar MuZA / APA 7",
+   "from_guideline": false
+  },
+  {
+   "item": "Jarak header/footer",
+   "value": "1,25 cm",
+   "source": "Tidak diatur",
+   "from_guideline": false
+  }
+ ],
+ "credit": "Template dibuat otomatis dengan MuZA_Skripsi_Template v1.1 (MuZA Project)."
+}

@@ -1,14 +1,14 @@
 # GitHub Repository About & Topics Config (MSSHI v3.1.0)
 # Syarat GitHub: field About maksimal 350 karakter. Pilih salah satu opsi di bawah!
 
-## Opsi 1 — English Showcase (Rekomendasi Utama Global, 319 karakter)
-MSSHI v3.1.0 — Hermes Ultimate Optimizer & Sovereign Sage: 62 Modular AI Skills + 49 Upstreams for Hermes, Antigravity, Claude & OpenClaw. Features 5-Bot Hierarchy, CLI-Anything Low-RAM Bridge (Anti-Grey Screen), MFA Film, BBA/MBA & Tax, S1-S3 Thesis Engine, Cybersec, OmniVoice & KAT-Coder. Zero-Cost & Drive-Adaptive!
+## Opsi 1 — English Showcase (Rekomendasi Utama Global, 316 karakter)
+MSSHI v3.1.0 — 63 Modular AI Skills + 49 Upstreams for Hermes, Antigravity, Claude & OpenClaw! Includes NEW MuZA Skripsi Drag-and-Drop v1.1 (Auto Campus Logo & Officials + Extract Pedoman + .docx + MuZA_Search Colab), 5-Bot Hierarchy, CLI-Anything Low-RAM, MFA Film, MBA & Pajak RI, Vibecoding, Cybersec & OmniVoice.
 
-## Opsi 2 — Bilingual / Developer Highlight (316 karakter)
-MSSHI v3.1.0: 62 AI Agent Skills + 49 Upstreams for Hermes, Google Antigravity, Claude, Codex & OpenClaw. Replaces 22 heavy MCPs with low-RAM CLI-Anything + OmniVoice + Dreaming + KAT-Coder + BRAG/Unslop/Scrapling/Harness2. Covers MFA Film, BBA/MBA/Tax RI, S1-S3 Thesis & Defensive Cybersec (Win10 4GB RAM friendly).
+## Opsi 2 — Bilingual / Developer Highlight (320 karakter)
+MSSHI v3.1.0: 63 AI Agent Skills + 49 Upstreams for Hermes, Antigravity, Claude & OpenClaw. Replaces 22 heavy MCPs with low-RAM CLI-Anything + OmniVoice + Dreaming + KAT-Coder + BRAG/Unslop/Scrapling/Harness2 + MuZA Skripsi v1.1 Drag-and-Drop. Covers MFA Film, BBA/MBA/Tax RI, S1-S3 Thesis & Cybersec (Win10 4GB friendly).
 
-## Opsi 3 — Indonesian First (Untuk Komunitas Nusantara & Sesi Zoom, 303 karakter)
-MSSHI v3.1.0: 62 Skill AI + 49 Upstream untuk Hermes, Antigravity, Claude & OpenClaw. Dilengkapi 5 Persona Bot, CLI-Anything Hemat RAM 4GB (Anti Grey Screen), OmniVoice TTS, Dreaming, KAT-Coder, BRAG, Unslop, Film/Foto MFA, Bisnis & Pajak RI, Skripsi S1-S3, hingga Cybersec Defense. Lengkap PDF Panduan!
+## Opsi 3 — Indonesian First (Untuk Komunitas Nusantara & Sesi Zoom, 319 karakter)
+MSSHI v3.1.0: 63 Skill AI + 49 Upstream untuk Hermes, Antigravity, Claude & OpenClaw. Kini hadir MuZA Skripsi v1.1 (Drag-and-Drop + Logo/Pejabat Kampus Otomatis), 5 Persona Bot, CLI-Anything Hemat RAM 4GB (Anti Grey Screen), OmniVoice, Dreaming, KAT-Coder, BRAG, Unslop, Film MFA, Bisnis & Pajak RI & Cybersec + PDF Panduan!
 
 ## GitHub Topics (Copy & Paste ke Repository Topics)
-hermes-agent, ai-agents, multi-agent-systems, agent-skills, google-antigravity, claude-code, openclaw, codex-cli, cli-anything, omnivoice, vibecoding, cybersecurity, thesis-writing, filmmaking, indonesian-ai, llm-optimization, low-ram, sovereign-ai, msshi
+hermes-agent, ai-agents, multi-agent-systems, agent-skills, google-antigravity, claude-code, openclaw, codex-cli, cli-anything, omnivoice, vibecoding, cybersecurity, thesis-writing, muza-skripsi, filmmaking, indonesian-ai, llm-optimization, low-ram, sovereign-ai, msshi

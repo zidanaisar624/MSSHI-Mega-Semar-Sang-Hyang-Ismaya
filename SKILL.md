@@ -1,6 +1,6 @@
 ---
 name: msshi
-description: Route MSSHI work across research, creative production, business, and engineering. Use for task planning, five-role handoffs, and tool or budget checks.
+description: Route MSSHI work across research, thesis/skripsi formatting, creative production, business, and engineering. Use for task planning, five-role handoffs, tool or budget checks, or contextual requests such as "Buatkan aku template skripsi" / "templete skripsi" (which routes to muza-skripsi-template).
 ---
 
 # MSSHI
@@ -46,6 +46,6 @@ For numeric time-series forecasts, load `skills/timesfm-forecasting/SKILL.md` an
 
 ## v3.1 contextual integrations
 
-Read the corresponding skill only when relevant: `unslop` for UI cleanup (Kiki/Val/Shikaku), `brag` for launch videos (Kiki), `scrapling` for local HTML extraction (Val/Shikaku), `harness2` for deterministic harness evaluation/proposals (Val/Shikaku). Preserve personas/models and human review. No automatic live-harness promotion, paid benchmark calls, browser startup, or personal-session transfer. Dependencies are separate from portable knowledge files; ChatGPT web Knowledge upload does not install Python/Node runtimes. See docs/V3_1_UPDATE.md.
+Read the corresponding skill only when relevant: `muza-skripsi-template` (Val/Shizuka/Yukino/Solo/Antigravity) whenever the user mentions template/format/pedoman skripsi or tugas akhir (e.g. *"Buatkan aku template skripsi!"* / *"templete skripsi"*) and follow its mandatory 5-stage gated process (`skills/muza-skripsi-template/SKILL.md`), `unslop` for UI cleanup (Kiki/Val/Shikaku), `brag` for launch videos (Kiki), `scrapling` for local HTML extraction (Val/Shikaku), `harness2` for deterministic harness evaluation/proposals (Val/Shikaku). Preserve personas/models and human review. No automatic live-harness promotion, paid benchmark calls, browser startup, or personal-session transfer. Dependencies are separate from portable knowledge files; ChatGPT web Knowledge upload does not install Python/Node runtimes. See docs/V3_1_UPDATE.md.
 
 REA is separate and disabled by default. Offer optional/rea only after explicit selection; ordinary MSSHI installation does not enable it. Use the default-off guidance in docs/guides/INSTALL_FOR_AGENTS.md.
