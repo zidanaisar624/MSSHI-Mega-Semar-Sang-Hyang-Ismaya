@@ -578,20 +578,20 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
 
     kat_modes = {"1": "light", "2": "ideal", "3": "cloud", "4": "skip"}
     req_kat = getattr(args, 'kat_mode', None)
+    req_stage_trim = bool(getattr(args, 'stage_auto_trim', False))
     req_steel = bool(getattr(args, 'install_steel', False))
     pick = "5"
-    stage_trim = False
+    kat_choice = req_kat
+    stage_trim = req_stage_trim
     run_dream = False
     enable_voice = False
 
-    if req_kat or req_steel:
-        kat_choice = req_kat or "skip"
+    if req_kat or req_stage_trim or req_steel:
         pick = "cli"
     elif yes:
-        kat_choice = "skip"
         pick = "yes-default"
     else:
-        print("  1. Stage plugin aman msshi-auto-trim (fail-open; KAT tetap skip) (Rekomendasi)")
+        print("  1. Stage plugin aman msshi-auto-trim (fail-open; pertahankan KAT saat ini) (Rekomendasi)")
         print("  2. Atur KAT-Coder (light / ideal / cloud / skip) + opsional msshi-auto-trim")
         print("  3. Aktifkan plugin lokal aman (msshi-auto-trim + Dreaming offline + OmniVoice jika terverifikasi)")
         print("  4. Opt-in Steel Browser Policy (butuh config.yaml & repo terpin)")
@@ -599,7 +599,6 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
         pick = _prompt_choice("Pilihan Plugin [5]: ", "5")
         if pick not in {"1", "2", "3", "4", "5"}:
             raise ValueError("Pilihan Plugin harus 1-5.")
-        kat_choice = "skip"
         if pick == "1":
             stage_trim = True
         elif pick == "2":
@@ -618,13 +617,22 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
         elif pick == "4":
             req_steel = True
 
-    kat_result = kat(profile_home, kat_choice)
+    kat_result = kat(profile_home, kat_choice) if kat_choice is not None else kat_stat
     print("  KAT:", json.dumps(kat_result, ensure_ascii=False))
-    trim_result = _stage_auto_trim_plugin(profile_home, target, mode, selections) if stage_trim else {
-        "staged": False, "llmtrim_binary": bool(shutil.which("llmtrim") or shutil.which("llmtrim.exe")),
-    }
     if stage_trim:
+        trim_result = _stage_auto_trim_plugin(profile_home, target, mode, selections)
         print(f"  msshi-auto-trim: staged ke profil {trim_result['profiles']} (fail-open, llmtrim_binary={trim_result['llmtrim_binary']}).")
+    else:
+        existing_trim = [
+            label for label, _, _, profile_dir in _hermes_profile_roots("hermes", target, mode, selections, profile_home)
+            if (profile_dir / "plugins" / "msshi-auto-trim" / "plugin.yaml").is_file()
+        ]
+        trim_result = {
+            "staged": bool(existing_trim),
+            "profiles": existing_trim,
+            "llmtrim_binary": bool(shutil.which("llmtrim") or shutil.which("llmtrim.exe")),
+            "fail_open": True,
+        }
 
     dream_result = {"status": "skipped"}
     if run_dream:
@@ -705,7 +713,17 @@ def _setup_service_connections(args, platform, profile_home, lang, yes):
         selected = mapping[pick]
 
     if selected == "skip":
-        return {"mode": "skip", "status": "skipped", "config_present": config_present, "brightdata_enabled": False}
+        existing_profiles = [
+            name for name, row in svc_stat.items()
+            if any(svc.get("registered") for svc in (row.get("services") or {}).values())
+        ]
+        return {
+            "mode": "skip",
+            "status": ("preserved" if existing_profiles else "skipped"),
+            "existing_profiles": existing_profiles,
+            "config_present": config_present,
+            "brightdata_enabled": False,
+        }
     if not config_present:
         print("  Koneksi eksternal ditunda: buka Hermes satu kali lalu jalankan 'msshi services install'.")
         return {"mode": selected, "status": "deferred_pre_hermes", "config_present": False, "brightdata_enabled": False}
@@ -834,11 +852,22 @@ def _setup_bot_app_connections(args, mode, platform, target, selections, profile
         preview = ", ".join(targets_connected[:6]) + ("..." if len(targets_connected) > 6 else "")
         print(f"  - {label}: {len(targets_connected)} app tersambung ({preview}), auto_open_on_boot=false")
 
+    existing_connected_bots = {}
+    if not plan:
+        for label, _, _, profile_dir in bot_roots:
+            conn_file = profile_dir / "msshi-bridge" / "connections.json"
+            if conn_file.is_file():
+                try:
+                    existing_connected_bots[label] = len(installer.read_json(conn_file).get("targets", []))
+                except (OSError, ValueError):
+                    pass
+
     return {
         "mode": chosen_action,
         "detected_ready": ready_ids,
         "needs_install_count": len(needs_install),
         "bots": bot_results,
+        "existing_connected_bots": existing_connected_bots,
         "auto_open_on_boot": False,
         "execution": "msshi-runtime-ticket",
     }
@@ -876,8 +905,15 @@ def _emit_setup_report(home, mode, platform, target, profile_home, report_data, 
               f"OmniVoice={plugins_info.get('omnivoice', {}).get('status', 'skipped')}, "
               f"Steel={plugins_info.get('steel_policy', {}).get('status', 'skipped')}")
         print(f"Koneksi Service : {services_info.get('status', 'skipped')} (BrightData=OFF)")
-        print(f"Bot -> Apps     : {apps_info.get('mode', 'skipped')} "
-              f"({len(apps_info.get('bots', {}))} bot dipetakan, auto_open_on_boot=false)")
+        existing_conns = apps_info.get('existing_connected_bots') or {}
+        if apps_info.get('bots'):
+            print(f"Bot -> Apps     : {apps_info.get('mode', 'skipped')} "
+                  f"({len(apps_info.get('bots', {}))} bot dipetakan, auto_open_on_boot=false)")
+        elif existing_conns:
+            print(f"Bot -> Apps     : preserved ({len(existing_conns)} bot sudah tersambung, auto_open_on_boot=false)")
+        else:
+            print(f"Bot -> Apps     : {apps_info.get('mode', 'skipped')} "
+                  f"(0 bot dipetakan, auto_open_on_boot=false)")
     print(f"Provider/Model  : dipertahankan utuh (provider_model_mutated=false)")
     print(f"File Laporan    : {report_path}")
     return report_path
@@ -1208,6 +1244,7 @@ def main(argv=None):
             wizard.add_argument("--extra-packs", nargs="+", help="Tambahkan extra packs di langkah [1/4] Skills.")
             wizard.add_argument("--extra-skills", nargs="+", help="Tambahkan extra skill slugs di langkah [1/4] Skills.")
             wizard.add_argument("--kat-mode", choices=("light", "ideal", "cloud", "skip"), help="Atur mode KAT-Coder di langkah [2/4] Plugin.")
+            wizard.add_argument("--stage-auto-trim", action="store_true", help="Stage plugin fail-open msshi-auto-trim ke profil Hermes di langkah [2/4] Plugin.")
             wizard.add_argument("--install-steel", action="store_true", help="Opt-in Steel Browser Policy di langkah [2/4] Plugin.")
             wizard.add_argument("--connect-services", choices=("skip", "per-profile", "share-oauth"), help="Atur koneksi MCP GitLab/Tinyfish di langkah [3/4] Koneksi.")
             wizard.add_argument("--connect-apps", choices=("skip", "auto-reconnect", "select"), help="Sambungkan Bot -> CLI-Anything -> Apps di langkah [4/4].")

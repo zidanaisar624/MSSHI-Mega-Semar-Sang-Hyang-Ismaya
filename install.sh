@@ -13,6 +13,7 @@ platform=
 default_bot=
 yes_mode=0
 kat_mode=
+stage_auto_trim=0
 connect_services=
 connect_apps=
 connect_bots=
@@ -31,6 +32,7 @@ while [ "$#" -gt 0 ]; do
         --default-bot) default_bot=${2:?--default-bot requires a value}; shift ;;
         --yes|-y) yes_mode=1 ;;
         --kat-mode) kat_mode=${2:?--kat-mode requires a value}; shift ;;
+        --stage-auto-trim) stage_auto_trim=1 ;;
         --connect-services) connect_services=${2:?--connect-services requires a value}; shift ;;
         --connect-apps) connect_apps=${2:?--connect-apps requires a value}; shift ;;
         --connect-bots) connect_bots=${2:?--connect-bots requires a value}; shift ;;
@@ -79,6 +81,7 @@ if [ "$no_setup" -eq 0 ]; then
     if [ -n "$default_bot" ]; then set -- "$@" --default-bot "$default_bot"; fi
     if [ "$yes_mode" -eq 1 ]; then set -- "$@" --yes; fi
     if [ -n "$kat_mode" ]; then set -- "$@" --kat-mode "$kat_mode"; fi
+    if [ "$stage_auto_trim" -eq 1 ]; then set -- "$@" --stage-auto-trim; fi
     if [ -n "$connect_services" ]; then set -- "$@" --connect-services "$connect_services"; fi
     if [ -n "$connect_apps" ]; then set -- "$@" --connect-apps "$connect_apps"; fi
     if [ -n "$connect_bots" ]; then set -- "$@" --connect-bots "$connect_bots"; fi

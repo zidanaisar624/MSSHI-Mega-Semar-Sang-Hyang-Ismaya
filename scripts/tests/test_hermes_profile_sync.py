@@ -472,6 +472,45 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertEqual((hermes_optout / "SOUL.md").read_text(encoding="utf-8"), stock_soul)
             self.assertTrue((hermes_optout / "profiles" / "yukino" / "profile.yaml").is_file())
 
+    def test_existing_settings_preserved_across_yes_and_reinstall(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            msshi_home = root / "msshi-data"
+            hermes_home = root / "hermes-home"
+            msshi_home.mkdir()
+            hermes_home.mkdir()
+            (hermes_home / "config.yaml").write_text(
+                "model:\n  default: custom/keep-model\n  provider: openai\n",
+                encoding="utf-8",
+            )
+            base_env = {
+                "MSSHI_HOME": str(msshi_home),
+                "HERMES_HOME": str(hermes_home),
+                "MSSHI_IGNORE_REGISTRY_HERMES_HOME": "1",
+            }
+            with patch.dict(os.environ, base_env, clear=False), patch("sys.stdout", new_callable=io.StringIO):
+                code1 = msshi_cli.main([
+                    "setup", "--mode", "muza-preset", "--platform", "hermes",
+                    "--kat-mode", "light", "--stage-auto-trim",
+                    "--connect-apps", "auto-reconnect", "--yes",
+                ])
+            self.assertEqual(code1, 0)
+            self.assertTrue((hermes_home / "plugins" / "msshi-auto-trim" / "plugin.yaml").is_file())
+            self.assertTrue((hermes_home / "profiles" / "shikaku" / "plugins" / "msshi-auto-trim" / "plugin.yaml").is_file())
+
+            # Re-running with plain --yes (like re-running install.ps1 -Yes) MUST preserve existing KAT, auto-trim, and app connections
+            with patch.dict(os.environ, base_env, clear=False), patch("sys.stdout", new_callable=io.StringIO):
+                code2 = msshi_cli.main([
+                    "setup", "--mode", "muza-preset", "--platform", "hermes", "--yes",
+                ])
+            self.assertEqual(code2, 0)
+            report = json.loads((msshi_home / "reports" / "last-setup-report.json").read_text(encoding="utf-8"))
+            self.assertEqual(report["plugins"]["kat"]["mode"], "light")
+            self.assertTrue(report["plugins"]["auto_trim"]["staged"])
+            self.assertEqual(set(report["plugins"]["auto_trim"]["profiles"]), {"yukino", "shizuka", "val", "kiki-chii", "shikaku"})
+            self.assertIn("shikaku", report["bot_app_connections"]["existing_connected_bots"])
+            self.assertIn("yukino", report["bot_app_connections"]["existing_connected_bots"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -11,6 +11,7 @@ param(
     [string]$DefaultBot,
     [switch]$Yes,
     [string]$KatMode,
+    [switch]$StageAutoTrim,
     [string]$ConnectServices,
     [string]$ConnectApps,
     [string]$ConnectBots,
@@ -19,7 +20,7 @@ param(
 )
 
 & {
-    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiYes, $MsshiKatMode, $MsshiConnectServices, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
+    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiConnectServices, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
     $ErrorActionPreference = 'Stop'
     $repository = 'https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git'
     $scratch = $null
@@ -88,6 +89,7 @@ param(
         if ($MsshiDefaultBot) { $setupArgs += @('--default-bot', $MsshiDefaultBot) }
         if ($MsshiYes) { $setupArgs += '--yes' }
         if ($MsshiKatMode) { $setupArgs += @('--kat-mode', $MsshiKatMode) }
+        if ($MsshiStageAutoTrim) { $setupArgs += '--stage-auto-trim' }
         if ($MsshiConnectServices) { $setupArgs += @('--connect-services', $MsshiConnectServices) }
         if ($MsshiConnectApps) { $setupArgs += @('--connect-apps', $MsshiConnectApps) }
         if ($MsshiConnectBots) { $setupArgs += @('--connect-bots', $MsshiConnectBots) }
@@ -120,4 +122,4 @@ param(
             }
         }
     }
-} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $Mode $Platform $DefaultBot $Yes $KatMode $ConnectServices $ConnectApps $ConnectBots $ConnectTargets $WithRea
+} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $Mode $Platform $DefaultBot $Yes $KatMode $StageAutoTrim $ConnectServices $ConnectApps $ConnectBots $ConnectTargets $WithRea

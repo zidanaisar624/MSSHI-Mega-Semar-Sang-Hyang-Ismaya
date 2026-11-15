@@ -131,7 +131,7 @@ msshi optional list
 Setelah memilih mode dan menyalin skill target, `msshi setup` di mode `muza-preset` untuk Hermes otomatis menjadikan profil `default` (`<HERMES_HOME>/`) sebagai **Yukino Yukinoshita** dan menyiapkan 4 bot lainnya di `<HERMES_HOME>/profiles/{shizuka,val,kiki-chii,shikaku}` (gunakan `--default-bot keep-hermes` bila ingin memisahkan bot `Hermes`; profil legacy `profiles/yukino` yang sudah ada tidak akan dihapus), lalu memandu 4 langkah lanjutan (serta flag non-interaktif yang dapat dilewati dari `install.ps1` / `install.sh`):
 
 1. **`[1/4] Skills`**: Menambah paket (`--extra-packs`) atau skill individu (`--extra-skills`) ke target/bot tertentu, serta opt-in REA (`--with-rea`, default OFF).
-2. **`[2/4] Plugin`**: Memeriksa dan men-stage plugin fail-open `msshi-auto-trim`, preferensi `KAT-Coder` (`--kat-mode`), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
+2. **`[2/4] Plugin`**: Memeriksa dan men-stage plugin fail-open `msshi-auto-trim` (`--stage-auto-trim`), preferensi `KAT-Coder` (`--kat-mode`, mempertahankan pengaturan KAT yang sudah ada bila tidak diganti), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
 3. **`[3/4] Koneksi`**: Memasang konektor MCP `GitLab` / `Tinyfish` (`--connect-services skip|per-profile|share-oauth`, tetap menjaga `BrightData` OFF dan aman bila `config.yaml` Hermes belum dibuat).
 4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Memetakan bot Hermes ke aplikasi lokal/web terdeteksi (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`) dengan mode semua bot, bot pilihan, atau mapping manual per bot (`auto_open_on_boot: false`).
 
