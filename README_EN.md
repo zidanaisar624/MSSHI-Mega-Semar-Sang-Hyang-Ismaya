@@ -105,15 +105,15 @@ flowchart LR
 
 ## 🎭 Meet the 5-Bot Hierarchy (Disciplined Specialist Team)
 
-Every bot carries its own persona instructions, domain guardrails, local **`OmniVoice`** prosody, and verified skill allocation audited in [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
+Every bot carries its own [`SOUL.md`](configs/personas/) persona instructions, domain guardrails, curated bundled skill count, local **`OmniVoice`** prosody, and verified skill allocation audited in [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
 | Avatar | Bot &amp; Title | Core Mandate | Signature `v3.1.0` Stack |
 | :---: | :--- | :--- | :--- |
-| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)* | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
-| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
-| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
-| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Auto-set as Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**23 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**35 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**17 skills**) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**21 skills**) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
 
 > 🦀 **Shared Foundation Across All 5 Bots:** Every persona inherits [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, and lossless JSON compression via [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
 
@@ -217,14 +217,25 @@ flowchart LR
 
 - **Windows Beginners:** Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 for versioned PDF manuals), or drag `.zip`/`.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat).
 - **v2.x Upgrade:** Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once (backs up `SOUL.md` &amp; `Creative DNA` automatically).
-- **Automatic Hermes Desktop Bot Provisioning (Before / During / After Opening Hermes):** Selecting `muza-preset` (mode `4`, including custom display names) automatically configures the root `default` profile (`<HERMES_HOME>/`, previously labeled `Hermes`) as **Yukino Yukinoshita** and creates the remaining 4 roles (`shizuka`, `val`, `kiki-chii`, `shikaku`) in `<HERMES_HOME>/profiles/` (pass `--default-bot keep-hermes` / `-DefaultBot keep-hermes` to keep a separate `Hermes` profile; any pre-existing legacy `profiles/yukino` is safely preserved). Selecting `custom-bots` (mode `2`) provisions custom profiles in `<HERMES_HOME>/profiles/<bot>` with `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, channel-safe `.env`, and a cloned `model:` seed when Hermes is initialized — or atomic pre-staging via `pending-bots.json` before first launch!
-- **Windows PowerShell** *(add `-DownloadPdf` to fetch the v3.1.0 manual, or `-Mode muza-preset -Yes` for unattended 5-bot auto-setup)*:
+- **Automatic Hermes Desktop Bot Provisioning (3 Timings: Before / During / After Opening Hermes):**
+  - **Before opening Hermes:** Stages skills, `msshi-auto-trim`, and `pending-bots.json` atomically; once Hermes initializes, `msshi desktop` / `msshi runtime migrate` / `msshi update` automatically backfills the user's configured default `model:` and non-secret `.env` keys across profiles.
+  - **While Hermes is running:** Syncs profiles atomically into `<HERMES_HOME>/profiles` and signals multiplexer rescan without touching `state.db`, active chat sessions, or existing `provider`/`model`.
+  - **After Hermes is configured:** In `muza-preset` (mode `4`, including custom display names), the root `default` profile (`<HERMES_HOME>/`, previously labeled `Hermes`) is automatically configured as **Yukino Yukinoshita** (stock unedited `SOUL.md` is backed up to `.bak`; custom `SOUL.md`/`config.yaml`/`user_creative_dna.json` and legacy `profiles/yukino` are preserved) while `shizuka`, `val`, `kiki-chii`, and `shikaku` are created under `<HERMES_HOME>/profiles/`. Pass `--default-bot keep-hermes` / `-DefaultBot keep-hermes` to keep a separate `Hermes` profile. In `custom-bots` (mode `2`), custom profiles receive `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, channel-safe `.env`, and a cloned `model:` seed.
+- **Windows PowerShell:**
   ```powershell
+  # Interactive 4-step wizard (optionally add -DownloadPdf to fetch the v3.1.0 handbook)
   irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
+
+  # Unattended 1-shot install (5 Hermes bots + Yukino default + auto-trim + auto-connect apps):
+  & ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1'))) -Mode muza-preset -Platform hermes -Yes -StageAutoTrim -ConnectApps auto-reconnect
   ```
-- **macOS / Linux Bash** *(supports `--download-pdf` / `--no-pdf` and `--mode muza-preset --yes`)*:
+- **macOS / Linux Bash:**
   ```bash
+  # Interactive 4-step wizard (supports --download-pdf / --no-pdf)
   curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
+
+  # Unattended 1-shot install (5 Hermes bots + Yukino default + auto-trim + auto-connect apps):
+  curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | sh -s -- --mode muza-preset --platform hermes --yes --stage-auto-trim --connect-apps auto-reconnect
   ```
 
 | Agent / Host | Fast Install Route |
@@ -277,21 +288,21 @@ flowchart LR
 - **`notebooks/skripsi/`**: Official Google Colab notebooks (`MuZA_Search.ipynb`, `MuZA_Skripsi_Builder.ipynb`).
 - **`docs/pdf-guides/` &amp; `docs/manuals/`**: Release-versioned PDF handbooks, Hydrogen execution report PDF, `latest/`, and [`pdf_catalog.json`](docs/manuals/pdf_catalog.json).
 - **`assets/`**: Standardized `avatars/`, `memes/`, `showcases/`, 8 SVG [`diagrams/`](assets/README.md), and [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json).
-- **`scripts/`**: CLI (`msshi_cli.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, `generate_hydrogen_report_pdf.py`, and release auditors (`check_release*.py`).
+- **`scripts/`**: CLI (`msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, `generate_hydrogen_report_pdf.py`, and release auditors (`check_release*.py`).
 - **`skills/` &amp; `optional/rea/`**: **63 bundled active skill folders (`51 core + 12 wrappers`)** including 11-file `muza-skripsi-template/`, plus opt-in `rea`.
 
 ---
 
 ## 🧭 4-Step Setup Flow (`msshi setup`)
 
-Right after staging skills (supported **before, during, or after opening Hermes Desktop**), `msshi setup` exposes interactive and unattended options forwarded by `install.ps1` / `install.sh`:
+Right after staging skills &amp; Hermes bot profiles (supported **before, during, or after opening Hermes Desktop**), `msshi setup` walks through 4 stages whose flags are also forwarded by `install.ps1` / `install.sh`:
 
-1. **`[1/4] Skills`**: Add extra packs (`--extra-packs`) or individual skills (`--extra-skills`) per bot/target, plus explicit opt-in REA (`--with-rea`, default OFF).
-2. **`[2/4] Plugins`**: Inspect and stage fail-open `msshi-auto-trim`, `KAT-Coder` mode (`--kat-mode`), offline `Hermes-Dreaming`, `OmniVoice` status, and opt-in `Steel Browser Policy` (`--install-steel`).
-3. **`[3/4] Service Connections`**: Configure `GitLab` / `Tinyfish` MCP connectors (`--connect-services skip|per-profile|share-oauth`, keeping `BrightData` OFF and safely deferring if Hermes `config.yaml` is not yet created).
-4. **`[4/4] Bot to CLI-Anything to Apps`**: Connect all or selected bots to detected apps via `auto-reconnect`, or manually map per-bot app targets (`--connect-apps`, `--connect-bots`, `--connect-targets`, `auto_open_on_boot: false`).
+1. **`[1/4] Skills`**: Add extra packs (`--extra-packs`) or individual skills (`--extra-skills`) per bot/target, plus explicit opt-in REA (`--with-rea`, default **OFF**).
+2. **`[2/4] Plugins &amp; Add-ons`**: Inspect and stage fail-open `msshi-auto-trim` (`--stage-auto-trim` / `-StageAutoTrim`), `KAT-Coder` preference (`--kat-mode light|ideal|cloud|skip` / `-KatMode`), offline `Hermes-Dreaming`, `OmniVoice` status, and opt-in `Steel Browser Policy` (`--install-steel`).
+3. **`[3/4] Service Connections &amp; MCP`**: Configure `GitLab` / `Tinyfish` MCP connectors (`--connect-services skip|per-profile|share-oauth` / `-ConnectServices`), keeping `BrightData` **OFF** and safely deferring if Hermes `config.yaml` does not exist yet (`deferred_pre_hermes`).
+4. **`[4/4] Bot to CLI-Anything to Apps`**: Connect all or selected bots to detected apps via `auto-reconnect`, or manually map per-bot app targets (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`; always `auto_open_on_boot: false`).
 
-Each run writes a structured summary report to `<MSSHI_HOME>/reports/last-setup-report.json` while leaving your active `provider` and `model` intact.
+> 🛡️ **Automatic Preservation on Re-run / `--yes`:** Re-running `msshi setup` or passing `--yes` preserves existing active settings — including `KAT-Coder` mode (`light`/`ideal`/`cloud`), pre-staged `msshi-auto-trim`, existing MCP services, connected bot-to-app mappings (`preserved`), plus user `provider`, `model`, custom `SOUL.md`, and `user_creative_dna.json` (`provider_model_mutated: false`). Each run saves a structured report to `<MSSHI_HOME>/reports/last-setup-report.json`.
 
 ---
 

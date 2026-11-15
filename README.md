@@ -107,15 +107,15 @@ flowchart LR
 
 ## 🎭 Mengenal 5 Persona Bot Hirarki (Bukan Sekadar Hiasan Prompt!)
 
-Setiap bot punya berkas [`SOUL.md`](configs/personas/shizuka.md), batasan otoritas, profil prosodi **`OmniVoice`**, serta distribusi skill terkurasi yang diverifikasi otomatis lewat [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
+Setiap bot punya berkas [`SOUL.md`](configs/personas/) khusus, batasan otoritas, alokasi skill bundel terukur, profil prosodi **`OmniVoice`**, serta audit otomatis di [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
 | Avatar | Bot &amp; Gelar | Peran &amp; Mandat Eksekusi | Skill &amp; Fitur Andalan `v3.1.0` |
 | :---: | :--- | :--- | :--- |
-| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)* | Menguji ide mentah pengguna agar tajam sebelum masuk produksi; mengatur ritme energi kerja &amp; mengekstrak *brief* jernih untuk Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
-| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Pemimpin orkestrasi tim: merancang strategi Bisnis/BBA/MBA/Pajak RI, menjaga guardrail `TokenShield` (`$1.00`), mendelegasikan tugas, &amp; merangkum hasil akhir untuk manusia. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Mesin kecerdasan akademik: memetakan *research gap*, mencari paper primer, merakit template skripsi Word otomatis, meramal deret waktu **`TimesFM`**, &amp; `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) · **Mesin Skripsi #8 (`muza-skripsi-template`)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
-| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Sutradara kreatif **Concepting First**: merancang storyboard, produksi film/dokumenter 10–40 menit per bab, video peluncuran **`BRAG`** (**Hyperframes**), &amp; **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
-| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Architect, Coder &amp; Cybersec)* | Arsitek full-stack (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, evaluasi **`Harness²`**, parser lokal **`Scrapling`**, defensive cybersecurity, serta **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Otomatis jadi bot <code>default</code> Hermes</sub> | Menguji ide mentah pengguna agar tajam sebelum masuk produksi; mengatur ritme energi kerja &amp; mengekstrak *brief* jernih untuk Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skill**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Pemimpin orkestrasi tim: merancang strategi Bisnis/BBA/MBA/Pajak RI, menjaga guardrail `TokenShield` (`$1.00`), mendelegasikan tugas, &amp; merangkum hasil akhir untuk manusia. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**23 skill**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Mesin kecerdasan akademik: memetakan *research gap*, mencari paper primer, merakit template skripsi Word otomatis, meramal deret waktu **`TimesFM`**, &amp; `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**35 skill**) · **Mesin Skripsi #8 (`muza-skripsi-template`)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Sutradara kreatif **Concepting First**: merancang storyboard, produksi film/dokumenter 10–40 menit per bab, video peluncuran **`BRAG`** (**Hyperframes**), &amp; **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**17 skill**) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Architect, Coder &amp; Cybersec)* | Arsitek full-stack (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, evaluasi **`Harness²`**, parser lokal **`Scrapling`**, defensive cybersecurity, serta **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**21 skill**) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
 
 > 🦀 **Shared Foundation Across All 5 Bots:** Seluruh 5 persona memakai [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md) (pengganti 22 MCP lokal berat — aplikasi dibuka **hanya** saat ada tiket `msshi runtime ticket`), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, dan proteksi hook lossless [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
 
@@ -229,14 +229,25 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 
 - **Windows Pemula (Klik 2x):** Jalankan [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (menu interaktif lengkap termasuk unduhan PDF panduan!).
 - **Migrasi Pengguna Lama `v2.x` ke `v3.1.0`:** Jalankan [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) sekali (cadangan `SOUL.md` &amp; `Creative DNA` dibuat otomatis).
-- **Auto-Set Profil Bot Hermes Desktop (3 Waktu: Sebelum / Saat / Setelah Membuka Hermes):** Saat memilih `muza-preset` (mode `4`, termasuk nama custom seperti `Sir. Robot`), profil `default` (`<HERMES_HOME>/`, sebelumnya tampil sebagai `Hermes`) otomatis dikonfigurasi menjadi **Yukino Yukinoshita** dan 4 anggota lainnya (`shizuka`, `val`, `kiki-chii`, `shikaku`) dibuat di `<HERMES_HOME>/profiles/` (opsi `--default-bot keep-hermes` / `-DefaultBot keep-hermes` tersedia bila ingin memisahkan bot bawaan; profil legacy `profiles/yukino` yang sudah ada tetap dipertahankan). Pada `custom-bots` (mode `2`), setiap bot dibuat langsung di `<HERMES_HOME>/profiles/<bot>` lengkap dengan `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, `.env` bebas secret channel, dan seed `model:` dari `config.yaml` utama jika Hermes sudah aktif — atau pre-stage `pending-bots.json` jika Hermes belum pernah dibuka!
-- **Windows PowerShell** *(tambah `-DownloadPdf` jika ingin langsung mengunduh PDF v3.1.0, atau `-Mode muza-preset -Yes` untuk auto-set 5 bot tanpa prompt)*:
+- **Auto-Set Profil Bot Hermes Desktop (3 Waktu: Sebelum / Saat / Setelah Membuka Hermes):**
+  - **Sebelum Hermes dibuka:** MSSHI menyiapkan skills, `msshi-auto-trim`, dan antrean profil di `pending-bots.json`; begitu Hermes dibuka lalu user menjalankan `msshi desktop` / `msshi runtime migrate` / `msshi update`, `model:` default &amp; `.env` non-secret otomatis di-backfill ke semua bot.
+  - **Saat Hermes berjalan:** Sinkronisasi atomik membuat/memperbarui profil ke `<HERMES_HOME>/profiles` dan memicu rescan multiplexer tanpa menyentuh `state.db`, sesi aktif, maupun `provider`/`model` user.
+  - **Setelah Hermes diset / sudah dipakai:** Pada `muza-preset` (mode `4`, termasuk nama tampilan custom), bot `default` (`<HERMES_HOME>/`, sebelumnya `Hermes`) otomatis diset menjadi **Yukino Yukinoshita** (`SOUL.md` bawaan polos dicadangkan ke `.bak`, sementara `SOUL.md`/`config.yaml`/`user_creative_dna.json` kustom dan profil legacy `profiles/yukino` tetap aman), serta 4 bot lain (`shizuka`, `val`, `kiki-chii`, `shikaku`) disiapkan di `<HERMES_HOME>/profiles/`. Gunakan `--default-bot keep-hermes` / `-DefaultBot keep-hermes` bila ingin memisahkan bot `Hermes` bawaan. Pada `custom-bots` (mode `2`), setiap bot dibuat lengkap dengan `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, `.env` bebas secret channel, dan seed `model:` dari `config.yaml` utama.
+- **Windows PowerShell:**
   ```powershell
+  # Mode interaktif 4 tahap (bisa langsung tambah -DownloadPdf untuk mengunduh PDF v3.1.0)
   irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
+
+  # Atau instal otomatis tanpa prompt (5 bot Hermes + Yukino default + auto-trim + auto-connect apps):
+  & ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1'))) -Mode muza-preset -Platform hermes -Yes -StageAutoTrim -ConnectApps auto-reconnect
   ```
-- **macOS / Linux Bash** *(dukung `--download-pdf` / `--no-pdf` dan `--mode muza-preset --yes`)*:
+- **macOS / Linux Bash:**
   ```bash
+  # Mode interaktif 4 tahap (dukung --download-pdf / --no-pdf)
   curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
+
+  # Atau instal otomatis tanpa prompt (5 bot Hermes + Yukino default + auto-trim + auto-connect apps):
+  curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | sh -s -- --mode muza-preset --platform hermes --yes --stage-auto-trim --connect-apps auto-reconnect
   ```
 
 | Platform / Agen Tujuan | Cara Pasang Tercepat |
@@ -300,9 +311,22 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 | **`docs/pdf-guides/` &amp; `docs/manuals/`** | Buku Panduan Master PDF v3.1.0, Laporan Eksekusi Hydrogen PDF, Spesifikasi Settings v3.0, rilis `latest/`, dan [`pdf_catalog.json`](docs/manuals/pdf_catalog.json). |
 | **`docs/guides/`** | Panduan agen &amp; publik: [`INSTALL_FOR_AGENTS.md`](docs/guides/INSTALL_FOR_AGENTS.md), [`PANDUAN_KUSTOMISASI_USER_PUBLIK.md`](docs/guides/PANDUAN_KUSTOMISASI_USER_PUBLIK.md), dan panduan auto-update. |
 | **`assets/`** | `avatars/` (Hero banner dual-tone, fullbody Noir &amp; 5 avatar karakter seragam), `memes/` (komik evolusi 2x2 &amp; meme reaksi), `showcases/`, `diagrams/` (8 SVG arsitektur), serta [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json) &amp; [`assets/README.md`](assets/README.md). |
-| **`scripts/`** | Mesin CLI `msshi_cli.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`, `prepare_github_visuals.py`, `secret_scan.py`, `generate_hydrogen_report_pdf.py`, &amp; `check_release*.py`. |
+| **`scripts/`** | Mesin CLI `msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`, `prepare_github_visuals.py`, `secret_scan.py`, `generate_hydrogen_report_pdf.py`, &amp; `check_release*.py`. |
 | **`configs/`** | Matriks skill (`bot_role_and_skill_matrix.json`, `upstreams.json`, `skill_activation_matrix.json`), persona 5 bot (`configs/personas/`), &amp; [`configs/github_about.txt`](configs/github_about.txt). |
 | **`skills/` &amp; `optional/rea/`** | **63 folder skill aktif terbundel (`51 inti + 12 wrapper`)** termasuk 11-file `skills/muza-skripsi-template/`, plus 1 wrapper opt-in `rea`. |
+
+---
+
+## 🧭 Alur Setup 4 Tahap (`msshi setup`)
+
+Setelah menyalin skill target &amp; menata profil bot Hermes (didukung **sebelum, saat, atau setelah membuka Hermes Desktop**), `msshi setup` memandu 4 langkah lengkap yang juga dapat diotomasi lewat flag di `install.ps1` / `install.sh`:
+
+1. **`[1/4] Skills`**: Tambah extra packs (`--extra-packs`) / skill individu (`--extra-skills`) per target atau bot, serta opt-in REA (`--with-rea`, default **OFF**).
+2. **`[2/4] Plugin & Add-on`**: Periksa dan stage plugin fail-open `msshi-auto-trim` (`--stage-auto-trim` / `-StageAutoTrim`), preferensi `KAT-Coder` (`--kat-mode light|ideal|cloud|skip` / `-KatMode`), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
+3. **`[3/4] Koneksi Layanan & MCP`**: Pasang konektor MCP `GitLab` &amp; `Tinyfish` (`--connect-services skip|per-profile|share-oauth` / `-ConnectServices`), tetap menjaga `BrightData` **OFF** dan aman bila `config.yaml` Hermes belum ada (`deferred_pre_hermes`).
+4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Hubungkan semua bot atau bot pilihan ke aplikasi terdeteksi via `auto-reconnect`, atau petakan aplikasi spesifik per bot secara manual (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`; selalu `auto_open_on_boot: false`).
+
+> 🛡️ **Preservasi Otomatis Saat Update / `--yes`:** Menjalankan ulang `msshi setup` atau mode `--yes` mempertahankan pengaturan yang sudah aktif — termasuk mode `KAT-Coder` (`light`/`ideal`/`cloud`), plugin `msshi-auto-trim` yang sudah di-stage, koneksi layanan MCP, app mapping bot yang sudah tersambung (`preserved`), serta `provider`, `model`, `SOUL.md` kustom, dan `user_creative_dna.json` (`provider_model_mutated: false`). Setiap setup menyimpan laporan JSON terstruktur ke `<MSSHI_HOME>/reports/last-setup-report.json`.
 
 ---
 
@@ -328,18 +352,5 @@ Perintah ini menyalakan `HERMES_DESKTOP_DISABLE_GPU=1` khusus untuk proses Herme
 Materi orisinal MSSHI dirilis di bawah [**Lisensi MIT**](LICENSE). Komponen pihak ketiga, model, nama karakter rujukan, dan aset eksternal mengikuti ketentuan lisensi masing-masing di [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) dan [docs/PROVENANCE.md](docs/PROVENANCE.md).
 
 <br>
-
----
-
-## 🧭 Alur Setup 4 Tahap (`msshi setup`)
-
-Setelah menyalin skill target (baik **sebelum, saat, atau setelah membuka Hermes Desktop**), `msshi setup` memandu opsi lengkap dengan flag CLI non-interaktif yang juga diteruskan oleh `install.ps1` / `install.sh`:
-
-1. **`[1/4] Skills`**: Tambah extra packs (`--extra-packs`) / skill individu (`--extra-skills`) per target atau bot, serta opt-in REA (`--with-rea`, default OFF).
-2. **`[2/4] Plugin`**: Cek & stage plugin fail-open `msshi-auto-trim`, mode `KAT-Coder` (`--kat-mode`), `Hermes-Dreaming` offline, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
-3. **`[3/4] Koneksi`**: Pasang konektor MCP `GitLab` & `Tinyfish` (`--connect-services skip|per-profile|share-oauth`, tetap menjaga `BrightData` OFF dan aman sebelum `config.yaml` Hermes dibuat).
-4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Hubungkan semua bot atau bot pilihan ke aplikasi terdeteksi via `auto-reconnect`, atau petakan aplikasi spesifik per bot secara manual (`--connect-apps`, `--connect-bots`, `--connect-targets`, `auto_open_on_boot: false`).
-
-Setiap setup menyimpan ringkasan JSON terstruktur ke `<MSSHI_HOME>/reports/last-setup-report.json` tanpa mengubah `provider` atau `model` aktif.
 
 > **Verifikasi &amp; Audit Paket:** [`adapters/msshi-visual-review/README.md`](adapters/msshi-visual-review/README.md) · `python scripts/secret_scan.py` · `python scripts/msshi_cli.py doctor` · `python scripts/check_release.py --smoke` · `python scripts/check_release_v31.py --package-only`
