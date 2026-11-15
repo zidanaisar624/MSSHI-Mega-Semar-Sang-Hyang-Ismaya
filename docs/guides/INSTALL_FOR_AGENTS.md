@@ -12,8 +12,8 @@ Paste this message into Hermes Agent, OpenClaw, Claude Code, or Antigravity if t
 
 1. Confirm the target agent, profile or workspace, and desired scope. For a new public setup, offer Solo, Custom Multi-Bot, Selective Packs, and the MuZA five-role preset. Default to a Solo preview when no existing installation or role preference is evident. Respect the host's sandbox and existing authorization.
 2. Use the canonical [MSSHI GitHub repository](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya). Check `VERSION.json`, `LICENSE`, and the scripts for the selected route. Clone into a new or explicitly selected directory. Do not overwrite an existing checkout with local changes. If the user supplied a ZIP, inspect its contents and source before extracting to a separate directory.
-3. From the checkout root, run `python scripts/check_release.py` to validate the package. Preview the requested setup with the direct installer. Specify `--target-dir` if the profile or target is ambiguous. Use `py -3` on Windows or `python3` on macOS/Linux if `python` is unavailable. For web-only hosts, use the upload path below instead of a local installer.
-4. State the exact destination, scope, and anticipated changes. Apply the reviewed plan when covered by the user's request. Keep provider, model, credentials, existing `SOUL.md`, and `user_creative_dna.json` intact. Use the configured application's profile management UI or documented commands when a persona workspace needs linking.
+3. From the checkout root, run `python scripts/check_release.py` to validate the package. Preview the requested setup with the direct installer. For Hermes Agent multi-bot modes (`muza-preset` or `custom-bots`), MSSHI automatically targets `<HERMES_HOME>/profiles` (adaptive `D:\HermesData` if a writable `D:` drive exists on Windows, or `%LOCALAPPDATA%\hermes` / `~/.hermes` fallback) and creates ready-to-run Hermes Desktop profiles (`profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, channel-safe `.env`, and model-seeded `config.yaml`). In `muza-preset` on Hermes, the root `default` profile (`<HERMES_HOME>/`) is automatically configured as **Yukino Yukinoshita** while `shizuka`, `val`, `kiki-chii`, and `shikaku` are created under `<HERMES_HOME>/profiles/` (pass `--default-bot keep-hermes` to keep `default` separate; existing legacy `profiles/yukino` data is never removed). Only pass `--target-dir` if you intentionally want a custom or portable directory. Use `py -3` on Windows or `python3` on macOS/Linux if `python` is unavailable. For web-only hosts, use the upload path below instead of a local installer.
+4. State the exact destination, scope, and anticipated changes. Apply the reviewed plan when covered by the user's request. Keep provider, model, credentials, custom `SOUL.md`, and `user_creative_dna.json` intact (an unedited stock Hermes `SOUL.md` on `default` is backed up before applying Yukino). If Hermes is not yet initialized (before first open), MSSHI pre-stages the bots and automatically backfills the user's configured default `model:` and non-channel `.env` keys once they run `msshi desktop`, `msshi runtime migrate`, or `msshi update` after opening Hermes. If Hermes is open during installation, MSSHI stages profiles atomically and triggers a live multiplexer rescan without touching active `state.db`, sessions, or existing model settings.
 5. Verify the actual files and, where available, the host's skill list. Report the version, path, count, and what still depends on host setup. Use a fresh session to refresh discovery. If shell, GitHub, attachments, or an install action is unavailable, give the matching manual route and say which step remains.
 6. Keep upstream repositories separate from the installed skill folders. Download external references only when the user requests an update or upstream fetch. A downloaded repository needs its own review and setup before use. Keep paid jobs and app startup on demand.
 
@@ -55,14 +55,17 @@ hermes skills tap add zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya
 hermes skills install zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/wise-judgment-and-sovereign-orchestrator
 ```
 
-For the managed MSSHI CLI, use one of the following after reviewing the installer. Run `msshi setup` to choose a mode if the installer did not open the wizard.
+For the managed MSSHI CLI, use one of the following after reviewing the installer. The setup wizard supports installing **before, during, or after** Hermes opens, automatically configures Hermes Desktop bot profiles under `<HERMES_HOME>/profiles` without altering the user's provider or model, and now guides through a **4-step post-apply flow**: `[1/4] Skills` (extra packs/skills + opt-in REA default OFF) -> `[2/4] Plugin` (`msshi-auto-trim` fail-open, KAT, Dreaming, OmniVoice, opt-in Steel) -> `[3/4] Koneksi` (`GitLab` / `Tinyfish`, BrightData OFF) -> `[4/4] Bot ke CLI-Anything ke Apps` (`auto-reconnect` all/selected bots or per-bot manual mapping, `auto_open_on_boot: false`), finishing with a setup report saved to `<MSSHI_HOME>/reports/last-setup-report.json`.
 
 ```powershell
+# Interactive wizard (or pass -Mode muza-preset -Platform hermes -Yes -ConnectApps auto-reconnect for unattended multi-bot + app setup)
 irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
 ```
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
+# Non-interactive MuZA 5-bot auto setup for Hermes:
+# curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | sh -s -- --mode muza-preset --platform hermes --yes --connect-apps auto-reconnect
 ```
 
 [Hermes Agent skills documentation](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).

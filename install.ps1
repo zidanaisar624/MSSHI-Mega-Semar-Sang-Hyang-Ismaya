@@ -5,11 +5,21 @@ param(
     [switch]$NoPath,
     [switch]$DownloadPdf,
     [switch]$NoPdf,
-    [string]$PdfVersion
+    [string]$PdfVersion,
+    [string]$Mode,
+    [string]$Platform,
+    [string]$DefaultBot,
+    [switch]$Yes,
+    [string]$KatMode,
+    [string]$ConnectServices,
+    [string]$ConnectApps,
+    [string]$ConnectBots,
+    [string]$ConnectTargets,
+    [switch]$WithRea
 )
 
 & {
-    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion)
+    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiYes, $MsshiKatMode, $MsshiConnectServices, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
     $ErrorActionPreference = 'Stop'
     $repository = 'https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git'
     $scratch = $null
@@ -73,10 +83,20 @@ param(
             $env:Path = "$binDir;$env:Path"
         }
         $setupArgs = @('setup')
+        if ($MsshiMode) { $setupArgs += @('--mode', $MsshiMode) }
+        if ($MsshiPlatform) { $setupArgs += @('--platform', $MsshiPlatform) }
+        if ($MsshiDefaultBot) { $setupArgs += @('--default-bot', $MsshiDefaultBot) }
+        if ($MsshiYes) { $setupArgs += '--yes' }
+        if ($MsshiKatMode) { $setupArgs += @('--kat-mode', $MsshiKatMode) }
+        if ($MsshiConnectServices) { $setupArgs += @('--connect-services', $MsshiConnectServices) }
+        if ($MsshiConnectApps) { $setupArgs += @('--connect-apps', $MsshiConnectApps) }
+        if ($MsshiConnectBots) { $setupArgs += @('--connect-bots', $MsshiConnectBots) }
+        if ($MsshiConnectTargets) { $setupArgs += @('--connect-targets', $MsshiConnectTargets) }
+        if ($MsshiWithRea) { $setupArgs += '--with-rea' }
         if ($MsshiDownloadPdf) { $setupArgs += '--download-pdf' }
         if ($MsshiNoPdf) { $setupArgs += '--no-pdf' }
         if ($MsshiPdfVersion) { $setupArgs += @('--pdf-version', $MsshiPdfVersion) }
-        if (-not $MsshiNoSetup -and -not [Console]::IsInputRedirected) {
+        if (-not $MsshiNoSetup -and ($MsshiYes -or -not [Console]::IsInputRedirected)) {
             & $runtime @pythonArgs -B -X utf8 $cli @setupArgs
             if ($LASTEXITCODE -ne 0) { throw 'MSSHI setup was interrupted or failed. Run msshi setup again.' }
         } elseif (-not $MsshiNoSetup) {
@@ -100,4 +120,4 @@ param(
             }
         }
     }
-} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion
+} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $Mode $Platform $DefaultBot $Yes $KatMode $ConnectServices $ConnectApps $ConnectBots $ConnectTargets $WithRea

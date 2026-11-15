@@ -6,6 +6,7 @@
 - Expanded the default bundle to 63 skills (51 core + 12 wrappers) and 49 pinned source references, with separate licenses and runtime prerequisites.
 - Added curated `assets/visuals/`, `docs/pdf-guides/Panduan_Master_MSSHI_v3.1.0.pdf`, `configs/github_about.txt`, and Mesin Ke-8 in `docs/TUJUH_MESIN_AKADEMIK.md`.
 - Clarified terminal setup, pack/skill, optional REA/KAT and app choices with bilingual function/prerequisite help, a read-only `msshi choices` command, and a complete choice guide. Version and activation defaults remain unchanged.
+- Added 3-timing automatic Hermes Desktop bot profile provisioning (before, during, and after opening Hermes) via `scripts/msshi_hermes_profiles.py`, adaptive Windows `D:\HermesData` vs `%LOCALAPPDATA%\hermes` resolution, pure-Python YAML fallback (`PureYamlCompat`) in `msshi_runtime.py`, custom display-name updates (`--update-display-names`), and non-interactive `-Mode`/`-Yes` flags in `install.ps1`/`install.sh`/`msshi setup`.
 - Added four standard contextual wrappers: Unslop UI improvement (Kiki/Val/Shikaku), BRAG launch video (Kiki), Scrapling local HTML parser (Val/Shikaku), and Harness² deterministic harness evaluation (Val/Shikaku).
 - Added REA as a separate default-off opt-in for public installs; MuZA explicitly enables it for Coder.
 - Kept live persona/model routing and v3.0 browser/MCP safeguards; no automatic model-backed benchmarks or live harness promotion.

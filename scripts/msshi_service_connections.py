@@ -53,10 +53,19 @@ def config(data):
 
 def homes(root):
     result = {'default': root}
+    profiles_dir = root / 'profiles'
+    seen = set()
     for name in PROFILE_NAMES:
-        home = root/'profiles'/name
-        if (home/'config.yaml').is_file():
+        home = profiles_dir / name
+        if (home / 'config.yaml').is_file():
             result[name] = home
+            seen.add(name)
+    if profiles_dir.is_dir():
+        for folder in sorted(profiles_dir.iterdir()):
+            if folder.name in seen or folder.name.startswith('.') or folder.is_symlink():
+                continue
+            if folder.is_dir() and (folder / 'config.yaml').is_file():
+                result[folder.name] = folder
     return result
 
 
@@ -115,9 +124,24 @@ def add_missing(data):
 def status(root):
     output = {}
     for name, home in homes(root).items():
-        c = config((home/'config.yaml').read_bytes())
-        directory = home/'mcp-tokens'
-        output[name] = {'credential_directory': str(directory.resolve()), 'services': {}}
+        cfg_file = home / 'config.yaml'
+        directory = home / 'mcp-tokens'
+        if not cfg_file.is_file():
+            output[name] = {
+                'credential_directory': str(directory.resolve()),
+                'config_present': False,
+                'services': {
+                    service: {
+                        'registered': False, 'enabled': False, 'endpoint_matches': False,
+                        'cached_oauth': (directory / f'{service}.json').is_file(),
+                        'discovery': 'pending Hermes config.yaml initialization',
+                        'authentication': 'not tested by status',
+                    } for service in SERVICES
+                },
+            }
+            continue
+        c = config(cfg_file.read_bytes())
+        output[name] = {'credential_directory': str(directory.resolve()), 'config_present': True, 'services': {}}
         for service in SERVICES:
             item = (c.get('mcp_servers') or {}).get(service)
             output[name]['services'][service] = {

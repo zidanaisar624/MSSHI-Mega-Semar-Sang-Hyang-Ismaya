@@ -16,6 +16,7 @@ import sys
 
 sys.dont_write_bytecode = True
 import check_release_v3 as legacy
+import msshi_hermes_profiles as hermes_profiles
 from msshi_sources import data_root
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -151,7 +152,8 @@ def full_preservation(home):
         if not file.is_file(): missing.append(name)
         elif digest(file) != expected: changed.append(name)
     required = set()
-    for alias in legacy.ROLES.values():
+    role_map = legacy.resolve_role_map(home)
+    for alias in role_map.values():
         profile = home / "profiles" / alias if alias else home
         for filename in ("config.yaml", "config.json", "SOUL.md", "user_creative_dna.json", "configs/user_creative_dna.json"):
             file = profile / filename
@@ -247,7 +249,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
         if package_only:
             readiness[slug]["evidence_status"] = "not_evaluated_package_only"
             continue
-        expected_profiles = {legacy.ROLES[role] or "default" for role in expected_roles}
+        expected_profiles = {role_map[role] or "default" for role in expected_roles}
         if slug == "rea":
             registry_path = data_root() / "state.json"
             registry = read(registry_path) if registry_path.is_file() else {}
@@ -415,7 +417,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--home", type=Path, default=Path(os.environ.get("HERMES_HOME", Path.home() / ".hermes")))
+    parser.add_argument("--home", type=Path, default=hermes_profiles.resolve_hermes_home())
     parser.add_argument("--repo", type=Path, default=ROOT)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--package-only", action="store_true")

@@ -59,8 +59,18 @@ def assess(steel_available, personal_account=False, transfer=False, approved=Fal
 
 
 def status(home):
+    cfg_file = home / "config.yaml"
+    if not cfg_file.is_file():
+        return {"home": str(home), "preferred_provider": None, "config_present": False,
+                "plugins": {"browser-steel": False, "msshi-steel-policy": False},
+                "credentials_present": bool(os.environ.get("STEEL_API_KEY")),
+                "custom_endpoint_configured": False, "configured": False,
+                "ready_for_authorized_task": False, "authenticated": "not_tested",
+                "connected": False, "api_requests": 0, "network_tested": False,
+                "auto_open_on_boot": False, "local_fallback": False,
+                "personal_profile_copy": False, "steel_upstream_commit": STEEL_COMMIT}
     yaml = yaml_reader(home)
-    cfg = yaml.load((home / "config.yaml").read_text(encoding="utf-8")) or {}
+    cfg = yaml.load(cfg_file.read_text(encoding="utf-8")) or {}
     browser = cfg.get("browser") or {}
     enabled = (cfg.get("plugins") or {}).get("enabled") or []
     found = {}

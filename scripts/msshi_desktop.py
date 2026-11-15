@@ -9,6 +9,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
+
+import msshi_hermes_profiles as hermes_profiles
 from datetime import datetime, timezone
 
 
@@ -96,6 +98,11 @@ def run(home: Path, timeout: int, check_only: bool = False, software_rendering: 
     if os.name != "nt":
         raise ValueError("This launcher currently supports the Windows Desktop installation.")
     home = home.expanduser().resolve()
+    if not check_only and home.is_dir():
+        try:
+            hermes_profiles.sync_pending_profile_configs(home)
+        except OSError:
+            pass
     source = home / "hermes-agent"
     desktop = source / "apps/desktop/release/win-unpacked/Hermes.exe"
     launcher = home / "bin/hermes.exe"
@@ -152,8 +159,7 @@ def run(home: Path, timeout: int, check_only: bool = False, software_rendering: 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--hermes-home", type=Path,
-                        default=Path(os.environ.get("HERMES_HOME", r"D:\HermesData")))
+    parser.add_argument("--hermes-home", type=Path, default=hermes_profiles.resolve_hermes_home())
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--check-only", action="store_true")
     parser.add_argument("--software-rendering", action="store_true",

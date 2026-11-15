@@ -229,11 +229,12 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 
 - **Windows Pemula (Klik 2x):** Jalankan [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (menu interaktif lengkap termasuk unduhan PDF panduan!).
 - **Migrasi Pengguna Lama `v2.x` ke `v3.1.0`:** Jalankan [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) sekali (cadangan `SOUL.md` &amp; `Creative DNA` dibuat otomatis).
-- **Windows PowerShell** *(tambah `-DownloadPdf` jika ingin langsung mengunduh PDF v3.1.0)*:
+- **Auto-Set Profil Bot Hermes Desktop (3 Waktu: Sebelum / Saat / Setelah Membuka Hermes):** Saat memilih `muza-preset` (mode `4`, termasuk nama custom seperti `Sir. Robot`), profil `default` (`<HERMES_HOME>/`, sebelumnya tampil sebagai `Hermes`) otomatis dikonfigurasi menjadi **Yukino Yukinoshita** dan 4 anggota lainnya (`shizuka`, `val`, `kiki-chii`, `shikaku`) dibuat di `<HERMES_HOME>/profiles/` (opsi `--default-bot keep-hermes` / `-DefaultBot keep-hermes` tersedia bila ingin memisahkan bot bawaan; profil legacy `profiles/yukino` yang sudah ada tetap dipertahankan). Pada `custom-bots` (mode `2`), setiap bot dibuat langsung di `<HERMES_HOME>/profiles/<bot>` lengkap dengan `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, `.env` bebas secret channel, dan seed `model:` dari `config.yaml` utama jika Hermes sudah aktif — atau pre-stage `pending-bots.json` jika Hermes belum pernah dibuka!
+- **Windows PowerShell** *(tambah `-DownloadPdf` jika ingin langsung mengunduh PDF v3.1.0, atau `-Mode muza-preset -Yes` untuk auto-set 5 bot tanpa prompt)*:
   ```powershell
   irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
   ```
-- **macOS / Linux Bash** *(dukung `--download-pdf` / `--no-pdf`)*:
+- **macOS / Linux Bash** *(dukung `--download-pdf` / `--no-pdf` dan `--mode muza-preset --yes`)*:
   ```bash
   curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
   ```
@@ -327,5 +328,18 @@ Perintah ini menyalakan `HERMES_DESKTOP_DISABLE_GPU=1` khusus untuk proses Herme
 Materi orisinal MSSHI dirilis di bawah [**Lisensi MIT**](LICENSE). Komponen pihak ketiga, model, nama karakter rujukan, dan aset eksternal mengikuti ketentuan lisensi masing-masing di [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) dan [docs/PROVENANCE.md](docs/PROVENANCE.md).
 
 <br>
+
+---
+
+## 🧭 Alur Setup 4 Tahap (`msshi setup`)
+
+Setelah menyalin skill target (baik **sebelum, saat, atau setelah membuka Hermes Desktop**), `msshi setup` memandu opsi lengkap dengan flag CLI non-interaktif yang juga diteruskan oleh `install.ps1` / `install.sh`:
+
+1. **`[1/4] Skills`**: Tambah extra packs (`--extra-packs`) / skill individu (`--extra-skills`) per target atau bot, serta opt-in REA (`--with-rea`, default OFF).
+2. **`[2/4] Plugin`**: Cek & stage plugin fail-open `msshi-auto-trim`, mode `KAT-Coder` (`--kat-mode`), `Hermes-Dreaming` offline, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
+3. **`[3/4] Koneksi`**: Pasang konektor MCP `GitLab` & `Tinyfish` (`--connect-services skip|per-profile|share-oauth`, tetap menjaga `BrightData` OFF dan aman sebelum `config.yaml` Hermes dibuat).
+4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Hubungkan semua bot atau bot pilihan ke aplikasi terdeteksi via `auto-reconnect`, atau petakan aplikasi spesifik per bot secara manual (`--connect-apps`, `--connect-bots`, `--connect-targets`, `auto_open_on_boot: false`).
+
+Setiap setup menyimpan ringkasan JSON terstruktur ke `<MSSHI_HOME>/reports/last-setup-report.json` tanpa mengubah `provider` atau `model` aktif.
 
 > **Verifikasi &amp; Audit Paket:** [`adapters/msshi-visual-review/README.md`](adapters/msshi-visual-review/README.md) · `python scripts/secret_scan.py` · `python scripts/msshi_cli.py doctor` · `python scripts/check_release.py --smoke` · `python scripts/check_release_v31.py --package-only`

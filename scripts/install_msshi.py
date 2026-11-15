@@ -12,6 +12,12 @@ import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+import msshi_hermes_profiles as hermes_profiles
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX = ROOT / "configs" / "bot_role_and_skill_matrix.json"
@@ -117,21 +123,28 @@ def read_matrix(path, root=ROOT):
 
 
 def host_roots(home):
-    choices = []
+    env_override = None
+    if home != Path.home():
+        env_override = {**os.environ, "HOME": str(home), "USERPROFILE": str(home)}
+    resolved_hermes = hermes_profiles.resolve_hermes_home(env=env_override)
+    choices = [resolved_hermes]
     if value := os.environ.get("HERMES_HOME"):
-        choices.append(absolute(value))
+        normalized = hermes_profiles.normalize_hermes_root(value)
+        if normalized not in choices:
+            choices.insert(0, normalized)
     for candidate in (home / ".hermes", home / "HermesData"):
-        if candidate.is_dir():
+        if candidate.is_dir() and candidate not in choices:
             choices.append(candidate)
     if os.name == "nt":
-        # A custom Windows path only counts if it actually looks like Hermes.
-        candidate = Path("D:/HermesData")
-        if (candidate / "skills").is_dir() or (candidate / "config.yaml").is_file():
-            choices.append(candidate)
+        local_app = os.environ.get("LOCALAPPDATA")
+        local_hermes = Path(local_app) / "hermes" if local_app else home / "AppData/Local/hermes"
+        for candidate in (Path("D:/HermesData"), local_hermes):
+            if (hermes_profiles.is_hermes_dir(candidate) and candidate not in choices):
+                choices.append(candidate)
     openclaw = absolute(os.environ["OPENCLAW_STATE_DIR"]) if os.environ.get("OPENCLAW_STATE_DIR") else home / ".openclaw"
     claude = absolute(os.environ["CLAUDE_CONFIG_DIR"]) if os.environ.get("CLAUDE_CONFIG_DIR") else home / ".claude"
     return {
-        "hermes": [path / "skills" for path in choices] or [home / ".hermes" / "skills"],
+        "hermes": [path / "skills" for path in choices] or [resolved_hermes / "skills"],
         "openclaw": [openclaw / "skills"],
         "claude": [claude / "skills"],
         "codex": [home / ".agents" / "skills"],
@@ -311,6 +324,10 @@ def main(argv=None):
     selection.add_argument("--skills", nargs="+", metavar="SKILL", help="Daftar slug skill selective, dipisah spasi.")
     parser.add_argument("--matrix", type=Path, default=MATRIX, help="Matriks kustom. Path aset di dalam JSON relatif ke repo.")
     parser.add_argument("--target-dir", type=Path, help="Folder skill (solo/selective) atau induk workspace bot (mode tim).")
+    parser.add_argument("--hermes-profiles", action="store_true", help="Daftarkan otomatis sebagai Hermes Desktop profiles (profile.yaml, config.yaml seed, .env).")
+    parser.add_argument("--update-display-names", action="store_true", help="Perbarui display_name pada profile.yaml yang sudah ada sesuai pilihan terminal.")
+    parser.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto",
+                        help="Pada mode muza-preset untuk Hermes, atur apakah profil 'default' otomatis menjadi Yukino ('auto'/'yukino') atau dipertahankan sebagai 'Hermes' ('keep-hermes').")
     parser.add_argument("--pull-upstreams", action="store_true", help="Unduh repositori referensi ke cache terpisah saat --apply; perlu internet/disk, tidak mengaktifkan aplikasi, model, akun atau runtime otomatis.")
     parser.add_argument("--upstreams-dir", type=Path, default=data_root() / "upstreams", help="Folder cache sumber eksternal.")
     action = parser.add_mutually_exclusive_group()
@@ -325,10 +342,24 @@ def main(argv=None):
         is_team = args.mode in {"custom-bots", "muza-preset"}
         if args.target_dir:
             target = absolute(args.target_dir)
+        elif is_team and host == "hermes":
+            hermes_root = hermes_profiles.resolve_hermes_home(
+                create_adaptive=args.apply,
+                persist_windows_env=args.apply,
+            )
+            target = hermes_root / "profiles"
         elif is_team:
             target = Path.cwd() / "msshi-agents"
         else:
+            if host == "hermes" and args.apply:
+                detected = hermes_profiles.resolve_hermes_home(
+                    create_adaptive=True,
+                    persist_windows_env=True,
+                ) / "skills"
             target = detected or Path.cwd() / "msshi-skills"
+        provision_hermes = is_team and host == "hermes" and (
+            not args.target_dir or target.name.lower() == "profiles" or args.hermes_profiles
+        )
         reject_links(target)
         if existing(target) and not target.is_dir():
             raise ValueError(f"Target bukan folder: {target}")
@@ -339,34 +370,97 @@ def main(argv=None):
             manifest = ROOT / "configs" / "upstreams.json"
             print(f"Sumber eksternal: {len(upstream_entries(manifest))} entri -> {absolute(args.upstreams_dir)}")
         if is_team:
+            roles_by_id = {b["id"]: str(b.get("role") or "") for b in (data.get("bots") or []) if isinstance(b, dict) and "id" in b}
+            hermes_home = None
+            profiles_root = target
+            if provision_hermes:
+                hermes_home = (
+                    target if (args.hermes_profiles and target.name.lower() != "profiles")
+                    else hermes_profiles.resolve_target_hermes_home(target)
+                )
+                profiles_root = hermes_home / "profiles"
+                if args.apply and os.name == "nt" and hermes_home == Path("D:/HermesData").absolute():
+                    hermes_profiles.persist_windows_hermes_home(hermes_home)
+            has_model_seed = bool(hermes_profiles.launch_model_seed_from_home(hermes_home)) if hermes_home else False
+            default_bot_is_yukino = bool(provision_hermes and args.mode == "muza-preset" and args.default_bot != "keep-hermes")
             plans = []
             for bot_id, label, skills, soul in team_plan(data, args.mode, catalog):
-                bot_dir = target / bot_id
+                as_default = bool(default_bot_is_yukino and bot_id == "yukino")
+                bot_dir = hermes_home if as_default else (profiles_root / bot_id)
                 reject_links(bot_dir)
                 if existing(bot_dir) and not bot_dir.is_dir():
                     raise ValueError(f"Target bot bukan folder: {bot_dir}")
                 copies, preserved, external = skill_plan(bot_dir / "skills", skills, catalog)
-                print(f"\n{label} ({bot_id})")
+                print(f"\n{label} (default <- {bot_id})" if as_default else f"\n{label} ({bot_id})")
                 print_plan(copies, preserved, external)
-                for filename in ("SOUL.md", "AGENTS.md"):
-                    if existing(bot_dir / filename):
-                        print(f"  Pertahankan {bot_dir / filename}")
+                soul_path = bot_dir / "SOUL.md"
+                if as_default and existing(soul_path) and hermes_profiles.is_stock_hermes_soul(soul_path):
+                    print(f"  Cadangkan & perbarui {soul_path} (ganti template bawaan Hermes ke persona {label})")
+                elif existing(soul_path):
+                    print(f"  Pertahankan {soul_path}")
+                else:
+                    print(f"  Buat {soul_path}")
+                agents_file = bot_dir / "AGENTS.md"
+                if existing(agents_file):
+                    print(f"  Pertahankan {agents_file}")
+                else:
+                    print(f"  Buat {agents_file}")
+                if provision_hermes:
+                    print(f"  {'Perbarui' if existing(bot_dir / 'profile.yaml') else 'Buat'} {bot_dir / 'profile.yaml'} (display_name: {label})")
+                    if as_default:
+                        print(f"  Pertahankan {bot_dir / 'config.yaml'} & .env utama Hermes (profil default)")
+                        if existing(profiles_root / bot_id):
+                            print(f"  Pertahankan profil legacy {profiles_root / bot_id} (riwayat chat/state.db lama tetap aman)")
+                    elif existing(bot_dir / "config.yaml"):
+                        print(f"  Pertahankan {bot_dir / 'config.yaml'} (provider/model aman)")
+                    elif has_model_seed:
+                        print(f"  Seed {bot_dir / 'config.yaml'} (dari model default)")
                     else:
-                        print(f"  Buat {bot_dir / filename}")
-                plans.append((bot_dir, label, soul, copies, skills, external))
+                        print("  Pre-stage profile sebelum Hermes dibuka (config.yaml akan disinkronkan setelah Hermes dikonfigurasi)")
+                local_skills = ", ".join(slug for slug in dict.fromkeys(skills) if catalog[slug])
+                agents_text = (
+                    f"# {label}\n\nBaca SOUL.md untuk persona dan batas peran.\n\n"
+                    f"Skill paket untuk bot ini: {local_skills or '—'}.\n\n"
+                    f"Integrasi eksternal yang perlu disiapkan: {', '.join(external) or '—'}.\n"
+                )
+                plans.append((bot_id, as_default, bot_dir, label, roles_by_id.get(bot_id, ""), soul, agents_text, copies, skills, external))
             if args.apply:
-                for bot_dir, label, soul, copies, skills, external in plans:
-                    for source, destination in copies:
-                        copy_skill(source, destination)
-                    local_skills = ", ".join(slug for slug in dict.fromkeys(skills) if catalog[slug])
-                    create_text(bot_dir / "SOUL.md", soul)
-                    create_text(
-                        bot_dir / "AGENTS.md",
-                        f"# {label}\n\nBaca SOUL.md untuk persona dan batas peran.\n\n"
-                        f"Skill paket untuk bot ini: {local_skills or '—'}.\n\n"
-                        f"Integrasi eksternal yang perlu disiapkan: {', '.join(external) or '—'}.\n",
-                    )
-            print("Workspace tim portabel. Daftarkan tiap bot di platform Anda bila diperlukan.")
+                if provision_hermes and hermes_home is not None:
+                    pending_rows = []
+                    for bot_id, as_default, bot_dir, label, description, soul, agents_text, copies, skills, external in plans:
+                        hermes_profiles.sync_hermes_profile(
+                            hermes_home, bot_id, label, soul, agents_text, copies,
+                            description=description,
+                            update_display_names=args.update_display_names,
+                            as_default=as_default,
+                            copy_fn=copy_skill,
+                        )
+                        pending_rows.append({"bot_id": "default" if as_default else bot_id, "label": label, "description": description})
+                    hermes_profiles.record_pending_bots(hermes_home, pending_rows, args.mode)
+                    multiplex = hermes_profiles.notify_live_multiplexer(hermes_home)
+                    if has_model_seed:
+                        msg = (
+                            f"Profil Hermes otomatis didaftarkan ('default' -> Yukino di {hermes_home}, anggota tim di {profiles_root})."
+                            if default_bot_is_yukino
+                            else f"Profil Hermes otomatis didaftarkan di {profiles_root} (siap di tab BOTS)."
+                        )
+                        print(msg)
+                    else:
+                        print(
+                            f"Profil Hermes pre-staged di {profiles_root}. "
+                            "Buka Hermes & atur provider/model Anda, lalu jalankan 'msshi desktop' atau 'msshi runtime migrate' "
+                            "agar seluruh bot otomatis mewarisi konfigurasi model Anda."
+                        )
+                    if multiplex.get("notified"):
+                        print("Multiplexer Hermes yang sedang berjalan telah disegarkan (rescan live).")
+                else:
+                    for _bot_id, _as_default, bot_dir, _label, _description, soul, agents_text, copies, _skills, _external in plans:
+                        for source, destination in copies:
+                            copy_skill(source, destination)
+                        create_text(bot_dir / "SOUL.md", soul)
+                        create_text(bot_dir / "AGENTS.md", agents_text)
+                if not provision_hermes:
+                    print("Workspace tim portabel. Daftarkan tiap bot di platform Anda bila diperlukan.")
         else:
             copies, preserved, external = skill_plan(
                 target, selected_skills(args, catalog, packs, data.get("aliases", {})), catalog,

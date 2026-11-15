@@ -660,6 +660,22 @@
     "upstream-cache": {
       "id": "Simpan checkout referensi eksternal di luar folder skill agar dapat diperiksa atau diintegrasikan terpisah. Cache memakai internet/disk dan tidak sama dengan fitur yang sudah terpasang atau aktif.",
       "en": "Keep external reference checkouts outside skill folders for separate review or integration. The cache uses internet/disk and is not the same as an installed or active capability."
+    },
+    "setup-skills": {
+      "id": "Tambahkan paket atau skill individual ekstra dan kelola skill opsional REA per bot saat setup tanpa mengubah skill kustom yang sudah ada.",
+      "en": "Add extra skill packs or individual skills and manage optional REA wrappers per bot during setup without overwriting custom skills."
+    },
+    "setup-plugins": {
+      "id": "Kelola plugin Hermes dan integrasi runtime seperti msshi-auto-trim, KAT-Coder, Hermes-Dreaming, OmniVoice, dan Steel Browser Policy secara opsional dan non-destruktif.",
+      "en": "Manage Hermes plugins and optional runtime integrations such as msshi-auto-trim, KAT-Coder, Hermes-Dreaming, OmniVoice, and Steel Browser Policy safely."
+    },
+    "setup-services": {
+      "id": "Periksa atau daftarkan koneksi MCP layanan eksternal GitLab dan Tinyfish secara aman per profil atau berbagi OAuth opt-in, sementara BrightData tetap nonaktif.",
+      "en": "Inspect or register external GitLab and Tinyfish MCP connections safely per profile or via opt-in shared OAuth while keeping BrightData disabled."
+    },
+    "setup-bot-apps": {
+      "id": "Hubungkan tiap profil bot ke jembatan CLI-Anything dan aplikasi lokal atau web secara on-demand memakai tiket tugas, dengan auto_open_on_boot tetap nonaktif.",
+      "en": "Connect selected bot profiles to CLI-Anything bridges and local or web apps on demand via task tickets while keeping auto_open_on_boot disabled."
     }
   }
 }

@@ -217,11 +217,12 @@ flowchart LR
 
 - **Windows Beginners:** Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 for versioned PDF manuals), or drag `.zip`/`.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat).
 - **v2.x Upgrade:** Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once (backs up `SOUL.md` &amp; `Creative DNA` automatically).
-- **Windows PowerShell** *(add `-DownloadPdf` to fetch the v3.1.0 manual)*:
+- **Automatic Hermes Desktop Bot Provisioning (Before / During / After Opening Hermes):** Selecting `muza-preset` (mode `4`, including custom display names) automatically configures the root `default` profile (`<HERMES_HOME>/`, previously labeled `Hermes`) as **Yukino Yukinoshita** and creates the remaining 4 roles (`shizuka`, `val`, `kiki-chii`, `shikaku`) in `<HERMES_HOME>/profiles/` (pass `--default-bot keep-hermes` / `-DefaultBot keep-hermes` to keep a separate `Hermes` profile; any pre-existing legacy `profiles/yukino` is safely preserved). Selecting `custom-bots` (mode `2`) provisions custom profiles in `<HERMES_HOME>/profiles/<bot>` with `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, channel-safe `.env`, and a cloned `model:` seed when Hermes is initialized — or atomic pre-staging via `pending-bots.json` before first launch!
+- **Windows PowerShell** *(add `-DownloadPdf` to fetch the v3.1.0 manual, or `-Mode muza-preset -Yes` for unattended 5-bot auto-setup)*:
   ```powershell
   irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
   ```
-- **macOS / Linux Bash** *(supports `--download-pdf` / `--no-pdf`)*:
+- **macOS / Linux Bash** *(supports `--download-pdf` / `--no-pdf` and `--mode muza-preset --yes`)*:
   ```bash
   curl -fsSL https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.sh | bash
   ```
@@ -278,6 +279,19 @@ flowchart LR
 - **`assets/`**: Standardized `avatars/`, `memes/`, `showcases/`, 8 SVG [`diagrams/`](assets/README.md), and [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json).
 - **`scripts/`**: CLI (`msshi_cli.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, `generate_hydrogen_report_pdf.py`, and release auditors (`check_release*.py`).
 - **`skills/` &amp; `optional/rea/`**: **63 bundled active skill folders (`51 core + 12 wrappers`)** including 11-file `muza-skripsi-template/`, plus opt-in `rea`.
+
+---
+
+## 🧭 4-Step Setup Flow (`msshi setup`)
+
+Right after staging skills (supported **before, during, or after opening Hermes Desktop**), `msshi setup` exposes interactive and unattended options forwarded by `install.ps1` / `install.sh`:
+
+1. **`[1/4] Skills`**: Add extra packs (`--extra-packs`) or individual skills (`--extra-skills`) per bot/target, plus explicit opt-in REA (`--with-rea`, default OFF).
+2. **`[2/4] Plugins`**: Inspect and stage fail-open `msshi-auto-trim`, `KAT-Coder` mode (`--kat-mode`), offline `Hermes-Dreaming`, `OmniVoice` status, and opt-in `Steel Browser Policy` (`--install-steel`).
+3. **`[3/4] Service Connections`**: Configure `GitLab` / `Tinyfish` MCP connectors (`--connect-services skip|per-profile|share-oauth`, keeping `BrightData` OFF and safely deferring if Hermes `config.yaml` is not yet created).
+4. **`[4/4] Bot to CLI-Anything to Apps`**: Connect all or selected bots to detected apps via `auto-reconnect`, or manually map per-bot app targets (`--connect-apps`, `--connect-bots`, `--connect-targets`, `auto_open_on_boot: false`).
+
+Each run writes a structured summary report to `<MSSHI_HOME>/reports/last-setup-report.json` while leaving your active `provider` and `model` intact.
 
 ---
 

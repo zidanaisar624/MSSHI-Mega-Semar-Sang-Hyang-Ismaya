@@ -7,9 +7,31 @@ import os
 from pathlib import Path
 import sys
 
+import msshi_hermes_profiles as hermes_profiles
+
 ROOT = Path(__file__).resolve().parents[1]
 ROLES = {"yukino": "", "shizuka": "shizuka-hiratsuka", "val": "val",
          "kiki-chii": "kiki-chii", "shikaku": "nyenyenye-ya-gw-coder"}
+ROLE_CANDIDATES = {
+    "yukino": ("yukino", ""),
+    "shizuka": ("shizuka", "shizuka-hiratsuka"),
+    "val": ("val",),
+    "kiki-chii": ("kiki-chii",),
+    "shikaku": ("shikaku", "nyenyenye-ya-gw-coder"),
+}
+
+
+def resolve_role_map(home: Path) -> dict[str, str]:
+    resolved: dict[str, str] = {}
+    for role, legacy_alias in ROLES.items():
+        chosen = legacy_alias
+        for candidate in ROLE_CANDIDATES.get(role, (legacy_alias,)):
+            folder = home / "profiles" / candidate if candidate else home
+            if folder.is_dir():
+                chosen = candidate
+                break
+        resolved[role] = chosen
+    return resolved
 BLOCKED = {"blender", "wordcraft", "lightcraft", "cadcraft", "craftanything", "deckcraft",
            "designcraft", "effectcraft", "figcraft", "filmcraft", "gridcraft",
            "materialcraft", "pdfcraft", "photocraft", "solidcraft",
@@ -69,7 +91,8 @@ def audit(repo, home, package_only=False, baseline_override=None):
         load_yaml = yaml_read
     baseline_path = baseline_override or home / "msshi-private/v3-provider-model-baseline.json"
     baseline = read(baseline_path) if baseline_path.is_file() else {}
-    for role, alias in ROLES.items():
+    role_map = resolve_role_map(home)
+    for role, alias in role_map.items():
         profile = home / "profiles" / alias if alias else home
         file = profile / "config.yaml"
         if not file.is_file():
@@ -94,7 +117,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
                {"registered_desktop_servers": [name for name in registered if normalize(name) in BLOCKED],
                 "registered_utility_servers": [name for name in registered if normalize(name) in UTILITY_MCP], "active_legacy_servers": active,
                 "active_legacy_plugins": active_plugins})
-        routes_file = home / "msshi-runtime/profiles" / ("default" if role == "yukino" else alias) / "routes.json"
+        routes_file = home / "msshi-runtime/profiles" / (alias or "default") / "routes.json"
         routes = read(routes_file).get("targets", {}) if routes_file.is_file() else {}
         utility_routes = {key: routes.get(key, {}) for key in sorted(UTILITY_MCP)}
         utility_ready = all(route.get("kind") == "native-cli" and route.get("readiness") == "available"
@@ -136,7 +159,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
         video = data.get("remotion", {})
         record("remotion_mp4", video.get("passed", video.get("mp4_success")) is True, video)
     enabled_files = {}
-    for role, alias in ROLES.items():
+    for role, alias in role_map.items():
         folder = (home / "profiles" / alias if alias else home) / "skills"
         enabled_files[role] = sum(1 for file in folder.rglob("SKILL.md") if file.is_file())
     record("skill_inventory", all(enabled_files.values()), enabled_files)
@@ -144,7 +167,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--home", type=Path, default=Path(os.environ.get("HERMES_HOME", Path.home() / ".hermes")))
+    parser.add_argument("--home", type=Path, default=hermes_profiles.resolve_hermes_home())
     parser.add_argument("--repo", type=Path, default=ROOT)
     parser.add_argument("--package-only", action="store_true")
     parser.add_argument("--baseline", type=Path, help="Explicit preserved or user-approved provider/model baseline file")

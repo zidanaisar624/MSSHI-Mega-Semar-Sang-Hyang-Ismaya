@@ -21,6 +21,8 @@ import shutil
 import signal
 import subprocess
 import sys
+
+import msshi_hermes_profiles as hermes_profiles
 import tempfile
 import time
 import uuid
@@ -112,26 +114,47 @@ def yaml_module():
         from ruamel.yaml import YAML
         return YAML
     except ImportError:
-        # Hermes' committed environment is authoritative; no dependency install.
-        roots = [Path(os.environ.get("HERMES_HOME", "~/.hermes")).expanduser()]
-        roots.extend(Path.home().glob(".hermes"))
-        for root in roots:
-            if root.parent.name == "profiles":
+        candidates = []
+        env_home = os.environ.get("HERMES_HOME")
+        if env_home:
+            candidates.append(Path(env_home).expanduser())
+        candidates.append(hermes_profiles.resolve_hermes_home(create_adaptive=False, persist_windows_env=False))
+        candidates.append(Path.home() / ".hermes")
+        if os.name == "nt":
+            if os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/"):
+                candidates.append(Path(os.environ.get("MSSHI_WINDOWS_D_ROOT", r"D:\HermesData")))
+            local_app_data = os.environ.get("LOCALAPPDATA")
+            if local_app_data:
+                candidates.append(Path(local_app_data) / "hermes")
+        seen_roots = set()
+        for root in candidates:
+            if root.parent.name.lower() == "profiles":
                 root = root.parent.parent
+            key = str(root).lower() if os.name == "nt" else str(root)
+            if key in seen_roots or not root.exists():
+                continue
+            seen_roots.add(key)
+            venv_roots = [root / "hermes-agent" / ".venv"]
             for facts in root.glob("installs/*/facts.json"):
                 env = read_json(facts, {}).get("packages", {}).get("venv", {}).get("environment")
-                if not env:
-                    continue
-                library = Path(env) / "Lib/site-packages"
-                if not library.is_dir():
-                    continue
-                sys.path.insert(0, str(library))
-                try:
-                    from ruamel.yaml import YAML
-                    return YAML
-                except ImportError:
-                    sys.path.remove(str(library))
-        raise ValueError("ruamel.yaml is required for config migration. Run with Hermes' Python environment.")
+                if env:
+                    venv_roots.append(Path(env))
+            for venv in venv_roots:
+                libraries = [venv / "Lib" / "site-packages", *sorted(venv.glob("lib/python*/site-packages"))]
+                for library in libraries:
+                    if not library.is_dir():
+                        continue
+                    lib_str = str(library)
+                    inserted = lib_str not in sys.path
+                    if inserted:
+                        sys.path.insert(0, lib_str)
+                    try:
+                        from ruamel.yaml import YAML
+                        return YAML
+                    except ImportError:
+                        if inserted and lib_str in sys.path:
+                            sys.path.remove(lib_str)
+        return hermes_profiles.PureYamlCompat
 
 
 def yaml_read(data):
@@ -482,6 +505,9 @@ the existing persona helper with backup. Preserve provider/model settings.
 
 
 def migrate(home):
+    sync_summary = hermes_profiles.sync_pending_profile_configs(home)
+    if sync_summary.get("seeded_configs") or sync_summary.get("seeded_envs"):
+        hermes_profiles.notify_live_multiplexer(home)
     root = home / "msshi-runtime"
     with locked(root / ".migration-lock"):
         changes = {}
@@ -567,8 +593,7 @@ def migrate(home):
 
 
 def normalized_home(value):
-    path = Path(value or os.environ.get("HERMES_HOME", "~/.hermes")).expanduser().absolute()
-    return path.parent.parent if path.parent.name.lower() == "profiles" else path
+    return hermes_profiles.resolve_hermes_home(value)
 
 
 def profile_name(value):

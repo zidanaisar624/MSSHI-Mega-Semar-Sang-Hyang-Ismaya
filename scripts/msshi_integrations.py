@@ -12,6 +12,8 @@ from pathlib import Path, PurePosixPath
 import re
 import subprocess
 import sys
+
+import msshi_hermes_profiles as hermes_profiles
 import tempfile
 from urllib.request import Request, urlopen
 
@@ -19,6 +21,13 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
 PROFILES = {"yukino": "", "shizuka": "shizuka-hiratsuka", "val": "val",
             "kiki-chii": "kiki-chii", "shikaku": "nyenyenye-ya-gw-coder"}
+ROLE_ALIASES = {
+    "yukino": ("yukino", ""),
+    "shizuka": ("shizuka", "shizuka-hiratsuka"),
+    "val": ("val",),
+    "kiki-chii": ("kiki-chii",),
+    "shikaku": ("shikaku", "shikaku-nara", "nyenyenye-ya-gw-coder"),
+}
 SOURCE_SPEC = {
     "caveman": ("JuliusBrussee/caveman", "3dc497a7f858c774d6e15b25e8c6120ef3a0eda8"),
     "hyperframes": ("heygen-com/hyperframes", "3ad7611f9fd36c1cef589c59b116ad7043c3b041"),
@@ -135,12 +144,13 @@ def materialize(home, slug):
 
 
 def profiles(home):
-    for role, name in PROFILES.items():
-        profile = home if not name else home / "profiles" / name
-        if role == "shikaku":
-            profile = next((home / "profiles" / alias for alias in ("shikaku-nara", name, "shikaku")
-                            if (home / "profiles" / alias).is_dir()), profile)
-        if profile.is_dir():
+    for role, candidates in ROLE_ALIASES.items():
+        profile = next(
+            ((home if not alias else home / "profiles" / alias) for alias in candidates
+             if (home if not alias else home / "profiles" / alias).is_dir()),
+            None,
+        )
+        if profile is not None:
             yield role, profile
 
 
@@ -453,7 +463,7 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("install", "dream", "voice", "kat"):
         cmd = sub.add_parser(name)
-        cmd.add_argument("--home", type=Path, default=Path(os.getenv("HERMES_HOME", str(Path.home() / ".hermes"))))
+        cmd.add_argument("--home", type=Path, default=hermes_profiles.resolve_hermes_home())
         if name == "install":
             cmd.add_argument("--antigravity", type=Path)
         elif name == "dream":
