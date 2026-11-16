@@ -1,0 +1,38 @@
+{
+  "version": "3.1.1",
+  "tested_implementation_commit": "84ecd134f01ec65c4848b4f50c597b811f6b3a80",
+  "date": "2026-11-16",
+  "scope": "Package and disposable local fixtures only. No live model or service jobs.",
+  "full_unit_suite": {
+    "passed": 48,
+    "note": "Followed by targeted tests for subsequent small guards."
+  },
+  "targeted_checks": {
+    "coder_helpers": 10,
+    "native_profiles_and_plugin": 12,
+    "python_cache_inventory": 3,
+    "runtime_fixture_groups": 10,
+    "managed_fixture_groups": 8,
+    "manual_delivery": 5
+  },
+  "release_static_and_smoke": "PASS",
+  "package_audit": "PASS_SUCCESS",
+  "powershell_installer_syntax": "PASS",
+  "client_manual": {
+    "pages": 99,
+    "command_families": 31,
+    "parser_nodes": 83,
+    "argument_rows": 267,
+    "unique_flags": 125,
+    "sha256": "5fe84e2c8ca39a54718b71e86ce581cc971e121862dc5d2de9f0e6f55c914982",
+    "all_pages_rendered": true,
+    "bounds_violations": 0,
+    "visual_review": "PASS"
+  },
+  "not_tested": [
+    "Paid model inference",
+    "Real named-bot model collaboration",
+    "Remote KAT inference",
+    "Every third-party application production workflow"
+  ]
+}
