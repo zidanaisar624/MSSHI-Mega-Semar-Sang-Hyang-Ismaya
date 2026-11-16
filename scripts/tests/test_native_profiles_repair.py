@@ -170,15 +170,85 @@ class NativeProfilesRepairTests(unittest.TestCase):
                 mock_message(invalid, "no dispatch")
         self.assertEqual(len(calls), 1)
 
-    def test_default_mapping_refused_and_preview_has_zero_writes(self):
-        with self.assertRaises(ValueError):
-            hp.sync_hermes_profile(self.home, "yukino", "Yukino", "soul", "agents", [], as_default=True)
+    def test_default_mapping_preserves_custom_soul_config_and_preview_has_zero_writes(self):
         target = self.home / "profiles"
         with contextlib.redirect_stdout(io.StringIO()), patch.dict(os.environ, {"MSSHI_IGNORE_REGISTRY_HERMES_HOME": "1"}):
             result = install_msshi.main(["--platform", "hermes", "--mode", "muza-preset", "--target-dir", str(target), "--dry-run"])
         self.assertEqual(result, 0)
         self.assertFalse(target.exists())
         self.assertEqual((self.home / "config.yaml").read_bytes(), self.root_cfg)
+        original_soul = (self.home / "SOUL.md").read_bytes()
+        result = hp.sync_hermes_profile(self.home, "yukino", "Yukino", "soul", "agents", [], as_default=True)
+        self.assertTrue(result["custom_soul_preserved"])
+        self.assertEqual(result["bot_id"], "default")
+        self.assertEqual((self.home / "config.yaml").read_bytes(), self.root_cfg)
+        self.assertEqual((self.home / "SOUL.md").read_bytes(), original_soul)
+
+    def test_auto_layout_fresh_existing_and_receipted_alias_switch(self):
+        self.assertEqual(hp.resolve_default_bot(self.home), "keep-hermes")
+        fresh = self.home / "isolated-new-home"
+        self.assertEqual(hp.resolve_default_bot(fresh), "yukino")
+        legacy = self.existing("yukino")
+        (legacy / "state.db").write_bytes(b"history sentinel")
+        (self.home / "active_profile").write_bytes(b"yukino\n")
+        tx = hp.ProfileTransaction(self.home)
+        hp.record_team_layout(self.home, "yukino", transaction=tx)
+        hp.hide_legacy_named_yukino(self.home, transaction=tx)
+        receipt = tx.commit()
+        self.assertEqual(hp.team_role_profiles(self.home)["yukino"], "default")
+        self.assertEqual(hp.resolve_default_bot(self.home), "yukino")
+        self.assertNotIn("yukino", hp.live_named_profiles(self.home))
+        self.assertEqual((legacy / "state.db").read_bytes(), b"history sentinel")
+        self.assertEqual((self.home / "active_profile").read_bytes(), b"default\n")
+        self.assertEqual(hp.rollback_profile_receipt(Path(receipt))["conflicts"], [])
+        self.assertIn("yukino", hp.live_named_profiles(self.home))
+        self.assertEqual((self.home / "active_profile").read_bytes(), b"yukino\n")
+
+    def test_stock_root_becomes_yukino_without_moving_any_model_and_rolls_back(self):
+        stock = hp.STOCK_HERMES_SOUL + "\n"
+        (self.home / "SOUL.md").write_text(stock, encoding="utf-8")
+        self.assertEqual(hp.resolve_default_bot(self.home), "yukino")
+        result = hp.sync_hermes_profile(self.home, "yukino", "Yukino", "Yukino template", "policy", [], as_default=True)
+        self.assertTrue(result["stock_soul_replaced"])
+        self.assertEqual((self.home / "SOUL.md").read_text(), "Yukino template\n")
+        self.assertEqual((self.home / "config.yaml").read_bytes(), self.root_cfg)
+        self.assertFalse((self.home / "profiles/yukino").exists())
+        self.assertEqual(hp.rollback_profile_receipt(Path(result["receipt"]))["conflicts"], [])
+        self.assertEqual((self.home / "SOUL.md").read_text(encoding="utf-8"), stock)
+
+    def test_stock_prefix_is_not_permission_to_replace_custom_persona(self):
+        soul = hp.STOCK_HERMES_SOUL + "\nMy own added rule.\n"
+        (self.home / "SOUL.md").write_text(soul, encoding="utf-8")
+        self.assertFalse(hp.is_stock_hermes_soul(self.home / "SOUL.md"))
+        self.assertEqual(hp.resolve_default_bot(self.home), "keep-hermes")
+
+    def test_pre_hermes_five_real_bots_activate_when_user_adds_config(self):
+        fresh = self.home / "fresh-isolated"
+        tx = hp.ProfileTransaction(fresh)
+        for name in NAMES:
+            hp.sync_hermes_profile(fresh, name, name, f"Public {name}", "policy", [],
+                                  as_default=name == "yukino", transaction=tx)
+        hp.record_team_layout(fresh, "yukino", transaction=tx)
+        hp.install_team_routing_plugin(fresh, ROOT, transaction=tx)
+        tx.commit()
+        self.assertEqual(set(hp.live_named_profiles(fresh)), set(NAMES) - {"yukino"})
+        self.assertFalse((fresh / "config.yaml").exists())
+        user_config = b"# current user route\r\nmodel:\r\n  default: chosen/model\r\n  provider: chosen-provider\r\ndelegation:\r\n  model: chosen/child\r\n  provider: chosen-child-provider\r\n"
+        (fresh / "config.yaml").write_bytes(user_config)
+        result = hp.sync_pending_profile_configs(fresh)
+        self.assertEqual(set(result["seeded_configs"]), set(NAMES) - {"yukino"})
+        self.assertEqual(set(result["team_routing"]), {"default", "shizuka", "val", "kiki-chii", "shikaku"})
+        for profile, row in result["team_routing"].items():
+            self.assertTrue(row["active"], profile)
+            pdir = fresh if profile == "default" else fresh / "profiles" / profile
+            cfg = hp.load_yaml_mapping(pdir / "config.yaml")
+            self.assertEqual(cfg["model"], {"default": "chosen/model", "provider": "chosen-provider"})
+            self.assertEqual(cfg["delegation"]["backend"], "msshi-team")
+        root_cfg = hp.load_yaml_mapping(fresh / "config.yaml")
+        self.assertEqual(root_cfg["delegation"]["model"], "chosen/child")
+        self.assertEqual(root_cfg["delegation"]["provider"], "chosen-child-provider")
+        self.assertIn(b"# current user route\r\nmodel:\r\n  default: chosen/model", (fresh / "config.yaml").read_bytes())
+        self.assertIsNone(hp.sync_pending_profile_configs(fresh)["team_routing_receipt"])
 
     def test_plugin_activation_preserves_primary_and_custom_backend_values(self):
         folder = self.existing("shikaku")
@@ -256,6 +326,10 @@ class TeamRoutingPluginTests(unittest.TestCase):
         self.assertIn("delegate only needed portions", prompt)
         self.assertIn("I don't need to do anything here.", prompt)
         self.assertIn("neutral general assistant", registrations["prompt"]({"profile_name": "default"}))
+        neutral = registrations["prompt"]({"profile_name": "default"})
+        self.assertIn("hand off only relevant bounded portions", neutral)
+        self.assertIn("message_agent", neutral)
+        self.assertIn("credit-consuming", neutral)
 
     def test_kat_disabled_for_non_coder_and_requires_private_validated_model(self):
         private = self.home / "msshi-private/coder/kat.json"
@@ -276,6 +350,38 @@ class TeamRoutingPluginTests(unittest.TestCase):
             private.write_text(json.dumps(data))
             with self.assertRaises(ValueError):
                 backend.route_task({"execution": "kat"}, {})
+
+    def test_default_yukino_schema_routes_both_ways_and_preserves_legacy_layout(self):
+        hp.record_team_layout(self.home, "yukino")
+        self.constants.get_hermes_home = lambda: self.home
+        root_backend = self.plugin.MSSHITeamRouting()
+        self.assertEqual(set(root_backend.task_parameters({})["profile"]["enum"]), set(NAMES) - {"yukino"})
+        self.assertIn("native role yukino (actual profile default)", self.plugin.role_policy({"profile_name": "default"}))
+        self.constants.get_hermes_home = lambda: self.home / "profiles/val"
+        val_backend = self.plugin.MSSHITeamRouting()
+        self.assertIn("default", val_backend.task_parameters({})["profile"]["enum"])
+        self.assertNotIn("yukino", val_backend.task_parameters({})["profile"]["enum"])
+        self.assertEqual(val_backend.route_task({"profile": "default"}, {}), {"profile": "default", "label": "MSSHI default"})
+        with self.assertRaises(ValueError):
+            val_backend.route_task({"profile": "yukino"}, {})
+        hp.record_team_layout(self.home, "keep-hermes")
+        self.assertIn("yukino", val_backend.task_parameters({})["profile"]["enum"])
+        self.assertNotIn("default", val_backend.task_parameters({})["profile"]["enum"])
+
+    def test_every_role_routes_only_to_other_real_teammates_in_each_layout(self):
+        for layout in ("yukino", "keep-hermes"):
+            hp.record_team_layout(self.home, layout)
+            actual_roles = hp.team_role_profiles(self.home)
+            for actual in actual_roles.values():
+                self.constants.get_hermes_home = lambda active=actual: self.home if active == "default" else self.home / "profiles" / active
+                backend = self.plugin.MSSHITeamRouting()
+                offered = backend.task_parameters({})["profile"]["enum"]
+                self.assertEqual(set(offered), set(actual_roles.values()) - {actual})
+                for target in offered:
+                    self.assertEqual(backend.route_task({"profile": target}, {})["profile"], target)
+                with self.assertRaises(ValueError):
+                    backend.route_task({"profile": actual}, {})
+                self.assertLess(len(self.plugin.role_policy({"profile_name": actual})), 2600)
 
     def test_kat_private_coder_env_fallback_does_not_modify_process(self):
         self.constants.get_hermes_home = lambda: self.home / "profiles/shikaku"

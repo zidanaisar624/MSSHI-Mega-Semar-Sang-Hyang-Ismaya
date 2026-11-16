@@ -337,7 +337,7 @@ def native_routes(home, profile, cfg):
     routes["llmtrim"] = {"kind": "native-cli", "executable": sys.executable if trim and wrapper_available else None,
                          "native_binary": trim, "readiness": "available" if trim and wrapper_available else "optional_missing",
                          "prefix": ["-B", "-X", "utf8", str(wrapper), "--home", str(home), "--binary", trim or ""],
-                         "local_only": True, "preset": "safe",
+                         "local_only": True, "preset": "msshi-json-only",
                          "env": {"PYTHONUTF8": "1", "PYTHONDONTWRITEBYTECODE": "1"}}
     former_apps = {norm(name): item for name, item in (cfg.get("mcp_servers") or {}).items()
                    if isinstance(item, dict)}
@@ -611,6 +611,9 @@ def migrate(home):
         wrapper_source = Path(__file__).with_name("msshi_llmtrim.py")
         if wrapper_source.is_file():
             changes[home / "tools/msshi/msshi_llmtrim.py"] = wrapper_source.read_bytes()
+        wrapper_config = Path(__file__).with_name("msshi_llmtrim_json_only.toml")
+        if wrapper_config.is_file():
+            changes[home / "tools/msshi/msshi_llmtrim_json_only.toml"] = wrapper_config.read_bytes()
         legacy_hersona = home / "integrations/databyte-yupiai/skills/persona/hersona/SKILL.md"
         if legacy_hersona.is_file() and sha(legacy_hersona.read_bytes()) == "02269a237d8dca52d5f4ef90c612828f9abef004cf893a93e11ddcdcbdf5f09d":
             changes[legacy_hersona] = utilities_skill(home, "default").replace(
@@ -625,7 +628,7 @@ def migrate(home):
         helper_source = Path(hermes_profiles.__file__)
         changes[root / "msshi_hermes_profiles.py"] = helper_source.read_bytes()
         plugin_source = here.parent / "hermes_plugins/msshi-auto-trim"
-        plugin_names = ("__init__.py", "plugin.yaml", "README.md")
+        plugin_names = ("__init__.py", "plugin.yaml", "README.md", "json-only.toml")
         plugin_files = {filename: (plugin_source / filename).read_bytes() for filename in plugin_names
                         if (plugin_source / filename).is_file()}
         auto_trim_available = len(plugin_files) == len(plugin_names)

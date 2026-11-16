@@ -1,0 +1,8 @@
+# MSSHI child-process policy: JSON whitespace compaction, never TOON or sampling.
+# Do not select a preset: LLMtrim presets override these explicit stage flags.
+auto = false
+hygiene = true
+serialize = false
+dedup = false
+normalize_unicode = false
+strip_base64 = false

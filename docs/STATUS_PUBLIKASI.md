@@ -1,6 +1,6 @@
 # Pemeriksaan sebelum publikasi
 
-Rilis MSSHI v3.1.0 memuat 63 skill bundel (51 inti + 12 wrapper) dan manifest 49 sumber. Perubahan lokal tidak otomatis berarti GitHub sudah diperbarui: cocokkan HEAD dengan origin/main atau gunakan msshi status. Riwayat dan tag lama dipertahankan. PDF serta audit pribadi tidak masuk repo publik.
+Rilis MSSHI v3.1.2 memuat 67 skill bundel (51 inti + 16 wrapper) dan manifest 52 sumber. Perubahan lokal tidak otomatis berarti GitHub sudah diperbarui: cocokkan HEAD dengan origin/main atau gunakan msshi status. Riwayat dan tag lama dipertahankan. PDF panduan publik disertakan; audit dan preset pribadi tidak masuk repo publik. [Perubahan v3.1.2](V3_1_2_REPAIR.md).
 
 ```sh
 python scripts/check_release.py --smoke
@@ -17,7 +17,7 @@ Pemeriksaan membaca struktur, matriks, audit, tautan lokal, metadata skill, sert
 
 Tujuh SVG di paket ini adalah aset visual rilis. Tiga di antaranya menggantikan PNG dari arsip sumber. Panduan asal materi ada di [catatan provenance](PROVENANCE.md). Untuk memeriksa cara GitHub mendeteksi dan menampilkan lisensi, lihat [panduan lisensi GitHub](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
 
-Arsip publik memuat 50 skill inti, delapan wrapper integrasi, dan satu pintu masuk di root. Panduan dan installer pribadi MuZA disimpan terpisah.
+Arsip publik memuat 67 folder skill dan satu pintu masuk di root. Panduan pemulihan dan installer pribadi disimpan terpisah. Pada instalasi baru, default menjadi Yukino; susunan bot pengguna lama dipertahankan secara otomatis.
 
 ## Batas integrasi opsional
 

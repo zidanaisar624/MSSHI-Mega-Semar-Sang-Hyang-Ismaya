@@ -18,6 +18,15 @@ import uuid
 PROFILE_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 NO_BUNDLED_SKILLS_MARKER = ".no-bundled-skills"
 STOCK_HERMES_SOUL_PREFIX = "You are Hermes Agent, built by Nous Research."
+STOCK_HERMES_SOUL = (
+    "You are Hermes Agent, built by Nous Research. Be direct: match the length of your reply to the weight of "
+    "the ask — a one-line question gets a one-line answer, and finished work gets a short report of what "
+    "changed, what's verified, and what's left, never a replay of the process. No filler (\"Great question,\" "
+    "\"I'd be happy to\"), no restating the request back, no re-summarizing what you already said, no narrating "
+    "tool calls the user can see. Plain claims over adjectives; when unsure, say so plainly. Agree because it's "
+    "right, not because the user said it. Depth is earned — give it when the user asks for detail, teaches, or "
+    "the stakes demand it, not by default."
+)
 _PLACEHOLDER_ENV = "# Per-profile secrets for this Hermes profile.\n"
 _HERMES_PROFILE_DIRS = ("memories", "sessions", "skills", "skins", "logs", "plans", "workspace", "cron", "home")
 _STRONG_HERMES_MARKERS = ("config.yaml", "state.db", "hermes-agent", "auth.json", ".env")
@@ -37,6 +46,77 @@ _NON_COPY_ENV_EXACT = {
     "TERMINAL_CWD", "PYTHONPATH", "PYTHONHOME",
 }
 _YAML_AMBIGUOUS = re.compile(r"^(?:true|false|yes|no|on|off|null|~|[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)$", re.I)
+TEAM_ROLE_IDS = ("yukino", "shizuka", "val", "kiki-chii", "shikaku")
+
+
+def team_role_profiles(hermes_home: Path) -> dict[str, str]:
+    """Logical roles mapped to real native IDs, never a synthetic Desktop roster."""
+    path = hermes_home / "msshi-runtime" / "team-layout.json"
+    if path.is_file() and not path.is_symlink() and path.stat().st_size <= 65536:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8-sig"))
+            expected = {name: name for name in TEAM_ROLE_IDS}
+            if data.get("default_bot") == "yukino":
+                expected["yukino"] = "default"
+            if data.get("schema") == 1 and data.get("roles") == expected:
+                return expected
+        except (OSError, ValueError, AttributeError):
+            pass
+    return {name: name for name in TEAM_ROLE_IDS}
+
+
+def resolve_default_bot(hermes_home: Path, requested: str = "auto") -> str:
+    """Fresh/stock installs use actual default as Yukino; existing choices are retained."""
+    if requested not in {"auto", "yukino", "keep-hermes"}:
+        raise ValueError(f"Unknown default bot mode: {requested}")
+    if requested != "auto":
+        return requested
+    layout = hermes_home / "msshi-runtime" / "team-layout.json"
+    if layout.is_file() and not layout.is_symlink():
+        return "yukino" if team_role_profiles(hermes_home)["yukino"] == "default" else "keep-hermes"
+    # A legacy named roster is an existing user choice, including deleted profiles.
+    if live_named_profiles(hermes_home) or any((hermes_home / "profiles" / name).exists() for name in TEAM_ROLE_IDS):
+        return "keep-hermes"
+    meta = load_yaml_mapping(hermes_home / "profile.yaml") if (hermes_home / "profile.yaml").is_file() else {}
+    generic = {"", "hermes", "default", "yukino", "yukino yukinoshita"}
+    ui = meta.get("ui_meta") if isinstance(meta.get("ui_meta"), dict) else {}
+    bots = ui.get("hermes-bots") if isinstance(ui.get("hermes-bots"), dict) else {}
+    if any(str(value or "").strip().lower() not in generic for value in (meta.get("display_name"), bots.get("title"))):
+        return "keep-hermes"
+    if not is_stock_hermes_soul(hermes_home / "SOUL.md"):
+        # Older releases could already have adopted default as Yukino.
+        return "yukino" if str(meta.get("display_name", "")).lower() in {"yukino", "yukino yukinoshita"} else "keep-hermes"
+    return "yukino"
+
+
+def record_team_layout(hermes_home: Path, default_bot: str, *, transaction=None) -> Path:
+    mode = resolve_default_bot(hermes_home, default_bot)
+    roles = {name: ("default" if name == "yukino" and mode == "yukino" else name) for name in TEAM_ROLE_IDS}
+    path = _confined(hermes_home, hermes_home / "msshi-runtime" / "team-layout.json")
+    content = (json.dumps({"schema": 1, "default_bot": mode, "roles": roles}, indent=2) + "\n").encode()
+    if transaction is not None:
+        transaction.write(path, content)
+    elif not path.is_file() or path.read_bytes() != content:
+        _atomic_write_bytes(path, content)
+    return path
+
+
+def hide_legacy_named_yukino(hermes_home: Path, *, transaction=None) -> dict:
+    """Explicit default-Yukino switch: hide the old alias without deleting user data."""
+    if team_role_profiles(hermes_home)["yukino"] != "default":
+        raise ValueError("Record the default-Yukino layout before hiding its legacy alias")
+    folder = _confined(hermes_home, hermes_home / "profiles" / "yukino")
+    if not folder.is_dir():
+        return {"hidden": False, "reason": "no_legacy_named_yukino", "receipt": None}
+    tx = transaction or ProfileTransaction(hermes_home)
+    marker = _confined(hermes_home, hermes_home / "profiles" / ".deleted" / "yukino")
+    changed = False if marker.exists() else tx.write(marker, b"MSSHI: Yukino role now uses native default; all named profile data preserved.\n")
+    # Native active_profile is a plain ID file. Repoint only this alias; never configs.
+    active = hermes_home / "active_profile"
+    if active.is_file() and active.read_text(encoding="utf-8-sig").strip() == "yukino":
+        tx.write(active, b"default\n")
+    return {"hidden": True, "changed": changed, "tombstone": str(marker),
+            "receipt": tx.commit() if transaction is None else None}
 
 
 def utc_now() -> str:
@@ -606,7 +686,9 @@ def is_stock_hermes_soul(path: Path) -> bool:
         return False
     if not text:
         return True
-    return text.startswith(STOCK_HERMES_SOUL_PREFIX) and len(text) <= 900
+    # Exact known native templates only: sharing the introduction is NOT permission
+    # to replace a user's customized persona.
+    return text in {STOCK_HERMES_SOUL, STOCK_HERMES_SOUL.replace("—", "--")}
 
 
 def _backup_default_file(hermes_home: Path, path: Path) -> Path | None:
@@ -821,8 +903,10 @@ def rollback_profile_receipt(receipt: Path, *, expected_home: Path | None = None
 
 def coordination_policy(bot_id: str) -> str:
     return f"""{_POLICY_START}
-## MSSHI role coordination (active native profile: {bot_id})
-Keep the default Hermes assistant neutral. Native named roles are:
+## MSSHI role coordination (active logical role: {bot_id}; use installed native mapping)
+The native default can represent Yukino when team-layout.json selects that layout;
+otherwise default remains a neutral Hermes assistant. Resolve roles to actual native IDs
+using msshi-runtime/team-layout.json and the live roster; never invent a profile. Roles:
 - yukino: receive ideas, discuss early concepts, then hand off complex planning to shizuka.
 - shizuka: coordinate the plan and synthesize specialist results for the user.
 - val: literature, evidence, data, academic research; send findings to shizuka.
@@ -950,22 +1034,26 @@ def sync_hermes_profile(
     update_stock_soul: bool = False, copy_fn=None,
     transaction: ProfileTransaction | None = None,
 ) -> dict[str, object]:
-    """Provision native named profiles; preserve every existing SOUL/config/.env byte.
+    """Provision a real native profile, preserving customized SOUL and config/.env.
 
-    as_default is a compatibility input only: mapping a named persona to neutral default
-    is now refused. Call restore_neutral_default explicitly for presentation repair.
+    as_default=True adopts root/default as Yukino. Only an absent/stock SOUL is replaced;
+    restoring an existing personal SOUL is a separate explicit private-preset operation.
+    No profile configuration, credential or history is moved to or from default.
     """
     if not valid_profile_id(bot_id) or bot_id == "default":
         raise ValueError(f"Invalid named Hermes profile ID: {bot_id!r}")
-    if as_default:
-        raise ValueError("Named personas must use profiles/<id>; Hermes default stays neutral")
+    if as_default and bot_id != "yukino":
+        raise ValueError("Only Yukino may use the MuZA preset's native default profile")
     hermes_home = hermes_home.absolute()
-    target_dir = _confined(hermes_home, hermes_home / "profiles" / bot_id)
+    target_dir = _confined(hermes_home, hermes_home if as_default else hermes_home / "profiles" / bot_id)
     if target_dir.exists() and not target_dir.is_dir():
         raise ValueError(f"Profile target is not a directory: {target_dir}")
     tx = transaction or ProfileTransaction(hermes_home)
     own_transaction = transaction is None
-    is_new = not target_dir.exists()
+    # Never stage/move the infrastructure root as though it were a named profile.
+    is_new = not target_dir.exists() and not as_default
+    if as_default:
+        target_dir.mkdir(parents=True, exist_ok=True)
     stage_dir = target_dir.parent / f".{bot_id}.staging-{uuid.uuid4().hex}" if is_new else target_dir
     stage_dir = _confined(hermes_home, stage_dir)
     seeded_config = seeded_env = False
@@ -995,11 +1083,13 @@ def sync_hermes_profile(
             write(marker, b"")
         meta_path = stage_dir / "profile.yaml"
         existing_meta = load_yaml_mapping(meta_path) if meta_path.is_file() else {}
-        new_meta = _build_profile_meta(existing_meta, label, description, update_display_names)
+        new_meta = _build_profile_meta(existing_meta, label, description, update_display_names or as_default)
         if not meta_path.is_file() or new_meta != existing_meta:
             write(meta_path, dump_yaml(new_meta).encode("utf-8"))
         soul_path = stage_dir / "SOUL.md"
-        if not soul_path.exists():
+        stock_replaced = as_default and soul_path.exists() and is_stock_hermes_soul(soul_path)
+        custom_soul_preserved = as_default and soul_path.exists() and not stock_replaced
+        if not soul_path.exists() or stock_replaced:
             write(soul_path, (soul_text.rstrip() + "\n").encode("utf-8"))
         policy = coordination_policy(bot_id)
         for agents_path in (stage_dir / "AGENTS.md", stage_dir / "workspace" / "AGENTS.md"):
@@ -1032,7 +1122,7 @@ def sync_hermes_profile(
         if is_new:
             _rename_with_retry(stage_dir, target_dir)
             tx.mark(target_dir)
-        restored = _restore_selected_profile(hermes_home, target_dir, tx)
+        restored = None if as_default else _restore_selected_profile(hermes_home, target_dir, tx)
         # Include final descendant changes in newly created parent-directory receipts.
         for row in tx.entries.values():
             if row["kind"] == "tree" and row["before_sha256"] is None:
@@ -1046,10 +1136,12 @@ def sync_hermes_profile(
         if own_transaction:
             tx.rollback()
         raise
-    return {"bot_id": bot_id, "role_id": bot_id, "as_default": False, "path": str(target_dir),
+    return {"bot_id": "default" if as_default else bot_id, "role_id": bot_id, "as_default": as_default, "path": str(target_dir),
             "created": is_new, "display_name": new_meta["display_name"],
             "seeded_config": seeded_config, "seeded_env": seeded_env,
             "skills_installed": skills_installed, "restored_tombstone": restored,
+            "stock_soul_replaced": stock_replaced,
+            "custom_soul_preserved": bool(custom_soul_preserved),
             "receipt": receipt, "context_policy": "profile/workspace AGENTS; loaded only when native cwd discovery reaches them"}
 
 
@@ -1181,9 +1273,9 @@ def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: 
         except (OSError, ValueError):
             existing = {}
     bots = dict(existing.get("bots") or {})
-    # Remove only the obsolete installer alias, not any native profile.
+    # Pending IDs are actual native profiles; no synthetic profiles/default folder.
     if mode == "muza-preset":
-        bots.pop("default", None)
+        bots.pop("yukino" if any(row["bot_id"] == "default" for row in entries) else "default", None)
     for row in entries:
         bot_id = row["bot_id"]
         bots[bot_id] = {
@@ -1258,11 +1350,26 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
             meta = _build_profile_meta({}, str(info.get("display_name") or bot_id), str(info.get("description") or ""), True)
             _atomic_write_text(meta_path, dump_yaml(meta))
 
-    # Legacy default->Yukino entries must never reassign the neutral root identity.
+    # Backfill configuration only; never rewrite the chosen default persona/layout.
     if pending_path.is_file():
         pending_data["hermes_initialized"] = is_hermes_initialized(hermes_home)
         pending_data["last_backfill_at"] = utc_now()
         _atomic_write_text(pending_path, json.dumps(pending_data, indent=2, ensure_ascii=False) + "\n")
+
+    # Pre-Hermes staging has no config yet. Activate the already-staged native
+    # plugin after the user's own configuration appears, respecting disabled/custom policies.
+    routing_tx = ProfileTransaction(hermes_home)
+    routing_rows = {}
+    try:
+        homes = [("default", hermes_home), *live_named_profiles(hermes_home).items()]
+        for profile_id, pdir in homes:
+            plugin = pdir / "plugins" / "msshi-team-routing"
+            if (plugin / "plugin.yaml").is_file() and (plugin / "__init__.py").is_file():
+                routing_rows[profile_id] = _activate_team_config(pdir / "config.yaml", routing_tx)
+        routing_receipt = routing_tx.commit()
+    except Exception:
+        routing_tx.rollback()
+        raise
 
     return {
         "hermes_home": str(hermes_home),
@@ -1270,6 +1377,8 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
         "has_model_seed": bool(seed),
         "seeded_configs": seeded_configs,
         "seeded_envs": seeded_envs,
+        "team_routing": routing_rows,
+        "team_routing_receipt": routing_receipt,
     }
 
 

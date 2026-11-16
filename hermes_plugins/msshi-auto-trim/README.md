@@ -11,6 +11,13 @@ out, or fails, Hermes keeps the original result. Small results, errors, plain
 conversation, source-file tools, patches, persona/config tools, and prompts
 remain unchanged. There is no guaranteed saving on every turn or workload.
 
+The bundled `json-only.toml` disables TOON, deduplication and Unicode/base64
+rewrites. MSSHI removes `LLMTRIM_PRESET` only inside the compression subprocess
+and pins that file with `LLMTRIM_CONFIG`; global settings remain unchanged.
+The upstream `safe` preset alone is insufficient: it can replace JSON arrays
+with TOON strings, which the exact-data gate correctly rejects. Keep the TOML
+beside `__init__.py`; if it is missing, the original result is retained.
+
 Install this directory as `<HERMES_HOME>/plugins/msshi-auto-trim/` and enable
 `msshi-auto-trim` under `plugins.enabled`. Set the executable under
 `plugins.entries.msshi-auto-trim.settings.binary`. Repeat for each profile.

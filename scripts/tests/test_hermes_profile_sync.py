@@ -114,22 +114,21 @@ class HermesProfileSyncTests(unittest.TestCase):
             }
 
             # 1. BEFORE Hermes is opened/initialized (no config.yaml / .env yet)
-            # MuZA provisions five real named profiles; root/default stays neutral.
+            # Fresh MuZA uses the real default as Yukino plus four named specialists.
             with patch.dict(os.environ, base_env, clear=False), patch("sys.stdout", new_callable=io.StringIO):
                 code = msshi_cli.main(["setup", "--mode", "muza-preset", "--platform", "hermes", "--yes"])
             self.assertEqual(code, 0)
 
-            self.assertTrue((hermes_home / "profiles" / "yukino").exists())
-            yukino_meta = hermes_profiles.load_yaml_mapping(hermes_home / "profiles/yukino/profile.yaml")
+            self.assertFalse((hermes_home / "profiles" / "yukino").exists())
+            yukino_meta = hermes_profiles.load_yaml_mapping(hermes_home / "profile.yaml")
             self.assertEqual(yukino_meta["display_name"], "Yukino Yukinoshita")
-            self.assertFalse((hermes_home / "SOUL.md").exists())
-            self.assertFalse((hermes_home / "profile.yaml").exists())
-            self.assertFalse((hermes_home / ".no-bundled-skills").exists())
-            self.assertTrue((hermes_home / "profiles/yukino/skills/cli-anything-universal-bridge/SKILL.md").is_file())
+            self.assertTrue((hermes_home / "SOUL.md").exists())
+            self.assertTrue((hermes_home / ".no-bundled-skills").exists())
+            self.assertTrue((hermes_home / "skills/cli-anything-universal-bridge/SKILL.md").is_file())
             self.assertFalse((hermes_home / "config.yaml").exists())
 
             for bot_id in ("yukino", "shizuka", "val", "kiki-chii", "shikaku"):
-                pdir = hermes_home / "profiles" / bot_id
+                pdir = hermes_home if bot_id == "yukino" else hermes_home / "profiles" / bot_id
                 self.assertTrue((pdir / "profile.yaml").is_file(), f"Missing profile.yaml for {bot_id}")
                 self.assertTrue((pdir / "SOUL.md").is_file(), f"Missing SOUL.md for {bot_id}")
                 self.assertTrue((pdir / "AGENTS.md").is_file(), f"Missing AGENTS.md for {bot_id}")
@@ -178,7 +177,7 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertTrue((hermes_home / "msshi-runtime" / "last-migration.json").is_file())
             self.assertFalse((hermes_home / "profiles" / "val" / "config.yaml").exists())
 
-            for bot_id in ("yukino", "shizuka", "kiki-chii", "shikaku"):
+            for bot_id in ("shizuka", "kiki-chii", "shikaku"):
                 pdir = hermes_home / "profiles" / bot_id
                 cfg = hermes_profiles.load_yaml_mapping(pdir / "config.yaml")
                 self.assertEqual(cfg.get("model", {}).get("default"), "upstage/solar-mini4:free")
@@ -239,7 +238,7 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertFalse(any(p.name.startswith(".val.") for p in (hermes_home / "profiles").iterdir()))
 
             for bot_id in ("yukino", "shizuka", "val", "kiki-chii", "shikaku"):
-                bot_root = hermes_home / "profiles" / bot_id
+                bot_root = hermes_home if bot_id == "yukino" else hermes_home / "profiles" / bot_id
                 conn_file = bot_root / "msshi-bridge" / "connections.json"
                 self.assertTrue(conn_file.is_file(), f"Missing connections.json for {bot_id}")
                 conn_doc = json.loads(conn_file.read_text(encoding="utf-8"))
@@ -249,7 +248,7 @@ class HermesProfileSyncTests(unittest.TestCase):
             report_file = msshi_home / "reports" / "last-setup-report.json"
             self.assertTrue(report_file.is_file())
             report_doc = json.loads(report_file.read_text(encoding="utf-8"))
-            self.assertEqual(report_doc["default_bot"], "keep-hermes")
+            self.assertEqual(report_doc["default_bot"], "yukino")
             self.assertFalse(report_doc["provider_model_mutated"])
             self.assertFalse(report_doc["skills"]["rea_enabled"])
             self.assertTrue(report_doc["plugins"]["auto_trim"]["staged"])
@@ -405,7 +404,7 @@ class HermesProfileSyncTests(unittest.TestCase):
             report_b = json.loads((msshi_home / "reports" / "last-setup-report.json").read_text(encoding="utf-8"))
             self.assertEqual(list(report_b["skills"]["applied_targets"]), ["yukino"])
             for slug in packs[extra_pack]:
-                self.assertTrue((hermes_home / "profiles/yukino/skills" / slug / "SKILL.md").is_file())
+                self.assertTrue((hermes_home / "skills" / slug / "SKILL.md").is_file())
             self.assertTrue((hermes_home / "plugins" / "msshi-auto-trim" / "plugin.yaml").is_file())
             self.assertTrue(report_b["plugins"]["auto_trim"]["staged"])
             self.assertEqual(report_b["plugins"]["dreaming"]["status"], "ok")
@@ -414,11 +413,11 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertEqual(report_b["bot_app_connections"]["bots"]["yukino"]["status"], "connected")
             self.assertEqual(
                 report_b["bot_app_connections"]["bots"]["yukino"]["connections_file"],
-                str(hermes_home / "profiles/yukino/msshi-bridge/connections.json"),
+                str(hermes_home / "msshi-bridge/connections.json"),
             )
             self.assertIn("perplexity", report_b["bot_app_connections"]["bots"]["yukino"]["targets"])
             self.assertEqual(list(report_b["bot_app_connections"]["bots"]), ["yukino"])
-            yukino_cfg = hermes_profiles.load_yaml_mapping(hermes_home / "profiles/yukino/config.yaml")
+            yukino_cfg = hermes_profiles.load_yaml_mapping(hermes_home / "config.yaml")
             self.assertEqual(yukino_cfg["model"], {"default": "custom/post-hermes", "provider": "openrouter"})
             self.assertIn("gitlab", yukino_cfg.get("mcp_servers", {}))
 

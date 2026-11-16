@@ -77,6 +77,16 @@ def compress_result(result: Any, binary: str, *, status: str = "", min_chars: in
     if not command or not Path(command).is_file():
         metrics["outcome"] = "binary_missing"
         return None, metrics
+    config = Path(__file__).with_name("json-only.toml")
+    if not config.is_file():
+        metrics["outcome"] = "compressor_error"
+        return None, metrics
+    # `safe` still enables nested TOON serialization in LLMtrim 0.13.8. Pin
+    # explicit JSON-only stages instead; alter only this child process's env.
+    child_env = dict(os.environ)
+    child_env.pop("LLMTRIM_PRESET", None)
+    child_env.update(LLMTRIM_CONFIG=str(config), LLMTRIM_NO_UPDATE_CHECK="1",
+                     LLMTRIM_CAPTURE_MAX_MB="0")
     # This request-shaped envelope is processed locally by `compress`; it is
     # never sent to a model. Keep real provider/model settings out of this call.
     envelope = {"model": "msshi-local-compression", "messages": [
@@ -87,7 +97,7 @@ def compress_result(result: Any, binary: str, *, status: str = "", min_chars: in
         run = subprocess.run([command, "compress", "--provider", "openai"],
             input=json.dumps(envelope, ensure_ascii=False), capture_output=True, text=True,
             encoding="utf-8", errors="strict", timeout=timeout,
-            env=dict(os.environ, LLMTRIM_PRESET="safe"),
+            env=child_env,
             **({"creationflags": subprocess.CREATE_NO_WINDOW} if os.name == "nt" else {}))
         if run.returncode:
             metrics["outcome"] = "compressor_error"

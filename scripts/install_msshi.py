@@ -327,7 +327,7 @@ def main(argv=None):
     parser.add_argument("--hermes-profiles", action="store_true", help="Daftarkan otomatis sebagai Hermes Desktop profiles (profile.yaml, config.yaml seed, .env).")
     parser.add_argument("--update-display-names", action="store_true", help="Perbarui display_name pada profile.yaml yang sudah ada sesuai pilihan terminal.")
     parser.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto",
-                        help="Hermes default tetap netral; Yukino memakai profil bernama sendiri. keep-hermes juga memperbaiki label default Yukino lama tanpa mengubah SOUL/model. yukino diterima sebagai alias kompatibilitas profil bernama.")
+                        help="auto: instalasi baru menjadikan bot default Yukino; susunan yang sudah ada dipertahankan. yukino: ubah peran/tampilan default, tanpa memindahkan model/chat. keep-hermes: default netral + lima profil bernama.")
     parser.add_argument("--restore-default-identity", action="store_true", help="Perbaiki hanya label default yang terduplikasi sebagai Yukino; SOUL, provider/model dan visual dipertahankan.")
     parser.add_argument("--rollback-receipt", type=Path, help="Pulihkan perubahan profil dari receipt lokal dengan --apply; perubahan user sesudah instalasi dilaporkan sebagai konflik.")
     parser.add_argument("--no-pdf", action="store_true", help="Jangan salin modul PDF ke Downloads setelah pemasangan.")
@@ -394,13 +394,16 @@ def main(argv=None):
                 if args.apply and os.name == "nt" and hermes_home == Path("D:/HermesData").absolute():
                     hermes_profiles.persist_windows_hermes_home(hermes_home)
             has_model_seed = bool(hermes_profiles.launch_model_seed_from_home(hermes_home)) if hermes_home else False
-            # Five named identities; root/default must not silently become Yukino.
+            default_bot = (hermes_profiles.resolve_default_bot(hermes_home, args.default_bot)
+                           if provision_hermes and args.mode == "muza-preset" else "keep-hermes")
+            yukino_is_default = default_bot == "yukino"
             if provision_hermes:
-                print("Hermes default tetap netral; Yukino dan empat spesialis memakai profil bernama sendiri.")
+                print("Bot default menjadi Yukino + empat profil spesialis." if yukino_is_default else
+                      "Hermes default tetap netral; Yukino dan empat spesialis memakai profil bernama sendiri.")
             plans = []
             for bot_id, label, skills, soul in team_plan(data, args.mode, catalog):
-                as_default = False
-                bot_dir = profiles_root / bot_id
+                as_default = yukino_is_default and bot_id == "yukino"
+                bot_dir = hermes_home if as_default else profiles_root / bot_id
                 reject_links(bot_dir)
                 if existing(bot_dir) and not bot_dir.is_dir():
                     raise ValueError(f"Target bot bukan folder: {bot_dir}")
@@ -408,7 +411,9 @@ def main(argv=None):
                 print(f"\n{label} ({bot_id})")
                 print_plan(copies, preserved, external)
                 soul_path = bot_dir / "SOUL.md"
-                if existing(soul_path):
+                if as_default and existing(soul_path) and hermes_profiles.is_stock_hermes_soul(soul_path):
+                    print(f"  Ganti template SOUL bawaan menjadi Yukino (cadangan melalui receipt): {soul_path}")
+                elif existing(soul_path):
                     print(f"  Pertahankan {soul_path}")
                 else:
                     print(f"  Buat {soul_path}")
@@ -440,15 +445,21 @@ def main(argv=None):
                         if args.restore_default_identity or args.default_bot == "keep-hermes":
                             hermes_profiles.restore_neutral_default(hermes_home, transaction=transaction)
                         for bot_id, as_default, bot_dir, label, description, soul, agents_text, copies, skills, external in plans:
-                            hermes_profiles.sync_hermes_profile(
+                            profile_result = hermes_profiles.sync_hermes_profile(
                                 hermes_home, bot_id, label, soul, agents_text, copies,
                                 description=description,
                                 update_display_names=args.update_display_names,
-                                as_default=False,
+                                as_default=as_default,
                                 copy_fn=copy_skill,
                                 transaction=transaction,
                             )
-                            pending_rows.append({"bot_id": bot_id, "label": label, "description": description})
+                            if profile_result.get("custom_soul_preserved"):
+                                print("  SOUL default yang sudah disesuaikan tetap utuh; pemulihan SOUL pribadi memakai helper preset terpisah.")
+                            pending_rows.append({"bot_id": "default" if as_default else bot_id, "label": label, "description": description})
+                        if args.mode == "muza-preset":
+                            hermes_profiles.record_team_layout(hermes_home, default_bot, transaction=transaction)
+                            if args.default_bot == "yukino":
+                                hermes_profiles.hide_legacy_named_yukino(hermes_home, transaction=transaction)
                         hermes_profiles.record_pending_bots(hermes_home, pending_rows, args.mode, transaction=transaction)
                         if args.mode == "muza-preset" and not args.no_team_routing:
                             routing = hermes_profiles.install_team_routing_plugin(hermes_home, ROOT, transaction=transaction)
@@ -462,7 +473,8 @@ def main(argv=None):
                         print(f"Receipt rollback profil: {receipt}")
                     multiplex = hermes_profiles.notify_live_multiplexer(hermes_home)
                     if has_model_seed:
-                        msg = f"Lima profil bernama Hermes disiapkan di {profiles_root}; default tetap netral."
+                        msg = (f"Bot default Yukino + empat spesialis disiapkan di {hermes_home}." if yukino_is_default else
+                               f"Lima profil bernama Hermes disiapkan di {profiles_root}; default tetap netral.")
                         print(msg)
                     else:
                         print(

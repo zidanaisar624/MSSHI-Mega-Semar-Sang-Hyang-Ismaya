@@ -41,9 +41,27 @@ def _profile() -> str:
 
 def _live_profiles(root: Path) -> tuple[str, ...]:
     from hermes_constants import named_profile_is_live
-    return tuple(name for name in PROFILE_ROLES
-                 if not (root / "profiles" / name).is_symlink()
-                 and named_profile_is_live(root / "profiles" / name))
+    return tuple(name for name in _role_profiles(root).values()
+                 if (name == "default" and root.is_dir()) or
+                 (name != "default" and not (root / "profiles" / name).is_symlink()
+                  and named_profile_is_live(root / "profiles" / name)))
+
+
+def _role_profiles(root: Path) -> dict[str, str]:
+    """Map roles to supported real native IDs; malformed layout fails to legacy named mode."""
+    roles = {name: name for name in PROFILE_ROLES}
+    path = root / "msshi-runtime" / "team-layout.json"
+    if path.is_file() and not path.is_symlink() and not path.parent.is_symlink() and path.stat().st_size <= 65536:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8-sig"))
+            expected = dict(roles)
+            if data.get("default_bot") == "yukino":
+                expected["yukino"] = "default"
+            if data.get("schema") == 1 and data.get("roles") == expected:
+                return expected
+        except (OSError, ValueError, AttributeError):
+            pass
+    return roles
 
 
 
@@ -124,25 +142,25 @@ class MSSHITeamRouting(DelegationProvider):
 
     @property
     def display_name(self) -> str:
-        return "MSSHI named bot handoffs"
+        return "MSSHI native bot handoffs"
 
     @property
     def summary(self) -> str:
-        return "Use live named profiles; ordinary subagents keep existing delegation model/provider."
+        return "Use live native role profiles; ordinary subagents keep existing delegation model/provider."
 
     def task_parameters(self, config: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
         parameters = {}
         names = [name for name in _live_profiles(self.root) if name != self.active_profile]
         if names:
             parameters["profile"] = {"type": "string", "enum": names,
-                "description": "Optional actual named specialist. Omit for ordinary ephemeral delegation."}
+                "description": "Optional actual native teammate ID. default means Yukino only when selected in team layout. Omit for ordinary ephemeral delegation."}
         if _kat_settings(self.root, self.active_profile) is not None:
             parameters["execution"] = {"type": "string", "enum": ["configured", "kat"],
                 "description": "Coder-only optional KAT subtask; configured keeps existing delegation routing."}
         return parameters
 
     def description(self, config: Mapping[str, Any]) -> str:
-        return ("For a named specialist use profile only from the offered live enum. "
+        return ("For a native teammate use profile only from the offered live enum. "
                 "This loads that bot's own SOUL, skills, main model and credentials. "
                 "Omitting profile preserves existing delegation routing. Prefer message_agent "
                 "when this is native Bot Chat and that tool is actually available.")
@@ -155,8 +173,8 @@ class MSSHITeamRouting(DelegationProvider):
         if target is not None:
             if execution == "kat":
                 raise DelegationRouteError("Named profiles use their own main model. Request KAT only from Shikaku without profile.")
-            if target == self.active_profile or target not in PROFILE_ROLES or target not in _live_profiles(self.root):
-                raise DelegationRouteError("Target is not a different live named profile. Refresh the session roster; no task was started.")
+            if target == self.active_profile or target not in _live_profiles(self.root):
+                raise DelegationRouteError("Target is not a different live native profile. Refresh the session roster; no task was started.")
             return {"profile": target, "label": f"MSSHI {target}"}
         if execution == "kat":
             settings = _kat_settings(self.root, _profile())
@@ -169,20 +187,28 @@ class MSSHITeamRouting(DelegationProvider):
 
 
 def role_policy(session_info: Mapping[str, Any]) -> str:
-    profile = str(session_info.get("profile_name") or "default")
+    actual_profile = str(session_info.get("profile_name") or "default")
+    roles = _role_profiles(_root())
+    profile = next((role for role, actual in roles.items() if actual == actual_profile), "")
     if profile not in PROFILE_ROLES:
-        return "Hermes default remains a neutral general assistant. Do not impersonate named MSSHI bots."
-    own = f"MSSHI native role {profile}: {PROFILE_ROLES[profile]}. "
+        own = ("Hermes default remains a neutral general assistant. Do not impersonate named MSSHI bots. "
+               "For requests needing specialist work, hand off only relevant bounded portions to live teammates; "
+               "use shizuka to coordinate complex work. Simple conversation needs no delegation. ")
+    else:
+        own = f"MSSHI native role {profile} (actual profile {actual_profile}): {PROFILE_ROLES[profile]}. "
+    own += "Role-to-native-profile mapping: " + ", ".join(f"{role}={actual}" for role, actual in roles.items()) + ". "
     if profile in {"yukino", "shizuka"}:
         own += ("For work spanning specialties, delegate only needed portions to actual live named bots: "
                 "yukino ideation, shizuka coordinator, val research, kiki-chii creative, shikaku coding. "
                 "Simple conversation needs no delegation. Do not do all specialist work alone or wake everyone. ")
-    else:
+    elif profile in PROFILE_ROLES:
         own += "Stay within your specialty and return useful findings to shizuka when the task needs coordination. "
     return own + (
         "Use native message_agent only when exposed in Bot Chat (target/message/constraints/expecting/expects_reply); "
         "a queued acknowledgement is not completion. Finish the turn and await its notification. "
         "Otherwise use delegate_task profile only if offered by its current schema. An unnamed child is not a named teammate. "
+        "Use only the current live roster/schema; never wake everyone or repeat completed research. "
+        "Do not start credit-consuming chat/API verification without explicit authorization. "
         "Handoff: goal, output, context, limits/approval, evidence, blockers, next action. "
         "Received bot messages already carry a reply path: answer in your final response, do not send a second DM to reply. "
         "If a Bot Chat message needs no action, reply exactly: I don't need to do anything here. "

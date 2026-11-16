@@ -76,7 +76,8 @@ def audit(repo, home, package_only=False, baseline_override=None):
            {"entries": len(rows)})
     required = ("scripts/msshi_runtime.py", "scripts/msshi_integrations.py", "scripts/msshi_desktop.py",
                 "scripts/find_muza_assets.py", "UPDATE_OTOMATIS_KE_V3.bat", "MULAI_DI_SINI_PEMULA.bat",
-                "THIRD_PARTY_NOTICES.md", "CREDITS.md", "docs/V3_MIGRATION.md", "scripts/msshi_llmtrim.py")
+                "THIRD_PARTY_NOTICES.md", "CREDITS.md", "docs/V3_MIGRATION.md", "scripts/msshi_llmtrim.py",
+                "scripts/msshi_llmtrim_json_only.toml", "hermes_plugins/msshi-auto-trim/json-only.toml")
     missing = [name for name in required if not (repo / name).is_file()]
     record("package_entrypoints", not missing, {"missing": missing})
     if package_only:

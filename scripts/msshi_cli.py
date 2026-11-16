@@ -403,7 +403,9 @@ def _hermes_profile_roots(platform, target, mode, selections, profile_home):
         for folder in selections:
             parent = folder.parent
             if parent == profile_home:
-                roots.append(("default", profile_home, "default", profile_home))
+                label = ("yukino" if mode == "muza-preset" and
+                         hermes_profiles.team_role_profiles(profile_home)["yukino"] == "default" else "default")
+                roots.append((label, profile_home, "default", profile_home))
             else:
                 roots.append((parent.name, profile_home, parent.name, parent))
         return roots
@@ -413,9 +415,9 @@ def _hermes_profile_roots(platform, target, mode, selections, profile_home):
 def _stage_auto_trim_plugin(profile_home, target, mode, selections):
     """Stage fail-open msshi-auto-trim plugin files into Hermes profile(s) without mutating config.yaml."""
     plugin_src = ROOT / "hermes_plugins" / "msshi-auto-trim"
-    files = [plugin_src / name for name in ("__init__.py", "plugin.yaml", "README.md")
+    files = [plugin_src / name for name in ("__init__.py", "plugin.yaml", "README.md", "json-only.toml")
              if (plugin_src / name).is_file()]
-    if not files:
+    if len(files) != 4:
         return {"staged": False, "reason": "plugin source missing", "profiles": [], "llmtrim_binary": False}
     roots = _hermes_profile_roots("hermes", target, mode, selections, profile_home)
     if (profile_home / "config.yaml").is_file() and all(item[3] != profile_home for item in roots):
@@ -939,8 +941,10 @@ def setup(args, home, state):
     data, catalog, packs = installer.read_matrix(ROOT / MATRIX)
     command = ["--mode", mode, "--platform", platform, "--target-dir", str(target)]
     default_bot_mode = getattr(args, 'default_bot', 'auto')
-    # All five team members are real named profiles. Default stays neutral.
-    yukino_is_default = False
+    hermes_root_dir = (hermes_profiles.resolve_target_hermes_home(target)
+                       if platform == "hermes" and target.name.lower() == "profiles" else None)
+    yukino_is_default = bool(mode == "muza-preset" and hermes_root_dir is not None and
+                            hermes_profiles.resolve_default_bot(hermes_root_dir, default_bot_mode) == "yukino")
     if platform == "hermes" and mode == "muza-preset" and default_bot_mode != "auto":
         command.extend(("--default-bot", default_bot_mode))
     selections = {}
@@ -1235,7 +1239,7 @@ def main(argv=None):
         if action == "setup":
             wizard.add_argument("--mode", choices=MODES, help="Pilih mode langsung tanpa prompt.")
             wizard.add_argument("--yes", "-y", action="store_true", help="Konfirmasi otomatis tanpa prompt.")
-            wizard.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto", help="Hermes tetap netral; lima bot memakai profil bernama. auto/yukino adalah alias kompatibilitas; keep-hermes juga memperbaiki label default yang duplikat.")
+            wizard.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto", help="auto: baru = default Yukino + 4 spesialis; existing dipertahankan. yukino: ubah default tanpa memindahkan model/chat. keep-hermes: default netral + 5 profil bernama.")
             wizard.add_argument("--extra-packs", nargs="+", help="Tambahkan extra packs di langkah [1/4] Skills.")
             wizard.add_argument("--extra-skills", nargs="+", help="Tambahkan extra skill slugs di langkah [1/4] Skills.")
             wizard.add_argument("--kat-mode", choices=("light", "ideal", "cloud", "skip"), help="Buka wizard endpoint KAT khusus Coder (light/ideal/cloud alias kompatibilitas); skip menonaktifkan KAT saja. Tidak mengunduh model.")

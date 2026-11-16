@@ -1,6 +1,7 @@
 """Compress a JSON request locally with llmtrim; never send a model request."""
 from __future__ import annotations
 import argparse
+from decimal import Decimal
 import hashlib
 import json
 import os
@@ -12,21 +13,88 @@ import sys
 
 MAX_BYTES = 16 * 1024 * 1024
 
+
+def _pairs(items):
+    result = {}
+    for key, value in items:
+        if key in result:
+            raise ValueError('Ambiguous duplicate JSON key')
+        result[key] = value
+    return result
+
+
+def _reject_constant(value):
+    raise ValueError('Non-finite JSON number')
+
+
+def _parse(data):
+    return json.loads(data, object_pairs_hook=_pairs, parse_float=Decimal,
+                      parse_constant=_reject_constant)
+
+
+def _canonical(value):
+    if isinstance(value, dict):
+        entries = []
+        for key, child in value.items():
+            # Only tool-result JSON text may be minified; all other request
+            # strings, instructions, model IDs and tool IDs remain exact.
+            if key == 'content' and value.get('role') == 'tool' and isinstance(child, str):
+                try:
+                    nested = _parse(child)
+                    if isinstance(nested, (dict, list)):
+                        entries.append((key, ('json-tool-content', _canonical(nested))))
+                        continue
+                except (ValueError, TypeError, RecursionError):
+                    pass
+            entries.append((key, _canonical(child)))
+        return ('object', tuple(sorted(entries)))
+    if isinstance(value, list):
+        return ('array', tuple(_canonical(child) for child in value))
+    if isinstance(value, Decimal):
+        return ('decimal', value)
+    if value is None:
+        return ('null',)
+    if type(value) in (str, int, bool):
+        return (type(value).__name__, value)
+    raise ValueError('Unsupported JSON type')
+
+
 def compress(payload: bytes, binary: str, provider: str | None = None) -> bytes:
     if len(payload) > MAX_BYTES:
         raise ValueError('Input exceeds the 16 MiB local limit')
-    json.loads(payload)
+    parsed = _parse(payload)
+    if isinstance(parsed, dict):
+        if parsed.get('error') or parsed.get('success') is False:
+            return payload
+        for row in parsed.get('messages', []):
+            if isinstance(row, dict) and row.get('role') == 'tool' and isinstance(row.get('content'), str):
+                try:
+                    content = _parse(row['content'])
+                    if isinstance(content, dict) and (content.get('error') or content.get('success') is False):
+                        return payload
+                except (ValueError, TypeError, RecursionError):
+                    pass
+    original = _canonical(parsed)
+    config = Path(__file__).with_name('msshi_llmtrim_json_only.toml')
+    if not config.is_file():
+        return payload
+    child_env = dict(os.environ, PYTHONUTF8='1', LLMTRIM_CONFIG=str(config),
+                     LLMTRIM_NO_UPDATE_CHECK='1', LLMTRIM_CAPTURE_MAX_MB='0')
+    child_env.pop('LLMTRIM_PRESET', None)
     command = [binary, 'compress']
     if provider:
         command += ['--provider', provider]
-    result = subprocess.run(command, input=payload, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        env={**os.environ, 'LLMTRIM_PRESET':'safe', 'PYTHONUTF8':'1'}, timeout=30,
-        **({'creationflags':subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {}))
-    if result.returncode:
-        # Do not leak the supplied payload or possible credentials through error messages.
-        raise ValueError('Local llmtrim compression failed; original input was retained')
-    json.loads(result.stdout)
-    return result.stdout
+    try:
+        result = subprocess.run(command, input=payload, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            env=child_env, timeout=30,
+            **({'creationflags':subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {}))
+        if (result.returncode or len(result.stdout) >= len(payload)
+                or _canonical(_parse(result.stdout)) != original):
+            return payload
+        return result.stdout
+    except (OSError, subprocess.SubprocessError, ValueError, TypeError, RecursionError):
+        # Fail open without printing supplied data, credentials or stderr.
+        return payload
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
@@ -72,7 +140,7 @@ def main(argv=None):
             args.output.parent.mkdir(parents=True,exist_ok=True)
             with args.output.open('xb') as stream:
                 stream.write(result)
-            print(json.dumps({'success':True,'local_only':True,'preset':'safe','llm_calls':0,
+            print(json.dumps({'success':True,'local_only':True,'policy':'json-only','unchanged':result==payload,'llm_calls':0,
                 'input_bytes':len(payload),'output_bytes':len(result),'output':str(args.output),
                 'input_sha256':hashlib.sha256(payload).hexdigest(),'output_sha256':hashlib.sha256(result).hexdigest()},indent=2))
         else:
