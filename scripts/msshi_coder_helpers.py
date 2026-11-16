@@ -133,7 +133,10 @@ def routing_ready(home):
     from msshi_hermes_profiles import load_yaml_mapping
     data = load_yaml_mapping(config)
     backend = str((data.get('delegation') or {}).get('backend') or '')
-    return backend in {'msshi-team-routing', 'msshi-team'}
+    plugins = data.get('plugins') or {}
+    return (backend == 'msshi-team' and isinstance(plugins, dict)
+            and 'msshi-team-routing' in (plugins.get('enabled') or [])
+            and 'msshi-team-routing' not in (plugins.get('disabled') or []))
 
 
 def goose_status(home):

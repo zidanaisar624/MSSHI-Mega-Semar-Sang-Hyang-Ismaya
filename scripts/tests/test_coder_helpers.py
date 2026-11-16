@@ -20,7 +20,7 @@ class CoderHelpers(unittest.TestCase):
         self.home = Path(self.temp.name)
         self.profile = self.home / 'profiles/shikaku'
         self.profile.mkdir(parents=True)
-        self.config = b'model:\n  provider: original\n  default: unchanged\ndelegation:\n  backend: msshi-team-routing\n  model: existing-helper\n'
+        self.config = b'model:\n  provider: original\n  default: unchanged\ndelegation:\n  backend: msshi-team\n  model: existing-helper\nplugins:\n  enabled: [msshi-team-routing]\n  disabled: []\n'
         (self.profile / 'config.yaml').write_bytes(self.config)
         (self.profile / 'SOUL.md').write_bytes(b'private original persona')
         plugin = self.profile / 'plugins/msshi-team-routing/plugin.yaml'
@@ -62,6 +62,15 @@ class CoderHelpers(unittest.TestCase):
 
     def test_missing_native_plugin_blocks_enable(self):
         (self.profile / 'plugins/msshi-team-routing/plugin.yaml').unlink()
+        with patch.dict(os.environ, {kat.ENV_NAME: 'fixture-secret'}):
+            result = kat.configure(self.home, preset='streamlake-payg', activate=True,
+                                   accept_documented_model=True)
+        self.assertEqual(result['status'], 'needs_native_team_routing')
+        self.assertFalse(result['enabled'])
+
+    def test_explicit_plugin_disable_blocks_enable(self):
+        (self.profile / 'config.yaml').write_bytes(self.config.replace(
+            b'disabled: []', b'disabled: [msshi-team-routing]'))
         with patch.dict(os.environ, {kat.ENV_NAME: 'fixture-secret'}):
             result = kat.configure(self.home, preset='streamlake-payg', activate=True,
                                    accept_documented_model=True)
