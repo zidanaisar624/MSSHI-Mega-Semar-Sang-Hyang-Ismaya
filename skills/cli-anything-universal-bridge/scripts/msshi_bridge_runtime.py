@@ -81,6 +81,13 @@ def target_allowed(profile, target):
     remote = str(target).lower().startswith("mcp:")
     target = normalized(str(target)).removeprefix("mcp:")
     target = MCP_ALIASES.get(target, target)
+    # A generic adapter for a known application has the same role restrictions.
+    if target.startswith("cli:"):
+        application = MCP_ALIASES.get(target[4:], target[4:])
+        if application in {*ARTCRAFT, *DISALLOWED_TARGETS, "blender", "blender-cli"}:
+            target = application
+    if target == "blender-cli":
+        target = "blender"
     if target in DISALLOWED_TARGETS:
         return False
     role = role_for_profile(profile)
