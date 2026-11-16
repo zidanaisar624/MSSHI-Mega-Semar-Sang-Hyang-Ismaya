@@ -113,11 +113,10 @@ def _kat_settings(root: Path, active_profile: str) -> dict[str, Any] | None:
 
 class MSSHITeamRouting(DelegationProvider):
     def __init__(self):
-        # Session-stable schema; route_task rechecks the target before core builds a child.
+        # Native providers are profile-scoped and may outlive individual chats.
+        # Read local readiness at each new schema build; core freezes that session's tools.
         self.root = _root()
         self.active_profile = _profile()
-        self.profiles = _live_profiles(self.root)
-        self.kat_available = _kat_settings(self.root, self.active_profile) is not None
 
     @property
     def name(self) -> str:
@@ -133,11 +132,11 @@ class MSSHITeamRouting(DelegationProvider):
 
     def task_parameters(self, config: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
         parameters = {}
-        names = [name for name in self.profiles if name != self.active_profile]
+        names = [name for name in _live_profiles(self.root) if name != self.active_profile]
         if names:
             parameters["profile"] = {"type": "string", "enum": names,
                 "description": "Optional actual named specialist. Omit for ordinary ephemeral delegation."}
-        if self.kat_available:
+        if _kat_settings(self.root, self.active_profile) is not None:
             parameters["execution"] = {"type": "string", "enum": ["configured", "kat"],
                 "description": "Coder-only optional KAT subtask; configured keeps existing delegation routing."}
         return parameters
@@ -156,12 +155,12 @@ class MSSHITeamRouting(DelegationProvider):
         if target is not None:
             if execution == "kat":
                 raise DelegationRouteError("Named profiles use their own main model. Request KAT only from Shikaku without profile.")
-            if target == self.active_profile or target not in self.profiles or target not in _live_profiles(self.root):
+            if target == self.active_profile or target not in PROFILE_ROLES or target not in _live_profiles(self.root):
                 raise DelegationRouteError("Target is not a different live named profile. Refresh the session roster; no task was started.")
             return {"profile": target, "label": f"MSSHI {target}"}
         if execution == "kat":
             settings = _kat_settings(self.root, _profile())
-            if not self.kat_available or settings is None:
+            if settings is None:
                 raise DelegationRouteError("KAT is not enabled and validated for this Coder session. Use configured routing.")
             return {"model": settings["model"], "provider": "custom", "base_url": settings["base_url"],
                     "api_key": _private_key(self.root, settings["api_key_env"]), "fallback_providers": [], "label": "Coder KAT opt-in"}

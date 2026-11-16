@@ -279,6 +279,9 @@ class TeamRoutingPluginTests(unittest.TestCase):
 
     def test_kat_private_coder_env_fallback_does_not_modify_process(self):
         self.constants.get_hermes_home = lambda: self.home / "profiles/shikaku"
+        # A provider registered before setup must pick up readiness on a NEW schema build.
+        backend = self.plugin.MSSHITeamRouting()
+        self.assertNotIn("execution", backend.task_parameters({}))
         private = self.home / "msshi-private/coder/kat.json"
         private.parent.mkdir(parents=True)
         private.write_text(json.dumps({"schema": 1, "enabled": True, "profile": "shikaku", "provider": "custom",
@@ -287,7 +290,6 @@ class TeamRoutingPluginTests(unittest.TestCase):
         (self.home / "profiles/shikaku/.env").write_text('FIXTURE_PRIVATE_KAT="fixture-only"\nOTHER_SECRET=ignore\n')
         with patch.dict(os.environ, {}, clear=False):
             os.environ.pop("FIXTURE_PRIVATE_KAT", None)
-            backend = self.plugin.MSSHITeamRouting()
             self.assertIn("execution", backend.task_parameters({}))
             route = backend.route_task({"execution": "kat"}, {})
             self.assertEqual(route["api_key"], "fixture-only")
