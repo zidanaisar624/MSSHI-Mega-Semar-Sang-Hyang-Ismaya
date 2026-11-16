@@ -21,7 +21,7 @@ from msshi_sources import data_root
 
 ROOT = Path(__file__).resolve().parents[1]
 SCOPES = {"unslop": {"kiki-chii", "val", "shikaku"}, "brag": {"kiki-chii"},
-          "scrapling": {"val", "shikaku"}, "harness2": {"val", "shikaku"}}
+          "scrapling": {"val", "shikaku"}, "harness2": {"yukino", "shizuka", "val", "kiki-chii", "shikaku"}}
 FORBIDDEN = {".git", "node_modules", "venv", ".venv", "site-packages", "__pycache__"}
 AUDITS = {"unslop": "msshi-private/v3.1-sources/unslop-integration-audit.json",
           "brag": "msshi-private/v3.1-brag-audit.json",
@@ -209,6 +209,47 @@ def audit(repo, home, package_only=False, baseline_override=None):
     profile_folder = home / "profiles"
     if not package_only and profile_folder.is_dir():
         profiles.update({file.name: file for file in profile_folder.iterdir() if file.is_dir() and not file.name.startswith(".")})
+
+    # Contextual instructions are separately auditable from runtime installation
+    # or model-backed task success. Their source helper does not run on boot.
+    everyone = {"yukino", "shizuka", "val", "kiki-chii", "shikaku"}
+    contexts = {"career-ops": ("career-ops", everyone),
+                "remote-jobs": ("remote-jobs", everyone),
+                "mattpocock-engineering": ("mattpocock-skills", everyone),
+                "rea-video": ("rea-video", {"kiki-chii"})}
+    for slug, (source_id, expected_roles) in contexts.items():
+        actual_roles = {role for role, bot in bots.items() if slug in bot.get("required_skills", [])}
+        upstream = rows.get(source_id, {})
+        record(f"context_{slug}_roles", actual_roles == expected_roles
+               and set(upstream.get("roles", [])) == expected_roles and upstream.get("auto_start") is False,
+               {"expected": sorted(expected_roles), "matrix": sorted(actual_roles),
+                "upstream_roles": upstream.get("roles"), "auto_start": upstream.get("auto_start")})
+        files, detail = small_tree(repo / "skills" / slug)
+        small = "SKILL.md" in files and not detail.get("issues") and not detail.get("missing")
+        record(f"context_{slug}_small_wrapper", small, detail)
+        readiness[slug] = {"configuration": {"package_skill_present": small, "roles": sorted(expected_roles)},
+                           "runtime_or_task_success": "not_implied_by_wrapper", "auto_start": False}
+        if not package_only:
+            wanted = {role_map[role] or "default" for role in expected_roles}
+            observed = {name for name, profile in profiles.items() if (profile / "skills" / slug).exists()}
+            copies = {name: small_tree(profiles[name] / "skills" / slug) for name in wanted & observed}
+            valid = all(tree == files and not info.get("issues") for tree, info in copies.values())
+            record(f"context_{slug}_live_scope_and_copies",
+                   "PASS" if wanted == observed and valid else "NEEDS_ATTENTION" if observed - wanted or not valid else "PENDING",
+                   {"expected_profiles": sorted(wanted), "observed_profiles": sorted(observed),
+                    "copies_match": valid, "missing": sorted(wanted - observed)})
+    record("context_source_helper_present", (repo / "scripts/msshi_context_sources.py").is_file(),
+           {"entrypoint": "msshi integrations source", "default_action": "local_status"})
+    policy_path = repo / "configs/muza_app_policy.json"
+    policy = read(policy_path).get("artcraft", {}) if policy_path.is_file() else {}
+    app_assignments = {role: {slug.removeprefix("artcraft-") for slug in bot.get("optional_skills", [])
+                              if slug.startswith("artcraft-")} for role, bot in bots.items()}
+    record("muza_artcraft_strict_native_roles", bool(policy) and
+           all(app_assignments[role] == set(policy.get(role, [])) for role in everyone)
+           and [len(app_assignments[role]) for role in ("val", "shikaku", "kiki-chii")] == [4, 2, 13]
+           and app_assignments["shikaku"] & app_assignments["kiki-chii"] == {"figcraft"},
+           {"matrix_apps": {role: sorted(apps) for role, apps in app_assignments.items()},
+            "policy": str(policy_path)})
 
     scopes = {slug: set(roles) for slug, roles in SCOPES.items()}
     catalog = {row["slug"]: row for row in matrix["skills"]}

@@ -377,30 +377,41 @@ def bridge_smoke(work):
     connect("--mode", "auto-reconnect")
     status = connect("--status")
     rows = {row["id"]: row for row in status["connections"]}
-    require({"filmcraft", "blender"} <= rows.keys()
-            and rows["filmcraft"]["readiness"] == "configured"
-            and rows["blender"]["readiness"] == "configured",
-            "Auto-reconnect did not detect configured MCP routes from both config files")
+    catalog = {row["id"]: row for row in connect("--catalog")["connections"]}
+    require(all(catalog[name]["route"] == "native-cli"
+                and catalog[name]["readiness"] in {"requires_migration", "needs_install"}
+                and catalog[name]["require_task_ticket"] is True
+                for name in ("anicraft", "filmcraft", "blender"))
+            and not ({"anicraft", "filmcraft", "blender"} & rows.keys()),
+            "Legacy desktop MCP declarations were mistaken for ready native CLI routes")
     require(status.get("auto_open_on_boot") is False,
             "Auto-reconnect enabled application startup")
 
     manual_state = ("connect", "--hermes-home", home, "--profile", "default", "--json")
     run_cli("msshi_cli.py", *manual_state, "--mode", "select", "--targets",
-            "gdrive-web,youtube-chrome", env=env)
+            "perplexity,youtube-chrome", env=env)
     run_cli("msshi_cli.py", *manual_state, "--add", "tiktok", env=env)
     run_cli("msshi_cli.py", *manual_state, "--remove", "youtube-chrome", env=env)
     selected = json.loads(run_cli("msshi_cli.py", *manual_state, "--status", env=env))
-    require({row["id"] for row in selected["connections"]} == {"gdrive-web", "tiktok"},
+    require({row["id"] for row in selected["connections"]} == {"perplexity", "tiktok"},
             "Select/add/remove did not preserve the selected routes")
     require({row["id"] for row in connect("--status")["connections"]} == rows.keys(),
             "A route change leaked into a different Hermes profile")
     connect("--add", "../untrusted", ok=False)
+    connect("--add", "gdrive-web", ok=False)
     connect("--open", "gdrive-web", "--dry-run", ok=False)
 
+    # Old registries must not bypass disabled routes before runtime migration.
+    blocked_registry = home / "msshi-bridge" / "connections.json"
+    previous_registry = blocked_registry.read_bytes()
+    blocked_registry.write_text(json.dumps({"schema_version": 1, "targets": ["gdrive-web"]}), encoding="utf-8")
+    run_cli("msshi_cli.py", *manual_state, "--open", "gdrive-web", env=env, ok=False)
+    blocked_registry.write_bytes(previous_registry)
+
     manual = ("connect", "--hermes-home", home, "--profile", "manual")
-    run_cli("msshi_cli.py", *manual, env=env, input_text="2\n2,5\n")
+    run_cli("msshi_cli.py", *manual, env=env, input_text="2\n3,5\n")
     menu_report = json.loads(run_cli("msshi_cli.py", *manual, "--status", "--json", env=env))
-    require({row["id"] for row in menu_report["connections"]} == {"gdrive-web", "tiktok"},
+    require({row["id"] for row in menu_report["connections"]} == {"perplexity", "tiktok"},
             "Interactive target selection did not register both requested routes")
     require(all(file.read_bytes() == contents for file, contents in settings.items()),
             "Bridge modified Hermes configuration")

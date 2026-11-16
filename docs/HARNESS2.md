@@ -1,4 +1,4 @@
-# Harness² untuk Val dan Coder
+# Harness² untuk kelima bot
 
 MSSHI v3.1 mengintegrasikan [Harness² dari Google Research](https://github.com/google-research/harness2) sebagai alat proposal dan demonstrasi lokal. Framework upstream menjalankan dua tingkat rekursi dengan bobot model tetap: Propose–Probe–Compose pada tugas, serta library pengalaman untuk perbaikan lintas tugas. Integrasi ini membatasi tindakan pada proposal yang ditinjau manusia dan demo ledger deterministik dalam runtime privat.
 
@@ -6,7 +6,9 @@ MSSHI v3.1 mengintegrasikan [Harness² dari Google Research](https://github.com/
 | --- | --- |
 | Val | Desain evaluasi, baseline, holdout, ukuran keberhasilan, pemeriksaan bukti dan ketidakpastian |
 | Coder | Kandidat harness di workspace terisolasi, diff, probe yang dapat diulang, dan rollback |
-| Shizuka | Menerima ringkasan lewat koordinasi yang sudah diotorisasi; tidak mendapat instalasi skill baru ini |
+| Shizuka | Menilai rencana lintas bidang dan mengoordinasikan ringkasan yang didelegasikan |
+| Yukino | Menguji rumusan ide dan kriteria keberhasilan sebelum tugas diteruskan |
+| Kiki-Chii | Membandingkan kandidat alur kreatif, output dan batas sumber daya |
 
 Delapan permukaan eksperimen upstream adalah system prompt, guardrails, memory, tool guidance, subagents, skills, scripts, dan plugins. Permukaan itu hanya dipakai pada salinan eksperimen. Provider/model/fallback/MoA, persona, SOUL, DNA, memori, plugin native, browser, GDrive, dan Brightdata aktif tidak diubah. Tidak ada auto-promotion lesson, perubahan bobot model, daemon, desktop MCP, atau layanan cloud baru.
 
@@ -61,4 +63,4 @@ Proposal nyata harus memisahkan baseline/probe/holdout, mencatat model dan angga
 
 Lisensi serta pemberitahuan pihak ketiga upstream tetap berlaku untuk framework dan benchmark terkait. Wrapper, skill, dan dokumentasi MSSHI adalah materi orisinal paket; helper ownership proses diadaptasi dari helper TimesFM MSSHI berlisensi MIT. Framework upstream tidak dibundel ke source publik MSSHI dan bukan produk Google yang didukung resmi.
 
-Validasi integrasi mencakup instalasi core dari pin, verifikasi hash paket, demo kedua mode dengan total ledger yang benar, guard jaringan/proses, penolakan path/verb yang dilarang, fixture timeout parent+descendant, serta hash salinan skill Val/Coder. Tidak ada tes chat LLM atau kredit API.
+Validasi integrasi awal mencakup instalasi core dari pin, verifikasi hash paket, demo kedua mode dengan total ledger yang benar, guard jaringan/proses, penolakan path/verb yang dilarang, fixture timeout parent+descendant, serta hash salinan skill Val/Coder. Pembaruan 16 November memperluas kepemilikan instruksi ke kelima bot; itu tidak berarti setiap bot telah menjalankan benchmark atau chat LLM. Demo tidak menggunakan kredit API.

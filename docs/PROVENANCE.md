@@ -28,3 +28,17 @@ Atribusi ini mendeskripsikan kontribusi MuZA dan bantuan dari produk AI dalam pe
 Pernyataan kredit mencatat penggunaan alat AI dan arahan MuZA. Rincian lisensi upstream tersedia di [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
 Integrasi v3.1 tercatat di [notices](../THIRD_PARTY_NOTICES.md) dan [panduan](V3_1_UPDATE.md); model dan assets upstream tidak otomatis menjadi materi MIT MSSHI.
+
+## Integrasi kontekstual 16 November 2026
+
+CareerOps, Remote In Tech, Skills for Real Engineers (Matt Pocock), dan rea-video
+ditinjau dari source, frontmatter, package manifest serta lisensi pada commit yang
+dipin. [Panduan integrasi](CONTEXTUAL_INTEGRATIONS.md) membedakan instruksi, cache
+source, runtime, data pengguna, dan operasi nyata. CareerOps/remote-jobs/Matt Pocock
+serta Harness² dibagikan pada kelima peran; rea-video diarahkan ke Kiki-Chii.
+
+Tidak ada evaluasi CV, aplikasi kerja, benchmark model, generasi video atau promosi
+harness yang dijalankan pada boot. Metadata discovery host dapat memakai konteks;
+on-demand tidak dijelaskan sebagai jaminan seluruh billing menjadi nol. Implementasi
+dan dependency upstream disiapkan terpisah dari scanner skill, tanpa mengubah model
+utama atau persona pengguna.

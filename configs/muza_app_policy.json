@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "preset": "muza-preset",
+  "artcraft_root_env": "MSSHI_ARTCRAFT_ROOT",
+  "windows_default_artcraft_root": "D:/Program/ArtCraft Apps",
+  "auto_open_on_boot": false,
+  "require_task_ticket": true,
+  "artcraft": {
+    "default": [],
+    "yukino": [],
+    "shizuka": [],
+    "val": [
+      "pdfcraft",
+      "gridcraft",
+      "wordcraft",
+      "deckcraft"
+    ],
+    "shikaku": [
+      "craftanything",
+      "figcraft"
+    ],
+    "kiki-chii": [
+      "anicraft",
+      "filmcraft",
+      "effectcraft",
+      "soundcraft",
+      "photocraft",
+      "lightcraft",
+      "designcraft",
+      "figcraft",
+      "vectorcraft",
+      "cadcraft",
+      "solidcraft",
+      "materialcraft",
+      "texturecraft"
+    ]
+  },
+  "non_artcraft": {
+    "val": [
+      "perplexity",
+      "python",
+      "whatsapp-web",
+      "youtube-chrome"
+    ],
+    "shikaku": [
+      "antigravity",
+      "git",
+      "node",
+      "perplexity",
+      "python",
+      "youtube-chrome"
+    ],
+    "kiki-chii": [
+      "blender",
+      "ffmpeg",
+      "node",
+      "obs",
+      "perplexity",
+      "python",
+      "tiktok",
+      "youtube-chrome"
+    ]
+  },
+  "shared_utilities": [
+    "graphify",
+    "hersona",
+    "llmtrim"
+  ],
+  "disabled_targets": [
+    "gdrive",
+    "gdrive-web",
+    "gimp",
+    "google-drive",
+    "googledrive",
+    "libreoffice",
+    "solvecraft"
+  ],
+  "execution": "msshi-runtime-ticket",
+  "note": "Unknown custom profile IDs retain their chosen non-MuZA policy; installed runtime/executable readiness is verified separately."
+}

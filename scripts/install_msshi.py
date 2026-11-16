@@ -327,13 +327,25 @@ def main(argv=None):
     parser.add_argument("--hermes-profiles", action="store_true", help="Daftarkan otomatis sebagai Hermes Desktop profiles (profile.yaml, config.yaml seed, .env).")
     parser.add_argument("--update-display-names", action="store_true", help="Perbarui display_name pada profile.yaml yang sudah ada sesuai pilihan terminal.")
     parser.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto",
-                        help="Pada mode muza-preset untuk Hermes, atur apakah profil 'default' otomatis menjadi Yukino ('auto'/'yukino') atau dipertahankan sebagai 'Hermes' ('keep-hermes').")
+                        help="Hermes default tetap netral; Yukino memakai profil bernama sendiri. keep-hermes juga memperbaiki label default Yukino lama tanpa mengubah SOUL/model. yukino diterima sebagai alias kompatibilitas profil bernama.")
+    parser.add_argument("--restore-default-identity", action="store_true", help="Perbaiki hanya label default yang terduplikasi sebagai Yukino; SOUL, provider/model dan visual dipertahankan.")
+    parser.add_argument("--rollback-receipt", type=Path, help="Pulihkan perubahan profil dari receipt lokal dengan --apply; perubahan user sesudah instalasi dilaporkan sebagai konflik.")
+    parser.add_argument("--no-pdf", action="store_true", help="Jangan salin modul PDF ke Downloads setelah pemasangan.")
+    parser.add_argument("--pdf-dest", type=Path, help="Folder tujuan modul PDF (default: Downloads).")
+    parser.add_argument("--no-team-routing", action="store_true", help="Lewati backend lokal pembagian tugas; backend kustom yang sudah ada selalu dipertahankan.")
     parser.add_argument("--pull-upstreams", action="store_true", help="Unduh repositori referensi ke cache terpisah saat --apply; perlu internet/disk, tidak mengaktifkan aplikasi, model, akun atau runtime otomatis.")
     parser.add_argument("--upstreams-dir", type=Path, default=data_root() / "upstreams", help="Folder cache sumber eksternal.")
     action = parser.add_mutually_exclusive_group()
     action.add_argument("--dry-run", action="store_true", help="Tampilkan rencana saja (default).")
     action.add_argument("--apply", action="store_true", help="Tulis hanya file baru sesuai rencana.")
     args = parser.parse_args(argv)
+    if args.rollback_receipt:
+        if not args.apply:
+            print(f"Pratinjau rollback: {args.rollback_receipt}; tambahkan --apply untuk memulihkan.")
+            return 0
+        result = hermes_profiles.rollback_profile_receipt(args.rollback_receipt.expanduser())
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return 1 if result["conflicts"] else 0
     if (args.packs or args.skills) and args.mode != "selective":
         parser.error("--packs dan --skills hanya untuk --mode selective.")
     try:
@@ -382,21 +394,21 @@ def main(argv=None):
                 if args.apply and os.name == "nt" and hermes_home == Path("D:/HermesData").absolute():
                     hermes_profiles.persist_windows_hermes_home(hermes_home)
             has_model_seed = bool(hermes_profiles.launch_model_seed_from_home(hermes_home)) if hermes_home else False
-            default_bot_is_yukino = bool(provision_hermes and args.mode == "muza-preset" and args.default_bot != "keep-hermes")
+            # Five named identities; root/default must not silently become Yukino.
+            if provision_hermes:
+                print("Hermes default tetap netral; Yukino dan empat spesialis memakai profil bernama sendiri.")
             plans = []
             for bot_id, label, skills, soul in team_plan(data, args.mode, catalog):
-                as_default = bool(default_bot_is_yukino and bot_id == "yukino")
-                bot_dir = hermes_home if as_default else (profiles_root / bot_id)
+                as_default = False
+                bot_dir = profiles_root / bot_id
                 reject_links(bot_dir)
                 if existing(bot_dir) and not bot_dir.is_dir():
                     raise ValueError(f"Target bot bukan folder: {bot_dir}")
                 copies, preserved, external = skill_plan(bot_dir / "skills", skills, catalog)
-                print(f"\n{label} (default <- {bot_id})" if as_default else f"\n{label} ({bot_id})")
+                print(f"\n{label} ({bot_id})")
                 print_plan(copies, preserved, external)
                 soul_path = bot_dir / "SOUL.md"
-                if as_default and existing(soul_path) and hermes_profiles.is_stock_hermes_soul(soul_path):
-                    print(f"  Cadangkan & perbarui {soul_path} (ganti template bawaan Hermes ke persona {label})")
-                elif existing(soul_path):
+                if existing(soul_path):
                     print(f"  Pertahankan {soul_path}")
                 else:
                     print(f"  Buat {soul_path}")
@@ -407,11 +419,7 @@ def main(argv=None):
                     print(f"  Buat {agents_file}")
                 if provision_hermes:
                     print(f"  {'Perbarui' if existing(bot_dir / 'profile.yaml') else 'Buat'} {bot_dir / 'profile.yaml'} (display_name: {label})")
-                    if as_default:
-                        print(f"  Pertahankan {bot_dir / 'config.yaml'} & .env utama Hermes (profil default)")
-                        if existing(profiles_root / bot_id):
-                            print(f"  Pertahankan profil legacy {profiles_root / bot_id} (riwayat chat/state.db lama tetap aman)")
-                    elif existing(bot_dir / "config.yaml"):
+                    if existing(bot_dir / "config.yaml"):
                         print(f"  Pertahankan {bot_dir / 'config.yaml'} (provider/model aman)")
                     elif has_model_seed:
                         print(f"  Seed {bot_dir / 'config.yaml'} (dari model default)")
@@ -427,23 +435,34 @@ def main(argv=None):
             if args.apply:
                 if provision_hermes and hermes_home is not None:
                     pending_rows = []
-                    for bot_id, as_default, bot_dir, label, description, soul, agents_text, copies, skills, external in plans:
-                        hermes_profiles.sync_hermes_profile(
-                            hermes_home, bot_id, label, soul, agents_text, copies,
-                            description=description,
-                            update_display_names=args.update_display_names,
-                            as_default=as_default,
-                            copy_fn=copy_skill,
-                        )
-                        pending_rows.append({"bot_id": "default" if as_default else bot_id, "label": label, "description": description})
-                    hermes_profiles.record_pending_bots(hermes_home, pending_rows, args.mode)
+                    transaction = hermes_profiles.ProfileTransaction(hermes_home)
+                    try:
+                        if args.restore_default_identity or args.default_bot == "keep-hermes":
+                            hermes_profiles.restore_neutral_default(hermes_home, transaction=transaction)
+                        for bot_id, as_default, bot_dir, label, description, soul, agents_text, copies, skills, external in plans:
+                            hermes_profiles.sync_hermes_profile(
+                                hermes_home, bot_id, label, soul, agents_text, copies,
+                                description=description,
+                                update_display_names=args.update_display_names,
+                                as_default=False,
+                                copy_fn=copy_skill,
+                                transaction=transaction,
+                            )
+                            pending_rows.append({"bot_id": bot_id, "label": label, "description": description})
+                        hermes_profiles.record_pending_bots(hermes_home, pending_rows, args.mode, transaction=transaction)
+                        if args.mode == "muza-preset" and not args.no_team_routing:
+                            routing = hermes_profiles.install_team_routing_plugin(hermes_home, ROOT, transaction=transaction)
+                            print("Native team routing:", json.dumps(routing, ensure_ascii=False))
+                        receipt = transaction.commit()
+                    except Exception:
+                        rollback = transaction.rollback()
+                        print("Pemulihan profil:", json.dumps(rollback, ensure_ascii=False))
+                        raise
+                    if receipt:
+                        print(f"Receipt rollback profil: {receipt}")
                     multiplex = hermes_profiles.notify_live_multiplexer(hermes_home)
                     if has_model_seed:
-                        msg = (
-                            f"Profil Hermes otomatis didaftarkan ('default' -> Yukino di {hermes_home}, anggota tim di {profiles_root})."
-                            if default_bot_is_yukino
-                            else f"Profil Hermes otomatis didaftarkan di {profiles_root} (siap di tab BOTS)."
-                        )
+                        msg = f"Lima profil bernama Hermes disiapkan di {profiles_root}; default tetap netral."
                         print(msg)
                     else:
                         print(
@@ -478,6 +497,9 @@ def main(argv=None):
                 return 1
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
         parser.exit(2, f"Kesalahan: {exc}\n")
+    if args.apply:
+        from msshi_manuals import prompt_manual_download
+        prompt_manual_download(args, source_root=ROOT)
     return 0
 
 

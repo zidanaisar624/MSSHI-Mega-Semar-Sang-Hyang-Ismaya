@@ -180,5 +180,85 @@
       "preferred_over_legacy_generic_rea_setup": true,
       "provider_model_mutation": false
     }
-  }
+  },
+  "contextual_integrations": {
+    "career-ops": {
+      "profiles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "trigger": [
+        "career",
+        "cv",
+        "job",
+        "interview"
+      ],
+      "background_model_calls": false,
+      "user_data": "private separate DATA_ROOT"
+    },
+    "remote-jobs": {
+      "profiles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "trigger": [
+        "remote work",
+        "job search"
+      ],
+      "background_model_calls": false,
+      "active_vacancies_verified": false
+    },
+    "mattpocock-engineering": {
+      "profiles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "trigger": [
+        "engineering",
+        "architecture",
+        "specification",
+        "tdd"
+      ],
+      "respect_explicit_only_upstream": true,
+      "automatic_tracker_publication": false
+    },
+    "harness2": {
+      "profiles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "trigger": [
+        "harness evaluation",
+        "proposal",
+        "deterministic demo"
+      ],
+      "automatic_promotion": false,
+      "automatic_model_benchmarks": false
+    },
+    "rea-video": {
+      "profiles": [
+        "kiki-chii"
+      ],
+      "trigger": [
+        "reference video",
+        "shot breakdown",
+        "remake plan"
+      ],
+      "automatic_model_downloads": false,
+      "automatic_vlm_calls": false
+    }
+  },
+  "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee."
 }

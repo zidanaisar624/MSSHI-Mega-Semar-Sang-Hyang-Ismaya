@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ctypes
+import hashlib
+import importlib.util
 from datetime import datetime, timezone
 import json
 import os
@@ -11,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import time
+import uuid
 
 PROFILE_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 NO_BUNDLED_SKILLS_MARKER = ".no-bundled-skills"
@@ -30,6 +33,8 @@ _NON_COPY_ENV_EXACT = {
     "HOME_CHANNEL",
     "ALLOWED_USERS",
     "HERMES_DASHBOARD_SESSION_TOKEN",
+    "HERMES_HOME", "HERMES_PROFILE", "HERMES_DEFAULT_HOME", "MSSHI_HOME",
+    "TERMINAL_CWD", "PYTHONPATH", "PYTHONHOME",
 }
 _YAML_AMBIGUOUS = re.compile(r"^(?:true|false|yes|no|on|off|null|~|[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)$", re.I)
 
@@ -655,126 +660,519 @@ def _build_profile_meta(
     return meta
 
 
-def sync_hermes_profile(
-    hermes_home: Path,
-    bot_id: str,
-    label: str,
-    soul_text: str,
-    agents_text: str,
-    skill_copies: list[tuple[Path, Path]],
-    *,
-    description: str = "",
-    update_display_names: bool = False,
-    as_default: bool = False,
-    update_stock_soul: bool = True,
-    copy_fn=None,
-) -> dict[str, object]:
-    """Create or safely update one Hermes profile without clobbering state, sessions, or user model config."""
-    if not valid_profile_id(bot_id):
-        raise ValueError(f"ID bot tidak valid untuk Hermes profile: {bot_id!r}")
-    if as_default:
-        target_dir = hermes_home
-        if target_dir.is_symlink():
-            raise ValueError(f"Menolak menulis melalui symlink profile: {target_dir}")
-        target_dir.mkdir(parents=True, exist_ok=True)
-        is_new = False
-        stage_dir = target_dir
-        seed = {}
-        safe_env = _PLACEHOLDER_ENV
-    else:
-        profiles_root = hermes_home / "profiles"
-        profiles_root.mkdir(parents=True, exist_ok=True)
-        if os.name != "nt":
-            try:
-                os.chmod(profiles_root, 0o700)
-            except OSError:
-                pass
-        tombstone = profiles_root / ".deleted" / bot_id
-        if tombstone.exists() or tombstone.is_symlink():
-            tombstone.unlink(missing_ok=True)
+# The receipts contain local credential backups. Never publish this directory.
+_POLICY_START = "<!-- MSSHI:MANAGED-COORDINATION:START -->"
+_POLICY_END = "<!-- MSSHI:MANAGED-COORDINATION:END -->"
+_IDENTITY_MARKERS = ("config.yaml", ".env", "SOUL.md", "profile.yaml", "auth.json", "state.db")
 
-        target_dir = profiles_root / bot_id
-        if target_dir.is_symlink():
-            raise ValueError(f"Menolak menulis melalui symlink profile: {target_dir}")
-        seed = launch_model_seed_from_home(hermes_home)
-        safe_env = clone_safe_env_text(hermes_home / ".env")
-        is_new = not target_dir.exists()
-        stage_dir = profiles_root / f".{bot_id}.staging-{os.getpid()}" if is_new else target_dir
-        if is_new:
-            if stage_dir.exists():
-                shutil.rmtree(stage_dir, ignore_errors=True)
-            stage_dir.mkdir(parents=True, exist_ok=True)
 
+def _confined(root: Path, path: Path) -> Path:
+    root, path = root.absolute(), path.absolute()
+    if not path.is_relative_to(root):
+        raise ValueError(f"Path outside Hermes root: {path}")
+    check = path
+    while check != root.parent:
+        if check.is_symlink():
+            raise ValueError(f"Refusing profile symlink: {check}")
+        if check == root:
+            break
+        check = check.parent
+    return path
+
+
+def _fingerprint(path: Path, kind: str = "file") -> str | None:
+    if not path.exists():
+        return None
+    if path.is_symlink():
+        raise ValueError(f"Refusing profile symlink: {path}")
+    if kind == "file":
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    digest = hashlib.sha256()
+    for child in sorted(path.rglob("*")):
+        if child.is_symlink():
+            raise ValueError(f"Refusing symlink inside profile tree: {child}")
+        digest.update(child.relative_to(path).as_posix().encode("utf-8"))
+        digest.update(b"/" if child.is_dir() else bytes.fromhex(_fingerprint(child)))
+    return digest.hexdigest()
+
+
+def _atomic_write_bytes(path: Path, content: bytes, mode: int | None = None) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(f".{path.name}.tmp-{uuid.uuid4().hex}")
     try:
-        _ensure_profile_subdirs(stage_dir, write_no_bundled_marker=not as_default)
+        tmp.write_bytes(content)
+        if mode is not None and os.name != "nt":
+            os.chmod(tmp, mode)
+        _rename_with_retry(tmp, path)
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+class ProfileTransaction:
+    """Local, lazy receipt. Existing identity/config/secrets are never rewritten by sync.
+
+    Changed metadata, context files and selected tombstones are backed up before writes.
+    Rollback only restores a path if its installed fingerprint still matches: later user
+    changes become conflicts instead of being overwritten. New trees are quarantined.
+    """
+    def __init__(self, hermes_home: Path):
+        self.home = hermes_home.absolute()
+        self.folder = self.home / "msshi-runtime" / "profile-receipts" / (
+            datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-" + uuid.uuid4().hex[:8])
+        self.receipt = self.folder / "receipt.json"
+        self.entries: dict[str, dict] = {}
+        self.state = "applying"
+
+    def _save(self) -> None:
+        _confined(self.home, self.receipt)
+        self.folder.mkdir(parents=True, exist_ok=True)
+        if os.name != "nt":
+            os.chmod(self.folder, 0o700)
+        payload = {"version": 1, "hermes_home": str(self.home), "state": self.state,
+                   "updated_at": utc_now(), "entries": list(self.entries.values())}
+        _atomic_write_text(self.receipt, json.dumps(payload, indent=2, ensure_ascii=False) + "\n", mode=0o600)
+
+    def capture(self, path: Path, kind: str = "file") -> dict:
+        path = _confined(self.home, path)
+        key = str(path)
+        if key in self.entries:
+            return self.entries[key]
+        before = _fingerprint(path, kind)
+        entry = {"path": key, "kind": kind, "before_sha256": before, "after_sha256": before}
+        if kind == "file" and before is not None:
+            self.folder.mkdir(parents=True, exist_ok=True)
+            backup = self.folder / (f"{len(self.entries):04d}.bak")
+            _atomic_write_bytes(backup, path.read_bytes(), mode=0o600)
+            entry["backup"] = backup.name
+        elif kind == "tree" and before is not None:
+            raise ValueError("Only newly created trees can be tracked as a tree")
+        self.entries[key] = entry
+        self._save()
+        return entry
+
+    def mark(self, path: Path) -> None:
+        entry = self.entries[str(path.absolute())]
+        entry["after_sha256"] = _fingerprint(path, entry["kind"])
+        self._save()
+
+    def write(self, path: Path, content: bytes, mode: int | None = None) -> bool:
+        _confined(self.home, path)
+        if path.is_file() and path.read_bytes() == content:
+            return False
+        self.capture(path)
+        _atomic_write_bytes(path, content, mode)
+        self.mark(path)
+        return True
+
+    def commit(self) -> str | None:
+        if not self.entries:
+            return None
+        self.state = "applied"
+        self._save()
+        return str(self.receipt)
+
+    def rollback(self) -> dict:
+        if not self.entries:
+            return {"state": "unchanged", "restored": [], "conflicts": []}
+        # A failed copy may have left its own new tree partly written.
+        for entry in self.entries.values():
+            if entry["kind"] == "tree" and entry["before_sha256"] is None and entry["after_sha256"] is None:
+                entry["after_sha256"] = _fingerprint(Path(entry["path"]), "tree")
+        self._save()
+        return rollback_profile_receipt(self.receipt, expected_home=self.home)
+
+
+def rollback_profile_receipt(receipt: Path, *, expected_home: Path | None = None) -> dict:
+    receipt = receipt.absolute()
+    payload = json.loads(receipt.read_text(encoding="utf-8-sig"))
+    home = Path(payload["hermes_home"]).absolute()
+    if expected_home is not None and home != expected_home.absolute():
+        raise ValueError("Rollback receipt belongs to another Hermes root")
+    _confined(home / "msshi-runtime" / "profile-receipts", receipt)
+    restored, conflicts = [], []
+    initial = {row["path"]: _fingerprint(_confined(home, Path(row["path"])), row["kind"])
+               for row in payload.get("entries", []) if not row.get("rolled_back")}
+    for row in reversed(payload.get("entries", [])):
+        if row.get("rolled_back"):
+            continue
+        path = _confined(home, Path(row["path"]))
+        if initial[row["path"]] != row.get("after_sha256"):
+            conflicts.append(str(path))
+            continue
+        if row.get("before_sha256") is not None:
+            backup = receipt.parent / str(row["backup"])
+            if backup.parent != receipt.parent or _fingerprint(backup) != row["before_sha256"]:
+                raise ValueError("Invalid profile backup")
+            _atomic_write_bytes(path, backup.read_bytes(), mode=0o600)
+        elif path.exists():
+            if row["kind"] == "tree":
+                quarantine = receipt.parent / "quarantine" / f"{len(restored):04d}-{path.name}"
+                quarantine.parent.mkdir(parents=True, exist_ok=True)
+                _rename_with_retry(path, quarantine)
+            else:
+                path.unlink()
+        row["rolled_back"] = True
+        restored.append(str(path))
+    payload["state"] = "rollback_conflicts" if conflicts else "rolled_back"
+    payload["rollback"] = {"at": utc_now(), "restored": restored, "conflicts": conflicts}
+    _atomic_write_text(receipt, json.dumps(payload, indent=2, ensure_ascii=False) + "\n", mode=0o600)
+    return {"state": payload["state"], "receipt": str(receipt), "restored": restored, "conflicts": conflicts}
+
+
+def coordination_policy(bot_id: str) -> str:
+    return f"""{_POLICY_START}
+## MSSHI role coordination (active native profile: {bot_id})
+Keep the default Hermes assistant neutral. Native named roles are:
+- yukino: receive ideas, discuss early concepts, then hand off complex planning to shizuka.
+- shizuka: coordinate the plan and synthesize specialist results for the user.
+- val: literature, evidence, data, academic research; send findings to shizuka.
+- kiki-chii: concept-first filmmaking, video, photography and creative production.
+- shikaku: coding, debugging, architecture, web development and authorized security work.
+For a task spanning specialties, yukino/shizuka should delegate only the relevant work to
+real, live named profiles. Simple conversation may be answered directly. Never wake all
+bots for every question, delegate to yourself, or substitute an unnamed ephemeral child
+for a named specialist without explaining the limitation.
+Use message_agent only when the current native Bot Chat exposes that tool; its actual
+fields are target, message, constraints, expecting and expects_reply. Send a composed,
+scoped request, then finish the turn and wait for its completion notification. A queued
+acknowledgement is not completed work. Do not invent a bot_relay roster or tool names.
+Outside Bot Chat, use delegate_task with an explicit named profile only if the current
+native delegation provider advertises that parameter in the live tool schema. Otherwise
+explain that named-bot handoff is unavailable in this session; do not pretend it happened.
+Handoff format: goal; required output; relevant context; limits/approval; evidence; blockers;
+next action. Return only useful results to the coordinator. A received bot message already
+has a transport reply path: put the reply in the final response, never send a second DM
+merely to reply. For a Bot Chat turn requiring no action, say exactly:
+I don't need to do anything here.
+Do not send that no-action response as a new message or create a reply loop. Human review
+is required between creative stages and before publishing or irreversible external actions.
+This policy does not change provider/model, credentials, SOUL.md or the user's role voices.
+{_POLICY_END}"""
+
+
+def _managed_agents_bytes(existing: bytes, policy: str, initial: str = "") -> bytes:
+    block = policy.encode("utf-8")
+    start, end = _POLICY_START.encode(), _POLICY_END.encode()
+    if start in existing:
+        if existing.count(start) != 1 or existing.count(end) != 1:
+            raise ValueError("Ambiguous MSSHI coordination markers; preserve file for manual review")
+        left = existing.index(start)
+        right = existing.index(end, left) + len(end)
+        return existing[:left] + block + existing[right:]
+    if end in existing:
+        raise ValueError("Unpaired MSSHI coordination marker")
+    content = existing or (initial.rstrip() + "\n").encode("utf-8")
+    return content + (b"\n\n" if content and not content.endswith(b"\n\n") else b"") + block + b"\n"
+
+
+def _restore_selected_profile(hermes_home: Path, target_dir: Path, tx: ProfileTransaction) -> str | None:
+    tombstone = _confined(hermes_home, target_dir.parent / ".deleted" / target_dir.name)
+    if not tombstone.exists():
+        return None
+    if not tombstone.is_file():
+        raise ValueError(f"Invalid profile tombstone: {tombstone}")
+    tx.capture(tombstone)
+    source = hermes_home / "hermes-agent" / "hermes_constants.py"
+    method = "hermes-compatible-selected-tombstone"
+    if source.is_file() and not source.is_symlink():
+        spec = importlib.util.spec_from_file_location("_msshi_native_hermes_constants", source)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        if Path(module.profile_tombstone_path(target_dir)).absolute() != tombstone.absolute():
+            raise ValueError("Native Hermes tombstone convention differs; refusing restore")
+        module.clear_named_profile_deleted(target_dir)
+        method = "hermes_constants.clear_named_profile_deleted"
+    else:
+        tombstone.unlink()
+    tx.mark(tombstone)
+    return method
+
+
+def live_named_profiles(hermes_home: Path) -> dict[str, Path]:
+    """Native identity/tombstone conventions, no process, plugin or model execution."""
+    result = {}
+    profiles = hermes_home / "profiles"
+    if not profiles.is_dir() or profiles.is_symlink():
+        return result
+    for path in profiles.iterdir():
+        if not valid_profile_id(path.name) or not path.is_dir() or path.is_symlink():
+            continue
+        if (profiles / ".deleted" / path.name).exists():
+            continue
+        if any((path / name).is_file() for name in _IDENTITY_MARKERS):
+            result[path.name] = path
+    return result
+
+
+def validate_named_profile_target(hermes_home: Path, source: str, target: str) -> Path:
+    """Validate local dispatch authority for structural/mock tests; never dispatch a turn."""
+    if source == target:
+        raise ValueError("Refusing self delegation")
+    profiles = live_named_profiles(hermes_home)
+    if target not in profiles:
+        raise ValueError(f"Target is not a live native named profile: {target}")
+    return profiles[target]
+
+
+def restore_neutral_default(hermes_home: Path, *, transaction: ProfileTransaction | None = None) -> dict:
+    """Explicit keep-hermes repair of duplicate Yukino presentation only, never identity/config."""
+    tx = transaction or ProfileTransaction(hermes_home)
+    meta_path = _confined(hermes_home, hermes_home / "profile.yaml")
+    meta = load_yaml_mapping(meta_path) if meta_path.is_file() else {}
+    ui = dict(meta.get("ui_meta") or {})
+    bots = dict(ui.get("hermes-bots") or {})
+    duplicate = {"yukino", "yukino yukinoshita"}
+    changed = False
+    if str(meta.get("display_name") or "").strip().lower() in duplicate:
+        meta["display_name"] = "Hermes"
+        changed = True
+    if str(bots.get("title") or "").strip().lower() in duplicate:
+        bots["title"] = "Hermes"
+        ui["hermes-bots"] = bots
+        meta["ui_meta"] = ui
+        revisions = dict(meta.get("_ui_meta_revisions") or {})
+        revisions["hermes-bots"] = int(revisions.get("hermes-bots") or 0) + 1
+        meta["_ui_meta_revisions"] = revisions
+        changed = True
+    if changed:
+        # This explicit duplicate-persona repair also clears its stale role description.
+        # Visuals/section placement stay intact; SOUL/config are never touched.
+        meta["description"] = "Asisten Hermes umum"
+        meta["description_auto"] = False
+        tx.write(meta_path, dump_yaml(meta).encode("utf-8"))
+    return {"changed": changed, "path": str(meta_path), "receipt": tx.commit() if transaction is None else None}
+
+
+def sync_hermes_profile(
+    hermes_home: Path, bot_id: str, label: str, soul_text: str, agents_text: str,
+    skill_copies: list[tuple[Path, Path]], *, description: str = "",
+    update_display_names: bool = False, as_default: bool = False,
+    update_stock_soul: bool = False, copy_fn=None,
+    transaction: ProfileTransaction | None = None,
+) -> dict[str, object]:
+    """Provision native named profiles; preserve every existing SOUL/config/.env byte.
+
+    as_default is a compatibility input only: mapping a named persona to neutral default
+    is now refused. Call restore_neutral_default explicitly for presentation repair.
+    """
+    if not valid_profile_id(bot_id) or bot_id == "default":
+        raise ValueError(f"Invalid named Hermes profile ID: {bot_id!r}")
+    if as_default:
+        raise ValueError("Named personas must use profiles/<id>; Hermes default stays neutral")
+    hermes_home = hermes_home.absolute()
+    target_dir = _confined(hermes_home, hermes_home / "profiles" / bot_id)
+    if target_dir.exists() and not target_dir.is_dir():
+        raise ValueError(f"Profile target is not a directory: {target_dir}")
+    tx = transaction or ProfileTransaction(hermes_home)
+    own_transaction = transaction is None
+    is_new = not target_dir.exists()
+    stage_dir = target_dir.parent / f".{bot_id}.staging-{uuid.uuid4().hex}" if is_new else target_dir
+    stage_dir = _confined(hermes_home, stage_dir)
+    seeded_config = seeded_env = False
+    skills_installed = 0
+    try:
+        if is_new:
+            target_dir.parent.mkdir(parents=True, exist_ok=True)
+            stage_dir.mkdir(mode=0o700)
+            tx.capture(target_dir, "tree")
+        # Track only newly created subdirectories for an existing profile.
+        for name in _HERMES_PROFILE_DIRS:
+            path = stage_dir / name
+            _confined(hermes_home, path)
+            if not path.exists():
+                if not is_new:
+                    tx.capture(path, "tree")
+                path.mkdir()
+                if not is_new:
+                    tx.mark(path)
+        def write(path: Path, data: bytes, mode: int | None = None):
+            if is_new:
+                _atomic_write_bytes(path, data, mode)
+            else:
+                tx.write(path, data, mode)
+        marker = stage_dir / NO_BUNDLED_SKILLS_MARKER
+        if not marker.exists():
+            write(marker, b"")
         meta_path = stage_dir / "profile.yaml"
         existing_meta = load_yaml_mapping(meta_path) if meta_path.is_file() else {}
-        new_meta = _build_profile_meta(
-            existing_meta, label, description, update_display_names,
-            replace_generic_names=as_default,
-        )
+        new_meta = _build_profile_meta(existing_meta, label, description, update_display_names)
         if not meta_path.is_file() or new_meta != existing_meta:
-            _atomic_write_text(meta_path, dump_yaml(new_meta))
-
+            write(meta_path, dump_yaml(new_meta).encode("utf-8"))
         soul_path = stage_dir / "SOUL.md"
         if not soul_path.exists():
-            _atomic_write_text(soul_path, soul_text.rstrip() + "\n")
-        elif as_default and update_stock_soul and is_stock_hermes_soul(soul_path):
-            _backup_default_file(hermes_home, soul_path)
-            _atomic_write_text(soul_path, soul_text.rstrip() + "\n")
-        agents_path = stage_dir / "AGENTS.md"
-        if not agents_path.exists():
-            _atomic_write_text(agents_path, agents_text.rstrip() + "\n")
-
-        seeded_config = False
-        seeded_env = False
-        if not as_default:
-            cfg_path = stage_dir / "config.yaml"
-            if not cfg_path.exists() and seed:
-                _atomic_write_text(cfg_path, dump_yaml(seed))
+            write(soul_path, (soul_text.rstrip() + "\n").encode("utf-8"))
+        policy = coordination_policy(bot_id)
+        for agents_path in (stage_dir / "AGENTS.md", stage_dir / "workspace" / "AGENTS.md"):
+            old = agents_path.read_bytes() if agents_path.exists() else b""
+            new = _managed_agents_bytes(old, policy, agents_text)
+            if new != old:
+                write(agents_path, new)
+        config_path = stage_dir / "config.yaml"
+        if not config_path.exists():
+            seed = launch_model_seed_from_home(hermes_home)
+            if seed:
+                write(config_path, dump_yaml(seed).encode("utf-8"))
                 seeded_config = True
-
-            env_path = stage_dir / ".env"
-            if _env_is_placeholder(env_path) and (not env_path.exists() or safe_env != _PLACEHOLDER_ENV):
-                _atomic_write_text(env_path, safe_env, mode=0o600)
-                seeded_env = safe_env != _PLACEHOLDER_ENV
-
-        skills_installed = 0
+        env_path = stage_dir / ".env"
+        if not env_path.exists():
+            safe_env = clone_safe_env_text(hermes_home / ".env")
+            write(env_path, safe_env.encode("utf-8"), 0o600)
+            seeded_env = safe_env != _PLACEHOLDER_ENV
         for src, dst in skill_copies:
-            rel_dst = stage_dir / dst.relative_to(target_dir) if is_new and dst.is_relative_to(target_dir) else dst
-            if not rel_dst.exists():
-                if copy_fn is not None:
-                    copy_fn(src, rel_dst)
-                else:
-                    shutil.copytree(src, rel_dst)
+            dst = _confined(target_dir / "skills", dst)
+            actual_dst = stage_dir / dst.relative_to(target_dir)
+            _confined(hermes_home, actual_dst)
+            if not actual_dst.exists():
+                if not is_new:
+                    tx.capture(actual_dst, "tree")
+                (copy_fn or shutil.copytree)(src, actual_dst)
+                if not is_new:
+                    tx.mark(actual_dst)
                 skills_installed += 1
-
-        if os.name != "nt":
-            try:
-                os.chmod(stage_dir, 0o700)
-            except OSError:
-                pass
         if is_new:
             _rename_with_retry(stage_dir, target_dir)
+            tx.mark(target_dir)
+        restored = _restore_selected_profile(hermes_home, target_dir, tx)
+        # Include final descendant changes in newly created parent-directory receipts.
+        for row in tx.entries.values():
+            if row["kind"] == "tree" and row["before_sha256"] is None:
+                tx.mark(Path(row["path"]))
+        receipt = tx.commit() if own_transaction else None
     except Exception:
         if is_new and stage_dir.exists():
-            shutil.rmtree(stage_dir, ignore_errors=True)
+            # Only this invocation's randomly named, confined staging tree is removed.
+            _confined(target_dir.parent, stage_dir)
+            shutil.rmtree(stage_dir)
+        if own_transaction:
+            tx.rollback()
         raise
-
-    return {
-        "bot_id": "default" if as_default else bot_id,
-        "role_id": bot_id,
-        "as_default": as_default,
-        "path": str(target_dir),
-        "created": is_new,
-        "display_name": new_meta["display_name"],
-        "seeded_config": seeded_config,
-        "seeded_env": seeded_env,
-        "skills_installed": skills_installed,
-    }
+    return {"bot_id": bot_id, "role_id": bot_id, "as_default": False, "path": str(target_dir),
+            "created": is_new, "display_name": new_meta["display_name"],
+            "seeded_config": seeded_config, "seeded_env": seeded_env,
+            "skills_installed": skills_installed, "restored_tombstone": restored,
+            "receipt": receipt, "context_policy": "profile/workspace AGENTS; loaded only when native cwd discovery reaches them"}
 
 
-def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: str) -> Path:
+
+def _replace_yaml_section_bytes(raw: bytes, key: str, section: dict) -> bytes:
+    """Change one top-level section, keeping all unrelated source text byte-identical.
+
+    Refuse exotic/non-mapping YAML when a narrow rewrite cannot be proven equivalent.
+    Existing model/provider/MoA values inside delegation are copied verbatim as values.
+    """
+    text = raw.decode("utf-8-sig")
+    bom = b"\xef\xbb\xbf" if raw.startswith(b"\xef\xbb\xbf") else b""
+    newline = "\r\n" if "\r\n" in text else "\n"
+    lines = text.splitlines(keepends=True)
+    pattern = re.compile(r"^(?:" + re.escape(key) + r"|'" + re.escape(key) + r"'|\"" + re.escape(key) + r"\")\s*:")
+    hits = [index for index, line in enumerate(lines) if pattern.match(line)]
+    if len(hits) > 1:
+        raise ValueError(f"Duplicate YAML section {key}; refusing automatic plugin activation")
+    rendered = dump_yaml({key: section}).replace("\r\n", "\n").replace("\n", newline)
+    if hits:
+        start = hits[0]
+        end = start + 1
+        while end < len(lines):
+            line = lines[end]
+            if line.strip() and not line[0].isspace() and not line.startswith("#"):
+                break
+            end += 1
+        return bom + ("".join(lines[:start]) + rendered + "".join(lines[end:])).encode("utf-8")
+    if text.strip() and not text.endswith(("\n", "\r")):
+        text += newline
+    return bom + (text + rendered).encode("utf-8")
+
+
+def _activate_team_config(path: Path, tx: ProfileTransaction) -> dict:
+    if not path.is_file():
+        return {"active": False, "reason": "config_missing"}
+    before = load_yaml_mapping(path)
+    plugins = before.get("plugins") or {}
+    delegation = before.get("delegation") or {}
+    if not isinstance(plugins, dict) or not isinstance(delegation, dict):
+        return {"active": False, "reason": "non_mapping_plugin_or_delegation_config"}
+    disabled = plugins.get("disabled") or []
+    enabled = plugins.get("enabled")
+    if not isinstance(disabled, list) or (enabled is not None and not isinstance(enabled, list)):
+        return {"active": False, "reason": "custom_plugin_policy_requires_review"}
+    if "msshi-team-routing" in disabled:
+        return {"active": False, "reason": "explicitly_disabled_by_user"}
+    old_backend = delegation.get("backend") or "default"
+    change_backend = str(old_backend).strip().lower() in {"default", "msshi-team"}
+    expected = dict(before)
+    expected_plugins = dict(plugins)
+    expected_plugins["enabled"] = list(enabled or [])
+    if "msshi-team-routing" not in expected_plugins["enabled"]:
+        expected_plugins["enabled"].append("msshi-team-routing")
+    expected["plugins"] = expected_plugins
+    if change_backend:
+        expected_delegation = dict(delegation)
+        expected_delegation["backend"] = "msshi-team"
+        expected["delegation"] = expected_delegation
+    else:
+        expected_delegation = delegation
+    raw = path.read_bytes()
+    if expected_plugins != plugins:
+        raw = _replace_yaml_section_bytes(raw, "plugins", expected_plugins)
+    if expected_delegation != delegation:
+        raw = _replace_yaml_section_bytes(raw, "delegation", expected_delegation)
+    # Validate proposed bytes in memory; no interpreter, secret resolver or API is run.
+    after = load_yaml_mapping(raw)
+    if after != expected:
+        raise ValueError(f"Cannot prove narrow config edit preserves routing at {path}")
+    changed = tx.write(path, raw, 0o600)
+    return {"active": True, "backend": "msshi-team" if change_backend else "custom_backend_preserved",
+            "changed": changed, "main_model_provider_preserved": before.get("model") == after.get("model")
+            and before.get("provider") == after.get("provider"),
+            "delegation_routing_preserved": {k: v for k, v in delegation.items() if k != "backend"}
+            == {k: v for k, v in (after.get("delegation") or {}).items() if k != "backend"}}
+
+
+def install_team_routing_plugin(
+    hermes_home: Path, repo_source: Path, *, profile_ids: tuple[str, ...] =
+    ("yukino", "shizuka", "val", "kiki-chii", "shikaku"),
+    transaction: ProfileTransaction | None = None,
+) -> dict:
+    """Stage native plugin per profile and opt into only supported/default backend policies.
+
+    Plugin activation changes plugins.enabled/delegation.backend only (backed up). Existing
+    primary model/provider, auxiliary/MoA, SOUL and credential files are never changed.
+    """
+    hermes_home = hermes_home.absolute()
+    source = repo_source / "hermes_plugins" / "msshi-team-routing"
+    if not (source / "plugin.yaml").is_file() or not (source / "__init__.py").is_file():
+        raise ValueError("MSSHI team-routing plugin source is missing")
+    native_context = hermes_home / "hermes-agent" / "hermes_cli" / "plugins_context.py"
+    if native_context.is_file():
+        text = native_context.read_text(encoding="utf-8")
+        if "def register_delegation_provider(" not in text or "def register_system_prompt_section(" not in text:
+            return {"installed": False, "reason": "native_hermes_plugin_api_unsupported"}
+    elif (hermes_home / "hermes-agent").exists():
+        return {"installed": False, "reason": "native_hermes_plugin_api_unconfirmed"}
+    tx = transaction or ProfileTransaction(hermes_home)
+    rows = {}
+    try:
+        homes = [("default", hermes_home)]
+        live = live_named_profiles(hermes_home)
+        homes.extend((name, live[name]) for name in profile_ids if name in live)
+        for name, home in homes:
+            folder = _confined(hermes_home, home / "plugins" / "msshi-team-routing")
+            for filename in ("plugin.yaml", "__init__.py", "README.md"):
+                src = source / filename
+                if src.is_symlink():
+                    raise ValueError("Refusing plugin source symlink")
+                tx.write(folder / filename, src.read_bytes())
+            rows[name] = _activate_team_config(home / "config.yaml", tx)
+        receipt = tx.commit() if transaction is None else None
+    except Exception:
+        if transaction is None:
+            tx.rollback()
+        raise
+    return {"installed": True, "profiles": rows, "receipt": receipt,
+            "restart_required": True, "new_session_prompt_required": True,
+            "network_or_llm_calls": 0}
+
+def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: str, *, transaction: ProfileTransaction | None = None) -> Path:
     manifest_path = hermes_home / "msshi-runtime" / "pending-bots.json"
     existing = {}
     if manifest_path.is_file():
@@ -783,6 +1181,9 @@ def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: 
         except (OSError, ValueError):
             existing = {}
     bots = dict(existing.get("bots") or {})
+    # Remove only the obsolete installer alias, not any native profile.
+    if mode == "muza-preset":
+        bots.pop("default", None)
     for row in entries:
         bot_id = row["bot_id"]
         bots[bot_id] = {
@@ -790,16 +1191,18 @@ def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: 
             "display_name": row.get("label") or bot_id,
             "description": row.get("description") or "",
             "mode": mode,
-            "updated_at": utc_now(),
         }
     payload = {
         "version": 1,
         "mode": mode,
-        "updated_at": utc_now(),
         "hermes_initialized": is_hermes_initialized(hermes_home),
         "bots": bots,
     }
-    _atomic_write_text(manifest_path, json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
+    content = (json.dumps(payload, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    if transaction is not None:
+        transaction.write(manifest_path, content)
+    elif not manifest_path.is_file() or manifest_path.read_bytes() != content:
+        _atomic_write_bytes(manifest_path, content)
     return manifest_path
 
 
@@ -845,7 +1248,7 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
             _atomic_write_text(cfg, dump_yaml(seed))
             seeded_configs.append(bot_id)
         env_file = pdir / ".env"
-        if _env_is_placeholder(env_file) and (not env_file.exists() or safe_env != _PLACEHOLDER_ENV):
+        if not env_file.exists():
             _atomic_write_text(env_file, safe_env, mode=0o600)
             if safe_env != _PLACEHOLDER_ENV:
                 seeded_envs.append(bot_id)
@@ -855,19 +1258,7 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
             meta = _build_profile_meta({}, str(info.get("display_name") or bot_id), str(info.get("description") or ""), True)
             _atomic_write_text(meta_path, dump_yaml(meta))
 
-    default_pending = (pending_data.get("bots") or {}).get("default")
-    if isinstance(default_pending, dict) and not hermes_home.is_symlink():
-        default_meta_path = hermes_home / "profile.yaml"
-        if not default_meta_path.is_file():
-            meta = _build_profile_meta(
-                {},
-                str(default_pending.get("display_name") or "Yukino Yukinoshita"),
-                str(default_pending.get("description") or ""),
-                True,
-                replace_generic_names=True,
-            )
-            _atomic_write_text(default_meta_path, dump_yaml(meta))
-
+    # Legacy default->Yukino entries must never reassign the neutral root identity.
     if pending_path.is_file():
         pending_data["hermes_initialized"] = is_hermes_initialized(hermes_home)
         pending_data["last_backfill_at"] = utc_now()
@@ -916,13 +1307,26 @@ def _find_hermes_python(hermes_home: Path) -> Path | None:
     agent_dir = hermes_home / "hermes-agent"
     if not agent_dir.is_dir():
         return None
-    candidates = [
-        agent_dir / ".venv" / "Scripts" / "python.exe",
-        agent_dir / ".venv" / "bin" / "python",
-        agent_dir / ".venv" / "bin" / "python3",
-    ]
+    candidates = [agent_dir / ".venv" / "Scripts" / "python.exe",
+                  agent_dir / ".venv" / "bin" / "python", agent_dir / ".venv" / "bin" / "python3"]
+    # uv tool installs keep Python beside HermesData/tools rather than source/.venv.
+    # Read the launcher's bounded shebang; do not execute arbitrary candidates to probe.
+    launcher = hermes_home / "bin" / "hermes.exe"
+    if launcher.is_file() and not launcher.is_symlink():
+        with launcher.open("rb") as handle:
+            header = handle.read(1024 * 1024)
+        for line in re.findall(rb"#!([^\r\n]+)", header):
+            decoded = line.decode("utf-8", errors="ignore").strip()
+            match = re.match(r'"([^"\r\n]+python(?:[0-9.]*)?\.exe)"|(.+?python(?:[0-9.]*)?\.exe)(?:\s|$)', decoded, re.I)
+            if match:
+                candidate = Path(match.group(1) or match.group(2))
+                if candidate.absolute().is_relative_to(hermes_home.absolute()):
+                    candidates.append(candidate)
+    tools = hermes_home / "tools"
+    if tools.is_dir() and not tools.is_symlink():
+        candidates.extend(sorted(tools.glob("python-*/python.exe"), reverse=True))
     for candidate in candidates:
-        if candidate.is_file():
+        if candidate.is_file() and not candidate.is_symlink():
             return candidate
     return None
 
@@ -951,10 +1355,14 @@ def notify_live_multiplexer(hermes_home: Path) -> dict[str, object]:
                 timeout=10,
                 check=False,
             )
+            try:
+                response = json.loads(proc.stdout.strip().splitlines()[-1]) if proc.stdout.strip() else {}
+            except (ValueError, IndexError):
+                response = {}
             return {
                 "running": True,
-                "notified": proc.returncode == 0,
-                "stdout": proc.stdout.strip(),
+                "notified": proc.returncode == 0 and isinstance(response, dict) and isinstance(response.get("served_profiles"), list) and not response.get("error"),
+                "response": response,
                 "returncode": proc.returncode,
             }
         except (OSError, subprocess.SubprocessError) as error:

@@ -1,6 +1,6 @@
 # Third-party source notices
 
-MSSHI's original integration code is MIT. External components retain their own licenses and notices. These 49 source entries are references and cached opt-in dependencies. A source listing does not relicense its content or prove that its runtime is installed.
+MSSHI's original integration code is MIT. External components retain their own licenses and notices. These 52 source entries are references and cached opt-in dependencies. A source listing does not relicense its content or prove that its runtime is installed.
 
 Retain MIT copyright and permission notices when distributing copies. Retain Apache-2.0 license, copyright and applicable NOTICE files, and mark modifications. CC0 applies only to an explicitly CC0-designated asset. No blanket CC0 grant is inferred for any repository or media service. Upstream accounts, commercial services, model weights, font files and generated media may carry additional terms.
 
@@ -46,7 +46,7 @@ New v3 source revisions and selected files were reviewed on 2026-11-11. The orig
 | 34 | [cli-anything-catalog](https://clianything.cc) | External registry terms; no blanket sublicense | model card / external terms |
 | 35 | [hermes-steel](https://github.com/steel-dev/hermes-steel) | MIT | d8a1e39657d3e3deaa59da37e857be3f14b9dc5b |
 | 36 | [gpt-researcher](https://github.com/assafelovic/gpt-researcher) | Apache-2.0 | ddd4db36208d9c8e49f3b2436efda97baecb5433 |
-| 37 | [remote-jobs](https://github.com/remoteintech/remote-jobs) | ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts) | fa2253f1ed02cc4d8f59ab3ccc831b008cdd7189 |
+| 37 | [remote-jobs](https://github.com/remoteintech/remote-jobs) | ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts) | 155939ad935d22afa8edbaaf0770b99f9d0dbf0d |
 | 38 | [caveman](https://github.com/JuliusBrussee/caveman) | Apache-2.0 | 3dc497a7f858c774d6e15b25e8c6120ef3a0eda8 |
 | 39 | [hyperframes](https://github.com/heygen-com/hyperframes) | Apache-2.0 | 3ad7611f9fd36c1cef589c59b116ad7043c3b041 |
 | 40 | [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | MIT | 6ae86f61f520d6ca229d2f40e070410638c908c5 |
@@ -65,9 +65,9 @@ Any reported token saving or throughput is an upstream benchmark from a specific
 
 CC0 applies only to assets with an explicit CC0 license file. Academic references and public theories do not grant a blanket license to copy their source texts.
 
-## Existing local CLI utilities outside the 49-source inventory
+## Existing local CLI utilities outside the 52-source inventory
 
-The MSSHI adapters may invoke two separately installed utilities. Their upstream source code and binaries are not bundled in this public package, and they do not add entries to the 49-source manifest.
+The MSSHI adapters may invoke two separately installed utilities. Their upstream source code and binaries are not bundled in this public package, and they do not add entries to the 52-source manifest.
 
 - [Llmtrim](https://github.com/fkiene/llmtrim) is licensed under [MPL-2.0](https://github.com/fkiene/llmtrim/blob/main/LICENSE). MSSHI invokes its local compress command; the native automatic hook is original MSSHI adapter code. Retain the upstream license and applicable source notices when distributing upstream files or modifications.
 - [Hersona](https://github.com/shiro-0x/hersona) is licensed under [MIT](https://github.com/shiro-0x/hersona/blob/main/LICENSE), copyright 2026 Hersona contributors. Retain its copyright and license notices when distributing copies or substantial upstream portions.
@@ -90,3 +90,12 @@ Google Research TimesFM source is Apache-2.0. The selected `google/timesfm-2.5-2
 ### REA optional runtime
 
 REA already belongs to the source inventory. The v3.1 optional adapter references morluto/rea at `a8527d43b8439476f5c9d1497315dfe7dd5e1f38`, MIT, copyright 2026 morluto. It is disabled by default in public installers. The npm runtime is separate; native provider engines keep their own licenses and are not automatically acquired.
+
+## Contextual integrations reviewed 2026-11-16
+
+- **CareerOps**, [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops), pin `c687a6f89aa766de468d41402df1ce24bdd86315`: code MIT, copyright Santiago Fernandez de Valderrama; `employers/` data CC BY 4.0, with separate trademark rules. The MSSHI wrapper does not bundle personal CVs, employer datasets or dependencies. Full workflow source and private user data are separate.
+- **Remote In Tech**, [remoteintech/remote-jobs](https://github.com/remoteintech/remote-jobs), pin `155939ad935d22afa8edbaaf0770b99f9d0dbf0d`: project ISC, copyright 2024 Lene Saile; Cube Boilerplate MIT and fonts SIL OFL. The company directory is not a guarantee of active vacancies.
+- **Skills for Real Engineers**, [mattpocock/skills](https://github.com/mattpocock/skills), pin `5863806dd4e15c63174bee4e7515a4256792ecfa`: MIT, copyright Matt Pocock. The wrapper preserves explicit-only orchestration and loads selected disciplines from a private source cache.
+- **rea-video**, [JuneYaooo/rea-video](https://github.com/JuneYaooo/rea-video), pin `820d661e807034e0f0284262b4e93085cfd3da49`: Apache-2.0, including the original NOTICE. Model weights, source videos, audio, OCR/ASR and hosted-generation services keep their own terms and are not included in the MSSHI wrapper.
+
+Original legal texts are retained as `LICENSE.upstream` in these skill folders (and `NOTICE.upstream` for rea-video). See [contextual integration setup](docs/CONTEXTUAL_INTEGRATIONS.md). The original MSSHI wrappers remain MIT; upstream licenses are not replaced by that license.

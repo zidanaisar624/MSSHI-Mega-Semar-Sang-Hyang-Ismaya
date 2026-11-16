@@ -1,5 +1,14 @@
 # Changelog MSSHI
 
+## v3.1.1 - 2026-11-16
+
+- Repair five native Hermes profiles: named Yukino, neutral default, targeted deletion-marker recovery, transactional receipts and conflict-aware rollback. Preserve primary/MoA/delegation models, SOUL and credentials.
+- Add native profile-aware delegation and bounded system prompt coordination. Existing custom backends are preserved; no model turns run during setup.
+- Reconcile CLI-Anything registries with strict ArtCraft ownership (Val 4 / Shikaku 2 / Kiki 13), native app discovery including Anicraft, and persistent disabled routes. Add snapshot-guarded runtime rebaseline with explicit acceptance of stale historical evidence.
+- Replace preference-only KAT setup with an optional Coder endpoint/key wizard, metadata-only catalog checks and gated native delegation. Distinguish open-weight Dev from official StreamLake Pro; no large model download or primary-model replacement.
+- Bundle CareerOps, Remote Jobs and Matt Pocock context wrappers for all five roles; rea-video for Kiki. Harness2 is available to all five. Total: 67 bundled skills (51 core + 16 wrappers), 52 pinned sources.
+- Automatically deliver the verified client PDF on bootstrap, setup, update and direct apply; support explicit destination/opt-out and back up a differing existing file.
+
 ## v3.1.0 - 2026-11-14
 
 - Added **MuZA Skripsi Starter v1.1 (Drag-and-Drop Edition)**: bundled `skills/muza-skripsi-template/` (11 files: `SKILL.md` with 5-stage contextual & explicit workflow gate, `campus_lookup.py`, `extract_guideline.py`, `build_template.py`, `spec_schema.md`, `example_spec.json`, 5 methodology presets), Colab notebooks (`notebooks/skripsi/MuZA_Search.ipynb` & `MuZA_Skripsi_Builder.ipynb`), `MULAI_SKRIPSI_DRAG_AND_DROP.bat`, `msshi skripsi`, and `msshi doctor`.

@@ -124,15 +124,24 @@ msshi select --local --lang en
 msshi optional list
 ```
 
-`msshi choices` dan `msshi optional list` hanya membaca bantuan, tanpa login, unduhan, aplikasi atau kredit LLM. Menu KAT menjelaskan bahwa pilihannya baru menyimpan preferensi; ia belum memasang/mengaktifkan model. REA hanya ditambahkan bila dipilih secara eksplisit, dengan runtime terpisah. Menu `msshi connect` menjelaskan fungsi aplikasi dan bahwa registrasi tidak sama dengan koneksi/autentikasi yang sudah teruji. Opsi yang dilewati dapat ditambahkan nanti.
+`msshi choices` dan `msshi optional list` hanya membaca bantuan, tanpa login, unduhan, aplikasi atau kredit LLM. Menu KAT membuka wizard endpoint/key khusus Coder; aktivasi memerlukan key, ID model terverifikasi dan native routing. Dev dan StreamLake Pro berbeda; bobot tidak diunduh. REA hanya ditambahkan bila dipilih secara eksplisit, dengan runtime terpisah. Menu `msshi connect` menjelaskan fungsi aplikasi dan bahwa registrasi tidak sama dengan koneksi/autentikasi yang sudah teruji. Opsi yang dilewati dapat ditambahkan nanti.
 
 ## Alur Wizard 4 Tahap di `msshi setup`
 
-Setelah memilih mode dan menyalin skill target, `msshi setup` di mode `muza-preset` untuk Hermes otomatis menjadikan profil `default` (`<HERMES_HOME>/`) sebagai **Yukino Yukinoshita** dan menyiapkan 4 bot lainnya di `<HERMES_HOME>/profiles/{shizuka,val,kiki-chii,shikaku}` (gunakan `--default-bot keep-hermes` bila ingin memisahkan bot `Hermes`; profil legacy `profiles/yukino` yang sudah ada tidak akan dihapus), lalu memandu 4 langkah lanjutan (serta flag non-interaktif yang dapat dilewati dari `install.ps1` / `install.sh`):
+Setelah memilih mode dan menyalin skill target, preset Hermes membuat lima profil native bernama `yukino`, `shizuka`, `val`, `kiki-chii`, `shikaku`; Hermes default tetap netral. `--default-bot keep-hermes` juga memperbaiki label default lama yang duplikat, tanpa menimpa SOUL/model. Plugin lokal memakai native named-profile delegation dan prompt koordinasi; mulai chat baru setelah gateway di-restart. Setup kemudian memandu 4 langkah lanjutan (flag tersedia dari `install.ps1` / `install.sh`):
 
 1. **`[1/4] Skills`**: Menambah paket (`--extra-packs`) atau skill individu (`--extra-skills`) ke target/bot tertentu, serta opt-in REA (`--with-rea`, default OFF).
-2. **`[2/4] Plugin`**: Memeriksa dan men-stage plugin fail-open `msshi-auto-trim` (`--stage-auto-trim`), preferensi `KAT-Coder` (`--kat-mode`, mempertahankan pengaturan KAT yang sudah ada bila tidak diganti), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
+2. **`[2/4] Plugin`**: Memeriksa dan men-stage plugin fail-open `msshi-auto-trim` (`--stage-auto-trim`), wizard endpoint/key `KAT-Coder` opsional khusus Shikaku (`--kat-mode`; tidak mengubah model utama), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
 3. **`[3/4] Koneksi`**: Memasang konektor MCP `GitLab` / `Tinyfish` (`--connect-services skip|per-profile|share-oauth`, tetap menjaga `BrightData` OFF dan aman bila `config.yaml` Hermes belum dibuat).
 4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Memetakan bot Hermes ke aplikasi lokal/web terdeteksi (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`) dengan mode semua bot, bot pilihan, atau mapping manual per bot (`auto_open_on_boot: false`).
 
 Ringkasan setiap setup disimpan ke `<MSSHI_HOME>/reports/last-setup-report.json` tanpa mengubah `provider` atau `model` pengguna.
+
+
+## v3.1.1: profil native, KAT, sumber kontekstual, dan PDF
+
+Lihat [catatan perbaikan](V3_1_1_REPAIR.md), [KAT Coder](CODER_KAT.md), dan [integrasi kontekstual](CONTEXTUAL_INTEGRATIONS.md). Perintah `msshi coder --home ROOT wizard` mengatur endpoint/key privat; `status` membaca kesiapan lokal. `msshi integrations source --home ROOT --name NAME` membaca status; `--fetch` mengambil source terpin di luar scanner; runtime tetap eksplisit.
+
+PDF terbaru otomatis disalin saat bootstrap/setup/update/direct apply ke Downloads/MSSHI_Manuals. `--pdf-dest` atau `MSSHI_PDF_DIR` memilih tujuan lain; `--no-pdf` / `MSSHI_NO_PDF=1` melewati penyalinan. Windows memakai `-PdfDest` / `-NoPdf`. Berkas yang berbeda dicadangkan sebelum penggantian.
+
+`msshi runtime rebaseline --home ROOT` hanya preview; penerapan memerlukan `--apply --expected-snapshot SHA` dan, bila bukti historis tidak cocok, `--accept-current-llm-settings --reason "alasan"`. Ini menerima baseline sekarang dengan catatan, bukan mengklaim riwayat yang tidak terbukti.

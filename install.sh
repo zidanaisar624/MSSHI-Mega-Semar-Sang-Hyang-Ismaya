@@ -8,6 +8,7 @@ no_path=0
 download_pdf=0
 no_pdf=0
 pdf_version=
+pdf_dest=
 mode=
 platform=
 default_bot=
@@ -27,6 +28,7 @@ while [ "$#" -gt 0 ]; do
         --download-pdf) download_pdf=1 ;;
         --no-pdf) no_pdf=1 ;;
         --pdf-version) pdf_version=${2:?--pdf-version requires a version}; shift ;;
+        --pdf-dest) pdf_dest=${2:?--pdf-dest requires a path}; shift ;;
         --mode) mode=${2:?--mode requires a value}; shift ;;
         --platform) platform=${2:?--platform requires a value}; shift ;;
         --default-bot) default_bot=${2:?--default-bot requires a value}; shift ;;
@@ -73,6 +75,9 @@ if [ ! -f "$cli" ]; then
 fi
 set -- bootstrap
 if [ "$no_path" -eq 1 ]; then set -- "$@" --no-path; fi
+if [ "$no_pdf" -eq 1 ]; then set -- "$@" --no-pdf; fi
+if [ -n "$pdf_version" ]; then set -- "$@" --pdf-version "$pdf_version"; fi
+if [ -n "$pdf_dest" ]; then set -- "$@" --pdf-dest "$pdf_dest"; fi
 "$python" -B -X utf8 "$cli" "$@"
 if [ "$no_setup" -eq 0 ]; then
     set -- setup
@@ -90,16 +95,12 @@ if [ "$no_setup" -eq 0 ]; then
     if [ "$download_pdf" -eq 1 ]; then set -- "$@" --download-pdf; fi
     if [ "$no_pdf" -eq 1 ]; then set -- "$@" --no-pdf; fi
     if [ -n "$pdf_version" ]; then set -- "$@" --pdf-version "$pdf_version"; fi
+    if [ -n "$pdf_dest" ]; then set -- "$@" --pdf-dest "$pdf_dest"; fi
     if [ "$yes_mode" -eq 1 ] || [ -t 0 ]; then
         "$python" -B -X utf8 "$cli" "$@"
     elif ( : </dev/tty ) 2>/dev/null; then
         "$python" -B -X utf8 "$cli" "$@" </dev/tty
     else
-        if [ "$download_pdf" -eq 1 ] || [ -n "$pdf_version" ]; then
-            "$python" -B -X utf8 "$source_dir/scripts/msshi_manuals.py" download --version "${pdf_version:-latest}"
-        fi
         printf 'Run msshi setup from an interactive terminal.\n'
     fi
-elif [ "$download_pdf" -eq 1 ] || [ -n "$pdf_version" ]; then
-    "$python" -B -X utf8 "$source_dir/scripts/msshi_manuals.py" download --version "${pdf_version:-latest}"
 fi

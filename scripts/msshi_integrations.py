@@ -19,10 +19,10 @@ from urllib.request import Request, urlopen
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
-PROFILES = {"yukino": "", "shizuka": "shizuka-hiratsuka", "val": "val",
-            "kiki-chii": "kiki-chii", "shikaku": "nyenyenye-ya-gw-coder"}
+PROFILES = {"yukino": "yukino", "shizuka": "shizuka", "val": "val",
+            "kiki-chii": "kiki-chii", "shikaku": "shikaku"}
 ROLE_ALIASES = {
-    "yukino": ("yukino", ""),
+    "yukino": ("yukino",),
     "shizuka": ("shizuka", "shizuka-hiratsuka"),
     "val": ("val",),
     "kiki-chii": ("kiki-chii",),
@@ -444,21 +444,18 @@ def voice_status(home):
 
 
 def kat(home, mode):
-    target = home / "msshi-private/integrations/kat.json"
-    if mode == "status":
-        return read(target) if target.is_file() else {"mode": "skip", "enabled": False}
-    value = {"mode": mode, "enabled": False, "role": "shikaku", "trigger": "coding task only",
-             "model": "Kwaipilot/KAT-Coder-V2.5-Dev", "auto_unload_seconds": 60,
-             "base_provider_or_model_mutation": False, "downloaded": False,
-             "status": "not configured" if mode == "skip" else "requires verified endpoint or local quantized model"}
-    if mode in {"light", "ideal"}:
-        value["quantization"] = "IQ2_XS/IQ3_XXS" if mode == "light" else "Q4_K_M"
-        value["hardware_check"] = "Check actual model size and free RAM. Nominal RAM does not prove fit."
-    atomic(target, encode(value))
-    return value
+    # Compatibility entrypoint: selecting KAT now runs the real endpoint wizard.
+    # Never replace the primary or existing delegated model in config.yaml.
+    from msshi_coder_helpers import root_home, status, wizard
+    home = root_home(home)
+    return status(home) if mode == 'status' else wizard(home, mode)
 
 
 def main(argv=None):
+    effective = list(sys.argv[1:] if argv is None else argv)
+    if effective and effective[0] == 'source':
+        from msshi_context_sources import main as source_main
+        return source_main(effective[1:])
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("install", "dream", "voice", "kat"):
@@ -478,6 +475,9 @@ def main(argv=None):
             cmd.add_argument("--state", choices=("normal", "calm", "tired", "incident"))
         else:
             cmd.add_argument("--mode", choices=("skip", "cloud", "light", "ideal", "status"), default="status")
+    source = sub.add_parser('source', help='Pinned contextual sources, local directory/skill reads and explicit runtime setup.')
+    source.add_argument('arguments', nargs=argparse.REMAINDER,
+                        help='Run msshi integrations source --help for all source/runtime flags.')
     args = parser.parse_args(argv)
     home = checked(args.home)
     try:

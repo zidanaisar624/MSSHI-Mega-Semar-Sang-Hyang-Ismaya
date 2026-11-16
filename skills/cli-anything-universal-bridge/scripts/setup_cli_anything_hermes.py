@@ -244,7 +244,8 @@ def read_registry(destination):
 
 
 def registry_bytes(registered):
-    return (json.dumps({"schema_version": 1, "auto_open_on_boot": False, "targets": sorted(registered)},
+    return (json.dumps({"schema_version": 3, "auto_open_on_boot": False,
+                        "execution": "msshi-runtime-ticket", "targets": sorted(registered)},
                        indent=2) + "\n").encode("utf-8")
 
 
@@ -298,7 +299,8 @@ def report(destination, registered, candidates, warnings, selected=None):
         "schema_version": schema, "auto_open_on_boot": False, "registry": str(destination),
         "connections": [{"id": key, **current_capability(key, candidates), "description": description(key),
                          "registered": (current_capability(key,candidates)["readiness"] == "configured"
-                                        if key in declared_remote else key in registered)}
+                                        if key in declared_remote else key in registered and
+                                        current_capability(key,candidates)["readiness"] not in {"blocked_by_specialization", "disabled"})}
                         for key in ids],
         "warnings": warnings,
     }
@@ -322,7 +324,7 @@ def resolve_targets(targets, candidates, registered, remove=False):
             selected.extend(hub.ARTCRAFT)
         elif name == "existing":
             selected.extend(existing)
-        elif name in candidates or hub.GENERIC_CLI.fullmatch(name) or (remove and name in registered):
+        elif name in candidates or name in hub.ARTCRAFT or hub.GENERIC_CLI.fullmatch(name) or (remove and name in registered):
             selected.append(name)
         else:
             raise ValueError("Target koneksi tidak dikenal. Lihat --catalog.")
@@ -334,16 +336,23 @@ def plan_connections(hermes_home=None, profile=None, mode="auto-reconnect", targ
     home = selected_profile(hermes_home, profile)
     destination = destination_for(home, default_state_dir, state_dir)
     candidates, warnings = inventory(home)
-    return planned_registration(destination, candidates, warnings, mode, targets, allowed_targets)
+    return planned_registration(destination, candidates, warnings, mode, targets, allowed_targets, profile_home=home)
 
 
-def planned_registration(destination, candidates, warnings, mode, targets, allowed_targets=None):
+def planned_registration(destination, candidates, warnings, mode, targets, allowed_targets=None, profile_home=None):
     current = read_registry(destination)
+    profile_home = Path(profile_home) if profile_home is not None else None
+    profile = (profile_home.name if profile_home is not None and profile_home.parent.name.casefold() == "profiles"
+               else "default" if profile_home is not None else None)
     if mode == "auto-reconnect":
         selected = {key for key, row in candidates.items()
                     if row["readiness"] in {"configured", "available", "available_web"}}
     elif mode == "select" and targets:
         selected = resolve_targets(targets, candidates, current)
+        forbidden = {name for name in selected if profile is not None and not hub.target_allowed(profile, name)}
+        # Group selection is scoped to eligible apps. An explicit forbidden ID is rejected.
+        if forbidden and not any(canonical(name) in {"artcraft", "existing"} for name in targets):
+            raise ValueError("Target di luar spesialisasi profil: " + ", ".join(sorted(forbidden)))
     else:
         raise ValueError("Pilih mode auto-reconnect atau berikan target untuk mode select.")
     if allowed_targets is not None:
@@ -353,10 +362,70 @@ def planned_registration(destination, candidates, warnings, mode, targets, allow
         if "existing" in allow:
             allow.update(key for key, row in candidates.items() if row["readiness"] == "configured")
         selected &= allow
-    registered = current | selected
+    if profile is not None:
+        selected = {name for name in selected if hub.target_allowed(profile, name)}
+        permitted_current = {name for name in current if hub.target_allowed(profile, name)}
+    else:
+        permitted_current = current
+    registered = permitted_current | selected
     result = report(destination, registered, candidates, warnings)
-    result.update(added=sorted(registered - current), selected=sorted(selected))
+    result.update(added=sorted(registered - current), selected=sorted(selected),
+                  removed_by_specialization=sorted(current - permitted_current))
     return destination, registry_bytes(registered), result
+
+
+def synchronized_runtime_bytes(profile_home, registered):
+    """Plan the matching v3 routes without launching tools or changing config/SOUL."""
+    state, profile = hub.migrated_state(profile_home)
+    path = state / "profiles" / profile / "routes.json"
+    if not (state / "policy.json").is_file() or not path.is_file():
+        return None, None
+    reject_links(path)
+    document = json.loads(read_text(path))
+    original = document.get("targets")
+    if document.get("schema") != 3 or not isinstance(original, dict):
+        raise ValueError("Format rute runtime tidak valid; jalankan migrasi yang sesuai")
+    routes = {key: dict(row) for key, row in original.items()
+              if key in {"gdrive", "gdrive-web"} or hub.target_allowed(profile, key)}
+    for key in registered:
+        if not hub.target_allowed(profile, key):
+            raise ValueError("Target di luar spesialisasi profil: " + key)
+        if key in hub.ARTCRAFT:
+            cli = hub.artcraft_executable(key)
+            row = routes.setdefault(key, {"kind": "native-cli", "env": {}})
+            row.update(executable=cli, readiness="available" if cli else "optional_missing", user_disabled=False)
+        elif key in routes:
+            row = routes[key]
+            if row.get("user_disabled"):
+                row.update(user_disabled=False,
+                           readiness="available" if row.get("executable") and Path(row["executable"]).is_file() else "optional_missing")
+        elif hub.GENERIC_CLI.fullmatch(key):
+            cli = hub.harness_executable(key, profile_home)
+            routes[key] = {"kind": "native-cli", "executable": cli,
+                           "readiness": "available" if cli else "optional_missing", "user_disabled": False}
+    for key, row in routes.items():
+        if key not in registered and row.get("readiness") == "available":
+            row.update(readiness="disabled_by_user", user_disabled=True)
+    for key in ("gdrive", "gdrive-web"):
+        routes[key] = {"kind": "web", "readiness": "disabled", "reason": "GDrive disabled by policy"}
+    document.update(targets=routes, auto_open_on_boot=False, require_task_ticket=True,
+                    specialization_policy="muza-v1")
+    return path, (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
+
+def write_synchronized_registry(destination, data, profile_home):
+    registered = set(json.loads(data)["targets"])
+    route_path, route_bytes = synchronized_runtime_bytes(profile_home, registered)
+    original_route = route_path.read_bytes() if route_path else None
+    if route_path and route_bytes != original_route:
+        write_registry(route_path, route_bytes)
+    try:
+        write_registry(destination, data)
+    except BaseException:
+        if route_path and route_path.read_bytes() == route_bytes:
+            write_registry(route_path, original_route)
+        raise
+    return str(route_path) if route_path else None
 
 
 def emit(result, as_json):
@@ -444,6 +513,10 @@ def run(args, default_state_dir=None):
         return 0
     installation = home.parent.parent if home.parent.name.casefold() == "profiles" else home
     runtime_state = installation / "msshi-runtime"
+    if args.open or args.run:
+        _, profile = hub.migrated_state(home)
+        if not hub.target_allowed(profile, canonical(args.open or args.run)):
+            raise ValueError("Target di luar spesialisasi profil atau dinonaktifkan oleh kebijakan.")
     if (runtime_state / "policy.json").is_file():
         if args.open or args.run:
             if not getattr(args, "ticket", None):
@@ -489,7 +562,8 @@ def run(args, default_state_dir=None):
             candidates, warnings = inventory(home)
             current = read_registry(destination)
             removed = resolve_targets([args.remove], candidates, current, remove=True)
-            registered = current - removed
+            _, profile = hub.migrated_state(home)
+            registered = {key for key in current - removed if hub.target_allowed(profile, key)}
             data = registry_bytes(registered)
             result = report(destination, registered, candidates, warnings)
             result["removed"] = sorted(current - registered)
@@ -497,13 +571,16 @@ def run(args, default_state_dir=None):
             candidates, warnings = inventory(home)
             _, data, result = planned_registration(
                 destination, candidates, warnings, "select" if args.add else mode, [args.add] if args.add else targets,
+                profile_home=home,
             )
         if not args.dry_run:
             if (runtime_state / "policy.json").is_file():
                 registry = json.loads(data)
                 registry.update(schema_version=3,execution="msshi-runtime-ticket",auto_open_on_boot=False)
                 data = (json.dumps(registry,indent=2)+"\n").encode("utf-8")
-            write_registry(destination, data)
+            result["runtime_routes_synchronized"] = write_synchronized_registry(destination, data, home)
+            refreshed, refresh_warnings = inventory(home)
+            result.update(report(destination, set(json.loads(data)["targets"]), refreshed, refresh_warnings))
     result["mode"] = "Pratinjau. Registri tetap." if args.dry_run else "Registri disimpan. Semua rute on-demand."
     emit(result, args.json)
     return 0

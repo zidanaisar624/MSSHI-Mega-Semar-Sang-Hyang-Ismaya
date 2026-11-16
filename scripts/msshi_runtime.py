@@ -13,6 +13,7 @@ import ctypes
 from datetime import datetime, timezone
 import hashlib
 import io
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -27,24 +28,44 @@ import tempfile
 import time
 import uuid
 
-VERSION = "3.1.0"
+VERSION = "3.1.1"
 DISABLED_MCP = {
     "blender", "wordcraft", "lightcraft", "cadcraft", "craftanything",
     "deckcraft", "designcraft", "effectcraft", "figcraft", "filmcraft",
     "gridcraft", "materialcraft", "pdfcraft", "photocraft", "solidcraft",
-    "soundcraft", "texturecraft", "vectorcraft",
+    "soundcraft", "texturecraft", "vectorcraft", "anicraft",
 }
 UTILITY_MCP = {"hersona", "llmtrim"}
-MIGRATED_MCP = DISABLED_MCP | UTILITY_MCP
+MIGRATED_MCP = DISABLED_MCP | UTILITY_MCP | {"gimp", "libreoffice", "solvecraft"}
 RETAINED_MCP = {"gitlab", "tinyfish"}
 ARTCRAFT = DISABLED_MCP - {"blender"}
 ROLES = {
-    "default": "yukino", "yukino": "yukino", "shizuka-hiratsuka": "shizuka",
+    "default": "default", "yukino": "yukino", "shizuka-hiratsuka": "shizuka",
     "shizuka": "shizuka", "val": "val", "kiki-chii": "kiki-chii",
     "nyenyenye-ya-gw-coder": "shikaku", "shikaku-nara": "shikaku", "shikaku": "shikaku",
 }
-PROTECTED_KEYS = ("provider", "model", "providers", "fallback_providers", "display_name", "name")
+LLM_KEYS = ("provider", "model", "providers", "custom_providers", "fallback_providers",
+            "moa", "mixture_of_agents", "subagent", "subagents", "auxiliary")
+LEGACY_PROTECTED_KEYS = ("provider", "model", "providers", "fallback_providers", "display_name", "name")
+PROTECTED_KEYS = (*LLM_KEYS, "display_name", "name")
 SLUG = re.compile(r"^[a-z0-9][a-z0-9_-]{0,95}$")
+_BRIDGE_POLICY = None
+
+
+def bridge_policy():
+    global _BRIDGE_POLICY
+    if _BRIDGE_POLICY is None:
+        here = Path(__file__).resolve().parent
+        path = here / "msshi_bridge_runtime.py"
+        if not path.is_file():
+            path = here.parent / "skills/cli-anything-universal-bridge/scripts/msshi_bridge_runtime.py"
+        if not path.is_file():
+            raise ValueError("Bridge policy module is missing; use the complete MSSHI release")
+        spec = importlib.util.spec_from_file_location("_msshi_runtime_bridge_policy", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _BRIDGE_POLICY = module
+    return _BRIDGE_POLICY
 
 
 def norm(value):
@@ -170,6 +191,76 @@ def protected(data):
     return sha(encoded({name: cfg[name] for name in PROTECTED_KEYS if name in cfg}))
 
 
+def legacy_protected(data):
+    cfg = yaml_read(data)
+    return sha(encoded({name: cfg[name] for name in LEGACY_PROTECTED_KEYS if name in cfg}))
+
+
+def llm_fingerprint(data):
+    cfg = yaml_read(data)
+    projection = {name: cfg[name] for name in LLM_KEYS if name in cfg}
+    return sha(json.dumps(projection, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+
+
+def preservation_baseline(home, replacements=None):
+    replacements = replacements or {}
+    entries = {}
+    for folder in profiles(home).values():
+        config = safe_path(folder / "config.yaml")
+        raw = replacements.get(config, config.read_bytes())
+        soul = safe_path(folder / "SOUL.md")
+        entries[str(config)] = {"llm_sha256": llm_fingerprint(raw), "raw_sha256": sha(raw),
+                                "soul_path": str(soul), "soul_sha256": sha(soul.read_bytes()) if soul.is_file() else None}
+    return {"schema_version": 2, "keys": list(LLM_KEYS), "files": entries,
+            "recorded_at": datetime.now(timezone.utc).isoformat(),
+            "semantics": "LLM settings preserved since this observed baseline; not proof of historical external edits."}
+
+
+def preservation_report(home, migration):
+    baseline = migration.get("preservation_baseline") or {}
+    current_paths = {str(folder / "config.yaml") for folder in profiles(home).values()}
+    ui_changed, soul_changed, llm_changed, missing = [], [], [], []
+    if baseline.get("schema_version") == 2 and isinstance(baseline.get("files"), dict):
+        entries = baseline["files"]
+        for raw_path, expected in entries.items():
+            path = safe_path(raw_path)
+            if not path.is_relative_to(home) or not path.is_file():
+                missing.append(raw_path)
+                continue
+            data = path.read_bytes()
+            if llm_fingerprint(data) != expected.get("llm_sha256"):
+                llm_changed.append(raw_path)
+            elif sha(data) != expected.get("raw_sha256"):
+                ui_changed.append(raw_path)
+            soul = safe_path(expected.get("soul_path") or path.parent / "SOUL.md")
+            if not soul.is_relative_to(home):
+                missing.append(str(soul))
+            elif (sha(soul.read_bytes()) if soul.is_file() else None) != expected.get("soul_sha256"):
+                soul_changed.append(str(soul))
+        missing.extend(sorted(current_paths - set(entries)))
+        valid = bool(entries) and not llm_changed and not missing
+        state = "LLM_SETTINGS_CHANGED" if llm_changed else "BASELINE_INPUTS_MISSING" if missing else "CURRENT"
+        if valid and (ui_changed or soul_changed):
+            state = "CURRENT_LLM_WITH_USER_METADATA_EDITS"
+        return {"provider_model_preserved": valid, "state": state, "schema_version": 2,
+                "config_changed_outside_llm": ui_changed, "soul_changed_since_baseline": soul_changed,
+                "llm_changed_paths": llm_changed, "missing_baseline_inputs": missing,
+                "requires_explicit_current_acceptance": not valid,
+                "semantics": baseline.get("semantics")}
+    checks = migration.get("protected_config_hashes") or {}
+    changed = []
+    for raw_path, expected in checks.items():
+        path = safe_path(raw_path)
+        if not path.is_relative_to(home) or not path.is_file() or legacy_protected(path.read_bytes()) != expected:
+            changed.append(raw_path)
+    changed.extend(sorted(current_paths - set(checks)))
+    valid = bool(checks) and not changed
+    return {"provider_model_preserved": valid, "state": "LEGACY_MATCH" if valid else "LEGACY_BASELINE_REVIEW_REQUIRED",
+            "schema_version": 1, "legacy_changed_paths": changed,
+            "requires_explicit_current_acceptance": not valid,
+            "semantics": "Legacy hash includes display metadata; a mismatch does not establish who changed a model."}
+
+
 def profiles(home):
     result = {"default": home}
     for path in sorted((home / "profiles").glob("*")):
@@ -213,9 +304,10 @@ def executable(candidates):
 
 
 def native_routes(home, profile, cfg):
+    hub = bridge_policy()
     previous = read_json(home / "msshi-runtime/profiles" / profile / "routes.json", {})
     routes = {name: row for name, row in previous.get("targets", {}).items()
-              if norm(name) not in RETAINED_MCP}
+              if norm(name) not in RETAINED_MCP and hub.target_allowed(profile, name)}
     for route in routes.values():
         if route.get("executable") and not Path(route["executable"]).is_file():
             route["readiness"] = "optional_missing"
@@ -247,24 +339,18 @@ def native_routes(home, profile, cfg):
                          "prefix": ["-B", "-X", "utf8", str(wrapper), "--home", str(home), "--binary", trim or ""],
                          "local_only": True, "preset": "safe",
                          "env": {"PYTHONUTF8": "1", "PYTHONDONTWRITEBYTECODE": "1"}}
-    for name, item in (cfg.get("mcp_servers") or {}).items():
-        slug = norm(name)
-        if slug not in DISABLED_MCP or not isinstance(item, dict):
+    former_apps = {norm(name): item for name, item in (cfg.get("mcp_servers") or {}).items()
+                   if isinstance(item, dict)}
+    for slug in hub.ARTCRAFT:
+        if not hub.target_allowed(profile, slug):
             continue
-        if slug in ARTCRAFT:
-            filename = "craft-anything" if slug == "craftanything" else slug
-            former = item.get("command", "")
-            cli = executable([former if str(former).lower().endswith("-cli.exe") else None,
-                              home / "applications" / filename / f"{filename}-cli.exe",
-                              Path("D:/Program/ArtCraft Apps") / filename / f"{filename}-cli.exe",
-                              f"{filename}-cli"])
-            routes[slug] = {"kind": "native-cli", "executable": cli,
-                            "readiness": "available" if cli else "optional_missing",
-                            "env": {key: str(value) for key, value in item.get("env", {}).items()
-                                    if key in {"APPDATA", "LOCALAPPDATA", "XDG_CONFIG_HOME", "XDG_CACHE_HOME", "TEMP", "TMP"}}}
-        else:
-            routes[slug] = {"kind": "native-cli", "executable": None,
-                            "readiness": "requires_native_adapter"}
+        prior_env = routes.get(slug, {}).get("env", {})
+        old_env = former_apps.get(slug, {}).get("env", {})
+        cli = hub.artcraft_executable(slug)
+        routes[slug] = {"kind": "native-cli", "executable": cli,
+                        "readiness": "available" if cli else "optional_missing",
+                        "env": {key: str(value) for key, value in {**old_env, **prior_env}.items()
+                                if key in {"APPDATA", "LOCALAPPDATA", "XDG_CONFIG_HOME", "XDG_CACHE_HOME", "TEMP", "TMP"}}}
     blender = executable(["blender", r"D:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe",
                           r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"])
     routes["blender"] = {"kind": "native-cli", "executable": blender,
@@ -275,6 +361,7 @@ def native_routes(home, profile, cfg):
         "node": [home / "tools/node-26.12.1-win32-x64/node.exe", "node"],
         "python": [sys.executable], "gitlab": ["glab"],
         "graphify": [home / "msshi-private/graphify-runtime/venv/Scripts/graphify.exe", "graphify"],
+        "obs": ["cli-anything-obs-studio", "cli-anything-obs"],
         "antigravity": [r"D:\Program\Antigravity IDE\Antigravity IDE\Antigravity IDE.exe", "antigravity-ide", "antigravity", Path.home() / "AppData/Local/Programs/Antigravity/bin/antigravity.cmd"],
     }.items():
         command = executable(names)
@@ -299,8 +386,14 @@ def native_routes(home, profile, cfg):
                      "perplexity": "https://www.perplexity.ai/", "whatsapp-web": "https://web.whatsapp.com/"}.items():
         routes[name] = {"kind": "browser", "executable": chrome,
                         "readiness": "available" if chrome else "optional_missing", "url": url}
+    routes = {name: row for name, row in routes.items()
+              if name in {"gdrive", "gdrive-web"} or hub.target_allowed(profile, name)}
+    for name, row in routes.items():
+        if name not in {"gdrive", "gdrive-web"} and previous.get("targets", {}).get(name, {}).get("user_disabled"):
+            row.update(user_disabled=True, readiness="disabled_by_user")
     return {"schema": 3, "profile": profile, "role": ROLES.get(profile, "custom"),
-            "auto_open_on_boot": False, "require_task_ticket": True, "targets": routes}
+            "auto_open_on_boot": False, "require_task_ticket": True, "specialization_policy": "muza-v1",
+            "artcraft_root": str(hub.artcraft_root()), "targets": routes}
 
 
 def yaml_section(lines, key):
@@ -525,6 +618,12 @@ def migrate(home):
                 b"# Local compression and persona tools", b"# Hersona local CLI catalog")
         here = Path(__file__).resolve().parent
         bridge_source = here if (here / "msshi_bridge_runtime.py").is_file() else here.parent / "skills/cli-anything-universal-bridge/scripts"
+        policy_source = bridge_source / "msshi_bridge_runtime.py"
+        if not policy_source.is_file():
+            raise ValueError("Bridge policy source is missing")
+        changes[root / "msshi_bridge_runtime.py"] = policy_source.read_bytes()
+        helper_source = Path(hermes_profiles.__file__)
+        changes[root / "msshi_hermes_profiles.py"] = helper_source.read_bytes()
         plugin_source = here.parent / "hermes_plugins/msshi-auto-trim"
         plugin_names = ("__init__.py", "plugin.yaml", "README.md")
         plugin_files = {filename: (plugin_source / filename).read_bytes() for filename in plugin_names
@@ -555,7 +654,8 @@ def migrate(home):
             bridge = profile / "skills/cli-anything-universal-bridge/scripts"
             if bridge.is_dir():
                 changes[bridge / "msshi_runtime.py"] = Path(__file__).read_bytes()
-                for filename in ("msshi_bridge_runtime.py", "setup_cli_anything_hermes.py"):
+                changes[bridge / "msshi_hermes_profiles.py"] = helper_source.read_bytes()
+                for filename in ("msshi_bridge_runtime.py", "setup_cli_anything_hermes.py", "connection_help.json"):
                     source = bridge_source / filename
                     if source.is_file():
                         changes[bridge / filename] = source.read_bytes()
@@ -575,6 +675,7 @@ def migrate(home):
                                "incident_action": "alert_then_contain_owned_expired_job_then_report"}}
         changes[root / "policy.json"] = encoded(policy)
         report["protected_config_hashes"] = {str(path): value for path,value in checks.items()}
+        report["preservation_baseline"] = preservation_baseline(home, changes)
         changes[root / "last-migration.json"] = encoded(report)
         changes[root / "runtime.py"] = Path(__file__).read_bytes()
         inventory = {"version": VERSION, "passive_only": True, "launches_applications": False,
@@ -604,6 +705,8 @@ def profile_name(value):
 
 
 def ticket(home, profile, target, task, source, ttl):
+    if not bridge_policy().target_allowed(profile, target):
+        raise ValueError("Target is outside this profile's MuZA specialization")
     root = home / "msshi-runtime"
     routes = read_json(root / "profiles" / profile / "routes.json")
     if not routes or target not in routes["targets"] or routes["targets"][target]["readiness"] != "available":
@@ -661,14 +764,19 @@ class ProcessJob:
 
 
 def run_target(home, profile, identifier, target, arguments, timeout):
+    if not bridge_policy().target_allowed(profile, target):
+        raise ValueError("Target is outside this profile's MuZA specialization")
     if not re.fullmatch(r"[a-f0-9]{32}", identifier):
         raise ValueError("A valid one-use task ticket is required")
     root = home / "msshi-runtime"
     route = read_json(root / "profiles" / profile / "routes.json", {}).get("targets", {}).get(target)
     if not route or route.get("readiness") != "available" or not route.get("executable"):
         raise ValueError("Native CLI route is unavailable or disabled")
-    if any(arg.lower() == "mcp" or arg.lower().startswith("--connect") for arg in arguments):
-        raise ValueError("MCP and unmanaged application connections are disabled for runtime routes")
+    effective_args = [*route.get("prefix", []), *arguments]
+    if any(str(arg).lower().split("=", 1)[0].lstrip("-") in {"mcp", "serve", "connect"} for arg in effective_args):
+        raise ValueError("MCP, serve and unmanaged application connections are disabled for runtime routes")
+    if target == "craftanything" and any(str(arg).lower() == "setup" for arg in effective_args):
+        raise ValueError("Craft Anything client setup is not allowed through a task route")
     if target == "hersona":
         permitted = {"list", "show", "matrix", "blend", "preview", "diff", "reanchor", "export", "--help", "-h"}
         if not arguments or (arguments[0] not in permitted and arguments[:2] != ["personas", "list"]):
@@ -683,7 +791,7 @@ def run_target(home, profile, identifier, target, arguments, timeout):
         command = [route["executable"], f"--user-data-dir={browser_state}", "--new-window", f"--app={route['url']}"]
     if not Path(command[0]).is_file():
         raise ValueError("Registered executable is no longer available")
-    if Path(command[0]).suffix.lower() in {".cmd", ".bat"}:
+    if Path(command[0]).suffix.lower() in {".cmd", ".bat", ".ps1"}:
         raise ValueError("This route requires a native executable adapter, not a shell shim")
     ticket_path = root / "tickets" / (identifier + ".json")
     with locked(root / "locks" / (identifier + ".lock")), locked(root / "locks/app-concurrency.lock"):
@@ -832,8 +940,9 @@ def status(home):
         result["profiles"][row["profile"]]["enabled_targeted_mcp"] = sorted(name for name,value in actual.items() if value)
         result["profiles"][row["profile"]]["enabled_targeted_plugins"] = sorted(name for name in cfg.get("plugins",{}).get("enabled",[]) if norm(name) in MIGRATED_MCP)
     migration = read_json(root / "last-migration.json",{})
-    checks = migration.get("protected_config_hashes",{})
-    result["provider_model_preserved"] = bool(checks) and all(protected(Path(path).read_bytes()) == value for path,value in checks.items())
+    preservation = preservation_report(home, migration)
+    result["provider_model_preserved"] = preservation["provider_model_preserved"]
+    result["preservation"] = preservation
     receipts = sorted((root / "backups").glob("*/receipt.json"))
     result["rollback_receipt"] = str(receipts[-1]) if receipts else None
     guardian_row = read_json(root / "guardian-state.json",{})
@@ -843,8 +952,77 @@ def status(home):
              and all(not row["enabled_targeted_mcp"] and not row["enabled_targeted_plugins"]
                      for row in result["profiles"].values()))
     result["result"] = "PASS_SUCCESS" if valid else "SETUP_REQUIRED"
+    result["readiness"] = "READY" if valid else "SETUP_REQUIRED"
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if valid else 2
+
+
+def preservation_inputs(home):
+    files = {}
+    for folder in profiles(home).values():
+        for filename in ("config.yaml", "SOUL.md"):
+            path = safe_path(folder / filename)
+            files[str(path)] = sha(path.read_bytes()) if path.is_file() else None
+    migration = safe_path(home / "msshi-runtime/last-migration.json")
+    return {"files": files, "migration_sha256": sha(migration.read_bytes()) if migration.is_file() else None}
+
+
+def rebaseline(home, apply=False, expected_snapshot=None, accept_current=False, reason=""):
+    """Preview current inputs, then optionally accept a stable observed baseline.
+
+    This never changes provider/model/config/SOUL values. Accepting current LLM
+    settings acknowledges them; it cannot establish who made historical edits.
+    """
+    root = home / "msshi-runtime"
+    current = read_json(root / "last-migration.json", {})
+    inputs = preservation_inputs(home)
+    if not inputs["files"]:
+        raise ValueError("No configured Hermes profiles were found")
+    snapshot = sha(encoded(inputs))
+    prior = preservation_report(home, current)
+    report = {"operation": "rebaseline", "apply": bool(apply), "snapshot": snapshot,
+              "preservation_before": prior, "inputs": inputs,
+              "current_llm_acceptance_required": prior["requires_explicit_current_acceptance"],
+              "provider_model_values_mutated": False, "soul_values_mutated": False,
+              "historical_external_edits_verified": False}
+    if not apply:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 0
+    if not expected_snapshot or not re.fullmatch(r"[a-f0-9]{64}", expected_snapshot):
+        raise ValueError("Apply requires --expected-snapshot from a fresh read-only rebaseline preview")
+    if expected_snapshot != snapshot:
+        raise ValueError("Protected inputs changed after preview; request a new rebaseline preview")
+    if prior["requires_explicit_current_acceptance"] and not accept_current:
+        raise ValueError("Review is required: use --accept-current-llm-settings only for the user's intended current configuration")
+    if accept_current and len(reason.strip()) < 8:
+        raise ValueError("Explicit current-configuration acceptance requires a meaningful --reason")
+    with locked(root / ".migration-lock"):
+        if sha(encoded(preservation_inputs(home))) != expected_snapshot:
+            raise ValueError("Protected inputs changed while acquiring the migration lock")
+        updated = dict(current)
+        checks = {folder / "config.yaml": protected((folder / "config.yaml").read_bytes())
+                  for folder in profiles(home).values()}
+        updated["protected_config_hashes"] = {str(path): digest for path, digest in checks.items()}
+        updated["preservation_baseline"] = preservation_baseline(home)
+        updated["baseline_acceptance"] = {
+            "at": datetime.now(timezone.utc).isoformat(), "snapshot": snapshot,
+            "method": "explicit_current_configuration_acceptance" if accept_current else "unchanged_llm_settings_refresh",
+            "reason": reason.strip() or "Refresh observed baseline without changing LLM settings",
+            "previous_state": prior["state"], "historical_external_edits_verified": False,
+        }
+        receipt, count = transaction(home, {root / "last-migration.json": encoded(updated)}, checks)
+        after_inputs = preservation_inputs(home)
+        if after_inputs["files"] != inputs["files"]:
+            saved = read_json(receipt)
+            for item in reversed(saved["changes"]):
+                restore_row(item, receipt.parent)
+            raise ValueError("Config/SOUL changed during baseline refresh; previous baseline restored")
+        after = preservation_report(home, updated)
+        if not after["provider_model_preserved"]:
+            raise ValueError("New baseline did not verify current LLM settings")
+    report.update(receipt=str(receipt), files_changed=count, preservation_after=after)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 0
 
 
 def install_guardian(home):
@@ -914,6 +1092,12 @@ def main(argv=None):
         p = commands.add_parser(verb)
         p.add_argument("--home", dest="sub_home")
         p.add_argument("--json", action="store_true", help="Output is always JSON")
+    p = commands.add_parser("rebaseline", help="Preview or accept a stable current config/SOUL baseline without changing their values")
+    p.add_argument("--home", dest="sub_home")
+    p.add_argument("--apply", action="store_true", help="Write the reviewed baseline; preview is read-only by default")
+    p.add_argument("--expected-snapshot", help="SHA256 snapshot returned by the preview; stale previews are refused")
+    p.add_argument("--accept-current-llm-settings", action="store_true", help="Explicitly acknowledge user-intended current LLM settings when old evidence is stale")
+    p.add_argument("--reason", default="", help="Reason for accepting the current configuration; no secret values")
     p = commands.add_parser("ticket")
     p.add_argument("--home", dest="sub_home")
     p.add_argument("--profile")
@@ -946,6 +1130,8 @@ def main(argv=None):
         return migrate(home)
     if args.operation == "status":
         return status(home)
+    if args.operation == "rebaseline":
+        return rebaseline(home, args.apply, args.expected_snapshot, args.accept_current_llm_settings, args.reason)
     if args.operation == "hardware":
         print(json.dumps(hardware(), indent=2))
         return 0

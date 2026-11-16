@@ -1,6 +1,6 @@
 ---
 name: harness2
-description: Buat proposal evaluasi harness dan jalankan demo deterministik Harness² di ruang privat. Untuk Val menilai bukti eksperimen dan Coder menyiapkan kandidat terisolasi; tanpa perubahan otomatis pada persona, memori, konfigurasi, atau harness Hermes aktif.
+description: Kelima bot dapat membuat proposal evaluasi harness dan memakai demo deterministik Harness² sesuai konteks. Simpan eksperimen di ruang privat, dengan bukti dan review; tidak mengubah persona, memori, konfigurasi, atau harness Hermes aktif secara otomatis.
 license: MIT
 metadata:
   upstream: https://github.com/google-research/harness2
@@ -12,7 +12,7 @@ metadata:
 
 [Harness² dari Google Research](https://github.com/google-research/harness2/tree/6868817518876de8fd170c6a8354daca273b6191) mengoptimalkan sistem di sekitar model melalui Propose–Probe–Compose dengan bobot model tetap. Delapan komponen yang dipelajari upstream adalah system prompt, guardrails, memory, tool guidance, subagents, skills, scripts, dan plugins. Daftar itu menjelaskan permukaan eksperimen pada salinan terisolasi, bukan izin mengubah Hermes aktif.
 
-**Val** merumuskan hipotesis, baseline, data evaluasi terpisah, ukuran keberhasilan, ketidakpastian, dan interpretasi bukti. **Coder** menyiapkan kandidat dalam workspace eksperimen, diff yang dapat ditinjau, probe yang dapat diulang, dan rencana rollback. Ringkasan untuk Shizuka berisi tujuan, perubahan yang diusulkan, bukti, kegagalan, biaya, dan keputusan yang masih memerlukan tinjauan manusia; gunakan rute koordinasi yang sudah diotorisasi.
+Tersedia bagi **Yukino, Shizuka, Val, Kiki-Chii dan Shikaku**. Masing-masing dapat mengusulkan perbaikan harness pada bidangnya ketika konteks sesuai. Val membantu ukuran bukti dan Coder membantu implementasi terisolasi, tanpa membatasi akses bot lain. Ringkasan untuk Shizuka berisi tujuan, diff, bukti, kegagalan, biaya dan keputusan manusia; gunakan mekanisme koordinasi yang benar-benar tersedia. Tidak ada eksperimen/model atau promosi perubahan otomatis pada boot maupun setiap pesan.
 
 Pertahankan provider, model, fallback, MoA, persona, SOUL, DNA, memori, plugin, dan gaya native pengguna. Jangan mempromosikan proposal atau lesson demo ke konfigurasi atau memori persisten. Tugas ini tidak mengaktifkan model self-training atau pengubahan bobot.
 

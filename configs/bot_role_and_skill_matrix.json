@@ -40,7 +40,11 @@
         "rebuttal-writing",
         "research-paper-writing",
         "unlimited-ocr-2",
-        "muza-skripsi-template"
+        "muza-skripsi-template",
+        "career-ops",
+        "remote-jobs",
+        "mattpocock-engineering",
+        "harness2"
       ],
       "optional_skills": [
         "anti-slop",
@@ -49,7 +53,6 @@
         "graphify",
         "hermes-jev-skills",
         "hermes-steel",
-        "remote-jobs",
         "token-monitor",
         "tokenshield",
         "tokentracker",
@@ -98,7 +101,11 @@
         "research-paper-writing",
         "unlimited-ocr-2",
         "wise-judgment-and-sovereign-orchestrator",
-        "muza-skripsi-template"
+        "muza-skripsi-template",
+        "career-ops",
+        "remote-jobs",
+        "mattpocock-engineering",
+        "harness2"
       ],
       "optional_skills": [
         "anti-slop",
@@ -107,7 +114,6 @@
         "graphify",
         "hermes-jev-skills",
         "hermes-steel",
-        "remote-jobs",
         "token-monitor",
         "tokenshield",
         "tokentracker",
@@ -171,7 +177,10 @@
         "unslop",
         "scrapling",
         "harness2",
-        "muza-skripsi-template"
+        "muza-skripsi-template",
+        "career-ops",
+        "remote-jobs",
+        "mattpocock-engineering"
       ],
       "optional_skills": [
         "anti-slop",
@@ -181,11 +190,14 @@
         "graphify",
         "hermes-jev-skills",
         "hermes-steel",
-        "remote-jobs",
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr"
+        "unlimited-ocr",
+        "artcraft-pdfcraft",
+        "artcraft-gridcraft",
+        "artcraft-wordcraft",
+        "artcraft-deckcraft"
       ],
       "academic_engines": [
         "gap-kebaruan",
@@ -226,25 +238,15 @@
         "slide-generation",
         "unlimited-ocr-2",
         "unslop",
-        "brag"
+        "brag",
+        "career-ops",
+        "remote-jobs",
+        "mattpocock-engineering",
+        "harness2",
+        "rea-video"
       ],
       "optional_skills": [
         "anti-slop",
-        "artcraft-cadcraft",
-        "artcraft-craftanything",
-        "artcraft-deckcraft",
-        "artcraft-designcraft",
-        "artcraft-effectcraft",
-        "artcraft-figcraft",
-        "artcraft-filmcraft",
-        "artcraft-gridcraft",
-        "artcraft-lightcraft",
-        "artcraft-pdfcraft",
-        "artcraft-photocraft",
-        "artcraft-solidcraft",
-        "artcraft-soundcraft",
-        "artcraft-vectorcraft",
-        "artcraft-wordcraft",
         "bang-motion",
         "barty-motion-graphics",
         "better-design",
@@ -269,13 +271,25 @@
         "higgsfield-youtube-thumbnail",
         "motion-primitives",
         "paper-shaders",
-        "remote-jobs",
         "remotion-skills",
         "superdesign-skill",
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr"
+        "unlimited-ocr",
+        "artcraft-anicraft",
+        "artcraft-filmcraft",
+        "artcraft-effectcraft",
+        "artcraft-soundcraft",
+        "artcraft-photocraft",
+        "artcraft-lightcraft",
+        "artcraft-designcraft",
+        "artcraft-figcraft",
+        "artcraft-vectorcraft",
+        "artcraft-cadcraft",
+        "artcraft-solidcraft",
+        "artcraft-materialcraft",
+        "artcraft-texturecraft"
       ],
       "academic_engines": [
         "metode-analisis",
@@ -316,7 +330,10 @@
         "unlimited-ocr-2",
         "unslop",
         "scrapling",
-        "harness2"
+        "harness2",
+        "career-ops",
+        "remote-jobs",
+        "mattpocock-engineering"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -349,7 +366,9 @@
         "token-monitor",
         "tokenshield",
         "tokentracker",
-        "unlimited-ocr"
+        "unlimited-ocr",
+        "artcraft-craftanything",
+        "artcraft-figcraft"
       ],
       "academic_engines": [
         "metode-analisis"
@@ -427,106 +446,136 @@
       "slug": "artcraft-cadcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan teknis.",
-      "scope": "creative"
+      "purpose": "Rancangan CAD melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-craftanything",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk otomasi kreatif lintas alat.",
-      "scope": "creative"
+      "purpose": "Menggunakan agen aplikasi lokal untuk tugas coding yang dipilih; tidak menjalankan setup --client hermes atau mode MCP.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-deckcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk presentasi kreatif.",
-      "scope": "creative"
+      "purpose": "Menyusun presentasi riset melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-designcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk desain aset visual.",
-      "scope": "creative"
+      "purpose": "Desain aset visual melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-effectcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk efek visual dan compositing.",
-      "scope": "creative"
+      "purpose": "Efek visual/compositing melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-figcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan UI dan prototipe.",
-      "scope": "creative"
+      "purpose": "Rancangan UI/prototipe melalui CLI lokal; hanya Shikaku dan Kiki-Chii berbagi rute ini.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-filmcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk perencanaan adegan dan shot.",
-      "scope": "creative"
+      "purpose": "Penyuntingan dan komposisi video melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-gridcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk tabel dan perencanaan produksi.",
-      "scope": "creative"
+      "purpose": "Mengolah tabel/data spreadsheet melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-lightcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan pencahayaan.",
-      "scope": "creative"
+      "purpose": "Pengolahan foto/RAW melalui CLI lokal sesuai tiket tugas; aplikasi tidak dibuka saat boot.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-pdfcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk paket dokumen PDF.",
-      "scope": "creative"
+      "purpose": "Membaca dan menyiapkan dokumen PDF riset melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-photocraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk pengolahan dan evaluasi foto.",
-      "scope": "creative"
+      "purpose": "Penyuntingan foto/gambar melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-solidcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk model bentuk padat.",
-      "scope": "creative"
+      "purpose": "Pemodelan bentuk padat melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-soundcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk rancangan suara dan mixing.",
-      "scope": "creative"
+      "purpose": "Penyuntingan dan pengolahan audio melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-vectorcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk aset vektor.",
-      "scope": "creative"
+      "purpose": "Penyuntingan aset vektor melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "artcraft-wordcraft",
       "status": "external",
       "path": null,
-      "purpose": "Nama adapter opsional dalam rancangan ArtCraft untuk dokumen produksi.",
-      "scope": "creative"
+      "purpose": "Menyusun dokumen riset melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "auto-curiousity-for-film-making",
@@ -585,8 +634,10 @@
       "slug": "blender-mcp",
       "status": "external",
       "path": null,
-      "purpose": "Menghubungkan tahap komposisi 3D, render, dan pemeriksaan adegan dengan adapter Blender yang tersedia.",
-      "scope": "creative"
+      "purpose": "Blender melalui CLI/native harness sesuai tiket tugas; nama katalog historis ini tidak mengaktifkan server MCP.",
+      "scope": "creative",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     },
     {
       "slug": "brainstorming-research-ideas",
@@ -1170,14 +1221,6 @@
       "scope": "academic"
     },
     {
-      "slug": "remote-jobs",
-      "status": "external",
-      "path": null,
-      "purpose": "Menyaring perusahaan remote, lalu memeriksa syarat lokasi dan lowongan langsung.",
-      "scope": "business",
-      "source": "https://github.com/remoteintech/remote-jobs"
-    },
-    {
       "slug": "remotion-skills",
       "status": "external",
       "path": null,
@@ -1358,6 +1401,81 @@
       "integration_ids": [
         "harness2"
       ]
+    },
+    {
+      "slug": "career-ops",
+      "status": "bundled",
+      "path": "skills/career-ops/SKILL.md",
+      "purpose": "Bantu karier, CV-lowongan skor 1-5, tracker dan wawancara sesuai konteks.",
+      "scope": "contextual",
+      "source": "https://github.com/career-ops-hq/career-ops",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "career-ops"
+      ]
+    },
+    {
+      "slug": "remote-jobs",
+      "status": "bundled",
+      "path": "skills/remote-jobs/SKILL.md",
+      "purpose": "Saring direktori perusahaan remote, lalu periksa lowongan aktif ketika diminta.",
+      "scope": "contextual",
+      "source": "https://github.com/remoteintech/remote-jobs",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "remote-jobs"
+      ]
+    },
+    {
+      "slug": "mattpocock-engineering",
+      "status": "bundled",
+      "path": "skills/mattpocock-engineering/SKILL.md",
+      "purpose": "Disiplin engineering, TDD, debugging dan spesifikasi; orkestrator/publikasi eksplisit.",
+      "scope": "contextual",
+      "source": "https://github.com/mattpocock/skills",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "mattpocock-skills"
+      ]
+    },
+    {
+      "slug": "rea-video",
+      "status": "bundled",
+      "path": "skills/rea-video/SKILL.md",
+      "purpose": "Kiki membedah video referensi per shot ke VIDEO.md; model dan generasi merupakan opt-in terpisah.",
+      "scope": "contextual",
+      "source": "https://github.com/JuneYaooo/rea-video",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "rea-video"
+      ]
+    },
+    {
+      "slug": "artcraft-anicraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Animasi dan komposisi bergerak melalui CLI aplikasi lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
+    },
+    {
+      "slug": "artcraft-materialcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Penyusunan material melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
+    },
+    {
+      "slug": "artcraft-texturecraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Penyusunan tekstur melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
     }
   ],
   "packs": {
@@ -1389,11 +1507,14 @@
       "motion-graphics-suite",
       "slide-generation",
       "unslop",
-      "brag"
+      "brag",
+      "rea-video"
     ],
     "business": [
       "business-sage",
-      "cli-anything-business-sage"
+      "cli-anything-business-sage",
+      "career-ops",
+      "remote-jobs"
     ],
     "thesis": [
       "academic-plotting",
@@ -1445,13 +1566,15 @@
       "explore-run",
       "unslop",
       "scrapling",
-      "harness2"
+      "harness2",
+      "mattpocock-engineering"
     ],
     "cybersec": [
       "ai-research-reproduction",
       "analyze-project",
       "antigravity-webdev-cybersec",
-      "evaluating-code-models"
+      "evaluating-code-models",
+      "mattpocock-engineering"
     ]
   },
   "routes": [
@@ -1497,7 +1620,9 @@
       "persona-shizuka-yukino-shikaku",
       "phoenix-observability",
       "unlimited-ocr-2",
-      "muza-skripsi-template"
+      "muza-skripsi-template",
+      "mattpocock-engineering",
+      "career-ops"
     ],
     "external_skills": [
       "addy-agent-skills",
@@ -1626,6 +1751,13 @@
       "pilih-padatkan",
       "memori-proyek",
       "prefix-anggaran"
-    ]
+    ],
+    "muza_contextual_shared": [
+      "career-ops",
+      "remote-jobs",
+      "mattpocock-engineering",
+      "harness2"
+    ],
+    "background_model_calls": false
   }
 }

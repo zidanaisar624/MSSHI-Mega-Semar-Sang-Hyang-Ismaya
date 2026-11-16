@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "External MSSHI integration inventory with opt-in source-cache refresh and separate runtime setup.",
-  "checked_on": "2026-11-13",
+  "checked_on": "2026-11-16",
   "defaults": {
     "install_external": false,
     "auto_open_on_boot": false,
@@ -159,11 +159,12 @@
       "kind": "local_agent",
       "pack": "webdev",
       "roles": [
-        "shikaku-nara"
+        "shikaku"
       ],
       "use_when": "Delegasikan vibecoding pada workspace yang dipilih.",
-      "requires": "Goose lokal dan konfigurasi provider pengguna. Batasi direktori kerja dan izin tool.",
-      "license": "Apache-2.0"
+      "requires": "Goose adalah agen CLI terpisah, bukan ID model MoA. Endpoint/provider dan izin tool terisolasi diperlukan; tidak autostart.",
+      "license": "Apache-2.0",
+      "revision": "0bf8b62407201ce11cac7da2582d25eb0fe620f5"
     },
     {
       "id": "superpowers",
@@ -652,21 +653,24 @@
       "id": "remote-jobs",
       "source": "https://github.com/remoteintech/remote-jobs",
       "source_type": "git",
-      "verification": "upstream-documentation-read; not runtime-tested",
+      "verification": "pinned README/source directory/license reviewed 2026-11-16; active vacancies not verified",
       "status": "external-opt-in",
       "auto_start": false,
       "domain": "career",
       "kind": "data_directory",
       "pack": "business",
       "roles": [
-        "shizuka-hiratsuka",
+        "yukino",
+        "shizuka",
         "val",
         "kiki-chii",
-        "yukino-yukinoshita"
+        "shikaku"
       ],
       "use_when": "Cari perusahaan remote, lalu verifikasi lowongan aktif di laman resmi perusahaan.",
       "requires": "Akses direktori dan laman karier. Cek lokasi, zona waktu dan hak kerja per posisi.",
-      "license": "ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts)"
+      "license": "ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts)",
+      "revision": "155939ad935d22afa8edbaaf0770b99f9d0dbf0d",
+      "background_model_calls": false
     },
     {
       "id": "caveman",
@@ -782,18 +786,19 @@
       "id": "kat-coder-v2-5-dev",
       "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
       "source_type": "model-card",
-      "verification": "official model card read 2026-11-11",
+      "verification": "official HF metadata/model card reviewed 2026-11-16; no weights/model calls",
       "status": "optional-model-not-installed",
       "auto_start": false,
       "domain": "engineering",
       "kind": "optional_subagent",
       "pack": "webdev",
       "roles": [
-        "shikaku-nara"
+        "shikaku"
       ],
       "use_when": "Explicit coding subtask only; never replace the primary model.",
-      "requires": "User-selected compatible endpoint or verified local quantized model and available RAM.",
-      "license": "Apache-2.0 according to official model card"
+      "requires": "Model text-only 35B total/3B aktif. Pada RAM16GB/RTX3050 utamakan endpoint remote yang benar; jangan menjanjikan Q4 muat atau mengubah model utama.",
+      "license": "Apache-2.0 according to official model card",
+      "revision": "7be56fe773e72b6f5ca93c1ae45d828ddb893922"
     },
     {
       "id": "timesfm",
@@ -882,12 +887,81 @@
       "kind": "contextual-skill-integration",
       "pack": "thesis",
       "roles": [
+        "yukino",
+        "shizuka",
         "val",
+        "kiki-chii",
         "shikaku"
       ],
-      "use_when": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
+      "use_when": "Kelima bot dapat mengusulkan evaluasi harness sesuai konteks; demo deterministik dan promosi perubahan tetap terpisah.",
       "requires": "Python3.12 runtime terpisah; benchmark model berbayar dan promosi harness aktual tidak dijalankan wrapper.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "background_model_calls": false
+    },
+    {
+      "id": "career-ops",
+      "source": "https://github.com/career-ops-hq/career-ops",
+      "source_type": "git",
+      "revision": "c687a6f89aa766de468d41402df1ce24bdd86315",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-16; runtime/task not tested by source review",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "career",
+      "kind": "contextual-skill-integration",
+      "pack": "business",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "use_when": "Bantu strategi karier, CV/JD, skor kecocokan 1-5, tracker dan wawancara saat diminta.",
+      "requires": "Source workflow lengkap dengan AGENTS.md dan modes/, Node sesuai upstream; CV/data pengguna privat. Browser dan panggilan model terpisah.",
+      "license": "MIT; employers data CC-BY-4.0",
+      "background_model_calls": false
+    },
+    {
+      "id": "mattpocock-skills",
+      "source": "https://github.com/mattpocock/skills",
+      "source_type": "git",
+      "revision": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-16; runtime/task not tested by source review",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "contextual-skill-integration",
+      "pack": "webdev",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "use_when": "Pilih disiplin engineering/TDD/domain model saat konteks sesuai; orkestrator dan publikasi tetap dipanggil eksplisit.",
+      "requires": "Source cache terpisah; hormati disable-model-invocation dan workspace/issue tracker yang dipilih.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "rea-video",
+      "source": "https://github.com/JuneYaooo/rea-video",
+      "source_type": "git",
+      "revision": "820d661e807034e0f0284262b4e93085cfd3da49",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-16; runtime/task not tested by source review",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "contextual-skill-integration",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Bedah video referensi per shot ke VIDEO.md dan rencana pembuatan ulang dengan review Kiki.",
+      "requires": "Python 3.10+ dan FFmpeg/ffprobe; runtime, OCR/ASR/stems/VLM/model download dan generasi ulang merupakan opt-in terpisah.",
+      "license": "Apache-2.0",
+      "background_model_calls": false
     }
   ]
 }

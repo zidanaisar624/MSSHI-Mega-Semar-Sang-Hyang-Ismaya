@@ -6,6 +6,7 @@ param(
     [switch]$DownloadPdf,
     [switch]$NoPdf,
     [string]$PdfVersion,
+    [string]$PdfDest,
     [string]$Mode,
     [string]$Platform,
     [string]$DefaultBot,
@@ -20,7 +21,7 @@ param(
 )
 
 & {
-    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiConnectServices, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
+    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiPdfDest, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiConnectServices, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
     $ErrorActionPreference = 'Stop'
     $repository = 'https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git'
     $scratch = $null
@@ -75,6 +76,9 @@ param(
         }
         $bootArgs = @('bootstrap')
         if ($MsshiNoPath) { $bootArgs += '--no-path' }
+        if ($MsshiNoPdf) { $bootArgs += '--no-pdf' }
+        if ($MsshiPdfVersion) { $bootArgs += @('--pdf-version', $MsshiPdfVersion) }
+        if ($MsshiPdfDest) { $bootArgs += @('--pdf-dest', $MsshiPdfDest) }
         & $runtime @pythonArgs -B -X utf8 $cli @bootArgs
         if ($LASTEXITCODE -ne 0) { throw 'MSSHI bootstrap failed.' }
         $dataDir = $env:MSSHI_HOME
@@ -98,20 +102,12 @@ param(
         if ($MsshiDownloadPdf) { $setupArgs += '--download-pdf' }
         if ($MsshiNoPdf) { $setupArgs += '--no-pdf' }
         if ($MsshiPdfVersion) { $setupArgs += @('--pdf-version', $MsshiPdfVersion) }
+        if ($MsshiPdfDest) { $setupArgs += @('--pdf-dest', $MsshiPdfDest) }
         if (-not $MsshiNoSetup -and ($MsshiYes -or -not [Console]::IsInputRedirected)) {
             & $runtime @pythonArgs -B -X utf8 $cli @setupArgs
             if ($LASTEXITCODE -ne 0) { throw 'MSSHI setup was interrupted or failed. Run msshi setup again.' }
         } elseif (-not $MsshiNoSetup) {
-            if ($MsshiDownloadPdf -or $MsshiPdfVersion) {
-                $manualCli = Join-Path $source 'scripts\msshi_manuals.py'
-                $dlArgs = @('download', '--version', $(if ($MsshiPdfVersion) { $MsshiPdfVersion } else { 'latest' }))
-                & $runtime @pythonArgs -B -X utf8 $manualCli @dlArgs
-            }
             Write-Host 'Run msshi setup from an interactive terminal.'
-        } elseif ($MsshiDownloadPdf -or $MsshiPdfVersion) {
-            $manualCli = Join-Path $source 'scripts\msshi_manuals.py'
-            $dlArgs = @('download', '--version', $(if ($MsshiPdfVersion) { $MsshiPdfVersion } else { 'latest' }))
-            & $runtime @pythonArgs -B -X utf8 $manualCli @dlArgs
         }
     } finally {
         if ($scratch -and (Test-Path -LiteralPath $scratch -PathType Container)) {
@@ -122,4 +118,4 @@ param(
             }
         }
     }
-} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $Mode $Platform $DefaultBot $Yes $KatMode $StageAutoTrim $ConnectServices $ConnectApps $ConnectBots $ConnectTargets $WithRea
+} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $PdfDest $Mode $Platform $DefaultBot $Yes $KatMode $StageAutoTrim $ConnectServices $ConnectApps $ConnectBots $ConnectTargets $WithRea

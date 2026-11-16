@@ -1,5 +1,5 @@
 {
-  "reviewed_at": "2026-11-13",
+  "reviewed_at": "2026-11-16",
   "entries": [
     {
       "id": "higgsfield-skills",
@@ -467,20 +467,6 @@
       "status": "license_read"
     },
     {
-      "id": "remote-jobs",
-      "source": "https://github.com/remoteintech/remote-jobs",
-      "revision": "fa2253f1ed02cc4d8f59ab3ccc831b008cdd7189",
-      "license": "ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts)",
-      "copyright_lines": [
-        "Copyright (c) 2024 Lene Saile",
-        "Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.",
-        "Copyright (c) 2024 Set Studio"
-      ],
-      "license_url": "https://raw.githubusercontent.com/remoteintech/remote-jobs/fa2253f1ed02cc4d8f59ab3ccc831b008cdd7189/LICENSE",
-      "license_sha256": "91cde5c61d3e1306fb4df12b310d820b666ae7e797c34bccc029194e76d2a297",
-      "status": "license_read"
-    },
-    {
       "id": "caveman",
       "source": "https://github.com/JuliusBrussee/caveman",
       "revision": "3dc497a7f858c774d6e15b25e8c6120ef3a0eda8",
@@ -652,6 +638,42 @@
       "status": "primary-license-reviewed",
       "note": "Original MSSHI routing wrapper; upstream code/assets are not blanket relicensed under MIT.",
       "license_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+    },
+    {
+      "id": "career-ops",
+      "source": "https://github.com/career-ops-hq/career-ops",
+      "revision": "c687a6f89aa766de468d41402df1ce24bdd86315",
+      "license": "MIT (code); employers data CC BY 4.0",
+      "license_url": "https://raw.githubusercontent.com/career-ops-hq/career-ops/c687a6f89aa766de468d41402df1ce24bdd86315/LICENSE",
+      "license_sha256": "51989d2589b2aa87ca6cbb253391bcb476a21cbafdc71eea4410548538510870",
+      "status": "pinned_license_read; upstream implementation and runtimes not bundled"
+    },
+    {
+      "id": "remote-jobs",
+      "source": "https://github.com/remoteintech/remote-jobs",
+      "revision": "155939ad935d22afa8edbaaf0770b99f9d0dbf0d",
+      "license": "ISC; bundled boilerplate MIT and fonts SIL OFL",
+      "license_url": "https://raw.githubusercontent.com/remoteintech/remote-jobs/155939ad935d22afa8edbaaf0770b99f9d0dbf0d/LICENSE",
+      "license_sha256": "91cde5c61d3e1306fb4df12b310d820b666ae7e797c34bccc029194e76d2a297",
+      "status": "pinned_license_read; upstream implementation and runtimes not bundled"
+    },
+    {
+      "id": "mattpocock-skills",
+      "source": "https://github.com/mattpocock/skills",
+      "revision": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "license": "MIT",
+      "license_url": "https://raw.githubusercontent.com/mattpocock/skills/5863806dd4e15c63174bee4e7515a4256792ecfa/LICENSE",
+      "license_sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "status": "pinned_license_read; upstream implementation and runtimes not bundled"
+    },
+    {
+      "id": "rea-video",
+      "source": "https://github.com/JuneYaooo/rea-video",
+      "revision": "820d661e807034e0f0284262b4e93085cfd3da49",
+      "license": "Apache-2.0",
+      "license_url": "https://raw.githubusercontent.com/JuneYaooo/rea-video/820d661e807034e0f0284262b4e93085cfd3da49/LICENSE",
+      "license_sha256": "2beb280b855389587b12dfda5f61a7baf09d1c4a20aac833b1c96f9569c5e458",
+      "status": "pinned_license_read; upstream implementation and runtimes not bundled"
     }
   ],
   "additional_runtime_terms": {

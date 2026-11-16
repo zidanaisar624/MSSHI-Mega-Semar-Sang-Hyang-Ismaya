@@ -15,10 +15,29 @@ from urllib.parse import urlencode
 
 
 ARTCRAFT = (
-    "filmcraft", "effectcraft", "photocraft", "lightcraft", "soundcraft",
+    "anicraft", "filmcraft", "effectcraft", "photocraft", "lightcraft", "soundcraft",
     "designcraft", "vectorcraft", "figcraft", "wordcraft", "gridcraft",
-    "deckcraft", "pdfcraft", "cadcraft", "solidcraft", "craftanything",
+    "deckcraft", "pdfcraft", "cadcraft", "solidcraft", "craftanything", "materialcraft", "texturecraft",
 )
+ROLE_ALIASES = {
+    "default": "default", "yukino": "yukino", "shizuka": "shizuka", "shizuka-hiratsuka": "shizuka",
+    "val": "val", "kiki-chii": "kiki-chii", "shikaku": "shikaku",
+    "shikaku-nara": "shikaku", "nyenyenye-ya-gw-coder": "shikaku",
+}
+MUZA_ARTCRAFT = {
+    "default": (), "yukino": (), "shizuka": (),
+    "val": ("pdfcraft", "gridcraft", "wordcraft", "deckcraft"),
+    "shikaku": ("craftanything", "figcraft"),
+    "kiki-chii": ("anicraft", "filmcraft", "effectcraft", "soundcraft", "photocraft", "lightcraft",
+                  "designcraft", "figcraft", "vectorcraft", "cadcraft", "solidcraft", "materialcraft", "texturecraft"),
+}
+MUZA_NON_ART = {
+    "val": ("perplexity", "python", "whatsapp-web", "youtube-chrome"),
+    "shikaku": ("antigravity", "git", "node", "perplexity", "python", "youtube-chrome"),
+    "kiki-chii": ("blender", "ffmpeg", "node", "obs", "perplexity", "python", "tiktok", "youtube-chrome"),
+}
+SHARED_UTILITIES = {"hersona", "llmtrim", "graphify"}
+DISALLOWED_TARGETS = {"gdrive", "gdrive-web", "googledrive", "google-drive", "gimp", "libreoffice", "solvecraft"}
 GENERIC_CLI = re.compile(r"cli:[a-z0-9][a-z0-9-]{0,63}")
 CATALOG_URL = "https://clianything.cc/"
 PROJECT_URL = "https://github.com/HKUDS/CLI-Anything"
@@ -51,6 +70,58 @@ MCP_ALIASES = {
     **{f"artcraft-{name}": name for name in ARTCRAFT},
     "artcraft-craft-anything": "craftanything",
 }
+
+
+def role_for_profile(profile):
+    return ROLE_ALIASES.get(str(profile or "default").lower(), "custom")
+
+
+def target_allowed(profile, target):
+    """Preset routing is role-scoped; it is not an operating-system security boundary."""
+    remote = str(target).lower().startswith("mcp:")
+    target = normalized(str(target)).removeprefix("mcp:")
+    target = MCP_ALIASES.get(target, target)
+    if target in DISALLOWED_TARGETS:
+        return False
+    role = role_for_profile(profile)
+    if role == "custom":
+        return True
+    if target in ARTCRAFT:
+        return target in MUZA_ARTCRAFT[role]
+    if remote and target != "blender":
+        return True
+    if target in SHARED_UTILITIES:
+        return True
+    if role in MUZA_NON_ART:
+        # Existing remote service connectors have independent auth/permissions.
+        return target in MUZA_NON_ART[role] or target in {"gitlab", "tinyfish"}
+    return target != "blender"
+
+
+def artcraft_root():
+    value = os.environ.get("MSSHI_ARTCRAFT_ROOT")
+    if value:
+        path = Path(value).expanduser()
+        if not path.is_absolute():
+            raise ValueError("MSSHI_ARTCRAFT_ROOT must be an absolute application directory")
+        return path
+    return Path("D:/Program/ArtCraft Apps") if os.name == "nt" else Path.home() / "Applications/ArtCraft Apps"
+
+
+def artcraft_executable(target):
+    if target not in ARTCRAFT:
+        return None
+    folder = "craft-anything" if target == "craftanything" else target
+    path = artcraft_root() / folder / (folder + ("-cli.exe" if os.name == "nt" else "-cli"))
+    return str(path.absolute()) if path.is_file() else None
+
+
+def scope_capabilities(rows, profile):
+    for name, row in rows.items():
+        if not target_allowed(profile, name):
+            row.update(readiness="disabled" if name in {"gdrive", "gdrive-web"} else "blocked_by_specialization",
+                       policy_role=role_for_profile(profile), require_task_ticket=True)
+    return rows
 
 
 def normalized(value):
@@ -244,7 +315,9 @@ def capabilities(connectors, hermes_home=None):
     routes = state / "profiles" / profile / "routes.json"
     if (state / "policy.json").is_file() and routes.is_file():
         data = json.loads(routes.read_text(encoding="utf-8"))
-        rows = {key: {"route": row["kind"], "readiness": row["readiness"],
+        rows = {key: {"route": row["kind"], "readiness": ("optional_missing" if row.get("readiness") == "available"
+                      and row.get("kind") in {"native-cli", "browser", "desktop"}
+                      and not (row.get("executable") and Path(row["executable"]).is_file()) else row["readiness"]),
                       "require_task_ticket": True}
                 for key,row in data["targets"].items()}
         for name,enabled in connectors.items():
@@ -252,11 +325,11 @@ def capabilities(connectors, hermes_home=None):
                 rows[mcp_id(name)] = {"route": "hermes-mcp", "readiness": "configured" if enabled else "disabled",
                                      "connector": name, "registration_source": "hermes-config",
                                      "require_task_ticket": False}
-        return rows
+        return scope_capabilities(rows, profile)
     rows = {}
     for target in (*WEB_TARGETS, "antigravity"):
         if target == "gdrive-web":
-            rows[target] = {"route": "web", "readiness": "available_web"}
+            rows[target] = {"route": "web", "readiness": "disabled"}
             continue
         path = app_executable(target)
         if target == "youtube-chrome":
@@ -266,18 +339,21 @@ def capabilities(connectors, hermes_home=None):
         else:
             desktop = path or WINDOWS_STORE_APPS[target] in store_app_ids()
             rows[target] = {"route": "hybrid", "readiness": "available" if desktop else "available_web"}
-    for target in (*ARTCRAFT, "blender"):
-        rows[target] = {"route": "hermes-mcp", "readiness": "missing_config"}
+    for target in ARTCRAFT:
+        rows[target] = {"route": "native-cli", "readiness": "requires_migration" if artcraft_executable(target) else "needs_install",
+                        "require_task_ticket": True}
+    rows["blender"] = {"route": "native-cli", "readiness": "requires_migration", "require_task_ticket": True}
     for name, enabled in connectors.items():
         target = mcp_id(name)
         prior = rows.get(target, {})
         if prior.get("readiness") != "configured":
-            rows[target] = {"route": "hermes-mcp", "readiness": "configured" if enabled else "disabled",
-                            "connector": name}
+            if target not in ARTCRAFT and target != "blender":
+                rows[target] = {"route": "hermes-mcp", "readiness": "configured" if enabled else "disabled",
+                                "connector": name}
     for target in (*HARNESS, *NATIVE, *installed_extension_ids()):
         rows[target] = {"route": "native-cli" if target in NATIVE else "cli-anything",
                         "readiness": "available" if harness_executable(target, hermes_home) else "needs_install"}
-    return rows
+    return scope_capabilities(rows, profile)
 
 
 def safe_process(path, args, wait):
@@ -287,6 +363,8 @@ def safe_process(path, args, wait):
 
 
 def open_target(target, query=None):
+    if target in DISALLOWED_TARGETS:
+        raise ValueError("Rute ini dinonaktifkan oleh kebijakan MSSHI.")
     state, _ = migrated_state()
     if (state / "policy.json").is_file():
         raise ValueError("MSSHI v3 execution requires msshi runtime run and a one-use task ticket.")
@@ -323,7 +401,9 @@ def open_target(target, query=None):
 
 
 def run_target(target, argv, hermes_home=None):
-    state, _ = migrated_state(hermes_home)
+    state, profile = migrated_state(hermes_home)
+    if not target_allowed(profile, target):
+        raise ValueError("Target di luar spesialisasi profil atau dinonaktifkan oleh kebijakan.")
     if (state / "policy.json").is_file():
         raise ValueError("MSSHI v3 execution requires msshi runtime run and a one-use task ticket.")
     if target not in (*HARNESS, *NATIVE) and not GENERIC_CLI.fullmatch(target):

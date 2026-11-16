@@ -1,4 +1,4 @@
-# MSSHI v3.1.0 - What each installation choice does
+# MSSHI v3.1.1 - What each installation choice does
 
 [Bahasa Indonesia](OPTION_GUIDE.md) | [English](OPTION_GUIDE_EN.md)
 
@@ -55,11 +55,11 @@ These commands only read help. They do not install, authenticate, open apps, fet
 | pull-upstreams | Download external reference repositories into a cache for additional modules. Uses internet and disk space; it does not automatically run their code or make dependencies/accounts ready. |
 | custom-display-names | Change display names in the preset while keeping role assignments and folder IDs the same. |
 | artcraft | Optional creative apps for photo, video, audio, design and documents through available adapters. You may skip them; apps, licenses or service accounts are separate and do not open at boot. |
-| kat | An additional coding subagent, separate from the main model. This choice only saves readiness preferences; it does not download a model or enable the subagent yet. |
-| kat-light | Plan local KAT with IQ2_XS/IQ3_XXS quantization for a smaller memory footprint. Requires model files and a real RAM check; selection does not download or load the model. |
-| kat-ideal | Plan local KAT with Q4_K_M quantization, generally heavier than the light option. Requires model files and enough RAM; selection does not download or load the model. |
-| kat-cloud | Plan a separate API endpoint for the coding subagent. Requires an account/endpoint and cost approval; this choice makes no API call and does not replace the main model. |
-| kat-skip | Skip KAT configuration; coding can still use the agent and main model already configured. |
+| kat | Optional Shikaku-only KAT helper. The wizard configures an endpoint, model ID and key reference while preserving primary/MoA settings. Dev needs a real deployment; official StreamLake serves a different Pro v2.5 variant and needs its own key/account billing. |
+| kat-light | Compatibility alias for the old choice: opens the KAT wizard, downloading no local model. 16 GB RAM does not prove fit; a valid endpoint/key is required. |
+| kat-ideal | Legacy choice alias opening endpoint setup; it neither installs Q4 nor promises a 35B model fits a laptop. The Coder primary model is preserved. |
+| kat-cloud | Configure a remote KAT endpoint through the wizard and hidden key input. Dev has no automatically supplied hosted URL; StreamLake is a paid, different Pro v2.5 variant. |
+| kat-skip | Disable only the Coder KAT helper; primary models, normal delegation and coding skills remain available. |
 | skill-vs-pack | Packs select skill groups by subject; individual skills give one-by-one control. Mandatory foundations remain included, and external references are not necessarily ready to run. |
 | voice | Local OmniVoice speech for requested audio or read-aloud, not every chat automatically. Requires weights, RAM and audio setup; the weights license restricts commercial use. |
 | dream | Create deterministic local summary/learning proposals from selected material. Does not call an LLM or automatically promote proposals into active memory. |
@@ -88,7 +88,7 @@ These choices configure the route registry only. Apps, runtimes, sign-in, accoun
 | ID | Function / prerequisites |
 | --- | --- |
 | existing | Reuse connectors already enabled in this Hermes profile; authentication and successful operations still need separate verification. |
-| artcraft | Register the group of 15 ArtCraft creative apps for video, images, audio, design, documents, and 3D; apps/runtimes are installed separately. |
+| artcraft | Optional creative apps for photo, video, audio, design and documents through available adapters. You may skip them; apps, licenses or service accounts are separate and do not open at boot. |
 | gdrive-web | Access Google Drive files through the web for a requested task; requires account sign-in and permission under the active browser policy. |
 | perplexity | Research and search with Perplexity; web/app access and account limits are checked when used, without opening the app now. |
 | youtube-chrome | Access YouTube for video research through the available route; personal-browser access requires task-scoped permission and the active policy. |
@@ -124,15 +124,15 @@ These choices configure the route registry only. Apps, runtimes, sign-in, accoun
 | materialcraft | Work on materials for visual/3D projects in MaterialCraft; requires the app and an available CLI adapter. |
 | texturecraft | Work on textures for visual/3D projects in TextureCraft; requires the app and an available CLI adapter. |
 | git | Manage source versions and change history with Git; pushing or writing to a remote still requires task permission and account access. |
-| gitlab | Access GitLab projects and data through the registered adapter; requires authentication and appropriate project permissions. |
+| gitlab | Access GitLab projects through web MCP with appropriate account authentication and permissions. Read only task-scoped data; project changes need explicit instructions. |
 | mcp:gitlab | Access GitLab projects, issues, and data through the registered MCP connector; authentication and project permissions are checked separately, and registration does not prove successful operations. |
 | mcp:tinyfish | Use Tinyfish web automation/search through MCP for authorized tasks; sign-in and quota/cost permission are required, and registration does not prove a working connection. |
 | node | Run JavaScript tools/projects with local Node.js; selecting the route does not install packages or execute a project. |
 | python | Run local Python tools/projects; selecting the route does not install dependencies or execute code. |
 | graphify | Map file/code relationships into a project graph through local Graphify; requires its runtime and selected project input. |
 | whatsapp-web | Access WhatsApp Web when required by a task; requires an account session and task-scoped permission, with authorization for sending messages. |
-| hersona | Manage personalization/personas through Hersona CLI; selecting the route does not change personas or model configuration. |
-| llmtrim | Compact eligible payloads through llmtrim CLI; savings depend on the input and do not guarantee lower total token billing. |
+| hersona | Find persona references and prepare character-adjustment drafts through the CLI. Active persona still follows native SOUL; drafts do not automatically overwrite user settings. |
+| llmtrim | Compact eligible large JSON outputs without losing values, with an equality check. Does not compress every chat or guarantee a particular billing reduction. |
 
 App names explain intended use; detection or registration alone is not proof of successful authentication or task completion. Unknown CLI extensions and existing MCP connectors receive a generic explanation until their own documentation is reviewed. Connection menu language follows `MSSHI_LANG=en` (PowerShell: `$env:MSSHI_LANG="en"`) or an English `LANG` locale.
 
@@ -243,7 +243,7 @@ The catalogue has 122 canonical names: 63 bundled instruction folders and 59 ext
 | ponytail | External; separate setup | Reduce unnecessary complexity and choose changes proportionate to the task. |
 | prep-for-meetings | Bundled instructions | Prepare a meeting brief from available notes and goals. |
 | prep-for-meetings-2 | Bundled instructions | Condense meeting material into key points and a quick reminder card. |
-| rea | Optional, OFF; separate runtime | Optionally analyze owned JavaScript or archives through a local static-analysis CLI; native formats need separate engines. |
+| rea | Static CLI analysis of owned JavaScript/archives, useful for understanding applications and artifacts. Default No; this installs only the wrapper, not the runtime or native engines. |
 | rebuttal-writing | Bundled instructions | Draft point-by-point responses to supervisor or reviewer feedback. |
 | remote-jobs | External; separate setup | Shortlist remote employers, then verify location requirements and current vacancies. |
 | remotion-skills | External; separate setup | Build editable video compositions as code and render them when the runtime is available. |
@@ -272,3 +272,6 @@ The catalogue has 122 canonical names: 63 bundled instruction folders and 59 ext
 | auto-curiosity-for-film-making | auto-curiousity-for-film-making |
 
 Source of the menu copy: [option_help.json](../configs/option_help.json), [application help](../skills/cli-anything-universal-bridge/scripts/connection_help.json). See [CLI](CLI.md), [REA](REA.md), and [third-party licenses](../THIRD_PARTY_NOTICES.md).
+
+
+[v3.1.1 native profiles, KAT and automatic PDF delivery](V3_1_1_REPAIR.md)

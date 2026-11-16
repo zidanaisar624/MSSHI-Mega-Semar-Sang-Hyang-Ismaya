@@ -35,9 +35,9 @@ def resolve_role_map(home: Path) -> dict[str, str]:
 BLOCKED = {"blender", "wordcraft", "lightcraft", "cadcraft", "craftanything", "deckcraft",
            "designcraft", "effectcraft", "figcraft", "filmcraft", "gridcraft",
            "materialcraft", "pdfcraft", "photocraft", "solidcraft",
-           "soundcraft", "texturecraft", "vectorcraft"}
+           "soundcraft", "texturecraft", "vectorcraft", "anicraft"}
 UTILITY_MCP = {"hersona", "llmtrim"}
-MIGRATED_MCP = BLOCKED | UTILITY_MCP
+MIGRATED_MCP = BLOCKED | UTILITY_MCP | {"gimp", "libreoffice", "solvecraft"}
 
 def read(path):
     return json.loads(path.read_text(encoding="utf-8-sig"))

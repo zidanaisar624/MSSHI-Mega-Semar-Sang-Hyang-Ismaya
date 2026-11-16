@@ -406,8 +406,8 @@
       "en": "Draft point-by-point responses to supervisor or reviewer feedback."
     },
     "remote-jobs": {
-      "id": "Menyaring perusahaan remote, lalu memeriksa syarat lokasi dan lowongan langsung.",
-      "en": "Shortlist remote employers, then verify location requirements and current vacancies."
+      "id": "Cari perusahaan remote dari direktori lokal terpin; lowongan aktif tetap diverifikasi terpisah.",
+      "en": "Find remote-friendly companies in the pinned local directory; verify current vacancies separately."
     },
     "remotion-skills": {
       "id": "Merancang komposisi video sebagai kode dan merendernya bila runtime tersedia.",
@@ -486,8 +486,32 @@
       "en": "Extract CSS/XPath data from saved local HTML in an isolated parser runtime."
     },
     "harness2": {
-      "id": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
-      "en": "Explore harness improvements through deterministic demonstrations and human-reviewed proposals."
+      "id": "Kelima bot dapat menyusun proposal dan demo evaluasi harness; tidak mempromosikan perubahan otomatis.",
+      "en": "All five bots can propose and demonstrate harness evaluation; changes are never promoted automatically."
+    },
+    "career-ops": {
+      "id": "Bantu CV-lowongan, strategi karier, tracker dan wawancara; source, runtime dan CV pengguna terpisah.",
+      "en": "Career planning, CV/job fit, tracking and interviews; source, runtime and personal CV data are separate."
+    },
+    "mattpocock-engineering": {
+      "id": "Pilih disiplin TDD, debugging dan domain model; orkestrator/spec publish hanya saat diminta.",
+      "en": "Select TDD, debugging and domain-modeling disciplines; invoke orchestrators/spec publishing explicitly."
+    },
+    "rea-video": {
+      "id": "Kiki membedah referensi video ke VIDEO.md; VLM, audio-model dan remake adalah pilihan terpisah.",
+      "en": "Kiki breaks down reference video into VIDEO.md; VLM, audio models and remakes are separate opt-ins."
+    },
+    "artcraft-anicraft": {
+      "id": "Animasi dan komposisi bergerak melalui CLI aplikasi lokal sesuai tiket tugas.",
+      "en": "Use the local anicraft CLI only for an explicit task ticket; do not open it on boot."
+    },
+    "artcraft-materialcraft": {
+      "id": "Penyusunan material melalui CLI lokal sesuai tiket tugas.",
+      "en": "Use the local materialcraft CLI only for an explicit task ticket; do not open it on boot."
+    },
+    "artcraft-texturecraft": {
+      "id": "Penyusunan tekstur melalui CLI lokal sesuai tiket tugas.",
+      "en": "Use the local texturecraft CLI only for an explicit task ticket; do not open it on boot."
     }
   },
   "packs": {
@@ -582,24 +606,24 @@
       "en": "Optional creative apps for photo, video, audio, design and documents through available adapters. You may skip them; apps, licenses or service accounts are separate and do not open at boot."
     },
     "kat": {
-      "id": "Subagen coding tambahan untuk pekerjaan kode, terpisah dari model utama. Pilihan di sini hanya menyimpan preferensi kesiapan; tidak mengunduh model dan belum mengaktifkan subagen.",
-      "en": "An additional coding subagent, separate from the main model. This choice only saves readiness preferences; it does not download a model or enable the subagent yet."
+      "id": "Helper KAT opsional khusus Shikaku. Wizard menyiapkan endpoint, ID model dan referensi key; model utama/MoA tetap utuh. Dev perlu deployment nyata; preset resmi StreamLake menggunakan Pro v2.5 yang berbeda dan membutuhkan key serta saldo akun sendiri.",
+      "en": "Optional Shikaku-only KAT helper. The wizard configures an endpoint, model ID and key reference while preserving primary/MoA settings. Dev needs a real deployment; official StreamLake serves a different Pro v2.5 variant and needs its own key/account billing."
     },
     "kat-light": {
-      "id": "Rencana KAT lokal dengan kuantisasi IQ2_XS/IQ3_XXS untuk jejak memori lebih kecil. Perlu file model dan pemeriksaan RAM nyata; memilihnya tidak mengunduh atau memuat model.",
-      "en": "Plan local KAT with IQ2_XS/IQ3_XXS quantization for a smaller memory footprint. Requires model files and a real RAM check; selection does not download or load the model."
+      "id": "Alias kompatibilitas pilihan lama: membuka wizard KAT, tanpa mengunduh model lokal. RAM 16 GB tidak membuktikan model muat; pilihan harus memiliki endpoint/key yang valid.",
+      "en": "Compatibility alias for the old choice: opens the KAT wizard, downloading no local model. 16 GB RAM does not prove fit; a valid endpoint/key is required."
     },
     "kat-ideal": {
-      "id": "Rencana KAT lokal dengan kuantisasi Q4_K_M yang umumnya lebih berat dari opsi ringan. Perlu file model dan RAM cukup; memilihnya tidak mengunduh atau memuat model.",
-      "en": "Plan local KAT with Q4_K_M quantization, generally heavier than the light option. Requires model files and enough RAM; selection does not download or load the model."
+      "id": "Alias pilihan lama yang membuka wizard endpoint; tidak memasang Q4 atau menjanjikan model 35B muat di laptop. Model utama Coder tidak diganti.",
+      "en": "Legacy choice alias opening endpoint setup; it neither installs Q4 nor promises a 35B model fits a laptop. The Coder primary model is preserved."
     },
     "kat-cloud": {
-      "id": "Rencana memakai endpoint API terpisah untuk subagen coding. Perlu akun/endpoint dan persetujuan biaya; pilihan ini tidak membuat panggilan API atau mengganti model utama.",
-      "en": "Plan a separate API endpoint for the coding subagent. Requires an account/endpoint and cost approval; this choice makes no API call and does not replace the main model."
+      "id": "Konfigurasikan endpoint KAT jarak jauh lewat wizard dan input key rahasia. KAT-Coder-V2.5-Dev tidak mendapat URL hosted otomatis; preset StreamLake adalah Pro v2.5, berbayar dan berbeda varian.",
+      "en": "Configure a remote KAT endpoint through the wizard and hidden key input. Dev has no automatically supplied hosted URL; StreamLake is a paid, different Pro v2.5 variant."
     },
     "kat-skip": {
-      "id": "Lewati konfigurasi KAT; coding tetap dapat memakai agen dan model utama yang sudah diatur.",
-      "en": "Skip KAT configuration; coding can still use the agent and main model already configured."
+      "id": "Nonaktifkan helper KAT khusus Coder; semua model utama, delegasi biasa dan skill coding tetap tersedia.",
+      "en": "Disable only the Coder KAT helper; primary models, normal delegation and coding skills remain available."
     },
     "skill-vs-pack": {
       "id": "Paket memilih kelompok skill sesuai bidang; skill individual memberi kontrol satu per satu. Skill fondasi wajib tetap disertakan, dan referensi eksternal belum tentu siap dijalankan.",
@@ -676,6 +700,18 @@
     "setup-bot-apps": {
       "id": "Hubungkan tiap profil bot ke jembatan CLI-Anything dan aplikasi lokal atau web secara on-demand memakai tiket tugas, dengan auto_open_on_boot tetap nonaktif.",
       "en": "Connect selected bot profiles to CLI-Anything bridges and local or web apps on demand via task tickets while keeping auto_open_on_boot disabled."
+    },
+    "context-sources": {
+      "id": "Cache source terpin CareerOps, direktori remote, Matt Pocock dan rea-video di luar skills; default status tidak mengunduh atau menjalankan model.",
+      "en": "Cache pinned CareerOps, remote-directory, Matt Pocock and rea-video sources outside skills; default status downloads nothing and runs no model."
+    },
+    "career-ops-runtime": {
+      "id": "Pasang dependency Node secara eksplisit tanpa lifecycle scripts atau unduhan Chromium; CV/data pengguna tetap privat, tugas dan akun terpisah.",
+      "en": "Explicitly install Node dependencies without lifecycle scripts or Chromium downloads; personal CV/data remains private and tasks/accounts are separate."
+    },
+    "rea-video-runtime": {
+      "id": "Pasang runtime Python terisolasi; analisis lokal dapat melewati OCR/ASR/stems/VLM. Fitur model, unduhan bobot dan generasi tidak otomatis aktif.",
+      "en": "Install an isolated Python runtime; local analysis can skip OCR/ASR/stems/VLM. Model features, weights and generation are not automatically enabled."
     }
   }
 }

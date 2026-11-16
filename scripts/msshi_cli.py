@@ -41,7 +41,7 @@ RELEASE_DIRS = ("scripts", "configs", "skills", "docs", "portable", "assets", "a
 RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md",
                  "LICENSE", "SKILL.md", "install.ps1", "install.sh", "package.json",
                  "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat",
-                 "MULAI_DI_SINI_PEMULA.bat", "MULAI_SKRIPSI_DRAG_AND_DROP.bat")
+                 "MULAI_DI_SINI_PEMULA.bat", "MULAI_SKRIPSI_DRAG_AND_DROP.bat", "INSTALL_FOR_AGENTS.md")
 
 
 @contextmanager
@@ -403,7 +403,7 @@ def _hermes_profile_roots(platform, target, mode, selections, profile_home):
         for folder in selections:
             parent = folder.parent
             if parent == profile_home:
-                roots.append(("yukino" if mode == "muza-preset" else "default", profile_home, "default", profile_home))
+                roots.append(("default", profile_home, "default", profile_home))
             else:
                 roots.append((parent.name, profile_home, parent.name, parent))
         return roots
@@ -592,7 +592,7 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
         pick = "yes-default"
     else:
         print("  1. Stage plugin aman msshi-auto-trim (fail-open; pertahankan KAT saat ini) (Rekomendasi)")
-        print("  2. Atur KAT-Coder (light / ideal / cloud / skip) + opsional msshi-auto-trim")
+        print("  2. Atur endpoint KAT-Coder opsional + input key privat; model utama tetap")
         print("  3. Aktifkan plugin lokal aman (msshi-auto-trim + Dreaming offline + OmniVoice jika terverifikasi)")
         print("  4. Opt-in Steel Browser Policy (butuh config.yaml & repo terpin)")
         print("  5. Lewati / pertahankan kondisi saat ini")
@@ -939,12 +939,8 @@ def setup(args, home, state):
     data, catalog, packs = installer.read_matrix(ROOT / MATRIX)
     command = ["--mode", mode, "--platform", platform, "--target-dir", str(target)]
     default_bot_mode = getattr(args, 'default_bot', 'auto')
-    yukino_is_default = (
-        platform == "hermes"
-        and mode == "muza-preset"
-        and target.name.lower() == "profiles"
-        and default_bot_mode != "keep-hermes"
-    )
+    # All five team members are real named profiles. Default stays neutral.
+    yukino_is_default = False
     if platform == "hermes" and mode == "muza-preset" and default_bot_mode != "auto":
         command.extend(("--default-bot", default_bot_mode))
     selections = {}
@@ -1031,8 +1027,6 @@ def setup(args, home, state):
         },
         lang,
     )
-    if yes and not getattr(args, 'download_pdf', False) and not getattr(args, 'pdf_version', None):
-        args.no_pdf = True
     from msshi_manuals import prompt_manual_download
     prompt_manual_download(args, source_root=ROOT, lang=lang)
 
@@ -1152,7 +1146,7 @@ def update(args, home, state, source, commit):
         print("Belum ada target. Jalankan msshi setup untuk memasang dan mendaftarkan skills.")
     has_manual_catalog = (source / "docs" / "manuals" / "pdf_catalog.json").is_file()
     explicit_pdf = bool(getattr(args, "download_pdf", False) or getattr(args, "pdf_version", None))
-    if explicit_pdf or (has_manual_catalog and sys.stdin.isatty() and not getattr(args, "no_pdf", False)):
+    if explicit_pdf or (has_manual_catalog and not getattr(args, "no_pdf", False)):
         from msshi_manuals import prompt_manual_download
         prompt_manual_download(args, source_root=source)
     if args.skip_upstreams:
@@ -1197,7 +1191,7 @@ def main(argv=None):
     updater.add_argument("--hermes-home", type=Path, help="Folder Hermes untuk migrasi v3.")
     updater.add_argument("--source", type=Path, help="Pakai kandidat lokal yang sudah diperiksa.")
     updater.add_argument("--download-pdf", action="store_true", help="Unduh Buku Panduan PDF lengkap untuk versi ini.")
-    updater.add_argument("--no-pdf", action="store_true", help="Lewati pertanyaan unduh Buku Panduan PDF.")
+    updater.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
     for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
@@ -1225,11 +1219,12 @@ def main(argv=None):
         }
         command = subparsers.add_parser(verb, add_help=False, help=descriptions[verb])
         command.add_argument("arguments", nargs=argparse.REMAINDER)
-    for verb in ("dream", "voice", "kat"):
+    for verb in ("dream", "voice", "kat", "coder"):
         command = subparsers.add_parser(verb, add_help=False, help={
             'dream': 'Proposal pelajaran lokal untuk ditinjau, bukan promosi memori otomatis.',
             'voice': 'Status/setup OmniVoice lokal untuk audio yang diminta.',
-            'kat': 'Catat preferensi subagen coding; model/endpoint belum otomatis aktif.',
+            'kat': 'Wizard opsional KAT untuk Coder; masukkan endpoint dan key secara privat.',
+            'coder': 'Status, preset, dan setup endpoint KAT opsional khusus Shikaku.',
         }[verb])
         command.add_argument("arguments", nargs=argparse.REMAINDER)
     for action in ("setup", "select"):
@@ -1240,10 +1235,10 @@ def main(argv=None):
         if action == "setup":
             wizard.add_argument("--mode", choices=MODES, help="Pilih mode langsung tanpa prompt.")
             wizard.add_argument("--yes", "-y", action="store_true", help="Konfirmasi otomatis tanpa prompt.")
-            wizard.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto", help="Di mode muza-preset untuk Hermes, atur apakah profil 'default' otomatis menjadi Yukino ('auto'/'yukino') atau dipertahankan sebagai 'Hermes' ('keep-hermes').")
+            wizard.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto", help="Hermes tetap netral; lima bot memakai profil bernama. auto/yukino adalah alias kompatibilitas; keep-hermes juga memperbaiki label default yang duplikat.")
             wizard.add_argument("--extra-packs", nargs="+", help="Tambahkan extra packs di langkah [1/4] Skills.")
             wizard.add_argument("--extra-skills", nargs="+", help="Tambahkan extra skill slugs di langkah [1/4] Skills.")
-            wizard.add_argument("--kat-mode", choices=("light", "ideal", "cloud", "skip"), help="Atur mode KAT-Coder di langkah [2/4] Plugin.")
+            wizard.add_argument("--kat-mode", choices=("light", "ideal", "cloud", "skip"), help="Buka wizard endpoint KAT khusus Coder (light/ideal/cloud alias kompatibilitas); skip menonaktifkan KAT saja. Tidak mengunduh model.")
             wizard.add_argument("--stage-auto-trim", action="store_true", help="Stage plugin fail-open msshi-auto-trim ke profil Hermes di langkah [2/4] Plugin.")
             wizard.add_argument("--install-steel", action="store_true", help="Opt-in Steel Browser Policy di langkah [2/4] Plugin.")
             wizard.add_argument("--connect-services", choices=("skip", "per-profile", "share-oauth"), help="Atur koneksi MCP GitLab/Tinyfish di langkah [3/4] Koneksi.")
@@ -1252,15 +1247,18 @@ def main(argv=None):
             wizard.add_argument("--connect-targets", help="Daftar app target (dipisah koma atau 'detected') untuk langkah [4/4].")
             wizard.add_argument("--with-rea", action="store_true", help="Opt-in analisis statis JavaScript/arsip: pasang instruksi REA; runtime Node/npm dan engine native terpisah. Default OFF.")
             wizard.add_argument("--download-pdf", action="store_true", help="Sekalian unduh Buku Panduan PDF Lengkap untuk versi ini.")
-            wizard.add_argument("--no-pdf", action="store_true", help="Lewati pertanyaan unduh Buku Panduan PDF.")
+            wizard.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
             wizard.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
             wizard.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
         if action == "select":
             wizard.add_argument("--local", action="store_true", help="Pilih dari rilis lokal tanpa mengakses GitHub.")
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
+    launcher.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
+    launcher.add_argument("--pdf-version", help="Pilih versi panduan; default latest.")
+    launcher.add_argument("--pdf-dest", type=Path, help="Folder PDF; default Downloads/MSSHI_Manuals.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -1286,7 +1284,7 @@ def main(argv=None):
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",
                        "brag": "../skills/brag/scripts/msshi_brag.py", "scrapling": "msshi_scrapling.py", "harness2": "msshi_harness2.py",
-                       "dream": "msshi_integrations.py", "voice": "msshi_integrations.py", "kat": "msshi_integrations.py"}
+                       "dream": "msshi_integrations.py", "voice": "msshi_integrations.py", "kat": "msshi_integrations.py", "coder": "msshi_coder_helpers.py"}
         if args.command in entrypoints:
             prefix = [args.command] if args.command in {"dream", "voice", "kat"} else []
             return subprocess.call([sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / entrypoints[args.command]),
@@ -1300,6 +1298,8 @@ def main(argv=None):
                 if migration:
                     return migration
                 bootstrap(home, stage_release(ROOT, home), state, args.no_path)
+                from msshi_manuals import prompt_manual_download
+                prompt_manual_download(args, source_root=ROOT)
             elif args.command == "setup":
                 setup(args, home, state)
             elif args.command == "select" and args.local:

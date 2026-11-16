@@ -1,8 +1,8 @@
-# MSSHI v3.1.0 - Arti setiap pilihan instalasi
+# MSSHI v3.1.1 - Arti setiap pilihan instalasi
 
 [Bahasa Indonesia](OPTION_GUIDE.md) | [English](OPTION_GUIDE_EN.md)
 
-Penjelasan muncul langsung di `msshi setup`, `msshi select`, `msshi optional list`, serta menu/katalog koneksi aplikasi. Revisi ini tetap memakai versi 3.1.0 dan default yang sama. `--lang en` mengganti bahasa penjelasan setup/select; ID dan format input tetap sama.
+Penjelasan muncul langsung di `msshi setup`, `msshi select`, `msshi optional list`, serta menu/katalog koneksi aplikasi. Revisi ini memakai versi 3.1.1; KAT opsional membuka wizard endpoint/key khusus Coder. `--lang en` mengganti bahasa penjelasan setup/select; ID dan format input tetap sama.
 
 ```sh
 msshi choices rea
@@ -55,11 +55,11 @@ Perintah di atas hanya membaca bantuan: tidak memasang, login, membuka aplikasi,
 | pull-upstreams | Unduh repositori referensi eksternal ke cache untuk modul tambahan. Memakai internet dan ruang disk; tidak otomatis menjalankan kode atau menjamin dependency/akun siap. |
 | custom-display-names | Ubah nama tampilan bot pada preset; pembagian peran dan ID folder tetap sama. |
 | artcraft | Aplikasi kreatif opsional untuk foto, video, audio, desain, dan dokumen melalui adapter yang tersedia. Boleh dilewati; aplikasi, lisensi, atau akun layanan disiapkan terpisah dan tidak dibuka saat boot. |
-| kat | Subagen coding tambahan untuk pekerjaan kode, terpisah dari model utama. Pilihan di sini hanya menyimpan preferensi kesiapan; tidak mengunduh model dan belum mengaktifkan subagen. |
-| kat-light | Rencana KAT lokal dengan kuantisasi IQ2_XS/IQ3_XXS untuk jejak memori lebih kecil. Perlu file model dan pemeriksaan RAM nyata; memilihnya tidak mengunduh atau memuat model. |
-| kat-ideal | Rencana KAT lokal dengan kuantisasi Q4_K_M yang umumnya lebih berat dari opsi ringan. Perlu file model dan RAM cukup; memilihnya tidak mengunduh atau memuat model. |
-| kat-cloud | Rencana memakai endpoint API terpisah untuk subagen coding. Perlu akun/endpoint dan persetujuan biaya; pilihan ini tidak membuat panggilan API atau mengganti model utama. |
-| kat-skip | Lewati konfigurasi KAT; coding tetap dapat memakai agen dan model utama yang sudah diatur. |
+| kat | Helper KAT opsional khusus Shikaku. Wizard menyiapkan endpoint, ID model dan referensi key; model utama/MoA tetap utuh. Dev perlu deployment nyata; preset resmi StreamLake menggunakan Pro v2.5 yang berbeda dan membutuhkan key serta saldo akun sendiri. |
+| kat-light | Alias kompatibilitas pilihan lama: membuka wizard KAT, tanpa mengunduh model lokal. RAM 16 GB tidak membuktikan model muat; pilihan harus memiliki endpoint/key yang valid. |
+| kat-ideal | Alias pilihan lama yang membuka wizard endpoint; tidak memasang Q4 atau menjanjikan model 35B muat di laptop. Model utama Coder tidak diganti. |
+| kat-cloud | Konfigurasikan endpoint KAT jarak jauh lewat wizard dan input key rahasia. KAT-Coder-V2.5-Dev tidak mendapat URL hosted otomatis; preset StreamLake adalah Pro v2.5, berbayar dan berbeda varian. |
+| kat-skip | Nonaktifkan helper KAT khusus Coder; semua model utama, delegasi biasa dan skill coding tetap tersedia. |
 | skill-vs-pack | Paket memilih kelompok skill sesuai bidang; skill individual memberi kontrol satu per satu. Skill fondasi wajib tetap disertakan, dan referensi eksternal belum tentu siap dijalankan. |
 | voice | Suara lokal OmniVoice untuk audio atau baca-nyaring yang diminta; tidak otomatis menyuarakan setiap chat. Perlu bobot, RAM, dan setup audio; lisensi bobot membatasi penggunaan komersial. |
 | dream | Buat proposal rangkuman/pelajaran secara lokal dan deterministik dari bahan terpilih. Tidak memanggil LLM atau otomatis memasukkan proposal ke memori aktif. |
@@ -88,7 +88,7 @@ Pilihan ini hanya mengatur registri rute. Aplikasi, runtime, login, izin akun, d
 | ID | Fungsi / prasyarat |
 | --- | --- |
 | existing | Daftarkan ulang konektor Hermes yang sudah aktif pada profil ini; login dan keberhasilan operasi tetap perlu diperiksa terpisah. |
-| artcraft | Daftarkan kelompok 15 aplikasi kreatif ArtCraft untuk video, gambar, audio, desain, dokumen, dan 3D; aplikasi/runtime dipasang terpisah. |
+| artcraft | Aplikasi kreatif opsional untuk foto, video, audio, desain, dan dokumen melalui adapter yang tersedia. Boleh dilewati; aplikasi, lisensi, atau akun layanan disiapkan terpisah dan tidak dibuka saat boot. |
 | gdrive-web | Akses file Google Drive melalui web ketika tugas memerlukannya; perlu login dan izin akun, mengikuti kebijakan browser aktif. |
 | perplexity | Riset dan pencarian melalui Perplexity; akses web/aplikasi serta batas akun diperiksa saat dipakai, tanpa membuka aplikasi sekarang. |
 | youtube-chrome | Akses YouTube untuk riset video melalui rute yang tersedia; browser personal memerlukan izin sesuai tugas dan kebijakan aktif. |
@@ -124,15 +124,15 @@ Pilihan ini hanya mengatur registri rute. Aplikasi, runtime, login, izin akun, d
 | materialcraft | Pengerjaan material untuk proyek visual/3D di MaterialCraft; perlu aplikasi serta adapter CLI yang tersedia. |
 | texturecraft | Pengerjaan tekstur untuk proyek visual/3D di TextureCraft; perlu aplikasi serta adapter CLI yang tersedia. |
 | git | Kelola versi source code dan riwayat perubahan lewat Git; push atau penulisan remote tetap memerlukan izin tugas dan akses akun. |
-| gitlab | Akses proyek dan data GitLab melalui adapter yang terdaftar; perlu autentikasi serta izin proyek yang sesuai. |
+| gitlab | Akses proyek GitLab melalui MCP web dengan autentikasi dan izin akun yang sesuai. Baca hanya data dalam lingkup tugas; perubahan proyek memerlukan instruksi yang jelas. |
 | mcp:gitlab | Akses proyek, issue, dan data GitLab melalui konektor MCP yang terdaftar; autentikasi dan izin proyek diperiksa terpisah, registrasi bukan bukti operasi berhasil. |
 | mcp:tinyfish | Gunakan layanan otomasi/pencarian web Tinyfish melalui MCP untuk tugas yang diizinkan; perlu login serta izin kuota/biaya, registrasi bukan bukti koneksi berhasil. |
 | node | Jalankan tool/proyek JavaScript dengan Node.js lokal; memilih rute tidak memasang paket atau menjalankan proyek. |
 | python | Jalankan tool/proyek Python lokal; memilih rute tidak memasang dependency atau menjalankan kode. |
 | graphify | Petakan hubungan file/kode menjadi graf proyek melalui Graphify lokal; perlu runtime serta input proyek yang dipilih. |
 | whatsapp-web | Akses WhatsApp Web saat tugas memerlukannya; perlu sesi akun dan izin terikat tugas, pengiriman pesan memerlukan otorisasi. |
-| hersona | Kelola personalisasi/persona melalui Hersona CLI; memilih rute tidak mengubah persona atau konfigurasi model. |
-| llmtrim | Padatkan payload yang memenuhi syarat melalui llmtrim CLI; manfaat bergantung input dan tidak menjamin penghematan seluruh tagihan token. |
+| hersona | Cari referensi persona dan siapkan draf penyesuaian karakter melalui CLI. Persona aktif tetap mengikuti SOUL native; draf tidak otomatis menimpa pengaturan pengguna. |
+| llmtrim | Padatkan keluaran JSON besar yang memenuhi syarat tanpa kehilangan nilai, dengan pemeriksaan kesetaraan. Tidak memadatkan semua chat atau menjamin persentase penghematan tagihan tertentu. |
 
 Nama aplikasi menjelaskan kegunaannya; deteksi atau registrasi saja tidak membuktikan login maupun keberhasilan tugas. Ekstensi CLI dan konektor MCP yang belum dikenal mendapat penjelasan umum sampai dokumentasinya diperiksa. Bahasa menu koneksi mengikuti `MSSHI_LANG=en` (PowerShell: `$env:MSSHI_LANG="en"`) atau locale `LANG` berbahasa Inggris.
 
@@ -243,7 +243,7 @@ Katalog berisi 122 nama kanonis: 63 folder instruksi bawaan dan 59 referensi eks
 | ponytail | Eksternal; setup terpisah | Mengurangi kerumitan solusi dan memilih perubahan yang sesuai kebutuhan. |
 | prep-for-meetings | Instruksi dibundel | Menyusun ringkasan pertemuan dari catatan dan tujuan yang tersedia. |
 | prep-for-meetings-2 | Instruksi dibundel | Memadatkan bahan pertemuan menjadi pokok bahasan dan kartu pengingat. |
-| rea | Opsional OFF; runtime terpisah | Analisis statis JavaScript atau arsip milik pengguna lewat CLI lokal; format native memerlukan engine terpisah. |
+| rea | Analisis statis JavaScript/arsip milik pengguna melalui CLI; berguna untuk memahami aplikasi dan artefak. Default Tidak; pilihan ini hanya memasang wrapper, bukan runtime atau engine native. |
 | rebuttal-writing | Instruksi dibundel | Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer. |
 | remote-jobs | Eksternal; setup terpisah | Menyaring perusahaan remote, lalu memeriksa syarat lokasi dan lowongan langsung. |
 | remotion-skills | Eksternal; setup terpisah | Merancang komposisi video sebagai kode dan merendernya bila runtime tersedia. |
@@ -272,3 +272,6 @@ Katalog berisi 122 nama kanonis: 63 folder instruksi bawaan dan 59 referensi eks
 | auto-curiosity-for-film-making | auto-curiousity-for-film-making |
 
 Sumber teks menu: [option_help.json](../configs/option_help.json), [bantuan aplikasi](../skills/cli-anything-universal-bridge/scripts/connection_help.json). Lihat juga [CLI](CLI.md), [REA](REA.md), dan [lisensi pihak ketiga](../THIRD_PARTY_NOTICES.md).
+
+
+[v3.1.1: profil native, KAT, PDF otomatis](V3_1_1_REPAIR.md)
