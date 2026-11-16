@@ -150,7 +150,7 @@ def stage_release(source, home):
             if directory.is_dir():
                 installer.validate_tree(directory)
                 shutil.copytree(directory, staging / name, symlinks=True,
-                                ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+                                ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
         for name in RELEASE_FILES:
             path = source / name
             installer.reject_links(path)

@@ -40,12 +40,18 @@ def inventory(path: Path) -> dict[str, str]:
     result = {}
     for entry in sorted(path.rglob("*")):
         validate_path(entry)
+        relative = entry.relative_to(path)
+        # Python may compile a bundled helper during an offline check. Those
+        # disposable files do not establish ownership or a user customization.
+        # Validate first so an ignored cache name cannot conceal a link.
+        if any(part.casefold() == "__pycache__" for part in relative.parts) or entry.suffix.casefold() in {".pyc", ".pyo"}:
+            continue
         if entry.is_file():
             digest = hashlib.sha256()
             with entry.open("rb") as stream:
                 for chunk in iter(lambda: stream.read(1024 * 1024), b""):
                     digest.update(chunk)
-            result[entry.relative_to(path).as_posix()] = digest.hexdigest()
+            result[relative.as_posix()] = digest.hexdigest()
         elif not entry.is_dir():
             raise ValueError(f"Entri tidak didukung: {entry}")
     return result
@@ -65,7 +71,8 @@ def update_skill(incoming: Path, target: Path, backup_root: Path,
     candidate = staging / "incoming"
     backup = backup_root / target.name
     try:
-        shutil.copytree(incoming, candidate, symlinks=True)
+        shutil.copytree(incoming, candidate, symlinks=True,
+                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
         if inventory(candidate) != source_files or inventory(target) != target_files:
             raise ValueError(f"Isi berubah selama persiapan: {target.name}")
         target.rename(backup)

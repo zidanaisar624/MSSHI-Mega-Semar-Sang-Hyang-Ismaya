@@ -285,7 +285,7 @@ def copy_skill(source, destination):
     destination.parent.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(prefix=".msshi-stage-", dir=destination.parent.parent) as work:
         candidate = Path(work) / destination.name
-        shutil.copytree(source, candidate, symlinks=True, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+        shutil.copytree(source, candidate, symlinks=True, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
         validate_tree(candidate)
         if existing(destination):
             raise FileExistsError(f"Skill muncul saat persiapan: {destination}")
