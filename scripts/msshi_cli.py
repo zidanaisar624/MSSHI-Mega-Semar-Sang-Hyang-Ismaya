@@ -617,7 +617,7 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
         elif pick == "4":
             req_steel = True
 
-    kat_result = kat(profile_home, kat_choice) if kat_choice is not None else kat_stat
+    kat_result = kat(profile_home, kat_choice, interactive=False if yes else None) if kat_choice is not None else kat_stat
     print("  KAT:", json.dumps(kat_result, ensure_ascii=False))
     if stage_trim:
         trim_result = _stage_auto_trim_plugin(profile_home, target, mode, selections)

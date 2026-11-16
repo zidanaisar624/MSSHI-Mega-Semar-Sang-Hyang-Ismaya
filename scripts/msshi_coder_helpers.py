@@ -225,12 +225,15 @@ def configure(home, *, preset='exact-dev', base_url=None, model=None, api_key_en
     return status(home)
 
 
-def wizard(home, mode='cloud'):
+def wizard(home, mode='cloud', *, interactive=None):
     if mode == 'skip':
         data = status(home);data.update(enabled=False, status='disabled_by_user')
         atomic(state_path(home), encode({k:v for k,v in data.items() if k not in {'api_key_present','ready_for_requested_task','goose','routing_ready'}}))
         return status(home)
-    if not sys.stdin.isatty(): return configure(home)
+    if not (home / 'profiles/shikaku/config.yaml').is_file():
+        return {**status(home), 'enabled': False, 'status': 'needs_coder_profile_configuration'}
+    if interactive is False or (interactive is None and not sys.stdin.isatty()):
+        return configure(home)
     print('KAT is optional for Coder only; primary and existing sub-agent models stay unchanged.')
     print('1. Exact Dev: your OpenAI-compatible deployment URL (no hosted URL is bundled).')
     print('2. Official StreamLake Pro v2.5 API: different variant; needs its own key/billing.')

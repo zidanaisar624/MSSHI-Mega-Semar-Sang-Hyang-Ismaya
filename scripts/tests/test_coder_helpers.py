@@ -102,6 +102,15 @@ class CoderHelpers(unittest.TestCase):
              patch.object(kat, 'model_catalog', side_effect=AssertionError('network')):
             self.assertEqual(kat.wizard(self.home, 'cloud')['status'], 'needs_endpoint')
 
+    def test_unattended_selection_never_prompts_even_with_inherited_console(self):
+        with patch.object(sys.stdin, 'isatty', return_value=True), \
+             patch('builtins.input', side_effect=AssertionError('unexpected prompt')):
+            self.assertEqual(kat.wizard(self.home, 'cloud', interactive=False)['status'], 'needs_endpoint')
+
+    def test_pre_hermes_wizard_defers_without_coder_config(self):
+        (self.profile / 'config.yaml').unlink()
+        self.assertEqual(kat.wizard(self.home, interactive=False)['status'], 'needs_coder_profile_configuration')
+
 
 if __name__ == '__main__':
     unittest.main()

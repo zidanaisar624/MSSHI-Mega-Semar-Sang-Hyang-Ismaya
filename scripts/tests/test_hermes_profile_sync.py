@@ -30,7 +30,7 @@ class HermesProfileSyncTests(unittest.TestCase):
         no_pdf = patch.dict(os.environ, {"MSSHI_NO_PDF": "1"})
         no_pdf.start()
         self.addCleanup(no_pdf.stop)
-        def offline_kat_wizard(home, mode="cloud"):
+        def offline_kat_wizard(home, mode="cloud", **_):
             from msshi_coder_helpers import configure, status
             if not (home / "profiles/shikaku/config.yaml").is_file():
                 return status(home)  # Pre-Hermes setup defers private endpoint configuration.

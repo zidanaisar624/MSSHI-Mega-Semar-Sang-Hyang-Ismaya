@@ -443,12 +443,12 @@ def voice_status(home):
             "unload": "process exits after each synthesis", "provider": "omnivoice" if ready else "pending"}
 
 
-def kat(home, mode):
+def kat(home, mode, *, interactive=None):
     # Compatibility entrypoint: selecting KAT now runs the real endpoint wizard.
     # Never replace the primary or existing delegated model in config.yaml.
     from msshi_coder_helpers import root_home, status, wizard
     home = root_home(home)
-    return status(home) if mode == 'status' else wizard(home, mode)
+    return status(home) if mode == 'status' else wizard(home, mode, interactive=interactive)
 
 
 def main(argv=None):

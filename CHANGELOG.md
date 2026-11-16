@@ -2,6 +2,8 @@
 
 ## v3.1.1 - 2026-11-16
 
+- Ensure unattended `setup --yes --kat-mode ...` never prompts even when a Windows child inherits a console; defer KAT until Coder config exists.
+
 - Repair five native Hermes profiles: named Yukino, neutral default, targeted deletion-marker recovery, transactional receipts and conflict-aware rollback. Preserve primary/MoA/delegation models, SOUL and credentials.
 - Add native profile-aware delegation and bounded system prompt coordination. Existing custom backends are preserved; no model turns run during setup.
 - Reconcile CLI-Anything registries with strict ArtCraft ownership (Val 4 / Shikaku 2 / Kiki 13), native app discovery including Anicraft, and persistent disabled routes. Add snapshot-guarded runtime rebaseline with explicit acceptance of stale historical evidence.
