@@ -1,5 +1,13 @@
 # Changelog MSSHI
 
+## v3.1.2 - 2026-11-17
+
+- Add portable user-address rules to all five persona templates and combined Main/Sub-Agent/MoA/contract/review protocols for Coder and Kiki. An explicit, receipt-backed SOUL helper preserves private persona bytes and refuses implicit Obsidian writes.
+
+- Honor unattended Windows setup even when the process inherits a console; KAT is optional/default OFF, including the MuZA preset. No local weight download or main-model change.
+- Fix CareerOps source checks for its actual upstream layout (no root npm lock), resume only Git-blob-verified partial downloads, and record an explicit locally resolved dependency lock when runtime setup is requested.
+- Preserve prior v3.1.1 history and tag; this patch includes the Windows issue found during live installation. Update the client handbook and automatic PDF channel accordingly.
+
 ## v3.1.1 - 2026-11-16
 
 - Ensure unattended `setup --yes --kat-mode ...` never prompts even when a Windows child inherits a console; defer KAT until Coder config exists.

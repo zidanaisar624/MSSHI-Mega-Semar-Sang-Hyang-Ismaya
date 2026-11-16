@@ -36,8 +36,9 @@ dan pembacaan satu skill selanjutnya tidak melakukan akses jaringan atau model.
 
 Cache mengandung kode/dokumentasi workflow yang dipilih, bukan history Git, vendor
 dependency, contoh video/model besar atau data pengguna. Untuk CareerOps, AGENTS.md,
-mode workflow termasuk `_shared.md`/`_writing.md`, scripts, dan lock dependency harus
-tersedia. Source ini berbeda dari User Layer privat.
+mode workflow termasuk `_shared.md`/`_writing.md`, scripts, dan `package.json` harus
+tersedia. Pin ini tidak mempunyai `package-lock.json` pada root CLI; lock di `web/`
+milik proyek web terpisah. Source ini berbeda dari User Layer privat.
 
 ## Runtime eksplisit
 
@@ -46,8 +47,12 @@ msshi integrations source --home "PATH_HERMES" --name career-ops --install-runti
 msshi integrations source --home "PATH_HERMES" --name rea-video --install-runtime
 ```
 
-CareerOps memerlukan Node sesuai rentang upstream. Installer menjalankan `npm ci`
-dengan `--ignore-scripts` dan `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`; Chromium dan
+CareerOps memerlukan Node sesuai rentang upstream. Pada pemasangan runtime eksplisit,
+installer membuat resolusi dependency lokal dengan `npm install --package-lock-only
+--ignore-scripts`, lalu menjalankan `npm ci --ignore-scripts`. Hash lock lokal dicatat
+dan diperiksa saat status/reinstall; lock tersebut bukan pin yang disediakan upstream.
+Resolusi pertama dapat mengikuti versi dependency yang tersedia sesuai rentang manifest.
+Dengan `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`, Chromium dan
 aktivitas portal tidak dipasang/dijalankan otomatis. Data CV/tracker diletakkan pada
 `msshi-private/career-ops-data/`. Gunakan `CAREER_OPS_DATA_DIR` yang dilaporkan status
 untuk proses CareerOps; jangan menyimpan CV di source cache/repo publik. Tanpa CV dan

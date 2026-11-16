@@ -48,6 +48,8 @@ def relative(value):
 
 
 def read(path):
+    if path.stat().st_size > MAX_FILE:
+        raise ValueError('Source/runtime metadata exceeds size budget')
     return json.loads(path.read_text(encoding='utf-8-sig'))
 
 
@@ -117,7 +119,8 @@ def verify_cached(home, name):
         raise ValueError('Invalid source inventory')
     for name_, digest in hashes.items():
         path = checked(root / relative(name_))
-        if not isinstance(digest, str) or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+        if (not isinstance(digest, str) or path.stat().st_size > MAX_FILE
+                or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
             raise ValueError(f'Cached source changed: {name}/{name_}')
     return state
 
@@ -133,19 +136,35 @@ def materialize(home, name):
     rows = [row for row in tree['tree'] if selected_file(name, row)]
     if not rows or len(rows) > 3000 or sum(row.get('size', 0) for row in rows) > MAX_TOTAL:
         raise ValueError('Selected source exceeds file/size budget')
+    # CareerOps deliberately has no root npm lock at this reviewed pin. The
+    # web/package-lock.json belongs to a separate web project, not this CLI.
+    required = ['README.md', 'LICENSE']
+    if name == 'career-ops':
+        required += ['AGENTS.md', '.agents/skills/career-ops/SKILL.md', 'package.json',
+                     'modes/_shared.md', 'modes/_writing.md']
+    if name == 'rea-video': required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
+    selected_paths = {row['path'] for row in rows}
+    missing = [path for path in required if path not in selected_paths]
+    if missing:
+        raise ValueError('Pinned source is missing required workflow/license files: ' + ', '.join(missing))
     root = folder(home, name)
     def one(row):
         rel = relative(row['path'])
+        target = checked(root / rel)
+        if target.is_file():
+            if target.stat().st_size > MAX_FILE:
+                raise ValueError(f'Partial cached source exceeds size budget: {name}/{row["path"]}')
+            data = target.read_bytes()
+            if hashlib.sha1(f'blob {len(data)}\0'.encode() + data).hexdigest() != row['sha']:
+                raise ValueError(f'Partial cached source differs from reviewed pin; preserve and review it: {name}/{row["path"]}')
+            return row['path'], hashlib.sha256(data).hexdigest()
         data = fetch(f'https://raw.githubusercontent.com/{repo}/{pin}/{row["path"]}')
         if hashlib.sha1(f'blob {len(data)}\0'.encode() + data).hexdigest() != row['sha']:
             raise ValueError('Upstream Git blob mismatch')
-        atomic(root / rel, data)
+        atomic(target, data)
         return row['path'], hashlib.sha256(data).hexdigest()
     with ThreadPoolExecutor(max_workers=4) as pool:
         hashes = dict(pool.map(one, rows))
-    required = ['README.md', 'LICENSE']
-    if name == 'career-ops': required += ['AGENTS.md', '.agents/skills/career-ops/SKILL.md', 'package-lock.json']
-    if name == 'rea-video': required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
     if any(path not in hashes for path in required):
         raise ValueError('Pinned source is missing a required workflow/license file')
     if name == 'career-ops' and not any(path.startswith('modes/') for path in hashes):
@@ -162,7 +181,10 @@ def status(home, name):
     runtime_state = read(marker) if marker.is_file() else {}
     executable_ready = ((root / 'node_modules/.package-lock.json').is_file() if name == 'career-ops'
                         else (runtime / 'venv' / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')).is_file())
-    runtime_ready = cached is not None and runtime_state.get('commit') == PINNED[name][1] and executable_ready
+    lock_path = checked(root / 'package-lock.json')
+    lock_verified = (lock_path.is_file() and lock_path.stat().st_size <= MAX_FILE and bool(runtime_state.get('dependency_lock_sha256'))
+                     and hashlib.sha256(lock_path.read_bytes()).hexdigest() == runtime_state['dependency_lock_sha256']) if name == 'career-ops' else True
+    runtime_ready = cached is not None and runtime_state.get('commit') == PINNED[name][1] and executable_ready and lock_verified
     result = {'name': name, 'repository': PINNED[name][0], 'commit': PINNED[name][1],
               'source_cached': cached is not None, 'source_path': str(root),
               'source_files': len(cached['files']) if cached else 0,
@@ -173,7 +195,9 @@ def status(home, name):
         data = home / 'msshi-private' / 'career-ops-data'
         result.update(data_root=str(data), cv_present=(data / 'cv.md').is_file(),
                       environment={'CAREER_OPS_DATA_DIR': str(data)},
-                      prerequisite='Workflow source, Node dependencies, user CV/profile; browser only for requested browser/PDF work')
+                      dependency_lock_verified=bool(lock_verified),
+                      dependency_lock_origin=runtime_state.get('dependency_lock_origin'),
+                      prerequisite='Workflow source, Node dependencies, user CV/profile; root dependency lock is generated locally on explicit runtime setup; browser only for requested browser/PDF work')
     elif name == 'rea-video':
         python = runtime / 'venv' / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
         result.update(python=str(python), prerequisite='Python runtime and ffmpeg/ffprobe; OCR/ASR/VLM/model downloads are separate opt-ins',
@@ -224,6 +248,7 @@ def install_runtime(home, name):
     env.update(TEMP=str(temp), TMP=str(temp), PIP_CACHE_DIR=str(runtime / 'pip-cache'),
                PIP_DISABLE_PIP_VERSION_CHECK='1', PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD='1',
                npm_config_cache=str(runtime / 'npm-cache'))
+    install_metadata = {}
     if name == 'career-ops':
         npm = shutil.which('npm.cmd' if os.name == 'nt' else 'npm')
         node = shutil.which('node')
@@ -234,8 +259,36 @@ def install_runtime(home, name):
         major, minor, _ = map(int, match.groups())
         if not ((major == 22 and minor >= 13) or (major == 23 and minor >= 4) or major >= 24):
             raise ValueError('CareerOps requires Node ^22.13.0 or >=23.4.0')
-        # Lifecycle hooks in upstream normally fetch Chromium. Never run them here.
+        # The pinned CLI has package.json but no root package-lock.json. Generate
+        # a local resolution only on this explicit runtime action, then use ci.
+        # This resolution is not represented as an upstream-supplied lock/pin.
+        lock = checked(root / 'package-lock.json')
+        if not lock.is_file():
+            subprocess.run([npm, 'install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'],
+                           cwd=root, env=env, check=True, timeout=900)
+        if not lock.is_file() or lock.stat().st_size > MAX_FILE:
+            raise ValueError('CareerOps local dependency lock was not generated within size budget')
+        lock_data = read(lock)
+        package_data = read(root / 'package.json')
+        packages = lock_data.get('packages', {}) if isinstance(lock_data, dict) else {}
+        root_package = packages.get('', {}) if isinstance(packages, dict) else {}
+        if (not isinstance(lock_data, dict) or not isinstance(root_package, dict)
+                or lock_data.get('lockfileVersion') not in {2, 3}
+                or root_package.get('name') != package_data.get('name')
+                or root_package.get('dependencies', {}) != package_data.get('dependencies', {})):
+            raise ValueError('CareerOps local dependency lock does not match the reviewed package manifest')
+        lock_hash = hashlib.sha256(lock.read_bytes()).hexdigest()
+        if marker_state := ((runtime / 'installed.json') if (runtime / 'installed.json').is_file() else None):
+            previous_hash = read(marker_state).get('dependency_lock_sha256')
+            if previous_hash and previous_hash != lock_hash:
+                raise ValueError('CareerOps dependency lock changed after setup; preserve and review it before reinstalling')
+        # Lifecycle hooks normally fetch Chromium. Never run them here.
         subprocess.run([npm, 'ci', '--ignore-scripts', '--no-audit', '--no-fund'], cwd=root, env=env, check=True, timeout=900)
+        if hashlib.sha256(lock.read_bytes()).hexdigest() != lock_hash:
+            raise ValueError('CareerOps dependency lock changed during installation')
+        install_metadata = {'dependency_lock_sha256': lock_hash,
+                            'dependency_lock_origin': 'generated-local-resolution',
+                            'upstream_root_lockfile': False}
         data = home / 'msshi-private' / 'career-ops-data'; data.mkdir(parents=True, exist_ok=True)
         runtime_command = ['node', str(root / 'doctor.mjs')]
     else:
@@ -247,7 +300,7 @@ def install_runtime(home, name):
     atomic(runtime / 'installed.json', encode({'name': name, 'commit': PINNED[name][1],
         'installed_utc': datetime.now(timezone.utc).isoformat(), 'command': runtime_command,
         'models_downloaded': False, 'browser_downloaded': False, 'operations_tested': False,
-        'lifecycle_scripts': False, 'auto_start': False}))
+        'lifecycle_scripts': False, 'auto_start': False, **install_metadata}))
     return status(home, name)
 
 

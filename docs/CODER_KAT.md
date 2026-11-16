@@ -1,5 +1,7 @@
 # Optional KAT for Shikaku (Coder)
 
+**Default OFF in every preset, including MuZA.** It is not required for coding. MuZA currently postpones KAT until suitable hardware is available. The normal Coder continues using the user-selected model; no local weights are installed.
+
 KAT is an optional **Coder subtask model**, never a replacement for your current primary, MoA or ordinary delegation models. Goose is an external coding agent, not an MoA model ID. Nothing in this setup downloads model weights or starts a model server.
 
 ## Choose the actual model and endpoint
