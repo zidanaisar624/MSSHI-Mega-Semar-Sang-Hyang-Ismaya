@@ -2,14 +2,14 @@
 
 <div align="center">
 
-<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.1.1 Mega Semar Sang Hyang Ismaya Banner" width="98%">
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.1.2 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
-# 🌐 MSSHI v3.1.1 — Mega Semar Sang Hyang Ismaya
+# 🌐 MSSHI v3.1.2 — Mega Semar Sang Hyang Ismaya
 ### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · MuZA Skripsi Drag-and-Drop v1.1*
 
-[![Release](https://img.shields.io/badge/Release-v3.1.1%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
+[![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
 [![Skills](https://img.shields.io/badge/Skills-67%20Bundled%20(51%20Core%20%2B%2016%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-52%20Pinned%20Sources-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-52%20Sources%20%7C%2049%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -18,7 +18,13 @@
 
 </div>
 
-> **v3.1.1 installation repair:** five named native profiles + neutral Hermes default, ArtCraft roles Val 4 / Shikaku 2 / Kiki 13, a real optional KAT endpoint wizard, 67 skills / 52 sources, and automatic PDF delivery to Downloads. [Repair notes](docs/V3_1_1_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
+> **v3.1.2 installation repair:** five named native profiles + neutral Hermes default, ArtCraft roles Val 4 / Shikaku 2 / Kiki 13, a real optional KAT endpoint wizard, 67 skills / 52 sources, and automatic PDF delivery to Downloads. [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
+
+> **KAT is optional, including MuZA preset:** no automatic weight download or activation. It stays disabled on MuZA's current laptop. Users with suitable hardware or an authorized endpoint can opt in through the Coder wizard.
+
+> **User names:** the MuZA preset names a role layout, not the person using it. Bots ask the user’s preferred name, preserve its spelling, and carry it across handoffs. [Collaboration and names](docs/COLLABORATION_AND_NAMES.md).
+
+> **Integration audit:** [52 sources, 67 skills, role allocation and installation limits](docs/UPSTREAM_SETUP_AUDIT.md). The preset installs role-specific instructions; runtimes, accounts, large models and selected schedules remain separate choices.
 
 ---
 
@@ -31,7 +37,7 @@
 <td valign="top">
   <h3>🎭 Turn Plain AI Chat into a 5-Specialist Cyber-Noir Command Suite</h3>
   <p>Tired of watching a <b>4 GB RAM Windows 10 laptop freeze (Grey Screen)</b> under 22 background local MCP servers — or having scripts break on <b><code>C:</code>-drive-only machines</b>?</p>
-  <p><b>MSSHI v3.1.1</b> overhauls agent reliability while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
+  <p><b>MSSHI v3.1.2</b> overhauls agent reliability while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
   <ul>
     <li>⚡ <b>CLI-Anything Universal Bridge</b> — Replaces 22 heavyweight MCP processes with lazy on-demand app tickets (<code>msshi runtime ticket</code> / <code>run</code>).</li>
     <li>🛡️ <b>$1 Zero-Waste Token Shield + Auto-Trim + Caveman</b> — Lossless JSON compression via <code>transform_tool_result</code> plus hard budget stops below a <b>$1.00</b> projected reserve.</li>
@@ -52,18 +58,18 @@
 
 | Version / Channel | Document Title &amp; Scope | Details | 1-Click Auto-Download | View Online |
 | :---: | :--- | :---: | :---: | :---: |
-| **`v3.1.1` (Client Handbook)** | **Hermes &amp; MSSHI v3.1.1 Client Master Handbook** — Complete beginner-to-pro guide covering 67 skills, 5 bots, CLI-Anything, OmniVoice, Skripsi v1.1 &amp; adaptive paths. | 99 pp · ~435 KiB | [![Download Master PDF](https://img.shields.io/badge/Download%20PDF-Master%20v3.1.1-FF6B1A?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.1/docs/manuals/v3.1.1/Modul_Pelanggan_MSSHI_v3.1.1.pdf) | [Open on GitHub](docs/manuals/v3.1.1/Modul_Pelanggan_MSSHI_v3.1.1.pdf) |
-| **`v3.1.0` (Execution Report)** | **MSSHI v3.1.0 Hydrogen Execution Report (Memeable &amp; Skripsi)** — Full audit of repo restructuring, 19 standardized visuals, Skripsi `.docx` integration &amp; release verification. | Official Report | [![Download Report PDF](https://img.shields.io/badge/Download%20PDF-Hydrogen%20Report-2CE8C6?style=for-the-badge&logo=adobeacrobatreader&logoColor=black)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.1/docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) | [Open on GitHub](docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) |
-| **`v3.0` (Optimizer Spec)** | **MSSHI v3.0 Full Settings Specification — Hermes Ultimate Optimizer** — Architecture blueprint for 22-MCP removal, `hermes-dreaming`, OmniVoice &amp; Caveman. | 50 pp · ~1.47 MB | [![Download v3.0 Spec PDF](https://img.shields.io/badge/Download%20PDF-Spec%20v3.0-8B5CF6?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.1/docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) | [Open on GitHub](docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) |
-| **`latest` (Auto-Track)** | **Stable `latest` Channel (Always Tracks Newest Release)** — Used automatically by `msshi manual download --version latest` &amp; interactive installers. | 99 pp · ~435 KiB | [![Download Latest Channel](https://img.shields.io/badge/1--Click%20Download-Channel%20Latest-10B981?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.1.pdf) | [View in `manuals/`](docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.1.pdf) |
+| **`v3.1.2` (Client Handbook)** | **Hermes &amp; MSSHI v3.1.2 Client Master Handbook** — Complete beginner-to-pro guide covering 67 skills, 5 bots, CLI-Anything, OmniVoice, Skripsi v1.1 &amp; adaptive paths. | 99 pp · ~435 KiB | [![Download Master PDF](https://img.shields.io/badge/Download%20PDF-Master%20v3.1.2-FF6B1A?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.2/docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf) | [Open on GitHub](docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf) |
+| **`v3.1.0` (Execution Report)** | **MSSHI v3.1.0 Hydrogen Execution Report (Memeable &amp; Skripsi)** — Full audit of repo restructuring, 19 standardized visuals, Skripsi `.docx` integration &amp; release verification. | Official Report | [![Download Report PDF](https://img.shields.io/badge/Download%20PDF-Hydrogen%20Report-2CE8C6?style=for-the-badge&logo=adobeacrobatreader&logoColor=black)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.2/docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) | [Open on GitHub](docs/pdf-guides/Laporan_Eksekusi_Hydrogen_MSSHI_v3.1.0_Memeable_dan_Skripsi.pdf) |
+| **`v3.0` (Optimizer Spec)** | **MSSHI v3.0 Full Settings Specification — Hermes Ultimate Optimizer** — Architecture blueprint for 22-MCP removal, `hermes-dreaming`, OmniVoice &amp; Caveman. | 50 pp · ~1.47 MB | [![Download v3.0 Spec PDF](https://img.shields.io/badge/Download%20PDF-Spec%20v3.0-8B5CF6?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/v3.1.2/docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) | [Open on GitHub](docs/pdf-guides/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf) |
+| **`latest` (Auto-Track)** | **Stable `latest` Channel (Always Tracks Newest Release)** — Used automatically by `msshi manual download --version latest` &amp; interactive installers. | 99 pp · ~435 KiB | [![Download Latest Channel](https://img.shields.io/badge/1--Click%20Download-Channel%20Latest-10B981?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.2.pdf) | [View in `manuals/`](docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.2.pdf) |
 
-> 💡 **Interactive Installer Support:** Running `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `UPDATE_OTOMATIS_KE_V3.bat`, `msshi setup`, or `msshi update` automatically copies the latest PDF into Downloads/MSSHI_Manuals (`--pdf-dest` changes its folder; `--no-pdf` opts out), or run `msshi manual download --version v3.1.1`. Machine catalog: [`docs/manuals/pdf_catalog.json`](docs/manuals/pdf_catalog.json) · Compact v3.1 link: [`docs/manuals/v3.1.1/Modul_Pelanggan_MSSHI_v3.1.1.pdf`](docs/manuals/v3.1.1/Modul_Pelanggan_MSSHI_v3.1.1.pdf) · Version archives: [`docs/manuals/v3.1.1/`](docs/manuals/v3.1.1/Modul_Pelanggan_MSSHI_v3.1.1.pdf) &amp; [`docs/manuals/v3.0/`](docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf).
+> 💡 **Interactive Installer Support:** Running `install.ps1`, `install.sh`, `MULAI_DI_SINI_PEMULA.bat`, `UPDATE_OTOMATIS_KE_V3.bat`, `msshi setup`, or `msshi update` automatically copies the latest PDF into Downloads/MSSHI_Manuals (`--pdf-dest` changes its folder; `--no-pdf` opts out), or run `msshi manual download --version v3.1.2`. Machine catalog: [`docs/manuals/pdf_catalog.json`](docs/manuals/pdf_catalog.json) · Compact v3.1 link: [`docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf`](docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf) · Version archives: [`docs/manuals/v3.1.2/`](docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf) &amp; [`docs/manuals/v3.0/`](docs/manuals/v3.0/Spesifikasi_Lengkap_Settings_MSSHI_v3.0_Hermes_Ultimate_Optimizer.pdf).
 
 </div>
 
 ---
 
-## 🕰️ Evolution Timeline (`v1.0` → `v3.1.1`): From Early Experiments to Drag-and-Drop Thesis Assembly
+## 🕰️ Evolution Timeline (`v1.0` → `v3.1.2`): From Early Experiments to Drag-and-Drop Thesis Assembly
 
 <div align="center">
 
@@ -87,9 +93,9 @@
   <br><sub><b>Eliminated 22 heavy MCPs</b> in favor of <b>CLI-Anything</b> + native lossless <code>msshi-auto-trim</code> + <code>caveman</code>! Added <b>OmniVoice</b> prosody, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b> &amp; <b>TimesFM</b>. Pure 4 GB RAM bliss.</sub>
 </td>
 <td width="50%" align="center" valign="top">
-  <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Evolution MSSHI v3.1.1 + Skripsi v1.1">
-  <br><b>Phase 4 · Mature Release (<code>v3.1.1 + Skripsi v1.1</code>)</b>
-  <br><sub>Now <b>63 bundled skills (51 core + 12 wrappers) + 49 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
+  <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Evolution MSSHI v3.1.2 + Skripsi v1.1">
+  <br><b>Phase 4 · Mature Release (<code>v3.1.2 + Skripsi v1.1</code>)</b>
+  <br><sub>Now <b>67 bundled skills (51 core + 16 wrappers) + 52 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
 </td>
 </tr>
 </table>
@@ -100,7 +106,7 @@
 flowchart LR
     V1["<b>Phase 0 · v1.0</b><br/>47 Core Skills<br/>S1–S2 MFA Filmmaking, Video &amp; Photo<br/>Auto-Curiosity &amp; Creative DNA"] --> V2["<b>Stages 1–2 · v2.0–v2.2</b><br/>Business Sage + Tax PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
     V2 --> V3["<b>Optimizer Leap · v3.0</b><br/>22 MCPs Replaced by CLI-Anything<br/>OmniVoice + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
-    V3 --> V31["<b>Mature Release · v3.1.1 + Skripsi v1.1</b><br/>63 Bundled Skills (51 Core + 12 Wrappers)<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
+    V3 --> V31["<b>Mature Release · v3.1.2 + Skripsi v1.1</b><br/>67 Bundled Skills (51 Core + 16 Wrappers)<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
 ```
 
 ---
@@ -109,19 +115,19 @@ flowchart LR
 
 Every bot carries its own [`SOUL.md`](configs/personas/) persona instructions, domain guardrails, curated bundled skill count, local **`OmniVoice`** prosody, and verified skill allocation audited in [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
-| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.1.1` Stack |
+| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.1.2` Stack |
 | :---: | :--- | :--- | :--- |
-| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Auto-set as Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
-| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**23 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**35 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
-| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**17 skills**) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
-| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (`KAT-Coder-V2.5-Dev`), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**21 skills**) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Fresh install: Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**31 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**27 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**38 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**22 skills**) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (optional KAT-Coder, default OFF), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**24 skills**) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
 
 > 🦀 **Shared Foundation Across All 5 Bots:** Every persona inherits [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, and lossless JSON compression via [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
 
 ---
 
-## 🎓 Spotlight Feature v3.1.1: MuZA Skripsi Starter v1.1 (Drag & Drop + Colab)
+## 🎓 Spotlight Feature v3.1.2: MuZA Skripsi Starter v1.1 (Drag & Drop + Colab)
 
 <table>
 <tr>
@@ -175,7 +181,7 @@ flowchart LR
 </td>
 <td width="40%" align="center" valign="middle">
   <img src="assets/memes/meme-06-budget-dan-cdrive.png" width="100%" alt="Accepting fate meme on $1 API budget and C-drive laptop">
-  <br><sub><i>When your API balance is down to <b>$1</b> on a 4 GB RAM <code>C:</code>-drive laptop — "Pasrah aku... yet MSSHI v3.1.1 makes it work!"</i></sub>
+  <br><sub><i>When your API balance is down to <b>$1</b> on a 4 GB RAM <code>C:</code>-drive laptop — "Pasrah aku... yet MSSHI v3.1.2 makes it work!"</i></sub>
 </td>
 </tr>
 </table>
@@ -215,17 +221,17 @@ flowchart LR
 
 **Fastest Option (Paste into Agent Chat):**
 
-> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.1.1 for me without overriding my existing LLM provider/model!`
+> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.1.2 for me without overriding my existing LLM provider/model!`
 
 - **Windows Beginners:** Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 for versioned PDF manuals), or drag `.zip`/`.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat).
 - **v2.x Upgrade:** Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once (backs up `SOUL.md` &amp; `Creative DNA` automatically).
 - **Automatic Hermes Desktop Bot Provisioning (3 Timings: Before / During / After Opening Hermes):**
   - **Before opening Hermes:** Stages skills, `msshi-auto-trim`, and `pending-bots.json` atomically; once Hermes initializes, `msshi desktop` / `msshi runtime migrate` / `msshi update` automatically backfills the user's configured default `model:` and non-secret `.env` keys across profiles.
   - **While Hermes is running:** Syncs profiles atomically into `<HERMES_HOME>/profiles` and signals multiplexer rescan without touching `state.db`, active chat sessions, or existing `provider`/`model`.
-  - **After Hermes is configured:** In `muza-preset` (mode `4`, including custom display names), the root `default` profile (`<HERMES_HOME>/`, previously labeled `Hermes`) is automatically configured as **Yukino Yukinoshita** (stock unedited `SOUL.md` is backed up to `.bak`; custom `SOUL.md`/`config.yaml`/`user_creative_dna.json` and legacy `profiles/yukino` are preserved) while `shizuka`, `val`, `kiki-chii`, and `shikaku` are created under `<HERMES_HOME>/profiles/`. Pass `--default-bot keep-hermes` / `-DefaultBot keep-hermes` to keep a separate `Hermes` profile. In `custom-bots` (mode `2`), custom profiles receive `profile.yaml`, `SOUL.md`, `AGENTS.md`, `skills/`, channel-safe `.env`, and a cloned `model:` seed.
+  - **New and existing installs:** `muza-preset` with `--default-bot auto` makes the actual `default` profile **Yukino**, plus four specialists, on fresh installs. An existing five-named-profile layout is preserved; no bot is automatically moved or hidden. `--default-bot keep-hermes` retains neutral Hermes plus five named profiles. Converting an existing layout requires explicit `--default-bot yukino`, with backups; provider/model settings and history are never moved.
 - **Windows PowerShell:**
   ```powershell
-  # Interactive 4-step wizard (optionally add -DownloadPdf to fetch the v3.1.1 handbook)
+  # Interactive 4-step wizard (optionally add -DownloadPdf to fetch the v3.1.2 handbook)
   irm https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/install.ps1 | iex
 
   # Unattended 1-shot install (5 Hermes bots + Yukino default + auto-trim + auto-connect apps):
