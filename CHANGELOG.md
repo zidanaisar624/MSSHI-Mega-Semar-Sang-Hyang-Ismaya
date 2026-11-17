@@ -2,6 +2,9 @@
 
 ## v3.1.2 - 2026-11-17
 
+- Fresh installs use actual default Yukino plus four specialists; existing named teams remain unchanged. Role mapping, delayed activation and all-direction handoffs are covered by offline fixtures. Curated upstream, Dreaming and voice selection also follow that mapping.
+- Use controlled JSON-only LLMtrim configuration after real-binary tests exposed TOON type changes in the upstream safe preset. Preserve exact data and fail open; no proxy or provider setting changes.
+- Complete missing Git revision metadata: all 49 Git sources are commit-pinned; model cards honor available revisions and non-Git registry/card limitations are explicit. Publish the complete 52-source/67-skill activation audit.
 - Add portable user-address rules to all five persona templates and combined Main/Sub-Agent/MoA/contract/review protocols for Coder and Kiki. An explicit, receipt-backed SOUL helper preserves private persona bytes and refuses implicit Obsidian writes.
 
 - Honor unattended Windows setup even when the process inherits a console; KAT is optional/default OFF, including the MuZA preset. No local weight download or main-model change.

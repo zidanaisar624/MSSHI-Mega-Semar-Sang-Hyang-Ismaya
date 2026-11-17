@@ -175,7 +175,8 @@ def run_cli(script, *args, ok=True, env=None, input_text=None):
     result = subprocess.run(
         [sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / script), *map(str, args)],
         cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=600,
-        env={**os.environ, **(env or {}), "HERMES_HOME": str(ROOT / ".msshi-check-no-hermes")}, input=input_text,
+        env={**os.environ, **(env or {}), "HERMES_HOME": str(ROOT / ".msshi-check-no-hermes"),
+             "MSSHI_NO_PDF": "1"}, input=input_text,
     )
     require((result.returncode == 0) == ok,
             f"{script} returned {result.returncode}: {(result.stderr or result.stdout)[-400:]}")

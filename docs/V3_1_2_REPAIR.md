@@ -1,6 +1,6 @@
 # MSSHI v3.1.2 - safe setup, collaboration and optional runtimes
 
-The release retains the existing artwork and Git history. It ships 67 physical skills (51 core and 16 wrappers), with 52 pinned upstream sources. The MuZA preset describes five roles; it never establishes the user's name as MuZA.
+The release retains the existing artwork and Git history. It ships 67 physical skills (51 core and 16 wrappers), with 52 upstream entries, including 49 Git repositories pinned to commits. The MuZA preset describes five roles; it never establishes the user's name as MuZA.
 
 ## Fresh installs versus an existing team
 

@@ -114,7 +114,10 @@ def upstream_entries(manifest):
         if kind == "git":
             url = f"https://{host}{path.removesuffix('.git')}.git"
         elif kind == "model-card":
-            url = f"https://{host}{path}/raw/main/README.md"
+            revision = entry.get("revision")
+            if revision and not COMMIT.fullmatch(revision):
+                raise ValueError("Model-card revision must be a complete commit.")
+            url = f"https://{host}{path}/raw/{revision or 'main'}/README.md"
         else:
             url = f"https://{host}/"
         items[name] = (kind, url, entry["pack"])

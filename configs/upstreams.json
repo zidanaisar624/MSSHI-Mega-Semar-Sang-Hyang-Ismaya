@@ -27,7 +27,8 @@
       ],
       "use_when": "Pilih generasi gambar/video/foto produk atau brand kit dari treatment Kiki-Chii.",
       "requires": "Skill lokal yang ditinjau, akun dan akses Higgsfield, anggaran, aset yang boleh dikirim.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "27000402070db19d958789d05b3b52b6f4718d7c"
     },
     {
       "id": "remotion-skills",
@@ -44,7 +45,8 @@
       ],
       "use_when": "Pilih video yang memerlukan timing, rendering terprogram atau subtitle yang dapat diedit.",
       "requires": "Skill yang relevan dan proyek Node/Remotion yang sudah dipilih.",
-      "license": "Unresolved at audited revision; do not redistribute without permission"
+      "license": "Unresolved at audited revision; do not redistribute without permission",
+      "revision": "1af7e69a2a613437d46095924057970a6a7df40d"
     },
     {
       "id": "barty-motion-graphics",
@@ -61,7 +63,8 @@
       ],
       "use_when": "Pilih iklan motion dari kode dan sound pass terstruktur.",
       "requires": "Pilih skill dan aset yang dibutuhkan, cek runtime render dari resep.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "3d83d987d658601d8a1269eb691622bdcd427335"
     },
     {
       "id": "charlie-motion-graphics",
@@ -78,7 +81,8 @@
       ],
       "use_when": "Pilih motion peluncuran yang seluruh frame-nya dibangun dengan kode.",
       "requires": "Tinjau resep skill dan siapkan runtime/render proyek yang dipilih.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "229022ebca76972e119e36ada23a1648d51665ab"
     },
     {
       "id": "bang-motion",
@@ -95,7 +99,8 @@
       ],
       "use_when": "Pilih opener, promo, teks bergerak atau explainer HTML.",
       "requires": "Browser untuk HTML. Node, Puppeteer dan FFmpeg bila perlu MP4.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "c1aa65e921c970d858705fcb4a53a8294d1a4131"
     },
     {
       "id": "humanizer-en",
@@ -112,7 +117,8 @@
       ],
       "use_when": "Sunting tulisan Inggris sambil menjaga fakta, kutipan dan suara penulis.",
       "requires": "Skill yang direview; salinan teks yang pengguna izinkan untuk disunting.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "b48c832f0f809c1b5658edbb838c2521b72f2413"
     },
     {
       "id": "humanizer-indonesia",
@@ -129,7 +135,8 @@
       ],
       "use_when": "Sunting tulisan Indonesia menurut ragam akademik, ajar atau semiformal.",
       "requires": "Skill dan referensi suara milik sendiri. Cek opsi scripts/metrik.py pada revisi yang dipakai.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "62fe1aed5932c26cfcfc7ed096415e59aae5b0db"
     },
     {
       "id": "anti-slop",
@@ -146,7 +153,8 @@
       ],
       "use_when": "Tinjau kebiasaan generik pada prose, UI atau kode sesuai output yang diminta.",
       "requires": "Pilih aturan untuk target proyek, bukan seluruh aturan lintas domain.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "3b75daa1fb6bb4c2b8a3807f82eed50914dee6b2"
     },
     {
       "id": "goose",
@@ -181,7 +189,8 @@
       ],
       "use_when": "Gunakan planning, debugging dan verifikasi untuk perubahan bertahap.",
       "requires": "Pilih skill atau plugin yang kompatibel dengan host. Tinjau hook bootstrap sebelum mengaktifkan plugin.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "22f0b463e7a5e579904dd6211a520321035526f7"
     },
     {
       "id": "ponytail",
@@ -198,7 +207,8 @@
       ],
       "use_when": "Tinjau solusi yang terlalu kompleks dan kurangi perubahan yang tidak perlu.",
       "requires": "Skill/instruksi yang cocok dengan host dan aturan repo.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846"
     },
     {
       "id": "addy-agent-skills",
@@ -215,7 +225,8 @@
       ],
       "use_when": "Pilih playbook coding, delivery, atau review sesuai fase.",
       "requires": "Salin skill yang diperlukan dengan referensinya; dependensi bervariasi per skill.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "301b02b12bff98e4688e6984af6556802322bbde"
     },
     {
       "id": "graphify",
@@ -228,11 +239,12 @@
       "kind": "local_cli",
       "pack": "webdev",
       "roles": [
-        "shikaku-nara"
+        "all"
       ],
       "use_when": "Petakan kode, dokumentasi dan dependensi sebelum membuka banyak file.",
       "requires": "CLI dan parser lokal sesuai format. Periksa tahap mana yang memakai model/API.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "revision": "5eedffa87476a063a05bed96f17275ed63f05c1a"
     },
     {
       "id": "mindrally-skills",
@@ -249,7 +261,8 @@
       ],
       "use_when": "Muat keahlian framework atau bahasa yang cocok dengan proyek.",
       "requires": "Pilih satu playbook berdasarkan stack; cek runtime masing-masing.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "revision": "7682ca77710e0971eab4e0ae5dddfa281aea0ba5"
     },
     {
       "id": "playwright-best-practices",
@@ -266,7 +279,8 @@
       ],
       "use_when": "Rancang tes E2E dengan locator, isolasi dan debugging yang dapat diulang.",
       "requires": "Proyek Playwright dan browser test. Gunakan lingkungan dan akun uji yang diizinkan.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "0b75b5835a87de1fdd202ba965f3bc5a27738fdf"
     },
     {
       "id": "awesome-copilot",
@@ -283,7 +297,8 @@
       ],
       "use_when": "Cari agen, instruksi atau skill Copilot yang sesuai dengan tugas.",
       "requires": "Ambil entry yang relevan; terjemahkan fitur yang khusus Copilot bila host berbeda.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "227949a7542a55d2155c00e7cdb998d9a0fee4f3"
     },
     {
       "id": "superdesign-skill",
@@ -302,7 +317,8 @@
       ],
       "use_when": "Tetapkan gaya, alur antarmuka dan standar visual sebelum implementasi.",
       "requires": "Skill yang dipilih, brief dan proyek UI. Fitur layanan perlu akun jika dipakai.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b"
     },
     {
       "id": "better-design",
@@ -321,7 +337,8 @@
       ],
       "use_when": "Cari tema, token desain, atau komponen UI siap adaptasi.",
       "requires": "Server MCP atau registry yang ditinjau. Pin versi; cek dependency dan lisensi komponen yang diambil.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "175e7ba49bcf83857abc32933686b5aa3abb197e"
     },
     {
       "id": "design-taste",
@@ -340,7 +357,8 @@
       ],
       "use_when": "Pilih identitas visual yang cocok dengan brief dan konsistensi antarlayar.",
       "requires": "Gunakan satu profil genre atau pola yang relevan.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "c4a6bff0871eb4b15371b0e7d2751628b0ed4608"
     },
     {
       "id": "paper-shaders",
@@ -359,7 +377,8 @@
       ],
       "use_when": "Gunakan shader canvas untuk elemen visual saat efek tersebut diperlukan.",
       "requires": "Paket npm sesuai framework dan kemampuan GPU/WebGL. Uji fallback dan aksesibilitas.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "revision": "b6e6e7f73faf614f0c9f4e635451d4c3ed47bad0"
     },
     {
       "id": "canvas-ui",
@@ -378,7 +397,8 @@
       ],
       "use_when": "Gunakan komponen WebGL/canvas pada UI dengan anggaran performa yang sesuai.",
       "requires": "Framework target dan browser WebGL. Baca batas Commons Clause sebelum distribusi.",
-      "license": "MIT + Commons Clause"
+      "license": "MIT + Commons Clause",
+      "revision": "a0be3b7e1f42d0d1bafde470b6794b39f6729502"
     },
     {
       "id": "motion-primitives",
@@ -397,7 +417,8 @@
       ],
       "use_when": "Pilih komponen animasi UI yang bisa disunting dan diuji.",
       "requires": "Framework dan motion runtime yang diminta komponen. Tambahkan reduced-motion.",
-      "license": "Unresolved at audited revision; do not redistribute without permission"
+      "license": "Unresolved at audited revision; do not redistribute without permission",
+      "revision": "120f64f6ca60348e251f929e9c81f11ccbe45eda"
     },
     {
       "id": "cursify",
@@ -416,7 +437,8 @@
       ],
       "use_when": "Pilih efek kursor React/Next.js bila menambah nilai interaksi.",
       "requires": "React/Next.js, tes pointer, sentuhan dan reduced-motion.",
-      "license": "Unresolved at audited revision; do not redistribute without permission"
+      "license": "Unresolved at audited revision; do not redistribute without permission",
+      "revision": "b3a173c33f12e74550389c9555f9ce85c30c46f6"
     },
     {
       "id": "strix",
@@ -433,7 +455,8 @@
       ],
       "use_when": "Tinjau keamanan aplikasi hanya pada target dan metode yang telah diotorisasi.",
       "requires": "Scope tertulis, target uji, runtime lokal sesuai docs, isolasi dan model milik pengguna bila perlu.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "revision": "e05948080bdccd2af47c922f70503005c17747b4"
     },
     {
       "id": "cybersecurity-library",
@@ -450,7 +473,8 @@
       ],
       "use_when": "Cari satu playbook sesuai hardening, forensik, deteksi atau audit.",
       "requires": "Indeks lokal dan tools sesuai playbook; review scope sebelum eksekusi.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "revision": "54a798831d2266a3ca61ce68a7acb80b81160d57"
     },
     {
       "id": "reverse-engineer-anything",
@@ -467,7 +491,8 @@
       ],
       "use_when": "Rujuk alur pemeriksaan artefak pada scope yang disetujui.",
       "requires": "Salinan artefak lokal, izin analisis, alat platform yang relevan. Periksa hubungan fork/revisi.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "e762e32afbba3fd32532fd42a3f4fdcd05252ad3"
     },
     {
       "id": "rea",
@@ -506,7 +531,8 @@
       "use_when": "Baca PDF scan/buku/gambar panjang dalam jendela halaman, simpan jejak halaman.",
       "requires": "Checkpoint yang dipin, runtime kompatibel, ruang disk/VRAM yang cukup dan review kode model.",
       "license": "MIT according to official model card",
-      "notes": "Model card mencontohkan Transformers dengan trust_remote_code. Review dan pin kode, jalankan hanya pada lingkungan lokal yang disetujui."
+      "notes": "Model card mencontohkan Transformers dengan trust_remote_code. Review dan pin kode, jalankan hanya pada lingkungan lokal yang disetujui.",
+      "pin_status": "model-card metadata not revision-pinned; model/runtime download remains explicit"
     },
     {
       "id": "unlimited-ocr",
@@ -523,7 +549,8 @@
       ],
       "use_when": "Jalankan pipeline OCR untuk model yang sesuai versi dokumentasinya.",
       "requires": "Dependensi dan hardware sesuai upstream. Cocokkan versi repo, checkpoint dan format PDF/gambar.",
-      "license": "MIT"
+      "license": "MIT",
+      "revision": "64e6f066023b305ab03860603a9cf358a8b70148"
     },
     {
       "id": "tokentracker",
@@ -541,7 +568,8 @@
       "use_when": "Ambil perkiraan pemakaian token dan biaya dari runtime yang didukung.",
       "requires": "Aplikasi/sumber data yang tersedia. Rekonsiliasi dengan biaya provider dan saldo resmi bila ada.",
       "license": "MIT",
-      "notes": "Sinyal untuk TokenShield v2.0; tidak diklaim sebagai integrasi API saldo yang telah berjalan."
+      "notes": "Sinyal untuk TokenShield v2.0; tidak diklaim sebagai integrasi API saldo yang telah berjalan.",
+      "revision": "fba54de8e8fc96301ad3607e911181040b86fdb6"
     },
     {
       "id": "token-monitor",
@@ -559,7 +587,8 @@
       "use_when": "Gunakan data biaya atau aktivitas sesi sebagai masukan meter lokal.",
       "requires": "Widget/ekspor atau API yang benar-benar tersedia; matikan sinkronisasi bila tidak dibutuhkan.",
       "license": "MIT",
-      "notes": "Sinyal untuk TokenShield v2.0; tidak diklaim sebagai integrasi API saldo yang telah berjalan."
+      "notes": "Sinyal untuk TokenShield v2.0; tidak diklaim sebagai integrasi API saldo yang telah berjalan.",
+      "revision": "43e21135d97afd875ede123ffd8a9de801275782"
     },
     {
       "id": "hermes-jev-skills",
@@ -577,7 +606,8 @@
       "use_when": "Pilih kemampuan skill selection hanya bila versi host mendukung dan pengguna mengaktifkan.",
       "requires": "Hermes kompatibel; konfirmasi nama opsi upstream. Routing model MSSHI dinonaktifkan.",
       "license": "MIT",
-      "notes": "jev_model_routing:false merupakan intent di manifest MSSHI. Verifikasi skema versi upstream sebelum menyalin setelan ke Hermes."
+      "notes": "jev_model_routing:false merupakan intent di manifest MSSHI. Verifikasi skema versi upstream sebelum menyalin setelan ke Hermes.",
+      "revision": "8316358bf60e98a21477582af829ef11c9cf52fb"
     },
     {
       "id": "cli-anything",
@@ -595,7 +625,8 @@
       "use_when": "Cari harness resmi yang cocok, lalu rencanakan perintah dan jalur kerja.",
       "requires": "Harness telah diaudit dan terpasang, aplikasi target, path yang dipilih pengguna.",
       "license": "Apache-2.0",
-      "notes": "Bridge MSSHI hanya merencanakan/membuka aplikasi yang dipilih; bukan konektor akun atau pemasangan harness upstream."
+      "notes": "Bridge MSSHI hanya merencanakan/membuka aplikasi yang dipilih; bukan konektor akun atau pemasangan harness upstream.",
+      "revision": "34f519533bc175d2fe287ab8316b0dd99bb9cc43"
     },
     {
       "id": "cli-anything-catalog",
@@ -612,7 +643,8 @@
       ],
       "use_when": "Temukan harness dan dokumentasi upstream, kemudian tinjau commit dan lisensinya.",
       "requires": "Akses web untuk pencarian dokumentasi. Registry tidak membuktikan tool sudah terpasang.",
-      "license": "External registry terms; no blanket sublicense"
+      "license": "External registry terms; no blanket sublicense",
+      "pin_status": "registry webpage snapshot; no Git commit; content is not executed"
     },
     {
       "id": "hermes-steel",
@@ -647,7 +679,8 @@
       ],
       "use_when": "Susun riset mendalam dengan pencarian, ekstraksi dan daftar sumber.",
       "requires": "Runtime dan penyedia model/pencarian yang dipilih. Batasi durasi dan biaya.",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "revision": "ddd4db36208d9c8e49f3b2436efda97baecb5433"
     },
     {
       "id": "remote-jobs",

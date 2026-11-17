@@ -128,7 +128,10 @@
     },
     "harness2": {
       "roles": [
+        "yukino",
+        "shizuka",
         "val",
+        "kiki-chii",
         "shikaku"
       ],
       "activation": "on_relevant_task",

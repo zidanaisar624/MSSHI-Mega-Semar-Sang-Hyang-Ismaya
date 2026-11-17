@@ -144,12 +144,20 @@ def materialize(home, slug):
 
 
 def profiles(home):
+    """Resolve logical roles to actual live native homes, including default-Yukino.
+
+    Legacy profile aliases remain supported. A hidden/deleted named profile must
+    not receive installs, memory processing or voice configuration through an alias.
+    """
+    home = checked(hermes_profiles.normalize_hermes_root(home))
+    mapped = hermes_profiles.team_role_profiles(home)
+    live_named = hermes_profiles.live_named_profiles(home)
     for role, candidates in ROLE_ALIASES.items():
-        profile = next(
-            ((home if not alias else home / "profiles" / alias) for alias in candidates
-             if (home if not alias else home / "profiles" / alias).is_dir()),
-            None,
-        )
+        actual = mapped.get(role, role)
+        native_ids = list(dict.fromkeys((actual, *candidates)))
+        profile = next((home if name == "default" else live_named[name]
+                        for name in native_ids
+                        if (name == "default" and home.is_dir()) or name in live_named), None)
         if profile is not None:
             yield role, profile
 
@@ -479,7 +487,7 @@ def main(argv=None):
     source.add_argument('arguments', nargs=argparse.REMAINDER,
                         help='Run msshi integrations source --help for all source/runtime flags.')
     args = parser.parse_args(argv)
-    home = checked(args.home)
+    home = checked(hermes_profiles.normalize_hermes_root(args.home))
     try:
         if args.command == "install":
             result = install(home, checked(args.antigravity) if args.antigravity else None)

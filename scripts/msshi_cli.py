@@ -595,7 +595,8 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
     else:
         print("  1. Stage plugin aman msshi-auto-trim (fail-open; pertahankan KAT saat ini) (Rekomendasi)")
         print("  2. Atur endpoint KAT-Coder opsional + input key privat; model utama tetap")
-        print("  3. Aktifkan plugin lokal aman (msshi-auto-trim + Dreaming offline + OmniVoice jika terverifikasi)")
+        print("  3. Siapkan auto-trim, buat laporan Dreaming lokal SEKALI, dan aktifkan OmniVoice jika sudah terverifikasi")
+        print("     Dreaming tidak otomatis dijadwalkan. Jadwal opsional: msshi dream --register (Windows, 03.00 WIB).")
         print("  4. Opt-in Steel Browser Policy (butuh config.yaml & repo terpin)")
         print("  5. Lewati / pertahankan kondisi saat ini")
         pick = _prompt_choice("Pilihan Plugin [5]: ", "5")
