@@ -206,6 +206,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
             "catalog_bundled": len(bundled), "actual_skill_folders": len(observed_skills), "actual_sources": len(entries)})
     bots = {row["id"]: row for row in matrix["bots"]}
     profiles = {"default": home}
+    role_map = hermes_profiles.team_role_profiles(home)
     profile_folder = home / "profiles"
     if not package_only and profile_folder.is_dir():
         profiles.update({file.name: file for file in profile_folder.iterdir() if file.is_dir() and not file.name.startswith(".")})

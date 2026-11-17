@@ -2,6 +2,7 @@
 
 ## v3.1.2 - 2026-11-17
 
+- Post-tag audit correction: initialize role mapping in profile-mode aggregate audit; cover both existing named Yukino and fresh default Yukino without touching models or installed profiles. The immutable v3.1.2 tag remains the packaging milestone; main and release/v3.1.0 include this correction.
 - Fresh installs use actual default Yukino plus four specialists; existing named teams remain unchanged. Role mapping, delayed activation and all-direction handoffs are covered by offline fixtures. Curated upstream, Dreaming and voice selection also follow that mapping.
 - Use controlled JSON-only LLMtrim configuration after real-binary tests exposed TOON type changes in the upstream safe preset. Preserve exact data and fail open; no proxy or provider setting changes.
 - Complete missing Git revision metadata: all 49 Git sources are commit-pinned; model cards honor available revisions and non-Git registry/card limitations are explicit. Publish the complete 52-source/67-skill activation audit.
