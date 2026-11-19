@@ -26,7 +26,7 @@ if %errorlevel%==0 (
 )
 
 echo ============================================================================
-echo   MuZA SKRIPSI STARTER v1.1 (DRAG-AND-DROP) - MSSHI v3.1.0
+echo   MuZA SKRIPSI STARTER v1.1 (DRAG-AND-DROP) - MSSHI v3.1.2
 echo ============================================================================
 echo   Kamu bisa:
 echo   1. DRAG file .zip (MuZA_Search) dan/atau .pdf/.docx Pedoman ke ikon .bat ini

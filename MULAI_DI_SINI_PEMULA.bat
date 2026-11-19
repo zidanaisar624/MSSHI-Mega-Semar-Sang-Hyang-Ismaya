@@ -2,13 +2,13 @@
 setlocal DisableDelayedExpansion
 cd /d "%~dp0"
 echo ======================================================
-echo   MSSHI v3.1.0 - Sovereign Sage & Ultimate Optimizer
+echo   MSSHI v3.1.2 - Sovereign Sage & Ultimate Optimizer
 echo ======================================================
 echo 1. Pasang skill dan pilih nama bot (+ opsi unduh PDF)
 echo 2. Migrasi Hermes yang sudah ada
 echo 3. Buka Hermes Desktop
-echo 4. Periksa hasil instalasi
-echo 5. Unduh Buku Panduan PDF Lengkap (v3.1.0 / v3.0)
+echo 4. Periksa hasil instalasi (Doctor)
+echo 5. Unduh Buku Panduan PDF Lengkap (v3.1.2 / v3.0)
 choice /c 12345 /n /m "Pilih 1-5: "
 if errorlevel 5 goto pdfmanual
 if errorlevel 4 goto audit
@@ -19,17 +19,17 @@ goto run
 :pdfmanual
 echo.
 echo Pilih versi Buku Panduan PDF:
-echo   1. Terbaru (v3.1.0 - Edisi Master Klien 130 halaman)
+echo   1. Terbaru (v3.1.2)
 echo   2. Spesifikasi Optimizer (v3.0 - 50 halaman)
 choice /c 12 /n /m "Pilih versi PDF [1-2]: "
 if errorlevel 2 goto pdfv30
-set "msshi_action=manual download --version v3.1.0"
+set "msshi_action=manual download --version latest"
 goto run
 :pdfv30
 set "msshi_action=manual download --version v3.0"
 goto run
 :audit
-set "msshi_action=audit"
+set "msshi_action=doctor"
 goto run
 :desktop
 set "msshi_action=desktop"
