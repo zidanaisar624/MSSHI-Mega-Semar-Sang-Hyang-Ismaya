@@ -415,11 +415,15 @@ def _parse_yaml_block(tokens: list[tuple[int, str]], idx: int, indent: int):
         idx += 1
         if rest is not None:
             mapping[key] = _parse_scalar(rest)
-        elif idx < len(tokens) and tokens[idx][0] > indent:
+        elif idx < len(tokens) and (tokens[idx][0] > indent or (
+            tokens[idx][0] == indent and (tokens[idx][1].startswith("- ") or tokens[idx][1] == "-")
+        )):
+            # YAML permits an unindented sequence directly beneath a mapping key.
+            # Native Hermes/PyYAML configurations use this for plugin and MoA lists.
             child_indent = tokens[idx][0]
             mapping[key], idx = _parse_yaml_block(tokens, idx, child_indent)
         else:
-            mapping[key] = {}
+            mapping[key] = None
     return mapping, idx
 
 
