@@ -10,19 +10,19 @@
       "title_en": "MSSHI v3.1.2 Client Handbook - Students, Lecturers and MuZA",
       "filename": "Modul_Pelanggan_MSSHI_v3.1.2.pdf",
       "rel_path": "docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
-      "pages": 110,
-      "size_bytes": 3512198,
-      "sha256": "58f2e326b7a37626accb6cb5d8a05c1835339d97dab660032bd32163540af84d",
-      "source_commit": "23c52114c558f2019ad4c5d88cd8a3124f71c931",
+      "pages": 113,
+      "size_bytes": 3522742,
+      "sha256": "63adff625048783bb0b8e9ca79086e5669dcf8f84dd229b38d1a3ea94ec3958a",
+      "source_commit": "42cb1dd782e19d697fdf08a3207ba9fa619e0383",
       "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
       "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
       "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/latest/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
-      "description_id": "Panduan lengkap 110 halaman: dua tipe interaksi dengan audit Main, MSSHITrim, dua preset Academic dan MuZA, native workspace Hermes, 32 keluarga CLI/84 node/288 argumen, 67 skill beserta fungsi/prasyarat, meeting readiness dan troubleshooting; tanpa akun atau konfigurasi pribadi.",
+      "description_id": "Panduan lengkap 113 halaman: dua tipe interaksi dengan audit Main, MSSHITrim, dua preset Academic dan MuZA, native workspace Hermes, 33 keluarga CLI/85 node/293 argumen, 67 skill beserta fungsi/prasyarat, meeting readiness dan troubleshooting; tanpa akun atau konfigurasi pribadi.",
       "source_commit_kind": "baseline with reviewed working-tree revision",
-      "source_manifest_sha256": "4c874f6947a7f76768219264466aab883947f242eb4222e24ea60b19a40cb445",
+      "source_manifest_sha256": "dfc86245a12eef449c6d524f4ec4b0b87cad1887cea4a61b19702f89eafba15b",
       "source_manifest_path": "docs/manuals/v3.1.2/source-manifest.json",
       "edition_date": "2026-11-19",
-      "source_manifest_file_sha256": "878554b47a0321fc28133b093f2bb218d1acd09484f724c293d8163d76cc4e8f"
+      "source_manifest_file_sha256": "834474234e4826f45e8be3604eef85dd6109dd1a6f57316713e8c5a0fbeb40cd"
     },
     {
       "version": "v3.1.2",
@@ -31,19 +31,19 @@
       "title_en": "MSSHI v3.1.2 Client Handbook - Students, Lecturers and MuZA",
       "filename": "Modul_Pelanggan_MSSHI_v3.1.2.pdf",
       "rel_path": "docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
-      "pages": 110,
-      "size_bytes": 3512198,
-      "sha256": "58f2e326b7a37626accb6cb5d8a05c1835339d97dab660032bd32163540af84d",
-      "source_commit": "23c52114c558f2019ad4c5d88cd8a3124f71c931",
+      "pages": 113,
+      "size_bytes": 3522742,
+      "sha256": "63adff625048783bb0b8e9ca79086e5669dcf8f84dd229b38d1a3ea94ec3958a",
+      "source_commit": "42cb1dd782e19d697fdf08a3207ba9fa619e0383",
       "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
       "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
       "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/v3.1.2/Modul_Pelanggan_MSSHI_v3.1.2.pdf",
-      "description_id": "Panduan lengkap 110 halaman: dua tipe interaksi dengan audit Main, MSSHITrim, dua preset Academic dan MuZA, native workspace Hermes, 32 keluarga CLI/84 node/288 argumen, 67 skill beserta fungsi/prasyarat, meeting readiness dan troubleshooting; tanpa akun atau konfigurasi pribadi.",
+      "description_id": "Panduan lengkap 113 halaman: dua tipe interaksi dengan audit Main, MSSHITrim, dua preset Academic dan MuZA, native workspace Hermes, 33 keluarga CLI/85 node/293 argumen, 67 skill beserta fungsi/prasyarat, meeting readiness dan troubleshooting; tanpa akun atau konfigurasi pribadi.",
       "source_commit_kind": "baseline with reviewed working-tree revision",
-      "source_manifest_sha256": "4c874f6947a7f76768219264466aab883947f242eb4222e24ea60b19a40cb445",
+      "source_manifest_sha256": "dfc86245a12eef449c6d524f4ec4b0b87cad1887cea4a61b19702f89eafba15b",
       "source_manifest_path": "docs/manuals/v3.1.2/source-manifest.json",
       "edition_date": "2026-11-19",
-      "source_manifest_file_sha256": "878554b47a0321fc28133b093f2bb218d1acd09484f724c293d8163d76cc4e8f"
+      "source_manifest_file_sha256": "834474234e4826f45e8be3604eef85dd6109dd1a6f57316713e8c5a0fbeb40cd"
     },
     {
       "version": "v3.1.1",
@@ -94,6 +94,24 @@
       "status": "retired_notice",
       "superseded_by": "v3.1.2",
       "source_commit_kind": "retired guide notice replacing a historical personal guide"
+    },
+    {
+      "version": "v3.1.2-install",
+      "maps_to": "v3.1.2",
+      "title_id": "Panduan Praktis Instalasi MSSHI v3.1.2",
+      "title_en": "MSSHI v3.1.2 Practical Installation Guide",
+      "filename": "Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
+      "rel_path": "docs/manuals/v3.1.2/Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
+      "pages": 6,
+      "size_bytes": 76679,
+      "sha256": "9b2e30e7e3bad111c20fd9960cee4b1c8b537640ad033e198a2458113edf9aaa",
+      "source_commit": "42cb1dd782e19d697fdf08a3207ba9fa619e0383",
+      "source_commit_kind": "reviewed implementation baseline",
+      "edition_date": "2026-11-19",
+      "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.1.2/Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
+      "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/v3.1.2/Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
+      "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/v3.1.2/Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
+      "description_id": "Panduan praktis 6 halaman untuk klien Windows: persiapan, pemasangan, preset Academic, pengaturan akses pribadi, Doctor --fix, Bot Forge, batas RAM 4 GB dan serah terima. Tanpa model, provider, endpoint, API key atau akun pembuat."
     }
   ]
 }
