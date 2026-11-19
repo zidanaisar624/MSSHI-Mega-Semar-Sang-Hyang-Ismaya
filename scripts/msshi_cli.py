@@ -421,8 +421,7 @@ def _stage_auto_trim_plugin(profile_home, target, mode, selections):
     roots = _hermes_profile_roots("hermes", target, mode, selections, profile_home)
     if (profile_home / "config.yaml").is_file() and all(item[3] != profile_home for item in roots):
         roots = [*roots, ("default", profile_home, "default", profile_home)]
-    names = list(dict.fromkeys("default" if folder == profile_home else folder.name
-                              for _, _, _, folder in roots if folder.is_dir()))
+    names = list(trim_setup.profile_dirs(profile_home))
     if not names:
         return {"staged": False, "reason": "native profiles are not created yet", "profiles": [], "llmtrim_binary": False}
     try:
@@ -1193,7 +1192,7 @@ def main(argv=None):
     updater.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "interaction", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
@@ -1206,6 +1205,7 @@ def main(argv=None):
             'browser': 'Simpan pilihan browser dan label akun; login manual, tanpa transfer cookie.',
             'trim': 'Ringkas JSON yang memenuhi syarat tanpa kehilangan nilai.',
             'interaction': 'Status/protokol dua tipe bot dan pemasangan plugin lokal tanpa panggilan model.',
+            'forge': 'Tinjau roster dan rancang profil baru; model dan akun dipilih pengguna.',
             'managed': 'Kelola pembaruan salinan skill yang cocok dengan fingerprint.',
             'services': 'Kompatibilitas lama; koneksi layanan diatur sendiri oleh pengguna.',
             'timesfm': 'Peramalan deret waktu lokal; runtime/model terpisah.',
@@ -1262,7 +1262,7 @@ def main(argv=None):
     launcher.add_argument("--pdf-version", help="Pilih versi panduan; default latest.")
     launcher.add_argument("--pdf-dest", type=Path, help="Folder PDF; default Downloads/MSSHI_Manuals.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -1283,7 +1283,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "forge": "msshi_forge.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_preferences.py", "trim": "msshi_llmtrim.py", "interaction": "msshi_interaction.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",

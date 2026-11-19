@@ -19,7 +19,7 @@ Pada instalasi baru preset MuZA, profil default yang sebenarnya menjadi Yukino, 
 
 | Komponen | Pembagian | Perilaku pemasangan / pemicu |
 | --- | --- | --- |
-| msshi-team-routing | Lima peran; asisten default netral pada susunan lama juga dapat bekerja sama | Pemasang menyiapkan backend native; sebelum konfigurasi Hermes tersedia, aktivasi diselesaikan saat sinkronisasi konfigurasi. Tidak menjalankan percakapan model saat setup. |
+| msshi-team-routing | Lima peran; asisten default netral pada susunan lama juga dapat bekerja sama | Pemasang mendaftarkan plugin native; backend delegasi dipilih pengguna. Sebelum konfigurasi Hermes tersedia, plugin tetap staged. Tidak menjalankan percakapan model saat setup. |
 | msshi-auto-trim / [LLMtrim](https://github.com/fkiene/llmtrim) | Semua profil yang dipasang dan mempunyai binary | Plugin dapat disiapkan lewat wizard/flag; migrasi mengaktifkan hook jika binary lokal tersedia. Binary tidak otomatis muncul hanya karena skill terpasang. Setelah siap, hasil tool JSON besar dipadatkan otomatis dengan pemeriksaan kesetaraan data. |
 | [Hersona](https://github.com/shiro-0x/hersona) | Pendamping bersama sesuai tugas persona | CLI terpisah, dipakai untuk katalog atau draf bila diminta; tidak menimpa SOUL. Binary dan dependensi perlu tersedia. |
 | Hermes-Dreaming | Lima peran, diproses terpisah | Pilihan plugin 3 membuat laporan offline sekali. Jadwal Windows pukul 03.00 WIB hanya dibuat melalui `msshi dream --register`. Tidak membangunkan model atau mempromosikan memori otomatis pada adapter MSSHI. |

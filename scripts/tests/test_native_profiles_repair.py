@@ -120,8 +120,8 @@ class NativeProfilesRepairTests(unittest.TestCase):
         result = self.sync("val")
         folder = self.home / "profiles/val"
         config = hp.load_yaml_mapping(folder / "config.yaml")
-        self.assertEqual(config["model"]["default"], "current/root")
-        self.assertEqual(config["model"]["provider"], "databyte")
+        self.assertNotIn('model', config)
+        self.assertNotIn('providers', config)
         env = (folder / ".env").read_text()
         self.assertNotIn("PRIVATE_API_KEY=fixture-only", env)
         self.assertNotIn("HERMES_HOME", env)
@@ -236,14 +236,17 @@ class NativeProfilesRepairTests(unittest.TestCase):
         user_config = b"# current user route\r\nmodel:\r\n  default: chosen/model\r\n  provider: chosen-provider\r\ndelegation:\r\n  model: chosen/child\r\n  provider: chosen-child-provider\r\n"
         (fresh / "config.yaml").write_bytes(user_config)
         result = hp.sync_pending_profile_configs(fresh)
-        self.assertEqual(set(result["seeded_configs"]), set(NAMES) - {"yukino"})
+        self.assertEqual(result['seeded_configs'], [])
         self.assertEqual(set(result["team_routing"]), {"default", "shizuka", "val", "kiki-chii", "shikaku"})
         for profile, row in result["team_routing"].items():
             self.assertTrue(row["active"], profile)
             pdir = fresh if profile == "default" else fresh / "profiles" / profile
             cfg = hp.load_yaml_mapping(pdir / "config.yaml")
-            self.assertEqual(cfg["model"], {"default": "chosen/model", "provider": "chosen-provider"})
-            self.assertEqual(cfg["delegation"]["backend"], "msshi-team")
+            if profile == 'default':
+                self.assertEqual(cfg['model'], {'default': 'chosen/model', 'provider': 'chosen-provider'})
+            else:
+                self.assertNotIn('model', cfg)
+            self.assertNotIn('backend', cfg.get('delegation') or {})
         root_cfg = hp.load_yaml_mapping(fresh / "config.yaml")
         self.assertEqual(root_cfg["delegation"]["model"], "chosen/child")
         self.assertEqual(root_cfg["delegation"]["provider"], "chosen-child-provider")
@@ -261,7 +264,7 @@ class NativeProfilesRepairTests(unittest.TestCase):
         self.assertEqual(new["model"], old["model"])
         self.assertEqual(new["delegation"]["model"], old["delegation"]["model"])
         self.assertEqual(new["delegation"]["provider"], old["delegation"]["provider"])
-        self.assertEqual(new["delegation"]["backend"], "msshi-team")
+        self.assertEqual(new['delegation'], old['delegation'])
         self.assertEqual(new["plugins"]["enabled"], ["existing-plugin", "msshi-team-routing"])
         self.assertIn(b"# exact shikaku\r\nmodel:\r\n  default: current/shikaku", cfg.read_bytes())
         self.assertTrue(result["new_session_prompt_required"])
@@ -274,7 +277,7 @@ class NativeProfilesRepairTests(unittest.TestCase):
         cfg.write_text(hp.dump_yaml(custom), encoding="utf-8")
         result = hp.install_team_routing_plugin(self.home, ROOT)
         self.assertEqual(hp.load_yaml_mapping(cfg)["delegation"]["backend"], "my-custom")
-        self.assertEqual(result["profiles"]["shikaku"]["backend"], "custom_backend_preserved")
+        self.assertEqual(result['profiles']['shikaku']['backend'], 'user_selected')
 
     def test_explicit_default_backend_is_preserved_across_repeated_sync(self):
         for name in ('shizuka', 'val'):

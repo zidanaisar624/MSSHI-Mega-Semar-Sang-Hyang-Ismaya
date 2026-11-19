@@ -190,6 +190,8 @@ def profile_dirs(home, selected=None):
         for folder in sorted(parent.iterdir()):
             if folder.name=='default' or not profiles.PROFILE_ID_RE.fullmatch(folder.name):
                 continue
+            if (parent / '.deleted' / folder.name).exists():
+                continue
             checked(folder)
             if folder.is_dir() and any((folder/name).is_file() for name in ('config.yaml','profile.yaml','SOUL.md')):
                 roots[folder.name]=folder

@@ -139,7 +139,10 @@ class HermesProfileSyncTests(unittest.TestCase):
                 self.assertTrue((pdir / "memories").is_dir())
                 self.assertTrue((pdir / "sessions").is_dir())
                 self.assertTrue((pdir / "skills" / "cli-anything-universal-bridge" / "SKILL.md").is_file())
-                self.assertFalse((pdir / "config.yaml").exists())
+                if bot_id == 'yukino':
+                    self.assertFalse((pdir / 'config.yaml').exists())
+                else:
+                    self.assertNotIn('model', hermes_profiles.load_yaml_mapping(pdir / 'config.yaml'))
 
             self.assertTrue((hermes_home / "msshi-runtime" / "pending-bots.json").is_file())
 
@@ -178,13 +181,13 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertEqual(default_after["model"]["provider"], "nous")
             self.assertEqual(default_after["providers"]["nous"]["api_mode"], "chat_completions")
             self.assertTrue((hermes_home / "msshi-runtime" / "last-migration.json").is_file())
-            self.assertFalse((hermes_home / "profiles" / "val" / "config.yaml").exists())
+            self.assertNotIn('model', hermes_profiles.load_yaml_mapping(hermes_home / 'profiles' / 'val' / 'config.yaml'))
 
             for bot_id in ("shizuka", "kiki-chii", "shikaku"):
                 pdir = hermes_home / "profiles" / bot_id
                 cfg = hermes_profiles.load_yaml_mapping(pdir / "config.yaml")
-                self.assertEqual(cfg.get("model", {}).get("default"), "upstage/solar-mini4:free")
-                self.assertIn("providers", cfg)
+                self.assertNotIn('model', cfg)
+                self.assertNotIn('providers', cfg)
                 self.assertNotIn("gateway", cfg)
                 env_text = (pdir / ".env").read_text(encoding="utf-8")
                 # Existing per-profile .env bytes are preserved, even for a user placeholder.
@@ -313,7 +316,7 @@ class HermesProfileSyncTests(unittest.TestCase):
                 self.assertIn("gdrive", changed)
                 parsed = msshi_runtime.yaml_read(updated)
                 self.assertEqual(parsed["model"]["default"], "upstage/solar-mini4:free")
-                self.assertNotIn("gdrive", parsed.get("mcp_servers", {}))
+                self.assertNotIn("gdrive", parsed.get("mcp_servers") or {})
 
     def test_pre_hermes_status_helpers_without_config_yaml(self) -> None:
         with TemporaryDirectory() as tmp:

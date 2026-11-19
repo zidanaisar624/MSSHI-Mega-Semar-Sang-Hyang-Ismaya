@@ -32,6 +32,8 @@
 <!-- MSSHI ACADEMIC INFO -->
 > **Academic v3.1.2:** instalasi baru menawarkan **Mahasiswa S1/S2/S3** sebagai pilihan awal dan **Dosen/Pimpinan Kampus** sebagai pilihan terpisah; MuZA tetap tersedia. [Panduan Academic](docs/ACADEMIC_PRESET.md). Model, provider, API key, dan akun diisi pengguna sendiri. Template catatan biasa disediakan; Obsidian tidak dipasang otomatis.
 
+> **Pengaturan mandiri:** setiap bot memperoleh MSSHITrim di semua mode Hermes. Model, provider, endpoint, base URL, API key dan backend delegasi dipilih pengguna sendiri; MSSHI tidak menyalinnya antarprofil. Gunakan `msshi doctor --json` / `msshi doctor --fix` untuk diagnosis dan pemulihan file terkelola yang aman. [Bot Forge](docs/BOT_FORGE.md) membantu merancang bot baru berdasarkan kebutuhan tim.
+
 ---
 
 <table>

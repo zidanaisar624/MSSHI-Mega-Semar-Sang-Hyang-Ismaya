@@ -30,7 +30,7 @@ ArtCraft, LightCraft, dan Blender memakai rute native CLI yang terdaftar. Jangan
 
 ## Koneksi lain
 
-GitLab dan Tinyfish tetap menjadi konektor MCP layanan web. Hersona dan llmtrim adalah utilitas lokal yang telah dialihkan dari MCP stdio ke CLI. Gunakan route hersona hanya untuk tugas persona yang relevan dan pratinjau katalog, blend, atau ekspor; persona native Hermes dan SOUL.md tidak diganti otomatis.
+GitLab, Tinyfish, BrightData dan layanan web lain memerlukan konfigurasi manual pengguna bila diperlukan. Hersona dan llmtrim adalah utilitas lokal yang telah dialihkan dari MCP stdio ke CLI. Gunakan route hersona hanya untuk tugas persona yang relevan dan pratinjau katalog, blend, atau ekspor; persona native Hermes dan SOUL.md tidak diganti otomatis.
 
 Contoh Hersona memerlukan tiket baru pada setiap eksekusi. Jalankan msshi runtime ticket --target hersona --task "Tinjau atribut persona yang diminta", lalu msshi runtime run --ticket TICKET_ID hersona -- show personality/kuudere. Tentukan --profile secara eksplisit bila profil aktif ambigu.
 
@@ -46,4 +46,8 @@ Pertahankan auto_open_on_boot false dan jev_model_routing false. Daftar rute men
 
 ## Browsing policy for v3
 
-Prefer Hermes-Steel through native Hermes browser tools after verifying the plugin and endpoint are ready. Read the public browser policy and use msshi browser for route assessment. Ask for task-specific approval before using a personal Chrome/other-browser session and require that account-specific need for any local-browser fallback. Account migration needs separate approval naming source, destination, account, data, and duration. Automatic login-data transfer is not implemented. Do not open a cloud session during boot or status checks.
+Use the browser the user selected via `msshi browser`. Ask for task-specific approval before using a personal browser session. Log in manually with the user; do not copy accounts, cookies or credentials. Steel is not automatically installed. Do not open a browser during boot or status checks.
+
+## Bot Forge (konteks permintaan bot baru)
+
+Saat pemakai meminta anggota tim permanen, mulai dengan `msshi forge --roster`. Pada preset tim, minta Shizuka mengumpulkan penilaian peran yang tersedia setelah pengguna menyetujui penggunaan model. Bandingkan opsi memakai bot/skill yang sudah ada, tanggung jawab yang kurang, nama, keluaran, skill, pola handoff, persetujuan manusia, serta rekomendasi tier model sesuai kebutuhan dan biaya. Jangan mengarang hasil konsultasi. Jelaskan peran yang belum menjawab. Simpan rancangan JSON sesuai `docs/BOT_FORGE.md`, pratinjau `msshi forge --blueprint rancangan.json`, lalu pengguna dapat membuat profil melalui `msshi forge --blueprint rancangan.json --apply` di terminal dan mengonfirmasi. Profil baru mendapat MSSHITrim jika runtime siap; model, provider, base URL dan API key diatur sendiri. Jangan menjalankan kickoff chat, menyalin konfigurasi akun atau mengaktifkan gateway terpisah/routine secara otomatis.

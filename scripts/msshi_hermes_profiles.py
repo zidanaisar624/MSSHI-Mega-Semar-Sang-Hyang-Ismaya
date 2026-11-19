@@ -982,6 +982,17 @@ I don't need to do anything here.
 Do not send that no-action response as a new message or create a reply loop. Human review
 is required between creative stages and before publishing or irreversible external actions.
 This policy does not change provider/model, credentials, SOUL.md or the user's role voices.
+
+Bot Forge development (only when the user asks for a new persistent bot): any bot
+may receive the request. Use `msshi forge --roster` to check existing roles and
+skills; ask Shizuka to coordinate a bounded review by each available role, if the
+user agrees to the associated model usage. Collect gaps, reuse options, name,
+job, skill list, handoffs and approval gates. Missing replies must be disclosed.
+Recommend model capability/cost/latency tiers, with no hardcoded private values.
+Show the final design and let the user decide. Use `msshi forge --blueprint FILE`
+for preview and let the user explicitly run `--apply` in their terminal to create
+a new profile. No inherited model/provider/base URL/keys, routine, gateway or
+intro chat. The user configures their own model and account afterward.
 {_POLICY_END}"""
 
 
@@ -1149,16 +1160,13 @@ def sync_hermes_profile(
             if new != old:
                 write(agents_path, new)
         config_path = stage_dir / "config.yaml"
-        if not config_path.exists():
-            seed = launch_model_seed_from_home(hermes_home)
-            if seed:
-                write(config_path, dump_yaml(seed).encode("utf-8"))
-                seeded_config = True
+        if is_new and not config_path.exists():
+            # A named profile can register local plugins without inheriting any
+            # model/provider/endpoint/key from the root or another profile.
+            write(config_path, b"# Configure model, provider and credentials in Hermes.\n")
         env_path = stage_dir / ".env"
         if not env_path.exists():
-            safe_env = clone_safe_env_text(hermes_home / ".env")
-            write(env_path, safe_env.encode("utf-8"), 0o600)
-            seeded_env = safe_env != _PLACEHOLDER_ENV
+            write(env_path, _PLACEHOLDER_ENV.encode("utf-8"), 0o600)
         for src, dst in skill_copies:
             dst = _confined(target_dir / "skills", dst)
             actual_dst = stage_dir / dst.relative_to(target_dir)
@@ -1221,6 +1229,8 @@ def _replace_yaml_section_bytes(raw: bytes, key: str, section: dict) -> bytes:
                 break
             end += 1
         return bom + ("".join(lines[:start]) + rendered + "".join(lines[end:])).encode("utf-8")
+    if text.strip() == "{}":
+        return bom + rendered.encode("utf-8")
     if text.strip() and not text.endswith(("\n", "\r")):
         text += newline
     return bom + (text + rendered).encode("utf-8")
@@ -1240,40 +1250,26 @@ def _activate_team_config(path: Path, tx: ProfileTransaction) -> dict:
         return {"active": False, "reason": "custom_plugin_policy_requires_review"}
     if "msshi-team-routing" in disabled:
         return {"active": False, "reason": "explicitly_disabled_by_user"}
-    old_backend = delegation.get("backend") or "default"
-    # An explicitly selected default backend is still a user's choice. Only
-    # absent backend settings may opt into MSSHI during preset provisioning.
-    # The key itself is the persistent preference marker across later syncs.
-    change_backend = 'backend' not in delegation or str(old_backend).strip().lower() == "msshi-team"
     expected = dict(before)
     expected_plugins = dict(plugins)
     expected_plugins["enabled"] = list(enabled or [])
     if "msshi-team-routing" not in expected_plugins["enabled"]:
         expected_plugins["enabled"].append("msshi-team-routing")
     expected["plugins"] = expected_plugins
-    if change_backend:
-        expected_delegation = dict(delegation)
-        expected_delegation["backend"] = "msshi-team"
-        expected["delegation"] = expected_delegation
-    else:
-        expected_delegation = delegation
     raw = path.read_bytes()
     if expected_plugins != plugins:
         raw = _replace_yaml_section_bytes(raw, "plugins", expected_plugins)
-    if expected_delegation != delegation:
-        raw = _replace_yaml_section_bytes(raw, "delegation", expected_delegation)
     # Validate proposed bytes in memory; no interpreter, secret resolver or API is run.
     after = load_yaml_mapping(raw)
     if after != expected:
         raise ValueError(f"Cannot prove narrow config edit preserves routing at {path}")
     changed = tx.write(path, raw, 0o600)
-    return {"active": True, "backend": "msshi-team" if change_backend else "custom_backend_preserved",
-            "backend_preference": "explicit_config_preserved" if not change_backend else "msshi_backend_selected",
+    return {"active": True, "backend": "user_selected",
+            "backend_preference": "explicit_config_preserved",
             "named_profile_delegate_backend_selected": (after.get("delegation") or {}).get("backend") == "msshi-team",
             "changed": changed, "main_model_provider_preserved": before.get("model") == after.get("model")
             and before.get("provider") == after.get("provider"),
-            "delegation_routing_preserved": {k: v for k, v in delegation.items() if k != "backend"}
-            == {k: v for k, v in (after.get("delegation") or {}).items() if k != "backend"}}
+            "delegation_routing_preserved": before.get("delegation") == after.get("delegation")}
 
 
 def install_team_routing_plugin(
@@ -1281,9 +1277,9 @@ def install_team_routing_plugin(
     ("yukino", "shizuka", "val", "kiki-chii", "shikaku"),
     transaction: ProfileTransaction | None = None,
 ) -> dict:
-    """Stage the native plugin; choose MSSHI backend only when no backend was set.
+    """Stage the native plugin; the user selects any delegation backend in Hermes.
 
-    Plugin activation changes plugins.enabled/delegation.backend only (backed up). Existing
+    Plugin activation changes plugins.enabled only (backed up). Existing
     explicit backends (including default), primary model/provider, auxiliary/MoA, SOUL
     and credential files are never changed. Named delegation needs its current schema;
     native Bot Chat message_agent remains available independently of backend selection.
@@ -1357,11 +1353,9 @@ def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: 
 
 
 def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
-    """Backfill the user's active model and required keys for enrolled pre-staged bots only."""
+    """Fill profile metadata only; user configures every model and credential."""
     if not hermes_home.is_dir():
         return {"hermes_home": str(hermes_home), "initialized": False, "seeded_configs": [], "seeded_envs": []}
-    seed = launch_model_seed_from_home(hermes_home)
-    safe_env = clone_safe_env_text(hermes_home / ".env")
     profiles_dir = hermes_home / "profiles"
     pending_path = hermes_home / "msshi-runtime" / "pending-bots.json"
     pending_data: dict = {}
@@ -1393,17 +1387,9 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
         if not pdir.is_dir() or pdir.is_symlink():
             continue
         _ensure_profile_subdirs(pdir)
-        cfg = pdir / "config.yaml"
-        if not cfg.exists() and seed:
-            _atomic_write_text(cfg, dump_yaml(seed))
-            seeded_configs.append(bot_id)
         env_file = pdir / ".env"
-        managed_empty_env = (bot_id in (pending_data.get('bots') or {}) and env_file.is_file()
-                             and env_file.read_bytes() in {_PLACEHOLDER_ENV.encode('utf-8'), _PLACEHOLDER_ENV.replace('\n', '\r\n').encode('utf-8')})
-        if not env_file.exists() or (managed_empty_env and safe_env != _PLACEHOLDER_ENV):
-            _atomic_write_text(env_file, safe_env, mode=0o600)
-            if safe_env != _PLACEHOLDER_ENV:
-                seeded_envs.append(bot_id)
+        if not env_file.exists():
+            _atomic_write_text(env_file, _PLACEHOLDER_ENV, mode=0o600)
         meta_path = pdir / "profile.yaml"
         if not meta_path.is_file():
             info = (pending_data.get("bots") or {}).get(bot_id, {})
@@ -1434,7 +1420,7 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
     return {
         "hermes_home": str(hermes_home),
         "initialized": is_hermes_initialized(hermes_home),
-        "has_model_seed": bool(seed),
+        "has_model_seed": False,
         "seeded_configs": seeded_configs,
         "seeded_envs": seeded_envs,
         "team_routing": routing_rows,

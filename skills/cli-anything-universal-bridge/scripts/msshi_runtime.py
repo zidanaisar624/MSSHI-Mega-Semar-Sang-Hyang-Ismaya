@@ -264,7 +264,7 @@ def preservation_report(home, migration):
 def profiles(home):
     result = {"default": home}
     for path in sorted((home / "profiles").glob("*")):
-        if path.is_dir() and not path.is_symlink() and (path / "config.yaml").is_file():
+        if hermes_profiles.valid_profile_id(path.name) and not (home / 'profiles' / '.deleted' / path.name).exists() and path.is_dir() and not path.is_symlink() and (path / "config.yaml").is_file():
             result[path.name] = path
     return result
 

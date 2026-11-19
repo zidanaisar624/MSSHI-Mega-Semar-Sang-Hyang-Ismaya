@@ -400,7 +400,6 @@ def main(argv=None):
                 profiles_root = hermes_home / "profiles"
                 if args.apply and os.name == "nt":
                     hermes_profiles.persist_windows_hermes_home(hermes_home)
-            has_model_seed = bool(hermes_profiles.launch_model_seed_from_home(hermes_home)) if hermes_home else False
             default_bot = (hermes_profiles.resolve_default_bot(hermes_home, args.default_bot)
                            if provision_hermes and args.mode in {"muza-preset", *academic.MODES} else "keep-hermes")
             yukino_is_default = default_bot == "yukino"
@@ -433,10 +432,8 @@ def main(argv=None):
                     print(f"  {'Perbarui' if existing(bot_dir / 'profile.yaml') else 'Buat'} {bot_dir / 'profile.yaml'} (display_name: {label})")
                     if existing(bot_dir / "config.yaml"):
                         print(f"  Pertahankan {bot_dir / 'config.yaml'} (provider/model aman)")
-                    elif has_model_seed:
-                        print(f"  Seed {bot_dir / 'config.yaml'} (dari model default)")
                     else:
-                        print("  Pre-stage profile sebelum Hermes dibuka (config.yaml akan disinkronkan setelah Hermes dikonfigurasi)")
+                        print("  Profil baru: atur sendiri model, provider, endpoint dan API key di Hermes.")
                 local_skills = ", ".join(slug for slug in dict.fromkeys(skills) if catalog[slug])
                 agents_text = (
                     f"# {label}\n\nBaca SOUL.md untuk persona dan batas peran.\n\n"
@@ -494,16 +491,7 @@ def main(argv=None):
                             academic.setup_profile(args, args.mode), explicit=args.academic_project)
                         print('Proyek akademik biasa:', project['project'], '(tanpa Obsidian/akun otomatis)')
                     multiplex = hermes_profiles.notify_live_multiplexer(hermes_home)
-                    if has_model_seed:
-                        msg = (f"Bot default Yukino + empat spesialis disiapkan di {hermes_home}." if yukino_is_default else
-                               f"Lima profil bernama Hermes disiapkan di {profiles_root}; default tetap netral.")
-                        print(msg)
-                    else:
-                        print(
-                            f"Profil Hermes pre-staged di {profiles_root}. "
-                            "Buka Hermes & atur provider/model Anda, lalu jalankan 'msshi desktop' atau 'msshi runtime migrate' "
-                            "agar seluruh bot otomatis mewarisi konfigurasi model Anda."
-                        )
+                    print(f"Profil Hermes disiapkan di {profiles_root}. Atur model, provider, endpoint dan API key setiap bot sendiri di Hermes; MSSHI tidak menyalin pengaturan antarprofil.")
                     if multiplex.get("notified"):
                         print("Multiplexer Hermes yang sedang berjalan telah disegarkan (rescan live).")
                 else:

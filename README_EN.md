@@ -32,6 +32,8 @@
 <!-- MSSHI ACADEMIC INFO -->
 > **Academic v3.1.2:** fresh installations offer **Indonesian S1/S2/S3 students** as the initial choice, plus a separate **Lecturer/Campus Leadership** preset; MuZA remains available. [Academic guide](docs/ACADEMIC_PRESET.md). Users supply their own models, providers, API keys and accounts. Ordinary note templates are provided; Obsidian is not installed automatically.
 
+> **User-owned settings:** MSSHITrim is standard for every Hermes setup mode. Users choose their own model, provider, endpoint, base URL, API key and delegation backend; MSSHI never copies these between profiles. Use `msshi doctor --json` and `msshi doctor --fix` for diagnostics and scoped repair. [Bot Forge](docs/BOT_FORGE.md) helps design additional bots.
+
 ---
 
 <table>
