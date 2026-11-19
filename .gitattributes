@@ -4,3 +4,4 @@ scripts/msshi-update text eol=lf
 *.pdf binary
 # Preserve the exact upstream CC-BY legal text, including its final blank line.
 skills/unslop/LICENSE whitespace=-blank-at-eof
+docs/manuals/**/source-manifest.json text eol=lf

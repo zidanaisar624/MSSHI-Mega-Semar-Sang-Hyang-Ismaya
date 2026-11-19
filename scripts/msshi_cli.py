@@ -596,7 +596,7 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
         print("  3. Siapkan auto-trim, buat laporan Dreaming lokal SEKALI, dan aktifkan OmniVoice jika sudah terverifikasi")
         print("     Dreaming tidak otomatis dijadwalkan. Jadwal opsional: msshi dream --register (Windows, 03.00 WIB).")
         print("  4. Atur browser pilihan pada langkah berikutnya (tanpa login otomatis)")
-        print("  5. Lewati / pertahankan kondisi saat ini")
+        print("  5. Pertahankan addon opsional; MSSHITrim standar tetap disiapkan")
         pick = _prompt_choice("Pilihan Plugin [5]: ", "5")
         if pick not in {"1", "2", "3", "4", "5"}:
             raise ValueError("Pilihan Plugin harus 1-5.")
@@ -1228,7 +1228,7 @@ def main(argv=None):
         }[verb])
         command.add_argument("arguments", nargs=argparse.REMAINDER)
     for action in ("setup", "select"):
-        wizard = subparsers.add_parser(action, help="Buka wizard empat mode." if action == "setup" else "Pilih skill atau paket.")
+        wizard = subparsers.add_parser(action, help="Pilih Academic, MuZA, Solo, Custom Multi-Bot, atau Selective." if action == "setup" else "Pilih skill atau paket.")
         wizard.add_argument("--platform", choices=PLATFORMS)
         wizard.add_argument("--target-dir", type=Path)
         wizard.add_argument("--lang", choices=('id', 'en'), default='id', help="Bahasa penjelasan pilihan (id/en); format input tetap sama.")

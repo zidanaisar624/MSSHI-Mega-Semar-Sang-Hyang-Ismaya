@@ -2,13 +2,13 @@
 
 Edisi distribusi Kamis, 19 November 2026 (Asia/Jakarta). Academic Mahasiswa, Academic Dosen dan MuZA; interaksi dua tipe dan MSSHITrim.
 
-Baseline Git `71eccb2c168629c01fd78e8e5d85f7fd9d641219` ditambah revisi kerja v3.1.2 universal. Manifest source publik: `3f47106d8dde14826a6c9f78d8cc738db910509123e9f04d6de61c67805c831d`. PDF dibuat setelah penangkapan parser, tanpa mengeksekusi aksi CLI/model.
+Baseline Git `23c52114c558f2019ad4c5d88cd8a3124f71c931` ditambah revisi kerja v3.1.2 universal. Manifest source publik: `4c874f6947a7f76768219264466aab883947f242eb4222e24ea60b19a40cb445`. PDF dibuat setelah penangkapan parser, tanpa mengeksekusi aksi CLI/model.
 
 # 1. Mulai di sini: bentuk produk dan cara membaca modul
 
 MSSHI (Mega Semar Sang Hyang Ismaya) adalah kumpulan instruksi skill, kerangka persona/peran, dan alat CLI untuk mengelola pemasangan, pembaruan, serta penggunaan alat sesuai tugas. Agen seperti Hermes membaca instruksi tersebut untuk menentukan alur kerja. Aplikasi kreatif, runtime Python/Node, bobot model, dan akun layanan disiapkan menurut fitur yang dipakai.
 
-Modul pelanggan ini menjelaskan **MSSHI 3.1.2**, berdasarkan source v3.1.2 yang ditinjau pada 19 November 2026; baseline Git `71eccb2c168629c01fd78e8e5d85f7fd9d641219` ditambah revisi universal dua tipe, Academic dan MSSHITrim yang dicatat dengan manifest hash. Edisi: **Kamis, 19 November 2026 (Asia/Jakarta)**. Pembaruan mencakup tata letak lima peran Hermes untuk instalasi baru dan lama, koordinasi peran, sapaan pribadi, protokol SOUL, pembagian aplikasi, KAT opsional/default OFF, integrasi kontekstual, dan penyalinan PDF otomatis. Contoh merupakan petunjuk pemakaian; laporan pengujian pada perangkat tertentu disimpan terpisah. Kode dan bantuan versi terpasang menjadi acuan perilaku command.
+Modul pelanggan ini menjelaskan **MSSHI 3.1.2**, berdasarkan source v3.1.2 yang ditinjau pada 19 November 2026; baseline Git `23c52114c558f2019ad4c5d88cd8a3124f71c931` ditambah revisi universal dua tipe, Academic dan MSSHITrim yang dicatat dengan manifest hash. Edisi: **Kamis, 19 November 2026 (Asia/Jakarta)**. Pembaruan mencakup tata letak lima peran Hermes untuk instalasi baru dan lama, koordinasi peran, sapaan pribadi, protokol SOUL, pembagian aplikasi, KAT opsional/default OFF, integrasi kontekstual, dan penyalinan PDF otomatis. Contoh merupakan petunjuk pemakaian; laporan pengujian pada perangkat tertentu disimpan terpisah. Kode dan bantuan versi terpasang menjadi acuan perilaku command.
 
 Jika Hermes sudah disiapkan untuk Anda, mulai dari Bab 3 dan Praktikum 1; gunakan bot/profil yang diberikan saat serah terima. Bab instalasi ditujukan untuk pemasangan baru atau penyesuaian host. Semua path konkret seperti `C:\HermesClient` adalah contoh: sesuaikan dengan folder instalasi pada perangkat Anda.
 
@@ -681,14 +681,14 @@ Setelah tugas, periksa output/receipt dan batas pengujiannya. Pakai bukti yang s
 
 # 6. Versi, sumber, dan batas kepercayaan modul
 
-Manifest revisi source publik yang dipakai buku ini: `3f47106d8dde14826a6c9f78d8cc738db910509123e9f04d6de61c67805c831d`. Daftar berkas dan hash berada pada source-manifest.json yang menyertai edisi ini. Nomor versi tetap 3.1.2.
+Manifest revisi source publik yang dipakai buku ini: `4c874f6947a7f76768219264466aab883947f242eb4222e24ea60b19a40cb445`. Daftar berkas dan hash berada pada source-manifest.json yang menyertai edisi ini. Teks di-hash sesudah CRLF dinormalkan menjadi LF; biner tetap byte asli. Aturan ini menjaga verifikasi pada Windows dan clone Git. Nomor versi tetap 3.1.2.
 
 `VERSION.json` memuat nomor versi paket. Commit Git menunjukkan isi source yang lebih spesifik. `main` dapat menerima perbaikan penjelasan tanpa menaikkan nomor versi; karena itu dua paket bertuliskan 3.1.2 dapat memiliki commit berbeda.
 
 | Identitas | Nilai edisi ini |
 | --- | --- |
 | Versi paket | `3.1.2` |
-| Commit implementasi yang dijelaskan | `71eccb2c168629c01fd78e8e5d85f7fd9d641219` |
+| Commit implementasi yang dijelaskan | `23c52114c558f2019ad4c5d88cd8a3124f71c931` |
 | Edisi modul | 19 November 2026, Asia/Jakarta |
 | Manifest | 67 skill fisik, 51 inti, 16 wrapper, 51 sumber |
 | Cakupan bukti | Sintaks dan perilaku source; status perangkat/akun diuji tersendiri |
@@ -707,11 +707,11 @@ API key, cookie, token, dan arsip pribadi tidak dicantumkan dalam modul. Katalog
 ## Sumber utama
 
 - [Repositori MSSHI](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya)
-- [Commit yang menjadi dasar modul](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/commit/71eccb2c168629c01fd78e8e5d85f7fd9d641219)
-- [README pada commit ini](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/README.md)
-- [CLI dan panduan pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/docs/CLI.md)
-- [Penjelasan seluruh pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/docs/OPTION_GUIDE.md)
-- [Lisensi/atribusi pihak ketiga](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/THIRD_PARTY_NOTICES.md)
+- [Commit yang menjadi dasar modul](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/commit/23c52114c558f2019ad4c5d88cd8a3124f71c931)
+- [README pada commit ini](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/23c52114c558f2019ad4c5d88cd8a3124f71c931/README.md)
+- [CLI dan panduan pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/23c52114c558f2019ad4c5d88cd8a3124f71c931/docs/CLI.md)
+- [Penjelasan seluruh pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/23c52114c558f2019ad4c5d88cd8a3124f71c931/docs/OPTION_GUIDE.md)
+- [Lisensi/atribusi pihak ketiga](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/23c52114c558f2019ad4c5d88cd8a3124f71c931/THIRD_PARTY_NOTICES.md)
 
 Kode orisinal MSSHI: MIT. Lisensi pihak ketiga tetap berlaku: bobot OmniVoice CC-BY-NC dan instruksi Unslop CC BY 4.0. Periksa ketentuan aset/dependency sebelum penggunaan atau distribusi komersial.
 
@@ -1198,14 +1198,14 @@ msshi skripsi --preset informatika_ilkom --out "C:\MSSHI-Latihan\Template-Latiha
 
 ## Sumber utama bab praktik
 
-Bab ini membaca source publik MSSHI pada commit 71eccb2c168629c01fd78e8e5d85f7fd9d641219, bukan mengeksekusi operasi latihan. Referensi fungsi dan batasnya: docs/ALUR_PRESET_MUZA.md, docs/V3_1_UPDATE.md, docs/BRAG.md, docs/SCRAPLING.md, docs/HARNESS2.md, docs/TIMESFM.md, docs/REA.md, docs/UNSLOP.md, docs/CLI_ANYTHING_BRIDGE.md, docs/STEEL_BROWSER_POLICY.md, docs/SERVICE_CONNECTIONS.md, docs/CONTEXTUAL_INTEGRATIONS.md, hermes_plugins/msshi-team-routing/README.md, serta parser helper terkait.
+Bab ini membaca source publik MSSHI pada commit 23c52114c558f2019ad4c5d88cd8a3124f71c931, bukan mengeksekusi operasi latihan. Referensi fungsi dan batasnya: docs/ALUR_PRESET_MUZA.md, docs/V3_1_UPDATE.md, docs/BRAG.md, docs/SCRAPLING.md, docs/HARNESS2.md, docs/TIMESFM.md, docs/REA.md, docs/UNSLOP.md, docs/CLI_ANYTHING_BRIDGE.md, docs/STEEL_BROWSER_POLICY.md, docs/SERVICE_CONNECTIONS.md, docs/CONTEXTUAL_INTEGRATIONS.md, hermes_plugins/msshi-team-routing/README.md, serta parser helper terkait.
 
-Baseline Git: https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/71eccb2c168629c01fd78e8e5d85f7fd9d641219 . Beberapa halaman integrasi/skill lama masih memakai hitungan v3.0 atau istilah MCP desktop. Untuk modul ini, jumlah 67 skill standar/51 sumber mengikuti VERSION.json terbaru; eksekusi aplikasi desktop mengikuti dispatcher CLI v3, bukan contoh legacy.
+Baseline Git: https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/23c52114c558f2019ad4c5d88cd8a3124f71c931 . Beberapa halaman integrasi/skill lama masih memakai hitungan v3.0 atau istilah MCP desktop. Untuk modul ini, jumlah 67 skill standar/51 sumber mengikuti VERSION.json terbaru; eksekusi aplikasi desktop mengikuti dispatcher CLI v3, bukan contoh legacy.
 
 
 # 8. Operasional, pembaruan, dan pemecahan masalah
 
-Bab ini merupakan panduan operasional untuk pelanggan MSSHI v3.1.2, berdasarkan source publik pada commit `71eccb2c168629c01fd78e8e5d85f7fd9d641219`. Semua path `C:\HermesClient` adalah contoh yang harus diganti dengan root instalasi pelanggan. Contoh tidak menyatakan bahwa aplikasi, model, atau akun pelanggan sudah terpasang maupun terhubung. Penyusunan modul tidak menjalankan perbaikan, model, render, atau operasi akun pelanggan.
+Bab ini merupakan panduan operasional untuk pelanggan MSSHI v3.1.2, berdasarkan source publik pada commit `23c52114c558f2019ad4c5d88cd8a3124f71c931`. Semua path `C:\HermesClient` adalah contoh yang harus diganti dengan root instalasi pelanggan. Contoh tidak menyatakan bahwa aplikasi, model, atau akun pelanggan sudah terpasang maupun terhubung. Penyusunan modul tidak menjalankan perbaikan, model, render, atau operasi akun pelanggan.
 
 ## Kenali jenis pemeriksaan sebelum menekan Enter
 
@@ -1277,7 +1277,7 @@ Junction yang didaftarkan secara eksplisit menyimpan tujuan fisiknya. Target ber
 
 ## Pastikan versi dan source yang benar-benar dipakai
 
-Versi paket edisi ini adalah 3.1.2, berdasarkan commit implementasi `71eccb2c168629c01fd78e8e5d85f7fd9d641219`. Nomor versi, commit checkout Git, snapshot CLI global, dependency aplikasi, dan bobot model merupakan identitas yang berbeda. Perubahan pada folder pengembangan belum tentu dipakai launcher global sampai instalasi/update menerapkannya.
+Versi paket edisi ini adalah 3.1.2, berdasarkan commit implementasi `23c52114c558f2019ad4c5d88cd8a3124f71c931`. Nomor versi, commit checkout Git, snapshot CLI global, dependency aplikasi, dan bobot model merupakan identitas yang berbeda. Perubahan pada folder pengembangan belum tentu dipakai launcher global sampai instalasi/update menerapkannya.
 
 ```powershell
 msshi status
@@ -1577,7 +1577,7 @@ Rujukan publik pada commit yang menjadi dasar modul: `scripts/msshi_cli.py`, `sc
 
 # 9. Referensi lengkap command MSSHI
 
-Referensi ini ditangkap dari parser revisi v3.1.2 pada 19 November 2026; baseline Git `71eccb2c168629c01fd78e8e5d85f7fd9d641219` dan manifest berkas sumber dicatat bersama hasil build. Parser asli menjadi sumber sintaks; penjelasan operasional dibaca dari implementasi. Tidak ada command model, render, login, instalasi, atau layanan yang dijalankan untuk menyusun bagian ini. Tree parser ditangkap sebelum `parse_args` mengeksekusi aksi; `format_help` menghasilkan usage sebenarnya.
+Referensi ini ditangkap dari parser revisi v3.1.2 pada 19 November 2026; baseline Git `23c52114c558f2019ad4c5d88cd8a3124f71c931` dan manifest berkas sumber dicatat bersama hasil build. Parser asli menjadi sumber sintaks; penjelasan operasional dibaca dari implementasi. Tidak ada command model, render, login, instalasi, atau layanan yang dijalankan untuk menyusun bagian ini. Tree parser ditangkap sebelum `parse_args` mengeksekusi aksi; `format_help` menghasilkan usage sebenarnya.
 
 ## Cara membaca dan menyalin
 
