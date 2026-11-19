@@ -17,6 +17,7 @@ if _SCRIPTS_DIR not in sys.path:
     sys.path.insert(0, _SCRIPTS_DIR)
 
 import msshi_hermes_profiles as hermes_profiles
+import msshi_academic as academic
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -250,7 +251,7 @@ def team_plan(data, mode, catalog):
         else:
             persona = local_file(bot["persona_file"], ".md").read_text(encoding="utf-8-sig")
         bots[bot_id] = (label, skills, persona)
-    order = MUZA_TEAM if mode == "muza-preset" else bots
+    order = MUZA_TEAM if mode in {"muza-preset", *academic.MODES} else bots
     if missing := set(order) - bots.keys():
         raise ValueError(f"Bot preset belum lengkap: {', '.join(sorted(missing))}")
     if not order:
@@ -315,8 +316,9 @@ def main(argv=None):
     from msshi_sources import data_root, fetch_upstreams, upstream_entries
 
     parser = argparse.ArgumentParser(description=TITLE + " — M.S.S.H.I. (Multi-Agent Sovereign Sage & Hermes Intelligence)")
-    parser.add_argument("--mode", choices=("solo", "custom-bots", "selective", "muza-preset"), default="solo",
-                        help="solo: satu agen; custom-bots: tim buatan Anda; selective: kategori pilihan; muza-preset: lima peran bawaan.")
+    parser.add_argument("--mode", choices=("solo", "custom-bots", "selective", "muza-preset", *academic.MODES, academic.ALIAS), default=None,
+                        help="Academic Mahasiswa (default baru), Academic Dosen, MuZA lima peran, solo, custom-bots atau selective. Instalasi lama dipertahankan bila mode tidak diberikan.")
+    academic.add_arguments(parser)
     parser.add_argument("--platform", choices=("auto", *HOSTS, "chatgpt", "manual"), default="auto",
                         help="Pilih host dan lokasi skill; auto mendeteksi, manual memakai folder pilihan, chatgpt memakai panduan portabel.")
     selection = parser.add_mutually_exclusive_group()
@@ -346,12 +348,17 @@ def main(argv=None):
         result = hermes_profiles.rollback_profile_receipt(args.rollback_receipt.expanduser())
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 1 if result["conflicts"] else 0
+    mode_home = (hermes_profiles.resolve_target_hermes_home(absolute(args.target_dir))
+                 if args.target_dir and args.platform == 'hermes' and Path(args.target_dir).name.lower() in {'profiles', 'skills'}
+                 else hermes_profiles.resolve_hermes_home())
+    args.mode = academic.canonical(args.mode or academic.existing_mode(mode_home) or "academic-mahasiswa")
     if (args.packs or args.skills) and args.mode != "selective":
         parser.error("--packs dan --skills hanya untuk --mode selective.")
     try:
         data, catalog, packs = read_matrix(args.matrix.expanduser())
+        data = academic.preset_matrix(data, args.mode, ROOT)
         host, detected = detect_host(args.platform)
-        is_team = args.mode in {"custom-bots", "muza-preset"}
+        is_team = args.mode in {"custom-bots", "muza-preset", *academic.MODES}
         if args.target_dir:
             target = absolute(args.target_dir)
         elif is_team and host == "hermes":
@@ -391,11 +398,11 @@ def main(argv=None):
                     else hermes_profiles.resolve_target_hermes_home(target)
                 )
                 profiles_root = hermes_home / "profiles"
-                if args.apply and os.name == "nt" and hermes_home == Path("D:/HermesData").absolute():
+                if args.apply and os.name == "nt":
                     hermes_profiles.persist_windows_hermes_home(hermes_home)
             has_model_seed = bool(hermes_profiles.launch_model_seed_from_home(hermes_home)) if hermes_home else False
             default_bot = (hermes_profiles.resolve_default_bot(hermes_home, args.default_bot)
-                           if provision_hermes and args.mode == "muza-preset" else "keep-hermes")
+                           if provision_hermes and args.mode in {"muza-preset", *academic.MODES} else "keep-hermes")
             yukino_is_default = default_bot == "yukino"
             if provision_hermes:
                 print("Bot default menjadi Yukino + empat profil spesialis." if yukino_is_default else
@@ -436,6 +443,13 @@ def main(argv=None):
                     f"Skill paket untuk bot ini: {local_skills or '—'}.\n\n"
                     f"Integrasi eksternal yang perlu disiapkan: {', '.join(external) or '—'}.\n"
                 )
+                if args.mode in academic.MODES and hermes_home is not None:
+                    project = academic.project_path(hermes_home, args.academic_project)
+                    agents_text += (f"\nWorkspace akademik bersama: {project}\n"
+                                    "Gunakan 00_PROFIL_AKADEMIK_PENGGUNA.md dan 01_STATUS_RISET_DAN_AKTIVITAS.md "
+                                    "untuk konteks yang dibagikan pengguna; jangan membaca ruang Private. "
+                                    f"Simpan hasil sesuai peran di {project / 'workspace' / bot_id}. "
+                                    "Template pertemuan ada di _Templates; status keputusan dan notulensi harus berdasarkan bukti.\n")
                 plans.append((bot_id, as_default, bot_dir, label, roles_by_id.get(bot_id, ""), soul, agents_text, copies, skills, external))
             if args.apply:
                 if provision_hermes and hermes_home is not None:
@@ -456,14 +470,15 @@ def main(argv=None):
                             if profile_result.get("custom_soul_preserved"):
                                 print("  SOUL default yang sudah disesuaikan tetap utuh; pemulihan SOUL pribadi memakai helper preset terpisah.")
                             pending_rows.append({"bot_id": "default" if as_default else bot_id, "label": label, "description": description})
-                        if args.mode == "muza-preset":
+                        if args.mode in {"muza-preset", *academic.MODES}:
                             hermes_profiles.record_team_layout(hermes_home, default_bot, transaction=transaction)
                             if args.default_bot == "yukino":
                                 hermes_profiles.hide_legacy_named_yukino(hermes_home, transaction=transaction)
                         hermes_profiles.record_pending_bots(hermes_home, pending_rows, args.mode, transaction=transaction)
-                        if args.mode == "muza-preset" and not args.no_team_routing:
+                        if args.mode in {"muza-preset", *academic.MODES} and not args.no_team_routing:
                             routing = hermes_profiles.install_team_routing_plugin(hermes_home, ROOT, transaction=transaction)
                             print("Native team routing:", json.dumps(routing, ensure_ascii=False))
+                        academic.record_active(hermes_home, args.mode, ROOT, transaction)
                         receipt = transaction.commit()
                     except Exception:
                         rollback = transaction.rollback()
@@ -471,6 +486,13 @@ def main(argv=None):
                         raise
                     if receipt:
                         print(f"Receipt rollback profil: {receipt}")
+                    if args.mode in {"muza-preset", *academic.MODES}:
+                        from msshi_interaction import install_existing
+                        print('Interaksi dua tipe:', json.dumps(install_existing(hermes_home, ROOT, apply=True), ensure_ascii=False))
+                    if args.mode in academic.MODES:
+                        project = academic.install_project(hermes_home, args.mode, ROOT,
+                            academic.setup_profile(args, args.mode), explicit=args.academic_project)
+                        print('Proyek akademik biasa:', project['project'], '(tanpa Obsidian/akun otomatis)')
                     multiplex = hermes_profiles.notify_live_multiplexer(hermes_home)
                     if has_model_seed:
                         msg = (f"Bot default Yukino + empat spesialis disiapkan di {hermes_home}." if yukino_is_default else

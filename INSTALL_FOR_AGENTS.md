@@ -11,3 +11,11 @@ MSSHI is a collection of portable skill instructions, optional runtime adapters 
 7. Verify with help, static audits and local fixtures first. Do not spend model/API credits, send messages, publish output, import browser sessions or buy cloud resources merely to test installation.
 
 For ChatGPT Projects/Custom GPTs use the portable Knowledge/Instructions files instead of claiming a terminal plugin was installed. For other hosts use supported discovery/install routes; a README example is not evidence that an unavailable host command exists. Report the actual installed files, pending dependencies and rollback receipt.
+
+## Public preset selection (v3.1.2)
+
+For a fresh Hermes installation, `academic-mahasiswa` is the initial choice for Indonesian S1/S2/S3 students. `academic-dosen` is a separate lecturer/campus-leadership option. The existing `muza-preset`, solo, custom-bots, and selective modes remain available. Preserve an existing installation's preset and custom SOUL files unless the user explicitly chooses a change; explain any retained custom persona instead of overwriting it.
+
+Use `msshi setup --mode academic-mahasiswa --platform hermes` or the corresponding `academic-dosen`/`muza-preset` command. The Academic preset keeps profile/status notes, meeting templates and role outputs inside native Hermes home at `workspace/academic`. It does not create an Obsidian vault, connect accounts, transfer cookies, supply models/providers/API keys, or grant access to any Private folder. Ask for the user's preferred form of address rather than assuming the preset creator's identity.
+
+Apps remain on demand. Academic defaults prioritize document/slide/data tools. Heavy CAD/3D/recording/security routes need a separately named opt-in plus an installed executable; no app is launched by registering its route. Confirm tools, budget and meeting-recording permission before actual use. Generated minutes must be based on supplied notes or an authorized transcript, never invented from the planned agenda.

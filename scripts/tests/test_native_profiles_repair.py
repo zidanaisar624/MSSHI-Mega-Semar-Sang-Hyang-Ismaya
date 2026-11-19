@@ -123,7 +123,7 @@ class NativeProfilesRepairTests(unittest.TestCase):
         self.assertEqual(config["model"]["default"], "current/root")
         self.assertEqual(config["model"]["provider"], "databyte")
         env = (folder / ".env").read_text()
-        self.assertIn("PRIVATE_API_KEY=fixture-only", env)
+        self.assertNotIn("PRIVATE_API_KEY=fixture-only", env)
         self.assertNotIn("HERMES_HOME", env)
         self.assertNotIn("TELEGRAM_", env)
         result = hp.rollback_profile_receipt(Path(result["receipt"]))
@@ -275,6 +275,22 @@ class NativeProfilesRepairTests(unittest.TestCase):
         result = hp.install_team_routing_plugin(self.home, ROOT)
         self.assertEqual(hp.load_yaml_mapping(cfg)["delegation"]["backend"], "my-custom")
         self.assertEqual(result["profiles"]["shikaku"]["backend"], "custom_backend_preserved")
+
+    def test_explicit_default_backend_is_preserved_across_repeated_sync(self):
+        for name in ('shizuka', 'val'):
+            folder = self.existing(name)
+            config = hp.load_yaml_mapping(folder / 'config.yaml')
+            config['delegation']['backend'] = 'default'
+            config['plugins'] = {'enabled': ['advanced-delegation'] if name == 'shizuka' else []}
+            (folder / 'config.yaml').write_text(hp.dump_yaml(config), encoding='utf-8')
+            before = config['delegation'].copy()
+            first = hp.install_team_routing_plugin(self.home, ROOT)
+            self.assertEqual(hp.load_yaml_mapping(folder / 'config.yaml')['delegation'], before)
+            self.assertFalse(first['profiles'][name]['named_profile_delegate_backend_selected'])
+            hp.sync_pending_profile_configs(self.home)
+            self.assertEqual(hp.load_yaml_mapping(folder / 'config.yaml')['delegation'], before)
+            if name == 'shizuka':
+                self.assertIn('advanced-delegation', hp.load_yaml_mapping(folder / 'config.yaml')['plugins']['enabled'])
 
 
 class TeamRoutingPluginTests(unittest.TestCase):

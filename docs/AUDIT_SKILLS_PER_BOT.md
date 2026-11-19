@@ -2,15 +2,15 @@
 
 Sumber: [matriks bot](../configs/bot_role_and_skill_matrix.json). Jalankan `python scripts/render_bot_audit.py` setelah mengubah matriks.
 
-Katalog berisi **67 skill bundel** dan **61 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
+Katalog berisi **67 skill bundel** dan **60 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
 
 | Bot | Mandat | Bundel | Rujukan eksternal |
 | --- | --- | ---: | ---: |
-| Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 31 | 10 |
-| Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 27 | 10 |
-| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 38 | 15 |
-| Kiki-Chii | One-Woman Creative Studio | 22 | 44 |
-| Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 24 | 33 |
+| Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 31 | 9 |
+| Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 27 | 9 |
+| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 38 | 14 |
+| Kiki-Chii | One-Woman Creative Studio | 22 | 43 |
+| Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 24 | 32 |
 
 ## Yukino Yukinoshita
 
@@ -54,7 +54,6 @@ Ide mentah, prioritas, energi, pilihan, dan pertanyaan untuk Shizuka. [Baca pers
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
 | [`graphify`](https://github.com/Graphify-Labs/graphify) | Eksternal | Membuat peta struktur proyek untuk penelusuran konteks. |
 | [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills) | Eksternal | Memilih skill dari konteks dengan pengalihan model dinonaktifkan. |
-| [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Eksternal | Membuka peramban untuk langkah yang diminta jika plugin tersedia. |
 | [`token-monitor`](https://github.com/Javis603/token-monitor) | Eksternal | Sumber status kuota tambahan untuk kebijakan anggaran. |
 | `tokenshield` | Eksternal | Menyatukan estimasi biaya, pembacaan penggunaan, dan batas cadangan berdasarkan data aktual. |
 | [`tokentracker`](https://github.com/xiufengsun/TokenTracker) | Eksternal | Sumber data penggunaan lokal untuk kebijakan anggaran. |
@@ -98,7 +97,6 @@ Strategi, delegasi, pemilihan alur kerja, dan penjelasan akhir kepada pengguna. 
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
 | [`graphify`](https://github.com/Graphify-Labs/graphify) | Eksternal | Membuat peta struktur proyek untuk penelusuran konteks. |
 | [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills) | Eksternal | Memilih skill dari konteks dengan pengalihan model dinonaktifkan. |
-| [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Eksternal | Membuka peramban untuk langkah yang diminta jika plugin tersedia. |
 | [`token-monitor`](https://github.com/Javis603/token-monitor) | Eksternal | Sumber status kuota tambahan untuk kebijakan anggaran. |
 | `tokenshield` | Eksternal | Menyatukan estimasi biaya, pembacaan penggunaan, dan batas cadangan berdasarkan data aktual. |
 | [`tokentracker`](https://github.com/xiufengsun/TokenTracker) | Eksternal | Sumber data penggunaan lokal untuk kebijakan anggaran. |
@@ -154,7 +152,6 @@ Bukti, metode, batas kepastian, serta dossier untuk Shizuka. [Baca persona](../c
 | [`gpt-researcher`](https://github.com/assafelovic/gpt-researcher) | Eksternal | Mengumpulkan dan menyusun bahan riset; Val memeriksa sumber sebelum penyerahan. |
 | [`graphify`](https://github.com/Graphify-Labs/graphify) | Eksternal | Membuat peta struktur proyek untuk penelusuran konteks. |
 | [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills) | Eksternal | Memilih skill dari konteks dengan pengalihan model dinonaktifkan. |
-| [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Eksternal | Membuka peramban untuk langkah yang diminta jika plugin tersedia. |
 | [`token-monitor`](https://github.com/Javis603/token-monitor) | Eksternal | Sumber status kuota tambahan untuk kebijakan anggaran. |
 | `tokenshield` | Eksternal | Menyatukan estimasi biaya, pembacaan penggunaan, dan batas cadangan berdasarkan data aktual. |
 | [`tokentracker`](https://github.com/xiufengsun/TokenTracker) | Eksternal | Sumber data penggunaan lokal untuk kebijakan anggaran. |
@@ -205,7 +202,6 @@ Konsep, produksi kreatif, identitas visual, dan penyerahan aset. [Baca persona](
 | [`design-taste`](https://github.com/madebymustafa/design-taste) | Eksternal | Memilih gaya visual, tipografi, dan komposisi yang sesuai. |
 | [`graphify`](https://github.com/Graphify-Labs/graphify) | Eksternal | Membuat peta struktur proyek untuk penelusuran konteks. |
 | [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills) | Eksternal | Memilih skill dari konteks dengan pengalihan model dinonaktifkan. |
-| [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Eksternal | Membuka peramban untuk langkah yang diminta jika plugin tersedia. |
 | [`higgsfield-brandkit`](https://github.com/higgsfield-ai/skills) | Eksternal | Menerapkan sistem visual merek pada produksi aset. |
 | [`higgsfield-faceless-video`](https://github.com/higgsfield-ai/skills) | Eksternal | Menyiapkan video tanpa tampil wajah dari skrip, tempo, dan aset. |
 | [`higgsfield-generate`](https://github.com/higgsfield-ai/skills) | Eksternal | Menghasilkan atau mengolah media setelah konsep dan parameter disetujui. |
@@ -281,7 +277,6 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 | [`goose`](https://github.com/aaif-goose/goose) | Eksternal | Menjalankan siklus perubahan kode dan pengujian bila harness Goose tersedia. |
 | [`graphify`](https://github.com/Graphify-Labs/graphify) | Eksternal | Membuat peta struktur proyek untuk penelusuran konteks. |
 | [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills) | Eksternal | Memilih skill dari konteks dengan pengalihan model dinonaktifkan. |
-| [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Eksternal | Membuka peramban untuk langkah yang diminta jika plugin tersedia. |
 | [`higgsfield-websites`](https://github.com/higgsfield-ai/skills) | Eksternal | Memetakan brief produk ke konsep situs dan aset pendukung. |
 | [`mindrally-skills`](https://github.com/mindrally/skills) | Eksternal | Menemukan panduan implementasi relevan di katalog eksternal. |
 | [`motion-primitives`](https://github.com/ibelick/motion-primitives) | Eksternal | Merancang gerak antarmuka memakai komponen animasi. |
@@ -305,7 +300,7 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 
 ### Semua bot
 
-- **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val, Kiki-Chii, Shikaku Nara** — [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop), [`career-ops`](../skills/career-ops/SKILL.md), [`cli-anything`](https://github.com/HKUDS/CLI-Anything), [`cli-anything-catalog`](https://clianything.cc/), [`cli-anything-universal-bridge`](../skills/cli-anything-universal-bridge/SKILL.md), [`graphify`](https://github.com/Graphify-Labs/graphify), [`harness2`](../skills/harness2/SKILL.md), [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills), [`hermes-steel`](https://github.com/steel-dev/hermes-steel), [`humanizer-en`](../skills/humanizer-en/SKILL.md), [`humanizer-indonesia`](../skills/humanizer-indonesia/SKILL.md), [`match-my-writing-style`](../skills/match-my-writing-style/SKILL.md), [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md), [`parenting-6d-gad-mdd`](../skills/parenting-6d-gad-mdd/SKILL.md), [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md), [`remote-jobs`](../skills/remote-jobs/SKILL.md), [`token-monitor`](https://github.com/Javis603/token-monitor), `tokenshield`, [`tokentracker`](https://github.com/xiufengsun/TokenTracker), [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR), [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md)
+- **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val, Kiki-Chii, Shikaku Nara** — [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop), [`career-ops`](../skills/career-ops/SKILL.md), [`cli-anything`](https://github.com/HKUDS/CLI-Anything), [`cli-anything-catalog`](https://clianything.cc/), [`cli-anything-universal-bridge`](../skills/cli-anything-universal-bridge/SKILL.md), [`graphify`](https://github.com/Graphify-Labs/graphify), [`harness2`](../skills/harness2/SKILL.md), [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills), [`humanizer-en`](../skills/humanizer-en/SKILL.md), [`humanizer-indonesia`](../skills/humanizer-indonesia/SKILL.md), [`match-my-writing-style`](../skills/match-my-writing-style/SKILL.md), [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md), [`parenting-6d-gad-mdd`](../skills/parenting-6d-gad-mdd/SKILL.md), [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md), [`remote-jobs`](../skills/remote-jobs/SKILL.md), [`token-monitor`](https://github.com/Javis603/token-monitor), `tokenshield`, [`tokentracker`](https://github.com/xiufengsun/TokenTracker), [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR), [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md)
 
 ### Beberapa bot
 
@@ -328,6 +323,6 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 Target kerja Shikaku dengan dukungan kreatif Kiki-Chii.
 
 - **Bundel** — [`ai-research-explore`](../skills/ai-research-explore/SKILL.md), [`ai-research-reproduction`](../skills/ai-research-reproduction/SKILL.md), [`analyze-project`](../skills/analyze-project/SKILL.md), [`antigravity-webdev-cybersec`](../skills/antigravity-webdev-cybersec/SKILL.md), [`evaluating-code-models`](../skills/evaluating-code-models/SKILL.md), [`evaluating-llms-harness`](../skills/evaluating-llms-harness/SKILL.md), [`explore-code`](../skills/explore-code/SKILL.md), [`explore-run`](../skills/explore-run/SKILL.md), [`filmmaking-videography-photography-s2`](../skills/filmmaking-videography-photography-s2/SKILL.md), [`humanizer-en`](../skills/humanizer-en/SKILL.md), [`humanizer-indonesia`](../skills/humanizer-indonesia/SKILL.md), [`langsmith-observability`](../skills/langsmith-observability/SKILL.md), [`match-my-writing-style`](../skills/match-my-writing-style/SKILL.md), [`nemo-evaluator-sdk`](../skills/nemo-evaluator-sdk/SKILL.md), [`parenting-6d-gad-mdd`](../skills/parenting-6d-gad-mdd/SKILL.md), [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md), [`phoenix-observability`](../skills/phoenix-observability/SKILL.md), [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md), [`muza-skripsi-template`](../skills/muza-skripsi-template/SKILL.md), [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md), [`career-ops`](../skills/career-ops/SKILL.md)
-- **Rujukan eksternal** — [`addy-agent-skills`](https://github.com/addyosmani/agent-skills), [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop), [`awesome-copilot`](https://github.com/github/awesome-copilot), [`bang-motion`](https://github.com/bangtutorial/bang-motion), [`better-design`](https://github.com/marvkr/better-design), [`canvas-ui`](https://github.com/DavidHDev/canvas-ui), [`cli-anything`](https://github.com/HKUDS/CLI-Anything), [`cli-anything-catalog`](https://clianything.cc/), [`cursify`](https://github.com/ui-layouts/cursify), [`cybersecurity-library`](https://github.com/mukul975/anthropic-cybersecurity-skills), [`design-taste`](https://github.com/madebymustafa/design-taste), [`goose`](https://github.com/aaif-goose/goose), [`graphify`](https://github.com/Graphify-Labs/graphify), [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills), [`hermes-steel`](https://github.com/steel-dev/hermes-steel), [`higgsfield-websites`](https://github.com/higgsfield-ai/skills), [`mindrally-skills`](https://github.com/mindrally/skills), [`motion-primitives`](https://github.com/ibelick/motion-primitives), [`paper-shaders`](https://github.com/paper-design/shaders), [`playwright-best-practices`](https://github.com/currents-dev/playwright-best-practices-skill), [`ponytail`](https://github.com/dietrichgebert/ponytail), [`rea`](https://github.com/morluto/rea), [`remotion-skills`](https://github.com/remotion-dev/skills), [`reverse-engineer-anything`](https://github.com/NabilRFG12/Reverse-Engineer-anything), [`strix`](https://github.com/usestrix/strix), [`superdesign-skill`](https://github.com/superdesigndev/superdesign-skill), [`superpowers`](https://github.com/obra/superpowers), [`token-monitor`](https://github.com/Javis603/token-monitor), `tokenshield`, [`tokentracker`](https://github.com/xiufengsun/TokenTracker), [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR)
+- **Rujukan eksternal** — [`addy-agent-skills`](https://github.com/addyosmani/agent-skills), [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop), [`awesome-copilot`](https://github.com/github/awesome-copilot), [`bang-motion`](https://github.com/bangtutorial/bang-motion), [`better-design`](https://github.com/marvkr/better-design), [`canvas-ui`](https://github.com/DavidHDev/canvas-ui), [`cli-anything`](https://github.com/HKUDS/CLI-Anything), [`cli-anything-catalog`](https://clianything.cc/), [`cursify`](https://github.com/ui-layouts/cursify), [`cybersecurity-library`](https://github.com/mukul975/anthropic-cybersecurity-skills), [`design-taste`](https://github.com/madebymustafa/design-taste), [`goose`](https://github.com/aaif-goose/goose), [`graphify`](https://github.com/Graphify-Labs/graphify), [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills), [`higgsfield-websites`](https://github.com/higgsfield-ai/skills), [`mindrally-skills`](https://github.com/mindrally/skills), [`motion-primitives`](https://github.com/ibelick/motion-primitives), [`paper-shaders`](https://github.com/paper-design/shaders), [`playwright-best-practices`](https://github.com/currents-dev/playwright-best-practices-skill), [`ponytail`](https://github.com/dietrichgebert/ponytail), [`rea`](https://github.com/morluto/rea), [`remotion-skills`](https://github.com/remotion-dev/skills), [`reverse-engineer-anything`](https://github.com/NabilRFG12/Reverse-Engineer-anything), [`strix`](https://github.com/usestrix/strix), [`superdesign-skill`](https://github.com/superdesigndev/superdesign-skill), [`superpowers`](https://github.com/obra/superpowers), [`token-monitor`](https://github.com/Javis603/token-monitor), `tokenshield`, [`tokentracker`](https://github.com/xiufengsun/TokenTracker), [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR)
 
 Pemetaan ini menjelaskan ruang kerja yang dituju. Ikuti panduan host untuk lokasi pemasangan dan gunakan skill yang diaktifkan untuk proyek.

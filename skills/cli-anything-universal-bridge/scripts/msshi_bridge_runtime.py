@@ -46,6 +46,7 @@ WEB_TARGETS = {
     "perplexity": ("https://www.perplexity.ai/", "https://www.perplexity.ai/search", "q"),
     "youtube-chrome": ("https://www.youtube.com/", "https://www.youtube.com/results", "search_query"),
     "tiktok": ("https://www.tiktok.com/", "https://www.tiktok.com/search", "q"),
+    "whatsapp-web": ("https://web.whatsapp.com/", "https://web.whatsapp.com/", "q"),
 }
 HARNESS = {
     "blender-cli": "cli-anything-blender",
@@ -76,7 +77,63 @@ def role_for_profile(profile):
     return ROLE_ALIASES.get(str(profile or "default").lower(), "custom")
 
 
-def target_allowed(profile, target):
+def academic_policy(hermes_home):
+    if hermes_home is None:
+        return None
+    state, _ = migrated_state(hermes_home)
+    marker = state / 'active-preset.json'
+    if not marker.is_file():
+        return None
+    for path in (marker, state / 'academic-app-policy.json'):
+        for node in (path, *path.parents):
+            if node.is_symlink() or (node.exists() and getattr(node.lstat(), 'st_file_attributes', 0) & 0x400):
+                raise ValueError('Academic policy must not use linked paths')
+    value = json.loads(marker.read_text(encoding='utf-8-sig'))
+    if value.get('preset') not in {'academic-mahasiswa', 'academic-dosen'}:
+        return None
+    policy = json.loads((state / 'academic-app-policy.json').read_text(encoding='utf-8-sig'))
+    if policy.get('schema_version') != 1:
+        raise ValueError('Unsupported Academic application policy')
+    return policy
+
+
+def academic_role(profile, hermes_home):
+    role = role_for_profile(profile)
+    if role == 'default':
+        state, _ = migrated_state(hermes_home)
+        layout = state / 'team-layout.json'
+        if layout.is_file():
+            data = json.loads(layout.read_text(encoding='utf-8-sig'))
+            if data.get('schema') == 1 and data.get('roles', {}).get('yukino') == 'default':
+                return 'yukino'
+    return role
+
+
+def optional_executable(target, hermes_home):
+    if target in ARTCRAFT:
+        return artcraft_executable(target)
+    if target == 'blender':
+        return app_executable('blender') or shutil.which('blender') or harness_executable('blender-cli', hermes_home)
+    return harness_executable(target, hermes_home)
+
+
+def academic_optional_allowed(profile, target, hermes_home, explicit=False):
+    policy = academic_policy(hermes_home)
+    if not policy or target not in policy.get('optional_installed_only', []):
+        return False
+    if not optional_executable(target, hermes_home):
+        return False
+    if explicit:
+        return True
+    state, _ = migrated_state(hermes_home)
+    route = state / 'profiles' / str(profile) / 'routes.json'
+    if not route.is_file():
+        return False
+    data = json.loads(route.read_text(encoding='utf-8-sig'))
+    return data.get('targets', {}).get(target, {}).get('academic_opt_in') is True
+
+
+def target_allowed(profile, target, hermes_home=None, allow_installed_optional=False):
     """Preset routing is role-scoped; it is not an operating-system security boundary."""
     remote = str(target).lower().startswith("mcp:")
     target = normalized(str(target)).removeprefix("mcp:")
@@ -90,6 +147,11 @@ def target_allowed(profile, target):
         target = "blender"
     if target in DISALLOWED_TARGETS:
         return False
+    policy = academic_policy(hermes_home)
+    if policy is not None:
+        role = academic_role(profile, hermes_home)
+        allowed = set(policy.get('artcraft', {}).get(role, [])) | set(policy.get('non_artcraft', {}).get(role, [])) | set(policy.get('shared_utilities', []))
+        return target in allowed or academic_optional_allowed(profile, target, hermes_home, explicit=allow_installed_optional)
     role = role_for_profile(profile)
     if role == "custom":
         return True
@@ -123,9 +185,9 @@ def artcraft_executable(target):
     return str(path.absolute()) if path.is_file() else None
 
 
-def scope_capabilities(rows, profile):
+def scope_capabilities(rows, profile, hermes_home=None):
     for name, row in rows.items():
-        if not target_allowed(profile, name):
+        if not target_allowed(profile, name, hermes_home):
             row.update(readiness="disabled" if name in {"gdrive", "gdrive-web"} else "blocked_by_specialization",
                        policy_role=role_for_profile(profile), require_task_ticket=True)
     return rows
@@ -159,6 +221,21 @@ def executable(names, windows=(), mac=()):
 
 
 def app_executable(target):
+    if target == 'blender':
+        found = executable(('blender',), (), ('Blender.app/Contents/MacOS/Blender',))
+        if found:
+            return found
+        if os.name == 'nt':
+            for name in ('ProgramFiles', 'ProgramFiles(x86)'):
+                value = os.environ.get(name)
+                if not value:
+                    continue
+                base = Path(value) / 'Blender Foundation'
+                if base.is_dir():
+                    for item in sorted(base.glob('Blender*/blender.exe'), reverse=True):
+                        if item.is_file():
+                            return str(item)
+        return None
     if target == "youtube-chrome":
         return executable(
             ("google-chrome", "google-chrome-stable", "chrome"),
@@ -332,7 +409,7 @@ def capabilities(connectors, hermes_home=None):
                 rows[mcp_id(name)] = {"route": "hermes-mcp", "readiness": "configured" if enabled else "disabled",
                                      "connector": name, "registration_source": "hermes-config",
                                      "require_task_ticket": False}
-        return scope_capabilities(rows, profile)
+        return scope_capabilities(rows, profile, hermes_home)
     rows = {}
     for target in (*WEB_TARGETS, "antigravity"):
         if target == "gdrive-web":
@@ -344,7 +421,7 @@ def capabilities(connectors, hermes_home=None):
         elif target == "antigravity":
             rows[target] = {"route": "desktop", "readiness": "available" if path else "needs_install"}
         else:
-            desktop = path or WINDOWS_STORE_APPS[target] in store_app_ids()
+            desktop = path or (target in WINDOWS_STORE_APPS and WINDOWS_STORE_APPS[target] in store_app_ids())
             rows[target] = {"route": "hybrid", "readiness": "available" if desktop else "available_web"}
     for target in ARTCRAFT:
         rows[target] = {"route": "native-cli", "readiness": "requires_migration" if artcraft_executable(target) else "needs_install",
@@ -360,7 +437,7 @@ def capabilities(connectors, hermes_home=None):
     for target in (*HARNESS, *NATIVE, *installed_extension_ids()):
         rows[target] = {"route": "native-cli" if target in NATIVE else "cli-anything",
                         "readiness": "available" if harness_executable(target, hermes_home) else "needs_install"}
-    return scope_capabilities(rows, profile)
+    return scope_capabilities(rows, profile, hermes_home)
 
 
 def safe_process(path, args, wait):
@@ -409,7 +486,7 @@ def open_target(target, query=None):
 
 def run_target(target, argv, hermes_home=None):
     state, profile = migrated_state(hermes_home)
-    if not target_allowed(profile, target):
+    if not target_allowed(profile, target, hermes_home):
         raise ValueError("Target di luar spesialisasi profil atau dinonaktifkan oleh kebijakan.")
     if (state / "policy.json").is_file():
         raise ValueError("MSSHI v3 execution requires msshi runtime run and a one-use task ticket.")

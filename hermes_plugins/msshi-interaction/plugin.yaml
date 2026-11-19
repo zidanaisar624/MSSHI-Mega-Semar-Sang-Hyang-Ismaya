@@ -1,0 +1,27 @@
+manifest_version: 2
+name: msshi-interaction
+version: "0.1.0"
+description: "Model-independent Main/Advisor and two-round Council workflow with explicit Main audit, bounded state and no calls at startup."
+author: "Muhammad Zidan Aisar, assisted by OpenAI ChatGPT"
+license: MIT
+requires_hermes: ">=0.23.1"
+provides_tools:
+  - msshi_interaction_begin
+  - msshi_interaction_step
+  - msshi_interaction_status
+  - msshi_advisor_context
+provides_hooks:
+  - pre_tool_call
+config_schema:
+  use_current_main_for_council:
+    type: bool
+    default: false
+    description: "Explicit local opt-in only: use the existing Main engine for separate Council roles when no explicit Council preset exists."
+  max_tokens:
+    type: int
+    default: 2048
+    description: "Output cap per Council completion; does not guarantee a provider billing cap."
+  timeout_seconds:
+    type: int
+    default: 90
+    description: "Timeout passed to the host LLM facade per Council completion."

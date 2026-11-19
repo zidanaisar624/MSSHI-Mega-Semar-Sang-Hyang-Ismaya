@@ -98,23 +98,69 @@ def compress(payload: bytes, binary: str, provider: str | None = None) -> bytes:
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--home',type=Path,default=Path(os.environ.get('HERMES_HOME',str(Path.home()/'.hermes'))))
+    parser.add_argument('--home',type=Path,help='Hermes data root; otherwise detect the existing local installation')
     parser.add_argument('--binary',type=Path)
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument('--input',type=Path,help='Provider-shaped JSON request; local file only')
     action.add_argument('--status',action='store_true',help='Read only aggregate automatic hook counters')
+    action.add_argument('--install',action='store_true',help='Prepare/enable MSSHITrim on native profiles; preview until --apply')
     parser.add_argument('--profile',default='default',help='Hermes profile ID for status')
+    parser.add_argument('--profiles',default='all',help='Installation only: all or comma-separated real profile IDs')
+    parser.add_argument('--apply',action='store_true',help='Installation only: apply with rollback receipt')
+    parser.add_argument('--download-runtime',action='store_true',help='Installation only: allow checksum-pinned CLI download')
+    parser.add_argument('--force-enable',action='store_true',help='Installation only: explicitly override a previous trim disable')
     parser.add_argument('--output',type=Path,help='Output file; defaults to stdout. Must differ from input.')
     parser.add_argument('--provider',choices=('openai','anthropic','google','gemini'),default='openai',
         help='Input JSON format, default OpenAI-compatible; does not change any Hermes provider setting')
     args = parser.parse_args(argv)
     try:
+        if args.home is None:
+            try:
+                import msshi_hermes_profiles as profiles
+                args.home=profiles.resolve_hermes_home()
+            except ImportError:
+                args.home=Path(os.environ.get('HERMES_HOME',str(Path.home()/'.hermes')))
+        if args.install:
+            try:
+                import msshi_trim_setup
+            except ImportError:
+                raise ValueError('Use the global msshi trim --install command from a complete MSSHI installation')
+            command=['--home',str(args.home),'--profiles',args.profiles]
+            if args.apply: command.append('--apply')
+            if args.download_runtime: command.append('--download-runtime')
+            if args.force_enable: command.append('--force-enable')
+            return msshi_trim_setup.main(command)
         if args.status:
             if not re.fullmatch(r'[a-z0-9][a-z0-9_-]{0,95}',args.profile):
                 raise ValueError('Invalid profile ID')
             root = args.home.expanduser().absolute()
             root = root.parent.parent if root.parent.name.casefold() == 'profiles' else root
             profile = root if args.profile == 'default' else root/'profiles'/args.profile
+            plugin_config = {}
+            try:
+                import msshi_hermes_profiles as profiles
+                config_file = profile/'config.yaml'
+                cfg = profiles.load_yaml_mapping(config_file.read_bytes()) if config_file.is_file() else {}
+                plugin_config = cfg.get('plugins') or {}
+            except (ImportError, OSError, ValueError):
+                plugin_config = {}
+            settings = ((plugin_config.get('entries') or {}).get('msshi-auto-trim') or {}).get('settings') or {}
+            enabled = ('msshi-auto-trim' in (plugin_config.get('enabled') or [])
+                       and 'msshi-auto-trim' not in (plugin_config.get('disabled') or [])
+                       and settings.get('enabled', True) is not False)
+            binary_path = Path(settings['binary']) if settings.get('binary') else None
+            if binary_path is None:
+                binary_path = next((path for path in (root/'tools/llmtrim/llmtrim.exe', root/'tools/llmtrim/llmtrim') if path.is_file()), None)
+                found_on_path = shutil.which('llmtrim') if binary_path is None else None
+                binary_path = Path(found_on_path) if found_on_path else binary_path
+            runtime_present = binary_path is not None and binary_path.is_file()
+            runtime_verified = False
+            if runtime_present:
+                provenance = binary_path.with_name('msshi-provenance.json')
+                if provenance.is_file() and provenance.stat().st_size < 16384:
+                    record = json.loads(provenance.read_bytes())
+                    runtime_verified = (record.get('managed_by') == 'msshi-trim-cli-v1'
+                        and record.get('binary_sha256') == hashlib.sha256(binary_path.read_bytes()).hexdigest())
             states = list((profile/'plugin-data').glob('agent-plugin-msshi-auto-trim-*/state.json'))
             if len(states)>1:
                 raise ValueError('Multiple plugin namespaces found; inspect native plugin status')
@@ -122,7 +168,10 @@ def main(argv=None):
             fields = {'compressed','skipped','unchanged','data_check_rejected','binary_missing',
                       'compressor_error','input_bytes','output_bytes','saved_bytes'}
             safe_metrics = {key:value for key,value in metrics.items() if key in fields and isinstance(value,int)}
-            print(json.dumps({'profile':args.profile,'plugin_installed':(profile/'plugins/msshi-auto-trim/plugin.yaml').is_file(),
+            print(json.dumps({'display_name':'MSSHITrim','plugin_id':'msshi-auto-trim',
+                'profile':args.profile,'plugin_installed':(profile/'plugins/msshi-auto-trim/plugin.yaml').is_file(),
+                'plugin_enabled':enabled,'runtime_present':runtime_present,
+                'runtime_hash_matches_installer_record':runtime_verified,
                 'scope':'automatic eligible large JSON tool results; not all conversation',
                 'state_recorded':bool(states),'metrics':safe_metrics,'llm_calls_for_status':0},indent=2))
             return 0

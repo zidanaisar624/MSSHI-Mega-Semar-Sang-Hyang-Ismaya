@@ -5,7 +5,7 @@
   "version": "3.1.2",
   "release_date": "2026-11-17",
   "bundled_skills": 67,
-  "external_sources": 52,
+  "external_sources": 51,
   "update_modes": [
     "check",
     "update",
@@ -34,7 +34,8 @@
     "doctor",
     "skripsi",
     "manual",
-    "choices"
+    "choices",
+    "interaction"
   ],
   "release_status": "release",
   "license": "MIT",

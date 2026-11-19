@@ -1,6 +1,6 @@
 # Pemeriksaan sebelum publikasi
 
-Rilis MSSHI v3.1.2 memuat 67 skill bundel (51 inti + 16 wrapper) dan manifest 52 sumber. Perubahan lokal tidak otomatis berarti GitHub sudah diperbarui: cocokkan HEAD dengan origin/main atau gunakan msshi status. Riwayat dan tag lama dipertahankan. PDF panduan publik disertakan; audit dan preset pribadi tidak masuk repo publik. [Perubahan v3.1.2](V3_1_2_REPAIR.md).
+Rilis MSSHI v3.1.2 memuat 67 skill bundel (51 inti + 16 wrapper) dan manifest 51 sumber. Perubahan lokal tidak otomatis berarti GitHub sudah diperbarui: cocokkan HEAD dengan origin/main atau gunakan msshi status. Riwayat commit dipertahankan. Tag v3.1.2 diperbarui sesuai permintaan pemilik; tag versi sebelumnya tetap dipertahankan. PDF panduan publik disertakan; audit dan preset pribadi tidak masuk repo publik. [Perubahan v3.1.2](V3_1_2_REPAIR.md).
 
 ```sh
 python scripts/check_release.py --smoke
@@ -23,6 +23,6 @@ Arsip publik memuat 67 folder skill dan satu pintu masuk di root. Panduan pemuli
 
 MCP aplikasi desktop serta utilitas lokal Hersona/Llmtrim dialihkan ke CLI. GitLab/Tinyfish tetap menjadi MCP web sesuai konfigurasi pengguna. Penghematan Llmtrim otomatis dibatasi pada hasil alat JSON yang memenuhi syarat melalui hook native; periksa penghitung dengan `msshi trim --status --profile default`. Tidak ada klaim seluruh chat otomatis dipadatkan atau persentase penghematan tagihan tertentu.
 
-Guard dan installer Steel native tersedia; endpoint/API key serta sesi cloud nyata tetap perlu disiapkan dan diuji. Guard menolak fallback diam-diam. Tidak ada transfer akun otomatis. Lisensi model OmniVoice dan komponen eksternal mengikuti [notices](../THIRD_PARTY_NOTICES.md), termasuk batas CC-BY-NC untuk bobot OmniVoice. Label opsional atau keberadaan instruksi tidak membuktikan runtime eksternal sudah berfungsi.
+Rute pemasangan Steel lama dihentikan. Wizard browser hanya menyimpan pilihan dan label pribadi untuk login manual; tidak memindahkan akun/cookie atau memasang konektor layanan otomatis. Lisensi model OmniVoice dan komponen eksternal mengikuti [notices](../THIRD_PARTY_NOTICES.md), termasuk batas CC-BY-NC untuk bobot OmniVoice. Label opsional atau keberadaan instruksi tidak membuktikan runtime eksternal sudah berfungsi.
 
 Uji updater shared/junction: `python scripts/check_managed.py`. [Cakupan pendaftaran dan rollback](MANAGED_UPDATES.md). [Status layanan web](SERVICE_CONNECTIONS.md). [TimesFM](TIMESFM.md).

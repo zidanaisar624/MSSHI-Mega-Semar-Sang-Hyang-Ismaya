@@ -647,24 +647,6 @@
       "pin_status": "registry webpage snapshot; no Git commit; content is not executed"
     },
     {
-      "id": "hermes-steel",
-      "source": "https://github.com/steel-dev/hermes-steel",
-      "source_type": "git",
-      "verification": "pinned-source-reviewed; native guard installed; cloud session requires credentials",
-      "status": "external-opt-in",
-      "auto_start": false,
-      "domain": "automation",
-      "kind": "hosted_browser_plugin",
-      "pack": "core",
-      "roles": [
-        "all"
-      ],
-      "use_when": "Pilih browser cloud hanya bila cakupan data dan biaya disetujui.",
-      "requires": "Plugin Hermes, konfigurasi browser eksplisit dan STEEL_API_KEY dari secret store lokal.",
-      "license": "MIT",
-      "revision": "d8a1e39657d3e3deaa59da37e857be3f14b9dc5b"
-    },
-    {
       "id": "gpt-researcher",
       "source": "https://github.com/assafelovic/gpt-researcher",
       "source_type": "git",

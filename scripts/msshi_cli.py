@@ -24,6 +24,7 @@ import install_msshi as installer
 import msshi_hermes_profiles as hermes_profiles
 import setup_cli_anything_hermes as connections
 import msshi_choices as choice_help
+import msshi_academic as academic
 from msshi_sources import RAW, REPOSITORY, clone, data_root, download, fetch_upstreams, write_json
 from msshi_update import inventory, release_version, update_skill
 
@@ -35,9 +36,11 @@ STATE_FILE = "state.json"
 RELEASE_ID = re.compile(r"(?:[0-9a-f]{24}|[0-9a-f]{64})")
 SEMVER = re.compile(r"(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?")
 PLATFORMS = (*installer.HOSTS, "manual")
-MODES = ("solo", "custom-bots", "selective", "muza-preset")
+MODES = ("solo", "custom-bots", "selective", "muza-preset", *academic.MODES)
+TEAM_MODES = {"custom-bots", "muza-preset", *academic.MODES}
+PRESET_MODES = {"muza-preset", *academic.MODES}
 RELEASE_DIRS = ("scripts", "configs", "skills", "docs", "portable", "assets", "adapters",
-                "business-sage", ".claude-plugin", "hermes_plugins", "optional", "notebooks")
+                "business-sage", ".claude-plugin", "hermes_plugins", "optional", "notebooks", "templates")
 RELEASE_FILES = ("VERSION.json", "CHANGELOG.md", "README.md", "README_EN.md",
                  "LICENSE", "SKILL.md", "install.ps1", "install.sh", "package.json",
                  "THIRD_PARTY_NOTICES.md", "CREDITS.md", "UPDATE_OTOMATIS_KE_V3.bat",
@@ -397,13 +400,13 @@ def _hermes_profile_roots(platform, target, mode, selections, profile_home):
     """Return list of (label, base_hermes_home, profile_arg, profile_dir) tuples."""
     if platform != "hermes":
         return []
-    team = mode in {"custom-bots", "muza-preset"}
+    team = mode in TEAM_MODES
     if team and target.name.lower() == "profiles":
         roots = []
         for folder in selections:
             parent = folder.parent
             if parent == profile_home:
-                label = ("yukino" if mode == "muza-preset" and
+                label = ("yukino" if mode in PRESET_MODES and
                          hermes_profiles.team_role_profiles(profile_home)["yukino"] == "default" else "default")
                 roots.append((label, profile_home, "default", profile_home))
             else:
@@ -413,34 +416,31 @@ def _hermes_profile_roots(platform, target, mode, selections, profile_home):
 
 
 def _stage_auto_trim_plugin(profile_home, target, mode, selections):
-    """Stage fail-open msshi-auto-trim plugin files into Hermes profile(s) without mutating config.yaml."""
-    plugin_src = ROOT / "hermes_plugins" / "msshi-auto-trim"
-    files = [plugin_src / name for name in ("__init__.py", "plugin.yaml", "README.md", "json-only.toml")
-             if (plugin_src / name).is_file()]
-    if len(files) != 4:
-        return {"staged": False, "reason": "plugin source missing", "profiles": [], "llmtrim_binary": False}
+    """Stage/enable the single native MSSHITrim hook; runtime downloads are install-only."""
+    import msshi_trim_setup as trim_setup
     roots = _hermes_profile_roots("hermes", target, mode, selections, profile_home)
     if (profile_home / "config.yaml").is_file() and all(item[3] != profile_home for item in roots):
         roots = [*roots, ("default", profile_home, "default", profile_home)]
-    staged_profiles = []
-    for label, _, _, profile_dir in roots:
-        if not profile_dir.is_dir():
-            continue
-        dest_dir = profile_dir / "plugins" / "msshi-auto-trim"
-        installer.reject_links(dest_dir)
-        dest_dir.mkdir(parents=True, exist_ok=True)
-        for src in files:
-            dest_file = dest_dir / src.name
-            installer.reject_links(dest_file)
-            shutil.copy2(src, dest_file)
-        staged_profiles.append(label)
-    llmtrim_binary = bool(shutil.which("llmtrim") or shutil.which("llmtrim.exe"))
-    return {
-        "staged": bool(staged_profiles),
-        "profiles": staged_profiles,
-        "llmtrim_binary": llmtrim_binary,
-        "fail_open": True,
-    }
+    names = list(dict.fromkeys("default" if folder == profile_home else folder.name
+                              for _, _, _, folder in roots if folder.is_dir()))
+    if not names:
+        return {"staged": False, "reason": "native profiles are not created yet", "profiles": [], "llmtrim_binary": False}
+    try:
+        result = trim_setup.install(profile_home, source_root=ROOT, selected=names,
+                                    apply=True, allow_download=True)
+    except (OSError, ValueError, subprocess.SubprocessError) as error:
+        # A blocked download is not permission to reconfigure a provider or abort
+        # the rest of setup. Stage lightweight files, retaining a pending state.
+        result = trim_setup.install(profile_home, source_root=ROOT, selected=names,
+                                    apply=True, allow_download=False)
+        result["download_pending"] = type(error).__name__
+    staged_ids = {row["profile"] for row in result["profiles"]
+                  if not row["status"].startswith("preserved_")}
+    staged = [label for label, _, _, folder in roots
+              if ("default" if folder == profile_home else folder.name) in staged_ids]
+    return {"staged": bool(staged), "profiles": staged,
+            "llmtrim_binary": result["binary"]["status"].startswith("verified_"),
+            "fail_open": True, "display_name": "MSSHITrim", "details": result}
 
 
 def _select_extra_slugs_interactive(catalog, packs):
@@ -519,8 +519,8 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
     expanded_extra = installer.include_mandatory(seed_slugs, catalog) if seed_slugs else []
     if expanded_extra:
         folder_map = {
-            ("yukino" if (mode == "muza-preset" and profile_home is not None and folder.parent == profile_home)
-             else (folder.parent.name if mode in {"custom-bots", "muza-preset"} else folder.name)): folder
+            ("yukino" if (mode in PRESET_MODES and profile_home is not None and folder.parent == profile_home)
+             else (folder.parent.name if mode in TEAM_MODES else folder.name)): folder
             for folder in selections
         }
         labels = list(folder_map)
@@ -560,31 +560,28 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
 
 
 def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_home, lang, yes):
-    """Step [2/4]: Configure KAT, msshi-auto-trim plugin staging, Dreaming, OmniVoice, and opt-in Steel."""
+    """Step [2/4]: Configure optional local addons; external service/browser login stays manual."""
     if platform != "hermes":
         print(f"\n[2/4] Plugin & Addon Hermes: dilewati (platform '{platform}' memakai workspace masing-masing).")
         return {"status": "skipped", "reason": f"platform={platform}"}
 
     from msshi_integrations import dream, kat, voice_enable, voice_status
-    import msshi_browser_policy as browser_policy
-
     choice_help.feature('setup-plugins', lang=lang)
-    steel_stat = browser_policy.status(profile_home)
-    steel_config_present = bool(steel_stat.get("config_present", (profile_home / "config.yaml").is_file()))
     voice_stat = voice_status(profile_home)
     kat_stat = kat(profile_home, "status")
     print("\n[2/4] Plugin & Addon Hermes:")
     print(f"  - KAT-Coder saat ini : {kat_stat.get('mode', 'skip')} ({kat_stat.get('status', 'not configured')})")
     print(f"  - OmniVoice runtime  : {'terverifikasi' if voice_stat.get('synthesis_verified') else 'belum diverifikasi (opsional via msshi voice)'}")
-    print(f"  - Steel Browser Policy: {'siap (config.yaml ada)' if steel_config_present else 'menunggu config.yaml Hermes'}")
 
     kat_modes = {"1": "light", "2": "ideal", "3": "cloud", "4": "skip"}
     req_kat = getattr(args, 'kat_mode', None)
     req_stage_trim = bool(getattr(args, 'stage_auto_trim', False))
     req_steel = bool(getattr(args, 'install_steel', False))
+    if req_steel:
+        print("  --install-steel sudah dihentikan; tidak ada plugin/browser/akun yang dipasang. Pilih browser pada langkah 3.")
     pick = "5"
     kat_choice = req_kat
-    stage_trim = req_stage_trim
+    stage_trim = True  # MSSHITrim is standard for new native profiles; explicit disables remain preserved.
     run_dream = False
     enable_voice = False
 
@@ -593,11 +590,12 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
     elif yes:
         pick = "yes-default"
     else:
-        print("  1. Stage plugin aman msshi-auto-trim (fail-open; pertahankan KAT saat ini) (Rekomendasi)")
+        print("  MSSHITrim otomatis: JSON tool besar dipadatkan lokal; runtime terpin, tanpa proxy/model/API calls.")
+        print("  1. Siapkan/verifikasi MSSHITrim saja; pertahankan addon lain (Rekomendasi)")
         print("  2. Atur endpoint KAT-Coder opsional + input key privat; model utama tetap")
         print("  3. Siapkan auto-trim, buat laporan Dreaming lokal SEKALI, dan aktifkan OmniVoice jika sudah terverifikasi")
         print("     Dreaming tidak otomatis dijadwalkan. Jadwal opsional: msshi dream --register (Windows, 03.00 WIB).")
-        print("  4. Opt-in Steel Browser Policy (butuh config.yaml & repo terpin)")
+        print("  4. Atur browser pilihan pada langkah berikutnya (tanpa login otomatis)")
         print("  5. Lewati / pertahankan kondisi saat ini")
         pick = _prompt_choice("Pilihan Plugin [5]: ", "5")
         if pick not in {"1", "2", "3", "4", "5"}:
@@ -612,19 +610,24 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
             if k_pick not in kat_modes:
                 raise ValueError("Pilihan KAT harus 1-4.")
             kat_choice = kat_modes[k_pick]
-            stage_trim = _prompt_choice("Stage juga plugin fail-open msshi-auto-trim? [Y/n]: ", "y").lower() in {"y", "yes", "ya"}
+            stage_trim = True
         elif pick == "3":
             stage_trim = True
             run_dream = True
             enable_voice = True
         elif pick == "4":
-            req_steel = True
+            pass  # Browser selection happens in step 3; no addon is installed here.
 
     kat_result = kat(profile_home, kat_choice, interactive=False if yes else None) if kat_choice is not None else kat_stat
     print("  KAT:", json.dumps(kat_result, ensure_ascii=False))
     if stage_trim:
         trim_result = _stage_auto_trim_plugin(profile_home, target, mode, selections)
-        print(f"  msshi-auto-trim: staged ke profil {trim_result['profiles']} (fail-open, llmtrim_binary={trim_result['llmtrim_binary']}).")
+        print(f"  MSSHITrim: profil {trim_result['profiles']} (fail-open, runtime_terverifikasi={trim_result['llmtrim_binary']}).")
+        details = trim_result.get('details', {})
+        if details.get('binary', {}).get('status', '').startswith('pending_'):
+            print(f"  Runtime belum siap: {details['binary']['status']}; plugin menunggu, setup lain tetap berjalan.")
+        if details.get('download_pending'):
+            print("  Unduhan runtime tertunda; ulangi: msshi trim --install --apply --download-runtime")
     else:
         existing_trim = [
             label for label, _, _, profile_dir in _hermes_profile_roots("hermes", target, mode, selections, profile_home)
@@ -659,20 +662,15 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
             voice_result = {"status": "not_verified", **voice_stat}
             print("  OmniVoice: belum diverifikasi; jalankan 'msshi voice --install-runtime' bila ingin mengaktifkan.")
 
-    steel_result = {"status": "skipped", "config_present": steel_config_present}
-    if req_steel:
-        if not steel_config_present:
-            steel_result = {"status": "deferred_pre_hermes", "reason": "config.yaml belum ada sebelum Hermes dibuka"}
-            print("  Steel Policy: ditunda karena config.yaml Hermes belum ada.")
-        else:
-            try:
-                steel_result = {"status": "installed", **browser_policy.install(profile_home, ROOT)}
-                print("  Steel Policy: terpasang (opt-in).")
-            except (OSError, ValueError, subprocess.SubprocessError) as error:
-                steel_result = {"status": "error", "reason": str(error)}
-                print(f"  Steel Policy: ditunda ({error}).")
+    steel_result = {"status": "retired", "installed": False, "credentials_touched": False}
 
     choice_help.feature('artcraft', lang=lang)
+    interaction_result = {"status": "skipped_non_team_mode", "model_calls": 0}
+    if mode in PRESET_MODES and profile_home is not None:
+        choice_help.feature('interaction', lang=lang)
+        from msshi_interaction import install_existing
+        interaction_result = install_existing(profile_home, ROOT, apply=True)
+        print("  Interaksi dua tipe:", json.dumps(interaction_result, ensure_ascii=False))
     return {
         "choice": pick,
         "kat": kat_result,
@@ -680,66 +678,45 @@ def _setup_plugins_and_addons(args, mode, platform, target, selections, profile_
         "dreaming": dream_result,
         "omnivoice": voice_result,
         "steel_policy": steel_result,
+        "interaction": interaction_result,
     }
 
 
 def _setup_service_connections(args, platform, profile_home, lang, yes):
-    """Step [3/4]: Inspect and configure external service MCP/OAuth connections safely."""
+    """Step [3/4]: User-selected browser labels only; never install external services."""
     if platform != "hermes":
-        print(f"\n[3/4] Koneksi eksternal (GitLab / Tinyfish): dilewati untuk platform '{platform}'.")
-        return {"status": "skipped", "reason": f"platform={platform}", "brightdata_enabled": False}
-
-    import msshi_service_connections as service_connections
-
-    choice_help.feature('setup-services', lang=lang)
-    svc_stat = service_connections.status(profile_home)
-    config_present = bool(svc_stat) and all(bool(row.get("config_present")) for row in svc_stat.values())
-    print("\n[3/4] Koneksi Eksternal (GitLab / Tinyfish; BrightData tetap OFF):")
-    if config_present:
-        print(f"  - Config Hermes siap di: {profile_home / 'config.yaml'}")
-    else:
-        print(f"  - Belum ada config.yaml di {profile_home} (mode sebelum Hermes dibuka).")
-
-    req_svc = getattr(args, 'connect_services', None)
-    if req_svc:
-        selected = req_svc
-    elif yes:
-        selected = "skip"
-    else:
-        print("  1. Pasang koneksi MCP GitLab & Tinyfish per-profil (aman, mempertahankan model/provider)")
-        print("  2. Pasang + bagikan token OAuth GitLab aktif ke profil lain (--share-oauth)")
-        print("  3. Lewati (atur nanti via 'msshi services install')")
-        pick = _prompt_choice("Pilihan Koneksi [3]: ", "3")
-        mapping = {"1": "per-profile", "2": "share-oauth", "3": "skip"}
-        if pick not in mapping:
-            raise ValueError("Pilihan Koneksi harus 1, 2, atau 3.")
-        selected = mapping[pick]
-
-    if selected == "skip":
-        existing_profiles = [
-            name for name, row in svc_stat.items()
-            if any(svc.get("registered") for svc in (row.get("services") or {}).values())
-        ]
-        return {
-            "mode": "skip",
-            "status": ("preserved" if existing_profiles else "skipped"),
-            "existing_profiles": existing_profiles,
-            "config_present": config_present,
-            "brightdata_enabled": False,
-        }
-    if not config_present:
-        print("  Koneksi eksternal ditunda: buka Hermes satu kali lalu jalankan 'msshi services install'.")
-        return {"mode": selected, "status": "deferred_pre_hermes", "config_present": False, "brightdata_enabled": False}
-    try:
-        installed = service_connections.install(profile_home, share_oauth=(selected == "share-oauth"))
-        print(f"  Koneksi eksternal terpasang di {len(installed.get('profiles', {}))} profil (BrightData tetap OFF).")
-        return {"mode": selected, "status": "installed", "config_present": True,
-                "brightdata_enabled": False, "receipt": installed.get("receipt"),
-                "profiles": list(installed.get("profiles", {}))}
-    except (OSError, ValueError) as error:
-        print(f"  Koneksi eksternal memerlukan tindak lanjut: {error}")
-        return {"mode": selected, "status": "deferred", "config_present": True,
-                "brightdata_enabled": False, "error": str(error)}
+        print(f"\n[3/4] Pilihan browser: dilewati untuk platform '{platform}'.")
+        return {"status": "skipped", "reason": f"platform={platform}", "external_services_installed": False}
+    import msshi_browser_preferences as browser_preferences
+    if getattr(args, 'connect_services', None):
+        print("  --connect-services sudah dihentikan. Tidak ada layanan/OAuth yang dipasang atau dibagikan.")
+    saved = browser_preferences.current(profile_home)
+    choice = getattr(args, 'setup_browser', None)
+    profile_label = getattr(args, 'browser_profile_label', '') or ''
+    account_label = getattr(args, 'browser_account_label', '') or ''
+    print("\n[3/4] Pilih browser dan label akun yang ingin digunakan:")
+    print("  Ini menyimpan pilihan saja. Tidak membuka browser, login, menyalin cookie, atau membaca akun.")
+    if choice is None and yes:
+        if profile_label or account_label:
+            raise ValueError("Label profil/akun memerlukan --browser.")
+        return {**saved, "changed": False, "external_services_installed": False}
+    if choice is None:
+        print("  1. Google Chrome")
+        print("  2. Microsoft Edge")
+        print("  3. Mozilla Firefox")
+        print("  4. Tidak memilih browser sekarang")
+        options = {"1": "chrome", "2": "edge", "3": "firefox", "4": "none"}
+        default_pick = next((key for key, value in options.items() if value == saved.get('browser')), "4")
+        pick = _prompt_choice(f"Pilihan Browser [{default_pick}]: ", default_pick)
+        if pick not in options:
+            raise ValueError("Pilihan browser harus 1-4.")
+        choice = options[pick]
+        if choice != 'none':
+            profile_label = _prompt_choice("Label profil browser (boleh kosong, bukan lokasi cookie): ", "")
+            account_label = _prompt_choice("Label akun untuk login manual (boleh kosong, bukan password): ", "")
+    result = browser_preferences.select(profile_home, choice, profile_label, account_label)
+    print(f"  Browser pilihan: {choice}; akun/login belum diverifikasi dan tidak dipindahkan.")
+    return {**result, "external_services_installed": False}
 
 
 def _setup_bot_app_connections(args, mode, platform, target, selections, profile_home, home, lang, yes):
@@ -906,8 +883,8 @@ def _emit_setup_report(home, mode, platform, target, profile_home, report_data, 
         print(f"Plugin & Addon  : KAT={plugins_info.get('kat', {}).get('mode', 'skip')}, "
               f"auto-trim={'staged' if plugins_info.get('auto_trim', {}).get('staged') else 'off'}, "
               f"OmniVoice={plugins_info.get('omnivoice', {}).get('status', 'skipped')}, "
-              f"Steel={plugins_info.get('steel_policy', {}).get('status', 'skipped')}")
-        print(f"Koneksi Service : {services_info.get('status', 'skipped')} (BrightData=OFF)")
+              f"browser-login=manual")
+        print(f"Pilihan Browser : {services_info.get('browser') or 'belum dipilih'} ({services_info.get('status', 'skipped')}; login manual)")
         existing_conns = apps_info.get('existing_connected_bots') or {}
         if apps_info.get('bots'):
             print(f"Bot -> Apps     : {apps_info.get('mode', 'skipped')} "
@@ -926,27 +903,47 @@ def setup(args, home, state):
     lang = getattr(args, 'lang', 'id')
     yes = getattr(args, 'yes', False)
     requested_mode = getattr(args, 'mode', None)
+    mode_home = (hermes_profiles.resolve_target_hermes_home(Path(args.target_dir))
+                 if getattr(args, 'platform', None) == 'hermes' and getattr(args, 'target_dir', None) and Path(args.target_dir).name.lower() in {'profiles', 'skills'}
+                 else hermes_profiles.resolve_hermes_home())
+    current_mode = academic.existing_mode(mode_home, state)
+    default_mode = current_mode or 'academic-mahasiswa'
     if requested_mode:
-        mode = requested_mode
+        mode = academic.canonical(requested_mode)
+    elif yes:
+        mode = default_mode
+        print(f"Mode: {mode} ({'pilihan instalasi lama dipertahankan' if current_mode else 'default instalasi baru'}).")
     else:
         for index, mode_name in enumerate(MODES, 1):
             print(f"{index}. {mode_name} - {choice_help.describe('modes', mode_name, lang=lang)}")
-        pick = input("Mode [1]: ").strip() or "1"
-        if pick not in {"1", "2", "3", "4"}:
-            raise ValueError("Mode harus 1, 2, 3, atau 4.")
+        default_pick = str(MODES.index(default_mode) + 1)
+        pick = _prompt_choice(f"Mode [{default_pick}]: ", default_pick)
+        if pick not in {str(i) for i in range(1, len(MODES) + 1)}:
+            raise ValueError(f"Mode harus 1 sampai {len(MODES)}.")
         mode = MODES[int(pick) - 1]
-    team = mode in {"custom-bots", "muza-preset"}
+    team = mode in TEAM_MODES
     platform, target = choose_targets(home, args.platform, args.target_dir, team, lang, yes=yes)
     print('Instruksi skill, aplikasi, runtime, model, dan akun dipasang terpisah; opsi dapat ditambahkan nanti.'
           if lang == 'id' else 'Skill instructions, apps, runtimes, models and accounts are separate; skipped options can be added later.')
     data, catalog, packs = installer.read_matrix(ROOT / MATRIX)
+    if mode in academic.MODES:
+        data = academic.preset_matrix(data, mode, ROOT)
+        academic_values = academic.setup_profile(args, mode, prompt=None if yes else _prompt_choice)
+    else:
+        academic_values = None
     command = ["--mode", mode, "--platform", platform, "--target-dir", str(target)]
+    if mode in academic.MODES:
+        for field, value in (academic_values or {}).items():
+            if value:
+                command.extend(('--' + field.replace('_', '-'), value))
+        if getattr(args, 'academic_project', None):
+            command.extend(('--academic-project', str(args.academic_project)))
     default_bot_mode = getattr(args, 'default_bot', 'auto')
     hermes_root_dir = (hermes_profiles.resolve_target_hermes_home(target)
                        if platform == "hermes" and target.name.lower() == "profiles" else None)
-    yukino_is_default = bool(mode == "muza-preset" and hermes_root_dir is not None and
+    yukino_is_default = bool(mode in PRESET_MODES and hermes_root_dir is not None and
                             hermes_profiles.resolve_default_bot(hermes_root_dir, default_bot_mode) == "yukino")
-    if platform == "hermes" and mode == "muza-preset" and default_bot_mode != "auto":
+    if platform == "hermes" and mode in PRESET_MODES and default_bot_mode != "auto":
         command.extend(("--default-bot", default_bot_mode))
     selections = {}
     custom_names_used = False
@@ -1000,6 +997,8 @@ def setup(args, home, state):
                     if files == inventory(catalog[slug]):
                         managed[slug] = fingerprint(files)
         write_json(home / STATE_FILE, state)
+    state["setup_mode"] = mode
+    write_json(home / STATE_FILE, state)
     print(f"Target terdaftar untuk pembaruan MSSHI: {len(selections)}.")
     profile_home = None
     if platform == "hermes":
@@ -1010,6 +1009,9 @@ def setup(args, home, state):
             else hermes_profiles.resolve_hermes_home()
         )
         if is_hermes_target:
+            if mode in academic.MODES:
+                academic.install_project(profile_home, mode, ROOT, academic_values,
+                                         explicit=getattr(args, 'academic_project', None))
             migrate_runtime(ROOT, profile_home)
     skills_report = _setup_extra_skills_and_optional(
         args, mode, platform, target, catalog, packs, selections, home, state, lang, yes, profile_home=profile_home,
@@ -1020,7 +1022,7 @@ def setup(args, home, state):
     _emit_setup_report(
         home, mode, platform, target, profile_home,
         {
-            "default_bot": ("yukino" if yukino_is_default else ("keep-hermes" if mode == "muza-preset" and platform == "hermes" else "default")),
+            "default_bot": ("yukino" if yukino_is_default else ("keep-hermes" if mode in PRESET_MODES and platform == "hermes" else "default")),
             "skills": {
                 "target_count": len(selections),
                 "targets": {str(folder): sorted(set(items)) for folder, items in selections.items()},
@@ -1097,19 +1099,11 @@ def migrate_runtime(source, hermes_home=None):
                                "migrate", "--home", str(candidate)])
     if outcome:
         return outcome
-    # Refresh an explicitly enrolled policy only. Fresh installations select
-    # Steel with msshi browser --install; no surprise browser account access.
-    from msshi_runtime import profiles, yaml_read
-    helper = source / 'scripts/msshi_browser_policy.py'
-    for folder in profiles(candidate).values():
-        config = yaml_read((folder / 'config.yaml').read_bytes())
-        if 'msshi-steel-policy' not in ((config.get('plugins') or {}).get('enabled') or []):
-            continue
-        if helper.is_file():
-            outcome = subprocess.call([sys.executable, '-B', '-X', 'utf8', str(helper),
-                                       '--install', '--hermes-home', str(folder)])
-            if outcome:
-                return outcome
+    from msshi_interaction import install_existing
+    interaction = install_existing(candidate, source, apply=True)
+    if interaction.get('files_planned'):
+        print('Interaction plugin:', json.dumps(interaction, ensure_ascii=False))
+    # Browser/account selection is declarative. Updates never reinstall a cloud browser.
     return 0
 
 
@@ -1199,7 +1193,7 @@ def main(argv=None):
     updater.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "interaction", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
@@ -1209,10 +1203,11 @@ def main(argv=None):
             'skripsi': 'Rakit template skripsi Word (.docx) drag-and-drop via MuZA Skripsi v1.1.',
             'assets': 'Cari bahan persona pribadi di lokasi yang dipilih.',
             'compact': 'Padatkan data internal sesuai format yang didukung.',
-            'browser': 'Periksa kebijakan Steel dan persetujuan browser personal.',
+            'browser': 'Simpan pilihan browser dan label akun; login manual, tanpa transfer cookie.',
             'trim': 'Ringkas JSON yang memenuhi syarat tanpa kehilangan nilai.',
+            'interaction': 'Status/protokol dua tipe bot dan pemasangan plugin lokal tanpa panggilan model.',
             'managed': 'Kelola pembaruan salinan skill yang cocok dengan fingerprint.',
-            'services': 'Status dan penyiapan MCP web GitLab/Tinyfish.',
+            'services': 'Kompatibilitas lama; koneksi layanan diatur sendiri oleh pengguna.',
             'timesfm': 'Peramalan deret waktu lokal; runtime/model terpisah.',
             'brag': 'Konsep dan video HTML/MP4; runtime dan aset terpisah.',
             'scrapling': 'Ekstrak CSS/XPath dari HTML lokal tanpa crawler jaringan.',
@@ -1238,15 +1233,19 @@ def main(argv=None):
         wizard.add_argument("--target-dir", type=Path)
         wizard.add_argument("--lang", choices=('id', 'en'), default='id', help="Bahasa penjelasan pilihan (id/en); format input tetap sama.")
         if action == "setup":
-            wizard.add_argument("--mode", choices=MODES, help="Pilih mode langsung tanpa prompt.")
+            wizard.add_argument("--mode", choices=(*MODES, academic.ALIAS), help="Pilih mode langsung tanpa prompt.")
             wizard.add_argument("--yes", "-y", action="store_true", help="Konfirmasi otomatis tanpa prompt.")
             wizard.add_argument("--default-bot", choices=("auto", "yukino", "keep-hermes"), default="auto", help="auto: baru = default Yukino + 4 spesialis; existing dipertahankan. yukino: ubah default tanpa memindahkan model/chat. keep-hermes: default netral + 5 profil bernama.")
             wizard.add_argument("--extra-packs", nargs="+", help="Tambahkan extra packs di langkah [1/4] Skills.")
             wizard.add_argument("--extra-skills", nargs="+", help="Tambahkan extra skill slugs di langkah [1/4] Skills.")
             wizard.add_argument("--kat-mode", choices=("light", "ideal", "cloud", "skip"), help="Buka wizard endpoint KAT khusus Coder (light/ideal/cloud alias kompatibilitas); skip menonaktifkan KAT saja. Tidak mengunduh model.")
             wizard.add_argument("--stage-auto-trim", action="store_true", help="Stage plugin fail-open msshi-auto-trim ke profil Hermes di langkah [2/4] Plugin.")
-            wizard.add_argument("--install-steel", action="store_true", help="Opt-in Steel Browser Policy di langkah [2/4] Plugin.")
-            wizard.add_argument("--connect-services", choices=("skip", "per-profile", "share-oauth"), help="Atur koneksi MCP GitLab/Tinyfish di langkah [3/4] Koneksi.")
+            wizard.add_argument("--install-steel", action="store_true", help="Deprecated: diterima sebagai no-op; tidak memasang Steel.")
+            wizard.add_argument("--connect-services", choices=("skip", "per-profile", "share-oauth"), help="Deprecated: no-op; layanan eksternal dihubungkan sendiri oleh pengguna.")
+            academic.add_arguments(wizard)
+            wizard.add_argument("--browser", dest="setup_browser", choices=("chrome", "edge", "firefox", "none"), help="Simpan pilihan browser; tidak membuka browser atau login.")
+            wizard.add_argument("--browser-profile-label", default="", help="Label profil browser saja; cookie dan direktori profil tidak dibaca.")
+            wizard.add_argument("--browser-account-label", default="", help="Label akun untuk login manual; jangan masukkan password/API key.")
             wizard.add_argument("--connect-apps", choices=("skip", "auto-reconnect", "select"), help="Sambungkan Bot -> CLI-Anything -> Apps di langkah [4/4].")
             wizard.add_argument("--connect-bots", help="Daftar bot (dipisah koma atau 'all') untuk langkah [4/4].")
             wizard.add_argument("--connect-targets", help="Daftar app target (dipisah koma atau 'detected') untuk langkah [4/4].")
@@ -1263,7 +1262,7 @@ def main(argv=None):
     launcher.add_argument("--pdf-version", help="Pilih versi panduan; default latest.")
     launcher.add_argument("--pdf-dest", type=Path, help="Folder PDF; default Downloads/MSSHI_Manuals.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -1286,14 +1285,31 @@ def main(argv=None):
             return connections.run(args, default_state_dir=home)
         entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
-                       "compact": "caveman_context_filter.py", "browser": "msshi_browser_policy.py", "trim": "msshi_llmtrim.py",
+                       "compact": "caveman_context_filter.py", "browser": "msshi_browser_preferences.py", "trim": "msshi_llmtrim.py", "interaction": "msshi_interaction.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",
                        "brag": "../skills/brag/scripts/msshi_brag.py", "scrapling": "msshi_scrapling.py", "harness2": "msshi_harness2.py",
                        "dream": "msshi_integrations.py", "voice": "msshi_integrations.py", "kat": "msshi_integrations.py", "coder": "msshi_coder_helpers.py"}
+        if args.command == "services":
+            print(json.dumps({"status": "manual_user_setup", "changed": False,
+                "message": "Automatic external-service setup has been retired. Connect the service yourself in Hermes when needed.",
+                "credentials_read_or_written": False, "network_requests": 0}, indent=2))
+            return 0
         if args.command in entrypoints:
             prefix = [args.command] if args.command in {"dream", "voice", "kat"} else []
-            return subprocess.call([sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / entrypoints[args.command]),
-                                    *prefix, *args.arguments])
+            result = subprocess.call([sys.executable, "-B", "-X", "utf8", str(ROOT / "scripts" / entrypoints[args.command]),
+                                      *prefix, *args.arguments])
+            if result == 0 and args.command == 'runtime' and '--help' not in args.arguments:
+                runtime_args = list(args.arguments)
+                runtime_home = None
+                if '--home' in runtime_args:
+                    position = runtime_args.index('--home')
+                    if position + 1 < len(runtime_args):
+                        runtime_home = runtime_args[position + 1]
+                        del runtime_args[position:position + 2]
+                if runtime_args[:1] == ['migrate']:
+                    from msshi_interaction import install_existing
+                    install_existing(hermes_profiles.resolve_hermes_home(runtime_home), ROOT, apply=True)
+            return result
         with locked(home):
             state = read_state(home)
             if args.command == "bootstrap":

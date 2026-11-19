@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "theme": "Cyber-Noir Editorial Comic (Dual-Tone Cyan #2CE8C6 + Orange #FF6B1A on #0B0F17)",
-  "total_standardized_assets": 19,
+  "total_standardized_assets": 20,
   "canvases": {
     "square_avatar": "320x320 rounded 32px, 4px neon character border",
     "vertical_character": "540x960 rounded 24px, #FF6B1A 4px border on #0B0F17 rim-glow backdrop",
-    "hero_banner": "1280x420 rounded 24px, dual-tone Cyan-to-Orange gradient border",
+    "hero_banner": "2752x1536 supplied key art; displayed responsively",
     "uniform_meme_panel": "640x400 (16:10) rounded 20px, contain-fit with blurred dark backdrop",
     "widescreen_showcase": "1280x720 (16:9) rounded 22px, 4px accent border"
   },
@@ -14,14 +14,14 @@
       "id": "hero-muza-banner",
       "output": "assets/avatars/hero-muza-banner.png",
       "canvas_type": "hero",
-      "width": 1280,
-      "height": 420,
+      "width": 2752,
+      "height": 1536,
       "border_hex": "#2CE8C6",
-      "source_collection": "hermes_ai",
-      "source_filename": "16_original_keyart_studio_research.jpg",
-      "purpose": "Hero Banner Utama MSSHI v3.1.0",
-      "size_bytes": 759041,
-      "sha256": "3b882b5e65065e3474106e38b1a604d8ac76b8430ab0c53494d262eee5c23dbe"
+      "source_collection": "user_supplied_generated_art",
+      "source_filename": "supplied_hero_v3.1.2.jpg",
+      "purpose": "Hero utama MSSHI v3.1.2",
+      "size_bytes": 5509024,
+      "sha256": "0cfa471b91c09e7ff1720414c3c9b75b84ee1434c23007e8daa194f094a8c7a3"
     },
     {
       "id": "muza-noir-fullbody",
@@ -256,6 +256,18 @@
       "purpose": "Extra Meme 04 — Cozy Chaos Engineering",
       "size_bytes": 194074,
       "sha256": "17731bca05b73f7784198b4759d7e91a365aa271b569a32ebe00ad8c79defc58"
+    },
+    {
+      "id": "interaction-two-types",
+      "output": "assets/interaction-two-types.jpg",
+      "canvas_type": "architecture_reference",
+      "width": 2752,
+      "height": 1536,
+      "purpose": "Diagram konsep dua tipe interaksi; bukan bukti runtime telah menjalankan Dewan.",
+      "source_collection": "user_supplied_generated_art",
+      "source_filename": "supplied_interaction_v3.1.2.jpg",
+      "size_bytes": 2417940,
+      "sha256": "658bbdf327b76d1136499f1d1b31ee79d63d57d9e7f9c78594a83ea80030477f"
     }
   ]
 }

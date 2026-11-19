@@ -10,10 +10,21 @@ param(
     [string]$Mode,
     [string]$Platform,
     [string]$DefaultBot,
+    [string]$AcademicProject,
+    [string]$AcademicLevel,
+    [string]$AcademicTopic,
+    [string]$AcademicDeadline,
+    [string]$AcademicCampusGuideline,
+    [string]$PreferredName,
     [switch]$Yes,
     [string]$KatMode,
     [switch]$StageAutoTrim,
-    [string]$ConnectServices,
+    [switch]$InstallSteel, # Deprecated compatibility input; no browser/plugin is installed.
+    [string]$ConnectServices, # Deprecated compatibility input; no automatic service setup.
+    [ValidateSet('chrome', 'edge', 'firefox', 'none')]
+    [string]$Browser,
+    [string]$BrowserProfileLabel,
+    [string]$BrowserAccountLabel,
     [string]$ConnectApps,
     [string]$ConnectBots,
     [string]$ConnectTargets,
@@ -21,7 +32,7 @@ param(
 )
 
 & {
-    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiPdfDest, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiConnectServices, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
+    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiPdfDest, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiAcademicProject, $MsshiAcademicLevel, $MsshiAcademicTopic, $MsshiAcademicDeadline, $MsshiAcademicCampusGuideline, $MsshiPreferredName, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiInstallSteel, $MsshiConnectServices, $MsshiBrowser, $MsshiBrowserProfileLabel, $MsshiBrowserAccountLabel, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
     $ErrorActionPreference = 'Stop'
     $repository = 'https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git'
     $scratch = $null
@@ -89,12 +100,22 @@ param(
         }
         $setupArgs = @('setup')
         if ($MsshiMode) { $setupArgs += @('--mode', $MsshiMode) }
+        if ($MsshiAcademicProject) { $setupArgs += @('--academic-project', $MsshiAcademicProject) }
+        if ($MsshiAcademicLevel) { $setupArgs += @('--academic-level', $MsshiAcademicLevel) }
+        if ($MsshiAcademicTopic) { $setupArgs += @('--academic-topic', $MsshiAcademicTopic) }
+        if ($MsshiAcademicDeadline) { $setupArgs += @('--academic-deadline', $MsshiAcademicDeadline) }
+        if ($MsshiAcademicCampusGuideline) { $setupArgs += @('--academic-campus-guideline', $MsshiAcademicCampusGuideline) }
+        if ($MsshiPreferredName) { $setupArgs += @('--preferred-name', $MsshiPreferredName) }
         if ($MsshiPlatform) { $setupArgs += @('--platform', $MsshiPlatform) }
         if ($MsshiDefaultBot) { $setupArgs += @('--default-bot', $MsshiDefaultBot) }
         if ($MsshiYes) { $setupArgs += '--yes' }
         if ($MsshiKatMode) { $setupArgs += @('--kat-mode', $MsshiKatMode) }
         if ($MsshiStageAutoTrim) { $setupArgs += '--stage-auto-trim' }
+        if ($MsshiInstallSteel) { $setupArgs += '--install-steel' }
         if ($MsshiConnectServices) { $setupArgs += @('--connect-services', $MsshiConnectServices) }
+        if ($MsshiBrowser) { $setupArgs += @('--browser', $MsshiBrowser) }
+        if ($MsshiBrowserProfileLabel) { $setupArgs += @('--browser-profile-label', $MsshiBrowserProfileLabel) }
+        if ($MsshiBrowserAccountLabel) { $setupArgs += @('--browser-account-label', $MsshiBrowserAccountLabel) }
         if ($MsshiConnectApps) { $setupArgs += @('--connect-apps', $MsshiConnectApps) }
         if ($MsshiConnectBots) { $setupArgs += @('--connect-bots', $MsshiConnectBots) }
         if ($MsshiConnectTargets) { $setupArgs += @('--connect-targets', $MsshiConnectTargets) }
@@ -118,4 +139,4 @@ param(
             }
         }
     }
-} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $PdfDest $Mode $Platform $DefaultBot $Yes $KatMode $StageAutoTrim $ConnectServices $ConnectApps $ConnectBots $ConnectTargets $WithRea
+} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $PdfDest $Mode $Platform $DefaultBot $AcademicProject $AcademicLevel $AcademicTopic $AcademicDeadline $AcademicCampusGuideline $PreferredName $Yes $KatMode $StageAutoTrim $InstallSteel $ConnectServices $Browser $BrowserProfileLabel $BrowserAccountLabel $ConnectApps $ConnectBots $ConnectTargets $WithRea

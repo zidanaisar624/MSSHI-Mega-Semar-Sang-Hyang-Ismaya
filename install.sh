@@ -11,11 +11,21 @@ pdf_version=
 pdf_dest=
 mode=
 platform=
+academic_project=
+academic_level=
+academic_topic=
+academic_deadline=
+academic_campus_guideline=
+preferred_name=
 default_bot=
 yes_mode=0
 kat_mode=
 stage_auto_trim=0
+install_steel=0
 connect_services=
+browser=
+browser_profile_label=
+browser_account_label=
 connect_apps=
 connect_bots=
 connect_targets=
@@ -29,13 +39,23 @@ while [ "$#" -gt 0 ]; do
         --no-pdf) no_pdf=1 ;;
         --pdf-version) pdf_version=${2:?--pdf-version requires a version}; shift ;;
         --pdf-dest) pdf_dest=${2:?--pdf-dest requires a path}; shift ;;
+        --academic-project) academic_project=${2:?--academic-project requires a path}; shift ;;
+        --academic-level) academic_level=${2-}; shift ;;
+        --academic-topic) academic_topic=${2-}; shift ;;
+        --academic-deadline) academic_deadline=${2-}; shift ;;
+        --academic-campus-guideline) academic_campus_guideline=${2-}; shift ;;
+        --preferred-name) preferred_name=${2-}; shift ;;
         --mode) mode=${2:?--mode requires a value}; shift ;;
         --platform) platform=${2:?--platform requires a value}; shift ;;
         --default-bot) default_bot=${2:?--default-bot requires a value}; shift ;;
         --yes|-y) yes_mode=1 ;;
         --kat-mode) kat_mode=${2:?--kat-mode requires a value}; shift ;;
         --stage-auto-trim) stage_auto_trim=1 ;;
+        --install-steel) install_steel=1 ;; # Deprecated compatibility no-op.
         --connect-services) connect_services=${2:?--connect-services requires a value}; shift ;;
+        --browser) browser=${2:?--browser requires chrome/edge/firefox/none}; shift ;;
+        --browser-profile-label) browser_profile_label=${2-}; shift ;;
+        --browser-account-label) browser_account_label=${2-}; shift ;;
         --connect-apps) connect_apps=${2:?--connect-apps requires a value}; shift ;;
         --connect-bots) connect_bots=${2:?--connect-bots requires a value}; shift ;;
         --connect-targets) connect_targets=${2:?--connect-targets requires a value}; shift ;;
@@ -82,12 +102,22 @@ if [ -n "$pdf_dest" ]; then set -- "$@" --pdf-dest "$pdf_dest"; fi
 if [ "$no_setup" -eq 0 ]; then
     set -- setup
     if [ -n "$mode" ]; then set -- "$@" --mode "$mode"; fi
+    if [ -n "$academic_project" ]; then set -- "$@" --academic-project "$academic_project"; fi
+    if [ -n "$academic_level" ]; then set -- "$@" --academic-level "$academic_level"; fi
+    if [ -n "$academic_topic" ]; then set -- "$@" --academic-topic "$academic_topic"; fi
+    if [ -n "$academic_deadline" ]; then set -- "$@" --academic-deadline "$academic_deadline"; fi
+    if [ -n "$academic_campus_guideline" ]; then set -- "$@" --academic-campus-guideline "$academic_campus_guideline"; fi
+    if [ -n "$preferred_name" ]; then set -- "$@" --preferred-name "$preferred_name"; fi
     if [ -n "$platform" ]; then set -- "$@" --platform "$platform"; fi
     if [ -n "$default_bot" ]; then set -- "$@" --default-bot "$default_bot"; fi
     if [ "$yes_mode" -eq 1 ]; then set -- "$@" --yes; fi
     if [ -n "$kat_mode" ]; then set -- "$@" --kat-mode "$kat_mode"; fi
     if [ "$stage_auto_trim" -eq 1 ]; then set -- "$@" --stage-auto-trim; fi
+    if [ "$install_steel" -eq 1 ]; then set -- "$@" --install-steel; fi
     if [ -n "$connect_services" ]; then set -- "$@" --connect-services "$connect_services"; fi
+    if [ -n "$browser" ]; then set -- "$@" --browser "$browser"; fi
+    if [ -n "$browser_profile_label" ]; then set -- "$@" --browser-profile-label "$browser_profile_label"; fi
+    if [ -n "$browser_account_label" ]; then set -- "$@" --browser-account-label "$browser_account_label"; fi
     if [ -n "$connect_apps" ]; then set -- "$@" --connect-apps "$connect_apps"; fi
     if [ -n "$connect_bots" ]; then set -- "$@" --connect-bots "$connect_bots"; fi
     if [ -n "$connect_targets" ]; then set -- "$@" --connect-targets "$connect_targets"; fi

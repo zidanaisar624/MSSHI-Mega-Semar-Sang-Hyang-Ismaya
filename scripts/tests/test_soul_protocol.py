@@ -1,6 +1,7 @@
 """SOUL-only protocol updates retain private persona bytes and never activate models."""
 from pathlib import Path
 import json
+import re
 import sys
 from tempfile import TemporaryDirectory
 import unittest
@@ -19,7 +20,7 @@ class SoulProtocolTests(unittest.TestCase):
         self.prefix = b'\xef\xbb\xbf# Private persona\r\nKeep spelling, voice and all personal references.\r\n'
         self.config = b'model:\r\n  default: current/main\r\n  provider: unchanged\r\ndelegation:\r\n  model: current/helper\r\n'
         self.secret = b'EXISTING_KEY="fixture-not-real"\r\n'
-        for name in ('shikaku', 'kiki-chii'):
+        for name in soul.PROFILES:
             folder = self.home / 'profiles' / name
             folder.mkdir(parents=True)
             (folder / 'SOUL.md').write_bytes(self.prefix)
@@ -62,12 +63,12 @@ class SoulProtocolTests(unittest.TestCase):
     def test_refresh_changes_only_managed_ranges_and_keeps_custom_suffix(self):
         template = (soul.ROOT/'configs/personas/shikaku.md').read_bytes()
         first = soul.render(self.prefix, template, 'shikaku') + b'\r\nPrivate project appendix.\r\n'
-        updated = template.replace(b'## Nama dan sapaan pengguna', b'## Nama dan sapaan pengguna revisi')
+        updated = template.replace(b'## Nama dan sapaan Pengguna', b'## Nama dan sapaan Pengguna revisi')
         second = soul.render(first, updated, 'shikaku')
         self.assertTrue(second.startswith(self.prefix))
         self.assertTrue(second.endswith(b'\r\nPrivate project appendix.\r\n'))
         self.assertEqual(second.count(soul.COMMON[0]), 1)
-        self.assertIn(b'pengguna revisi', second)
+        self.assertIn(b'Pengguna revisi', second)
 
     def test_rollback_preserves_later_user_edit(self):
         result = soul.apply_protocol(self.home, ['shikaku'], apply=True)
@@ -118,6 +119,86 @@ class SoulProtocolTests(unittest.TestCase):
             self.assertIn('minta izin terpisah', data)
             self.assertIn('model/provider yang benar-benar', data)
             self.assertNotIn('Fable 5.2', data)
+
+    def test_old_mixed_workflow_is_replaced_without_touching_private_neighbors(self):
+        template = (soul.ROOT/'configs/personas/shikaku.md').read_bytes()
+        old_begin, old_end = soul.legacy_markers('shikaku')
+        suffix = b'\r\nPrivate approved project notes stay byte-exact.\r\n'
+        original = self.prefix + old_begin + b'\r\nOld mixed worker protocol.\r\n' + old_end + suffix
+        result = soul.render(original, template, 'shikaku')
+        self.assertTrue(result.startswith(self.prefix))
+        self.assertIn(suffix, result)
+        self.assertNotIn(old_begin, result)
+        self.assertNotIn(b'Old mixed worker protocol.', result)
+        self.assertEqual(result.count(soul.markers('shikaku')[1][0]), 1)
+        self.assertEqual(soul.render(result, template, 'shikaku'), result)
+
+    def test_old_duplicate_or_incomplete_protocol_is_never_deleted(self):
+        template = (soul.ROOT/'configs/personas/shikaku.md').read_bytes()
+        left, right = soul.legacy_markers('shikaku')
+        for fragment in (left, left + right + left + right):
+            with self.subTest(fragment=fragment), self.assertRaises(ValueError):
+                soul.render(self.prefix + fragment, template, 'shikaku')
+
+    def test_coexisting_separate_legacy_block_is_removed_and_new_block_refreshed(self):
+        template = (soul.ROOT/'configs/personas/shikaku.md').read_bytes()
+        current = soul.render(self.prefix, template, 'shikaku')
+        left, right = soul.legacy_markers('shikaku')
+        original = current + b'\r\nKeep between.\r\n' + left + b'old' + right + b'\r\nKeep after.\r\n'
+        result = soul.render(original, template, 'shikaku')
+        self.assertNotIn(left, result)
+        self.assertIn(b'Keep between.', result)
+        self.assertIn(b'Keep after.', result)
+        self.assertEqual(result.count(soul.markers('shikaku')[1][0]), 1)
+
+    def test_overlapping_managed_ranges_refuse_the_rewrite(self):
+        template = (soul.ROOT/'configs/personas/shikaku.md').read_bytes()
+        left, right = soul.legacy_markers('shikaku')
+        first, last = soul.markers('shikaku')[1]
+        with self.assertRaises(ValueError):
+            soul.render(self.prefix + left + first + b'unknown' + last + right, template, 'shikaku')
+
+    def test_all_fifteen_templates_use_the_same_model_independent_interaction(self):
+        folders = ('', 'academic-mahasiswa', 'academic-dosen')
+        forbidden = re.compile(r'(?i)\b(?:fable|opus|sonnet|carbon|sol|kimi|argon|deepseek|kat|gpt|claude|gemini|muza|zidan)\b|obsidian')
+        for name in soul.PROFILES:
+            baseline = None
+            for folder in folders:
+                path = soul.ROOT/'configs/personas'/folder/(name+'.md')
+                data = path.read_bytes()
+                decoded = data.decode('utf-8')
+                self.assertIsNone(forbidden.search(decoded), str(path))
+                self.assertIn('Pengguna', decoded)
+                self.assertIn('SEMUA bot termasuk Yukino', decoded)
+                self.assertIn('minta izin terpisah', decoded)
+                self.assertIn('siap fokus', decoded)
+                start, end = soul.span(data, *soul.markers(name)[1])
+                protocol = data[start:end]
+                if baseline is None:
+                    baseline = protocol
+                self.assertEqual(protocol, baseline)
+                if name in {'yukino','shizuka'}:
+                    self.assertIn('tanpa Dewan MoA', decoded)
+                    self.assertIn('Sub-Agent (Advisor)', decoded)
+                    self.assertNotIn('Final Centralized Blueprint', decoded)
+                else:
+                    self.assertIn('tanpa Sub-Agent terpisah', decoded)
+                    self.assertIn('Audit Main', decoded)
+                    self.assertIn('Putaran 2', decoded)
+                    self.assertIn('permintaan sumber', decoded)
+
+    def test_all_five_roles_apply_their_own_interaction_without_other_writes(self):
+        result = soul.apply_protocol(self.home, list(soul.PROFILES), apply=True)
+        self.assertEqual(result['interaction_types'], {'yukino':1, 'shizuka':1, 'val':2, 'kiki-chii':2, 'shikaku':2})
+        self.assertFalse(result['config_or_model_written'])
+        self.assertFalse(result['vault_written'])
+        for name in soul.PROFILES:
+            folder = self.home/'profiles'/name
+            actual = (folder/'SOUL.md').read_bytes()
+            self.assertTrue(actual.startswith(self.prefix))
+            self.assertIsNotNone(soul.span(actual, *soul.markers(name)[1]))
+            self.assertEqual((folder/'config.yaml').read_bytes(), self.config)
+            self.assertEqual((folder/'.env').read_bytes(), self.secret)
 
 
 if __name__ == '__main__':

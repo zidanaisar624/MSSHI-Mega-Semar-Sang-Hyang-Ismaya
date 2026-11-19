@@ -66,7 +66,7 @@ def setup_targets(mode, selections, *, source=ROOT):
     """Choose only the setup destinations explicitly covered by this opt-in."""
     if mode in {'solo', 'selective'}:
         return list(selections)
-    if mode == 'muza-preset':
+    if mode in {'muza-preset', 'academic-mahasiswa', 'academic-dosen'}:
         manifest = installer.read_json(source / 'optional' / 'manifest.json')
         entry = next(row for row in manifest['entries'] if row['id'] == 'rea')
         roles = installer.names(entry.get('roles', []), 'optional role')

@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "default_new_install": "academic-mahasiswa",
+  "presets": {
+    "academic-mahasiswa": {
+      "label": "ACADEMIC PRESET — Mahasiswa S1/S2/S3",
+      "description": "Tim ringan untuk menuntaskan tugas akhir sesuai pedoman kampus: ide, bimbingan, riset, kode, presentasi, dan tindak lanjut.",
+      "audience": "mahasiswa",
+      "country": "Indonesia",
+      "levels": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "roles": {
+        "yukino": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "brainstorming-research-ideas",
+          "creative-thinking-for-research",
+          "focus-my-energy",
+          "idea-generation",
+          "prep-for-meetings",
+          "generate-fresh-ideas",
+          "get-more-perspectives",
+          "muza-skripsi-template"
+        ],
+        "shizuka": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "wise-judgment-and-sovereign-orchestrator",
+          "prep-for-meetings",
+          "focus-my-energy",
+          "math-reasoning",
+          "muza-skripsi-template",
+          "paper-revision",
+          "research-paper-writing",
+          "literature-review"
+        ],
+        "val": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "deep-research",
+          "literature-review",
+          "novelty-assessment",
+          "paper-writing-section",
+          "paper-revision",
+          "research-paper-writing",
+          "math-reasoning",
+          "data-analysis",
+          "backward-traceability",
+          "table-generation",
+          "academic-plotting",
+          "github-research",
+          "muza-skripsi-template",
+          "unslop"
+        ],
+        "kiki-chii": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "slide-generation",
+          "academic-plotting",
+          "filmmaking-videography-photography-s2",
+          "auto-curiousity-for-film-making",
+          "match-my-writing-style",
+          "unslop",
+          "generate-fresh-ideas"
+        ],
+        "shikaku": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "analyze-project",
+          "explore-code",
+          "math-reasoning",
+          "data-analysis",
+          "github-research",
+          "scrapling",
+          "unslop",
+          "mattpocock-engineering"
+        ]
+      },
+      "display_names": {
+        "yukino": "Yukino Yukinoshita",
+        "shizuka": "Sensei Shizuka Hiratsuka",
+        "val": "Val",
+        "kiki-chii": "Kiki-Chii",
+        "shikaku": "Sir. Robot"
+      },
+      "persona_files": {
+        "yukino": "configs/personas/academic-mahasiswa/yukino.md",
+        "shizuka": "configs/personas/academic-mahasiswa/shizuka.md",
+        "val": "configs/personas/academic-mahasiswa/val.md",
+        "kiki-chii": "configs/personas/academic-mahasiswa/kiki-chii.md",
+        "shikaku": "configs/personas/academic-mahasiswa/shikaku.md"
+      },
+      "templates_root": "templates/academic",
+      "app_policy_file": "configs/academic_app_policy.json",
+      "existing_install_policy": "explicit-choice-preserve-existing",
+      "model_provider_policy": "user-configured-preserve-existing",
+      "optional_plugins": [
+        {
+          "id": "solverforge-planner",
+          "purpose": "Perencanaan lokal berbasis kendala; proposal ditinjau sebelum diterapkan. Tidak membuat pengingat atau kalender cloud otomatis.",
+          "status": "optional-primary-source-and-local-engine-reviewed",
+          "source": "https://github.com/blackopsrepl/hermes-solverforge-planner",
+          "revision": "c2ae4f2ad893501aa644c5f70b8fb6df65d0495d",
+          "requires_hermes": ">=0.22.2",
+          "windows": "supported-x64",
+          "auto_install": false,
+          "auto_schedule": false
+        },
+        {
+          "id": "meeting-copilot-live",
+          "purpose": "Pendamping pertemuan pada host yang didukung. Native capture Windows diblokir pada revisi yang ditinjau; bukan koneksi Zoom siap pakai.",
+          "status": "optional-native-windows-capture-blocked",
+          "source": "https://github.com/adam4788/meeting-copilot",
+          "revision": "175f23d8a79d2423ed4493f068676442a2631929",
+          "requires_hermes": ">=0.22.7",
+          "auto_install": false,
+          "auto_record": false
+        },
+        {
+          "id": "transcribo",
+          "purpose": "Transkripsi hosted opt-in; audio diunggah dan saldo layanan dapat terpakai. OAuth, izin rekaman dan biaya perlu diperiksa terpisah.",
+          "status": "optional-hosted-audio-service-not-tested",
+          "source": "https://github.com/santigamo/transcribo-skill",
+          "revision": "15328a4",
+          "auto_install": false,
+          "auto_upload": false
+        }
+      ]
+    },
+    "academic-dosen": {
+      "label": "ACADEMIC PRESET — Dosen & Pimpinan Kampus",
+      "description": "Tim untuk mengajar, merancang materi/RPS, membimbing, meneliti, dan menyiapkan rapat serta tindak lanjut kampus.",
+      "audience": "dosen",
+      "country": "Indonesia",
+      "levels": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "roles": {
+        "yukino": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "brainstorming-research-ideas",
+          "creative-thinking-for-research",
+          "focus-my-energy",
+          "idea-generation",
+          "prep-for-meetings",
+          "generate-fresh-ideas",
+          "get-more-perspectives",
+          "muza-skripsi-template"
+        ],
+        "shizuka": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "wise-judgment-and-sovereign-orchestrator",
+          "prep-for-meetings",
+          "focus-my-energy",
+          "math-reasoning",
+          "muza-skripsi-template",
+          "paper-revision",
+          "research-paper-writing",
+          "literature-review",
+          "get-more-perspectives"
+        ],
+        "val": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "deep-research",
+          "literature-review",
+          "novelty-assessment",
+          "paper-writing-section",
+          "paper-revision",
+          "research-paper-writing",
+          "math-reasoning",
+          "data-analysis",
+          "backward-traceability",
+          "table-generation",
+          "academic-plotting",
+          "github-research",
+          "muza-skripsi-template",
+          "unslop",
+          "rebuttal-writing",
+          "creative-thinking-for-research"
+        ],
+        "kiki-chii": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "slide-generation",
+          "academic-plotting",
+          "filmmaking-videography-photography-s2",
+          "auto-curiousity-for-film-making",
+          "match-my-writing-style",
+          "unslop",
+          "generate-fresh-ideas"
+        ],
+        "shikaku": [
+          "cli-anything-universal-bridge",
+          "humanizer-en",
+          "humanizer-indonesia",
+          "unlimited-ocr-2",
+          "persona-shizuka-yukino-shikaku",
+          "analyze-project",
+          "explore-code",
+          "math-reasoning",
+          "data-analysis",
+          "github-research",
+          "scrapling",
+          "unslop",
+          "mattpocock-engineering"
+        ]
+      },
+      "display_names": {
+        "yukino": "Yukino Yukinoshita",
+        "shizuka": "Sensei Shizuka Hiratsuka",
+        "val": "Val",
+        "kiki-chii": "Kiki-Chii",
+        "shikaku": "Sir. Robot"
+      },
+      "persona_files": {
+        "yukino": "configs/personas/academic-dosen/yukino.md",
+        "shizuka": "configs/personas/academic-dosen/shizuka.md",
+        "val": "configs/personas/academic-dosen/val.md",
+        "kiki-chii": "configs/personas/academic-dosen/kiki-chii.md",
+        "shikaku": "configs/personas/academic-dosen/shikaku.md"
+      },
+      "templates_root": "templates/academic",
+      "app_policy_file": "configs/academic_app_policy.json",
+      "existing_install_policy": "explicit-choice-preserve-existing",
+      "model_provider_policy": "user-configured-preserve-existing",
+      "optional_plugins": [
+        {
+          "id": "solverforge-planner",
+          "purpose": "Perencanaan lokal berbasis kendala; proposal ditinjau sebelum diterapkan. Tidak membuat pengingat atau kalender cloud otomatis.",
+          "status": "optional-primary-source-and-local-engine-reviewed",
+          "source": "https://github.com/blackopsrepl/hermes-solverforge-planner",
+          "revision": "c2ae4f2ad893501aa644c5f70b8fb6df65d0495d",
+          "requires_hermes": ">=0.22.2",
+          "windows": "supported-x64",
+          "auto_install": false,
+          "auto_schedule": false
+        },
+        {
+          "id": "meeting-copilot-live",
+          "purpose": "Pendamping pertemuan pada host yang didukung. Native capture Windows diblokir pada revisi yang ditinjau; bukan koneksi Zoom siap pakai.",
+          "status": "optional-native-windows-capture-blocked",
+          "source": "https://github.com/adam4788/meeting-copilot",
+          "revision": "175f23d8a79d2423ed4493f068676442a2631929",
+          "requires_hermes": ">=0.22.7",
+          "auto_install": false,
+          "auto_record": false
+        },
+        {
+          "id": "transcribo",
+          "purpose": "Transkripsi hosted opt-in; audio diunggah dan saldo layanan dapat terpakai. OAuth, izin rekaman dan biaya perlu diperiksa terpisah.",
+          "status": "optional-hosted-audio-service-not-tested",
+          "source": "https://github.com/santigamo/transcribo-skill",
+          "revision": "15328a4",
+          "auto_install": false,
+          "auto_upload": false
+        }
+      ]
+    }
+  }
+}

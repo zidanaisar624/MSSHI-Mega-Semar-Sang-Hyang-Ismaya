@@ -101,6 +101,13 @@ def run(home: Path, timeout: int, check_only: bool = False, software_rendering: 
     if not check_only and home.is_dir():
         try:
             hermes_profiles.sync_pending_profile_configs(home)
+            # The normal suite launcher can complete deferred plugin staging
+            # after the user configures the host. Standalone legacy shortcuts
+            # without a full suite tree retain their existing launch behavior.
+            suite_source = Path(__file__).resolve().parents[1]
+            if (suite_source / 'hermes_plugins/msshi-interaction/plugin.yaml').is_file():
+                from msshi_interaction import install_existing
+                install_existing(home, suite_source, apply=True)
         except OSError:
             pass
     source = home / "hermes-agent"

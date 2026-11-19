@@ -156,7 +156,7 @@ def register(ctx):
         return replacement
 
     def status_json():
-        return json.dumps({"plugin": "msshi-auto-trim", "enabled": ctx.get_config("enabled", True),
+        return json.dumps({"display_name": "MSSHITrim", "plugin": "msshi-auto-trim", "enabled": ctx.get_config("enabled", True),
             "automatic": "eligible large JSON tool results only", "llm_calls": 0,
             "data_policy": "exact canonical JSON equality; otherwise original result",
             "metrics": ctx.state.get("metrics", default={})}, ensure_ascii=False, indent=2)
@@ -173,3 +173,5 @@ def register(ctx):
                              lambda parser: None, show_status)
     ctx.register_command("msshi-trim-status", slash_status,
                          description="Show automatic local JSON compression counters without a model call")
+    ctx.register_command("msshitrim-status", slash_status,
+                         description="MSSHITrim: show local JSON compaction counters without calling a model")

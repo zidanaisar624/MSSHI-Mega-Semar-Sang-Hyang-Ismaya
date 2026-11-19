@@ -1,4 +1,4 @@
-"""Preview/apply only managed SOUL collaboration blocks; never configure models or tools."""
+"""Preview/apply managed SOUL interaction blocks; never configure models or tools."""
 from __future__ import annotations
 
 import argparse
@@ -46,11 +46,16 @@ def encode(value: dict) -> bytes:
 
 
 def markers(profile: str) -> list[tuple[bytes, bytes]]:
-    result = [COMMON]
-    if profile in {'shikaku', 'kiki-chii'}:
-        result.append((f'<!-- MSSHI COLLABORATION {profile} BEGIN -->'.encode(),
-                       f'<!-- MSSHI COLLABORATION {profile} END -->'.encode()))
-    return result
+    if profile not in PROFILES:
+        raise ValueError('Unknown MSSHI role')
+    return [COMMON, (f'<!-- MSSHI INTERACTION {profile} BEGIN -->'.encode(),
+                     f'<!-- MSSHI INTERACTION {profile} END -->'.encode())]
+
+
+def legacy_markers(profile: str) -> tuple[bytes, bytes]:
+    """Old mixed-workflow protocol; replaced only inside its exact managed range."""
+    return (f'<!-- MSSHI COLLABORATION {profile} BEGIN -->'.encode(),
+            f'<!-- MSSHI COLLABORATION {profile} END -->'.encode())
 
 
 def span(data: bytes, begin: bytes, end: bytes) -> tuple[int, int] | None:
@@ -70,6 +75,27 @@ def render(original: bytes, template: bytes, profile: str) -> bytes:
     original.decode('utf-8-sig')
     newline = b'\r\n' if b'\r\n' in original else b'\n'
     result = original
+    # Validate all managed ranges before preparing a replacement. Incomplete or
+    # duplicated old blocks are never silently deleted as part of a migration.
+    legacy = span(result, *legacy_markers(profile))
+    incoming_interaction = markers(profile)[1]
+    current_interaction = span(result, *incoming_interaction)
+    ranges = [where for where in (span(result, *COMMON), legacy, current_interaction)
+              if where is not None]
+    if any(a[0] < b[1] and b[0] < a[1]
+           for index, a in enumerate(ranges) for b in ranges[index + 1:]):
+        raise ValueError('Managed SOUL ranges overlap; preserve and review the file')
+    if legacy is not None:
+        if current_interaction is None:
+            required = span(template, *incoming_interaction)
+            if required is None:
+                raise ValueError('Public persona lacks the two-type interaction protocol')
+            incoming = template[required[0]:required[1]].replace(b'\r\n', b'\n').replace(b'\n', newline)
+            result = result[:legacy[0]] + incoming + result[legacy[1]:]
+        else:
+            # A previous migration may have added the new protocol without
+            # withdrawing the old block. Remove only the known managed range.
+            result = result[:legacy[0]] + result[legacy[1]:]
     for begin, end in markers(profile):
         required = span(template, begin, end)
         if required is None:
@@ -109,6 +135,8 @@ def apply_protocol(home: Path, profiles: list[str], apply: bool = False, source:
     changes = [row for row in plans if row[2] != row[3]]
     result = {'operation': 'managed-soul-protocol', 'applied': False,
               'profiles': names, 'changed_profiles': [row[0] for row in changes],
+              'protocol_schema': 2, 'scope': 'managed-ranges-only',
+              'interaction_types': {name: (1 if name in {'yukino', 'shizuka'} else 2) for name in names},
               'config_or_model_written': False, 'vault_written': False, 'network_or_model_calls': 0}
     if not apply or not changes:
         result['status'] = 'preview' if not apply else 'already_current'
@@ -201,7 +229,7 @@ def rollback(home: Path, receipt: Path, apply: bool = False) -> dict:
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--home', type=Path, required=True, help='Existing Hermes root; only named profile SOUL files can change.')
-    parser.add_argument('--profiles', nargs='+', choices=PROFILES, default=['shikaku', 'kiki-chii'])
+    parser.add_argument('--profiles', nargs='+', choices=PROFILES, default=list(PROFILES))
     parser.add_argument('--apply', action='store_true', help='Apply reviewed marked blocks with backups; default previews only.')
     parser.add_argument('--rollback', type=Path, help='Preview or apply a SOUL-only receipt rollback; later edits become conflicts.')
     args = parser.parse_args(argv)

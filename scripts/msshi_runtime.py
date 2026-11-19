@@ -307,7 +307,7 @@ def native_routes(home, profile, cfg):
     hub = bridge_policy()
     previous = read_json(home / "msshi-runtime/profiles" / profile / "routes.json", {})
     routes = {name: row for name, row in previous.get("targets", {}).items()
-              if norm(name) not in RETAINED_MCP and hub.target_allowed(profile, name)}
+              if norm(name) not in RETAINED_MCP and hub.target_allowed(profile, name, home)}
     for route in routes.values():
         if route.get("executable") and not Path(route["executable"]).is_file():
             route["readiness"] = "optional_missing"
@@ -342,7 +342,7 @@ def native_routes(home, profile, cfg):
     former_apps = {norm(name): item for name, item in (cfg.get("mcp_servers") or {}).items()
                    if isinstance(item, dict)}
     for slug in hub.ARTCRAFT:
-        if not hub.target_allowed(profile, slug):
+        if not hub.target_allowed(profile, slug, home):
             continue
         prior_env = routes.get(slug, {}).get("env", {})
         old_env = former_apps.get(slug, {}).get("env", {})
@@ -387,12 +387,14 @@ def native_routes(home, profile, cfg):
         routes[name] = {"kind": "browser", "executable": chrome,
                         "readiness": "available" if chrome else "optional_missing", "url": url}
     routes = {name: row for name, row in routes.items()
-              if name in {"gdrive", "gdrive-web"} or hub.target_allowed(profile, name)}
+              if name in {"gdrive", "gdrive-web"} or hub.target_allowed(profile, name, home)}
     for name, row in routes.items():
+        if previous.get('targets', {}).get(name, {}).get('academic_opt_in') is True:
+            row['academic_opt_in'] = True
         if name not in {"gdrive", "gdrive-web"} and previous.get("targets", {}).get(name, {}).get("user_disabled"):
             row.update(user_disabled=True, readiness="disabled_by_user")
     return {"schema": 3, "profile": profile, "role": ROLES.get(profile, "custom"),
-            "auto_open_on_boot": False, "require_task_ticket": True, "specialization_policy": "muza-v1",
+            "auto_open_on_boot": False, "require_task_ticket": True, "specialization_policy": ("academic-v1" if hub.academic_policy(home) else "muza-v1"),
             "artcraft_root": str(hub.artcraft_root()), "targets": routes}
 
 
@@ -417,16 +419,15 @@ def replace_plugins(lines, plugin, newline):
 
 
 def config_update(original, restore_from=None, auto_trim_binary=None):
-    """Remove desktop/utility MCP registrations and restore retained service flags.
+    """Remove desktop/utility MCP registrations; preserve current service choices.
 
-    Current retained URLs and credentials remain in place. Their flags are restored
-    only from an original MSSHI migration backup when that backup exists.
+    The legacy restore_from parameter is accepted for compatibility only. A
+    historical backup cannot re-enable a service the user has since disconnected.
     """
     text = original.decode("utf-8-sig")
     lines = text.splitlines(keepends=True)
     newline = "\r\n" if "\r\n" in text else "\n"
     cfg = yaml_read(original)
-    prior = yaml_read(restore_from) if restore_from else {}
     changed = []
     section = yaml_section(lines,"mcp_servers")
     if section is not None:
@@ -440,31 +441,11 @@ def config_update(original, restore_from=None, auto_trim_binary=None):
                 lines[offset:last] = []
                 changed.append(name)
                 continue
-            if norm(name) not in RETAINED_MCP:
-                continue
-            old = (prior.get("mcp_servers") or {}).get(name)
-            if not isinstance(old,dict):
-                continue
-            chunk = lines[offset:last]
-            for flag in ("enabled","lazy"):
-                positions = [i for i,line in enumerate(chunk) if re.match(rf"^    {flag}:",line)]
-                if flag in old:
-                    value = old[flag]
-                    if not isinstance(value,bool):
-                        raise ValueError(f"Original remote flag needs review: {name}.{flag}")
-                    replacement = f"    {flag}: {'true' if value else 'false'}{newline}"
-                    if positions:
-                        chunk[positions[0]] = replacement
-                    else:
-                        chunk.insert(1,replacement)
-                else:
-                    chunk = [line for line in chunk if not re.match(rf"^    {flag}:",line)]
-            lines[offset:last] = chunk
     plugin = cfg.get("plugins",{})
-    previous_plugins = prior.get("plugins",{})
     remove = {name for name in plugin.get("enabled",[]) if norm(name) in MIGRATED_MCP}
-    remote_enabled = {name for name in previous_plugins.get("enabled",[]) if norm(name) in RETAINED_MCP}
-    remote_disabled = {name for name in previous_plugins.get("disabled",[]) if norm(name) in RETAINED_MCP}
+    trim_settings = ((plugin.get("entries") or {}).get("msshi-auto-trim") or {}).get("settings") or {}
+    if "msshi-auto-trim" in (plugin.get("disabled") or []) or trim_settings.get("enabled") is False:
+        auto_trim_binary = None  # Only an explicit trim --force-enable may override a user disable.
     if auto_trim_binary:
         entry_id = "msshi-auto-trim"
         entries = dict(plugin.get("entries") or {})
@@ -478,11 +459,11 @@ def config_update(original, restore_from=None, auto_trim_binary=None):
         plugin["entries"] = entries
         plugin["enabled"] = list(dict.fromkeys([*plugin.get("enabled", []), entry_id]))
         plugin["disabled"] = [name for name in plugin.get("disabled", []) if name != entry_id]
-    if remove or remote_enabled or remote_disabled or auto_trim_binary:
-        plugin["enabled"] = list(dict.fromkeys(
-            [name for name in plugin.get("enabled",[]) if name not in remove and name not in remote_disabled]
-            + sorted(remote_enabled)))
-        plugin["disabled"] = sorted((set(plugin.get("disabled",[])) | remove | remote_disabled) - remote_enabled)
+    if remove or auto_trim_binary:
+        # Current service choices are authoritative; never resurrect flags from
+        # the first migration backup after a user has disconnected a service.
+        plugin["enabled"] = [name for name in plugin.get("enabled",[]) if name not in remove]
+        plugin["disabled"] = sorted(set(plugin.get("disabled",[])) | remove)
         replace_plugins(lines,plugin,newline)
     result = "".join(lines).encode("utf-8-sig" if original.startswith(b"\xef\xbb\xbf") else "utf-8")
     final = yaml_read(result)
@@ -641,6 +622,20 @@ def migrate(home):
             checks[path] = protected(original)
             routes = native_routes(home, name, cfg)
             trim_binary = routes["targets"]["llmtrim"].get("native_binary") if auto_trim_available else None
+            trim_cfg = cfg.get("plugins") or {}
+            trim_settings = ((trim_cfg.get("entries") or {}).get("msshi-auto-trim") or {}).get("settings") or {}
+            if "msshi-auto-trim" in (trim_cfg.get("disabled") or []) or trim_settings.get("enabled") is False:
+                trim_binary = None
+            if trim_binary:
+                try:
+                    from msshi_trim_setup import managed_plugin_file
+                except ImportError:
+                    managed_plugin_file = lambda current, incoming, filename: current == incoming
+                for filename, content in plugin_files.items():
+                    current_file = profile / "plugins/msshi-auto-trim" / filename
+                    if current_file.is_file() and not managed_plugin_file(current_file.read_bytes(), content, filename):
+                        trim_binary = None  # Unknown local edits are not overwritten by migration.
+                        break
             changes[path], disabled = config_update(original, original_config(home,path), trim_binary)
             if trim_binary:
                 for filename, content in plugin_files.items():
@@ -708,8 +703,8 @@ def profile_name(value):
 
 
 def ticket(home, profile, target, task, source, ttl):
-    if not bridge_policy().target_allowed(profile, target):
-        raise ValueError("Target is outside this profile's MuZA specialization")
+    if not bridge_policy().target_allowed(profile, target, home):
+        raise ValueError("Target is outside this profile's active preset specialization")
     root = home / "msshi-runtime"
     routes = read_json(root / "profiles" / profile / "routes.json")
     if not routes or target not in routes["targets"] or routes["targets"][target]["readiness"] != "available":
@@ -767,8 +762,8 @@ class ProcessJob:
 
 
 def run_target(home, profile, identifier, target, arguments, timeout):
-    if not bridge_policy().target_allowed(profile, target):
-        raise ValueError("Target is outside this profile's MuZA specialization")
+    if not bridge_policy().target_allowed(profile, target, home):
+        raise ValueError("Target is outside this profile's active preset specialization")
     if not re.fullmatch(r"[a-f0-9]{32}", identifier):
         raise ValueError("A valid one-use task ticket is required")
     root = home / "msshi-runtime"
@@ -784,8 +779,10 @@ def run_target(home, profile, identifier, target, arguments, timeout):
         permitted = {"list", "show", "matrix", "blend", "preview", "diff", "reanchor", "export", "--help", "-h"}
         if not arguments or (arguments[0] not in permitted and arguments[:2] != ["personas", "list"]):
             raise ValueError("Hersona route permits local catalog/draft commands only; persona and provider mutation is disabled")
-    if target == "llmtrim" and any(arg.split("=", 1)[0] in {"--home", "--binary"} for arg in arguments):
-        raise ValueError("The local compression route cannot override its registered runtime or binary")
+    if target == "llmtrim" and any(arg.split("=", 1)[0] in {
+            "--home", "--binary", "--install", "--apply", "--download-runtime", "--force-enable", "--profiles"
+            } for arg in arguments):
+        raise ValueError("The local compression route cannot install plugins or override its registered runtime/binary")
     command = [route["executable"], *route.get("prefix", []), *arguments]
     if route["kind"] == "browser":
         if arguments:

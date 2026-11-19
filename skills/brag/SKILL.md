@@ -5,7 +5,7 @@ description: Kiki-Chii only. Plan and produce a short project launch video throu
 
 # BRAG for Kiki-Chii
 
-Scope: **Kiki-Chii only**, for `/brag`, a project launch video, or a short film showing what the user built. This MSSHI integration is an original, lightweight adaptation of [latent-spaces/brag](https://github.com/latent-spaces/brag/tree/669ab9286aa28b6c3ee30e75f181ee74319d012a). It does not supply a model or change the active model, provider, fallback, MoA, persona, SOUL, DNA, memory, or browser configuration. Keep Kiki's configured preferences, including the first MoA reference `claude-fable-5.2`.
+Scope: **Kiki-Chii only**, for `/brag`, a project launch video, or a short film showing what the user built. This MSSHI integration is an original, lightweight adaptation of [latent-spaces/brag](https://github.com/latent-spaces/brag/tree/669ab9286aa28b6c3ee30e75f181ee74319d012a). It does not supply a model or change the active model, provider, fallback, MoA, persona, SOUL, DNA, memory, or browser configuration. Keep the user's own configured preferences; no model or provider choice is supplied by this skill.
 
 ## Concepting First and human review
 

@@ -441,18 +441,6 @@
       "license": "External registry terms; no blanket sublicense"
     },
     {
-      "id": "hermes-steel",
-      "source": "https://github.com/steel-dev/hermes-steel",
-      "revision": "d8a1e39657d3e3deaa59da37e857be3f14b9dc5b",
-      "license": "MIT",
-      "copyright_lines": [
-        "Copyright (c) 2026 Nen Labs"
-      ],
-      "license_url": "https://raw.githubusercontent.com/steel-dev/hermes-steel/d8a1e39657d3e3deaa59da37e857be3f14b9dc5b/LICENSE",
-      "license_sha256": "cb0c1678e3f0556a7a6527ba1df72bded906a9b4e5617a09c7c30c292dfd4d68",
-      "status": "license_read"
-    },
-    {
       "id": "gpt-researcher",
       "source": "https://github.com/assafelovic/gpt-researcher",
       "revision": "ddd4db36208d9c8e49f3b2436efda97baecb5433",

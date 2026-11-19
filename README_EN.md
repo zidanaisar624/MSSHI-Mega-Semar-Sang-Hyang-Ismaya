@@ -9,7 +9,7 @@
 
 [![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
 [![Skills](https://img.shields.io/badge/Skills-67%20Bundled%20(51%20Core%20%2B%2016%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-52%20Sources%20%7C%2049%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-51%20Sources%20%7C%2048%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -18,13 +18,19 @@
 
 </div>
 
-> **v3.1.2 installation repair:** five named native profiles + neutral Hermes default, ArtCraft roles Val 4 / Shikaku 2 / Kiki 13, a real optional KAT endpoint wizard, 67 skills / 52 sources, and automatic PDF delivery to Downloads. [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
+> **v3.1.2 installation repair:** five named native profiles + neutral Hermes default, ArtCraft roles Val 4 / Shikaku 2 / Kiki 13, a real optional KAT endpoint wizard, 67 skills / 51 sources, and automatic PDF delivery to Downloads. [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
 
 > **KAT is optional, including MuZA preset:** no automatic weight download or activation. It stays disabled on MuZA's current laptop. Users with suitable hardware or an authorized endpoint can opt in through the Coder wizard.
 
 > **User names:** the MuZA preset names a role layout, not the person using it. Bots ask the user’s preferred name, preserve its spelling, and carry it across handoffs. [Collaboration and names](docs/COLLABORATION_AND_NAMES.md).
 
-> **Integration audit:** [52 sources, 67 skills, role allocation and installation limits](docs/UPSTREAM_SETUP_AUDIT.md). The preset installs role-specific instructions; runtimes, accounts, large models and selected schedules remain separate choices.
+> **Integration audit:** [51 sources, 67 skills, role allocation and installation limits](docs/UPSTREAM_SETUP_AUDIT.md). The preset installs role-specific instructions; runtimes, accounts, large models and selected schedules remain separate choices.
+
+<!-- MSSHI TWO TYPE INFO -->
+> **Two interaction types:** Yukino/Shizuka use Main + Advisor; Sir. Robot/Val/Kiki use Main + Council with two rounds and a Main audit. Quick chat bypasses the Council; missing configuration is reported. [Workflow, diagram and runtime limits](docs/INTERAKSI_DUA_TIPE.md).
+
+<!-- MSSHI ACADEMIC INFO -->
+> **Academic v3.1.2:** fresh installations offer **Indonesian S1/S2/S3 students** as the initial choice, plus a separate **Lecturer/Campus Leadership** preset; MuZA remains available. [Academic guide](docs/ACADEMIC_PRESET.md). Users supply their own models, providers, API keys and accounts. Ordinary note templates are provided; Obsidian is not installed automatically.
 
 ---
 
@@ -90,12 +96,12 @@
 <td width="50%" align="center" valign="top">
   <img src="assets/memes/meme-03-era-v30.png" width="95%" alt="Panel 3 Evolution MSSHI v3.0 Optimizer">
   <br><b>Phase 3 · The Optimizer Leap (<code>v3.0</code> · Tag <code>a8400c8</code>)</b>
-  <br><sub><b>Eliminated 22 heavy MCPs</b> in favor of <b>CLI-Anything</b> + native lossless <code>msshi-auto-trim</code> + <code>caveman</code>! Added <b>OmniVoice</b> prosody, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b> &amp; <b>TimesFM</b>. Pure 4 GB RAM bliss.</sub>
+  <br><sub><b>Eliminated 22 heavy MCPs</b> in favor of <b>CLI-Anything</b> + native lossless <code>msshi-auto-trim</code> + <code>caveman</code>! Added <b>OmniVoice</b> prosody, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b> &amp; <b>TimesFM</b>. Choose lightweight workflows for limited RAM; large runtimes remain optional.</sub>
 </td>
 <td width="50%" align="center" valign="top">
   <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Evolution MSSHI v3.1.2 + Skripsi v1.1">
   <br><b>Phase 4 · Mature Release (<code>v3.1.2 + Skripsi v1.1</code>)</b>
-  <br><sub>Now <b>67 bundled skills (51 core + 16 wrappers) + 52 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
+  <br><sub>Now <b>67 bundled skills (51 core + 16 wrappers) + 51 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
 </td>
 </tr>
 </table>
@@ -271,7 +277,7 @@ flowchart LR
 | [**`Scrapling`**](docs/SCRAPLING.md) | Val, Shikaku | Fast local HTML CSS/XPath parsing without network crawlers or Chrome profile access. |
 | [**`Harness²`**](docs/HARNESS2.md) | Val, Shikaku | Deterministic harness evaluation &amp; proposals without live auto-promotion. |
 | [**`Opt-in REA`**](docs/REA.md) | Shikaku *(opt-in)* | Local JS/archive inspection in `optional/rea/`. **Default OFF** (`--with-rea` / `msshi optional enable rea`). |
-| [**`OmniVoice`, `Auto-Trim`, `TimesFM` &amp; `Steel`**](docs/TIMESFM.md) | 5 Bots &amp; Val | Prosody TTS, [lossless JSON trimming](hermes_plugins/msshi-auto-trim/README.md), CPU forecasting, [Steel policy](docs/STEEL_BROWSER_POLICY.md) &amp; [OAuth service sharing](docs/SERVICE_CONNECTIONS.md). |
+| [**`OmniVoice`, `Auto-Trim` &amp; `TimesFM`**](docs/TIMESFM.md) | 5 Bots &amp; Val | Optional voice, eligible lossless JSON trimming, and local time-series forecasting. [Manual browser preferences](docs/STEEL_BROWSER_POLICY.md). |
 
 <details>
 <summary><b>📊 Click to View All 8 Technical Architecture SVG Diagrams</b></summary>
@@ -306,8 +312,8 @@ flowchart LR
 Right after staging skills &amp; Hermes bot profiles (supported **before, during, or after opening Hermes Desktop**), `msshi setup` walks through 4 stages whose flags are also forwarded by `install.ps1` / `install.sh`:
 
 1. **`[1/4] Skills`**: Add extra packs (`--extra-packs`) or individual skills (`--extra-skills`) per bot/target, plus explicit opt-in REA (`--with-rea`, default **OFF**).
-2. **`[2/4] Plugins &amp; Add-ons`**: Inspect and stage fail-open `msshi-auto-trim` (`--stage-auto-trim` / `-StageAutoTrim`), `KAT-Coder` preference (`--kat-mode light|ideal|cloud|skip` / `-KatMode`), offline `Hermes-Dreaming`, `OmniVoice` status, and opt-in `Steel Browser Policy` (`--install-steel`).
-3. **`[3/4] Service Connections &amp; MCP`**: Configure `GitLab` / `Tinyfish` MCP connectors (`--connect-services skip|per-profile|share-oauth` / `-ConnectServices`), keeping `BrightData` **OFF** and safely deferring if Hermes `config.yaml` does not exist yet (`deferred_pre_hermes`).
+2. **`[2/4] Plugins & Add-ons`**: Auto-Trim, offline Dreaming reports, KAT and voice remain separate choices. No app launch or automatic TTS at startup.
+3. **`[3/4] Browser & Account`**: Choose Chrome, Edge, Firefox or none. Profile/account labels stay private for manual login; no cookie access or automatic GitLab/Tinyfish/BrightData/Steel connection.
 4. **`[4/4] Bot to CLI-Anything to Apps`**: Connect all or selected bots to detected apps via `auto-reconnect`, or manually map per-bot app targets (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`; always `auto_open_on_boot: false`).
 
 > 🛡️ **Automatic Preservation on Re-run / `--yes`:** Re-running `msshi setup` or passing `--yes` preserves existing active settings — including `KAT-Coder` mode (`light`/`ideal`/`cloud`), pre-staged `msshi-auto-trim`, existing MCP services, connected bot-to-app mappings (`preserved`), plus user `provider`, `model`, custom `SOUL.md`, and `user_creative_dna.json` (`provider_model_mutated: false`). Each run saves a structured report to `<MSSHI_HOME>/reports/last-setup-report.json`.
@@ -333,4 +339,4 @@ This sets `HERMES_DESKTOP_DISABLE_GPU=1` exclusively for the Hermes Desktop proc
 - **OpenAI ChatGPT** — Co-Architect for SVG architecture maps, Stage 1–2 packaging, upstream manifests &amp; v3 migration implementation.
 - **Google Antigravity** — Development environment, agent orchestration, Cyber-Noir editorial restructuring &amp; MuZA Skripsi Drag-and-Drop v1.1 integration.
 
-Original MSSHI materials are licensed under the [**MIT License**](LICENSE). Third-party components retain their respective terms documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [docs/PROVENANCE.md](docs/PROVENANCE.md). Related docs: [Creative DNA Guide](docs/ALUR_PRESET_MUZA.md) · [49-Upstream Catalog](docs/INTEGRASI.md) · [Visual Review](adapters/msshi-visual-review/README.md) · [Publication Checklist](docs/STATUS_PUBLIKASI.md).
+Original MSSHI materials are licensed under the [**MIT License**](LICENSE). Third-party components retain their respective terms documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [docs/PROVENANCE.md](docs/PROVENANCE.md). Related docs: [Creative DNA Guide](docs/ALUR_PRESET_MUZA.md) · [48-Upstream Catalog](docs/INTEGRASI.md) · [Visual Review](adapters/msshi-visual-review/README.md) · [Publication Checklist](docs/STATUS_PUBLIKASI.md).

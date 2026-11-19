@@ -18,6 +18,7 @@
     "hermes_plugins",
     "skills",
     "configs",
+    "templates",
     "docs",
     "assets",
     "adapters",

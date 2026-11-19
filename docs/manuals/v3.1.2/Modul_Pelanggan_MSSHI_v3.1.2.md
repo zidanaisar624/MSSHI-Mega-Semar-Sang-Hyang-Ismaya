@@ -1,12 +1,14 @@
 # Modul Pelanggan MSSHI v3.1.2
 
-Edisi distribusi Selasa, 17 November 2026 | Dasar implementasi df1f322e9493c7bf6cf70a366881b263b38d4e70 | Disusun 17 November 2026
+Edisi distribusi Kamis, 19 November 2026 (Asia/Jakarta). Academic Mahasiswa, Academic Dosen dan MuZA; interaksi dua tipe dan MSSHITrim.
+
+Baseline Git `71eccb2c168629c01fd78e8e5d85f7fd9d641219` ditambah revisi kerja v3.1.2 universal. Manifest source publik: `3f47106d8dde14826a6c9f78d8cc738db910509123e9f04d6de61c67805c831d`. PDF dibuat setelah penangkapan parser, tanpa mengeksekusi aksi CLI/model.
 
 # 1. Mulai di sini: bentuk produk dan cara membaca modul
 
 MSSHI (Mega Semar Sang Hyang Ismaya) adalah kumpulan instruksi skill, kerangka persona/peran, dan alat CLI untuk mengelola pemasangan, pembaruan, serta penggunaan alat sesuai tugas. Agen seperti Hermes membaca instruksi tersebut untuk menentukan alur kerja. Aplikasi kreatif, runtime Python/Node, bobot model, dan akun layanan disiapkan menurut fitur yang dipakai.
 
-Modul pelanggan ini menjelaskan **MSSHI 3.1.2**, berdasarkan source implementasi commit `df1f322e9493c7bf6cf70a366881b263b38d4e70`. Edisi: **Selasa, 17 November 2026 (Asia/Jakarta)**. Pembaruan mencakup tata letak lima peran Hermes untuk instalasi baru dan lama, koordinasi peran, sapaan pribadi, protokol SOUL, pembagian aplikasi, KAT opsional/default OFF, integrasi kontekstual, dan penyalinan PDF otomatis. Contoh merupakan petunjuk pemakaian; laporan pengujian pada perangkat tertentu disimpan terpisah. Kode dan bantuan versi terpasang menjadi acuan perilaku command.
+Modul pelanggan ini menjelaskan **MSSHI 3.1.2**, berdasarkan source v3.1.2 yang ditinjau pada 19 November 2026; baseline Git `71eccb2c168629c01fd78e8e5d85f7fd9d641219` ditambah revisi universal dua tipe, Academic dan MSSHITrim yang dicatat dengan manifest hash. Edisi: **Kamis, 19 November 2026 (Asia/Jakarta)**. Pembaruan mencakup tata letak lima peran Hermes untuk instalasi baru dan lama, koordinasi peran, sapaan pribadi, protokol SOUL, pembagian aplikasi, KAT opsional/default OFF, integrasi kontekstual, dan penyalinan PDF otomatis. Contoh merupakan petunjuk pemakaian; laporan pengujian pada perangkat tertentu disimpan terpisah. Kode dan bantuan versi terpasang menjadi acuan perilaku command.
 
 Jika Hermes sudah disiapkan untuk Anda, mulai dari Bab 3 dan Praktikum 1; gunakan bot/profil yang diberikan saat serah terima. Bab instalasi ditujukan untuk pemasangan baru atau penyesuaian host. Semua path konkret seperti `C:\HermesClient` adalah contoh: sesuaikan dengan folder instalasi pada perangkat Anda.
 
@@ -16,8 +18,8 @@ Setelah menggunakan modul, Anda dapat memilih jalur instalasi, mengenali fungsi 
 
 | Jalur baca | Bagian yang dibaca | Hasil yang dituju |
 | --- | --- | --- |
-| Baru mengenal MSSHI | Bab 1-4, lalu satu latihan | Dapat mulai tanpa memasang semua integrasi |
-| Hermes sudah disiapkan | Bab 3-4, alur lima bot, operasional | Memakai instalasi yang ada tanpa mengulang setup |
+| Baru mengenal MSSHI | Bab 1-5, lalu satu latihan | Dapat mulai tanpa memasang semua integrasi |
+| Hermes sudah disiapkan | Bab 3-5, alur lima bot, operasional | Memakai instalasi yang ada tanpa mengulang setup |
 | Mencari sebuah command | Referensi CLI dan indeks opsi | Menemukan sintaks, efek, dan prasyarat |
 | Menambah skill/aplikasi | Pilihan fitur, CLI-Anything, runtime terkait | Menambah komponen yang memang diperlukan |
 | Mengatasi error | Bab operasional dan tabel troubleshooting | Memeriksa bukti serta memulihkan lingkup yang tepat |
@@ -28,10 +30,10 @@ Setelah menggunakan modul, Anda dapat memilih jalur instalasi, mengenali fungsi 
 | --- | --- |
 | Skill standar | 67 folder instruksi: 51 inti dan 16 wrapper integrasi |
 | Opsi terpisah | REA berada di `optional/rea`, default publik OFF |
-| Referensi upstream | 52 sumber; 49 repositori Git dipatok, dua model-card dan satu registry mengikuti metadata sumber |
-| Nama pada katalog skill | 128 nama kanonis: 67 bawaan dan 61 referensi eksternal; banyak nama dapat berkaitan dengan sumber yang sama |
+| Referensi upstream | 51 sumber; 48 repositori Git dipatok, dua model-card dan satu registry mengikuti metadata sumber |
+| Nama pada katalog skill | 127 nama kanonis: 67 bawaan dan 60 referensi eksternal; banyak nama dapat berkaitan dengan sumber yang sama |
 | Paket kategori | `core`, `filmmaking`, `business`, `thesis`, `webdev`, `cybersec` |
-| Mode setup | Solo, Custom Multi-Bot, Selective Packs, Preset 5-Bot MuZA |
+| Mode setup | Academic Mahasiswa, Academic Dosen, Solo, Custom Multi-Bot, Selective Packs, Preset MuZA |
 | Peran preset | Yukino, Shizuka, Val, Kiki-Chii, Shikaku |
 
 Jumlah skill yang sudah ada pada komputer pengguna dapat lebih besar karena mencakup koleksi lama, integrasi tambahan, dan kustomisasi. Angka katalog, jumlah folder terpasang, jumlah repositori, dan jumlah tool bukan satu ukuran yang sama.
@@ -57,7 +59,7 @@ Kolom `registered: true`, `available`, atau `configured` menjawab bagian tertent
 | Runtime | Program dan dependency yang benar-benar menjalankan pekerjaan |
 | Native CLI | Akses aplikasi melalui perintah lokal atau adaptor yang didukung |
 | CLI-Anything bridge | Registri dan jalur tugas untuk memakai CLI/adaptor yang tersedia |
-| MCP web | Konektor layanan web; GitLab dan Tinyfish tetap memakai jalur ini |
+| MCP web | Konektor layanan web; akun disambungkan sendiri melalui host; MSSHI tidak mengaktifkan GitLab/Tinyfish otomatis |
 | Profil | Home/config/persona/skill milik bot tertentu |
 | Tiket tugas | Otorisasi satu tugas dengan lingkup dan anggaran yang diterima runner |
 | Receipt | Catatan perubahan, hasil uji, hash, atau cadangan untuk lingkup tertentu |
@@ -200,96 +202,429 @@ Pada Hermes yang didukung, mode `muza-preset --default-bot auto` membedakan inst
 
 Jangan menempelkan API key ke Knowledge Bundle, README publik, screenshot laporan, atau GitHub. Gunakan mekanisme rahasia/akun dari host masing-masing.
 
-# 3. Pilihan setup dan kebiasaan memakai terminal
+# 3. Memilih preset dan menuntaskan pekerjaan akademik
 
-## Empat mode
+## Enam mode, dua jalur kampus
 
-| Mode | Pilih ketika | Yang dihasilkan |
+Pada instalasi baru, pilihan awal diarahkan ke **Academic Mahasiswa S1/S2/S3**.
+Academic Dosen/Pimpinan Kampus tersedia sebagai pilihan terpisah. Preset MuZA
+tetap ada untuk pengguna yang menginginkan tim kreatif, riset dan coding yang
+lebih luas. Memilih preset adalah memilih susunan kerja; nama pembuat preset
+bukan nama pengguna dan bukan izin untuk menyalin akun pembuatnya.
+
+| Mode | Untuk siapa | Hasil dan batasnya |
 | --- | --- | --- |
-| `solo` | Satu agen menangani beragam tugas | Semua instruksi standar pada satu target |
-| `custom-bots` | Anda ingin jumlah/nama/peran sendiri | Workspace bot dan pilihan skill masing-masing |
-| `selective` | Anda hanya membutuhkan bidang tertentu | Paket/skill pilihan beserta fondasi wajib |
-| `muza-preset` | Anda ingin lima peran terstruktur | Lima profil native pada Hermes yang didukung; workspace portabel pada host lain |
+| Academic Mahasiswa | Mahasiswa Indonesia S1, S2 atau S3 | Lima peran berfokus pada tugas, belajar, bimbingan, penelitian dan penyelesaian naskah; pilihan awal pemasangan baru |
+| Academic Dosen/Pimpinan Kampus | Dosen, pembimbing dan pimpinan kampus | Lima peran berfokus pada pengajaran, RPS, penelitian, rapat dan tindak lanjut |
+| Solo 1-Bot | Pengguna yang ingin satu agen | Satu agen memilih alur sesuai tugas; tidak membuat tim lima bot |
+| Custom Multi-Bot | Pengguna yang ingin merancang tim | Nama, jumlah dan pembagian tanggung jawab dipilih pengguna |
+| Selective Packs | Pengguna yang hanya perlu sebagian kemampuan | Memasang kategori yang dipilih dengan fondasi yang diperlukan |
+| Preset 5-Bot MuZA | Pengguna yang ingin ekosistem lintas bidang | Yukino, Shizuka, Val, Kiki-Chii dan Shikaku berkolaborasi sesuai matriks MuZA |
+
+Pemasangan ulang dan pembaruan harus mempertahankan instalasi lama. Periksa
+rencana target sebelum menerapkan pilihan: jangan membuat home Hermes kedua
+hanya untuk menyamai contoh dalam buku ini. Preset Academic tidak diterapkan
+diam-diam ke tim MuZA yang sudah ada. Pada laptop yang sudah memiliki lima bot,
+gunakan susunan yang ada kecuali memang ingin mengganti preset.
 
 ```powershell
-msshi setup
-msshi setup --platform hermes
-msshi setup --platform antigravity
-msshi setup --lang en
+msshi setup --platform hermes --mode academic-mahasiswa --lang id
+msshi setup --platform hermes --mode academic-dosen --lang id
 ```
 
-Menu kini menampilkan fungsi tiap pilihan sebelum pengguna menjawab. Bahasa penjelasan dapat dipilih; ID, angka pilihan, pemisah koma, dan format jawaban tetap sama. `all` memilih semua item dalam daftar yang sedang ditampilkan. Tinjau daftar tersebut karena makna `all` mengikuti konteks menu.
+Pilih salah satu sesuai kebutuhan; kedua baris adalah setup nyata, bukan
+pemeriksaan status. Alias `academic-mahasiswa-dosen` memilih jalur Mahasiswa.
+Isian opsional `--academic-level S1|S2|S3`, `--academic-topic`,
+`--academic-deadline`, `--academic-campus-guideline` dan `--preferred-name`
+disimpan secara lokal. Pada perintah, pilih satu nilai jenjang yang sesuai;
+jangan mengetik tanda `|` sebagai bagian nilai.
 
-KAT dan REA merupakan pilihan opsional dan default OFF, **termasuk pada preset MuZA**. Tidak memilih KAT berarti tidak memasang atau mengunduh model KAT. Memilih KAT membuka wizard endpoint untuk Shikaku: pilih deployment Dev yang memang tersedia atau preset resmi StreamLake Pro v2.5 yang berbeda varian, lalu siapkan key secara privat. Aktivasi memerlukan endpoint, model yang terverifikasi, key dan rute native yang sesuai. Pada terminal tanpa interaksi, pilihan KAT yang eksplisit hanya menyiapkan status pending tanpa menunggu jawaban atau mengunduh model; endpoint/key tetap memerlukan pengguna. Jika KAT tidak dipilih, tetap nonaktif. Pilihan lama light/ideal/cloud tetap diterima sebagai alias menuju wizard; tidak menjanjikan model 35B muat di laptop. Memilih wrapper REA belum memasang runtime npm atau engine native.
+## Lima peran Academic
 
-## Sapaan pengguna dan arti preset MuZA
+| Bot | Peran | Keluaran yang dapat ditinjau |
+| --- | --- | --- |
+| Yukino | Koordinator jadwal, ideasi, kerkom dan rapat | Tujuan kecil, urutan prioritas, kartu kesiapan, jadwal yang diusulkan, pembagian tugas |
+| Sensei Shizuka | Pembimbing belajar, mentor sidang dan perancang pembelajaran | Penjelasan sederhana, latihan tanya jawab, strategi belajar, rancangan RPS/modul atau struktur argumen |
+| Val | Riset skripsi S1, tesis S2, disertasi S3 dan data | Kata kunci, tabel literatur bersumber, gap yang dapat diperiksa, rancangan metode, analisis dan draf dokumen |
+| Kiki-Chii | Presentasi sidang, bahan mengajar dan konten edukasi | Storyboard slide, poster, infografis, naskah atau video yang dapat diedit |
+| Sir. Robot / Shikaku | Koding riset, olah data dan automasi | Diagnosis error, perubahan kode kecil, pengujian, pipeline data dan catatan cara menjalankan |
 
-MuZA adalah nama preset/topologi yang dibuat Muhammad Zidan Aisar, bukan nama otomatis setiap orang yang memasangnya. Bot menanyakan sapaan bila belum diketahui: nama lengkap, nama panggilan, atau singkatan yang Anda inginkan. Nama lengkap mengikuti ejaan yang Anda tuliskan; singkatan mengikuti gaya yang Anda setujui. Preferensi boleh ikut dalam ringkasan handoff agar tidak ditanyakan ulang oleh setiap bot. Memilih preset MuZA tidak mengharuskan pengguna dipanggil MuZA.
+Tugas kecil boleh diselesaikan satu bot. Untuk tugas lintas bidang, tentukan
+satu pemilik hasil akhir, lalu delegasikan bagian yang mempunyai tujuan jelas.
+Handoff membawa input, output yang diminta, bukti, batas biaya, tenggat dan
+pertanyaan terbuka. Bila host tidak menyediakan delegasi antarprofil yang
+sesungguhnya, bot harus menyatakan batas itu dan memberikan handoff yang bisa
+diteruskan; jangan mengklaim bot lain sudah bekerja ketika belum dipanggil.
 
-Profil lama yang berisi SOUL pribadi tidak otomatis ditimpa template publik. Pengguna yang ingin menambahkan kebijakan sapaan/protokol ke SOUL lama dapat memakai helper bertanda yang dijelaskan di Bab 7. Protokol bukan perubahan provider, model, akun, atau izin penulisan Obsidian.
+## Langkah pertama mahasiswa
 
-## Paket kategori
+Sediakan jenjang S1/S2/S3, program studi, tahap naskah, target yang realistis,
+pedoman kampus dan arahan pembimbing yang relevan. Isian yang belum diketahui
+boleh tetap kosong. Pilih satu hasil yang bisa dinilai dalam satu sesi.
 
-Paket mempercepat pemilihan kelompok skill. Skill individual memberi kontrol lebih rinci. Fondasi wajib tetap disertakan oleh installer, dan source eksternal yang dicatat dalam rencana tetap membutuhkan langkah terpisah.
+1. Yukino membantu memperjelas masalah dan langkah terdekat.
+2. Shizuka menyusun urutan belajar/kerja dan menerjemahkan masukan pembimbing.
+3. Val memeriksa literatur, metode, data dan klaim yang diperlukan.
+4. Sir. Robot membantu kode/data bila memang dibutuhkan; Kiki membantu visual.
+5. Shizuka menggabungkan hasil; pengguna memeriksa terhadap pedoman dan arahan.
+
+> Saya mahasiswa S1, baru mulai skripsi. Bantu saya memilih satu masalah yang
+> mungkin dikerjakan dengan data yang tersedia. Hari ini cukup hasilkan tiga
+> kandidat, kelemahannya, bukti yang masih perlu dicari, dan satu langkah besok.
+> Jangan dulu menulis seluruh bab atau memakai layanan berbayar.
+
+Untuk S2/S3, nyatakan kedalaman kontribusi dan standar pembimbing. Jangan
+menganggap memperpanjang teks S1 otomatis menjadi tesis atau disertasi. Bot
+harus membedakan temuan literatur, asumsi, klaim baru dan bukti hasil penelitian.
+
+## Langkah pertama dosen dan pimpinan kampus
+
+Mulai dari mata kuliah/agenda, peserta, durasi, hasil pembelajaran/keputusan,
+bahan yang tersedia dan batas yang harus dipatuhi. Gunakan data contoh atau
+anonim bila identitas mahasiswa/staf tidak diperlukan.
+
+> Siapkan perkuliahan Zoom 60 menit tentang metode penelitian. Shizuka buat
+> tujuan belajar dan alur latihan; Kiki susun storyboard delapan slide; Val
+> cek contoh dan rujukan. Saya meninjau sebelum dipakai di kelas. Jangan
+> mengirim undangan atau merekam apa pun.
+
+RPS, bahan ajar, disposisi staf dan keputusan rapat adalah draf yang perlu
+ditinjau pejabat/pengajar yang berwenang. Koneksi kalender, LMS, Zoom, Gmail,
+Telegram, Discord dan WhatsApp tidak disediakan melalui akun pembuat MSSHI.
+
+## Tiga keluaran setiap pertemuan
+
+| Tahap | Keluaran | Sumber dan batas |
+| --- | --- | --- |
+| Sebelum | Kartu kesiapan 30 detik | Inti pertemuan, yang disetujui, sikap/poin bicara, bahan yang kurang, program yang akan berjalan |
+| Sebelum/saat | Rundown menit demi menit | Durasi, agenda, pemilik, hasil, jeda dan alternatif jika demo bermasalah |
+| Setelah | Notulensi dan tindak lanjut | Catatan/transkrip nyata: keputusan, pemilik tugas, tenggat, pertanyaan terbuka dan draf ringkasan WhatsApp/LMS |
+
+Sebelum pertemuan berlangsung, keluaran notulensi berupa **kerangka kosong**.
+Bot tidak boleh mengarang peserta, keputusan, transkrip atau persetujuan.
+Menyiapkan draf jadwal bukan membuat undangan kalender. Menghasilkan draf
+ringkasan bukan mengirim pesan ke grup. Perekaman, transkripsi dan penggunaan
+model saat sesi perlu pengaturan serta persetujuan yang sesuai.
+
+> Yukino dan Shizuka, siapkan kerkom 45 menit. Tujuannya menyepakati batas
+> topik dan pembagian kerja. Buat kartu kesiapan, rundown, daftar bahan yang
+> masih kurang, serta kerangka notulensi. Jangan mengirim undangan dulu.
+
+Plugin `meeting-copilot-live`, `transcribo` dan `solverforge-planner` merupakan
+integrasi opsional. Protokol dan template tidak membuktikan plugin telah
+dipasang, kompatibel dengan Windows, mempunyai akses audio, atau bisa membaca
+layar Zoom. Gunakan catatan manual bila prasyarat plugin belum tersedia.
+
+## Catatan bawaan, tanpa aplikasi tambahan
+
+Academic menyimpan konteks dan keluaran di workspace bawaan Hermes pada home
+yang dipilih installer. Tidak membuat vault Obsidian, mengubah `.geminiignore`,
+memasang `obsidian-memory`, atau mengambil akun Drive/NotebookLM pembuat.
+
+Lokasi bawaan adalah `<HermesHome>/workspace/academic`. `--academic-project`
+boleh memilih subfolder lain di dalam `<HermesHome>/workspace`, bukan vault
+pribadi di luar home. Installer mengutamakan `HERMES_HOME`/instalasi yang sudah
+ada. Untuk pemasangan Windows baru, D: yang bisa ditulis dan mempunyai ruang
+cukup dapat dipakai; bila tidak tersedia, gunakan data pengguna pada C:.
+Lihat lokasi yang dicetak installer. Jangan membuat jalur D: fiktif di laptop
+yang hanya mempunyai C: atau menyalin path pribadi dari contoh orang lain.
+
+Template konteks akademik bersih disediakan untuk profil dan status riset.
+Status berisi **Sedang Fokus Apa Sekarang**, **Apa yang Sudah Diselesaikan**,
+dan **Target Selanjutnya**. Template pertemuan, kelas Zoom dan target harian
+dapat dipakai sebagai dokumen biasa. Jangan memasukkan API key atau token
+login ke dalam catatan ini. Folder bernama Private tetap dilarang untuk semua
+bot; buat ruang ide bersama yang memang diizinkan bila ingin dibantu merapikan.
+
+## Perangkat ringan dan pilihan aplikasi
+
+Academic mendahulukan dokumen, PDF, tabel, slide, Python dan riset harian yang
+tersedia di perangkat. Aplikasi Office/ArtCraft tetap memerlukan instalasi atau
+aksesnya sendiri. Nama rute tidak berarti aplikasi disertakan dalam MSSHI.
+Periksa katalog/kesiapan sebelum menjalankan.
+
+CAD/3D, Blender, OBS dan cyber runtime tidak menjadi pekerjaan startup atau
+unduhan wajib pada laptop RAM 4-8 GB. Rute berat hanya dipertimbangkan setelah
+pengguna memilihnya dan aplikasi/prasyaratnya terdeteksi. Dataset besar, OCR
+model besar, generasi gambar/video dan model lokal perlu penilaian RAM/disk
+terpisah; angka RAM rendah bukan jaminan semua fitur akan muat.
+
+## Model, suara dan akun milik pengguna
+
+Paket publik membagikan persona, skill, plugin yang sesuai dan alur kerja.
+Pengguna memilih provider, model dan key melalui pengaturan Hermes sendiri.
+SOUL menggambarkan cara bekerja dan batas peran, bukan konfigurasi model.
+Saran kemampuan bersifat umum: gunakan model teks yang mendukung tool untuk
+kerja agen; pisahkan generator gambar/audio/video dari penasihat teks.
+
+MoA/delegasi adalah kemampuan host dan memiliki biaya tambahan ketika
+diaktifkan. Jangan memasukkan model gambar atau TTS ke daftar penasihat teks
+hanya karena semua layanan mempunyai ID model. OmniVoice bersifat opsional;
+kepribadian teks tidak berarti audio otomatis menyala. Suara perlu runtime,
+model suara, pengaturan dan uji yang terpisah sebelum disebut siap.
+
+## Kebiasaan yang membantu cepat selesai
+
+Gunakan target kecil yang terukur, misalnya satu pertanyaan riset yang tajam,
+satu tabel sintesis, satu bagian metode, satu grafik atau satu latihan sidang.
+Tandai bagian yang belum punya bukti dan pertanyaan untuk pembimbing. Bot boleh
+mempercepat pencarian, penyusunan dan pemeriksaan, tetapi tidak mengarang
+referensi, data, hasil analisis atau persetujuan pembimbing. Status lulus dan
+kelayakan naskah tetap ditetapkan kampus.
+
+
+# 4. Dua tipe interaksi: percakapan, perencanaan dan eksekusi
+
+<!-- FIGURE: two_types -->
+
+Diagram konsep dari Pengguna untuk MSSHI v3.1.2. Gambar membantu memahami
+pembagian kerja; gambar bukan bukti panggilan Advisor, Dewan, tools, atau hasil
+runtime telah berhasil. Uraian dan status di bawah menjadi batas penggunaannya.
+
+## Peran tetap, mesin dipilih Pengguna
+
+Academic Mahasiswa, Academic Dosen dan MuZA memakai arsitektur dasar yang sama.
+Nama peran menjelaskan tanggung jawab, bukan nama model atau provider yang harus
+dibeli. Pengguna menyiapkan mesin, endpoint dan kredensial sendiri di host.
+SOUL publik tidak memberikan model, API key, akun, atau konfigurasi laptop
+pembuat. Instruksi perilaku tidak menciptakan tool yang belum tersedia.
+
+| Jalur | Bot | Susunan internal | Siapa memimpin hasil |
+| --- | --- | --- | --- |
+| Tipe 1 | Yukino dan Sensei Shizuka | Main Agent + Sub-Agent Advisor; tanpa Dewan | Main menerima koreksi, memutuskan rencana dan memimpin eksekusi |
+| Tipe 2 | Sir. Robot, Val dan Kiki-Chii | Main Agent + Council berisi Reference Agents dan Aggregator; tanpa Sub-Agent terpisah | Main merencanakan, mengaudit di tengah dua putaran dan memimpin eksekusi |
+
+Lima bot tidak harus bekerja pada setiap pesan. Main menjawab sapaan, pertanyaan
+cepat, status dan koreksi kecil secara langsung. Untuk proyek penuh, jelaskan
+hasil yang diminta, input, batas file/alat/biaya dan cara menilai hasilnya.
+Kata "video", "riset" atau "coding" saja tidak mengizinkan pemanggilan semua
+penasihat atau dimulainya pekerjaan panjang.
+
+## Saat permintaan masih ambigu
+
+Ada dua jalur klarifikasi yang berbeda:
+
+1. **Langsung:** jika Pengguna berbicara kepada bot pekerja, bot bertanya balik
+   pada percakapan itu tentang maksud, skala atau detail yang belum jelas.
+2. **Forward berantai:** jika tugas datang dari Yukino/Shizuka, pekerja bertanya
+   kepada pengirim terdekat dengan ID tugas dan kekurangannya. Pengirim meluruskan
+   dari konteks yang ada, membatalkan salah panggil, atau membawa pertanyaan
+   kepada Pengguna. Jawaban kembali melalui rantai yang sama.
+
+Jangan mengarang maksud atau menjalankan putaran hanya untuk mencari kejelasan.
+Jangan mengulang pertanyaan tanpa batas. Jika host tidak menyediakan jalur
+balasan/delegasi tersebut, kembalikan kartu klarifikasi atau handoff yang dapat
+diteruskan. Nyatakan secara jujur bila komunikasi lintas-bot belum dilakukan.
+
+> Saya hanya ingin bertanya singkat tentang beda metode kuantitatif dan
+> kualitatif. Jawab langsung; belum perlu proyek atau Dewan.
+
+> Ini tugas penuh: buat rencana penelitian dari pedoman dan data contoh ini.
+> Sebelum bekerja, tanyakan hanya bagian yang belum jelas. Tampilkan rencana,
+> sumber yang perlu dicari, pembagian kerja, dan perkiraan biaya untuk saya nilai.
+
+## Tipe 1: Main dan Advisor
+
+Yukino menata ide, jadwal dan kesiapan; Shizuka mengajar, menyusun strategi dan
+mengoordinasikan tim. Main menulis rencana awal, meminta Advisor menilai celah,
+alternatif dan koreksi yang relevan, lalu memeriksa serta memperbaiki rencana.
+Main tetap memimpin komunikasi, keputusan operasional, eksekusi dan verifikasi.
+
+Advisor bukan pengganti Pengguna dan bukan Dewan MoA. Pertanyaan kecil tidak
+memerlukan Advisor. Untuk tugas penuh yang memerlukan telaah, konsultasi hanya
+disebut selesai jika alat host benar-benar mengembalikan hasil. Jika Advisor
+belum disiapkan, tampilkan prasyarat; Main dapat memberi bantuan langsung yang
+masih sah atau menyiapkan draf dengan label "belum ditinjau Advisor".
+
+## Tipe 2: tepat dua putaran dengan audit Main
+
+| Tahap | Pelaksana | Keluaran dan pemeriksaan |
+| --- | --- | --- |
+| Initial Plan | Main | Tujuan, modul/bab/konsep, langkah, input, sumber, alat, batas biaya/izin dan kriteria selesai |
+| Putaran 1 | Reference Agents, lalu Aggregator | Koreksi, alternatif, gap, bukti yang kurang dan blueprint awal terpusat |
+| Audit Main | Main | Cocokkan blueprint dengan proyek, file, perangkat dan sumber nyata; catat koreksi dan bukti tambahan |
+| Putaran 2 | Reference Agents, lalu Aggregator | Tinjau ulang audit Main dan susun blueprint akhir beserta sumber, batas dan perubahan dari putaran pertama |
+| Persetujuan dan eksekusi | Main | Terima/tolak rancangan, kerjakan, uji, lalu laporkan hasil dan bagian yang belum terverifikasi |
+
+Dua pemanggilan Dewan berturut-turut tanpa audit Main di antaranya bukan alur
+ini. Tidak ada putaran ketiga otomatis. Pekerjaan lanjutan yang memerlukan
+evaluasi baru adalah siklus baru dengan tujuan dan biaya yang dijelaskan.
+Tidak ada Sub-Agent terpisah di dalam jalur Tipe 2; Reference dan Aggregator
+adalah komponen Dewan itu sendiri. Handoff lintas profil adalah koordinasi
+keahlian, bukan penambahan pekerja anonim yang selalu aktif.
+
+Aggregator bukan sekadar perangkum. Ia menyatukan bukti, menghapus duplikasi,
+menandai celah, mengelola sumber, dan menyusun struktur kode/API, matriks riset,
+analisis atau desain visual yang terpusat. Bila komponen Dewan tidak mempunyai
+tools, ia mengembalikan permintaan sumber terstruktur kepada Main. Main memakai
+alat yang tersedia dan diizinkan, memeriksa asal sumber, lalu mengirim bukti
+kembali. URL yang tertulis belum membuktikan halaman telah dibaca. Bukti yang
+belum tersedia tetap diberi status belum terverifikasi.
+
+Persetujuan Main merupakan keputusan internal atas blueprint. Ia tidak
+menggantikan persetujuan Pengguna untuk biaya baru, pengiriman data, perubahan
+berisiko, rekaman, review kreatif final, publikasi atau tindakan di luar mandat.
+
+Dua putaran bukan hanya dua panggilan model. Bila ada tiga Reference Agents
+dan satu Aggregator pada tiap putaran, Dewan dapat memerlukan delapan completion
+tambahan, di luar komunikasi Main, tools, pencarian atau generasi media. Jumlah
+nyata mengikuti konfigurasi dan perilaku host. Gunakan jalur jawaban singkat
+untuk pertanyaan kecil dan periksa perkiraan biaya sebelum proyek penuh.
+
+## Runtime, konfigurasi dan batas pengujian
+
+Plugin native `msshi-interaction` mencatat rencana, klarifikasi, putaran pertama,
+audit Main, putaran kedua dan persetujuan dalam state proyek. Ia berbeda dari
+MoA bawaan host yang dapat bersifat satu putaran atau menjadikan Aggregator
+sebagai model pelaksana. Memilih preset MoA pada UI tidak otomatis membuktikan
+alur dua putaran yang dikendalikan Main telah berjalan.
 
 ```powershell
-msshi choices --kind packs
-msshi choices --kind skills
-msshi choices unslop
-msshi choices rea
-msshi choices kat
-msshi optional list
+msshi interaction --protocol
+msshi interaction --home "C:\HermesClient" --status
 ```
 
-Gunakan `msshi select --local` untuk memilih dari paket yang sudah ada di perangkat. `msshi select` mengambil kandidat dari GitHub. Keduanya menampilkan rencana sebelum menerapkan pilihan; perintah ini dapat memasang skill yang belum ada pada target yang dipilih.
+Pemeriksaan ini tidak mengirim chat, memanggil Dewan atau memakai model. Tool
+native, schema, plugin aktif dan binding konfigurasi perlu tersedia pada sesi
+Hermes yang dipakai. Jika Reference Agents atau Aggregator belum diatur,
+status harus menyatakan kebutuhan konfigurasi dan berhenti sebelum panggilan
+berbayar. Pengguna mengatur komponen itu sendiri; pemasang tidak menciptakan
+pilihan model atau mengubah model utama.
 
-## Format command
-
-Dalam contoh `msshi scrapling --hermes-home "C:\HermesClient" parse --input ...`, urutannya penting: opsi global keluarga berada sebelum subcommand bila parser keluarga mendefinisikannya demikian. Selalu buka bantuan pada level yang dibutuhkan:
+Pemasangan plugin dapat ditinjau lebih dahulu:
 
 ```powershell
-msshi --help
-msshi scrapling --help
-msshi scrapling parse --help
-msshi rea native --help
+msshi interaction --home "C:\HermesClient" --install
 ```
 
-Teks `PATH_HERMES`, `PATH_SKILLS`, `INPUT`, atau `OUTPUT_BARU` pada referensi adalah penanda yang harus diganti. Tanda `[]` pada baris `usage:` berarti opsional; tanda `{a,b}` berarti pilih salah satu. Tanda itu bukan selalu bagian yang perlu diketik. Output baru sebaiknya berada di luar folder input jika adaptor menerapkan batas tersebut.
+Tambahkan `--apply` hanya ketika pemasangan itu memang dipilih. Perintah ini
+menyiapkan plugin dan receipt, bukan menjalankan Dewan. Reload plugin/sesi
+diperlukan agar schema baru terbaca. Penonaktifan eksplisit atau edit plugin
+lokal dipertahankan. Baca referensi CLI untuk opsi dan prasyarat host versi ini.
 
-Dalam PowerShell, beri tanda kutip pada path yang mengandung spasi atau apostrof. Gunakan `&` untuk menjalankan path executable yang dikutip. Jangan memakai `$HOME`/`$home` sebagai variabel tugas; nama itu sudah digunakan PowerShell. Modul menggunakan nama seperti `$MsshiHermesRoot` dan `$MsshiReceipt`.
+Di dalam sesi yang menawarkan schema plugin, bot memakai
+`msshi_interaction_begin`, `msshi_interaction_step` dan
+`msshi_interaction_status`. Aksi Tipe 2 harus berurutan: `council_round`, `audit`,
+`council_round`, kemudian `approve`. Aksi Advisor milik Tipe 1. Jangan menyalin
+nama tool menjadi slash command jika host tidak menawarkan bentuk tersebut.
 
-Contoh PowerShell panjang pada PDF memakai backtick di akhir baris untuk melanjutkan command; contoh Bash memakai backslash. Pertahankan tanda lanjutannya dan hindari spasi setelah tanda tersebut. Versi Markdown juga menyediakan command yang mudah disalin.
+Permintaan sumber yang belum selesai dapat dipenuhi Main melalui
+`resolve_sources`: lampirkan bukti yang telah diperiksa dan pemetaan permintaan
+ke sumbernya setelah putaran pertama, audit Main atau putaran kedua. Pencatatan
+ini tidak menambah panggilan LLM atau putaran Dewan. Celah sumber yang belum
+dituntaskan menahan persetujuan akhir, kecuali Main secara eksplisit menerima
+hasil terbatas dan mengungkap keterbatasannya. Klarifikasi setelah putaran
+pertama kembali ke tahap yang sama; jangan mengulang putaran yang sudah selesai
+hanya untuk melanjutkan jawaban klarifikasi.
 
-## Baca status dengan benar
+Pengujian dengan respons tiruan membuktikan urutan, batas panggilan dan penolakan
+state yang salah. Ia tidak membuktikan kualitas jawaban, saldo, autentikasi atau
+kompatibilitas provider nyata. Kehadiran plugin dan status konfigurasi tidak
+boleh dilaporkan sebagai "seluruh Dewan siap" tanpa uji yang sesuai dan berizin.
+
+## Sensei Learning Mode, desain dan review
+
+Semua bot dapat menjelaskan konsep, alasan pemilihan, langkah, pola yang bisa
+ditiru dan latihan kecil ketika Pengguna ingin belajar. Kedalaman mengikuti
+tujuan Pengguna; jawaban cepat tetap ringkas. Saat tenaga berkurang, perkecil
+target dan tawarkan pilihan ringan tanpa menebak diagnosis atau menekan.
+
+Untuk UI/web/slide/aset, gaya awal adalah modern-minimalis: grid, ruang kosong,
+tipografi jelas, kontras terbaca dan tiga sampai empat warna harmonis. Aksen
+anime/kartun berizin digunakan seperlunya. Pedoman kampus, identitas merek,
+aksesibilitas dan permintaan Pengguna dapat mengubah gaya tersebut.
+
+Kiki-Chii memulai dengan Concepting First. Tinjau konsep, naskah/storyboard,
+rough cut, preview dan final. Video 10-40 menit dibagi per bab/segmen. Pengguna
+bisa mengkritik atau mengubah rencana/hasil kapan saja; hentikan automasi yang
+terdampak, catat keputusan baru, lalu lanjutkan bagian yang masih sah.
+
+## Handoff untuk Antigravity
+
+Sir. Robot menyusun **MASTER PROMPT HANDOFF UNTUK ANTIGRAVITY** ketika proyek
+akan diteruskan: tujuan, keputusan, blueprint, status sumber, struktur berkas,
+kontrak fungsi/data, desain, langkah kerja, tes, izin/biaya, hasil yang sudah ada,
+kendala dan rollback. Pisahkan rencana dari hasil yang sudah diterapkan dan
+teruji. Jangan mengklaim dua putaran riil selesai jika baru membuat draf atau
+menguji state dengan respons tiruan.
+
+Handoff publik tidak memuat koneksi pribadi, API key, token, konfigurasi model,
+file profil atau vault pemilik. Data yang perlu dibawa ke perangkat lain
+dipilih Pengguna secara privat; paket GitHub berisi template dan kemampuan umum.
+
+## Skill, plugin dan aplikasi: otomatis yang mana?
+
+| Komponen | Pemicu | Fungsi | Cara memakai dan batas |
+| --- | --- | --- | --- |
+| SOUL/persona | Profil dipakai | Mandat, triase, sapaan dan tata kerja | Bercakap pada bot yang sesuai; bukan unduhan model |
+| Skill spesialis | Konteks tugas cocok atau nama skill dipanggil | Panduan metode, bukti dan hasil | Sebut keluaran; tidak mengeksekusi seluruh 67 skill |
+| Advisor/Dewan | Tugas penuh jelas, binding dan izin tersedia | Telaah rencana dan blueprint menurut tipe | Periksa status; tidak dipanggil saat sapaan/status |
+| MSSHITrim | Hasil tool JSON memenuhi syarat | Pemadatan lokal dengan pemeriksaan data setara | Hook otomatis bila runtime tersedia; cek counter |
+| CLI-Anything | Tugas aplikasi yang diizinkan dan tiket valid | Menjalankan rute sesuai peran/preset | Minta pekerjaan konkret; tidak ada aplikasi autostart |
+| Planner | Diminta menyusun jadwal | Usulan agenda, tugas dan blok waktu | Tanyakan rentang waktu setiap rencana; jam rutin hanya jika dipilih Pengguna |
+| Meeting/Transcription | Pilihan terpisah dengan izin dan dukungan host | Pendamping sesi atau pengolahan audio | Periksa OS, data yang dikirim dan kuota; template bukan rekaman |
+| Dreaming | Perintah atau jadwal yang dipilih | Proposal pembelajaran lokal untuk ditinjau | Tidak mempromosikan memori atau membangunkan model otomatis |
+| OmniVoice/media | Diminta menghasilkan suara/gambar/video | Jalur generasi terpisah dari penasihat teks | Runtime, model, hak aset dan biaya perlu disiapkan |
+| Hersona | Permintaan katalog/draf persona | Referensi karakter dan penyusunan draf | SOUL tetap sumber persona aktif; tidak menimpa otomatis |
+
+Tidak semua plugin tersedia pada semua OS/host. Planner publik bersifat opsional;
+memasang panel tidak membuat kalender panas, jam wajib atau jadwal kerja tetap.
+Meeting-Copilot live native dapat membutuhkan komponen desktop yang belum
+tersedia di Windows. Transcribo dapat melibatkan layanan hosted dan penagihan;
+jangan mengaktifkannya sebagai transkripsi lokal gratis tanpa verifikasi.
+
+## MSSHITrim: hemat pada keluaran yang cocok, tanpa proxy
+
+MSSHITrim adalah nama tampilan plugin native `msshi-auto-trim`, bukan kompresor
+kedua. Instalasi baru menyiapkannya pada profil native yang dipilih dan
+mengaktifkannya bila binary lokal terverifikasi. Bila runtime belum tersedia,
+langkah instalasi dapat mengambil arsip versi yang checksum-nya dipatok. Gagal
+mengunduh meninggalkan status pending; aplikasi dan model tidak dijalankan.
+Pengguna lama yang sengaja menonaktifkan atau menyunting plugin tetap dihormati.
+
+Hal ini berlaku pada pemasang penuh MSSHI/`msshi setup` untuk Hermes. Jalur
+`npx skills add`, tap atau penyalinan Markdown saja belum tentu menjalankan
+instalasi plugin native dan binary; selesaikan setup MSSHI bila ingin hook ini.
+
+Hook memeriksa hasil tool berupa JSON object/array yang cukup besar; percakapan,
+error, patch, source-file, persona dan konfigurasi tidak dipadatkan. Pemadatan
+memakai subprocess lokal `llmtrim compress` dan konfigurasi JSON-only. Kandidat
+harus memuat data kanonis yang persis setara. Perubahan nilai, pengubahan array
+menjadi TOON, timeout atau error membuat hasil asli diteruskan. Ini fail-open
+terhadap kegagalan kompresi, bukan perubahan isi secara diam-diam.
 
 ```powershell
-msshi connect --status --hermes-home "C:\HermesClient" --profile default
-msshi connect --status --hermes-home "C:\HermesClient" --profile kiki-chii
-msshi managed status
-msshi check
+msshi trim --status --profile val
+msshi trim --install
 ```
 
-Nama peran pada preset publik dapat berbeda dari ID folder instalasi lama. Gunakan ID profil yang diberikan untuk instalasi Anda; nama tampilan bot di Desktop tidak selalu menjadi nama folder. Pada instalasi baru preset, peran Yukino memakai ID `default`; pada instalasi lama peran itu dapat tetap memakai `yukino`. Empat spesialis menggunakan `shizuka`, `val`, `kiki-chii`, dan `shikaku`. Baca pemetaan peran dan roster aktual; jangan menyimpulkan ID dari judul tampilan.
-
-## Bantuan yang dapat dicari
+Baris pertama membaca counter, baris kedua hanya pratinjau pemasangan. Untuk
+pemasangan yang memang dipilih dan memerlukan unduhan runtime:
 
 ```powershell
-msshi choices --kind apps
-msshi choices --kind features --lang en
-msshi choices --kind skills --json
-msshi optional list --lang en
+msshi trim --install --apply --download-runtime
 ```
 
-Katalog koneksi juga menjelaskan fungsi aplikasi. Untuk penjelasan koneksi berbahasa Inggris pada proses PowerShell saat ini:
+`--force-enable` adalah pilihan eksplisit untuk mengaktifkan kembali hook yang
+sebelumnya dimatikan. `--profiles` membatasi profil yang dipilih. Lihat help
+untuk format argumen yang benar; nama tampilan bot dapat berbeda dari ID folder.
+Sesudah reload, slash native `/msshi-trim-status` atau `/msshitrim-status`
+menampilkan diagnostik bila host mendaftarkannya. Perintah terminal
+`hermes msshi-trim-status` hanya tersedia pada mode plugin in-process yang
+mendukung pendaftaran CLI; ia dapat dilewati pada host plugin terisolasi.
 
-```powershell
-$env:MSSHI_LANG = "en"
-msshi connect --catalog
-```
+Counter menyimpan jumlah dan ukuran byte agregat, bukan isi tool, chat atau
+rahasia. Pengurangan byte bukan angka tagihan token provider. Plugin transformer
+lain yang berjalan lebih dahulu dapat mengambil prioritas menurut aturan host;
+MSSHITrim tidak menimpa core Hermes atau menjamin penghematan setiap giliran.
 
-Untuk kembali ke penjelasan Indonesia, set `$env:MSSHI_LANG = "id"`. Ini memilih bahasa bantuan; tidak mengubah provider atau model.
+MSSHITrim tidak menjalankan `llmtrim setup`, TLS proxy, CA/sertifikat, daemon
+login atau perubahan provider/model. Dashboard DSH Web UI `llmtrim-stats-plugin`
+bukan plugin Hermes atau kompresor dan tidak dipasang. Unduhan dan lisensi
+pihak ketiga mengikuti pin paket.
 
-# 4. Dari permintaan percakapan menjadi pekerjaan alat
+
+# 5. Dari permintaan percakapan menjadi pekerjaan alat
 
 <!-- FIGURE: execution -->
 
@@ -332,7 +667,7 @@ msshi connect --status --hermes-home "C:\HermesClient" --profile kiki-chii
 
 Registrasi tersebut menyiapkan rute. Eksekusi native pada arsitektur v3 memakai runner dan tiket tugas yang dijelaskan dalam referensi CLI. Aplikasi perlu memiliki CLI/adaptor yang tersedia; permintaan menyambungkan aplikasi baru tidak otomatis menciptakan adaptor lengkap atau memasang lisensi/akun.
 
-Pada arsitektur v3, aplikasi desktop seperti Lightcraft/Blender diarahkan melalui native CLI. GitLab dan Tinyfish tetap merupakan MCP web. Jika sebuah dokumen lama menyebut ArtCraft MCP/Blender MCP, gunakan kebijakan v3 dan rute native saat ini; jangan mengaktifkan ulang server desktop lama hanya karena label historis tersebut.
+Pada arsitektur v3, aplikasi desktop seperti Lightcraft/Blender diarahkan melalui native CLI. GitLab dan Tinyfish dapat dihubungkan sendiri sebagai MCP web; installer MSSHI tidak memasang koneksinya. Jika sebuah dokumen lama menyebut ArtCraft MCP/Blender MCP, gunakan kebijakan v3 dan rute native saat ini; jangan mengaktifkan ulang server desktop lama hanya karena label historis tersebut.
 
 ## Lima bot sebagai pembagian kerja
 
@@ -344,19 +679,21 @@ Pada Hermes yang didukung, preset memasang plugin lokal `msshi-team-routing` pad
 
 Setelah tugas, periksa output/receipt dan batas pengujiannya. Pakai bukti yang sudah ada sebelum mengulang render atau operasi web.
 
-# 5. Versi, sumber, dan batas kepercayaan modul
+# 6. Versi, sumber, dan batas kepercayaan modul
+
+Manifest revisi source publik yang dipakai buku ini: `3f47106d8dde14826a6c9f78d8cc738db910509123e9f04d6de61c67805c831d`. Daftar berkas dan hash berada pada source-manifest.json yang menyertai edisi ini. Nomor versi tetap 3.1.2.
 
 `VERSION.json` memuat nomor versi paket. Commit Git menunjukkan isi source yang lebih spesifik. `main` dapat menerima perbaikan penjelasan tanpa menaikkan nomor versi; karena itu dua paket bertuliskan 3.1.2 dapat memiliki commit berbeda.
 
 | Identitas | Nilai edisi ini |
 | --- | --- |
 | Versi paket | `3.1.2` |
-| Commit implementasi yang dijelaskan | `df1f322e9493c7bf6cf70a366881b263b38d4e70` |
-| Edisi modul | 17 November 2026, Asia/Jakarta |
-| Manifest | 67 skill fisik, 51 inti, 16 wrapper, 52 sumber |
+| Commit implementasi yang dijelaskan | `71eccb2c168629c01fd78e8e5d85f7fd9d641219` |
+| Edisi modul | 19 November 2026, Asia/Jakarta |
+| Manifest | 67 skill fisik, 51 inti, 16 wrapper, 51 sumber |
 | Cakupan bukti | Sintaks dan perilaku source; status perangkat/akun diuji tersendiri |
 
-`msshi check/status` membandingkan versi dan menampilkan changelog. Identitas commit membantu membedakan isi source. Tag historis tidak perlu dipindahkan untuk memasang revisi baru. Pada versi ini manifest sumber berisi 49 Git, dua model-card, dan satu katalog; jumlah itu berbeda dari jumlah rute aplikasi atau tool.
+`msshi check/status` membandingkan versi dan menampilkan changelog. Identitas commit membantu membedakan isi source. Nomor v3.1.2 pada buku ini tetap sama; bandingkan commit atau manifest sumber untuk membedakan revisi dalam versi tersebut. Pada versi ini manifest sumber berisi 48 Git, dua model-card, dan satu katalog; jumlah itu berbeda dari jumlah rute aplikasi atau tool.
 
 ## Urutan rujukan saat ada perbedaan
 
@@ -370,16 +707,16 @@ API key, cookie, token, dan arsip pribadi tidak dicantumkan dalam modul. Katalog
 ## Sumber utama
 
 - [Repositori MSSHI](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya)
-- [Commit yang menjadi dasar modul](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/commit/df1f322e9493c7bf6cf70a366881b263b38d4e70)
-- [README pada commit ini](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/README.md)
-- [CLI dan panduan pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/docs/CLI.md)
-- [Penjelasan seluruh pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/docs/OPTION_GUIDE.md)
-- [Lisensi/atribusi pihak ketiga](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/THIRD_PARTY_NOTICES.md)
+- [Commit yang menjadi dasar modul](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/commit/71eccb2c168629c01fd78e8e5d85f7fd9d641219)
+- [README pada commit ini](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/README.md)
+- [CLI dan panduan pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/docs/CLI.md)
+- [Penjelasan seluruh pilihan](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/docs/OPTION_GUIDE.md)
+- [Lisensi/atribusi pihak ketiga](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/71eccb2c168629c01fd78e8e5d85f7fd9d641219/THIRD_PARTY_NOTICES.md)
 
 Kode orisinal MSSHI: MIT. Lisensi pihak ketiga tetap berlaku: bobot OmniVoice CC-BY-NC dan instruksi Unslop CC BY 4.0. Periksa ketentuan aset/dependency sebelum penggunaan atau distribusi komersial.
 
 
-# 6. Menjalankan proyek lewat percakapan dan terminal
+# 7. Menjalankan proyek lewat percakapan dan terminal
 
 Panduan ini ditujukan untuk pengguna yang menerima setup MSSHI atau memasangnya sendiri. Semua path Windows C:\HermesClient dan C:\MSSHI-Latihan di bawah adalah contoh, bukan lokasi yang pasti ada di komputer Anda. Ganti C:\HermesClient dengan root Hermes yang dicatat saat serah terima, dan gunakan folder latihan baru milik sendiri. Jangan membuat root Hermes kedua hanya untuk menyamakan contoh. Nama profil pada command juga harus cocok dengan profil yang benar-benar terpasang.
 
@@ -396,7 +733,7 @@ MSSHI memberi petunjuk kerja, persona, pemilihan alat, dan helper terminal. Herm
 | Operasi | Apakah tindakan tertentu benar-benar berhasil? | File keluaran, hasil parser, ekspor, atau respons operasi yang dapat diperiksa. |
 | Mutu hasil | Apakah keluaran memenuhi brief? | Pemeriksaan isi, pengujian yang relevan, dan penilaian pengguna. |
 
-Contohnya, Blender dengan readiness available berarti executable/adapter tersedia. Itu belum menjadi bukti sebuah adegan tertentu sudah dirender. Tinyfish yang registered belum tentu memiliki token login yang masih berlaku. Jika sebuah uji MP4 satu detik berhasil, itu membuktikan jalur ekspor kecil; ia belum membuktikan seluruh film 40 menit, kualitas suara, atau akun generator video.
+Contohnya, Blender dengan readiness available berarti executable/adapter tersedia. Itu belum menjadi bukti sebuah adegan tertentu sudah dirender. Layanan web yang registered belum tentu memiliki token login yang masih berlaku; koneksinya disiapkan sendiri oleh pengguna. Jika sebuah uji MP4 satu detik berhasil, itu membuktikan jalur ekspor kecil; ia belum membuktikan seluruh film 40 menit, kualitas suara, atau akun generator video.
 
 ### Otomatis, sesuai konteks, dan manual
 
@@ -551,7 +888,7 @@ Gabungkan bab di timeline master, lalu periksa kontinuitas gambar, level suara, 
 
 OmniVoice lokal memerlukan bobot dan runtime yang sudah lolos sintesis. Mode voice chat dapat hanya melakukan STT; berbicara ke mikrofon tidak otomatis berarti semua jawaban dibacakan. Gunakan pilihan Read replies aloud/output audio pada host atau minta audio secara eksplisit. Pengaturan suara normal/calm/tired/incident menentukan preferensi gaya keluaran audio.
 
-Bobot OmniVoice berlisensi CC-BY-NC; penggunaan komersial perlu hak yang sesuai. ElevenLabs, SoundCraft, musik, SFX, serta font memiliki akun/lisensi/dependency masing-masing. MSSHI tidak menganggap model ElevenLabs otomatis tersedia setelah kredit Hermes terisi. Sebutkan penyedia suara yang memang disiapkan, lalu tinjau naskah, bahasa, pengucapan, hak suara, dan biaya sebelum produksi.
+Periksa lisensi source dan bobot OmniVoice secara terpisah sebelum penggunaan komersial; paket instruksi MSSHI bukan pemberian hak atas bobot atau suara. ElevenLabs, SoundCraft, musik, SFX, serta font memiliki akun/lisensi/dependency masing-masing. MSSHI tidak menganggap model ElevenLabs otomatis tersedia setelah kredit Hermes terisi. Sebutkan penyedia suara yang memang disiapkan, lalu tinjau naskah, bahasa, pengucapan, hak suara, dan biaya sebelum produksi.
 
 Creative DNA menyimpan preferensi yang disetujui: misalnya tempo editing, kontras, ragam caption, atau jenis transisi. Templat publik adalah contoh. Simpan data preferensi dan proyek nyata secara privat; pembelajaran/penulisan perubahan perlu mengikuti pilihan pengguna. Kiki dapat mengusulkan pembaruan setelah proyek, bukan diam-diam menganggap semua koreksi sementara sebagai aturan permanen.
 
@@ -587,16 +924,30 @@ msshi runtime run --home "C:\HermesClient" --profile kiki-chii --ticket TICKET_I
 
 Tiket terikat profil, target, satu eksekusi, dan waktu. Membuat tiket bukan izin untuk mengganti target atau menambah perintah lain. Perintah connect --open/--run yang muncul pada bagian dokumentasi v2.1 bukan jalur eksekusi profil v3. Istilah ArtCraft MCP/Blender MCP pada beberapa referensi film lama juga tidak menjadi instruksi mengaktifkan ulang MCP desktop; ikuti kebijakan CLI versi ini.
 
-Steel adalah rute penjelajahan umum yang dikonfigurasi melalui guard. Tanpa key/endpoint, browsing umum berhenti dengan petunjuk setup dan tidak diam-diam berpindah ke Chrome personal. Jika tugas memerlukan akun yang sudah login pada browser pengguna, sebutkan situs, akun, tujuan, cakupan akses, dan masa akses. Persetujuan akses browser tidak sama dengan persetujuan menyalin cookie atau memindahkan login ke Steel; pemindahan sesi belum diimplementasikan otomatis.
+## Browser dan akun yang dipilih pengguna
 
-GitLab dan Tinyfish tetap MCP layanan web, berbeda dari aplikasi desktop yang dipindahkan ke CLI. Login bersifat per akun/profil. Opsi berbagi cache OAuth pada Windows harus dipilih secara eksplisit untuk profil yang memakai identitas akun yang sama; jangan menggunakannya pada bot yang harus memakai akun berbeda. Registrasi status, discovery, autentikasi, dan operasi perlu dibedakan.
+Wizard menawarkan Chrome, Edge, Firefox atau tidak memilih browser. Label akun
+dan profil disimpan secara lokal sebagai petunjuk login manual, bukan token
+autentikasi. Setup tidak membuka browser, membaca akun, menyalin cookie,
+memindahkan sesi, atau memasang browser cloud. Memilih browser belum membuktikan
+host menyediakan kendali browser yang sesuai.
 
-~~~powershell
-msshi services status --hermes-home "C:\HermesClient"
+GitLab, Tinyfish, BrightData dan Steel tidak otomatis dipasang/disambungkan.
+Pengguna yang memerlukan layanan tersebut menghubungkannya sendiri melalui
+pengaturan resmi layanan/host. Jangan membagikan cache OAuth antarorang atau
+memasukkan akun pembuat MSSHI ke dalam instalasi pelanggan.
+
+```powershell
 msshi browser --status --hermes-home "C:\HermesClient"
-~~~
+msshi services status --hermes-home "C:\HermesClient"
+```
 
-Status di atas tidak membuka sesi Steel atau menjalankan Search/Fetch Tinyfish. Probe jaringan dan operasi layanan tetap tindakan terpisah. Jangan menempel token/key ke chat atau repo. Bila layanan meminta key, endpoint atau login ulang, siapkan melalui mekanisme rahasia/autentikasi yang didukung untuk akun Anda. BrightData memerlukan akun dan API key sendiri; jika belum disiapkan atau tidak diperlukan, biarkan nonaktif. Gunakan hasil pemeriksaan mesin Anda sendiri, bukan status instalasi orang lain.
+Status hanya membaca keadaan lokal. Flag install Steel dan koneksi layanan
+lama dipertahankan untuk memberi penjelasan kompatibilitas; tidak melakukan
+pemasangan atau login. Bila perlu akses akun pribadi untuk tugas tertentu,
+tentukan situs, tujuan dan cakupan; gunakan persetujuan dan kemampuan host yang
+benar-benar tersedia. Koneksi Google Drive, NotebookLM, Gmail, Discord atau
+Telegram bukan bagian akun publik yang diberikan oleh MSSHI.
 
 ## Business Sage sebagai alur kerja perangkat lunak
 
@@ -727,56 +1078,29 @@ Untuk tugas pertama, pilih satu keluaran kecil yang jelas: ringkasan satu sumber
 
 Jika tugas macet, simpan command, direktori kerja, profil, pesan error, waktu, dan lokasi output yang diharapkan. Lakukan status/help yang relevan dahulu. Jangan membayar chat berulang hanya untuk menemukan executable yang tidak ada, dan jangan menghapus library aplikasi yang sedang dipakai. Masalah Hermes Desktop, akun layanan, dependency parser, serta mutu video harus dipisahkan agar perbaikannya tepat. Sampaikan status yang benar-benar diperiksa, beserta hal yang masih perlu disiapkan.
 
-## KAT opsional untuk Coder: dari pilihan ke konfigurasi nyata
+## Helper mesin coding opsional dan pilihan model Pengguna
 
-KAT adalah helper delegasi khusus profil Shikaku yang **opsional/default OFF pada semua preset**. Tidak memasangnya merupakan pilihan yang sah. Pengguna perlu menyiapkan perangkat atau endpoint yang sesuai terlebih dahulu. Model utama Coder, pengaturan delegasi biasa, dan MoA yang sudah dipilih pengguna tetap dipertahankan. Goose adalah agen CLI eksternal tersendiri; jangan menulis `goose` sebagai ID model MoA. Kehadiran binary Goose juga belum membuktikan provider, tool, workspace dan anggarannya sudah siap.
+Keluarga command legacy `msshi coder`/`msshi kat` menyiapkan helper terpisah
+apabila Pengguna memang memilih deployment yang sesuai. Ia tetap opsional dan
+default OFF, termasuk pada MuZA. Tidak ada model/provider wajib dalam peran
+Sir. Robot dan tidak ada bobot besar yang diam-diam dipasang pada laptop.
 
 ```powershell
 msshi coder --home "C:\HermesClient" status
 msshi coder --home "C:\HermesClient" presets
-msshi coder --home "C:\HermesClient" wizard
 ```
 
-`status` dan `presets` membaca keadaan/pilihan tanpa inferensi. Wizard meminta pilihan dan, bila diperlukan, key melalui input tersembunyi; jangan menaruh key pada argumen terminal atau chat. Pilihan terminal lama light/ideal/cloud menuju wizard yang sama, tanpa unduhan bobot. Bila memakai helper dalam terminal noninteraktif, status persiapan dapat tetap pending sampai kredensial dan endpoint disiapkan.
+Status/presets membaca pilihan dan prasyarat lokal; ini bukan inferensi model.
+Konfigurasi endpoint, ID model dan key disiapkan sendiri secara privat bila
+memang diperlukan. Katalog metadata endpoint belum membuktikan saldo atau
+hasil chat. Helper opsional tidak mengubah model utama, Council, pilihan
+delegasi biasa atau konfigurasi media. Lihat seluruh flag pada referensi CLI,
+tetapi jangan menjalankan configure/activate hanya karena namanya ada di buku.
 
-| Pilihan | Endpoint / model | Prasyarat dan batas |
-| --- | --- | --- |
-| Exact Dev | `Kwaipilot/KAT-Coder-V2.5-Dev`; URL dari deployment yang benar-benar melayaninya | Model terbuka 35B total/3B aktif. Halaman HF yang ditinjau belum menyediakan Inference Provider publik; URL localhost contoh adalah server milik pengguna |
-| StreamLake PAYG resmi | Base `https://vanchin.streamlake.ai/api/gateway/v1/endpoints`, model `kat-coder-pro-v2.5` | Pro v2.5 adalah varian berbeda, membutuhkan akun/key dan penagihan StreamLake sendiri |
-| Custom | Endpoint OpenAI-compatible yang dipilih pengguna, ID model sesuai katalog | HTTPS di luar localhost, tanpa key tertanam pada URL; verifikasi ID dan hak akun |
-
-Jumlah parameter aktif tidak sama dengan ukuran bobot yang harus disimpan. Tidak ada janji model Dev muat pada RAM 16 GB/RTX 3050; unduhan model besar, penyewaan GPU dan deployment berbayar memerlukan keputusan tersendiri. Tidak ada endpoint atau saldo yang diciptakan oleh installer.
-
-Untuk menyiapkan preset resmi tanpa mengaktifkannya:
-
-```powershell
-msshi coder --home "C:\HermesClient" configure --preset streamlake-payg
-```
-
-Untuk akun yang sudah memiliki key StreamLake, pengguna dapat menambahkan key lewat prompt rahasia dan mengaktifkan konfigurasi setelah menerima ID model resmi:
-
-```powershell
-msshi coder --home "C:\HermesClient" configure --preset streamlake-payg --read-key --probe --accept-documented-model --activate
-```
-
-`--probe` hanya melakukan GET katalog `/models`, bukan chat/completion. `--accept-documented-model` khusus menerima ID preset StreamLake yang didokumentasikan; opsi ini tidak menguji inferensi maupun membuktikan saldo akun. Pada endpoint Dev/custom, model harus ditemukan pada katalog yang benar. Konfigurasi disimpan di `msshi-private/coder/kat.json`, dengan referensi key `MSSHI_KAT_API_KEY`; bila pengguna memasukkan key melalui wizard, nilainya tersimpan pada `.env` privat Coder beserta cadangan perubahan sebelumnya.
-
-| Status yang mungkin | Tindakan berikut |
-| --- | --- |
-| `needs_endpoint` | Pilih deployment nyata atau preset resmi yang sesuai varian |
-| `needs_api_key` | Siapkan key akun yang benar melalui input rahasia |
-| `needs_model_catalog` | Periksa ID pada katalog; jangan menebak nama model |
-| `needs_native_team_routing` | Pastikan plugin dan backend native Coder telah dimuat |
-| `prepared_not_enabled` | Konfigurasi disimpan tetapi belum diminta aktif |
-| `configured_not_inference_tested` | Prasyarat rute terpenuhi; pemanggilan model nyata belum diuji |
-
-Setelah konfigurasi siap, mulai sesi Shikaku baru. Hanya sesi Shikaku yang memenuhi syarat mendapat pilihan eksekusi KAT; named-profile delegation dari bot lain tetap memakai model utama Shikaku. Permintaan inferensi KAT kemudian dapat memakai biaya provider. Pengguna dapat menonaktifkan helper tanpa mengganti model utama:
-
-```powershell
-msshi coder --home "C:\HermesClient" disable
-```
-
-Rujukan endpoint/model: [model card resmi KAT Dev](https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev) dan [integrasi API resmi StreamLake](https://www.streamlake.ai/document/DOC/mg6k6nlp8j6qxicx4c9). Ketersediaan layanan dapat berubah; periksa katalog serta ketentuan akun saat benar-benar digunakan.
+Binary Goose, bila tersedia, adalah agen CLI eksternal, bukan ID model Council.
+Kehadiran binary saja tidak membuktikan provider, tool, workspace dan anggaran
+siap. Perangkat terbatas sebaiknya memulai dari tugas kecil pada mesin yang
+memang telah dipilih Pengguna; memilih peran tidak menjamin model lokal muat.
 
 ## Karier, engineering, dan bedah video sesuai konteks
 
@@ -874,14 +1198,14 @@ msshi skripsi --preset informatika_ilkom --out "C:\MSSHI-Latihan\Template-Latiha
 
 ## Sumber utama bab praktik
 
-Bab ini membaca source publik MSSHI pada commit df1f322e9493c7bf6cf70a366881b263b38d4e70, bukan mengeksekusi operasi latihan. Referensi fungsi dan batasnya: docs/ALUR_PRESET_MUZA.md, docs/V3_1_UPDATE.md, docs/BRAG.md, docs/SCRAPLING.md, docs/HARNESS2.md, docs/TIMESFM.md, docs/REA.md, docs/UNSLOP.md, docs/CLI_ANYTHING_BRIDGE.md, docs/STEEL_BROWSER_POLICY.md, docs/SERVICE_CONNECTIONS.md, docs/CONTEXTUAL_INTEGRATIONS.md, hermes_plugins/msshi-team-routing/README.md, serta parser helper terkait.
+Bab ini membaca source publik MSSHI pada commit 71eccb2c168629c01fd78e8e5d85f7fd9d641219, bukan mengeksekusi operasi latihan. Referensi fungsi dan batasnya: docs/ALUR_PRESET_MUZA.md, docs/V3_1_UPDATE.md, docs/BRAG.md, docs/SCRAPLING.md, docs/HARNESS2.md, docs/TIMESFM.md, docs/REA.md, docs/UNSLOP.md, docs/CLI_ANYTHING_BRIDGE.md, docs/STEEL_BROWSER_POLICY.md, docs/SERVICE_CONNECTIONS.md, docs/CONTEXTUAL_INTEGRATIONS.md, hermes_plugins/msshi-team-routing/README.md, serta parser helper terkait.
 
-Halaman sumber versi tetap: https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/df1f322e9493c7bf6cf70a366881b263b38d4e70 . Beberapa halaman integrasi/skill lama masih memakai hitungan v3.0 atau istilah MCP desktop. Untuk modul ini, jumlah 67 skill standar/52 sumber mengikuti VERSION.json terbaru; eksekusi aplikasi desktop mengikuti dispatcher CLI v3, bukan contoh legacy.
+Baseline Git: https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/tree/71eccb2c168629c01fd78e8e5d85f7fd9d641219 . Beberapa halaman integrasi/skill lama masih memakai hitungan v3.0 atau istilah MCP desktop. Untuk modul ini, jumlah 67 skill standar/51 sumber mengikuti VERSION.json terbaru; eksekusi aplikasi desktop mengikuti dispatcher CLI v3, bukan contoh legacy.
 
 
-# 7. Operasional, pembaruan, dan pemecahan masalah
+# 8. Operasional, pembaruan, dan pemecahan masalah
 
-Bab ini merupakan panduan operasional untuk pelanggan MSSHI v3.1.2, berdasarkan source publik pada commit `df1f322e9493c7bf6cf70a366881b263b38d4e70`. Semua path `C:\HermesClient` adalah contoh yang harus diganti dengan root instalasi pelanggan. Contoh tidak menyatakan bahwa aplikasi, model, atau akun pelanggan sudah terpasang maupun terhubung. Penyusunan modul tidak menjalankan perbaikan, model, render, atau operasi akun pelanggan.
+Bab ini merupakan panduan operasional untuk pelanggan MSSHI v3.1.2, berdasarkan source publik pada commit `71eccb2c168629c01fd78e8e5d85f7fd9d641219`. Semua path `C:\HermesClient` adalah contoh yang harus diganti dengan root instalasi pelanggan. Contoh tidak menyatakan bahwa aplikasi, model, atau akun pelanggan sudah terpasang maupun terhubung. Penyusunan modul tidak menjalankan perbaikan, model, render, atau operasi akun pelanggan.
 
 ## Kenali jenis pemeriksaan sebelum menekan Enter
 
@@ -901,7 +1225,7 @@ Gunakan urutan diagnosis berikut:
 | `msshi connect --status` | Membaca registrasi dan deteksi rute | Operasi aplikasi atau login layanan berhasil |
 | `msshi runtime status --home "C:\HermesClient"` | Memeriksa kebijakan, rute, dan preservasi setting yang dilacak | Setiap proyek dapat dijalankan |
 | `msshi audit --home "C:\HermesClient"` | Memeriksa paket/profil dan bukti operasi yang tersimpan | Menjalankan ulang semua operasi atau mengautentikasi akun saat ini |
-| `msshi browser --status --hermes-home "C:\HermesClient"` | Membaca kesiapan konfigurasi dan keberadaan kredensial | Sesi Steel cloud nyata berhasil |
+| `msshi browser --status --hermes-home "C:\HermesClient"` | Membaca preferensi browser/kebijakan lokal | Login atau kendali browser nyata berhasil |
 | `msshi services status --hermes-home "C:\HermesClient"` | Membaca konfigurasi layanan dan cache lokal | Token masih valid untuk operasi sekarang |
 | `msshi desktop --check-only --hermes-home "C:\HermesClient"` | Menyiapkan gateway dan memeriksa kesiapan launcher Windows | Tes render UI atau percakapan model |
 
@@ -935,7 +1259,7 @@ Sekali dalam periode pemeliharaan yang Anda pilih, periksa `msshi check`, `msshi
 | Cache upstream | Checkout referensi di luar scanner | Fetch sumber sesuai manifest; bukan aktivasi seluruh fiturnya |
 | Runtime | venv Python, dependency npm, interpreter khusus | Ikuti installer/status integrasi terkait |
 | Bobot model | TimesFM, OmniVoice | Unduhan dan setup khusus; tidak menjadi isi folder skill |
-| Akun/kredensial | Steel, GitLab, Tinyfish | Login/secret lokal yang dikelola layanan/host |
+| Akun/kredensial | Akun model, kalender, browser atau layanan yang dipilih | Pengguna mengatur login/secret sendiri pada host yang sesuai |
 | Proyek pengguna | HTML komposisi, data penelitian, source aplikasi | Simpan dalam workspace proyek, terpisah dari source paket |
 
 `msshi update` bukan jaminan seluruh package npm/pip atau aplikasi desktop sudah paling baru. Tanpa `--skip-upstreams`, update juga mencoba cache sumber dan integrasi curated yang didukung. Fetch Git sendiri tidak menjalankan semua kode upstream, memasang semua dependency, mengunduh semua bobot, atau mengisi semua akun. Status setiap integrasi tetap diperiksa secara terpisah.
@@ -953,7 +1277,7 @@ Junction yang didaftarkan secara eksplisit menyimpan tujuan fisiknya. Target ber
 
 ## Pastikan versi dan source yang benar-benar dipakai
 
-Versi paket edisi ini adalah 3.1.2, berdasarkan commit implementasi `df1f322e9493c7bf6cf70a366881b263b38d4e70`. Nomor versi, commit checkout Git, snapshot CLI global, dependency aplikasi, dan bobot model merupakan identitas yang berbeda. Perubahan pada folder pengembangan belum tentu dipakai launcher global sampai instalasi/update menerapkannya.
+Versi paket edisi ini adalah 3.1.2, berdasarkan commit implementasi `71eccb2c168629c01fd78e8e5d85f7fd9d641219`. Nomor versi, commit checkout Git, snapshot CLI global, dependency aplikasi, dan bobot model merupakan identitas yang berbeda. Perubahan pada folder pengembangan belum tentu dipakai launcher global sampai instalasi/update menerapkannya.
 
 ```powershell
 msshi status
@@ -997,7 +1321,7 @@ Dreaming bersifat opsional: pilihan plugin membuat laporan lokal deterministik s
 
 ## Cadangan dan rollback: pilih receipt yang tepat
 
-Tidak ada satu perintah yang mengembalikan seluruh laptop. Bedakan backup skill, metadata updater, receipt migrasi runtime, receipt browser Steel, cache OAuth, dan proyek pengguna. Selalu baca tujuan dan struktur receipt sebelum memulihkan.
+Tidak ada satu perintah yang mengembalikan seluruh laptop. Bedakan backup skill, metadata updater, receipt migrasi runtime, receipt legacy browser, kredensial layanan, dan proyek pengguna. Selalu baca tujuan dan struktur receipt sebelum memulihkan.
 
 | Yang ingin dipulihkan | Bahan yang digunakan | Batasnya |
 | --- | --- | --- |
@@ -1015,15 +1339,10 @@ msshi runtime rollback "PATH_RECEIPT_RUNTIME\receipt.json" --home "C:\HermesClie
 
 Receipt harus berada di bawah `C:\HermesClient\msshi-runtime\backups` dan mencatat home yang sama. Implementasi memeriksa hash hasil pemasangan sebelum memulihkan tiap file. File yang berubah lagi dapat dilewati. Karena itu, baca jumlah `restored` dan cocokkan dengan daftar perubahan; exit code saja belum membuktikan seluruh isi dipulihkan.
 
-Sintaks khusus Steel:
-
-```powershell
-msshi browser --rollback "PATH_RECEIPT_STEEL\receipt.json" --hermes-home "PATH_PROFIL"
-```
-
-Gunakan direktori profil yang menghasilkan receipt tersebut. Rollback Steel menolak file yang telah dikustomisasi setelah pemasangan. Reload/restart plugin melalui mekanisme Hermes sesudah pemulihan.
-
-**Jangan langsung memakai `rollback_receipt` terbaru tanpa membaca jenisnya.** Direktori backup dapat berisi receipt beberapa keluarga. Receipt Steel dengan `entries` bukan receipt runtime dengan `changes`. Untuk skill, simpan versi kini dahulu, pulihkan backup ke folder fisik yang sama, lalu selaraskan fingerprint state terkait atau biarkan hasilnya dianggap kustom sampai ditinjau. Git checkout/tag lama juga tidak memulihkan database, kredensial, atau semua dependency runtime.
+Bila menemukan receipt browser Steel dari revisi lama, jangan menerapkannya
+sebagai receipt migrasi runtime. Paket sekarang menghentikan pemasangan Steel.
+Tinjau isi receipt dan cadangan secara privat sebelum pemulihan. Mengembalikan
+Git checkout/tag tidak memulihkan akun, database atau seluruh dependency laptop.
 
 ## Menjaga scanner skill tetap ringan
 
@@ -1082,21 +1401,21 @@ TokenShield/reserve US$1 bergantung pada data saldo dan estimasi yang tersedia. 
 
 Llmtrim otomatis hanya menerima keluaran JSON besar yang memenuhi syarat dan lulus kesetaraan nilai serta tipe. Konfigurasi proses utilitas membatasi transformasi pada kebersihan JSON; serialisasi TOON, deduplikasi, normalisasi Unicode dan pembuangan base64 tidak diandalkan untuk mengganti data hasil tool. Jika data berubah, utilitas gagal atau waktu habis, hasil asli tetap dipakai. Ia tidak memadatkan seluruh percakapan/kode dan tidak menjamin persentase penghematan tagihan yang tetap. Pengurangan byte pada fixture merupakan hasil contoh, bukan pengukuran seluruh token berbayar. OmniVoice lokal memerlukan bobot/runtime dan lisensi bobot yang membatasi penggunaan komersial; lisensi MIT MSSHI tidak menggantikan lisensi model, musik, font, atau aplikasi.
 
-## Layanan eksternal: prasyarat dan pemeriksaan pelanggan
+## Browser, akun dan plugin pertemuan
 
-| Komponen | Prasyarat pada akun/perangkat pelanggan | Pemeriksaan sebelum tugas |
-| --- | --- | --- |
-| Steel | Key/endpoint kompatibel dan tugas/anggaran yang diizinkan | `msshi browser --status` membaca konfigurasi; sesi nyata diperiksa terpisah bila tugas memerlukannya |
-| GitLab | OAuth/izin MCP pada akun yang tepat | `msshi services status`; login/probe sesuai profil, lalu operasi baca kecil yang diizinkan |
-| Tinyfish | Login layanan, filter tool dan kuota/izin operasi | Bedakan registrasi, discovery, autentikasi dan hasil operasi; login ulang jika token kedaluwarsa |
-| BrightData | Akun/key serta pemeriksaan biaya/kuota | Biarkan opsi nonaktif bila belum diperlukan atau kredensial belum tersedia |
-| Google Drive | Rute GDrive/gdrive-web nonaktif dalam preset ini | Akses akun hanya melalui metode browser yang diizinkan untuk tugas; jangan mengaktifkan koneksi dari contoh lama |
+Installer menanyakan pilihan browser dan label profil/akun untuk login manual.
+Tidak ada browser terbuka saat startup, transfer cookie atau login cloud yang
+dibuat otomatis. GitLab, Tinyfish, BrightData dan Steel tidak disambungkan oleh
+setup. Perintah legacy tidak boleh dipakai sebagai bukti layanan sudah siap.
 
-GitLab dan Tinyfish tersedia menurut profil yang dipilih, termasuk default, Val dan Shizuka; registrasi dan autentikasi harus diperiksa di setiap cakupan itu. Panduan ini tidak menyatakan status akun pelanggan. Gunakan `msshi browser --status` dan `msshi services status` dengan root instalasi yang tepat untuk membaca konfigurasi sekarang. Login dilakukan sendiri pada profil yang dituju, misalnya `hermes mcp login tinyfish` setelah memastikan profil Hermes aktif benar. Identitas Google/GitLab/Tinyfish satu orang tidak boleh otomatis dipakai untuk pengguna lain. Opsi berbagi cache OAuth, bila dipilih, hanya cocok untuk profil yang sengaja memakai identitas akun sama; jangan membagikan cache pelanggan lain.
+Gmail, Discord, Telegram, Drive, NotebookLM dan konektor pengguna lain tetap
+pengaturan pribadi. Paket publik tidak berisi token, OAuth client milik
+pembuat, daftar akun pribadi, atau koneksi yang disalin dari laptop pembuat.
 
-Steel merupakan jalur umum dengan guard tanpa fallback diam-diam ke Chrome ketika key belum ada. Akses akun personal pada browser pengguna memerlukan cakupan situs, akun, tujuan dan akses, lalu mekanisme persetujuan host. Pemindahan cookie/login ke Steel belum diimplementasikan; persetujuan mengakses browser personal bukan izin menyalin sesi. Jangan mengakali guard melalui terminal/Computer Use.
-
-Periksa ketentuan dan kuota layanan sebelum operasi jaringan. Jangan menyamakan keberhasilan initialize/tools-list dengan keberhasilan Search, Fetch, atau otomasi browser. Jalur discovery, autentikasi dan operasi aktual merupakan pemeriksaan berbeda. Status lokal tanpa panggilan LLM bukan bukti bahwa seluruh penggunaan layanan akan gratis.
+Meeting-Copilot, Transcribo dan Planner adalah opsi terpisah. Baca status,
+kompatibilitas host, izin audio dan model/budget sebelum memakainya. Bila
+plugin belum siap, pakai template dan catatan manual; jangan menyatakan sebuah
+pertemuan sudah direkam, dijadwalkan, atau ditranskripsikan tanpa bukti.
 
 ## Tabel pemecahan masalah
 
@@ -1139,7 +1458,7 @@ Sesudah migrasi perangkat, baca status, verifikasi path executable, periksa comp
 | Kiki-Chii, seluruh ranah kreatif | `kiki-chii` | `kiki-chii` |
 | Shikaku, coding dan audit yang diminta | `shikaku` | `shikaku` |
 
-Root netral pada tim lama boleh tetap menjadi asisten tambahan; ia bukan peran spesialis keenam. Matriks aplikasi tetap sama: Val empat ArtCraft dokumen/data, Kiki tiga belas kreatif, Shikaku CraftAnything/Figcraft, Yukino/Shizuka/default netral tanpa ArtCraft. Figcraft adalah satu-satunya rute yang dibagi Kiki dan Shikaku.
+Root netral pada tim lama boleh tetap menjadi asisten tambahan; ia bukan peran spesialis keenam. Pada preset MuZA, matriks aplikasi tetap: Val empat ArtCraft dokumen/data, Kiki tiga belas kreatif, Shikaku CraftAnything/Figcraft, Yukino/Shizuka/default netral tanpa ArtCraft. Figcraft adalah satu-satunya rute yang dibagi Kiki dan Shikaku.
 
 Untuk instalasi baru yang memang hendak memakai lima peran, jalankan wizard pada root yang benar:
 
@@ -1159,7 +1478,7 @@ Tambahkan `--apply` setelah meninjau pratinjau. Pemasangan menjaga SOUL kustom, 
 
 **Sebelum, saat, dan setelah Hermes dibuka:** installer dapat menyiapkan file/pemetaan tanpa mengirim chat. Bila Hermes sedang terbuka, selesaikan tugas aktif lalu gunakan reload/restart yang didukung host dan mulai sesi baru. Bila pemasangan dilakukan sebelum Hermes pertama kali dibuka, profil baru dikenali saat host mulai. Pemeriksaan metadata/schema lokal tidak memerlukan kredit; tugas nyata antarbots tetap memakai model. Jangan mematikan proses atau menghapus percakapan untuk memaksa roster segar.
 
-Plugin `msshi-team-routing` aktif sebagai backend `msshi-team` hanya ketika backend lama default/unset. Backend kustom dipertahankan, sehingga ia dapat memerlukan pengaturan tersendiri sebelum schema delegasi bernama tersedia. `--no-team-routing` pada installer langsung melewati pemasangan backend tersebut. Instalasi tidak mengirim pesan antarbots atau memanggil model.
+Plugin `msshi-team-routing` dapat menyiapkan backend `msshi-team` ketika belum ada pilihan backend. Nilai backend yang dipilih secara eksplisit, termasuk `default`, tetap dipertahankan. Karena itu, periksa schema tool sesi sebelum mengklaim delegasi profil bernama tersedia. `--no-team-routing` pada installer langsung melewati pemasangan backend tersebut. Instalasi tidak mengirim pesan antarbots atau memanggil model.
 
 Setelah pemasangan, restart/reload plugin melalui mekanisme Hermes yang didukung, lalu mulai chat baru. Prompt koordinasi dibangun saat sesi dimulai; chat lama belum tentu memuat tambahan baru walaupun file plugin telah ada. Riwayat percakapan tidak perlu dihapus. Pada Bot Chat gunakan `message_agent` jika tersedia; pada backend ini `delegate_task` dapat menawarkan enum profil hidup. Jangan menambahkan parameter profil yang tidak ditawarkan tool sesi.
 
@@ -1211,7 +1530,7 @@ Sesudah apply, baca `msshi runtime status --home "C:\HermesClient"`. Bila audito
 | KAT pending setelah memilih cloud | Key, ID model, endpoint atau rute belum siap | Baca status reason; Pro v2.5 berbeda dengan Dev dan memerlukan akun sendiri |
 | Katalog model berhasil tetapi chat gagal | Bukti metadata belum membuktikan saldo/izin inferensi | Periksa respons layanan saat penggunaan yang diotorisasi; jangan tes berulang otomatis |
 | KAT tak muncul pada bot selain Coder | Pembatasan peran memang diterapkan | Delegasikan coding ke Shikaku; model utama bot lain tetap utuh |
-| App dipilih tetapi tidak diberi rute | Matriks peran menolak target di luar 4/2/13 atau target dinonaktifkan | Jalankan lewat pemilik peran, bukan melonggarkan seluruh profil |
+| App dipilih tetapi tidak diberi rute | Matriks preset/peran menolak target, aplikasi berat belum opt-in, atau target dinonaktifkan | Jalankan lewat pemilik peran, bukan melonggarkan seluruh profil |
 | Cache kontekstual berubah | File cache tidak lagi cocok SHA snapshot | Simpan perubahan yang ingin dipertahankan, tinjau asalnya; jangan memalsukan manifest |
 | CareerOps ada tetapi skor personal belum siap | CV/profil belum dipersonalisasi | Siapkan User Layer privat; jangan memakai profil contoh upstream |
 | rea-video mengunduh model | Default upstream fitur audio/model belum dinonaktifkan | Gunakan tahap ringan dengan flag no-ASR/no-stems/no-VLM sebelum tugas yang memerlukan model |
@@ -1222,7 +1541,7 @@ Tidak semua status NEEDS_ATTENTION berarti reinstall seluruh Hermes diperlukan. 
 
 ## Menambahkan protokol SOUL tanpa menghapus persona pribadi
 
-Lima template publik menanyakan sapaan pengguna bila belum diketahui. Protokol spesialis Kiki dan Shikaku menambahkan pembagian Main/Sub-Agent/MoA, kontrak input-output, bukti hasil, review, dan draf catatan. Model yang benar-benar dikonfigurasi pengguna tetap menjadi acuan. Tugas kecil tidak perlu dewan atau subagen, dan instruksi SOUL tidak menciptakan backend MoA atau hak akun yang belum ada.
+Lima template publik menanyakan sapaan pengguna bila belum diketahui. Protokol dua tipe berlaku pada semua preset: Yukino/Shizuka memakai Main dan Advisor; Sir. Robot/Val/Kiki memakai Main dan Council tepat dua putaran dengan audit Main di tengah, tanpa Sub-Agent terpisah. Kontrak input-output, bukti, review dan draf catatan tetap diperlukan. Model yang benar-benar dikonfigurasi pengguna tetap menjadi acuan. Tugas kecil tidak perlu dewan atau subagen, dan instruksi SOUL tidak menciptakan backend MoA atau hak akun yang belum ada.
 
 Untuk SOUL kustom yang sudah ada, helper terpisah dapat menambahkan hanya blok bertanda. Jalankan dari checkout MSSHI yang ditinjau; ini **bukan subcommand global msshi**:
 
@@ -1245,7 +1564,7 @@ python scripts/msshi_soul_protocol.py --home "C:\HermesClient" --rollback "PATH_
 
 Rollback pertama juga pratinjau. Bila pengguna mengedit SOUL setelah pemasangan, helper melaporkan konflik agar edit tersebut tidak ditimpa. Mulai sesi baru setelah reload host agar perubahan instruksi terbaca; percakapan lama tidak perlu dihapus.
 
-**Obsidian memerlukan izin terpisah.** Bot boleh menyiapkan draf catatan keputusan, temuan, bukti, masalah dan langkah berikut. Menulis ke vault memerlukan persetujuan lokasi, file, isi dan tindakan. Memasang SOUL/preset tidak memberikan izin itu.
+**Catatan eksternal merupakan pilihan pribadi.** Academic memakai workspace Hermes, tanpa Obsidian otomatis. Bot boleh menyiapkan draf catatan keputusan, temuan, bukti, masalah dan langkah berikut. Menulis ke vault memerlukan persetujuan lokasi, file, isi dan tindakan. Memasang SOUL/preset tidak memberikan izin itu.
 
 ## Memulihkan preset pribadi setelah instalasi ulang
 
@@ -1256,9 +1575,9 @@ Source publik menyediakan kemampuan dan template umum; persona pribadi, pilihan 
 Rujukan publik pada commit yang menjadi dasar modul: `scripts/msshi_cli.py`, `scripts/msshi_managed.py`, `scripts/msshi_runtime.py`, `scripts/msshi_desktop.py`, `scripts/msshi_browser_policy.py`, `docs/MANAGED_UPDATES.md`, `docs/V3_MIGRATION.md`, `docs/STEEL_BROWSER_POLICY.md`, `docs/SERVICE_CONNECTIONS.md`, serta `docs/OPTION_GUIDE.md`. Gunakan source dan panduan versi yang sama saat memeriksa perilaku. File akun, bukti lokal, konfigurasi pelanggan dan cadangan privat bukan bagian bahan publik yang harus dimiliki pembaca.
 
 
-# 8. Referensi lengkap command MSSHI
+# 9. Referensi lengkap command MSSHI
 
-Referensi ini cocok dengan source `df1f322e9493c7bf6cf70a366881b263b38d4e70` pada 17 November 2026. Parser asli menjadi sumber sintaks; penjelasan operasional dibaca dari implementasi. Tidak ada command model, render, login, instalasi, atau layanan yang dijalankan untuk menyusun bagian ini. Tree parser ditangkap sebelum `parse_args` mengeksekusi aksi; `format_help` menghasilkan usage sebenarnya.
+Referensi ini ditangkap dari parser revisi v3.1.2 pada 19 November 2026; baseline Git `71eccb2c168629c01fd78e8e5d85f7fd9d641219` dan manifest berkas sumber dicatat bersama hasil build. Parser asli menjadi sumber sintaks; penjelasan operasional dibaca dari implementasi. Tidak ada command model, render, login, instalasi, atau layanan yang dijalankan untuk menyusun bagian ini. Tree parser ditangkap sebelum `parse_args` mengeksekusi aksi; `format_help` menghasilkan usage sebenarnya.
 
 ## Cara membaca dan menyalin
 
@@ -1277,7 +1596,7 @@ Bantuan akar: `msshi --help`. Opsi `-h/--help` menampilkan petunjuk dan keluar s
 
 ```text
 usage: msshi [-h]
-             {check,status,connect,update,runtime,integrations,desktop,audit,doctor,skripsi,assets,compact,browser,trim,managed,services,timesfm,brag,scrapling,harness2,optional,rea,choices,manual,dream,voice,kat,coder,setup,select,bootstrap}
+             {check,status,connect,update,runtime,integrations,desktop,audit,doctor,skripsi,assets,compact,browser,trim,interaction,managed,services,timesfm,brag,scrapling,harness2,optional,rea,choices,manual,dream,voice,kat,coder,setup,select,bootstrap}
              ...
 ```
 
@@ -1295,10 +1614,11 @@ usage: msshi [-h]
 | `msshi skripsi` | Merakit template skripsi Word dari pedoman, metadata kampus, bahan referensi dan preset metode.. | `msshi skripsi --help` |
 | `msshi assets` | Mencari SOUL, sampel suara, nama file terkait katalog Notebook/knowledge base, dan arsip bahan personal pada root yang Anda tentukan.. | `msshi assets --help` |
 | `msshi compact` | Meringkas representasi file konteks lokal: menghapus whitespace JSON atau merangkum pengulangan baris log. | `msshi compact --help` |
-| `msshi browser` | Memasang atau memeriksa kebijakan Steel sebagai jalur browsing umum, menilai prasyarat akses akun personal/transfer, dan memulihkan transaksi Steel yang cocok.. | `msshi browser --help` |
-| `msshi trim` | Membaca metrik hook Llmtrim otomatis atau memadatkan request JSON lokal melalui binary llmtrim. | `msshi trim --help` |
+| `msshi browser` | Membaca status lokal dan menjelaskan penghentian jalur pemasangan Steel lama. | `msshi browser --help` |
+| `msshi trim` | MSSHITrim memadatkan hasil tool JSON yang memenuhi syarat secara lokal melalui hook msshi-auto-trim; CLI membaca counter, memadatkan file uji atau menyiapkan plugin/runtime sesuai pilihan.. | `msshi trim --help` |
+| `msshi interaction` | Memeriksa atau menyiapkan plugin native pengendali dua tipe: Main/Advisor untuk Yukino-Shizuka dan Main/Council dua putaran untuk Coder-Val-Kiki.. | `msshi interaction --help` |
 | `msshi managed` | Mendaftarkan dan memperbarui salinan MSSHI berdasarkan kecocokan isi/fingerprint, termasuk target fisik yang diakses melalui junction yang telah ditinjau.. | `msshi managed --help` |
-| `msshi services` | Membaca registrasi GitLab/Tinyfish, memasang definisi konektor MCP web, atau melakukan discovery/autentikasi lewat transport native Hermes.. | `msshi services --help` |
+| `msshi services` | Membaca status koneksi lokal; tindakan pemasangan/probe/berbagi OAuth lama dihentikan. | `msshi services --help` |
 | `msshi timesfm` | Menjalankan peramalan deret waktu numerik lokal untuk Val melalui runtime/bobot TimesFM terisolasi. | `msshi timesfm --help` |
 | `msshi brag` | Membuat tiga berkas brief/konsep/review untuk video peluncuran, lalu memeriksa/merender komposisi HTML yang dibuat pada tahap berikut melalui Hyperframes pin lokal. | `msshi brag --help` |
 | `msshi scrapling` | Parser HTML lokal dengan selector CSS/XPath untuk Val dan Coder. | `msshi scrapling --help` |
@@ -1309,9 +1629,9 @@ usage: msshi [-h]
 | `msshi manual` | Lihat katalog atau salin/unduh panduan PDF versi tertentu dengan SHA256.. | `msshi manual --help` |
 | `msshi dream` | Membuat proposal rangkuman/pelajaran lokal dan deterministik dari bahan yang relevan, atau mendaftarkan jadwalnya. | `msshi dream --help` |
 | `msshi voice` | Status, pemasangan dan aktivasi OmniVoice lokal sebagai TTS native Hermes, serta preferensi gaya suara per peran. | `msshi voice --help` |
-| `msshi kat` | Alias kompatibilitas KAT: status membaca, pilihan light/ideal/cloud membuka wizard endpoint/key khusus Coder; skip menonaktifkan KAT saja.. | `msshi kat --help` |
+| `msshi kat` | Alias legacy untuk helper coding opsional milik Pengguna; membaca status atau menyiapkan opsi deployment yang dipilih sendiri.. | `msshi kat --help` |
 | `msshi coder` | Atur model KAT opsional khusus subtask Coder melalui endpoint yang benar, input key privat, dan katalog model.. | `msshi coder --help` |
-| `msshi setup` | Wizard awal empat mode: semua skill standar pada satu agen, tim kustom, paket kategori terpilih, atau preset lima peran. | `msshi setup --help` |
+| `msshi setup` | Wizard enam mode: Academic Mahasiswa (pilihan awal pemasangan baru), Academic Dosen, Solo, tim kustom, paket terpilih, atau MuZA. | `msshi setup --help` |
 | `msshi select` | Memilih kategori atau skill satu per satu untuk ditambah/diperbarui. | `msshi select --help` |
 | `msshi bootstrap` | Mendaftarkan snapshot rilis lokal, launcher global, PATH user dan panduan PDF otomatis. | `msshi bootstrap --help` |
 
@@ -1386,7 +1706,7 @@ msshi connect --catalog
 msshi connect --status --hermes-home "C:\HermesClient"
 ```
 
-**Batas dan efek.** --catalog/--status tidak membuka aplikasi. Pada profil v3, --open/--run memerlukan tiket tugas untuk rute yang dilindungi. Menghapus rute dari registri tidak menghapus aplikasi. GitLab/Tinyfish tetap MCP web; Blender/Lightcraft dan aplikasi desktop memakai native CLI. Preset ArtCraft dibatasi Val 4, Shikaku 2, Kiki 13; default/Yukino/Shizuka tidak mendapat ArtCraft, Figcraft saja yang dibagi Coder/Kiki.
+**Batas dan efek.** --catalog/--status tidak membuka aplikasi. Tiket diperlukan untuk eksekusi rute yang dilindungi. MuZA memakai matriks ArtCraft 4/2/13; Academic memakai kebijakan ringan tersendiri. Rute berat Academic hanya dapat dipilih eksplisit bila aplikasi terdeteksi. Registrasi bukan bukti aplikasi atau akun siap.
 
 | Pemilih tindakan | Fungsi | Efek |
 | --- | --- | --- |
@@ -1977,9 +2297,9 @@ usage: msshi compact [-h] [--format {json,log,auto}] [--max-bytes MAX_BYTES]
 
 ## 13. `msshi browser`
 
-Memasang atau memeriksa kebijakan Steel sebagai jalur browsing umum, menilai prasyarat akses akun personal/transfer, dan memulihkan transaksi Steel yang cocok.
+Membaca status lokal dan menjelaskan penghentian jalur pemasangan Steel lama. Preferensi browser manual dipilih lewat msshi setup.
 
-**Prasyarat.** Untuk status cukup konfigurasi lokal. Pemakaian Steel nyata memerlukan endpoint/API key dan izin tugas. Browser personal memerlukan persetujuan terikat situs, akun, tujuan dan cakupan.
+**Prasyarat.** Home Hermes yang ingin diperiksa. Status tidak memerlukan akun browser cloud.
 
 **Mulai dari.**
 
@@ -1987,45 +2307,40 @@ Memasang atau memeriksa kebijakan Steel sebagai jalur browsing umum, menilai pra
 msshi browser --hermes-home "C:\HermesClient" --status
 ```
 
-**Batas dan efek.** --approved/--approval-note merepresentasikan persetujuan nyata, bukan tombol untuk mengarang izin. --account-transfer adalah penilaian izin transfer, bukan penyalinan cookie otomatis. --install dapat mengambil source pin dan menulis plugin/guard, tanpa sesi API. --steel-ready usang dan diabaikan.
+**Batas dan efek.** Flag install Steel lama tidak memasang plugin/layanan. Tidak membuka browser, memindahkan akun atau menyalin cookie. Rollback legacy hanya untuk receipt yang benar-benar cocok bila masih didukung; baca help/status versi terpasang.
 
 | Pemilih tindakan | Fungsi | Efek |
 | --- | --- | --- |
-| --status | Baca konfigurasi/readiness dan keputusan guard; tidak membuat sesi Steel. | baca lokal |
-| --install | Pasang plugin official pin dan guard; tidak meminta key/sesi API. | unduhan/tulis |
-| --rollback RECEIPT | Pulihkan transaksi Steel yang tepat, jangan receipt migrasi runtime. | tulis pemulihan |
-| --personal-account ... | Nilai permintaan akses akun personal dengan persetujuan terikat tugas. | penilaian izin |
-| --account-transfer ... | Nilai kebutuhan persetujuan transfer akun; bukan penyalinan cookie. | penilaian izin |
+| --status | Baca status/kebijakan lokal tanpa sesi cloud. | baca lokal |
+| --install | Flag legacy: pemasangan Steel dihentikan. | penjelasan lokal |
 
 ### `msshi browser`
 
-Efek: Status/penilaian membaca. Install/rollback menulis plugin/kebijakan dan receipt; bukan sesi browsing otomatis.
+Efek: Pemeriksaan/penjelasan lokal; bukan sesi browsing atau login otomatis.
 
 ```text
 usage: msshi browser [-h] [--hermes-home HERMES_HOME] [--status] [--install]
-                     [--rollback ROLLBACK] [--steel-source STEEL_SOURCE]
-                     [--steel-ready] [--personal-account] [--account-transfer]
-                     [--approved] [--approval-note APPROVAL_NOTE]
+                     [--rollback ROLLBACK]
 ```
 
 | Argumen/flag | Kebutuhan/default | Fungsi |
 | --- | --- | --- |
 | `--hermes-home` | opsional; default HERMES_HOME / default host | Home/root Hermes yang dipilih; gunakan nilai eksplisit agar tidak mengarah ke profil lain. |
 | `--status` | opsional; default Tidak/OFF | Tampilkan status lokal; efek tepat mengikuti penjelasan keluarga. |
-| `--install` | opsional; default Tidak/OFF | Install native official plugin + strict routing; no API session/key prompt. |
-| `--rollback` | opsional; default tidak diisi | Restore this profile's Steel receipt; refuse files customized after install. |
-| `--steel-source` | opsional; default tidak diisi | Existing checkout at the reviewed pinned Steel commit |
-| `--steel-ready` | opsional; default Tidak/OFF | Deprecated; ignored. Readiness is inspected locally. |
+| `--install` | opsional; default Tidak/OFF | Retired compatibility no-op; no plugin or account is installed. |
+| `--rollback` | opsional; default tidak diisi | Restore a verified historical Steel receipt; explicit action only. |
+| `--steel-source` | opsional; default tidak diisi | Opsi parser; ikuti nama dan nilai sah yang tercantum. |
+| `--steel-ready` | opsional; default Tidak/OFF | Opsi parser; ikuti nama dan nilai sah yang tercantum. |
 | `--personal-account` | opsional; default Tidak/OFF | Tandai kebutuhan akses akun personal agar guard menuntut persetujuan terikat tugas. |
-| `--account-transfer` | opsional; default Tidak/OFF | Tandai kebutuhan transfer akun; persetujuan akses biasa tidak otomatis mencakup transfer. |
-| `--approved` | opsional; default Tidak/OFF | Hanya gunakan bila persetujuan pengguna memang telah diberikan dalam scope tugas. |
+| `--account-transfer` | opsional; default Tidak/OFF | Flag legacy tanpa tindakan; tidak memindahkan akun atau cookie. |
+| `--approved` | opsional; default Tidak/OFF | Flag legacy tanpa tindakan pada helper browser ini; tidak membentuk login. |
 | `--approval-note` | opsional; default teks kosong | Catat situs/akun/tujuan/cakupan persetujuan nyata; tidak boleh berisi rahasia akun. |
 
 ## 14. `msshi trim`
 
-Membaca metrik hook Llmtrim otomatis atau memadatkan request JSON lokal melalui binary llmtrim. Hook otomatis hanya memproses hasil tool JSON besar yang memenuhi syarat dan menjaga nilai.
+MSSHITrim memadatkan hasil tool JSON yang memenuhi syarat secara lokal melalui hook msshi-auto-trim; CLI membaca counter, memadatkan file uji atau menyiapkan plugin/runtime sesuai pilihan.
 
-**Prasyarat.** Status memerlukan home/profil yang tepat; kompresi file memerlukan executable llmtrim dan format request yang didukung.
+**Prasyarat.** Binary llmtrim terverifikasi dan host dengan hook transform_tool_result untuk automasi. Setup penuh menyiapkannya bagi profil terpilih; penyalinan skill saja tidak memasang runtime.
 
 **Mulai dari.**
 
@@ -2033,7 +2348,7 @@ Membaca metrik hook Llmtrim otomatis atau memadatkan request JSON lokal melalui 
 msshi trim --home "C:\HermesClient" --status --profile default
 ```
 
-**Batas dan efek.** --provider memilih bentuk JSON input, bukan mengganti provider Hermes. Penghematan hanya pada payload yang memenuhi syarat; chat biasa/kode/error/config tidak otomatis dipadatkan. Output baru harus berbeda dari input. Status tidak memanggil model.
+**Batas dan efek.** Hanya JSON object/array besar yang lolos pemeriksaan data kanonis setara. Percakapan/error/patch/source/persona/config dilewati; kegagalan/time-out mempertahankan hasil asli. --install preview, --apply menulis, --download-runtime memilih unduhan pin; --force-enable terpisah untuk override disable eksplisit. Tidak memasang proxy/CA atau mengubah model/provider. Counter byte bukan tagihan token provider.
 
 | Pemilih tindakan | Fungsi | Efek |
 | --- | --- | --- |
@@ -2042,28 +2357,69 @@ msshi trim --home "C:\HermesClient" --status --profile default
 
 ### `msshi trim`
 
-Efek: Status membaca; input menjalankan utilitas lokal, menulis output baru bila diminta.
+Efek: Status membaca lokal tanpa model. Install --apply menulis plugin/receipt; download-runtime dapat memakai jaringan. Input/output menjalankan kompresor lokal, bukan inferensi.
 
 ```text
 usage: msshi trim [-h] [--home HOME] [--binary BINARY]
-                  (--input INPUT | --status) [--profile PROFILE]
-                  [--output OUTPUT]
+                  (--input INPUT | --status | --install) [--profile PROFILE]
+                  [--profiles PROFILES] [--apply] [--download-runtime]
+                  [--force-enable] [--output OUTPUT]
                   [--provider {openai,anthropic,google,gemini}]
 ```
 
 | Argumen/flag | Kebutuhan/default | Fungsi |
 | --- | --- | --- |
-| `--home` | opsional; default HERMES_HOME / default host | Home data yang dituju; lihat catatan keluarga karena managed memakai state MSSHI, bukan home Hermes. |
+| `--home` | opsional; default tidak diisi | Home data yang dituju; lihat catatan keluarga karena managed memakai state MSSHI, bukan home Hermes. |
 | `--binary` | opsional; default tidak diisi | Path executable llmtrim yang telah dipasang; bukan model/provider LLM. |
 | `--input` | opsional; default tidak diisi | Path input lokal sesuai format command; pilih file terkontrol yang telah disiapkan. |
 | `--status` | opsional; default Tidak/OFF | Tampilkan status lokal; efek tepat mengikuti penjelasan keluarga. |
+| `--install` | opsional; default Tidak/OFF | Prepare/enable MSSHITrim on native profiles; preview until --apply |
 | `--profile` | opsional; default default | ID folder profil Hermes, misalnya default atau kiki-chii; bukan selalu nama tampilan. |
+| `--profiles` | opsional; default all | Installation only: all or comma-separated real profile IDs |
+| `--apply` | opsional; default Tidak/OFF | Terapkan rencana yang didukung command ini; tanpa flag managed tetap merencanakan. |
+| `--download-runtime` | opsional; default Tidak/OFF | Installation only: allow checksum-pinned CLI download |
+| `--force-enable` | opsional; default Tidak/OFF | Installation only: explicitly override a previous trim disable |
 | `--output` | opsional; default tidak diisi | Tujuan output baru. Jangan memakai file input/config/proof yang belum ditinjau sebagai target overwrite. |
 | `--provider` | opsional; default openai | Bentuk request JSON (openai/anthropic/google/gemini); tidak mengubah konfigurasi provider Hermes. Nilai: openai, anthropic, google, gemini. |
 
-Wajib satu dari: `--input`, `--status`.
+Wajib satu dari: `--input`, `--status`, `--install`.
 
-## 15. `msshi managed`
+## 15. `msshi interaction`
+
+Memeriksa atau menyiapkan plugin native pengendali dua tipe: Main/Advisor untuk Yukino-Shizuka dan Main/Council dua putaran untuk Coder-Val-Kiki.
+
+**Prasyarat.** Hermes yang mendukung plugin/schema versi yang ditentukan manifest. Binding Advisor/Council dipilih Pengguna sendiri; tidak ada model atau provider bawaan publik.
+
+**Mulai dari.**
+
+```powershell
+msshi interaction --home "C:\HermesClient" --status
+```
+
+**Batas dan efek.** Status/protocol/install tidak menjalankan Advisor atau Council. --install adalah pratinjau; --apply menyiapkan plugin/receipt. Val atau bot lain tanpa binding akan melaporkan NEEDS_COUNCIL_CONFIG, bukan diisi model otomatis. Reload/schema native diperlukan. Pengujian state dengan tiruan bukan uji provider nyata.
+
+### `msshi interaction`
+
+Efek: Status/protocol membaca/cetak lokal; install --apply menulis plugin dan pendaftaran yang dipilih tanpa mengganti model/provider atau memanggil model.
+
+```text
+usage: msshi interaction [-h] [--home HOME] [--source SOURCE] [--status]
+                         [--install] [--apply]
+                         [--profiles {default,yukino,shizuka,val,kiki-chii,shikaku} [{default,yukino,shizuka,val,kiki-chii,shikaku} ...]]
+                         [--protocol]
+```
+
+| Argumen/flag | Kebutuhan/default | Fungsi |
+| --- | --- | --- |
+| `--home` | opsional; default HERMES_HOME / default host | Home data yang dituju; lihat catatan keluarga karena managed memakai state MSSHI, bukan home Hermes. |
+| `--source` | opsional; default root paket aktif | Source yang dituju; artinya bergantung command, dijelaskan pada catatan keluarga. |
+| `--status` | opsional; default Tidak/OFF | Tampilkan status lokal; efek tepat mengikuti penjelasan keluarga. |
+| `--install` | opsional; default Tidak/OFF | Opsi parser; ikuti nama dan nilai sah yang tercantum. |
+| `--apply` | opsional; default Tidak/OFF | Terapkan rencana yang didukung command ini; tanpa flag managed tetap merencanakan. |
+| `--profiles` | opsional; default tidak diisi | Opsi parser; ikuti nama dan nilai sah yang tercantum. Nilai: default, yukino, shizuka, val, kiki-chii, shikaku. |
+| `--protocol` | opsional; default Tidak/OFF | Opsi parser; ikuti nama dan nilai sah yang tercantum. |
+
+## 16. `msshi managed`
 
 Mendaftarkan dan memperbarui salinan MSSHI berdasarkan kecocokan isi/fingerprint, termasuk target fisik yang diakses melalui junction yang telah ditinjau.
 
@@ -2104,11 +2460,11 @@ usage: msshi managed [-h] [--source SOURCE] [--baseline BASELINE]
 | `--apply` | opsional; default Tidak/OFF | Terapkan rencana yang didukung command ini; tanpa flag managed tetap merencanakan. |
 | `--include-optional` | opsional; default kosong; boleh diulang | Explicitly enroll exact copies of this optional wrapper; default is none. Nilai: rea. |
 
-## 16. `msshi services`
+## 17. `msshi services`
 
-Membaca registrasi GitLab/Tinyfish, memasang definisi konektor MCP web, atau melakukan discovery/autentikasi lewat transport native Hermes.
+Membaca status koneksi lokal; tindakan pemasangan/probe/berbagi OAuth lama dihentikan. Layanan dihubungkan sendiri lewat host bila diperlukan.
 
-**Prasyarat.** Untuk probe: Hermes source/runtime native dengan dependency MCP, konfigurasi konektor dan akun/login layanan. Registrasi tidak sama dengan autentikasi.
+**Prasyarat.** Home/profil yang ingin diperiksa; MSSHI tidak menyediakan akun atau key layanan.
 
 **Mulai dari.**
 
@@ -2116,22 +2472,21 @@ Membaca registrasi GitLab/Tinyfish, memasang definisi konektor MCP web, atau mel
 msshi services status --hermes-home "C:\HermesClient"
 ```
 
-**Batas dan efek.** Probe memakai jaringan dan dapat memakai cache/refresh akun; bukan tes offline. --share-oauth adalah pilihan eksplisit berbagi identitas akun default antarprofil pada Windows, dengan pemeriksaan konflik dan backup. --read-test pada implementasi ini hanya menambah GET token-info GitLab; tidak menjalankan Search/Fetch Tinyfish. Login interaktif tetap melalui hermes mcp login NAMA_LAYANAN.
+**Batas dan efek.** GitLab/Tinyfish/BrightData tidak dipasang atau diberi akun secara otomatis. Flag lama memberi penjelasan kompatibilitas dan tidak membuat koneksi, melakukan probe, atau membagikan cache OAuth.
 
 | Pemilih tindakan | Fungsi | Efek |
 | --- | --- | --- |
-| status | Baca registrasi/cakupan konektor pada profil. | baca lokal |
-| install | Pasang definisi GitLab/Tinyfish; OAuth sharing hanya dengan flag eksplisit. | tulis konfigurasi |
-| probe | Lakukan discovery/autentikasi jaringan; kegagalan tidak otomatis membuka login interaktif. | jaringan akun |
+| status | Baca registrasi lokal. | baca lokal |
+| install/probe | Tindakan legacy dihentikan; hubungkan layanan sendiri di host. | penjelasan lokal |
 
 ### `msshi services`
 
-Efek: Status membaca lokal; install menulis config/cache-link; probe menghubungi layanan. Operasi layanan selanjutnya dapat berkuota/berbiaya.
+Efek: Baca status/penjelasan; tidak mengubah login atau koneksi.
 
 ```text
 usage: msshi services [-h] [--hermes-home HERMES_HOME] [--share-oauth]
-                      [--service {gitlab,tinyfish}]
-                      [--hermes-source HERMES_SOURCE] [--read-test]
+                      [--service {gitlab,tinyfish,brightdata_public}]
+                      [--read-test]
                       {status,install,probe}
 ```
 
@@ -2139,12 +2494,12 @@ usage: msshi services [-h] [--hermes-home HERMES_HOME] [--share-oauth]
 | --- | --- | --- |
 | `action` | wajib; default tidak diisi | Pilih tindakan yang tercantum; bukan nama file atau profil. Nilai: status, install, probe. |
 | `--hermes-home` | opsional; default HERMES_HOME / default host | Home/root Hermes yang dipilih; gunakan nilai eksplisit agar tidak mengarah ke profil lain. |
-| `--share-oauth` | opsional; default Tidak/OFF | Explicitly share default workspace identity, after account-conflict checks and private backups |
-| `--service` | opsional; default tinyfish | Layanan MCP web yang akan diprobe: gitlab atau tinyfish. Nilai: gitlab, tinyfish. |
-| `--hermes-source` | opsional; default tidak diisi | Checkout source Hermes native untuk probe transport; default dicari dari home. |
-| `--read-test` | opsional; default Tidak/OFF | Untuk probe GitLab: baca token-info guna memeriksa identitas; bukan uji Fetch Tinyfish. |
+| `--share-oauth` | opsional; default Tidak/OFF | Flag legacy tanpa tindakan; tidak membagikan kredensial atau cache OAuth. |
+| `--service` | opsional; default tinyfish | Nama layanan untuk penjelasan tindakan legacy; tidak membuat koneksi. Nilai: gitlab, tinyfish, brightdata_public. |
+| `--hermes-source` | opsional; default tidak diisi | Flag legacy untuk kompatibilitas; tidak menjalankan transport/probe. |
+| `--read-test` | opsional; default Tidak/OFF | Flag legacy tanpa tindakan; tidak melakukan probe atau permintaan jaringan. |
 
-## 17. `msshi timesfm`
+## 18. `msshi timesfm`
 
 Menjalankan peramalan deret waktu numerik lokal untuk Val melalui runtime/bobot TimesFM terisolasi. Input/output file menggantikan panggilan API LLM.
 
@@ -2255,7 +2610,7 @@ usage: msshi timesfm _worker [-h] --input INPUT --output OUTPUT
 | `--output` | wajib; default tidak diisi | Tujuan output baru. Jangan memakai file input/config/proof yang belum ditinjau sebagai target overwrite. |
 | `--horizon` | opsional; default 12 | Jumlah titik masa depan yang diprediksi; rentang 1-128, default 12. Nilai: 1..128. |
 
-## 18. `msshi brag`
+## 19. `msshi brag`
 
 Membuat tiga berkas brief/konsep/review untuk video peluncuran, lalu memeriksa/merender komposisi HTML yang dibuat pada tahap berikut melalui Hyperframes pin lokal. Kiki tetap Concepting First.
 
@@ -2383,7 +2738,7 @@ usage: msshi brag render [-h] [--hermes-root HERMES_ROOT] [--runtime RUNTIME]
 | `--quality` | opsional; default draft | draft untuk preview; delivery untuk keluaran akhir setelah review yang nyata. Nilai: draft, delivery. |
 | `--human-approved-preview` | opsional; default Tidak/OFF | Pernyataan bahwa preview memang sudah disetujui; wajib untuk delivery. |
 
-## 19. `msshi scrapling`
+## 20. `msshi scrapling`
 
 Parser HTML lokal dengan selector CSS/XPath untuk Val dan Coder. Menghasilkan JSON terstruktur tanpa menyediakan crawler jaringan atau browser stealth.
 
@@ -2501,7 +2856,7 @@ usage: msshi scrapling _parse [-h] --input INPUT (--css CSS | --xpath XPATH)
 
 Wajib satu dari: `--css`, `--xpath`.
 
-## 20. `msshi harness2`
+## 21. `msshi harness2`
 
 Menyusun proposal Propose-Probe-Compose dan menjalankan demo deterministik perbaikan harness dalam salinan terisolasi. Instruksinya tersedia bagi kelima bot sesuai bidang, dengan hasil dibawa untuk review manusia.
 
@@ -2585,7 +2940,7 @@ usage: msshi harness2 plan [-h] [--goal GOAL]
 | --- | --- | --- |
 | `--goal` | opsional; default Evaluate a narrow harness improvement without changing live Hermes | Hipotesis/tujuan eksperimen yang sempit untuk proposal Harness2, bukan perintah promosi otomatis. |
 
-## 21. `msshi optional`
+## 22. `msshi optional`
 
 Melihat dan mengaktifkan wrapper tambahan di luar paket standar. Pada rilis ini opsi publik adalah REA, default OFF; preset merekomendasikannya hanya untuk Coder bila pengguna memilih.
 
@@ -2644,7 +2999,7 @@ usage: msshi optional enable [-h] --target-dir TARGET_DIR [--install-runtime]
 | `--install-runtime` | opsional; default Tidak/OFF | Pasang runtime/dependency lokal secara eksplisit; dapat memakai internet/disk dan uji CPU. |
 | `--hermes-home` | opsional; default tidak diisi | Home/root Hermes yang dipilih; gunakan nilai eksplisit agar tidak mengarah ke profil lain. |
 
-## 22. `msshi rea`
+## 23. `msshi rea`
 
 Analisis statis JavaScript/aplikasi yang diekstrak dan inventaris artefak lokal, dengan jalur native eksplisit bila engine tersedia. Digunakan pada target milik pengguna atau yang diizinkan.
 
@@ -2763,7 +3118,7 @@ usage: msshi rea native [-h] --provider {ghidra,hopper,kuna} [--query QUERY]
 | `--query` | opsional; default tidak diisi | Simbol/alamat/pola untuk operasi native, atau kueri/workspace untuk rute koneksi. |
 | `--output` | wajib; default tidak diisi | Tujuan output baru. Jangan memakai file input/config/proof yang belum ditinjau sebagai target overwrite. |
 
-## 23. `msshi choices`
+## 24. `msshi choices`
 
 Membaca fungsi, status instruksi, dan prasyarat mode, platform, paket, skill, fitur dan aplikasi. Cocok sebelum memilih opsi yang belum dikenal.
 
@@ -2776,7 +3131,7 @@ msshi choices rea
 msshi choices --kind apps --lang id
 ```
 
-**Batas dan efek.** Katalog memiliki 128 nama kanonis: 67 instruksi bawaan dan 61 referensi eksternal; bukan 128 repo. Manifest berisi 52 sumber. Alias bukan skill tambahan; daftar kemampuan tidak membuktikan runtime sudah aktif.
+**Batas dan efek.** Katalog memiliki 127 nama kanonis: 67 instruksi bawaan dan 60 referensi eksternal; bukan jumlah repositori. Manifest berisi 51 sumber. Alias bukan skill tambahan; daftar kemampuan tidak membuktikan runtime sudah aktif.
 
 ### `msshi choices`
 
@@ -2796,7 +3151,7 @@ usage: msshi choices [-h]
 | `--lang` | opsional; default id | Bahasa penjelasan id/en; ID dan format input tetap sama. Nilai: id, en. |
 | `--json` | opsional; default Tidak/OFF | Keluarkan katalog penjelasan sebagai JSON. |
 
-## 24. `msshi manual`
+## 25. `msshi manual`
 
 Lihat katalog atau salin/unduh panduan PDF versi tertentu dengan SHA256.
 
@@ -2849,7 +3204,7 @@ usage: msshi manual download [-h] [--version VERSION] [--dest DEST] [--json]
 | `--dest` | opsional; default tidak diisi | Folder tujuan salinan PDF panduan, bukan path file rahasia atau folder skill. |
 | `--json` | opsional; default Tidak/OFF | Cetak output sebagai JSON. |
 
-## 25. `msshi dream`
+## 26. `msshi dream`
 
 Membuat proposal rangkuman/pelajaran lokal dan deterministik dari bahan yang relevan, atau mendaftarkan jadwalnya. Proposal harus ditinjau sebelum menjadi memori aktif.
 
@@ -2884,7 +3239,7 @@ usage: msshi dream [-h] [--home HOME] (--run-now | --register)
 
 Wajib satu dari: `--run-now`, `--register`.
 
-## 26. `msshi voice`
+## 27. `msshi voice`
 
 Status, pemasangan dan aktivasi OmniVoice lokal sebagai TTS native Hermes, serta preferensi gaya suara per peran. Audio dipakai ketika diminta atau fitur read-aloud host aktif.
 
@@ -2925,9 +3280,9 @@ usage: msshi voice [-h] [--home HOME] [--status] [--enable]
 | `--role` | opsional; default tidak diisi | Peran suara: yukino, shizuka, val, kiki-chii atau shikaku. Nilai: yukino, shizuka, val, kiki-chii, shikaku. |
 | `--state` | opsional; default tidak diisi | Preferensi suara normal/calm/tired/incident; berdasarkan pilihan pengguna, bukan diagnosis. Nilai: normal, calm, tired, incident. |
 
-## 27. `msshi kat`
+## 28. `msshi kat`
 
-Alias kompatibilitas KAT: status membaca, pilihan light/ideal/cloud membuka wizard endpoint/key khusus Coder; skip menonaktifkan KAT saja.
+Alias legacy untuk helper coding opsional milik Pengguna; membaca status atau menyiapkan opsi deployment yang dipilih sendiri.
 
 **Prasyarat.** Status membaca konfigurasi lokal. Aktivasi membutuhkan profil Shikaku, backend native, endpoint nyata, key akun dan bukti ID model. Dev memerlukan deployment sendiri; preset resmi StreamLake Pro v2.5 adalah varian berbeda dengan penagihan akun sendiri.
 
@@ -2937,7 +3292,7 @@ Alias kompatibilitas KAT: status membaca, pilihan light/ideal/cloud membuka wiza
 msshi kat --home "C:\HermesClient" --mode status
 ```
 
-**Batas dan efek.** Pilihan light/ideal/cloud membuka wizard endpoint yang sama, tanpa unduhan bobot atau janji model 35B muat di RAM 16 GB. Key dapat dibaca secara tersembunyi; GET /models hanya memeriksa metadata. Helper dapat aktif bila seluruh prasyarat terpenuhi; configured_not_inference_tested tidak membuktikan chat atau saldo akun. Model utama/MoA/delegasi biasa tetap utuh.
+**Batas dan efek.** Default OFF; tidak menetapkan model untuk peran Sir. Robot, tidak mengunduh bobot otomatis dan tidak mengubah Main/Council. Model/key/endpoint dipilih privat. Baca status sebelum configure; metadata endpoint bukan bukti inferensi berhasil.
 
 | Pemilih tindakan | Fungsi | Efek |
 | --- | --- | --- |
@@ -2961,7 +3316,7 @@ usage: msshi kat [-h] [--home HOME]
 | `--home` | opsional; default HERMES_HOME / default host | Home data yang dituju; lihat catatan keluarga karena managed memakai state MSSHI, bukan home Hermes. |
 | `--mode` | opsional; default status | Pilih mode operasi; daftar nilai sah dan artinya ada pada tabel tindakan. Nilai: skip, cloud, light, ideal, status. |
 
-## 28. `msshi coder`
+## 29. `msshi coder`
 
 Atur model KAT opsional khusus subtask Coder melalui endpoint yang benar, input key privat, dan katalog model.
 
@@ -3065,11 +3420,11 @@ usage: msshi coder configure [-h]
 | `--activate` | opsional; default Tidak/OFF | Aktifkan helper hanya jika endpoint, key, ID model terverifikasi dan backend native tersedia. |
 | `--accept-documented-model` | opsional; default Tidak/OFF | Terima ID resmi preset StreamLake Pro yang persis didokumentasikan; tidak membuktikan inferensi atau saldo. |
 
-## 29. `msshi setup`
+## 30. `msshi setup`
 
-Wizard awal empat mode: semua skill standar pada satu agen, tim kustom, paket kategori terpilih, atau preset lima peran. Penjelasan muncul sebelum pilihan; rencana ditampilkan sebelum penerapan.
+Wizard enam mode: Academic Mahasiswa (pilihan awal pemasangan baru), Academic Dosen, Solo, tim kustom, paket terpilih, atau MuZA. Instalasi lama mempertahankan preset yang terdeteksi bila mode tidak dipilih eksplisit.
 
-**Prasyarat.** Tentukan host dan folder tujuan. Pada Hermes yang didukung, auto mengubah default menjadi Yukino hanya pada instalasi baru dan mempertahankan tim lama. Empat spesialis memakai profil bernama. Host lain memakai workspace yang dihubungkan sesuai kemampuan host.
+**Prasyarat.** Pilih host dan home yang benar. Academic memakai root/workspace/academic di HermesData; tidak membuat vault Obsidian atau memindahkan akun.
 
 **Mulai dari.**
 
@@ -3077,23 +3432,32 @@ Wizard awal empat mode: semua skill standar pada satu agen, tim kustom, paket ka
 msshi setup --platform hermes --lang id
 ```
 
-**Batas dan efek.** KAT opsional/default OFF pada semua preset. Memilihnya membuka wizard endpoint/key; aktif hanya saat prasyarat model dan native routing tersedia. Tidak mengunduh bobot. REA default Tidak/OFF; --with-rea opt-in wrapper, runtime tetap terpisah. Custom team memilih sendiri bot penerima REA. Setup tidak menjamin semua aplikasi/model/akun eksternal tersedia.
+**Batas dan efek.** Model/provider/API key diatur pengguna sendiri. Profil akademik opsional memuat jenjang, topik, tenggat, pedoman dan sapaan. Browser disimpan sebagai pilihan/label untuk login manual, tanpa membuka aplikasi atau menyalin cookie. Rute berat Academic membutuhkan pilihan eksplisit dan aplikasi terdeteksi. Helper coding/REA/voice tetap opsional. MSSHITrim disiapkan otomatis oleh setup native penuh bila runtime terverifikasi; disable/edit pengguna dipertahankan.
 
 ### `msshi setup`
 
-Efek: Menulis skill, profil native/workspace, kebijakan koordinasi, receipt dan state sesudah rencana diterapkan. KAT membuka setup endpoint/key privat. PDF disalin otomatis kecuali --no-pdf; task model tidak dikirim saat instalasi.
+Efek: Menulis skill, profil, workspace/template dan receipt sesuai rencana. Tidak memanggil model, membuat login, mengaktifkan TTS atau mengganti preset lama secara diam-diam.
 
 ```text
 usage: msshi setup [-h]
                    [--platform {hermes,openclaw,claude,codex,antigravity,manual}]
                    [--target-dir TARGET_DIR] [--lang {id,en}]
-                   [--mode {solo,custom-bots,selective,muza-preset}] [--yes]
-                   [--default-bot {auto,yukino,keep-hermes}]
+                   [--mode {solo,custom-bots,selective,muza-preset,academic-mahasiswa,academic-dosen,academic-mahasiswa-dosen}]
+                   [--yes] [--default-bot {auto,yukino,keep-hermes}]
                    [--extra-packs EXTRA_PACKS [EXTRA_PACKS ...]]
                    [--extra-skills EXTRA_SKILLS [EXTRA_SKILLS ...]]
                    [--kat-mode {light,ideal,cloud,skip}] [--stage-auto-trim]
                    [--install-steel]
                    [--connect-services {skip,per-profile,share-oauth}]
+                   [--academic-project ACADEMIC_PROJECT]
+                   [--academic-level ACADEMIC_LEVEL]
+                   [--academic-topic ACADEMIC_TOPIC]
+                   [--academic-deadline ACADEMIC_DEADLINE]
+                   [--academic-campus-guideline ACADEMIC_CAMPUS_GUIDELINE]
+                   [--preferred-name PREFERRED_NAME]
+                   [--browser {chrome,edge,firefox,none}]
+                   [--browser-profile-label BROWSER_PROFILE_LABEL]
+                   [--browser-account-label BROWSER_ACCOUNT_LABEL]
                    [--connect-apps {skip,auto-reconnect,select}]
                    [--connect-bots CONNECT_BOTS]
                    [--connect-targets CONNECT_TARGETS] [--with-rea]
@@ -3106,15 +3470,24 @@ usage: msshi setup [-h]
 | `--platform` | opsional; default tidak diisi | Host tujuan: hermes/openclaw/claude/codex/antigravity/manual. Nilai: hermes, openclaw, claude, codex, antigravity, manual. |
 | `--target-dir` | opsional; default tidak diisi | Folder skill untuk solo/selective atau induk workspace untuk mode tim. |
 | `--lang` | opsional; default id | Bahasa penjelasan id/en; ID dan format input tetap sama. Nilai: id, en. |
-| `--mode` | opsional; default tidak diisi | Pilih mode operasi; daftar nilai sah dan artinya ada pada tabel tindakan. Nilai: solo, custom-bots, selective, muza-preset. |
+| `--mode` | opsional; default tidak diisi | Pilih mode operasi; daftar nilai sah dan artinya ada pada tabel tindakan. Nilai: solo, custom-bots, selective, muza-preset, academic-mahasiswa, academic-dosen, academic-mahasiswa-dosen. |
 | `--yes/-y` | opsional; default Tidak/OFF | Konfirmasi otomatis tanpa prompt. |
 | `--default-bot` | opsional; default auto | auto: instalasi baru memakai default sebagai Yukino, tim lama dipertahankan. keep-hermes: pertahankan default netral dan Yukino bernama. yukino: konversi default eksplisit. Model/provider tidak dipindah antarprofil. Nilai: auto, yukino, keep-hermes. |
 | `--extra-packs` | opsional; default tidak diisi | Tambahkan extra packs di langkah [1/4] Skills. |
 | `--extra-skills` | opsional; default tidak diisi | Tambahkan extra skill slugs di langkah [1/4] Skills. |
 | `--kat-mode` | opsional; default tidak diisi | Pilihan kompatibilitas light/ideal/cloud membuka wizard endpoint; skip menonaktifkan KAT saja. Tidak ada unduhan model lokal. Nilai: light, ideal, cloud, skip. |
 | `--stage-auto-trim` | opsional; default Tidak/OFF | Stage plugin fail-open msshi-auto-trim ke profil Hermes di langkah [2/4] Plugin. |
-| `--install-steel` | opsional; default Tidak/OFF | Opt-in Steel Browser Policy di langkah [2/4] Plugin. |
-| `--connect-services` | opsional; default tidak diisi | Atur koneksi MCP GitLab/Tinyfish di langkah [3/4] Koneksi. Nilai: skip, per-profile, share-oauth. |
+| `--install-steel` | opsional; default Tidak/OFF | Deprecated: diterima sebagai no-op; tidak memasang Steel. |
+| `--connect-services` | opsional; default tidak diisi | Deprecated: no-op; layanan eksternal dihubungkan sendiri oleh pengguna. Nilai: skip, per-profile, share-oauth. |
+| `--academic-project` | opsional; default tidak diisi | Workspace Academic harus berada di dalam root/workspace pada home Hermes. |
+| `--academic-level` | opsional; default teks kosong | Jenjang opsional S1, S2 atau S3. |
+| `--academic-topic` | opsional; default teks kosong | Topik riset pengguna, disimpan lokal; tidak memanggil model. |
+| `--academic-deadline` | opsional; default teks kosong | Target/tenggat yang dipilih pengguna; bukan undangan kalender. |
+| `--academic-campus-guideline` | opsional; default teks kosong | Label/lokasi pedoman kampus yang dipilih, bukan izin memindai semua dokumen. |
+| `--preferred-name` | opsional; default teks kosong | Sapaan pilihan pengguna dengan ejaan persis; bukan nama pembuat preset. |
+| `--browser` | opsional; default tidak diisi | Pilihan Chrome, Edge, Firefox atau none; tidak membuka browser atau login. Nilai: chrome, edge, firefox, none. |
+| `--browser-profile-label` | opsional; default teks kosong | Label profil browser untuk pengguna; bukan direktori atau cookie. |
+| `--browser-account-label` | opsional; default teks kosong | Label akun untuk login manual; jangan isi password/API key. |
 | `--connect-apps` | opsional; default tidak diisi | Sambungkan Bot -> CLI-Anything -> Apps di langkah [4/4]. Nilai: skip, auto-reconnect, select. |
 | `--connect-bots` | opsional; default tidak diisi | Daftar bot (dipisah koma atau 'all') untuk langkah [4/4]. |
 | `--connect-targets` | opsional; default tidak diisi | Daftar app target (dipisah koma atau 'detected') untuk langkah [4/4]. |
@@ -3124,7 +3497,7 @@ usage: msshi setup [-h]
 | `--pdf-version` | opsional; default tidak diisi | Versi panduan yang ada di katalog, default latest; PDF berbeda dari pemasangan runtime. |
 | `--pdf-dest` | opsional; default tidak diisi | Folder tujuan PDF panduan; default Downloads/MSSHI_Manuals atau folder manual data MSSHI. |
 
-## 30. `msshi select`
+## 31. `msshi select`
 
 Memilih kategori atau skill satu per satu untuk ditambah/diperbarui. Angka, slug, alias, dan all didukung; fondasi wajib tetap disertakan.
 
@@ -3155,7 +3528,7 @@ usage: msshi select [-h]
 | `--lang` | opsional; default id | Bahasa penjelasan id/en; ID dan format input tetap sama. Nilai: id, en. |
 | `--local` | opsional; default Tidak/OFF | Pilih dari rilis lokal tanpa mengakses GitHub. |
 
-## 31. `msshi bootstrap`
+## 32. `msshi bootstrap`
 
 Mendaftarkan snapshot rilis lokal, launcher global, PATH user dan panduan PDF otomatis. Biasanya dipanggil install.ps1/install.sh, bukan command pekerjaan harian.
 
@@ -3264,11 +3637,11 @@ Durasi 20 di sini detik, bukan 20 menit. Film 10-40 menit memerlukan rencana per
 
 Bagian ini mencakup seluruh keluarga CLI global MSSHI pada commit tersebut, termasuk alias, action selector, seluruh flag parser, serta empat worker internal agar inventaris tidak menyembunyikannya. `integrations dream/voice/kat` memiliki bentuk singkat yang sama; duplikasi itu tetap dicatat. Helper source langsung seperti `python scripts/install_msshi.py` dan perintah Hermes native, Git, npm/Skills CLI, FFmpeg atau aplikasi lain bukan subcommand global MSSHI. Gunakan bab instalasi/host dan dokumentasi tool tersebut untuk sintaksnya, bukan mengarang awalan `msshi`.
 
-Periksa `--help` dari versi yang benar setelah update. Versi semantik sama tidak berarti hash commit sama. Jangan menyalin receipt rollback terakhir secara buta: cocokkan `home`, jenis/schema transaksi, daftar perubahan, hash dan backup sebelum memilih `msshi runtime rollback` atau `msshi browser --rollback`. Tidak ada satu command yang memulihkan seluruh laptop.
+Sesudah update, periksa `--help` versi aktif dan cocokkan jenis receipt sebelum rollback.
 
 
 
-# 9. Katalog fungsi skill, pilihan fitur, dan aplikasi
+# 10. Katalog fungsi skill, pilihan fitur, dan aplikasi
 
 Katalog ini membantu memilih instruksi dan fitur. Status dibundel menunjukkan instruksi tersedia dalam paket; runtime/aplikasi/model/akun diperiksa terpisah. Nama referensi eksternal tidak berarti source atau fiturnya sudah aktif.
 
@@ -3283,77 +3656,116 @@ Katalog ini membantu memilih instruksi dan fitur. Status dibundel menunjukkan in
 | webdev | Pemetaan proyek, pengembangan web/UI, eksperimen kode, dan pengujian. |
 | cybersec | Pemetaan kode dan panduan audit keamanan pada target yang izinnya jelas; engine dipasang terpisah. |
 
+## Pembagian instruksi menurut preset
+
+Angka ini berasal dari manifest publik, bukan hitungan laptop pembuat. Satu
+skill dapat dibagi beberapa bot; jumlah per kolom tidak dijumlahkan untuk
+mendapat katalog unik. Academic sengaja memasang pilihan ringan sesuai peran,
+bukan memaksakan seluruh runtime atau seluruh 67 skill pada setiap bot.
+
+| Preset | Yukino | Shizuka | Val | Kiki | Coder | Skill unik |
+| --- | --- | --- | --- | --- | --- | --- |
+| Academic Mahasiswa | 13 | 13 | 19 | 12 | 13 | 35 |
+| Academic Dosen | 13 | 14 | 21 | 12 | 13 | 36 |
+| MuZA | 31 | 27 | 38 | 22 | 24 | 67 |
+
+Koleksi lama/kustom, integrasi terkurasi, alias dan wrapper opsional dapat
+membuat jumlah folder pada komputer berbeda. Source/cache eksternal bukan
+tambahan skill aktif otomatis. REA opsional berada terpisah dan default OFF.
+
 ## Seluruh 67 skill standar
 
-| Skill | Fungsi singkat |
-| --- | --- |
-| academic-plotting | Menghasilkan figur publikasi dari data dan spesifikasi yang disepakati. |
-| ai-research-explore | Merancang eksperimen kandidat yang terpisah dari baseline. |
-| ai-research-reproduction | Menetapkan target reproduksi penelitian yang dapat dibuktikan. |
-| analyze-project | Memetakan struktur proyek, konfigurasi, titik masuk, dan risiko perubahan. |
-| antigravity-webdev-cybersec | Hubungkan pengerjaan web dan evaluasi keamanan terotorisasi dengan Antigravity, Goose, dan alat lokal. |
-| auto-curiousity-for-film-making | Menguji kemampuan alat kreatif dan teknik produksi dalam eksperimen terpisah. |
-| autoresearch | Mengoordinasikan siklus eksperimen dan sintesis dengan batas berhenti. |
-| backward-traceability | Menautkan angka dan hasil laporan kembali ke data, skrip, atau perhitungan. |
-| brag | Rancang video peluncuran produk yang dapat diedit dengan Hyperframes, dimulai dari konsep dan review manusia. |
-| brainstorming-research-ideas | Memakai kerangka ideasi terstruktur untuk menemukan pertanyaan layak. |
-| business-sage | Menyusun analisis usaha, skenario finansial, dan pertanyaan verifikasi aturan yang relevan. |
-| career-ops | Bantu CV-lowongan, strategi karier, tracker dan wawancara; source, runtime dan CV pengguna terpisah. |
-| chatgpt-hermes-portability-kit | Memandu adaptasi metode dan profil ke platform lain menggunakan sumber yang sah. |
-| cli-anything-business-sage | Menjalankan perhitungan bisnis terstruktur melalui harness lokal yang tersedia. |
-| cli-anything-universal-bridge | Daftarkan, periksa, dan jalankan rute aplikasi, browser, serta alat agen yang tersedia saat dibutuhkan. |
-| creative-thinking-for-research | Mencoba reframing, analogi, dan kombinasi konsep untuk membuka pilihan. |
-| data-analysis | Memeriksa kualitas data, asumsi, uji statistik, dan ketidakpastian. |
-| deep-research | Menyusun pertanyaan, menelusuri literatur, dan mensintesis bukti yang dapat diperiksa. |
-| evaluating-code-models | Menguji keluaran model kode dengan tugas dan tolok ukur yang relevan. |
-| evaluating-llms-harness | Rencanakan evaluasi LLM memakai harness yang kompatibel dan anggaran yang disepakati. |
-| explore-code | Mengembangkan perubahan eksperimen dalam ruang kerja terisolasi. |
-| explore-run | Menjalankan uji terbatas dengan anggaran dan catatan hasil yang jelas. |
-| filmmaking-videography-photography-s2 | Menyatukan konsep, pengarahan, kamera, foto, penyuntingan, warna, dan suara. |
-| firecrawl-competitive-intel | Membandingkan perubahan produk, harga, dan fitur dengan bukti bertanggal. |
-| firecrawl-dashboard-reporting | Mengambil dan memeriksa indikator dasbor untuk pelaporan. |
-| firecrawl-deep-research | Mengumpulkan bukti web untuk sintesis dengan atribusi. |
-| firecrawl-knowledge-base | Menyiapkan koleksi dokumen, potongan, serta metadata asalnya. |
-| firecrawl-research-papers | Menemukan dan memeriksa makalah pada sumber akademik yang relevan. |
-| focus-my-energy | Menyesuaikan beban tugas dan langkah awal dengan energi yang dilaporkan pengguna. |
-| generate-fresh-ideas | Menghasilkan alternatif dari beberapa lensa kreatif untuk disaring pengguna. |
-| get-more-perspectives | Menguji keputusan dari beberapa sudut pandang sebelum memilih. |
-| github-research | Menelaah lisensi, rancangan, pemeliharaan, dan kesiapan repositori. |
-| harness2 | Kelima bot dapat menyusun proposal dan demo evaluasi harness; tidak mempromosikan perubahan otomatis. |
-| higgsfield-skills | Rutekan kebutuhan produksi kreatif ke modul Higgsfield yang sesuai setelah konsep disetujui. |
-| humanizer-en | Sunting prosa bahasa Inggris agar terasa alami sambil menjaga makna, suara penulis, dan sitasi. |
-| humanizer-indonesia | Sunting prosa bahasa Indonesia sesuai ragam pembaca sambil menjaga makna, istilah, dan sitasi. |
-| idea-generation | Mengembangkan dan menyaring gagasan penelitian dalam beberapa putaran. |
-| langsmith-observability | Memandu observabilitas dan evaluasi LangSmith pada lingkungan yang disetujui. |
-| literature-review | Membangun tinjauan pustaka dengan beberapa perspektif dan jejak sumber. |
-| match-my-writing-style | Menerapkan Voice Card yang disediakan pengguna sesuai audiens dan jenis tulisan. |
-| math-reasoning | Memeriksa langkah penalaran matematika dan syarat berlakunya. |
-| mattpocock-engineering | Pilih disiplin TDD, debugging dan domain model; orkestrator/spec publish hanya saat diminta. |
-| motion-graphics-suite | Pilih dan hubungkan empat rujukan motion graphics untuk komposisi yang tetap dapat diedit. |
-| muza-skripsi-template | Menyusun template Word (.docx) skripsi/tugas akhir sesuai aturan pedoman kampus, mencari logo & pejabat resmi otomatis, dan menyuntikkan hasil MuZA_Search. |
-| nemo-evaluator-sdk | Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia. |
-| notebooklm-thinking-datascience | Terapkan metode berpikir sistem dan data science dari indeks sumber milik pengguna. |
-| novelty-assessment | Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian. |
-| paper-context-resolver | Mengikat klaim reproduksi pada bagian, gambar, tabel, atau lampiran makalah. |
-| paper-revision | Memetakan catatan revisi ke perubahan konkret dan bukti perbaikan. |
-| paper-writing-section | Menyusun dan menyunting bagian naskah akademik dengan dua tahap pemeriksaan. |
-| parenting-6d-gad-mdd | Dukung percakapan dengan empati, struktur, dan otonomi; panduan ini tidak menggantikan perawatan klinis. |
-| persona-shizuka-yukino-shikaku | Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot. |
-| phoenix-observability | Memandu tracing dan evaluasi Phoenix tanpa memindahkan data di luar lingkup. |
-| prep-for-meetings | Menyusun ringkasan pertemuan dari catatan dan tujuan yang tersedia. |
-| prep-for-meetings-2 | Memadatkan bahan pertemuan menjadi pokok bahasan dan kartu pengingat. |
-| rea-video | Kiki membedah referensi video ke VIDEO.md; VLM, audio-model dan remake adalah pilihan terpisah. |
-| rebuttal-writing | Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer. |
-| remote-jobs | Cari perusahaan remote dari direktori lokal terpin; lowongan aktif tetap diverifikasi terpisah. |
-| research-paper-writing | Memeriksa struktur argumen dan hubungan antara klaim, bukti, serta pembahasan. |
-| scrapling | Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi. |
-| slide-generation | Menyusun presentasi dari argumen, hasil, dan visual yang dapat diverifikasi. |
-| symbolic-equation | Mencari kandidat persamaan yang dapat ditafsirkan dan diuji. |
-| table-generation | Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan. |
-| timesfm-forecasting | Prediksi deret waktu numerik secara lokal memakai TimesFM 2.5 setelah setup runtime dan bobot terpisah. |
-| unlimited-ocr-2 | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. |
-| unslop | Tinjau dan perbaiki desain antarmuka; skill ini mengubah UI, bukan gaya prosa bot. |
-| wise-judgment-and-sovereign-orchestrator | Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val. |
+Untuk setiap nama pada tabel, Pengguna dapat menyebut hasil yang ingin dibuat
+atau berkata "Gunakan skill [nama] untuk [hasil] dengan input ini". Nama skill
+bukan selalu slash command. Agen hanya memuat panduan yang relevan, kemudian
+memeriksa prasyarat aktual; memasang instruksi bukan mengeksekusi program.
+
+| Skill | Fungsi singkat | Pemicu / prasyarat yang perlu disiapkan |
+| --- | --- | --- |
+| academic-plotting | Menghasilkan figur publikasi dari data dan spesifikasi yang disepakati. | Berikan data, unit, tujuan figur dan format; renderer plotting/generasi diagram harus tersedia, generasi hosted terpisah. |
+| ai-research-explore | Merancang eksperimen kandidat yang terpisah dari baseline. | Repo, batas eksperimen, data dan anggaran komputasi yang disetujui; exploration bukan pekerjaan startup. |
+| ai-research-reproduction | Menetapkan target reproduksi penelitian yang dapat dibuktikan. | README/paper, target reproduksi kecil, dependency dan dataset berizin; jangan menjalankan seluruh training tanpa mandat. |
+| analyze-project | Memetakan struktur proyek, konfigurasi, titik masuk, dan risiko perubahan. | Source lokal yang dipilih dan tujuan audit; mulai read-only sebelum perubahan. |
+| antigravity-webdev-cybersec | Hubungkan pengerjaan web dan evaluasi keamanan terotorisasi dengan Antigravity, Goose, dan alat lokal. | Workspace coding, stack, lingkungan uji dan target keamanan yang diotorisasi; bukan scan jaringan otomatis. |
+| auto-curiousity-for-film-making | Menguji kemampuan alat kreatif dan teknik produksi dalam eksperimen terpisah. | Aplikasi/tugas baru yang dipilih; baca help/docs dan buat uji kecil. Pengetahuan source tidak menggantikan runtime/akun. |
+| autoresearch | Mengoordinasikan siklus eksperimen dan sintesis dengan batas berhenti. | Proposal, data, batas eksperimen dan biaya; model/training dijalankan hanya bila benar-benar dipilih. |
+| backward-traceability | Menautkan angka dan hasil laporan kembali ke data, skrip, atau perhitungan. | Angka hasil, kode dan sumber yang sah; menjaga jejak ke artefak pembentuk, bukan mengarang bukti. |
+| brag | Rancang video peluncuran produk yang dapat diedit dengan Hyperframes, dimulai dari konsep dan review manusia. | msshi brag doctor/init; init hanya brief. Komposisi editable, renderer dan preview perlu sebelum render MP4. |
+| brainstorming-research-ideas | Memakai kerangka ideasi terstruktur untuk menemukan pertanyaan layak. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| business-sage | Menyusun analisis usaha, skenario finansial, dan pertanyaan verifikasi aturan yang relevan. | Skenario dan angka yang dipilih; fakta pasar/aturan perlu sumber terkini. Bukan jaminan untung atau pengganti profesional. |
+| career-ops | Bantu CV-lowongan, strategi karier, tracker dan wawancara; source, runtime dan CV pengguna terpisah. | msshi integrations source career-ops; data CV/profil privat dan runtime Node jika dipilih, tanpa melamar otomatis. |
+| chatgpt-hermes-portability-kit | Memandu adaptasi metode dan profil ke platform lain menggunakan sumber yang sah. | Bahan konteks milik Pengguna yang dibagikan secara sadar; akun/vault/knowledge pribadi pembuat tidak ikut paket. |
+| cli-anything-business-sage | Menjalankan perhitungan bisnis terstruktur melalui harness lokal yang tersedia. | Harness bsage/CLI terpisah jika dipasang; periksa --help dan fungsi deterministik sebelum mengirim data. |
+| cli-anything-universal-bridge | Daftarkan, periksa, dan jalankan rute aplikasi, browser, serta alat agen yang tersedia saat dibutuhkan. | msshi connect --catalog/--status; app harus tersedia sesuai preset, task ticket untuk eksekusi; tidak autostart. |
+| creative-thinking-for-research | Mencoba reframing, analogi, dan kombinasi konsep untuk membuka pilihan. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| data-analysis | Memeriksa kualitas data, asumsi, uji statistik, dan ketidakpastian. | Dataset, definisi variabel dan pertanyaan statistik; Python/paket analisis tersedia, simpan data asli. |
+| deep-research | Menyusun pertanyaan, menelusuri literatur, dan mensintesis bukti yang dapat diperiksa. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| evaluating-code-models | Menguji keluaran model kode dengan tugas dan tolok ukur yang relevan. | Harness, dataset dan mesin model yang dipilih; benchmark dapat mahal dan harus dibatasi. |
+| evaluating-llms-harness | Rencanakan evaluasi LLM memakai harness yang kompatibel dan anggaran yang disepakati. | Harness, dataset berizin, model serta anggaran komputasi/API; tidak menguji semua model otomatis. |
+| explore-code | Mengembangkan perubahan eksperimen dalam ruang kerja terisolasi. | Workspace terisolasi/branch, rencana perubahan dan tes penerimaan; edit harus dalam mandat. |
+| explore-run | Menjalankan uji terbatas dengan anggaran dan catatan hasil yang jelas. | Rencana eksperimen, dependency, data dan budget; batasi matriks percobaan sebelum run. |
+| filmmaking-videography-photography-s2 | Menyatukan konsep, pengarahan, kamera, foto, penyuntingan, warna, dan suara. | Brief, hak aset dan review konsep; aplikasi/model generasi tidak otomatis disertakan. |
+| firecrawl-competitive-intel | Membandingkan perubahan produk, harga, dan fitur dengan bukti bertanggal. | Alat pencarian/Firecrawl yang benar-benar tersedia dan izin sumber; akun/kuota layanan terpisah, tidak mengirim data otomatis. |
+| firecrawl-dashboard-reporting | Mengambil dan memeriksa indikator dasbor untuk pelaporan. | Alat pencarian/Firecrawl yang benar-benar tersedia dan izin sumber; akun/kuota layanan terpisah, tidak mengirim data otomatis. |
+| firecrawl-deep-research | Mengumpulkan bukti web untuk sintesis dengan atribusi. | Alat pencarian/Firecrawl yang benar-benar tersedia dan izin sumber; akun/kuota layanan terpisah, tidak mengirim data otomatis. |
+| firecrawl-knowledge-base | Menyiapkan koleksi dokumen, potongan, serta metadata asalnya. | Alat pencarian/Firecrawl yang benar-benar tersedia dan izin sumber; akun/kuota layanan terpisah, tidak mengirim data otomatis. |
+| firecrawl-research-papers | Menemukan dan memeriksa makalah pada sumber akademik yang relevan. | Alat pencarian/Firecrawl yang benar-benar tersedia dan izin sumber; akun/kuota layanan terpisah, tidak mengirim data otomatis. |
+| focus-my-energy | Menyesuaikan beban tugas dan langkah awal dengan energi yang dilaporkan pengguna. | Kondisi tenaga/waktu yang dinyatakan Pengguna; bukan diagnosis atau aturan jam tetap. |
+| generate-fresh-ideas | Menghasilkan alternatif dari beberapa lensa kreatif untuk disaring pengguna. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| get-more-perspectives | Menguji keputusan dari beberapa sudut pandang sebelum memilih. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| github-research | Menelaah lisensi, rancangan, pemeliharaan, dan kesiapan repositori. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| harness2 | Kelima bot dapat menyusun proposal dan demo evaluasi harness; tidak mempromosikan perubahan otomatis. | msshi harness2 status/plan; demo deterministik atau eksperimen terpilih, bukan auto-upgrade model bot. |
+| higgsfield-skills | Rutekan kebutuhan produksi kreatif ke modul Higgsfield yang sesuai setelah konsep disetujui. | Source/modul sesuai tugas, akun dan kredit layanan bila memakai generasi hosted; belum berarti runtime/generasi siap. |
+| humanizer-en | Sunting prosa bahasa Inggris agar terasa alami sambil menjaga makna, suara penulis, dan sitasi. | Draf Inggris dan gaya yang dipilih; jaga fakta, kutipan dan atribusi, tanpa menjanjikan lolos detektor. |
+| humanizer-indonesia | Sunting prosa bahasa Indonesia sesuai ragam pembaca sambil menjaga makna, istilah, dan sitasi. | Draf Indonesia serta ragam akademik/ajar yang dipilih; pertahankan makna dan sitasi. |
+| idea-generation | Mengembangkan dan menyaring gagasan penelitian dalam beberapa putaran. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| langsmith-observability | Memandu observabilitas dan evaluasi LangSmith pada lingkungan yang disetujui. | Proyek trace/evaluasi dan akun/deployment yang dipilih; periksa izin data sebelum mengirim telemetri. |
+| literature-review | Membangun tinjauan pustaka dengan beberapa perspektif dan jejak sumber. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| match-my-writing-style | Menerapkan Voice Card yang disediakan pengguna sesuai audiens dan jenis tulisan. | Sampel gaya yang Pengguna izinkan; jangan menyalin suara/profil pribadi pembuat. |
+| math-reasoning | Memeriksa langkah penalaran matematika dan syarat berlakunya. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| mattpocock-engineering | Pilih disiplin TDD, debugging dan domain model; orkestrator/spec publish hanya saat diminta. | Workflow engineering yang sesuai; bagian explicit-only memerlukan permintaan, bukan semua slash otomatis tersedia. |
+| motion-graphics-suite | Pilih dan hubungkan empat rujukan motion graphics untuk komposisi yang tetap dapat diedit. | Pilih alur Bang Motion/Remotion/Hyperframes sesuai proyek; Node/browser/FFmpeg/font/aset perlu tersedia. |
+| muza-skripsi-template | Menyusun template Word (.docx) skripsi/tugas akhir sesuai aturan pedoman kampus, mencari logo & pejabat resmi otomatis, dan menyuntikkan hasil MuZA_Search. | msshi skripsi --help; pedoman kampus dan input sendiri. DOCX/RIS perlu dependency; hasil wajib ditinjau. |
+| nemo-evaluator-sdk | Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia. | SDK/harness, dataset dan model yang dipilih; kebutuhan hardware dan biaya terpisah dari instruksi. |
+| notebooklm-thinking-datascience | Terapkan metode berpikir sistem dan data science dari indeks sumber milik pengguna. | Bahan/notebook milik Pengguna jika disediakan; tidak memberi akses ke akun atau 600 sumber pribadi pembuat. |
+| novelty-assessment | Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| paper-context-resolver | Mengikat klaim reproduksi pada bagian, gambar, tabel, atau lampiran makalah. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| paper-revision | Memetakan catatan revisi ke perubahan konkret dan bukti perbaikan. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| paper-writing-section | Menyusun dan menyunting bagian naskah akademik dengan dua tahap pemeriksaan. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| parenting-6d-gad-mdd | Dukung percakapan dengan empati, struktur, dan otonomi; panduan ini tidak menggantikan perawatan klinis. | Dukungan belajar sesuai konteks yang dinyatakan; bukan diagnosis, layanan klinis atau penyalinan profil kesehatan. |
+| persona-shizuka-yukino-shikaku | Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot. | SOUL aktif serta interaksi dua tipe menjadi acuan; referensi karakter bukan pengaturan model atau voice otomatis. |
+| phoenix-observability | Memandu tracing dan evaluasi Phoenix tanpa memindahkan data di luar lingkup. | Deployment/trace data yang diotorisasi; akun, paket dan kebijakan pengiriman data diperiksa terpisah. |
+| prep-for-meetings | Menyusun ringkasan pertemuan dari catatan dan tujuan yang tersedia. | Tujuan, peserta, bahan dan rentang waktu; hasilkan kesiapan/rundown. Notulensi hanya dari catatan nyata. |
+| prep-for-meetings-2 | Memadatkan bahan pertemuan menjadi pokok bahasan dan kartu pengingat. | Gunakan variasi brief yang paling cocok, bukan dua proses berulang; jangan menjadwalkan/mengirim otomatis. |
+| rea-video | Kiki membedah referensi video ke VIDEO.md; VLM, audio-model dan remake adalah pilihan terpisah. | msshi integrations source rea-video; FFmpeg/ffprobe dan input berizin. OCR/ASR/stems/VLM/generasi merupakan opt-in terpisah. |
+| rebuttal-writing | Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| remote-jobs | Cari perusahaan remote dari direktori lokal terpin; lowongan aktif tetap diverifikasi terpisah. | Cache direktori melalui integrations source; konfirmasi lowongan di halaman resmi, daftar bukan lowongan pasti aktif. |
+| research-paper-writing | Memeriksa struktur argumen dan hubungan antara klaim, bukti, serta pembahasan. | Sebut nama skill atau hasil yang diinginkan; sediakan input dan sumber yang diizinkan. Panggilan model/tool mengikuti host dan batas biaya. |
+| scrapling | Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi. | msshi scrapling status/parse; menerima HTML lokal dan CSS/XPath, bukan URL/crawler/login. |
+| slide-generation | Menyusun presentasi dari argumen, hasil, dan visual yang dapat diverifikasi. | Materi/paper yang sudah diperiksa dan target audiens; LaTeX/renderer atau aplikasi slide perlu tersedia. |
+| symbolic-equation | Mencari kandidat persamaan yang dapat ditafsirkan dan diuji. | Data numerik dan batas pencarian persamaan; runtime/eksperimen/model dipilih terpisah. |
+| table-generation | Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan. | Hasil/angka terverifikasi dan format tabel; bukan sumber hasil eksperimen baru. |
+| timesfm-forecasting | Prediksi deret waktu numerik secara lokal memakai TimesFM 2.5 setelah setup runtime dan bobot terpisah. | msshi timesfm status; peramalan numerik memakai runtime/bobot lokal yang dipilih, bukan pencarian literatur. |
+| unlimited-ocr-2 | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. | Dokumen berizin; gunakan ekstraksi teks lokal dulu. OCR model membutuhkan runtime/bobot/RAM terpisah. |
+| unslop | Tinjau dan perbaiki desain antarmuka; skill ini mengubah UI, bukan gaya prosa bot. | Layar UI atau output visual yang ingin diperbaiki; audit/gagasan dulu, implementasi oleh pemilik kode. |
+| wise-judgment-and-sovereign-orchestrator | Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val. | Tujuan, izin dan kontrak handoff; tidak memanggil seluruh tim untuk setiap pesan. |
+
+## Plugin native yang disertakan source MSSHI
+
+| ID plugin | Fungsi / kapan bekerja | Pemakaian / batas |
+| --- | --- | --- |
+| msshi-interaction | State dan tool protokol Tipe 1/2; tidak memanggil model pada status/startup. | msshi interaction --status/--protocol. Proyek penuh perlu binding Pengguna, tools host dan izin biaya. |
+| msshi-auto-trim (MSSHITrim) | Hook otomatis pada hasil tool JSON yang lolos ukuran/format/kesetaraan. | Setup penuh menyiapkan profil native; msshi trim --status. Tidak mengubah chat, proxy, sertifikat atau provider. |
+| msshi-team-routing | Pemetaan/handoff peran sesuai backend yang aktif. | Gunakan schema delegasi host yang tersedia. Backend eksplisit dipertahankan; jangan menganggap teks SOUL menciptakan transport. |
+| msshi-steel-policy (legacy) | Source kompatibilitas lama yang jalur pemasangannya dihentikan. | Tidak dipasang atau diaktifkan oleh setup; tidak perlu menyalakannya untuk memilih Chrome/Edge/Firefox. |
+
+Plugin lain seperti Planner, Meeting-Copilot, Transcribo, Dreaming upstream dan
+OmniVoice mengikuti prasyarat/aktivasi masing-masing. Adapter Dreaming offline
+MSSHI bukan bukti plugin upstream penuh dipasang. Tidak ada akun kalender,
+Discord, Telegram, Gmail, Google Drive atau NotebookLM pembuat dalam paket.
+Status terpasang, terkonfigurasi, terautentikasi dan tugas riil berhasil
+dilaporkan terpisah. Plugin pribadi di laptop seorang pengguna tidak otomatis
+menjadi bagian rilis publik.
 
 ## Fitur opsional dan prasyarat
 
@@ -3372,10 +3784,10 @@ Katalog ini membantu memilih instruksi dan fitur. Status dibundel menunjukkan in
 | skill-vs-pack | Paket memilih kelompok skill sesuai bidang; skill individual memberi kontrol satu per satu. Skill fondasi wajib tetap disertakan, dan referensi eksternal belum tentu siap dijalankan. |
 | voice | Suara lokal OmniVoice untuk audio atau baca-nyaring yang diminta; tidak otomatis menyuarakan setiap chat. Perlu bobot, RAM, dan setup audio; lisensi bobot membatasi penggunaan komersial. |
 | dream | Buat proposal rangkuman/pelajaran secara lokal dan deterministik dari bahan terpilih. Tidak memanggil LLM atau otomatis memasukkan proposal ke memori aktif. |
-| steel | Browser utama untuk penjelajahan umum jika key/endpoint sudah disiapkan; layanan dapat berbiaya. Akses akun personal perlu persetujuan sesuai tugas, dan login browser lain tidak disalin otomatis. |
-| gitlab | Akses proyek GitLab melalui MCP web dengan autentikasi dan izin akun yang sesuai. Baca hanya data dalam lingkup tugas; perubahan proyek memerlukan instruksi yang jelas. |
-| tinyfish | Cari atau ambil informasi web melalui MCP web setelah login layanan. Operasi dapat memakai kuota/kredit; registrasi koneksi saja tidak membuktikan autentikasi atau tugas berhasil. |
-| brightdata | Layanan pengambilan data web opsional; tetap nonaktif tanpa akun dan API key. Pemakaian perlu setup layanan dan pemeriksaan biaya/kuota sebelum dijalankan. |
+| steel | Dihentikan dari pemasang MSSHI. Pilih browser lokal dan lakukan login sendiri; tidak ada transfer akun/cookie. |
+| gitlab | GitLab tidak disambungkan atau diberi kredensial oleh installer MSSHI. Hubungkan sendiri melalui pengaturan resmi layanan bila diperlukan; biaya dan izin mengikuti akun pengguna. |
+| tinyfish | Tinyfish tidak disambungkan atau diberi kredensial oleh installer MSSHI. Hubungkan sendiri melalui pengaturan resmi layanan bila diperlukan; biaya dan izin mengikuti akun pengguna. |
+| brightdata | BrightData tidak disambungkan atau diberi kredensial oleh installer MSSHI. Hubungkan sendiri melalui pengaturan resmi layanan bila diperlukan; biaya dan izin mengikuti akun pengguna. |
 | llmtrim | Padatkan keluaran JSON besar yang memenuhi syarat tanpa kehilangan nilai, dengan pemeriksaan kesetaraan. Tidak memadatkan semua chat atau menjamin persentase penghematan tagihan tertentu. |
 | hersona | Cari referensi persona dan siapkan draf penyesuaian karakter melalui CLI. Persona aktif tetap mengikuti SOUL native; draf tidak otomatis menimpa pengaturan pengguna. |
 | timesfm-runtime | Siapkan dependency dan bobot TimesFM untuk prediksi deret waktu lokal. Memerlukan unduhan, ruang disk, dan RAM cukup; uji kecil bukan jaminan akurasi pada data pengguna. |
@@ -3385,12 +3797,13 @@ Katalog ini membantu memilih instruksi dan fitur. Status dibundel menunjukkan in
 | managed-update | Perbarui salinan skill yang terdaftar dan fingerprint-nya cocok; pertahankan edit lokal yang berbeda. Pendaftaran ini bukan izin mengganti SOUL, provider/model, atau semua dependency runtime. |
 | upstream-cache | Simpan checkout referensi eksternal di luar folder skill agar dapat diperiksa atau diintegrasikan terpisah. Cache memakai internet/disk dan tidak sama dengan fitur yang sudah terpasang atau aktif. |
 | setup-skills | Tambahkan paket atau skill individual ekstra dan kelola skill opsional REA per bot saat setup tanpa mengubah skill kustom yang sudah ada. |
-| setup-plugins | Kelola plugin Hermes dan integrasi runtime seperti msshi-auto-trim, KAT-Coder, Hermes-Dreaming, OmniVoice, dan Steel Browser Policy secara opsional dan non-destruktif. |
-| setup-services | Periksa atau daftarkan koneksi MCP layanan eksternal GitLab dan Tinyfish secara aman per profil atau berbagi OAuth opt-in, sementara BrightData tetap nonaktif. |
+| setup-plugins | Kelola addon lokal opsional seperti auto-trim, KAT, laporan Dreaming offline dan OmniVoice bila telah diverifikasi. Tidak memasang browser cloud atau koneksi layanan otomatis. |
+| setup-services | Pilih Chrome, Edge, Firefox, atau tidak memilih browser; simpan label profil/akun untuk login manual. Tidak memasang layanan eksternal, membuka browser, membaca akun, atau menyalin cookie. |
 | setup-bot-apps | Hubungkan tiap profil bot ke jembatan CLI-Anything dan aplikasi lokal atau web secara on-demand memakai tiket tugas, dengan auto_open_on_boot tetap nonaktif. |
 | context-sources | Cache source terpin CareerOps, direktori remote, Matt Pocock dan rea-video di luar skills; default status tidak mengunduh atau menjalankan model. |
 | career-ops-runtime | Pasang dependency Node secara eksplisit tanpa lifecycle scripts atau unduhan Chromium; CV/data pengguna tetap privat, tugas dan akun terpisah. |
 | rea-video-runtime | Pasang runtime Python terisolasi; analisis lokal dapat melewati OCR/ASR/stems/VLM. Fitur model, unduhan bobot dan generasi tidak otomatis aktif. |
+| interaction | Tipe 1: Main berkonsultasi ke Advisor untuk proyek yang jelas. Tipe 2: Main memakai Dewan dua putaran dengan audit Main di antaranya, tanpa subagen terpisah. Pertanyaan singkat tidak memicu proses berat. Panggilan model memerlukan konfigurasi dan persetujuan biaya; status/pemasangan tidak memanggil model. |
 
 ## Pilihan aplikasi pada CLI-Anything
 
@@ -3448,7 +3861,7 @@ Pilihan ini hanya mengatur registri rute. Aplikasi, runtime, login, izin akun, d
 
 ## Referensi eksternal pada katalog
 
-Ada 61 nama referensi eksternal pada matriks. REA termasuk daftar penemuan ini tetapi pemasangan instruksinya merupakan opsi khusus default OFF. Sejumlah nama historis memuat kata MCP; arsitektur desktop MuZA v3 tetap memakai rute native CLI, sedangkan MCP web yang dipertahankan mengikuti kebijakan layanan. Daftar ini tidak memerintahkan pemasangan semua repo atau server.
+Ada 60 nama referensi eksternal pada matriks. REA termasuk daftar penemuan ini tetapi pemasangan instruksinya merupakan opsi khusus default OFF. Sejumlah nama historis memuat kata MCP; arsitektur desktop MuZA v3 tetap memakai rute native CLI, sedangkan koneksi MCP web disiapkan sendiri oleh pengguna bila diperlukan. Daftar ini tidak memerintahkan pemasangan semua repo atau server.
 
 | Nama | Fungsi |
 | --- | --- |
@@ -3488,7 +3901,6 @@ Ada 61 nama referensi eksternal pada matriks. REA termasuk daftar penemuan ini t
 | gpt-researcher | Mengumpulkan dan menyusun bahan riset; Val memeriksa sumber sebelum penyerahan. |
 | graphify | Membuat peta struktur proyek untuk penelusuran konteks. |
 | hermes-jev-skills | Memilih skill dari konteks dengan pengalihan model dinonaktifkan. |
-| hermes-steel | Gunakan integrasi browser Steel yang tersedia untuk tugas penjelajahan yang diizinkan. |
 | higgsfield-brandkit | Menerapkan sistem visual merek pada produksi aset. |
 | higgsfield-faceless-video | Menyiapkan video tanpa tampil wajah dari skrip, tempo, dan aset. |
 | higgsfield-generate | Menghasilkan atau mengolah media setelah konsep dan parameter disetujui. |
@@ -3520,10 +3932,10 @@ Ada 61 nama referensi eksternal pada matriks. REA termasuk daftar penemuan ini t
 | --- | --- |
 | auto-curiosity-for-film-making | auto-curiousity-for-film-making |
 
-Sumber: [katalog fungsi](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/configs/option_help.json), [matriks peran](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/configs/bot_role_and_skill_matrix.json), dan [fungsi koneksi](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/df1f322e9493c7bf6cf70a366881b263b38d4e70/skills/cli-anything-universal-bridge/scripts/connection_help.json).
+Sumber: [katalog fungsi](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/v3.1.2/configs/option_help.json), [matriks peran](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/v3.1.2/configs/bot_role_and_skill_matrix.json), dan [fungsi koneksi](https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/v3.1.2/skills/cli-anything-universal-bridge/scripts/connection_help.json).
 
 
-# 10. Pegangan cepat dan bahan latihan
+# 11. Pegangan cepat dan bahan latihan
 
 ## Lima langkah untuk satu sesi
 

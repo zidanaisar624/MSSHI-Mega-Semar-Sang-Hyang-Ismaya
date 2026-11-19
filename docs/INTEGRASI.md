@@ -1,89 +1,61 @@
-# Integrasi eksternal MSSHI v3.0
+# Integrasi eksternal MSSHI v3.1.2
 
-Katalog v3 memuat **45 sumber**, terdiri dari 42 repositori GitHub, dua kartu model Hugging Face dan satu situs katalog. Delapan sumber v3 memperluas 37 sumber Tahap 2. Steel sudah termasuk sumber sebelumnya; TimesFM ditambahkan untuk Val. Masing-masing dicocokkan dengan paket, peran, kegunaan, prasyarat dan lisensinya. Inventaris mesin tersedia di [configs/upstreams.json](../configs/upstreams.json).
+Katalog aktif: **51 sumber**, termasuk **48 repositori Git terpin**. Sumber/cache bukan runtime atau layanan yang sudah aktif. Inventaris: [upstreams.json](../configs/upstreams.json).
 
-Status `external-opt-in` berarti operator memilih sendiri integrasi yang akan dipasang atau dijalankan. Pemeriksaan dokumentasi tidak menguji seluruh runtime pada tiap host. Refresh upstream menyimpan sumber ke cache untuk ditinjau. Manifest memiliki 41 repositori Git, dua kartu model, dan satu situs katalog. Runtime, bobot model, aplikasi, kredensial, dan aktivasi layanan mengikuti panduan tiap sumber.
+Installer memasang instruksi ringan sesuai preset. Pilih runtime, akun, unduhan bobot, dan penggunaan berbayar secara terpisah. Aplikasi tidak dibuka saat startup. GitLab, Tinyfish, BrightData, dan Steel tidak disambungkan otomatis.
 
-## Memilih dan memeriksa integrasi
+Academic Mahasiswa dan Dosen memprioritaskan alur kampus serta aplikasi yang tersedia. MuZA mempertahankan pembagian peran kreatif dan coding. Pilihan model/provider/API key tidak dibagikan oleh paket publik.
 
-1. Cocokkan keluaran dengan `use_when`. Dalam tim MuZA ikuti matriks pemilik tugas. Dalam Solo, agen yang sama memilih rute sesuai konteks.
-2. Catat commit/release yang akan dipakai. Baca lisensi, notice aset, prasyarat OS dan versi host. Cek `requires` sebelum menjalankan sesuatu.
-3. Untuk skill Markdown, salin hanya folder yang dipilih dan referensinya. Untuk plugin, aplikasi, model, registry atau pustaka, tinjau dependensi dan cara pemasangan upstream pada tahap terpisah. Jaga rahasia di secret store lokal dan catat anggaran yang disetujui.
-4. Uji operasi terkecil yang relevan, misalnya deteksi perintah lokal, daftar tool tanpa panggilan model, satu halaman OCR publik atau ekspor klip uji dengan aset milik sendiri. Catat hasil dan batas uji.
-5. Jika prasyarat gagal, gunakan rute lokal yang tersedia dan laporkan langkah tertunda. Hindari penggantian model/provider, aktivasi layanan atau unggahan otomatis.
-
-## Rute kerja
-
-- **Kreatif.** Kiki-Chii memulai dari konsep, penonton, format, brief visual dan persetujuan. Higgsfield dipilih untuk generasi hosted apabila akun dan anggaran tersedia. Bang Motion cocok untuk opener HTML. Barty-Bart dan Charlie memberi resep motion berbasis kode. Remotion dipakai untuk perakitan, subtitle dan render terprogram. FilmCraft/SoundCraft atau Blender dapat dipakai untuk polishing jika sudah terpasang. Periksa izin aset, biaya dan preview pada tiap tahap.
-- **Tulisan.** Pilih humanizer sesuai bahasa dan gaya penulis. Gunakan anti-slop pada bagian prose, UI atau kode yang relevan. Pertahankan fakta, sitasi dan kutipan. Simpan sampel suara pribadi di luar repo publik. Gunakan preset `scripts/metrik.py` hanya setelah mengecek versi yang tersedia.
-- **Engineering dan web.** Shikaku Nara dapat memilih Goose setelah konfigurasi lokal, Superpowers untuk perubahan bertahap, Ponytail untuk mengurangi kompleksitas, Graphify untuk pemetaan, lalu satu skill yang cocok dengan stack. Pilih sistem visual berdasarkan brief. Uji komponen, efek dan browser sesuai aksesibilitas, performa, lisensi serta izin lingkungan.
-- **Cybersecurity.** Mulai dari audit lokal read-only dan satu playbook relevan. Strix dan REA memakai target serta metode yang berada dalam otorisasi pengguna. Dalam keadaan darurat, beri alert, lakukan triase lokal yang sudah diotorisasi, lalu laporkan bukti dan detail. Pemindaian aktif, perubahan sistem dan transfer artefak memerlukan otorisasi yang mencakup tindakan itu. Pilih satu revisi REA yang sesuai.
-- **OCR dan konteks.** Ekstrak lapisan teks PDF secara lokal bila tersedia. Untuk scan, cocokkan versi runtime, model dan hardware. Bagi dokumen per jendela halaman, simpan nomor halaman dan hash sumber, lalu ukur waktu dan puncak memori. OCR lokal dapat menghindari biaya API pada tahap ekstraksi. Penggunaan memori, durasi dan biaya LLM sesudah OCR bergantung pada mesin serta konfigurasi. Teruskan hasil ke indeks, Graphify untuk kode, ringkasan bertingkat dan checkpoint. Jev dipertimbangkan untuk pemilihan skill setelah opsi upstream diperiksa, dengan `jev_model_routing: false` sebagai intent paket.
-- **Anggaran.** TokenTracker dan token-monitor adalah sumber perkiraan pemakaian. TokenShield memakai saldo aktual yang tersedia dan taksiran biaya sebelum mengizinkan panggilan berbayar. Ambang cadangan di brief adalah USD 1,00. Bila nilai penting belum tersedia, tahan operasi berbayar atau minta angka yang diperlukan. Telemetri pemakaian tidak menjamin saldo provider.
-- **Riset dan karier.** Val memakai GPT Researcher apabila provider, retriever dan batas biaya sudah disepakati. Periksa rujukan dan tanggal. Remote Jobs memberi daftar perusahaan untuk disaring. Konfirmasi lowongan aktif, wilayah, zona waktu dan persyaratan di halaman karier resmi.
-
-## Bridge CLI-Anything sesuai permintaan
-
-Jalankan `msshi connect --mode auto-reconnect --dry-run` untuk melihat rute yang dapat didaftarkan. Gunakan `msshi connect --catalog` untuk memilih rute per aplikasi. Hermes memakai tool native untuk MCP dan MSSHI menjalankan harness lokal saat diminta. [Panduan koneksi dan contoh](CLI_ANYTHING_BRIDGE.md).
-
-## Inventaris 45 sumber
-
-Lisensi yang tercatat berasal dari README, metadata atau kartu model. Periksa `LICENSE` pada commit terpilih sebelum mendistribusikan kode, contoh, font, suara, bobot, merek atau dependensi.
-
-| ID dan sumber | Fungsi saat dipilih | Lisensi atau catatan distribusi |
-|---|---|---|
-| [`higgsfield-skills`](https://github.com/higgsfield-ai/skills) | Pilih generasi gambar/video/foto produk atau brand kit dari treatment Kiki-Chii. | MIT untuk skill; akun, kredit dan hasil media tunduk pada ketentuan layanan. |
-| [`remotion-skills`](https://github.com/remotion-dev/skills) | Pilih video yang memerlukan timing, rendering terprogram atau subtitle yang dapat diedit. | Lisensi paket skill perlu diperiksa pada revisi; lisensi runtime Remotion terpisah. |
-| [`barty-motion-graphics`](https://github.com/Barty-Bart/motion-graphics) | Pilih iklan motion dari kode dan sound pass terstruktur. | MIT; Geist OFL, ikon Lucide ISC, SFX tertentu CC0. Ikuti notice per aset. |
-| [`charlie-motion-graphics`](https://github.com/charlie947/motion-graphics-skills) | Pilih motion peluncuran yang seluruh frame-nya dibangun dengan kode. | MIT. |
-| [`bang-motion`](https://github.com/bangtutorial/bang-motion) | Pilih opener, promo, teks bergerak atau explainer HTML. | MIT; periksa izin aset dan CDN yang dipakai proyek. |
-| [`humanizer-en`](https://github.com/blader/humanizer) | Sunting tulisan Inggris sambil menjaga fakta, kutipan dan suara penulis. | MIT. |
-| [`humanizer-indonesia`](https://github.com/adhiprib/humanizer-indonesia) | Sunting tulisan Indonesia menurut ragam akademik, ajar atau semiformal. | MIT. Jangan sertakan sampel suara pribadi di repo publik. |
-| [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Tinjau kebiasaan generik pada prose, UI atau kode sesuai output yang diminta. | MIT. |
-| [`goose`](https://github.com/aaif-goose/goose) | Delegasikan vibecoding pada workspace yang dipilih. | Apache-2.0. Kebijakan provider dan ekstensi terpisah. |
-| [`superpowers`](https://github.com/obra/superpowers) | Gunakan planning, debugging dan verifikasi untuk perubahan bertahap. | MIT. |
-| [`ponytail`](https://github.com/dietrichgebert/ponytail) | Tinjau solusi yang terlalu kompleks dan kurangi perubahan yang tidak perlu. | MIT. |
-| [`addy-agent-skills`](https://github.com/addyosmani/agent-skills) | Pilih playbook coding, delivery, atau review sesuai fase. | MIT. |
-| [`graphify`](https://github.com/Graphify-Labs/graphify) | Petakan kode, dokumentasi dan dependensi sebelum membuka banyak file. | Repo menampilkan Apache-2.0 dan MIT; cek cakupan per file dan revisi. |
-| [`mindrally-skills`](https://github.com/mindrally/skills) | Muat keahlian framework atau bahasa yang cocok dengan proyek. | Apache-2.0. |
-| [`playwright-best-practices`](https://github.com/currents-dev/playwright-best-practices-skill) | Rancang tes E2E dengan locator, isolasi dan debugging yang dapat diulang. | MIT. |
-| [`awesome-copilot`](https://github.com/github/awesome-copilot) | Cari agen, instruksi atau skill Copilot yang sesuai dengan tugas. | MIT; periksa atribusi dan dependensi entry pilihan. |
-| [`superdesign-skill`](https://github.com/superdesigndev/superdesign-skill) | Tetapkan gaya, alur antarmuka dan standar visual sebelum implementasi. | MIT untuk repo; layanan eksternal terpisah. |
-| [`better-design`](https://github.com/marvkr/better-design) | Cari tema, token desain, atau komponen UI siap adaptasi. | MIT untuk repo; cek dependensi dan merek pihak ketiga. |
-| [`design-taste`](https://github.com/madebymustafa/design-taste) | Pilih identitas visual yang cocok dengan brief dan konsistensi antarlayar. | MIT. |
-| [`paper-shaders`](https://github.com/paper-design/shaders) | Gunakan shader canvas untuk elemen visual saat efek tersebut diperlukan. | Apache-2.0. |
-| [`canvas-ui`](https://github.com/DavidHDev/canvas-ui) | Gunakan komponen WebGL/canvas pada UI dengan anggaran performa yang sesuai. | MIT + Commons Clause menurut upstream; pembatasan menjual library. Tidak disalin ke MSSHI. |
-| [`motion-primitives`](https://github.com/ibelick/motion-primitives) | Pilih komponen animasi UI yang bisa disunting dan diuji. | Lisensi belum terkonfirmasi pada revisi audit. Jangan redistribusikan sebelum memperoleh hak yang sesuai. |
-| [`cursify`](https://github.com/ui-layouts/cursify) | Pilih efek kursor React/Next.js bila menambah nilai interaksi. | Lisensi belum terkonfirmasi dari sumber yang dibaca. Jangan vendor sebelum dicek. |
-| [`strix`](https://github.com/usestrix/strix) | Tinjau keamanan aplikasi hanya pada target dan metode yang telah diotorisasi. | Apache-2.0 untuk repo; platform cloud dan biaya terpisah. |
-| [`cybersecurity-library`](https://github.com/mukul975/anthropic-cybersecurity-skills) | Cari satu playbook sesuai hardening, forensik, deteksi atau audit. | Apache-2.0. Proyek komunitas; bukan produk resmi Anthropic. |
-| [`reverse-engineer-anything`](https://github.com/NabilRFG12/Reverse-Engineer-anything?tab=readme-ov-file) | Rujuk alur pemeriksaan artefak pada scope yang disetujui. | MIT menurut LICENSE repo; lisensi debugger dan alat dekompilasi terpisah. |
-| [`rea`](https://github.com/morluto/rea) | Gunakan upstream untuk analisis perilaku, file atau binary dalam scope. | MIT; alat eksternal dapat berlisensi terpisah. |
-| [`unlimited-ocr-2`](https://huggingface.co/baidu/Unlimited-OCR-2) | Baca PDF scan/buku/gambar panjang dalam jendela halaman, simpan jejak halaman. | MIT menurut model card. Review custom code dan dependency sebelum menjalankan. |
-| [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR) | Jalankan pipeline OCR untuk model yang sesuai versi dokumentasinya. | MIT. |
-| [`tokentracker`](https://github.com/xiufengsun/TokenTracker) | Ambil perkiraan pemakaian token dan biaya dari runtime yang didukung. | MIT. Catatan token bukan bukti saldo tersisa. |
-| [`token-monitor`](https://github.com/Javis603/token-monitor) | Gunakan data biaya atau aktivitas sesi sebagai masukan meter lokal. | MIT. Catatan biaya bukan jaminan saldo. |
-| [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills) | Pilih kemampuan skill selection hanya bila versi host mendukung dan pengguna mengaktifkan. | MIT. Jangan aktifkan mutasi model/provider melalui konfigurasi paket. |
-| [`cli-anything`](https://github.com/HKUDS/CLI-Anything) | Cari harness resmi yang cocok, lalu rencanakan perintah dan jalur kerja. | Apache-2.0 untuk framework. Lisensi aplikasi dan harness yang berbeda perlu diperiksa. |
-| [`cli-anything-catalog`](https://clianything.cc/) | Temukan harness dan dokumentasi upstream, kemudian tinjau commit dan lisensinya. | Situs referensi. Lisensi framework tidak otomatis mencakup paket pihak ketiga. |
-| [`hermes-steel`](https://github.com/steel-dev/hermes-steel) | Pilih browser cloud hanya bila cakupan data dan biaya disetujui. | MIT untuk plugin; layanan Steel, jaringan, proxy dan biaya terpisah. |
-| [`gpt-researcher`](https://github.com/assafelovic/gpt-researcher) | Susun riset mendalam dengan pencarian, ekstraksi dan daftar sumber. | Apache-2.0 untuk repo; API eksternal terpisah. |
-| [`remote-jobs`](https://github.com/remoteintech/remote-jobs) | Cari perusahaan remote, lalu verifikasi lowongan aktif di laman resmi perusahaan. | ISC menurut README upstream. Hak atas nama, merek, serta data pihak ketiga terpisah. |
-
-### Tujuh sumber tambahan v3
-
-| ID dan sumber | Fungsi saat dipilih | Lisensi atau catatan distribusi |
-|---|---|---|
-| [`caveman`](https://github.com/JuliusBrussee/caveman) | Ringkas handoff internal dan data terstruktur, sambil mempertahankan gaya percakapan persona. | Apache-2.0. Persentase penghematan upstream tidak dijamin untuk semua tugas. |
-| [`hyperframes`](https://github.com/heygen-com/hyperframes) | Pilih skill HTML/motion untuk Kiki-Chii dan Shikaku. Runtime render diaktifkan dan diuji terpisah. | Apache-2.0; lisensi aset dan layanan eksternal terpisah. |
-| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Cari pola UI/UX menggunakan katalog dan pencarian BM25 lokal. | MIT. |
-| [`anthropic-skills`](https://github.com/anthropics/skills) | Gunakan paket terpilih docx, pdf, pptx, xlsx, canvas-design, skill-creator, claude-api, dan webapp-testing. | Apache-2.0 pada masing-masing skill yang dipilih; pertahankan LICENSE/NOTICE per folder. |
-| [`hermes-omnivoice`](https://github.com/ThaungThanHan/hermes-omnivoice) | Suara lokal on-demand setelah dependensi, model, dan uji sintesis siap. | Plugin menyatakan Apache-2.0 dalam pyproject.toml. Bobot k2-fsa/OmniVoice memakai CC-BY-NC dan memerlukan hak yang sesuai untuk penggunaan komersial. |
-| [`hermes-dreaming`](https://github.com/itpartypattaya/hermes-dreaming/tree/21878d3ec8752283dd7ee69a803c63bb989c1740) | Konsolidasi deterministik menjadi usulan yang ditinjau, tanpa membangunkan agen LLM. | MIT pada revisi yang dipin. Batas input berbeda dari batas working set proses. |
-| [`kat-coder-v2-5-dev`](https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev) | Opsi subagen coder yang memerlukan runtime lokal atau endpoint terverifikasi. Dapat dilewati. | Apache-2.0 menurut model card. Ukuran kuantisasi dan kecukupan perangkat harus diverifikasi. |
-
-Audit revisi dan cakupan lisensi terbaru tercantum di [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) dan [inventaris lisensi mesin](../configs/upstream_license_audit.json). Lisensi ringkas di tabel ini tidak menggantikan berkas hukum pada revisi sumber yang dipakai.
-
-## TimesFM untuk Val
-
-[TimesFM](TIMESFM.md) menambahkan forecasting numerik lokal melalui runtime CPU terpisah. [Steel](STEEL_BROWSER_POLICY.md) memakai guard native yang menghentikan fallback lokal; sesi cloud tetap memerlukan kredensial dan persetujuan anggaran. [GitLab/Tinyfish](SERVICE_CONNECTIONS.md) adalah MCP layanan web yang dipertahankan.
+| Sumber | Peran | Fungsi saat dipilih | Prasyarat | Lisensi |
+| --- | --- | --- | --- | --- |
+| [higgsfield-skills](https://github.com/higgsfield-ai/skills) | kiki-chii | Pilih generasi gambar/video/foto produk atau brand kit dari treatment Kiki-Chii. | Skill lokal yang ditinjau, akun dan akses Higgsfield, anggaran, aset yang boleh dikirim. | MIT |
+| [remotion-skills](https://github.com/remotion-dev/skills) | kiki-chii | Pilih video yang memerlukan timing, rendering terprogram atau subtitle yang dapat diedit. | Skill yang relevan dan proyek Node/Remotion yang sudah dipilih. | Unresolved at audited revision; do not redistribute without permission |
+| [barty-motion-graphics](https://github.com/Barty-Bart/motion-graphics) | kiki-chii | Pilih iklan motion dari kode dan sound pass terstruktur. | Pilih skill dan aset yang dibutuhkan, cek runtime render dari resep. | MIT |
+| [charlie-motion-graphics](https://github.com/charlie947/motion-graphics-skills) | kiki-chii | Pilih motion peluncuran yang seluruh frame-nya dibangun dengan kode. | Tinjau resep skill dan siapkan runtime/render proyek yang dipilih. | MIT |
+| [bang-motion](https://github.com/bangtutorial/bang-motion) | kiki-chii | Pilih opener, promo, teks bergerak atau explainer HTML. | Browser untuk HTML. Node, Puppeteer dan FFmpeg bila perlu MP4. | MIT |
+| [humanizer-en](https://github.com/blader/humanizer) | all | Sunting tulisan Inggris sambil menjaga fakta, kutipan dan suara penulis. | Skill yang direview; salinan teks yang pengguna izinkan untuk disunting. | MIT |
+| [humanizer-indonesia](https://github.com/adhiprib/humanizer-indonesia) | all | Sunting tulisan Indonesia menurut ragam akademik, ajar atau semiformal. | Skill dan referensi suara milik sendiri. Cek opsi scripts/metrik.py pada revisi yang dipakai. | MIT |
+| [anti-slop](https://github.com/miqdadbadjuber/anti-slop) | all | Tinjau kebiasaan generik pada prose, UI atau kode sesuai output yang diminta. | Pilih aturan untuk target proyek, bukan seluruh aturan lintas domain. | MIT |
+| [goose](https://github.com/aaif-goose/goose) | shikaku | Delegasikan vibecoding pada workspace yang dipilih. | Goose adalah agen CLI terpisah, bukan ID model MoA. Endpoint/provider dan izin tool terisolasi diperlukan; tidak autostart. | Apache-2.0 |
+| [superpowers](https://github.com/obra/superpowers) | shikaku-nara | Gunakan planning, debugging dan verifikasi untuk perubahan bertahap. | Pilih skill atau plugin yang kompatibel dengan host. Tinjau hook bootstrap sebelum mengaktifkan plugin. | MIT |
+| [ponytail](https://github.com/dietrichgebert/ponytail) | shikaku-nara | Tinjau solusi yang terlalu kompleks dan kurangi perubahan yang tidak perlu. | Skill/instruksi yang cocok dengan host dan aturan repo. | MIT |
+| [addy-agent-skills](https://github.com/addyosmani/agent-skills) | shikaku-nara | Pilih playbook coding, delivery, atau review sesuai fase. | Salin skill yang diperlukan dengan referensinya; dependensi bervariasi per skill. | MIT |
+| [graphify](https://github.com/Graphify-Labs/graphify) | all | Petakan kode, dokumentasi dan dependensi sebelum membuka banyak file. | CLI dan parser lokal sesuai format. Periksa tahap mana yang memakai model/API. | Apache-2.0 |
+| [mindrally-skills](https://github.com/mindrally/skills) | shikaku-nara | Muat keahlian framework atau bahasa yang cocok dengan proyek. | Pilih satu playbook berdasarkan stack; cek runtime masing-masing. | Apache-2.0 |
+| [playwright-best-practices](https://github.com/currents-dev/playwright-best-practices-skill) | shikaku-nara | Rancang tes E2E dengan locator, isolasi dan debugging yang dapat diulang. | Proyek Playwright dan browser test. Gunakan lingkungan dan akun uji yang diizinkan. | MIT |
+| [awesome-copilot](https://github.com/github/awesome-copilot) | shikaku-nara | Cari agen, instruksi atau skill Copilot yang sesuai dengan tugas. | Ambil entry yang relevan; terjemahkan fitur yang khusus Copilot bila host berbeda. | MIT |
+| [superdesign-skill](https://github.com/superdesigndev/superdesign-skill) | kiki-chii, shikaku-nara, antigravity | Tetapkan gaya, alur antarmuka dan standar visual sebelum implementasi. | Skill yang dipilih, brief dan proyek UI. Fitur layanan perlu akun jika dipakai. | MIT |
+| [better-design](https://github.com/marvkr/better-design) | kiki-chii, shikaku-nara, antigravity | Cari tema, token desain, atau komponen UI siap adaptasi. | Server MCP atau registry yang ditinjau. Pin versi; cek dependency dan lisensi komponen yang diambil. | MIT |
+| [design-taste](https://github.com/madebymustafa/design-taste) | kiki-chii, shikaku-nara, antigravity | Pilih identitas visual yang cocok dengan brief dan konsistensi antarlayar. | Gunakan satu profil genre atau pola yang relevan. | MIT |
+| [paper-shaders](https://github.com/paper-design/shaders) | kiki-chii, shikaku-nara, antigravity | Gunakan shader canvas untuk elemen visual saat efek tersebut diperlukan. | Paket npm sesuai framework dan kemampuan GPU/WebGL. Uji fallback dan aksesibilitas. | Apache-2.0 |
+| [canvas-ui](https://github.com/DavidHDev/canvas-ui) | kiki-chii, shikaku-nara, antigravity | Gunakan komponen WebGL/canvas pada UI dengan anggaran performa yang sesuai. | Framework target dan browser WebGL. Baca batas Commons Clause sebelum distribusi. | MIT + Commons Clause |
+| [motion-primitives](https://github.com/ibelick/motion-primitives) | kiki-chii, shikaku-nara, antigravity | Pilih komponen animasi UI yang bisa disunting dan diuji. | Framework dan motion runtime yang diminta komponen. Tambahkan reduced-motion. | Unresolved at audited revision; do not redistribute without permission |
+| [cursify](https://github.com/ui-layouts/cursify) | kiki-chii, shikaku-nara, antigravity | Pilih efek kursor React/Next.js bila menambah nilai interaksi. | React/Next.js, tes pointer, sentuhan dan reduced-motion. | Unresolved at audited revision; do not redistribute without permission |
+| [strix](https://github.com/usestrix/strix) | shikaku-nara | Tinjau keamanan aplikasi hanya pada target dan metode yang telah diotorisasi. | Scope tertulis, target uji, runtime lokal sesuai docs, isolasi dan model milik pengguna bila perlu. | Apache-2.0 |
+| [cybersecurity-library](https://github.com/mukul975/anthropic-cybersecurity-skills) | shikaku-nara | Cari satu playbook sesuai hardening, forensik, deteksi atau audit. | Indeks lokal dan tools sesuai playbook; review scope sebelum eksekusi. | Apache-2.0 |
+| [reverse-engineer-anything](https://github.com/NabilRFG12/Reverse-Engineer-anything?tab=readme-ov-file) | shikaku-nara | Rujuk alur pemeriksaan artefak pada scope yang disetujui. | Salinan artefak lokal, izin analisis, alat platform yang relevan. Periksa hubungan fork/revisi. | MIT |
+| [rea](https://github.com/morluto/rea) | shikaku | Coder investigates authorized local JavaScript/apps/artifacts; native engines require existing supported provider. | Artefak milik pengguna/diotorisasi; pilih alat sesuai platform dan batas pemeriksaan. | MIT |
+| [unlimited-ocr-2](https://huggingface.co/baidu/Unlimited-OCR-2) | all | Baca PDF scan/buku/gambar panjang dalam jendela halaman, simpan jejak halaman. | Checkpoint yang dipin, runtime kompatibel, ruang disk/VRAM yang cukup dan review kode model. | MIT according to official model card |
+| [unlimited-ocr](https://github.com/baidu/Unlimited-OCR) | all | Jalankan pipeline OCR untuk model yang sesuai versi dokumentasinya. | Dependensi dan hardware sesuai upstream. Cocokkan versi repo, checkpoint dan format PDF/gambar. | MIT |
+| [tokentracker](https://github.com/xiufengsun/TokenTracker) | all | Ambil perkiraan pemakaian token dan biaya dari runtime yang didukung. | Aplikasi/sumber data yang tersedia. Rekonsiliasi dengan biaya provider dan saldo resmi bila ada. | MIT |
+| [token-monitor](https://github.com/Javis603/token-monitor) | all | Gunakan data biaya atau aktivitas sesi sebagai masukan meter lokal. | Widget/ekspor atau API yang benar-benar tersedia; matikan sinkronisasi bila tidak dibutuhkan. | MIT |
+| [hermes-jev-skills](https://github.com/kerpopule/hermes-jev-skills) | all | Pilih kemampuan skill selection hanya bila versi host mendukung dan pengguna mengaktifkan. | Hermes kompatibel; konfirmasi nama opsi upstream. Routing model MSSHI dinonaktifkan. | MIT |
+| [cli-anything](https://github.com/HKUDS/CLI-Anything) | all | Cari harness resmi yang cocok, lalu rencanakan perintah dan jalur kerja. | Harness telah diaudit dan terpasang, aplikasi target, path yang dipilih pengguna. | Apache-2.0 |
+| [cli-anything-catalog](https://clianything.cc/) | all | Temukan harness dan dokumentasi upstream, kemudian tinjau commit dan lisensinya. | Akses web untuk pencarian dokumentasi. Registry tidak membuktikan tool sudah terpasang. | External registry terms; no blanket sublicense |
+| [gpt-researcher](https://github.com/assafelovic/gpt-researcher) | val | Susun riset mendalam dengan pencarian, ekstraksi dan daftar sumber. | Runtime dan penyedia model/pencarian yang dipilih. Batasi durasi dan biaya. | Apache-2.0 |
+| [remote-jobs](https://github.com/remoteintech/remote-jobs) | yukino, shizuka, val, kiki-chii, shikaku | Cari perusahaan remote, lalu verifikasi lowongan aktif di laman resmi perusahaan. | Akses direktori dan laman karier. Cek lokasi, zona waktu dan hak kerja per posisi. | ISC (project), MIT (Cube Boilerplate), SIL OFL (fonts) |
+| [caveman](https://github.com/JuliusBrussee/caveman) | all | Skill only. Proxy, model Auto routing and paid memory compression are excluded. | Reviewed local runtime and active task when executing tools. | Apache-2.0 |
+| [hyperframes](https://github.com/heygen-com/hyperframes) | kiki-chii, shikaku-nara | Nine published skills. Pro-only features remain account-dependent. | Reviewed local runtime and active task when executing tools. | Apache-2.0 |
+| [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | kiki-chii, shikaku-nara | Local BM25 scripts and curated data are stored outside skill scanner roots. | Reviewed local runtime and active task when executing tools. | MIT |
+| [anthropic-skills](https://github.com/anthropics/skills) | all | Eight selected official skills installed with distinct anthology names. | Reviewed local runtime and active task when executing tools. | Apache-2.0 for each selected skill |
+| [hermes-omnivoice](https://github.com/ThaungThanHan/hermes-omnivoice) | all | Runtime and model weights separate; activate only after local synthesis verification. | Reviewed local runtime and active task when executing tools. | Apache-2.0 declared by pyproject.toml; no standalone LICENSE |
+| [hermes-dreaming](https://github.com/itpartypattaya/hermes-dreaming) | all | Pinned deterministic reporting only. No LLM wake or automatic fact promotion. | Reviewed local runtime and active task when executing tools. | MIT |
+| [kat-coder-v2-5-dev](https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev) | shikaku | Explicit coding subtask only; never replace the primary model. | Model text-only 35B total/3B aktif. Pada RAM16GB/RTX3050 utamakan endpoint remote yang benar; jangan menjanjikan Q4 muat atau mengubah model utama. | Apache-2.0 according to official model card |
+| [timesfm](https://github.com/google-research/timesfm) | val | Data numerik terurut waktu, forecasting dan baseline evaluasi; bukan chatbot atau model provider Hermes. | Explicit isolated Python CPU runtime installation and TimesFM2.5 pinned model download. | Apache-2.0 code and selected TimesFM2.5 weights; TimesFM3 weights noncommercial/nonproduction excluded |
+| [unslop](https://github.com/heydamir/unslop) | kiki-chii, val, shikaku | Audit dan perbaikan UI bertahap; Kiki arah visual, Val bukti dashboard, Coder implementasi. | Sumber UI atau URL yang diakses dengan izin; tidak memasang browser/snapshot scripts upstream. | CC-BY-4.0 |
+| [brag](https://github.com/latent-spaces/brag) | kiki-chii | Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia. | Node22+, runtime Hyperframes terpisah, FFmpeg, aset berizin; tidak mengganti model Kiki. | MIT; music and SFX have separate licenses and are not bundled |
+| [scrapling](https://github.com/D4Vinci/Scrapling) | val, shikaku | Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi. | Setup parser terisolasi; wrapper tidak mengaktifkan browser, stealth, CAPTCHA, atau akses akun. | BSD-3-Clause |
+| [harness2](https://github.com/google-research/harness2) | yukino, shizuka, val, kiki-chii, shikaku | Kelima bot dapat mengusulkan evaluasi harness sesuai konteks; demo deterministik dan promosi perubahan tetap terpisah. | Python3.12 runtime terpisah; benchmark model berbayar dan promosi harness aktual tidak dijalankan wrapper. | Apache-2.0 |
+| [career-ops](https://github.com/career-ops-hq/career-ops) | yukino, shizuka, val, kiki-chii, shikaku | Bantu strategi karier, CV/JD, skor kecocokan 1-5, tracker dan wawancara saat diminta. | Source workflow lengkap dengan AGENTS.md dan modes/, Node sesuai upstream; CV/data pengguna privat. Browser dan panggilan model terpisah. | MIT; employers data CC-BY-4.0 |
+| [mattpocock-skills](https://github.com/mattpocock/skills) | yukino, shizuka, val, kiki-chii, shikaku | Pilih disiplin engineering/TDD/domain model saat konteks sesuai; orkestrator dan publikasi tetap dipanggil eksplisit. | Source cache terpisah; hormati disable-model-invocation dan workspace/issue tracker yang dipilih. | MIT |
+| [rea-video](https://github.com/JuneYaooo/rea-video) | kiki-chii | Bedah video referensi per shot ke VIDEO.md dan rencana pembuatan ulang dengan review Kiki. | Python 3.10+ dan FFmpeg/ffprobe; runtime, OCR/ASR/stems/VLM/model download dan generasi ulang merupakan opt-in terpisah. | Apache-2.0 |

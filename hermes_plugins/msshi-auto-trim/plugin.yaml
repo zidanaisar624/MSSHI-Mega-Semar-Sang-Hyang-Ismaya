@@ -1,5 +1,6 @@
 name: msshi-auto-trim
-version: "0.1.0"
+version: "0.2.0"
+label: MSSHITrim
 description: "Automatically compact eligible large JSON tool results through local Llmtrim, accepting only exact data-preserving output. No MCP or LLM calls."
 author: "Muhammad Zidan Aisar (MuZA), assisted by OpenAI ChatGPT"
 license: MIT

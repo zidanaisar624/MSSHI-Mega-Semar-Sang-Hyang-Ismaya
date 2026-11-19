@@ -253,10 +253,6 @@
       "id": "Memilih skill dari konteks dengan pengalihan model dinonaktifkan.",
       "en": "Choose skills from context while keeping model routing disabled."
     },
-    "hermes-steel": {
-      "id": "Gunakan integrasi browser Steel yang tersedia untuk tugas penjelajahan yang diizinkan.",
-      "en": "Use an available Steel browser integration for an authorized browsing task."
-    },
     "higgsfield-brandkit": {
       "id": "Menerapkan sistem visual merek pada produksi aset.",
       "en": "Apply a consistent brand identity to creative assets."
@@ -556,6 +552,14 @@
     "muza-preset": {
       "id": "Buat tim Yukino untuk ide, Shizuka untuk koordinasi, Val untuk riset, Kiki untuk kreatif, dan Shikaku untuk kode.",
       "en": "Create a team: Yukino for ideas, Shizuka for coordination, Val for research, Kiki for creative work and Shikaku for code."
+    },
+    "academic-mahasiswa": {
+      "id": "Academic Mahasiswa S1/S2/S3 (pilihan awal baru): lima peran untuk bimbingan, riset, kode dan sidang; catatan di workspace Hermes, akun/model milik pengguna.",
+      "en": "Academic Students S1/S2/S3 (fresh-install initial choice): five roles for supervision, research, coding and defense; notes stay in Hermes workspace, with user-supplied accounts/models."
+    },
+    "academic-dosen": {
+      "id": "Academic Dosen/Pimpinan Kampus: lima peran untuk RPS, mengajar, pembimbingan, riset, rapat dan tindak lanjut; tidak memasang Obsidian atau akun otomatis.",
+      "en": "Academic Lecturers/Campus Leadership: five roles for syllabi, teaching, supervision, research, meetings and follow-up; no automatic Obsidian or account setup."
     }
   },
   "platforms": {
@@ -638,20 +642,20 @@
       "en": "Create deterministic local summary/learning proposals from selected material. Does not call an LLM or automatically promote proposals into active memory."
     },
     "steel": {
-      "id": "Browser utama untuk penjelajahan umum jika key/endpoint sudah disiapkan; layanan dapat berbiaya. Akses akun personal perlu persetujuan sesuai tugas, dan login browser lain tidak disalin otomatis.",
-      "en": "Primary browser for general browsing once a key/endpoint is configured; service use may cost money. Personal-account access needs task-scoped approval, and other browser logins are not copied automatically."
+      "id": "Dihentikan dari pemasang MSSHI. Pilih browser lokal dan lakukan login sendiri; tidak ada transfer akun/cookie.",
+      "en": "Retired from the MSSHI installer. Select a local browser and sign in yourself; no account or cookie transfer."
     },
     "gitlab": {
-      "id": "Akses proyek GitLab melalui MCP web dengan autentikasi dan izin akun yang sesuai. Baca hanya data dalam lingkup tugas; perubahan proyek memerlukan instruksi yang jelas.",
-      "en": "Access GitLab projects through web MCP with appropriate account authentication and permissions. Read only task-scoped data; project changes need explicit instructions."
+      "id": "GitLab tidak disambungkan atau diberi kredensial oleh installer MSSHI. Hubungkan sendiri melalui pengaturan resmi layanan bila diperlukan; biaya dan izin mengikuti akun pengguna.",
+      "en": "GitLab is not connected or provisioned with credentials by the MSSHI installer. Connect it manually using the service settings when needed; costs and permissions belong to the user account."
     },
     "tinyfish": {
-      "id": "Cari atau ambil informasi web melalui MCP web setelah login layanan. Operasi dapat memakai kuota/kredit; registrasi koneksi saja tidak membuktikan autentikasi atau tugas berhasil.",
-      "en": "Search or fetch web information through web MCP after service login. Operations may consume quota/credits; registration alone does not prove authentication or successful operation."
+      "id": "Tinyfish tidak disambungkan atau diberi kredensial oleh installer MSSHI. Hubungkan sendiri melalui pengaturan resmi layanan bila diperlukan; biaya dan izin mengikuti akun pengguna.",
+      "en": "Tinyfish is not connected or provisioned with credentials by the MSSHI installer. Connect it manually using the service settings when needed; costs and permissions belong to the user account."
     },
     "brightdata": {
-      "id": "Layanan pengambilan data web opsional; tetap nonaktif tanpa akun dan API key. Pemakaian perlu setup layanan dan pemeriksaan biaya/kuota sebelum dijalankan.",
-      "en": "Optional web-data service; remains disabled without an account and API key. Use requires service setup and a cost/quota check before running."
+      "id": "BrightData tidak disambungkan atau diberi kredensial oleh installer MSSHI. Hubungkan sendiri melalui pengaturan resmi layanan bila diperlukan; biaya dan izin mengikuti akun pengguna.",
+      "en": "BrightData is not connected or provisioned with credentials by the MSSHI installer. Connect it manually using the service settings when needed; costs and permissions belong to the user account."
     },
     "llmtrim": {
       "id": "Padatkan keluaran JSON besar yang memenuhi syarat tanpa kehilangan nilai, dengan pemeriksaan kesetaraan. Tidak memadatkan semua chat atau menjamin persentase penghematan tagihan tertentu.",
@@ -690,12 +694,12 @@
       "en": "Add extra skill packs or individual skills and manage optional REA wrappers per bot during setup without overwriting custom skills."
     },
     "setup-plugins": {
-      "id": "Kelola plugin Hermes dan integrasi runtime seperti msshi-auto-trim, KAT-Coder, Hermes-Dreaming, OmniVoice, dan Steel Browser Policy secara opsional dan non-destruktif.",
-      "en": "Manage Hermes plugins and optional runtime integrations such as msshi-auto-trim, KAT-Coder, Hermes-Dreaming, OmniVoice, and Steel Browser Policy safely."
+      "id": "Kelola addon lokal opsional seperti auto-trim, KAT, laporan Dreaming offline dan OmniVoice bila telah diverifikasi. Tidak memasang browser cloud atau koneksi layanan otomatis.",
+      "en": "Manage optional local addons such as auto-trim, KAT, offline Dreaming reports, and verified OmniVoice. No cloud browser or automatic service connection is installed."
     },
     "setup-services": {
-      "id": "Periksa atau daftarkan koneksi MCP layanan eksternal GitLab dan Tinyfish secara aman per profil atau berbagi OAuth opt-in, sementara BrightData tetap nonaktif.",
-      "en": "Inspect or register external GitLab and Tinyfish MCP connections safely per profile or via opt-in shared OAuth while keeping BrightData disabled."
+      "id": "Pilih Chrome, Edge, Firefox, atau tidak memilih browser; simpan label profil/akun untuk login manual. Tidak memasang layanan eksternal, membuka browser, membaca akun, atau menyalin cookie.",
+      "en": "Choose Chrome, Edge, Firefox, or none; store profile/account labels for manual login. Never installs external services, opens a browser, reads accounts, or copies cookies."
     },
     "setup-bot-apps": {
       "id": "Hubungkan tiap profil bot ke jembatan CLI-Anything dan aplikasi lokal atau web secara on-demand memakai tiket tugas, dengan auto_open_on_boot tetap nonaktif.",
@@ -712,6 +716,10 @@
     "rea-video-runtime": {
       "id": "Pasang runtime Python terisolasi; analisis lokal dapat melewati OCR/ASR/stems/VLM. Fitur model, unduhan bobot dan generasi tidak otomatis aktif.",
       "en": "Install an isolated Python runtime; local analysis can skip OCR/ASR/stems/VLM. Model features, weights and generation are not automatically enabled."
+    },
+    "interaction": {
+      "id": "Tipe 1: Main berkonsultasi ke Advisor untuk proyek yang jelas. Tipe 2: Main memakai Dewan dua putaran dengan audit Main di antaranya, tanpa subagen terpisah. Pertanyaan singkat tidak memicu proses berat. Panggilan model memerlukan konfigurasi dan persetujuan biaya; status/pemasangan tidak memanggil model.",
+      "en": "Type 1: Main consults an Advisor for confirmed projects. Type 2: Main uses exactly two Council rounds with its own audit between them, without a separate subagent. Brief questions do not start heavy work. Model calls require configuration and spending approval; status/installation makes no model calls."
     }
   }
 }

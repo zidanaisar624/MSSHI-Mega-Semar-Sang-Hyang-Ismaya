@@ -34,6 +34,26 @@ class JsonOnlyTrimTests(unittest.TestCase):
         self.assertIn(b'dedup = false', canonical)
         self.assertNotIn(b'preset =', canonical)
 
+    def test_msshitrim_alias_registers_one_hook_and_only_aggregate_metrics(self):
+        class State:
+            def __init__(self):self.values={}
+            def get(self,key,default=None):return self.values.get(key,default)
+            def set(self,key,value):self.values[key]=value
+        class Context:
+            def __init__(self):self.state=State();self.hooks=[];self.commands={}
+            def get_config(self,key,default=None):return default
+            def register_hook(self,name,handler):self.hooks.append((name,handler))
+            def register_command(self,name,handler,**kwargs):self.commands[name]=handler
+            def register_cli_command(self,*args,**kwargs):pass
+        context=Context();hook.register(context)
+        self.assertEqual(['transform_tool_result'],[name for name,_ in context.hooks])
+        self.assertEqual({'msshi-trim-status','msshitrim-status'},set(context.commands))
+        report=json.loads(context.commands['msshitrim-status']())
+        self.assertEqual('MSSHITrim',report['display_name'])
+        self.assertEqual('msshi-auto-trim',report['plugin'])
+        self.assertEqual(0,report['llm_calls'])
+        self.assertNotIn('messages',report)
+
     def test_hook_pins_child_config_without_mutating_parent_env(self):
         compact = json.dumps(self.data, separators=(',', ':'))
         output = json.dumps({'messages': [{'role': 'tool', 'tool_call_id': 'msshi-local-tool', 'content': compact}]})

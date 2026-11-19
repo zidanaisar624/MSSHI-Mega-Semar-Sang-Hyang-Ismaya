@@ -27,6 +27,9 @@ import msshi_service_connections  # noqa: E402
 class HermesProfileSyncTests(unittest.TestCase):
     def setUp(self) -> None:
         # Integration fixtures never deliver to real Downloads or ask for endpoint secrets.
+        no_trim_download = patch('msshi_trim_setup.fetch_archive', side_effect=OSError('Offline fixture: no runtime downloads'))
+        no_trim_download.start()
+        self.addCleanup(no_trim_download.stop)
         no_pdf = patch.dict(os.environ, {"MSSHI_NO_PDF": "1"})
         no_pdf.start()
         self.addCleanup(no_pdf.stop)
@@ -97,7 +100,7 @@ class HermesProfileSyncTests(unittest.TestCase):
                 "MSSHI_WINDOWS_D_DRIVE": "",
             }
             resolved_c = hermes_profiles.resolve_hermes_home(env=env_c_only)
-            expected_c = (local / "hermes").absolute() if os.name == "nt" else (user / ".hermes").absolute()
+            expected_c = (local / "HermesData").absolute() if os.name == "nt" else (user / ".hermes").absolute()
             self.assertEqual(resolved_c, expected_c)
 
     def test_before_during_and_after_hermes_flows(self) -> None:
@@ -214,7 +217,9 @@ class HermesProfileSyncTests(unittest.TestCase):
                 "y",          # confirm apply
                 "1",          # [1/4] Skills: keep bundled skills (REA OFF)
                 "1",          # [2/4] Plugin: stage fail-open msshi-auto-trim, KAT skip
-                "1",          # [3/4] Koneksi Services: per-profile GitLab/Tinyfish MCP
+                "1",          # [3/4] Browser: Chrome; labels remain empty
+                "",
+                "",
                 "1",          # [4/4] Bot -> Apps: auto-reconnect all bots
             ]) + "\n"
             with patch.dict(os.environ, base_env, clear=False), \
@@ -225,8 +230,8 @@ class HermesProfileSyncTests(unittest.TestCase):
 
             shikaku_after = hermes_profiles.load_yaml_mapping(shikaku_cfg)
             self.assertEqual(shikaku_after["model"], {"default": "custom/already-chosen", "provider": "openai"})
-            self.assertIn("gitlab", shikaku_after.get("mcp_servers", {}))
-            self.assertIn("tinyfish", shikaku_after.get("mcp_servers", {}))
+            self.assertNotIn("gitlab", shikaku_after.get("mcp_servers", {}))
+            self.assertNotIn("tinyfish", shikaku_after.get("mcp_servers", {}))
             self.assertNotIn("brightdata", shikaku_after.get("mcp_servers", {}))
             self.assertTrue((hermes_home / "profiles" / "shikaku" / "plugins" / "msshi-auto-trim" / "plugin.yaml").is_file())
             self.assertEqual(shikaku_db.read_bytes(), b"SQLite format 3\x00sentinel")
@@ -252,8 +257,9 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertFalse(report_doc["provider_model_mutated"])
             self.assertFalse(report_doc["skills"]["rea_enabled"])
             self.assertTrue(report_doc["plugins"]["auto_trim"]["staged"])
-            self.assertEqual(report_doc["services"]["status"], "installed")
-            self.assertFalse(report_doc["services"]["brightdata_enabled"])
+            self.assertEqual(report_doc["services"]["status"], "selected")
+            self.assertEqual(report_doc["services"]["browser"], "chrome")
+            self.assertFalse(report_doc["services"]["external_services_installed"])
             self.assertEqual(len(report_doc["bot_app_connections"]["bots"]), 5)
 
             # 3. Custom-bots mode (mode 2) auto-sets Hermes profiles cleanly
@@ -364,11 +370,12 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertEqual(report_a["plugins"]["kat"]["profile"], "shikaku")
             self.assertFalse(report_a["plugins"]["kat"]["enabled"])
             self.assertFalse(report_a["plugins"]["kat"]["main_model_changed"])
-            self.assertEqual(report_a["services"]["status"], "deferred_pre_hermes")
+            self.assertEqual(report_a["services"]["status"], "not_selected")
+            self.assertFalse(report_a["services"]["external_services_installed"])
             self.assertEqual(list(report_a["bot_app_connections"]["bots"]), ["shikaku"])
             self.assertEqual(report_a["bot_app_connections"]["bots"]["shikaku"]["status"], "connected")
 
-            # Case B: Post-Hermes interactive extra skills + dreaming + per-profile MCP + manual bot -> apps ("3")
+            # Case B: Post-Hermes extra skills + dreaming + browser preference + manual bot -> apps ("3")
             (hermes_home / "config.yaml").write_text(
                 "model:\n  default: custom/post-hermes\n  provider: openrouter\n",
                 encoding="utf-8",
@@ -387,7 +394,9 @@ class HermesProfileSyncTests(unittest.TestCase):
                 "",           # no extra individual slugs
                 "yukino",     # apply extra pack only to yukino
                 "3",          # [2/4] Plugin: auto-trim + dreaming + omnivoice check
-                "1",          # [3/4] Koneksi Services: per-profile MCP
+                "1",          # [3/4] Browser: Chrome, with explicit labels
+                "Work",
+                "Campus",
                 "3",          # [4/4] Bot -> Apps: manual per-bot mapping
                 "yukino,shikaku",  # selected bots for manual mapping
                 "perplexity", # yukino -> perplexity
@@ -408,7 +417,9 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertTrue((hermes_home / "plugins" / "msshi-auto-trim" / "plugin.yaml").is_file())
             self.assertTrue(report_b["plugins"]["auto_trim"]["staged"])
             self.assertEqual(report_b["plugins"]["dreaming"]["status"], "ok")
-            self.assertEqual(report_b["services"]["status"], "installed")
+            self.assertEqual(report_b["services"]["status"], "selected")
+            self.assertEqual(report_b["services"]["account_label"], "Campus")
+            self.assertFalse(report_b["services"]["external_services_installed"])
             self.assertEqual(report_b["bot_app_connections"]["mode"], "manual-per-bot")
             self.assertEqual(report_b["bot_app_connections"]["bots"]["yukino"]["status"], "connected")
             self.assertEqual(
@@ -419,7 +430,7 @@ class HermesProfileSyncTests(unittest.TestCase):
             self.assertEqual(list(report_b["bot_app_connections"]["bots"]), ["yukino"])
             yukino_cfg = hermes_profiles.load_yaml_mapping(hermes_home / "config.yaml")
             self.assertEqual(yukino_cfg["model"], {"default": "custom/post-hermes", "provider": "openrouter"})
-            self.assertIn("gitlab", yukino_cfg.get("mcp_servers", {}))
+            self.assertNotIn("gitlab", yukino_cfg.get("mcp_servers", {}))
 
     def test_named_yukino_preserves_neutral_stock_root_custom_soul_and_legacy(self) -> None:
         with TemporaryDirectory() as tmp:

@@ -35,6 +35,8 @@ _NON_COPY_ENV_PREFIXES = (
     "TELEGRAM_", "DISCORD_", "EMAIL_", "SLACK_", "WHATSAPP_", "SIGNAL_",
     "FEISHU_", "LARK_", "MATRIX_", "WECOM_", "QQ_", "DINGTALK_", "TWILIO_",
     "SMS_", "GATEWAY_RELAY_", "HOME_ASSISTANT_",
+    "GMAIL_", "GOOGLE_CLIENT_", "GOOGLE_OAUTH_", "GCAL_", "GDRIVE_", "OAUTH_",
+    "ZOOM_", "YOUTUBE_", "NOTEBOOKLM_", "NEXTCLOUD_", "DROPBOX_",
 )
 _NON_COPY_ENV_EXACT = {
     "GATEWAY_ALLOW_ALL_USERS",
@@ -193,8 +195,14 @@ def has_writable_drive_d(probe_write: bool = False, env: dict[str, str] | None =
                 return False
         except Exception:
             return False
+    try:
+        minimum = max(0, int(environ.get('MSSHI_MIN_FREE_GIB', '2'))) * 2**30
+        if shutil.disk_usage(drive).free < minimum:
+            return False
+    except (OSError, ValueError):
+        return False
     if not probe_write:
-        return True
+        return os.access(drive, os.W_OK)
     hermes_d = Path(environ.get("MSSHI_WINDOWS_D_ROOT") or (drive / "HermesData"))
     probe_dir = hermes_d if hermes_d.is_dir() else drive
     probe = probe_dir / f".msshi-probe-{os.getpid()}"
@@ -244,7 +252,7 @@ def resolve_hermes_home(
         d_root = Path(environ["MSSHI_WINDOWS_D_ROOT"]) if environ.get("MSSHI_WINDOWS_D_ROOT") else (
             Path(d_drive) / "HermesData" if d_drive else None
         )
-        candidates = [c for c in (d_root, local_app_data / f"hermes{suffix}", user_home / "HermesData", user_home / f".hermes{suffix}") if c is not None]
+        candidates = [c for c in (d_root, local_app_data / "HermesData", local_app_data / f"hermes{suffix}", user_home / "HermesData", user_home / f".hermes{suffix}") if c is not None]
     else:
         candidates = [user_home / f".hermes{suffix}", user_home / "HermesData"]
 
@@ -260,7 +268,11 @@ def resolve_hermes_home(
                 chosen.mkdir(parents=True, exist_ok=True)
                 persist_windows_hermes_home(chosen)
             return chosen
-        return (local_app_data / f"hermes{suffix}").absolute()
+        chosen = (local_app_data / (f"hermes{suffix}" if suffix else "HermesData")).absolute()
+        if create_adaptive and persist_windows_env and env is None and not environ.get("MSSHI_IGNORE_REGISTRY_HERMES_HOME"):
+            chosen.mkdir(parents=True, exist_ok=True)
+            persist_windows_hermes_home(chosen)
+        return chosen
     return (user_home / f".hermes{suffix}").absolute()
 
 
@@ -597,9 +609,44 @@ def is_channel_env_key(key: str) -> bool:
     return upper in _NON_COPY_ENV_EXACT or any(upper.startswith(prefix) for prefix in _NON_COPY_ENV_PREFIXES)
 
 
+def model_env_keys(source_cfg: dict) -> set[str]:
+    """Only locally configured active model authentication, never account/channel tokens."""
+    seed = launch_model_seed(source_cfg)
+    model = seed.get('model') if isinstance(seed.get('model'), dict) else {}
+    provider = str(model.get('provider') or '').lower()
+    standard = {
+        'openai': {'OPENAI_API_KEY'}, 'anthropic': {'ANTHROPIC_API_KEY'},
+        'openrouter': {'OPENROUTER_API_KEY'}, 'nous': {'NOUS_API_KEY'},
+        'gemini': {'GEMINI_API_KEY', 'GOOGLE_API_KEY'}, 'google': {'GEMINI_API_KEY', 'GOOGLE_API_KEY'},
+        'groq': {'GROQ_API_KEY'}, 'deepseek': {'DEEPSEEK_API_KEY'},
+        'mistral': {'MISTRAL_API_KEY'}, 'together': {'TOGETHER_API_KEY'},
+        'xai': {'XAI_API_KEY'}, 'fireworks': {'FIREWORKS_API_KEY'},
+    }
+    keys = set(standard.get(provider, ()))
+    env_name = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')
+    def walk(value):
+        if isinstance(value, dict):
+            for name, item in value.items():
+                if name in {'key_env', 'api_key_env', 'api_key_env_var'} and isinstance(item, str) and env_name.fullmatch(item):
+                    keys.add(item)
+                elif name in {'api_key', 'key'} and isinstance(item, str):
+                    match = re.fullmatch(r'\$\{([A-Za-z_][A-Za-z0-9_]*)\}|\$([A-Za-z_][A-Za-z0-9_]*)', item)
+                    if match:
+                        keys.add(next(x for x in match.groups() if x))
+                if isinstance(item, (dict, list)):
+                    walk(item)
+        elif isinstance(value, list):
+            for item in value:
+                walk(item)
+    walk(seed)
+    return {key for key in keys if not is_channel_env_key(key)}
+
+
 def clone_safe_env_text(root_env_path: Path) -> str:
     if not root_env_path.is_file():
         return _PLACEHOLDER_ENV
+    cfg_path = root_env_path.parent / 'config.yaml'
+    allowed = model_env_keys(load_yaml_mapping(cfg_path)) if cfg_path.is_file() else set()
     kept: list[str] = []
     try:
         lines = root_env_path.read_text(encoding="utf-8-sig").splitlines()
@@ -612,7 +659,7 @@ def clone_safe_env_text(root_env_path: Path) -> str:
         lhs = stripped.split("=", 1)[0].strip()
         if lhs.startswith("export "):
             lhs = lhs[7:].strip()
-        if lhs and not is_channel_env_key(lhs):
+        if lhs in allowed and not is_channel_env_key(lhs):
             kept.append(line)
     if not kept:
         return _PLACEHOLDER_ENV
@@ -1190,7 +1237,10 @@ def _activate_team_config(path: Path, tx: ProfileTransaction) -> dict:
     if "msshi-team-routing" in disabled:
         return {"active": False, "reason": "explicitly_disabled_by_user"}
     old_backend = delegation.get("backend") or "default"
-    change_backend = str(old_backend).strip().lower() in {"default", "msshi-team"}
+    # An explicitly selected default backend is still a user's choice. Only
+    # absent backend settings may opt into MSSHI during preset provisioning.
+    # The key itself is the persistent preference marker across later syncs.
+    change_backend = 'backend' not in delegation or str(old_backend).strip().lower() == "msshi-team"
     expected = dict(before)
     expected_plugins = dict(plugins)
     expected_plugins["enabled"] = list(enabled or [])
@@ -1214,6 +1264,8 @@ def _activate_team_config(path: Path, tx: ProfileTransaction) -> dict:
         raise ValueError(f"Cannot prove narrow config edit preserves routing at {path}")
     changed = tx.write(path, raw, 0o600)
     return {"active": True, "backend": "msshi-team" if change_backend else "custom_backend_preserved",
+            "backend_preference": "explicit_config_preserved" if not change_backend else "msshi_backend_selected",
+            "named_profile_delegate_backend_selected": (after.get("delegation") or {}).get("backend") == "msshi-team",
             "changed": changed, "main_model_provider_preserved": before.get("model") == after.get("model")
             and before.get("provider") == after.get("provider"),
             "delegation_routing_preserved": {k: v for k, v in delegation.items() if k != "backend"}
@@ -1225,10 +1277,12 @@ def install_team_routing_plugin(
     ("yukino", "shizuka", "val", "kiki-chii", "shikaku"),
     transaction: ProfileTransaction | None = None,
 ) -> dict:
-    """Stage native plugin per profile and opt into only supported/default backend policies.
+    """Stage the native plugin; choose MSSHI backend only when no backend was set.
 
     Plugin activation changes plugins.enabled/delegation.backend only (backed up). Existing
-    primary model/provider, auxiliary/MoA, SOUL and credential files are never changed.
+    explicit backends (including default), primary model/provider, auxiliary/MoA, SOUL
+    and credential files are never changed. Named delegation needs its current schema;
+    native Bot Chat message_agent remains available independently of backend selection.
     """
     hermes_home = hermes_home.absolute()
     source = repo_source / "hermes_plugins" / "msshi-team-routing"
@@ -1274,7 +1328,7 @@ def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: 
             existing = {}
     bots = dict(existing.get("bots") or {})
     # Pending IDs are actual native profiles; no synthetic profiles/default folder.
-    if mode == "muza-preset":
+    if mode in {"muza-preset", "academic-mahasiswa", "academic-dosen"}:
         bots.pop("yukino" if any(row["bot_id"] == "default" for row in entries) else "default", None)
     for row in entries:
         bot_id = row["bot_id"]
@@ -1299,7 +1353,7 @@ def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: 
 
 
 def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
-    """Backfill model config & non-channel .env for pre-staged bots once Hermes opens/configures."""
+    """Backfill the user's active model and required keys for enrolled pre-staged bots only."""
     if not hermes_home.is_dir():
         return {"hermes_home": str(hermes_home), "initialized": False, "seeded_configs": [], "seeded_envs": []}
     seed = launch_model_seed_from_home(hermes_home)
@@ -1340,7 +1394,9 @@ def sync_pending_profile_configs(hermes_home: Path) -> dict[str, object]:
             _atomic_write_text(cfg, dump_yaml(seed))
             seeded_configs.append(bot_id)
         env_file = pdir / ".env"
-        if not env_file.exists():
+        managed_empty_env = (bot_id in (pending_data.get('bots') or {}) and env_file.is_file()
+                             and env_file.read_bytes() in {_PLACEHOLDER_ENV.encode('utf-8'), _PLACEHOLDER_ENV.replace('\n', '\r\n').encode('utf-8')})
+        if not env_file.exists() or (managed_empty_env and safe_env != _PLACEHOLDER_ENV):
             _atomic_write_text(env_file, safe_env, mode=0o600)
             if safe_env != _PLACEHOLDER_ENV:
                 seeded_envs.append(bot_id)

@@ -344,12 +344,16 @@ def planned_registration(destination, candidates, warnings, mode, targets, allow
     profile_home = Path(profile_home) if profile_home is not None else None
     profile = (profile_home.name if profile_home is not None and profile_home.parent.name.casefold() == "profiles"
                else "default" if profile_home is not None else None)
+    explicit_optional = set()
     if mode == "auto-reconnect":
         selected = {key for key, row in candidates.items()
                     if row["readiness"] in {"configured", "available", "available_web"}}
     elif mode == "select" and targets:
         selected = resolve_targets(targets, candidates, current)
-        forbidden = {name for name in selected if profile is not None and not hub.target_allowed(profile, name)}
+        if profile_home is not None:
+            explicit_optional = {canonical(name) for name in targets
+                                 if hub.academic_optional_allowed(profile, canonical(name), profile_home, explicit=True)}
+        forbidden = {name for name in selected if profile is not None and not hub.target_allowed(profile, name, profile_home, allow_installed_optional=name in explicit_optional)}
         # Group selection is scoped to eligible apps. An explicit forbidden ID is rejected.
         if forbidden and not any(canonical(name) in {"artcraft", "existing"} for name in targets):
             raise ValueError("Target di luar spesialisasi profil: " + ", ".join(sorted(forbidden)))
@@ -363,18 +367,22 @@ def planned_registration(destination, candidates, warnings, mode, targets, allow
             allow.update(key for key, row in candidates.items() if row["readiness"] == "configured")
         selected &= allow
     if profile is not None:
-        selected = {name for name in selected if hub.target_allowed(profile, name)}
-        permitted_current = {name for name in current if hub.target_allowed(profile, name)}
+        selected = {name for name in selected if hub.target_allowed(profile, name, profile_home, allow_installed_optional=name in explicit_optional)}
+        permitted_current = {name for name in current if hub.target_allowed(profile, name, profile_home)}
     else:
         permitted_current = current
     registered = permitted_current | selected
     result = report(destination, registered, candidates, warnings)
     result.update(added=sorted(registered - current), selected=sorted(selected),
                   removed_by_specialization=sorted(current - permitted_current))
-    return destination, registry_bytes(registered), result
+    data = json.loads(registry_bytes(registered))
+    if explicit_optional:
+        data['academic_optional_opt_ins'] = sorted(explicit_optional)
+        result['academic_optional_opt_ins'] = sorted(explicit_optional)
+    return destination, (json.dumps(data, ensure_ascii=False, indent=2) + '\n').encode('utf-8'), result
 
 
-def synchronized_runtime_bytes(profile_home, registered):
+def synchronized_runtime_bytes(profile_home, registered, explicit_optional=()):
     """Plan the matching v3 routes without launching tools or changing config/SOUL."""
     state, profile = hub.migrated_state(profile_home)
     path = state / "profiles" / profile / "routes.json"
@@ -386,14 +394,20 @@ def synchronized_runtime_bytes(profile_home, registered):
     if document.get("schema") != 3 or not isinstance(original, dict):
         raise ValueError("Format rute runtime tidak valid; jalankan migrasi yang sesuai")
     routes = {key: dict(row) for key, row in original.items()
-              if key in {"gdrive", "gdrive-web"} or hub.target_allowed(profile, key)}
+              if key in {"gdrive", "gdrive-web"} or hub.target_allowed(profile, key, profile_home)}
     for key in registered:
-        if not hub.target_allowed(profile, key):
+        if not hub.target_allowed(profile, key, profile_home, allow_installed_optional=key in explicit_optional):
             raise ValueError("Target di luar spesialisasi profil: " + key)
         if key in hub.ARTCRAFT:
             cli = hub.artcraft_executable(key)
             row = routes.setdefault(key, {"kind": "native-cli", "env": {}})
             row.update(executable=cli, readiness="available" if cli else "optional_missing", user_disabled=False)
+        elif key in explicit_optional:
+            cli = hub.optional_executable(key, profile_home)
+            routes[key] = {'kind': 'native-cli', 'executable': cli, 'academic_opt_in': True,
+                           'readiness': 'available' if cli else 'optional_missing', 'user_disabled': False}
+            if key == 'blender':
+                routes[key]['prefix'] = ['--background']
         elif key in routes:
             row = routes[key]
             if row.get("user_disabled"):
@@ -403,19 +417,26 @@ def synchronized_runtime_bytes(profile_home, registered):
             cli = hub.harness_executable(key, profile_home)
             routes[key] = {"kind": "native-cli", "executable": cli,
                            "readiness": "available" if cli else "optional_missing", "user_disabled": False}
+    for key in explicit_optional:
+        if key in routes:
+            routes[key]['academic_opt_in'] = True
     for key, row in routes.items():
         if key not in registered and row.get("readiness") == "available":
             row.update(readiness="disabled_by_user", user_disabled=True)
     for key in ("gdrive", "gdrive-web"):
         routes[key] = {"kind": "web", "readiness": "disabled", "reason": "GDrive disabled by policy"}
     document.update(targets=routes, auto_open_on_boot=False, require_task_ticket=True,
-                    specialization_policy="muza-v1")
+                    specialization_policy=("academic-v1" if hub.academic_policy(profile_home) else "muza-v1"))
     return path, (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
 def write_synchronized_registry(destination, data, profile_home):
-    registered = set(json.loads(data)["targets"])
-    route_path, route_bytes = synchronized_runtime_bytes(profile_home, registered)
+    document = json.loads(data)
+    registered = set(document["targets"])
+    optional = set(document.get('academic_optional_opt_ins', []))
+    route_path, route_bytes = synchronized_runtime_bytes(profile_home, registered, optional)
+    if optional and route_path is None:
+        raise ValueError('Jalankan msshi runtime migrate sebelum mengaktifkan aplikasi Academic opsional.')
     original_route = route_path.read_bytes() if route_path else None
     if route_path and route_bytes != original_route:
         write_registry(route_path, route_bytes)
@@ -515,7 +536,7 @@ def run(args, default_state_dir=None):
     runtime_state = installation / "msshi-runtime"
     if args.open or args.run:
         _, profile = hub.migrated_state(home)
-        if not hub.target_allowed(profile, canonical(args.open or args.run)):
+        if not hub.target_allowed(profile, canonical(args.open or args.run), home):
             raise ValueError("Target di luar spesialisasi profil atau dinonaktifkan oleh kebijakan.")
     if (runtime_state / "policy.json").is_file():
         if args.open or args.run:
@@ -563,7 +584,7 @@ def run(args, default_state_dir=None):
             current = read_registry(destination)
             removed = resolve_targets([args.remove], candidates, current, remove=True)
             _, profile = hub.migrated_state(home)
-            registered = {key for key in current - removed if hub.target_allowed(profile, key)}
+            registered = {key for key in current - removed if hub.target_allowed(profile, key, home)}
             data = registry_bytes(registered)
             result = report(destination, registered, candidates, warnings)
             result["removed"] = sorted(current - registered)

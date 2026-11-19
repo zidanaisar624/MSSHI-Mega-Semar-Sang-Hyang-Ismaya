@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "preset": "academic",
+  "artcraft_root_env": "MSSHI_ARTCRAFT_ROOT",
+  "auto_open_on_boot": false,
+  "require_task_ticket": true,
+  "artcraft": {
+    "default": [],
+    "yukino": [],
+    "shizuka": [
+      "wordcraft",
+      "deckcraft"
+    ],
+    "val": [
+      "wordcraft",
+      "pdfcraft",
+      "gridcraft",
+      "deckcraft"
+    ],
+    "kiki-chii": [
+      "deckcraft",
+      "designcraft"
+    ],
+    "shikaku": []
+  },
+  "non_artcraft": {
+    "default": [],
+    "yukino": [
+      "perplexity",
+      "whatsapp-web"
+    ],
+    "shizuka": [
+      "perplexity",
+      "youtube-chrome"
+    ],
+    "val": [
+      "python",
+      "perplexity",
+      "youtube-chrome"
+    ],
+    "kiki-chii": [
+      "python"
+    ],
+    "shikaku": [
+      "python",
+      "git",
+      "node"
+    ]
+  },
+  "shared_utilities": [
+    "llmtrim"
+  ],
+  "optional_installed_only": [
+    "cadcraft",
+    "solidcraft",
+    "materialcraft",
+    "texturecraft",
+    "blender",
+    "obs",
+    "strix",
+    "rea-forensics"
+  ],
+  "execution": "msshi-runtime-ticket",
+  "note": "Route adalah izin sesuai tugas, bukan bukti aplikasi tersedia. Periksa instalasi dan kebutuhan tugas; aplikasi berat tidak menjadi route default. Jangan memasang, membuka, merekam, mengirim pesan, login, atau memakai layanan berbiaya tanpa otorisasi yang sesuai."
+}

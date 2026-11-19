@@ -53,37 +53,21 @@
     "bot_routing"
   ],
   "browser_policy": {
-    "schema": 1,
-    "preferred_provider": "hermes-steel",
-    "native_setting": "browser.cloud_provider=steel",
-    "activation": "on_task",
+    "schema": 2,
+    "preference_source": "private user browser selection",
+    "providers": [
+      "chrome",
+      "edge",
+      "firefox",
+      "none"
+    ],
     "auto_open_on_boot": false,
-    "fallback": {
-      "providers": [
-        "chrome",
-        "edge",
-        "other_user_browser"
-      ],
-      "approval_required": true,
-      "personal_account_required": true
-    },
-    "account_transfer": {
-      "approval_required": true,
-      "scope": [
-        "source_browser",
-        "destination",
-        "account",
-        "data",
-        "duration"
-      ],
-      "automatic_cookie_extraction": false,
-      "implementation": "review supported Steel session or manual login before transfer"
-    },
-    "cloud_usage": {
-      "requires_user_account": true,
-      "budget_check_before_paid_session": true,
-      "free_usage_not_guaranteed": true
-    }
+    "activation": "authorized_task_only",
+    "automatic_cookie_extraction": false,
+    "automatic_account_transfer": false,
+    "cloud_provider_installed": false,
+    "login": "manual user login; labels are not authentication",
+    "no_selection": "leave existing user settings unchanged"
   },
   "timesfm_policy": {
     "owner": "val",
@@ -263,5 +247,27 @@
       "automatic_vlm_calls": false
     }
   },
-  "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee."
+  "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee.",
+  "interaction_policy": {
+    "version": "3.1.2",
+    "type_1": [
+      "yukino",
+      "shizuka"
+    ],
+    "type_2": [
+      "shikaku",
+      "val",
+      "kiki-chii"
+    ],
+    "full_task_rounds": 2,
+    "fast_chat": "main_only",
+    "ambiguous_direct": "ask_user_before_heavy_work",
+    "ambiguous_forwarded": "ask_immediate_sender_then_user_if_needed",
+    "type_2_separate_subagent": false,
+    "settings": "user_owned_native_configuration",
+    "source_enrichment": "main_brokered_authorized_tools_with_evidence",
+    "missing_role_configuration": "stop_and_report_no_default_model_injection",
+    "automatic_paid_test": false,
+    "documentation": "docs/INTERAKSI_DUA_TIPE.md"
+  }
 }

@@ -1,8 +1,8 @@
 # Audit pemasangan skill dan plugin pihak ketiga
 
-Diperiksa untuk MSSHI v3.1.2 pada 17 November 2026. Dokumen ini menjelaskan perilaku pemasang publik dan pembagian peran, tanpa menyertakan profil atau data pribadi pembuat.
+Diperiksa untuk MSSHI v3.1.2 pada 18 November 2026. Dokumen ini menjelaskan perilaku pemasang publik dan pembagian peran, tanpa menyertakan profil atau data pribadi pembuat.
 
-**Jawaban singkat:** preset lima bot memasang instruksi 67 skill sesuai peran. Seluruh 52 sumber eksternal tidak otomatis menjadi plugin/runtime aktif. Pilihan akun, model besar, jadwal dan program pendamping tetap dijelaskan dan dipasang terpisah.
+**Jawaban singkat:** preset lima bot memasang instruksi 67 skill sesuai peran. Seluruh 51 sumber eksternal tidak otomatis menjadi plugin/runtime aktif. Pilihan akun, model besar, jadwal dan program pendamping tetap dijelaskan dan dipasang terpisah.
 
 ## Cara membaca status
 
@@ -24,11 +24,11 @@ Pada instalasi baru preset MuZA, profil default yang sebenarnya menjadi Yukino, 
 | [Hersona](https://github.com/shiro-0x/hersona) | Pendamping bersama sesuai tugas persona | CLI terpisah, dipakai untuk katalog atau draf bila diminta; tidak menimpa SOUL. Binary dan dependensi perlu tersedia. |
 | Hermes-Dreaming | Lima peran, diproses terpisah | Pilihan plugin 3 membuat laporan offline sekali. Jadwal Windows pukul 03.00 WIB hanya dibuat melalui `msshi dream --register`. Tidak membangunkan model atau mempromosikan memori otomatis pada adapter MSSHI. |
 | OmniVoice | Lima peran, dengan pengaturan suara masing-masing | Runtime dan bobot perlu dipasang terpisah; baru aktif setelah sintesis lokal terverifikasi. Tidak otomatis menyuarakan setiap chat. |
-| Hermes-Steel | Browser bersama dengan izin per tugas | Plugin dipilih melalui `--install-steel` atau `msshi browser --install`; endpoint/key dan izin anggaran tetap diperlukan. Akun browser pribadi tidak disalin otomatis. |
-| GitLab / Tinyfish | Tersedia untuk tiap profil yang didaftarkan | Tetap konektor MCP web. Registrasi bukan bukti login; gunakan otentikasi profil atau pilihan berbagi akun yang disetujui. Operasi layanan dapat berkuota/berbiaya. |
+| Browser pilihan pengguna | Per tugas yang diizinkan | Chrome, Edge, Firefox, atau none; label profil/akun hanya preferensi pribadi, login manual, tanpa penyalinan cookie atau browser cloud otomatis. |
+| Layanan web eksternal | Pilihan masing-masing pengguna | GitLab, Tinyfish, BrightData dan Steel tidak didaftarkan oleh installer. Sambungkan sendiri jika diperlukan; status lokal bukan bukti operasi layanan berhasil. |
 | Aplikasi desktop / CLI-Anything | Sesuai pembagian spesialis | Rute native dan tiket tugas; aplikasi tidak dibuka saat startup. Ditemukannya executable bukan bukti seluruh operasi editing telah diuji. |
 
-LLMtrim dan Hersona merupakan utilitas pendamping yang dicatat terpisah dari 52 entri manifest sumber. Tidak ada janji seluruh chat bebas token atau seluruh runtime eksternal otomatis tersedia.
+LLMtrim dan Hersona merupakan utilitas pendamping yang dicatat terpisah dari 51 entri manifest sumber. Tidak ada janji seluruh chat bebas token atau seluruh runtime eksternal otomatis tersedia.
 
 ## Dreaming dan Unslop
 
@@ -40,7 +40,7 @@ Unslop sudah menjadi instruksi bundel wajib untuk **Val, Kiki dan Coder**. Kiki 
 
 [Watermarks Remover](https://github.com/guillaumemeyer/watermarks-remover) belum menjadi bagian installer MSSHI ini. Proyek upstream mempunyai pilihan skill berbasis layanan HTTP dan pilihan teks mandiri. Kemungkinan integrasi khusus berikutnya dapat dibagi menurut tugas tulisan, media Kiki dan pemeliharaan Coder, tetapi dokumen ini tidak mengklaim komponen itu telah terpasang atau seluruh jenis watermark dapat ditangani.
 
-## Seluruh 52 sumber eksternal
+## Seluruh 51 sumber eksternal
 
 Seluruh 49 repositori Git dalam manifest dipatok pada commit. Model-card KAT mempunyai revisi tersendiri; model-card Unlimited-OCR-2 belum dipatok revisinya. Registry CLI-Anything merupakan situs, bukan repositori Git. Mengambil model-card hanya mengunduh keterangan, bukan bobot model.
 
@@ -179,4 +179,4 @@ Audit membaca matriks peran/skill, manifest sumber, audit lisensi, pilihan termi
 
 Dokumen ini membedakan pemasangan instruksi, tersedianya rute, tersedianya runtime, izin akun dan keberhasilan hasil tugas. Kemampuan model memilih atau memakai skill pada percakapan nyata tetap bergantung host dan tugas; keberadaan file saja tidak membuktikan kualitas hasil atau penghematan tagihan.
 
-Rujukan lokal: [matriks peran dan skill](../configs/bot_role_and_skill_matrix.json), [52 sumber](../configs/upstreams.json), [kebijakan pemicu](../configs/manifests/skill_activation_matrix.json), [penjelasan pilihan terminal](../configs/option_help.json), [catatan perbaikan](V3_1_2_REPAIR.md).
+Rujukan lokal: [matriks peran dan skill](../configs/bot_role_and_skill_matrix.json), [51 sumber](../configs/upstreams.json), [kebijakan pemicu](../configs/manifests/skill_activation_matrix.json), [penjelasan pilihan terminal](../configs/option_help.json), [catatan perbaikan](V3_1_2_REPAIR.md).

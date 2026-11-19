@@ -1,6 +1,6 @@
 # BRAG untuk Kiki-Chii
 
-BRAG mengubah proyek/aplikasi menjadi film peluncuran pendek: sudut cerita, storyboard, komposisi HTML yang dapat diedit, rendering lokal, poster, dan teks berbagi. Integrasi MSSHI ini hanya diaktifkan untuk **Kiki-Chii**. Model, provider, fallback, MoA (termasuk rujukan pertama `claude-fable-5.2`), persona/SOUL/DNA, memori, kredensial, dan konfigurasi browser tetap mengikuti konfigurasi pengguna.
+BRAG mengubah proyek/aplikasi menjadi film peluncuran pendek: sudut cerita, storyboard, komposisi HTML yang dapat diedit, rendering lokal, poster, dan teks berbagi. Integrasi MSSHI ini hanya diaktifkan untuk **Kiki-Chii**. Model, provider, fallback, penasihat teks/MoA bila dipilih, persona/SOUL/DNA, memori, kredensial, dan konfigurasi browser tetap mengikuti konfigurasi pengguna.
 
 Ini bukan model video generatif. Skill mengarahkan agen yang sudah dipilih pengguna dan menggunakan Hyperframes untuk merender HTML. `brag-slim` upstream mempunyai dispatch untuk model tertentu; integrasi ini tidak memasangnya atau mengubah model agar menyesuaikan dispatch tersebut.
 

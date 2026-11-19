@@ -5,26 +5,32 @@
 <img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.1.2 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
 # 🌐 MSSHI v3.1.2 — Mega Semar Sang Hyang Ismaya
-### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · MuZA Skripsi Drag-and-Drop v1.1*
+### *Asisten AI Terpadu untuk Tugas Kuliah Mahasiswa & Dosen (Skripsi, Tesis, Disertasi), Belajar Bareng Sensei, Content Creation, dan Coding*
 
 [![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
 [![Skills](https://img.shields.io/badge/Skills-67%20Bundled%20(51%20Core%20%2B%2016%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-52%20Sources%20%7C%2049%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-51%20Sources%20%7C%2048%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
 
-> *"Satu ekosistem berdaulat untuk Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT — mengubah laptop pas-pasan RAM 4 GB dan saldo `$1` menjadi markas riset akademik S1–S3, studio film MFA, penasihat bisnis/pajak RI, dan devops full-stack anti lemot."*
+> *"Satu ekosistem berdaulat untuk Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT — menata riset akademik S1–S3, belajar, konten dan coding melalui peran yang bekerja sesuai kebutuhan. Pilih alur ringan untuk perangkat terbatas; kebutuhan RAM, akun dan biaya mengikuti alat yang dipakai."*
 
 </div>
 
-> **v3.1.2 - Perbaikan instalasi:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, pembagian ArtCraft Val 4 / Shikaku 2 / Kiki 13, endpoint KAT opsional yang benar-benar dikonfigurasi, 67 skill / 52 sumber, dan PDF otomatis ke Downloads. [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
+> **v3.1.2 - Perbaikan instalasi:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, pembagian ArtCraft Val 4 / Shikaku 2 / Kiki 13, endpoint KAT opsional yang benar-benar dikonfigurasi, 67 skill / 51 sumber, dan PDF otomatis ke Downloads. [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
 
 > **KAT opsional, termasuk preset MuZA:** tidak diunduh atau diaktifkan otomatis. Pengguna lain dapat memilih endpoint atau perangkat yang memadai melalui wizard Coder.
 
 > **Nama pengguna:** preset MuZA adalah susunan peran, bukan nama pengguna. Bot menanyakan panggilan pilihan pengguna, mempertahankan ejaan nama, dan membagikannya saat handoff. [Alur kerja sama & nama](docs/COLLABORATION_AND_NAMES.md).
 
-> **Audit integrasi:** [52 sumber, 67 skill, pembagian bot dan batas pemasangan otomatis](docs/UPSTREAM_SETUP_AUDIT.md). Instruksi sesuai peran dipasang oleh preset; runtime, akun, model besar dan jadwal tertentu tetap pilihan terpisah.
+> **Audit integrasi:** [51 sumber, 67 skill, pembagian bot dan batas pemasangan otomatis](docs/UPSTREAM_SETUP_AUDIT.md). Instruksi sesuai peran dipasang oleh preset; runtime, akun, model besar dan jadwal tertentu tetap pilihan terpisah.
+
+<!-- MSSHI TWO TYPE INFO -->
+> **Interaksi dua tipe:** Yukino/Shizuka memakai Main + Advisor; Sir. Robot/Val/Kiki memakai Main + Dewan dengan dua putaran dan audit Main. Obrolan singkat tidak memutar Dewan; konfigurasi yang belum ada dilaporkan. [Cara kerja, diagram dan batas runtime](docs/INTERAKSI_DUA_TIPE.md).
+
+<!-- MSSHI ACADEMIC INFO -->
+> **Academic v3.1.2:** instalasi baru menawarkan **Mahasiswa S1/S2/S3** sebagai pilihan awal dan **Dosen/Pimpinan Kampus** sebagai pilihan terpisah; MuZA tetap tersedia. [Panduan Academic](docs/ACADEMIC_PRESET.md). Model, provider, API key, dan akun diisi pengguna sendiri. Template catatan biasa disediakan; Obsidian tidak dipasang otomatis.
 
 ---
 
@@ -92,12 +98,12 @@ Perjalanan **MSSHI** lahir dari frustrasi nyata menghadapi AI yang boros token, 
 <td width="50%" align="center" valign="top">
   <img src="assets/memes/meme-03-era-v30.png" width="95%" alt="Panel 3 Komik Evolusi MSSHI v3.0 Optimizer">
   <br><b>Fase 3 · Lompatan Optimizer (<code>v3.0</code> · Tag <code>a8400c8</code>)</b>
-  <br><sub><b>22 MCP berat diputus total</b> dan diganti <b>CLI-Anything</b> + plugin native <code>msshi-auto-trim</code> + <code>caveman</code>! Plus hadirnya prosodi suara <b>OmniVoice</b>, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b>, &amp; <b>TimesFM</b>. RAM 4 GB akhirnya bernapas lega!</sub>
+  <br><sub><b>22 MCP berat diputus total</b> dan diganti <b>CLI-Anything</b> + plugin native <code>msshi-auto-trim</code> + <code>caveman</code>! Plus hadirnya prosodi suara <b>OmniVoice</b>, <b>Hermes-Dreaming</b> (<code>21878d3</code>), <b>KAT-Coder-V2.5-Dev</b>, <b>Hyperframes</b>, &amp; <b>TimesFM</b>. Pilih alur ringan sesuai RAM; runtime besar tetap opsional.</sub>
 </td>
 <td width="50%" align="center" valign="top">
   <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Komik Evolusi MSSHI v3.1.2 + Skripsi v1.1">
   <br><b>Fase 4 · Rilis Matang Saat Ini (<code>v3.1.2 + Skripsi v1.1</code>)</b>
-  <br><sub>Genap <b>67 skill (51 inti + 16 wrapper) + 52 upstreams</b>: hadir <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; path adaptif <code>C:/D:</code>. Santai menikmati kopi sementara sistem bekerja presisi.</sub>
+  <br><sub>Genap <b>67 skill (51 inti + 16 wrapper) + 51 upstreams</b>: hadir <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; path adaptif <code>C:/D:</code>. Santai menikmati kopi sementara sistem bekerja presisi.</sub>
 </td>
 </tr>
 </table>
@@ -108,7 +114,7 @@ Perjalanan **MSSHI** lahir dari frustrasi nyata menghadapi AI yang boros token, 
 flowchart LR
     V1["<b>Fase Awal · v1.0</b><br/>47 Skill Inti<br/>Kurikulum S1–S2 MFA Film &amp; Foto<br/>Auto-Curiosity &amp; Creative DNA"] --> V2["<b>Tahap 1 &amp; 2 · v2.0–v2.2</b><br/>Business Sage + Pajak RI PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
     V2 --> V3["<b>Lompatan Optimizer · v3.0</b><br/>Migrasi 22 MCP &rarr; CLI-Anything<br/>OmniVoice + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
-    V3 --> V31["<b>Rilis Matang · v3.1.2 + Skripsi v1.1</b><br/>67 Skill (51 Inti + 16 Wrapper) + 52 Upstreams<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
+    V3 --> V31["<b>Rilis Matang · v3.1.2 + Skripsi v1.1</b><br/>67 Skill (51 Inti + 16 Wrapper) + 51 Upstreams<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
 ```
 
 ---
@@ -182,10 +188,10 @@ flowchart LR
 <td valign="top">
   <h3>🔥 Kenapa MSSHI Aman di Saldo Cekak &amp; Laptop Pas-Pasan?</h3>
   <ul>
-    <li><b>Proteksi Saldo <code>TokenShield</code> ($1.00 Hard Floor):</b> Mengecek proyeksi biaya sebelum pekerjaan besar jalan; bila proyeksi sisa &lt; <b>$1.00</b>, sistem berhenti dengan exit code peringatan sehingga kuota API tidak pernah kebablasan.</li>
+    <li><b>Kebijakan Saldo <code>TokenShield</code> (cadangan $1.00):</b> Periksa saldo dan perkiraan biaya sebelum tugas berbayar. Kebijakan ini bukan hard cap seluruh provider; gunakan limit billing/key milik layanan. Saldo yang tidak diketahui menahan otomatisasi berbayar yang membutuhkan pemeriksaan saldo.</li>
     <li><b>Hook Lossless <code>msshi-auto-trim</code> + <code>caveman</code>:</b> Memadatkan payload tool JSON besar lewat hook lokal hanya bila struktur data valid tetap 100% sama.</li>
-    <li><b>Provider Asli User Tidak Disentuh:</b> Konfigurasi DataByte, YupiAI, Gemini, Claude, DeepSeek, Kimi, Qwen, atau GPT milik Anda tetap utuh (<code>jev_model_routing: false</code> terkunci).</li>
-    <li><b>Support Penuh Laptop Drive <code>C:</code> Saja &amp; Drive <code>D:</code>:</b> Deteksi otomatis di installer PS1, SH, BAT, dan skrip Python (<code>D:\HermesData</code> vs fallback <code>%USERPROFILE%\HermesData</code>).</li>
+    <li><b>Provider Asli User Tidak Disentuh:</b> Provider, model dan API key ditentukan sendiri oleh pengguna; konfigurasi yang sudah ada dipertahankan (<code>jev_model_routing: false</code> terkunci).</li>
+    <li><b>Support Penuh Laptop Drive <code>C:</code> Saja &amp; Drive <code>D:</code>:</b> Deteksi otomatis di installer PS1, SH, BAT, dan skrip Python (<code>D:\HermesData</code> bila layak; fallback data pengguna pada drive C:).</li>
   </ul>
 </td>
 <td width="40%" align="center" valign="middle">
@@ -283,7 +289,7 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 | [**`Scrapling`**](docs/SCRAPLING.md) | Val, Shikaku | Ekstraksi CSS/XPath super cepat dari **HTML lokal** tanpa crawler liar, tanpa browser stealth, dan tanpa sentuh profil Chrome personal. |
 | [**`Harness²`**](docs/HARNESS2.md) | Val, Shikaku | Demo evaluasi harness deterministik dan usulan perbaikan (*tidak* promosi otomatis ke bot produksi atau bakar benchmark berbayar). |
 | [**`REA` (`opt-in`)**](docs/REA.md) | Shikaku *(opsional)* | Reverse engineering arsitektur JS/arsip lokal lewat `optional/rea/`. **Default OFF** demi keamanan — nyalakan hanya dengan `--with-rea` atau `msshi optional enable rea`. |
-| [**`OmniVoice`, `Auto-Trim`, `TimesFM` &amp; `Steel`**](docs/TIMESFM.md) | 5 Bot &amp; Val | `msshi voice` mengikuti prosodi 5 bot; [Auto-Trim](hermes_plugins/msshi-auto-trim/README.md) memadatkan JSON lossless; [TimesFM](docs/TIMESFM.md) meramal deret waktu lokal via CPU; [Kebijakan Steel Browser](docs/STEEL_BROWSER_POLICY.md) &amp; [OAuth Services](docs/SERVICE_CONNECTIONS.md) menjaga sesi privat (`msshi services --share-oauth`). |
+| [**`OmniVoice`, `Auto-Trim` &amp; `TimesFM`**](docs/TIMESFM.md) | 5 Bot &amp; Val | Suara opsional; pemadatan JSON lossless bila tersedia; prediksi lokal untuk tugas deret waktu. [Pilihan browser dan akun manual](docs/STEEL_BROWSER_POLICY.md). |
 
 <details>
 <summary><b>📊 Buka 8 Diagram Arsitektur Teknis &amp; Alur Kerja MSSHI (SVG Interaktif)</b></summary>
@@ -303,7 +309,7 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
   ![Tujuh mesin akademik dari gap riset sampai simulasi sidang](assets/diagrams/msshi-academic-map.svg)
 - **Lima Lapis Konteks Proyek Panjang ([Panduan 5 Lapis Konteks](docs/LIMA_LAPIS_KONTEKS.md)):**
   ![Lima lapis konteks dari indeks dokumen hingga paket bukti](assets/diagrams/msshi-context-layers.svg)
-- **Pemisahan Bundel, Runtime Perangkat &amp; Layanan Akun Eksternal ([Katalog 52 Sumber](docs/INTEGRASI.md), [Managed Updates](docs/MANAGED_UPDATES.md), [Status Publikasi](docs/STATUS_PUBLIKASI.md)):**
+- **Pemisahan Bundel, Runtime Perangkat &amp; Layanan Akun Eksternal ([Katalog 51 Sumber](docs/INTEGRASI.md), [Managed Updates](docs/MANAGED_UPDATES.md), [Status Publikasi](docs/STATUS_PUBLIKASI.md)):**
   ![Tiga jalur integrasi MSSHI: Bundel ZIP, Alat Perangkat, dan Layanan Akun](assets/diagrams/msshi-integration-map.svg)
 
 </details>
@@ -330,8 +336,8 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 Setelah menyalin skill target &amp; menata profil bot Hermes (didukung **sebelum, saat, atau setelah membuka Hermes Desktop**), `msshi setup` memandu 4 langkah lengkap yang juga dapat diotomasi lewat flag di `install.ps1` / `install.sh`:
 
 1. **`[1/4] Skills`**: Tambah extra packs (`--extra-packs`) / skill individu (`--extra-skills`) per target atau bot, serta opt-in REA (`--with-rea`, default **OFF**).
-2. **`[2/4] Plugin & Add-on`**: Periksa dan stage plugin fail-open `msshi-auto-trim` (`--stage-auto-trim` / `-StageAutoTrim`), preferensi `KAT-Coder` (`--kat-mode light|ideal|cloud|skip` / `-KatMode`), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
-3. **`[3/4] Koneksi Layanan & MCP`**: Pasang konektor MCP `GitLab` &amp; `Tinyfish` (`--connect-services skip|per-profile|share-oauth` / `-ConnectServices`), tetap menjaga `BrightData` **OFF** dan aman bila `config.yaml` Hermes belum ada (`deferred_pre_hermes`).
+2. **`[2/4] Plugin & Add-on`**: Auto-Trim, laporan Dreaming offline, KAT dan suara tetap pilihan terpisah. Tidak membuka aplikasi atau mengaktifkan TTS saat startup.
+3. **`[3/4] Browser & Akun`**: Pilih Chrome, Edge, Firefox, atau tidak memilih. Label profil/akun disimpan secara pribadi untuk login manual; tidak membaca cookie atau memasang GitLab/Tinyfish/BrightData/Steel.
 4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Hubungkan semua bot atau bot pilihan ke aplikasi terdeteksi via `auto-reconnect`, atau petakan aplikasi spesifik per bot secara manual (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`; selalu `auto_open_on_boot: false`).
 
 > 🛡️ **Preservasi Otomatis Saat Update / `--yes`:** Menjalankan ulang `msshi setup` atau mode `--yes` mempertahankan pengaturan yang sudah aktif — termasuk mode `KAT-Coder` (`light`/`ideal`/`cloud`), plugin `msshi-auto-trim` yang sudah di-stage, koneksi layanan MCP, app mapping bot yang sudah tersambung (`preserved`), serta `provider`, `model`, `SOUL.md` kustom, dan `user_creative_dna.json` (`provider_model_mutated: false`). Setiap setup menyimpan laporan JSON terstruktur ke `<MSSHI_HOME>/reports/last-setup-report.json`.
