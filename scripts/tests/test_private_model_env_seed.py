@@ -39,7 +39,7 @@ class ModelEnvironmentSeedTests(unittest.TestCase):
         cfg = {'model': {'provider': 'named'}, 'providers': {'named': {'api_key': '${USER_CHOSEN_LLM_KEY}'}}}
         self.assertEqual(hp.model_env_keys(cfg), {'USER_CHOSEN_LLM_KEY'})
 
-    def test_enrolled_empty_profile_gets_only_active_key_after_host_configuration(self):
+    def test_enrolled_empty_profile_keeps_its_own_empty_env_after_host_configuration(self):
         with TemporaryDirectory() as tmp:
             home = Path(tmp)
             profile = home / 'profiles/val'
@@ -50,7 +50,8 @@ class ModelEnvironmentSeedTests(unittest.TestCase):
             (home / 'config.yaml').write_text('model:\n  provider: openai\n  default: chosen\n')
             (home / '.env').write_text('OPENAI_API_KEY=fixture-key\nGMAIL_TOKEN=fixture-private\n')
             hp.sync_pending_profile_configs(home)
-            self.assertEqual((profile / '.env').read_text(), 'OPENAI_API_KEY=fixture-key\n')
+            self.assertEqual((profile / '.env').read_text(), hp._PLACEHOLDER_ENV)
+            self.assertFalse((profile / 'config.yaml').exists())
             (profile / '.env').write_text('# User customized empty file\n')
             hp.sync_pending_profile_configs(home)
             self.assertEqual((profile / '.env').read_text(), '# User customized empty file\n')
