@@ -666,10 +666,22 @@
       "lead_bot": "val",
       "load_mode": "opt_in_runtime"
     },
+    "sharewise": {
+      "mission": "3_konten_kreasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
     "slide-generation": {
       "mission": "3_konten_kreasi",
       "pillar": "research_and_prediction",
       "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "spacewise": {
+      "mission": "5_teman_curhat_dan_daily_scheduling",
+      "pillar": "governance_and_routing",
+      "lead_bot": "yukino",
       "load_mode": "on_demand_skill"
     },
     "symbolic-equation": {
@@ -758,6 +770,20 @@
       "scope": "none",
       "hook": "retired",
       "role": "Retired from installer; replaced by user-selected local browser via msshi browser without cookie extraction or account transfer."
+    },
+    "spacewise": {
+      "status": "active_default",
+      "pillar": "governance_and_routing",
+      "scope": "all_profiles",
+      "hook": "pre_tool_call + tools (spacewise_scan/preview/trash/undo)",
+      "role": "Local-only safe storage cleanup with literal-folder guard, local HTML preview, and human-approved undoable Trash (MIT, ardianreffa)."
+    },
+    "sharewise": {
+      "status": "active_default",
+      "pillar": "governance_and_routing",
+      "scope": "all_profiles",
+      "hook": "pre_tool_call + tools (sharewise_check/review/share/look)",
+      "role": "Local-only photo/video privacy check (Wall T1 yes/no counts only), manual/Vision review page, and clean redacted copies (MIT, ardianreffa)."
     }
   },
   "connections_and_bridges_registry": {
@@ -848,9 +874,11 @@
       "token": "1_belajar_jadi_guru",
       "memory": "1_belajar_jadi_guru",
       "bridge": "4_coding",
-      "voice": "3_konten_kreasi"
+      "voice": "3_konten_kreasi",
+      "utility": "5_teman_curhat_dan_daily_scheduling",
+      "privacy": "3_konten_kreasi"
     },
-    "expected_upstream_count": 54,
+    "expected_upstream_count": 56,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -905,7 +933,9 @@
       "rea-video",
       "grim-prompter",
       "claude-bughunter",
-      "imagination-studio"
+      "imagination-studio",
+      "spacewise",
+      "sharewise"
     ]
   }
 }

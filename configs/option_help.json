@@ -520,6 +520,14 @@
     "imagination-studio": {
       "id": "Opsional khusus Kiki-Chii/Content Creator: jembatan Slate & antrean render lokal Imagination Studio (gambar, klip video+suara, voice, musik, SFX) yang bekerja sama dengan Filmmaker saat dipilih.",
       "en": "Optional Kiki-Chii/Content Creator bridge for Imagination Studio Slate planning and local render queues (pictures, clips with sound, voice, music, SFX) collaborating with Filmmaker when enabled."
+    },
+    "spacewise": {
+      "id": "Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit.",
+      "en": "Safe local storage cleanup (duplicates, leftover installers, similar/blurry photos, large-file report) with local preview and explicit approval."
+    },
+    "sharewise": {
+      "id": "Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi.",
+      "en": "Local privacy check before sharing photos/videos (yes/no counts only, never leaking GPS/time/device) plus verified clean redacted copies."
     }
   },
   "packs": {
@@ -748,6 +756,14 @@
     "imagination-studio-runtime": {
       "id": "Aplikasi Imagination Studio (Keys & Sam Wasserman / TensorFold), plugin resmi Hermes (hermes plugins install imagination-studio, Hermes >= 0.22.7), dan bobot model dipasang terpisah oleh pengguna sesuai RAM/GPU (atau via ComfyUI PC/Comfy Cloud).",
       "en": "The Imagination Studio app (Keys & Sam Wasserman / TensorFold), official Hermes plugin (hermes plugins install imagination-studio, Hermes >= 0.22.7), and model weights are installed separately by the user according to RAM/GPU (or via remote ComfyUI/Comfy Cloud)."
+    },
+    "spacewise": {
+      "id": "Plugin & skill lokal Spacewise (MIT, tanpa jaringan): pindai 1 folder persis, tampilkan pratinjau lokal, pindahkan kategori yang disetujui ke Trash (macOS/Linux; Windows mode laporan).",
+      "en": "Local Spacewise plugin & skill (MIT, zero network): scan one literal folder, build local preview, move approved categories to Trash (macOS/Linux; Windows report-only)."
+    },
+    "sharewise": {
+      "id": "Plugin & skill lokal Sharewise (MIT, tanpa jaringan): audit metadata foto/video Wall T1 (ya/tidak saja), halaman review lokal, dan salinan bersih tanpa mengubah file asli.",
+      "en": "Local Sharewise plugin & skill (MIT, zero network): Wall T1 photo/video metadata audit (yes/no only), local review page, and verified clean copies without altering originals."
     }
   }
 }

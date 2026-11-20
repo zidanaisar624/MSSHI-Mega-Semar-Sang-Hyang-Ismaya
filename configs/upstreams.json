@@ -1035,6 +1035,54 @@
       "requires": "Opsional saat instalasi (public_default=false). Aplikasi Imagination Studio, plugin Hermes (>=0.22.7), dan bobot model terpisah; wajib cek headroom memori (/api/memory) sebelum render.",
       "license": "Apache-2.0 (credit Keys github.com/drowzeys & Sam Wasserman / Wasserman Productions); ships no model weights",
       "background_model_calls": false
+    },
+    {
+      "id": "spacewise",
+      "source": "https://github.com/ardianreffa/spacewise",
+      "source_type": "git",
+      "revision": "8e4f39aa49d9ad31e5972a67f886434c59dbc988",
+      "verification": "primary-source/pinned-package/frontmatter/license/security reviewed 2026-11-20; zero network calls",
+      "status": "bundled-native-plugin-and-skill",
+      "auto_start": false,
+      "domain": "utility",
+      "kind": "integration-wrapper",
+      "pack": "core",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/spacewise",
+      "use_when": "Bersihkan ruang penyimpanan secara lokal (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan gerbang persetujuan manusia.",
+      "requires": "Pillow (+ pillow-heif untuk HEIC); pada Windows hanya mode laporan/pratinjau di subfolder home (Trash hanya macOS/Linux).",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "sharewise",
+      "source": "https://github.com/ardianreffa/sharewise",
+      "source_type": "git",
+      "revision": "dd82698f253a29fe6eb53a8c36d4b51b11a289a9",
+      "verification": "primary-source/pinned-package/frontmatter/license/security reviewed 2026-11-20; zero network calls",
+      "status": "bundled-native-plugin-and-skill",
+      "auto_start": false,
+      "domain": "privacy",
+      "kind": "integration-wrapper",
+      "pack": "core",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/sharewise",
+      "use_when": "Periksa metadata sensitif foto/video sebelum dibagikan (laporan ya/tidak tanpa membocorkan nilai) dan buat salinan bersih dengan redaksi piksel.",
+      "requires": "Pillow + numpy (+ pillow-heif untuk HEIC); deteksi otomatis Apple Vision khusus macOS, pada Windows/Linux redaksi manual via halaman review lokal.",
+      "license": "MIT",
+      "background_model_calls": false
     }
   ]
 }

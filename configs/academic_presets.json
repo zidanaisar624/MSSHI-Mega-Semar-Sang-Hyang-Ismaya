@@ -26,7 +26,9 @@
           "prep-for-meetings",
           "generate-fresh-ideas",
           "get-more-perspectives",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -42,7 +44,9 @@
           "paper-revision",
           "research-paper-writing",
           "literature-review",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -66,7 +70,9 @@
           "unslop",
           "symbolic-equation",
           "timesfm-forecasting",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -81,7 +87,9 @@
           "match-my-writing-style",
           "unslop",
           "generate-fresh-ideas",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -99,7 +107,9 @@
           "mattpocock-engineering",
           "grim-prompter",
           "claude-bughunter",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ]
       },
       "display_names": {
@@ -191,7 +201,9 @@
           "prep-for-meetings",
           "generate-fresh-ideas",
           "get-more-perspectives",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -208,7 +220,9 @@
           "research-paper-writing",
           "literature-review",
           "get-more-perspectives",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -234,7 +248,9 @@
           "creative-thinking-for-research",
           "symbolic-equation",
           "timesfm-forecasting",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -249,7 +265,9 @@
           "match-my-writing-style",
           "unslop",
           "generate-fresh-ideas",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -267,7 +285,9 @@
           "mattpocock-engineering",
           "grim-prompter",
           "claude-bughunter",
-          "harness2"
+          "harness2",
+          "spacewise",
+          "sharewise"
         ]
       },
       "display_names": {

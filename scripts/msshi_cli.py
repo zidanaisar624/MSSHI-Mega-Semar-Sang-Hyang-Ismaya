@@ -443,9 +443,14 @@ def _stage_auto_trim_plugin(profile_home, target, mode, selections):
                   if not row["status"].startswith("preserved_")}
     staged = [label for label, _, _, folder in roots
               if ("default" if folder == profile_home else folder.name) in staged_ids]
+    wise_result = None
+    try:
+        wise_result = hermes_profiles.install_wise_plugins(profile_home, ROOT)
+    except (OSError, ValueError):
+        wise_result = {"installed": False}
     return {"staged": bool(staged), "profiles": staged,
             "llmtrim_binary": result["binary"]["status"].startswith("verified_"),
-            "fail_open": True, "display_name": "MSSHITrim", "details": result}
+            "fail_open": True, "display_name": "MSSHITrim", "wise_plugins": wise_result, "details": result}
 
 
 def _select_extra_slugs_interactive(catalog, packs):

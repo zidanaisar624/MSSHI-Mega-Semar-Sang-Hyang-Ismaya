@@ -703,6 +703,32 @@
       "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "notice_sha256": "39aef326861044aeb9f79833ee7911865352399eae64bb53f8f2d30ad850d226",
       "status": "pinned_license_and_notice_read; upstream app and model weights not bundled"
+    },
+    {
+      "id": "spacewise",
+      "source": "https://github.com/ardianreffa/spacewise",
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/spacewise",
+      "revision": "8e4f39aa49d9ad31e5972a67f886434c59dbc988",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 ardianreffa"
+      ],
+      "license_url": "https://raw.githubusercontent.com/ardianreffa/spacewise/8e4f39aa49d9ad31e5972a67f886434c59dbc988/LICENSE",
+      "license_sha256": "b511ee840cf8295dd4335fa426f0ca99ca3ae1fdfbf9659fa8136827994a41e4",
+      "status": "pinned_license_and_source_reviewed; MIT license retained in plugin and skill folders"
+    },
+    {
+      "id": "sharewise",
+      "source": "https://github.com/ardianreffa/sharewise",
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/sharewise",
+      "revision": "dd82698f253a29fe6eb53a8c36d4b51b11a289a9",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 ardianreffa"
+      ],
+      "license_url": "https://raw.githubusercontent.com/ardianreffa/sharewise/dd82698f253a29fe6eb53a8c36d4b51b11a289a9/LICENSE",
+      "license_sha256": "b511ee840cf8295dd4335fa426f0ca99ca3ae1fdfbf9659fa8136827994a41e4",
+      "status": "pinned_license_and_source_reviewed; MIT license retained in plugin and skill folders"
     }
   ],
   "additional_runtime_terms": {

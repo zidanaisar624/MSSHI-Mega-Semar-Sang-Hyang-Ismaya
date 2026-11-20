@@ -1318,6 +1318,110 @@ def install_team_routing_plugin(
             "restart_required": True, "new_session_prompt_required": True,
             "network_or_llm_calls": 0}
 
+
+def _activate_plugins_in_config(path: Path, plugin_ids: tuple[str, ...], tx: ProfileTransaction) -> dict:
+    if not path.is_file():
+        return {"active": False, "reason": "config_missing"}
+    before = load_yaml_mapping(path)
+    plugins = before.get("plugins") or {}
+    if not isinstance(plugins, dict):
+        return {"active": False, "reason": "non_mapping_plugin_config"}
+    disabled = plugins.get("disabled") or []
+    enabled = plugins.get("enabled")
+    if not isinstance(disabled, list) or (enabled is not None and not isinstance(enabled, list)):
+        return {"active": False, "reason": "custom_plugin_policy_requires_review"}
+    expected = dict(before)
+    expected_plugins = dict(plugins)
+    expected_plugins["enabled"] = list(enabled or [])
+    skipped_disabled = []
+    activated = []
+    for pid in plugin_ids:
+        if pid in disabled:
+            skipped_disabled.append(pid)
+            continue
+        if pid not in expected_plugins["enabled"]:
+            expected_plugins["enabled"].append(pid)
+        activated.append(pid)
+    expected["plugins"] = expected_plugins
+    raw = path.read_bytes()
+    if expected_plugins != plugins:
+        raw = _replace_yaml_section_bytes(raw, "plugins", expected_plugins)
+    after = load_yaml_mapping(raw)
+    if after != expected:
+        raise ValueError(f"Cannot prove narrow plugin config edit preserves routing at {path}")
+    changed = tx.write(path, raw, 0o600)
+    return {
+        "active": bool(activated),
+        "activated": activated,
+        "skipped_disabled": skipped_disabled,
+        "changed": changed,
+        "main_model_provider_preserved": before.get("model") == after.get("model")
+        and before.get("provider") == after.get("provider"),
+    }
+
+
+def install_wise_plugins(
+    hermes_home: Path,
+    repo_source: Path,
+    *,
+    plugin_ids: tuple[str, ...] = ("spacewise", "sharewise"),
+    profile_ids: tuple[str, ...] = ("yukino", "shizuka", "val", "kiki-chii", "shikaku"),
+    transaction: ProfileTransaction | None = None,
+) -> dict:
+    """Install local-only MIT Spacewise & Sharewise Hermes plugins across default and all live named profiles.
+
+    Touches only plugins/<id>/* and plugins.enabled (backed up atomically). Never mutates
+    provider, model, endpoints, credentials, delegation routing, or SOUL.md.
+    """
+    hermes_home = hermes_home.absolute()
+    sources: dict[str, Path] = {}
+    for pid in plugin_ids:
+        src = repo_source / "hermes_plugins" / pid
+        if not (src / "plugin.yaml").is_file() or not (src / "__init__.py").is_file():
+            raise ValueError(f"Hermes plugin source is missing: {pid}")
+        sources[pid] = src
+
+    tx = transaction or ProfileTransaction(hermes_home)
+    rows: dict[str, dict] = {}
+    try:
+        homes = [("default", hermes_home)]
+        live = live_named_profiles(hermes_home)
+        seen = {"default"}
+        for name in profile_ids:
+            if name in live and name not in seen:
+                homes.append((name, live[name]))
+                seen.add(name)
+        for name, folder in sorted(live.items()):
+            if name not in seen:
+                homes.append((name, folder))
+                seen.add(name)
+
+        for name, home in homes:
+            for pid, src_root in sources.items():
+                dst_root = _confined(hermes_home, home / "plugins" / pid)
+                for src_file in sorted(src_root.rglob("*")):
+                    if src_file.is_symlink():
+                        raise ValueError(f"Refusing plugin source symlink: {src_file}")
+                    if not src_file.is_file():
+                        continue
+                    rel = src_file.relative_to(src_root)
+                    if "__pycache__" in rel.parts or src_file.suffix in {".pyc", ".pyo"}:
+                        continue
+                    tx.write(_confined(hermes_home, dst_root / rel), src_file.read_bytes())
+            rows[name] = _activate_plugins_in_config(home / "config.yaml", plugin_ids, tx)
+        receipt = tx.commit() if transaction is None else None
+    except Exception:
+        if transaction is None:
+            tx.rollback()
+        raise
+    return {
+        "installed": True,
+        "plugins": list(plugin_ids),
+        "profiles": rows,
+        "receipt": receipt,
+        "network_or_llm_calls": 0,
+    }
+
 def record_pending_bots(hermes_home: Path, entries: list[dict[str, str]], mode: str, *, transaction: ProfileTransaction | None = None) -> Path:
     manifest_path = hermes_home / "msshi-runtime" / "pending-bots.json"
     existing = {}

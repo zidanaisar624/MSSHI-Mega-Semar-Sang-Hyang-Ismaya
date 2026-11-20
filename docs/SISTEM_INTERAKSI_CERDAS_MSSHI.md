@@ -93,10 +93,10 @@ Seluruh komponen paket MSSHI terpetakan 100% di [msshi_cognitive_system.json](..
 
 | Lapisan Komponen | Cakupan Terkelola | Aturan Sistem & Keamanan |
 | --- | --- | --- |
-| **Skill Bundel** | `69/69` (`skill_registry`) | Setiap skill terikat pada misi utama, pilar, `lead_bot`, dan mode muat (`core_always_light`, `on_demand_skill`, `lazy_context_source`, atau `opt_in_runtime`). |
+| **Skill Bundel** | `71/71` (`skill_registry`) | Setiap skill terikat pada misi utama, pilar, `lead_bot`, dan mode muat (`core_always_light`, `on_demand_skill`, `lazy_context_source`, atau `opt_in_runtime`), termasuk `spacewise` & `sharewise` untuk semua bot di semua preset. |
 | **Skill Opsional** | `2/2` (`optional/rea`, `optional/imagination-studio`) | Default `OFF`; `rea` khusus Coder (`--with-rea`), `imagination-studio` khusus Kiki-Chii/Content Creator (`--with-imagination-studio`, bekerja sama dengan Filmmaker bila terpasang). |
-| **Plugin Native Hermes** | `4/4` (`plugin_registry`) | `msshi-auto-trim` (hemat token lossless), `msshi-team-routing` (orkestrasi + 5 Misi + KAT opt-in), `msshi-interaction` (gating Tipe 1/Tipe 2/Main-only), dan `msshi-steel-policy` (status *retired*, tidak dipasang). |
-| **Repositori Upstream** | `54/54` (`upstream_governance`) | Disimpan di luar pemindai `skills/` (`upstreams/` atau `msshi-private/context-sources/`), diaudit lisensi & pin commit, dibaca 1 file on-demand, tanpa eksekusi otomatis. |
+| **Plugin Native Hermes** | `6/6` (`plugin_registry`) | `msshi-auto-trim` (hemat token lossless), `msshi-team-routing` (orkestrasi + 5 Misi + KAT opt-in), `msshi-interaction` (gating Tipe 1/Tipe 2/Main-only), `spacewise` (pembersihan penyimpanan lokal aman), `sharewise` (pemeriksaan privasi foto/video Wall T1 & salinan bersih), dan `msshi-steel-policy` (status *retired*, tidak dipasang). |
+| **Repositori Upstream** | `56/56` (`upstream_governance`) | Disimpan di luar pemindai `skills/` (`upstreams/` atau `msshi-private/context-sources/`), diaudit lisensi & pin commit, dibaca 1 file on-demand, tanpa eksekusi otomatis. |
 | **Koneksi, Bridge & Runtime** | `5/5` jalur (`connections_and_bridges_registry`) | (1) `CLI-Anything` App Bridge (`tiket tugas`, `auto_open_on_boot: false`), (2) Browser lokal manual (`msshi browser`, tanpa transfer cookie), (3) Layanan eksternal/MCP manual (`BrightData`/`GDrive` OFF), (4) `Coder KAT` opt-in privat, (5) Runtime terisolasi (`harness2`, `timesfm`, `dream`, `brag`, `scrapling`, `voice`, `rea`, `skripsi`, `light`). |
 
 ---

@@ -36,7 +36,9 @@
         "career-ops",
         "remote-jobs",
         "mattpocock-engineering",
-        "harness2"
+        "harness2",
+        "spacewise",
+        "sharewise"
       ],
       "optional_skills": [
         "anti-slop",
@@ -96,7 +98,9 @@
         "career-ops",
         "remote-jobs",
         "mattpocock-engineering",
-        "harness2"
+        "harness2",
+        "spacewise",
+        "sharewise"
       ],
       "optional_skills": [
         "anti-slop",
@@ -170,7 +174,9 @@
         "muza-skripsi-template",
         "career-ops",
         "remote-jobs",
-        "mattpocock-engineering"
+        "mattpocock-engineering",
+        "spacewise",
+        "sharewise"
       ],
       "optional_skills": [
         "anti-slop",
@@ -232,7 +238,9 @@
         "remote-jobs",
         "mattpocock-engineering",
         "harness2",
-        "rea-video"
+        "rea-video",
+        "spacewise",
+        "sharewise"
       ],
       "optional_skills": [
         "anti-slop",
@@ -324,7 +332,9 @@
         "remote-jobs",
         "mattpocock-engineering",
         "grim-prompter",
-        "claude-bughunter"
+        "claude-bughunter",
+        "spacewise",
+        "sharewise"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -1493,6 +1503,24 @@
       "scope": "native-cli",
       "execution": "task-ticket",
       "auto_open_on_boot": false
+    },
+    {
+      "slug": "spacewise",
+      "status": "bundled",
+      "path": "skills/spacewise/SKILL.md",
+      "purpose": "Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit.",
+      "scope": "all",
+      "source": "https://github.com/ardianreffa/spacewise",
+      "kind": "integration-wrapper"
+    },
+    {
+      "slug": "sharewise",
+      "status": "bundled",
+      "path": "skills/sharewise/SKILL.md",
+      "purpose": "Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi.",
+      "scope": "all",
+      "source": "https://github.com/ardianreffa/sharewise",
+      "kind": "integration-wrapper"
     }
   ],
   "packs": {
@@ -1514,7 +1542,9 @@
       "prep-for-meetings",
       "prep-for-meetings-2",
       "unlimited-ocr-2",
-      "wise-judgment-and-sovereign-orchestrator"
+      "wise-judgment-and-sovereign-orchestrator",
+      "spacewise",
+      "sharewise"
     ],
     "filmmaking": [
       "academic-plotting",
@@ -1778,7 +1808,9 @@
       "career-ops",
       "remote-jobs",
       "mattpocock-engineering",
-      "harness2"
+      "harness2",
+      "spacewise",
+      "sharewise"
     ],
     "background_model_calls": false
   }

@@ -361,6 +361,52 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertEqual(routed["core_mission"], "3_konten_kreasi")
         self.assertEqual(routed["lead_bot"], "kiki-chii")
 
+    def test_spacewise_and_sharewise_installed_across_all_bots_and_presets(self):
+        matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
+        academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+
+        for slug in ("spacewise", "sharewise"):
+            # Skill folder + <=1024-char description + MIT LICENSE.upstream
+            sm = (ROOT / "skills" / slug / "SKILL.md").read_text(encoding="utf-8-sig")
+            desc = sm.split("---")[1].split("description:", 1)[1].strip()
+            self.assertLessEqual(len(desc), 1024)
+            self.assertTrue((ROOT / "skills" / slug / "LICENSE.upstream").is_file())
+            # Native Hermes plugin folder + MIT LICENSE + plugin.yaml
+            pdir = ROOT / "hermes_plugins" / slug
+            self.assertTrue((pdir / "plugin.yaml").is_file())
+            self.assertTrue((pdir / "__init__.py").is_file())
+            self.assertTrue((pdir / "LICENSE").is_file())
+            # Present on ALL bots in muza-preset, core pack, academic-mahasiswa, and academic-dosen
+            self.assertIn(slug, matrix["packs"]["core"])
+            for bot in matrix["bots"]:
+                self.assertIn(slug, bot["required_skills"], f"{slug} missing on {bot['id']} in muza-preset")
+            for preset_id in ("academic-mahasiswa", "academic-dosen"):
+                for role, skills in academic["presets"][preset_id]["roles"].items():
+                    self.assertIn(slug, skills, f"{slug} missing on {role} in {preset_id}")
+
+        # Atomic plugin installer enables both plugins without mutating provider/model
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "hermes-home"
+            home.mkdir()
+            base_cfg = "model: keep-me\nprovider: keep-provider\nplugins:\n  enabled:\n    - msshi-auto-trim\n  disabled: []\n"
+            (home / "config.yaml").write_text(base_cfg, encoding="utf-8")
+            for bot in ("yukino", "shizuka", "val", "kiki-chii", "shikaku"):
+                pdir = home / "profiles" / bot
+                pdir.mkdir(parents=True)
+                (pdir / "config.yaml").write_text(base_cfg, encoding="utf-8")
+            res = hp.install_wise_plugins(home, ROOT)
+            self.assertTrue(res["installed"])
+            self.assertEqual(res["network_or_llm_calls"], 0)
+            for name in ("default", "yukino", "shizuka", "val", "kiki-chii", "shikaku"):
+                p = home if name == "default" else home / "profiles" / name
+                self.assertTrue((p / "plugins" / "spacewise" / "plugin.yaml").is_file())
+                self.assertTrue((p / "plugins" / "sharewise" / "plugin.yaml").is_file())
+                cfg = hp.load_yaml_mapping(p / "config.yaml")
+                self.assertEqual(cfg["model"], "keep-me")
+                self.assertEqual(cfg["provider"], "keep-provider")
+                self.assertIn("spacewise", cfg["plugins"]["enabled"])
+                self.assertIn("sharewise", cfg["plugins"]["enabled"])
+
 
 if __name__ == "__main__":
     unittest.main()

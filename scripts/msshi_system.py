@@ -196,7 +196,8 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "slide", "presentasi", "ppt", "grafik", "plot", "motion", "animasi", "storyboard",
             "thumbnail", "brand", "remake", "visual", "brag", "unslop", "youtube", "reels", "tiktok",
             "imagination studio", "slate", "tensorfold", "studio_clip", "studio_picture", "studio_voice",
-            "studio_song", "studio_sound",
+            "studio_song", "studio_sound", "sharewise", "exif", "gps foto", "sensor wajah", "blur wajah",
+            "hapus metadata",
         ),
         "lead": "kiki-chii",
         "coordinator": "shizuka",
@@ -232,6 +233,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "overwhelmed", "ngobrol", "daily", "harian", "jadwal", "schedule", "scheduling",
             "agenda", "to-do", "todo", "reminder", "pengingat", "rutinitas", "routine",
             "kebiasaan", "habit", "energi", "semangat", "teman bicara", "check-in",
+            "spacewise", "bersihkan penyimpanan", "foto duplikat", "file duplikat", "free up space",
         ),
         "lead": "yukino",
         "coordinator": "shizuka",
@@ -454,6 +456,8 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
     routing_profiles = _plugin_coverage(profiles, "msshi-team-routing")
     interaction_profiles = _plugin_coverage(profiles, "msshi-interaction")
     bridge_profiles = _skill_coverage(profiles, "cli-anything-universal-bridge")
+    spacewise_plugins = _plugin_coverage(profiles, "spacewise")
+    sharewise_plugins = _plugin_coverage(profiles, "sharewise")
 
     # Preset parity check from repo
     matrix = _read_json(source_root / "configs" / "bot_role_and_skill_matrix.json")
@@ -513,6 +517,8 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
                 "team_routing_profiles": routing_profiles,
                 "interaction_profiles": interaction_profiles,
                 "universal_bridge_profiles": bridge_profiles,
+                "spacewise_plugin_profiles": spacewise_plugins,
+                "sharewise_plugin_profiles": sharewise_plugins,
             },
         },
         "guardrails": {
