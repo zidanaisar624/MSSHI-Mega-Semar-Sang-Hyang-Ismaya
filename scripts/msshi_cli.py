@@ -1146,6 +1146,12 @@ def migrate_runtime(source, hermes_home=None):
     interaction = install_existing(candidate, source, apply=True)
     if interaction.get('files_planned'):
         print('Interaction plugin:', json.dumps(interaction, ensure_ascii=False))
+    if (source / "hermes_plugins/msshi-auto-trim/plugin.yaml").is_file():
+        import msshi_trim_setup as trim_setup
+        try:
+            trim_setup.install(candidate, source_root=source, apply=True, allow_download=False)
+        except (OSError, ValueError, subprocess.SubprocessError):
+            pass
     # Browser/account selection is declarative. Updates never reinstall a cloud browser.
     return 0
 

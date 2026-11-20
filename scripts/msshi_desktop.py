@@ -152,6 +152,9 @@ def run(home: Path, timeout: int, check_only: bool = False, software_rendering: 
             if (suite_source / 'hermes_plugins/msshi-interaction/plugin.yaml').is_file():
                 from msshi_interaction import install_existing
                 install_existing(home, suite_source, apply=True)
+            if (suite_source / 'hermes_plugins/msshi-auto-trim/plugin.yaml').is_file():
+                import msshi_trim_setup as trim_setup
+                trim_setup.install(home, source_root=suite_source, apply=True, allow_download=False)
         except OSError:
             pass
     source = home / "hermes-agent"
