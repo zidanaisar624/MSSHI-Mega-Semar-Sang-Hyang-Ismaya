@@ -689,6 +689,20 @@
       "content_license_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
       "notice_sha256": "547ed8bfa070693c2014bd66329dba258e0010add743fc5830e3b473b70e4eee",
       "status": "pinned_license_read; upstream implementation and runtimes not bundled"
+    },
+    {
+      "id": "imagination-studio",
+      "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
+      "hermes_plugin_listing": "https://hermeswatcher.com/plugins/imagination-studio",
+      "revision": "16f00b462a5a389e2c5e19c2cbf7d9527ad526ea",
+      "license": "Apache-2.0 (retains NOTICE attribution to Keys github.com/drowzeys & Sam Wasserman / Wasserman Productions)",
+      "copyright_lines": [
+        "Copyright 2026 Keys (drowzeys) and Sam Wasserman (Wasserman Productions)"
+      ],
+      "license_url": "https://raw.githubusercontent.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman/16f00b462a5a389e2c5e19c2cbf7d9527ad526ea/LICENSE",
+      "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "notice_sha256": "39aef326861044aeb9f79833ee7911865352399eae64bb53f8f2d30ad850d226",
+      "status": "pinned_license_and_notice_read; upstream app and model weights not bundled"
     }
   ],
   "additional_runtime_terms": {

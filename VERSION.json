@@ -5,7 +5,7 @@
   "version": "3.1.2",
   "release_date": "2026-11-17",
   "bundled_skills": 69,
-  "external_sources": 53,
+  "external_sources": 54,
   "update_modes": [
     "check",
     "update",
@@ -29,6 +29,7 @@
     "scrapling",
     "harness2",
     "rea",
+    "studio",
     "optional",
     "coder",
     "doctor",
@@ -43,11 +44,12 @@
   "license": "MIT",
   "core_skills": 51,
   "integration_wrappers": 18,
-  "optional_skills": 1,
-  "optional_integration_wrappers": 1,
+  "optional_skills": 2,
+  "optional_integration_wrappers": 2,
   "public_defaults": {
     "rea": false,
-    "kat": false
+    "kat": false,
+    "imagination-studio": false
   },
   "visual_assets": 8
 }

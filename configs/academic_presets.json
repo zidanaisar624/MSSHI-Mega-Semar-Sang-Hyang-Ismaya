@@ -150,6 +150,20 @@
           "revision": "15328a4",
           "auto_install": false,
           "auto_upload": false
+        },
+        {
+          "id": "imagination-studio",
+          "purpose": "Opsional khusus Kiki-Chii (Filmmaker/Content Creator): jembatan Slate & antrean render lokal Imagination Studio (127.0.0.1:7870) via plugin Hermes atau stdio MCP; bekerja sama dengan filmmaking-videography-photography-s2 saat dipilih.",
+          "status": "optional-kiki-filmmaker-studio-bridge",
+          "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
+          "hermes_plugin_listing": "https://hermeswatcher.com/plugins/imagination-studio",
+          "revision": "16f00b462a5a389e2c5e19c2cbf7d9527ad526ea",
+          "roles": [
+            "kiki-chii"
+          ],
+          "requires_hermes": ">=0.22.7",
+          "auto_install": false,
+          "auto_start": false
         }
       ]
     },
@@ -304,6 +318,20 @@
           "revision": "15328a4",
           "auto_install": false,
           "auto_upload": false
+        },
+        {
+          "id": "imagination-studio",
+          "purpose": "Opsional khusus Kiki-Chii (Filmmaker/Content Creator): jembatan Slate & antrean render lokal Imagination Studio (127.0.0.1:7870) via plugin Hermes atau stdio MCP; bekerja sama dengan filmmaking-videography-photography-s2 saat dipilih.",
+          "status": "optional-kiki-filmmaker-studio-bridge",
+          "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
+          "hermes_plugin_listing": "https://hermeswatcher.com/plugins/imagination-studio",
+          "revision": "16f00b462a5a389e2c5e19c2cbf7d9527ad526ea",
+          "roles": [
+            "kiki-chii"
+          ],
+          "requires_hermes": ">=0.22.7",
+          "auto_install": false,
+          "auto_start": false
         }
       ]
     }

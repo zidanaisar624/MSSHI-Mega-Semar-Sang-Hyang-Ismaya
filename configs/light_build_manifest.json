@@ -52,7 +52,8 @@
     "docs/manuals/v3.1.0",
     "docs/manuals/v3.1.1",
     "docs/manuals/v3.1.2",
-    "optional/rea"
+    "optional/rea",
+    "optional/imagination-studio"
   ],
   "exclude_globs": [
     "__pycache__",

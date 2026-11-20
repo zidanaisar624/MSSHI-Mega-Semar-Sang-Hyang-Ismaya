@@ -195,6 +195,8 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "konten", "kreasi", "video", "film", "foto", "fotografi", "desain", "design", "ui", "ux",
             "slide", "presentasi", "ppt", "grafik", "plot", "motion", "animasi", "storyboard",
             "thumbnail", "brand", "remake", "visual", "brag", "unslop", "youtube", "reels", "tiktok",
+            "imagination studio", "slate", "tensorfold", "studio_clip", "studio_picture", "studio_voice",
+            "studio_song", "studio_sound",
         ),
         "lead": "kiki-chii",
         "coordinator": "shizuka",
@@ -212,12 +214,14 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "plugins_and_tools": [
             "msshi-auto-trim (MSSHITrim JSON compaction)",
             "msshi integrations source --name rea-video (bedah video lokal ringan --no-vlm)",
+            "optional imagination-studio (jika terpasang/dipilih: Slate planning + antrean Studio 127.0.0.1:7870 setelah cek headroom)",
             "cli-anything-universal-bridge (on-demand task ticket, auto_open_on_boot=false)",
         ],
         "workflow": [
             "1. Mulai dengan Concepting First (hook, storyboard, gaya visual) dan review manusia sebelum rendering/produksi berat.",
-            "2. Untuk video referensi, jalankan rea-video lokal ringan (--no-vlm) dan baca VIDEO.md terlebih dahulu.",
-            "3. Untuk grafik ilmiah/slide, ambil angka terverifikasi dari Val sebelum visualisasi.",
+            "2. Jika optional imagination-studio terpasang/dipilih pada Kiki-Chii, teruskan Shot List ke Slate & cek headroom (msshi studio status --probe) sebelum memakai antrean Studio; jika belum terpasang, tetap mulus di ArtCraft/Blender/Motion-as-Code/Higgsfield.",
+            "3. Untuk video referensi, jalankan rea-video lokal ringan (--no-vlm) dan baca VIDEO.md terlebih dahulu.",
+            "4. Untuk grafik ilmiah/slide, ambil angka terverifikasi dari Val sebelum visualisasi.",
         ],
     },
     {
@@ -444,6 +448,7 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
     grim_profiles = _skill_coverage(profiles, "grim-prompter")
     bughunter_profiles = _skill_coverage(profiles, "claude-bughunter")
     research_profiles = _skill_coverage(profiles, "deep-research")
+    studio_profiles = _skill_coverage(profiles, "imagination-studio")
 
     # Pillar 4: Governance & Orchestration
     routing_profiles = _plugin_coverage(profiles, "msshi-team-routing")
@@ -502,6 +507,7 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
                     "grim_prompter": grim_profiles,
                     "claude_bughunter": bughunter_profiles,
                 },
+                "creative_optional_studio_profiles": studio_profiles,
             },
             "4_governance_and_routing": {
                 "team_routing_profiles": routing_profiles,

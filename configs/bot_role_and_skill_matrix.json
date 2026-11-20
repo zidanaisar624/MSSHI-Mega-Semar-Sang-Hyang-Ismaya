@@ -277,7 +277,8 @@
         "artcraft-cadcraft",
         "artcraft-solidcraft",
         "artcraft-materialcraft",
-        "artcraft-texturecraft"
+        "artcraft-texturecraft",
+        "imagination-studio"
       ],
       "academic_engines": [
         "metode-analisis",
@@ -1192,6 +1193,17 @@
       "source": "https://github.com/morluto/rea",
       "kind": "optional-integration-wrapper",
       "optional_path": "optional/rea/SKILL.md",
+      "public_default": false
+    },
+    {
+      "slug": "imagination-studio",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): kolaborasi Slate & antrean render lokal Imagination Studio (gambar, klip+suara, voice, musik, SFX) via plugin Hermes atau stdio MCP (127.0.0.1:7870).",
+      "scope": "creative",
+      "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/imagination-studio/SKILL.md",
       "public_default": false
     },
     {

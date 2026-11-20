@@ -484,12 +484,14 @@ def _select_extra_slugs_interactive(catalog, packs):
 
 
 def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, packs, selections, home, state, lang, yes, profile_home=None):
-    """Step [1/4]: Optionally add extra packs/skills per target/bot and opt-in REA."""
+    """Step [1/4]: Optionally add extra packs/skills per target/bot and opt-in REA / Imagination Studio."""
     choice_help.feature('setup-skills', lang=lang)
     choice_help.feature('rea', lang=lang)
+    choice_help.feature('imagination-studio', lang=lang)
     cli_packs = getattr(args, 'extra_packs', None) or []
     cli_skills = getattr(args, 'extra_skills', None) or []
     with_rea = bool(getattr(args, 'with_rea', False))
+    with_studio = bool(getattr(args, 'with_imagination_studio', False))
     pick = "1"
     seed_slugs = []
     for pack in cli_packs:
@@ -501,24 +503,30 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
             raise ValueError(f"Skill tidak dikenal: {slug}")
         seed_slugs.append(slug)
 
-    if not yes and not (cli_packs or cli_skills or with_rea):
-        print("\n[1/4] Skills Tambahan & Opsional (REA default OFF):" if lang == "id"
-              else "\n[1/4] Extra Skills & Optional Wrappers (REA default OFF):")
+    if not yes and not (cli_packs or cli_skills or with_rea or with_studio):
+        print("\n[1/4] Skills Tambahan & Opsional (REA & Imagination Studio default OFF):" if lang == "id"
+              else "\n[1/4] Extra Skills & Optional Wrappers (REA & Imagination Studio default OFF):")
         print("  1. Pertahankan skill bawaan saat ini (Rekomendasi)" if lang == "id"
               else "  1. Keep current bundled skills (Recommended)")
         print("  2. Tambah extra packs/skills ke target atau bot" if lang == "id"
               else "  2. Add extra packs/skills to target or bots")
         print("  3. Tambah extra packs/skills + pasang wrapper opsional REA" if lang == "id"
               else "  3. Add extra packs/skills + install optional REA wrapper")
-        print("  4. Pasang wrapper opsional REA saja (runtime Node/npm terpisah)" if lang == "id"
-              else "  4. Install optional REA wrapper only (separate Node/npm runtime)")
+        print("  4. Pasang wrapper opsional REA saja (khusus Coder; runtime Node/npm terpisah)" if lang == "id"
+              else "  4. Install optional REA wrapper only (Coder; separate Node/npm runtime)")
+        print("  5. Pasang wrapper opsional Imagination Studio saja (khusus Kiki-Chii / Content Creator; bekerja sama dengan Filmmaker)" if lang == "id"
+              else "  5. Install optional Imagination Studio wrapper only (Kiki-Chii / Content Creator; collaborates with Filmmaker)")
+        print("  6. Pasang kedua wrapper opsional: REA (Coder) + Imagination Studio (Kiki-Chii)" if lang == "id"
+              else "  6. Install both optional wrappers: REA (Coder) + Imagination Studio (Kiki-Chii)")
         pick = _prompt_choice("Pilihan Skills [1]: ", "1")
-        if pick not in {"1", "2", "3", "4"}:
-            raise ValueError("Pilihan Skills harus 1, 2, 3, atau 4.")
+        if pick not in {"1", "2", "3", "4", "5", "6"}:
+            raise ValueError("Pilihan Skills harus 1, 2, 3, 4, 5, atau 6.")
         if pick in {"2", "3"}:
             seed_slugs = _select_extra_slugs_interactive(catalog, packs)
-        if pick in {"3", "4"}:
+        if pick in {"3", "4", "6"}:
             with_rea = True
+        if pick in {"5", "6"}:
+            with_studio = True
 
     applied_targets = {}
     expanded_extra = installer.include_mandatory(seed_slugs, catalog) if seed_slugs else []
@@ -550,9 +558,16 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
     rea_results = []
     if with_rea:
         from msshi_optional import enable, setup_targets
-        for folder in setup_targets(mode, selections, source=ROOT):
+        for folder in setup_targets(mode, selections, name='rea', source=ROOT):
             result = enable('rea', folder, source=ROOT, home=home)
             rea_results.append(result)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+    studio_results = []
+    if with_studio:
+        from msshi_optional import enable, setup_targets
+        for folder in setup_targets(mode, selections, name='imagination-studio', source=ROOT):
+            result = enable('imagination-studio', folder, source=ROOT, home=home)
+            studio_results.append(result)
             print(json.dumps(result, ensure_ascii=False, indent=2))
     return {
         "choice": pick,
@@ -561,6 +576,8 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
         "applied_targets": applied_targets,
         "rea_enabled": with_rea,
         "rea_results": rea_results,
+        "imagination_studio_enabled": with_studio,
+        "imagination_studio_results": studio_results,
     }
 
 
@@ -1244,7 +1261,7 @@ def main(argv=None):
     updater.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "studio", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
@@ -1268,6 +1285,7 @@ def main(argv=None):
             'harness2': 'Demo deterministik dan proposal eksperimen harness.',
             'optional': 'Lihat atau pasang opsi tambahan; default OFF.',
             'rea': 'Analisis statis JavaScript/arsip; opsi Coder, runtime terpisah.',
+            'studio': 'Status & rencana kolaborasi opsional Imagination Studio (Kiki-Chii / Filmmaker; 0 panggilan LLM).',
             'choices': 'Baca fungsi dan prasyarat setiap pilihan tanpa memasang apa pun.',
             'manual': 'Lihat atau unduh Buku Panduan PDF Lengkap per versi.',
         }
@@ -1304,6 +1322,7 @@ def main(argv=None):
             wizard.add_argument("--connect-bots", help="Daftar bot (dipisah koma atau 'all') untuk langkah [4/4].")
             wizard.add_argument("--connect-targets", help="Daftar app target (dipisah koma atau 'detected') untuk langkah [4/4].")
             wizard.add_argument("--with-rea", action="store_true", help="Opt-in analisis statis JavaScript/arsip: pasang instruksi REA; runtime Node/npm dan engine native terpisah. Default OFF.")
+            wizard.add_argument("--with-imagination-studio", action="store_true", help="Opt-in Imagination Studio untuk Kiki-Chii / Content Creator: pasang wrapper kolaborasi Filmmaker + Slate/Studio queue; aplikasi Studio & plugin Hermes terpisah. Default OFF.")
             wizard.add_argument("--low-ram", action="store_true", help="Aktifkan mode Low-RAM (hemat memori untuk perangkat <= 6 GB RAM) tanpa mengubah provider/model.")
             wizard.add_argument("--resource-profile", choices=("auto", "light", "normal"), help="Atur profil resource (auto/light/normal) tanpa mengubah provider/model.")
             wizard.add_argument("--download-pdf", action="store_true", help="Sekalian unduh Buku Panduan PDF Lengkap untuk versi ini.")
@@ -1319,7 +1338,7 @@ def main(argv=None):
     launcher.add_argument("--pdf-version", help="Pilih versi panduan; default latest.")
     launcher.add_argument("--pdf-dest", type=Path, help="Folder PDF; default Downloads/MSSHI_Manuals.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "studio", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -1340,7 +1359,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "light": "msshi_light.py", "system": "msshi_system.py", "forge": "msshi_forge.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "light": "msshi_light.py", "system": "msshi_system.py", "forge": "msshi_forge.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "studio": "msshi_imagination_studio.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_preferences.py", "trim": "msshi_llmtrim.py", "interaction": "msshi_interaction.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",

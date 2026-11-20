@@ -717,6 +717,17 @@
       "load_mode": "opt_in_runtime",
       "default_installed": "false",
       "note": "Opt-in static JavaScript/archive analyzer for Coder via --with-rea; isolated Node runtime separate."
+    },
+    "imagination-studio": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "collaborates_with": [
+        "filmmaking-videography-photography-s2"
+      ],
+      "load_mode": "opt_in_runtime",
+      "default_installed": "false",
+      "note": "Opt-in Imagination Studio (Keys & Sam Wasserman / TensorFold) Slate & local render queue bridge for Kiki-Chii via --with-imagination-studio or msshi optional enable imagination-studio; collaborates with filmmaking-videography-photography-s2 when installed."
     }
   },
   "plugin_registry": {
@@ -804,6 +815,7 @@
         "msshi scrapling",
         "msshi voice",
         "msshi rea",
+        "msshi studio",
         "msshi skripsi",
         "msshi manual",
         "msshi light"
@@ -838,7 +850,7 @@
       "bridge": "4_coding",
       "voice": "3_konten_kreasi"
     },
-    "expected_upstream_count": 53,
+    "expected_upstream_count": 54,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -892,7 +904,8 @@
       "mattpocock-skills",
       "rea-video",
       "grim-prompter",
-      "claude-bughunter"
+      "claude-bughunter",
+      "imagination-studio"
     ]
   }
 }

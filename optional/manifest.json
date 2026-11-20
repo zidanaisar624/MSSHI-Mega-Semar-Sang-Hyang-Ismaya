@@ -9,6 +9,15 @@
         "shikaku"
       ],
       "source_id": "rea"
+    },
+    {
+      "id": "imagination-studio",
+      "path": "optional/imagination-studio",
+      "public_default": false,
+      "roles": [
+        "kiki-chii"
+      ],
+      "source_id": "imagination-studio"
     }
   ]
 }

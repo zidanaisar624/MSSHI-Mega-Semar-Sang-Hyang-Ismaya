@@ -16,7 +16,14 @@ from msshi_update import inventory
 
 ROOT = Path(__file__).resolve().parents[1]
 # Manifest declarations cannot turn arbitrary release directories into skills.
-OPTIONAL_PATHS = {'rea': 'optional/rea'}
+OPTIONAL_PATHS = {
+    'rea': 'optional/rea',
+    'imagination-studio': 'optional/imagination-studio',
+}
+OPTIONAL_ROLE_LABELS = {
+    'rea': 'Coder / Shikaku',
+    'imagination-studio': 'Content Creator / Kiki-Chii',
+}
 
 
 def optional_sources(source):
@@ -62,27 +69,29 @@ def binding_source(source, binding):
     return incoming
 
 
-def setup_targets(mode, selections, *, source=ROOT):
+def setup_targets(mode, selections, *, name='rea', source=ROOT):
     """Choose only the setup destinations explicitly covered by this opt-in."""
+    name = installer.safe_slug(name, 'optional skill')
     if mode in {'solo', 'selective'}:
         return list(selections)
     if mode in {'muza-preset', 'academic-mahasiswa', 'academic-dosen'}:
         manifest = installer.read_json(source / 'optional' / 'manifest.json')
-        entry = next(row for row in manifest['entries'] if row['id'] == 'rea')
+        entry = next(row for row in manifest['entries'] if row['id'] == name)
         roles = installer.names(entry.get('roles', []), 'optional role')
         return [folder for folder in selections if folder.parent.name in roles]
-    # A custom team has no implied Coder mapping. A separate explicit selection
+    # A custom team has no implied role mapping. A separate explicit selection
     # is required, and piped wizard input must retain its existing prompt order.
-    message = 'Pilih folder bot: msshi optional enable rea --target-dir PATH_TO_SKILLS'
+    label = 'REA' if name == 'rea' else 'Imagination Studio'
+    message = f'Pilih folder bot: msshi optional enable {name} --target-dir PATH_TO_SKILLS'
     if not sys.stdin.isatty():
         print(message)
         return []
     from msshi_cli import checklist
     choices = {folder.parent.name: folder for folder in selections}
-    print('Hanya folder bot yang dipilih akan menerima REA; bot lain tetap tanpa tambahan ini.')
+    print(f'Hanya folder bot yang dipilih akan menerima {label}; bot lain tetap tanpa tambahan ini.')
     try:
-        return [choices[name] for name in checklist(list(choices), 'bot untuk REA (opt-in)',
-                {name: f'Pasang instruksi REA pada {folder}; runtime tetap terpisah.' for name, folder in choices.items()})]
+        return [choices[bot] for bot in checklist(list(choices), f'bot untuk {label} (opt-in)',
+                {bot: f'Pasang instruksi {label} pada {folder}; runtime tetap terpisah.' for bot, folder in choices.items()})]
     except (EOFError, ValueError):
         print(message)
         return []
@@ -133,14 +142,20 @@ def enable(name, target_dir, *, source=ROOT, home=None, install_runtime=False,
     if install_runtime:
         if not registered:
             raise ValueError('Optional runtime requires an explicitly registered wrapper')
-        runtime_home = installer.absolute(hermes_home or os.environ.get('HERMES_HOME') or Path.home() / '.hermes')
-        helper = source / 'scripts' / 'msshi_rea.py'
-        installer.reject_links(helper)
-        if not helper.is_file():
-            raise ValueError(f'Optional runtime helper is missing: {helper}')
-        subprocess.run([sys.executable, '-B', '-X', 'utf8', str(helper),
-                        '--hermes-home', str(runtime_home), 'install'], check=True)
-        result['runtime_installed'] = True
+        if name == 'rea':
+            runtime_home = installer.absolute(hermes_home or os.environ.get('HERMES_HOME') or Path.home() / '.hermes')
+            helper = source / 'scripts' / 'msshi_rea.py'
+            installer.reject_links(helper)
+            if not helper.is_file():
+                raise ValueError(f'Optional runtime helper is missing: {helper}')
+            subprocess.run([sys.executable, '-B', '-X', 'utf8', str(helper),
+                            '--hermes-home', str(runtime_home), 'install'], check=True)
+            result['runtime_installed'] = True
+        else:
+            result['runtime_note'] = (
+                'Imagination Studio app & Hermes plugin are installed separately by the user '
+                '(hermes plugins install imagination-studio); MSSHI never auto-downloads studio weights.'
+            )
     return result
 
 
@@ -151,11 +166,11 @@ def main(argv=None):
     listing = sub.add_parser('list', help='Lihat fungsi, peran, dan prasyarat opsi; semua default publik OFF.')
     listing.add_argument('--lang', choices=('id', 'en'), default='id', help='Bahasa penjelasan.')
     activate = sub.add_parser('enable', help='Pasang instruksi opsi yang dipilih secara eksplisit; runtime terpisah.',
-        description='REA: analisis statis JavaScript/arsip milik Anda atau yang diizinkan. '
-                    'Memasang wrapper ringan saja; default OFF. Runtime Node/npm dan engine native dipasang terpisah.')
+        description='Pasang wrapper opsional (rea untuk Coder, imagination-studio untuk Kiki-Chii/Content Creator). '
+                    'Semua default publik OFF; runtime & aplikasi eksternal dipasang terpisah.')
     activate.add_argument('name', choices=tuple(OPTIONAL_PATHS))
     activate.add_argument('--target-dir', type=Path, required=True, help='Chosen host/profile skills directory.')
-    activate.add_argument('--install-runtime', action='store_true', help='Juga unduh dependency npm ke runtime terisolasi; perlu Node/npm kompatibel dan internet. Engine native tidak ikut dipasang.')
+    activate.add_argument('--install-runtime', action='store_true', help='Untuk REA: unduh dependency npm ke runtime terisolasi. Untuk Imagination Studio: hanya tampilkan langkah setup terpisah tanpa mengunduh bobot.')
     activate.add_argument('--hermes-home', type=Path, help='Hermes root/profile for the explicitly requested runtime.')
     args = parser.parse_args(argv)
     try:
@@ -164,7 +179,7 @@ def main(argv=None):
             result = {'optional_skills': [{'id': name, 'path': OPTIONAL_PATHS[name], 'public_default': False,
                       'description': describe('features', name, source=args.source, lang=args.lang),
                       'runtime': describe('features', name + '-runtime', source=args.source, lang=args.lang),
-                      'recommended_role': 'Coder / Shikaku', 'installs': 'skill wrapper only'}
+                      'recommended_role': OPTIONAL_ROLE_LABELS.get(name, 'Custom'), 'installs': 'skill wrapper only'}
                       for name in optional_sources(args.source)]}
         else:
             from msshi_cli import locked

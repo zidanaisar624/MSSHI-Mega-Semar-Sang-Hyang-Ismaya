@@ -258,6 +258,8 @@ def audit(repo, home, package_only=False, baseline_override=None):
     catalog = {row["slug"]: row for row in matrix["skills"]}
     if (repo / "optional/rea").exists() or catalog.get("rea", {}).get("optional_path"):
         scopes["rea"] = {"shikaku"}
+    if (repo / "optional/imagination-studio").exists() or catalog.get("imagination-studio", {}).get("optional_path"):
+        scopes["imagination-studio"] = {"kiki-chii"}
     for slug, expected_roles in scopes.items():
         configured = {role for role, row in bots.items() if slug in row.get("required_skills", []) + row.get("optional_skills", [])}
         source_row = rows.get(slug, {})
@@ -265,26 +267,29 @@ def audit(repo, home, package_only=False, baseline_override=None):
                and source_row.get("auto_start") is False,
                {"expected": sorted(expected_roles), "matrix": sorted(configured), "upstream_roles": source_row.get("roles"),
                 "auto_start": source_row.get("auto_start"), "revision": source_row.get("revision")})
-        folder = repo / "optional/rea" if slug == "rea" else repo / "skills" / slug
-        if slug == "rea":
+        is_optional = slug in {"rea", "imagination-studio"}
+        folder = (repo / "optional" / slug) if is_optional else (repo / "skills" / slug)
+        if is_optional:
             row = catalog.get(slug, {})
             optional_manifest = repo / "optional/manifest.json"
             optional_entries = read(optional_manifest).get("entries", []) if optional_manifest.is_file() else []
-            declarations = [entry for entry in optional_entries if entry.get("id") == "rea"]
-            record("v31_rea_public_default_off", row.get("public_default") is False and
-                   row.get("optional_path") == "optional/rea/SKILL.md" and not (repo / "skills/rea").exists() and
+            declarations = [entry for entry in optional_entries if entry.get("id") == slug]
+            record(f"v31_{slug}_public_default_off", row.get("public_default") is False and
+                   row.get("optional_path") == f"optional/{slug}/SKILL.md" and not (repo / "skills" / slug).exists() and
                    len(declarations) == 1 and declarations[0].get("public_default") is False and
-                   declarations[0].get("path") == "optional/rea" and declarations[0].get("roles") == ["shikaku"] and
+                   declarations[0].get("path") == f"optional/{slug}" and declarations[0].get("roles") == sorted(expected_roles) and
                    version.get("optional_skills") == len(optional_entries),
                    {"public_default": row.get("public_default"), "optional_path": row.get("optional_path"),
-                    "bundled_default_folder_present": (repo / "skills/rea").exists(), "declarations": declarations,
+                    "bundled_default_folder_present": (repo / "skills" / slug).exists(), "declarations": declarations,
                     "optional_declared_count": version.get("optional_skills"), "actual_optional_entries": len(optional_entries)})
         source_files, detail = small_tree(folder)
         source_ready = bool(source_files) and "SKILL.md" in source_files and not detail.get("issues") and not detail.get("missing")
         record(f"v31_{slug}_small_source", "PASS" if source_ready else "PENDING" if detail.get("missing") else "NEEDS_ATTENTION", detail)
-        if slug in {"brag", "scrapling", "harness2", "rea"}:
-            helper = cli_helper(repo, slug)
-            fallback = folder / "scripts" / f"msshi_{slug}.py"
+        if slug in {"brag", "scrapling", "harness2", "rea", "imagination-studio"}:
+            helper_verb = "studio" if slug == "imagination-studio" else slug
+            helper_name = "msshi_imagination_studio.py" if slug == "imagination-studio" else f"msshi_{slug}.py"
+            helper = cli_helper(repo, helper_verb)
+            fallback = folder / "scripts" / helper_name
             exists = helper is not None and helper.is_file() and fallback.is_file()
             record(f"v31_{slug}_standalone_helper", "PASS" if exists and digest(helper) == digest(fallback) else
                    "NEEDS_ATTENTION" if exists else "PENDING", {"helper": str(helper), "fallback": str(fallback), "files_present": exists})
@@ -294,24 +299,24 @@ def audit(repo, home, package_only=False, baseline_override=None):
             readiness[slug]["evidence_status"] = "not_evaluated_package_only"
             continue
         expected_profiles = {role_map[role] or "default" for role in expected_roles}
-        if slug == "rea":
+        if is_optional:
             registry_path = data_root() / "state.json"
             registry = read(registry_path) if registry_path.is_file() else {}
-            bindings = [binding for binding in registry.get("managed_bindings", []) if binding.get("skill") == "rea"]
+            bindings = [binding for binding in registry.get("managed_bindings", []) if binding.get("skill") == slug]
             selected = []
             invalid = []
             fingerprint = hashlib.sha256(json.dumps(source_files, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
             for binding in bindings:
                 logical = Path(binding.get("logical", "__missing__")).absolute()
                 if not logical.is_relative_to(home): continue
-                names = [name for name, profile in profiles.items() if logical == profile / "skills/rea"]
+                names = [name for name, profile in profiles.items() if logical == profile / "skills" / slug]
                 if (names and names[0] in expected_profiles and binding.get("optional") is True and
-                        binding.get("source_rel") == "optional/rea" and binding.get("fingerprint") == fingerprint and
+                        binding.get("source_rel") == f"optional/{slug}" and binding.get("fingerprint") == fingerprint and
                         Path(binding.get("physical", "__missing__")).resolve() == logical.resolve()):
                     selected.append(names[0])
                 else:
                     invalid.append(str(logical))
-            record("v31_rea_opt_in_registry", not invalid,
+            record(f"v31_{slug}_opt_in_registry", not invalid,
                    {"path": str(registry_path), "enabled_profiles": sorted(selected), "invalid_bindings": invalid})
             expected_profiles = set(selected)
             readiness[slug]["configuration"].update(public_default=False, enabled_profiles=sorted(selected))

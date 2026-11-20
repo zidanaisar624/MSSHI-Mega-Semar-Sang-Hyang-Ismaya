@@ -1015,6 +1015,26 @@
       "requires": "Source cache terpisah di msshi-private/context-sources; wajib verifikasi izin/scope tertulis; tidak memasang Burp/HackerOne MCP atau menjalankan pemindaian otomatis.",
       "license": "MIT (code); CC-BY-4.0 (documentation and skill content)",
       "background_model_calls": false
+    },
+    {
+      "id": "imagination-studio",
+      "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
+      "source_type": "git",
+      "revision": "16f00b462a5a389e2c5e19c2cbf7d9527ad526ea",
+      "verification": "primary-source/pinned-package/frontmatter/license/NOTICE reviewed 2026-11-20; runtime/GPU render not tested by source review",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "optional-integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "hermes_plugin_listing": "https://hermeswatcher.com/plugins/imagination-studio",
+      "use_when": "Opsional untuk Kiki-Chii (Filmmaker/Content Creator): perencanaan Slate dan antrean render lokal (gambar, klip video+suara, voice, musik, SFX) via plugin Hermes atau stdio MCP pada 127.0.0.1:7870 setelah Concepting First.",
+      "requires": "Opsional saat instalasi (public_default=false). Aplikasi Imagination Studio, plugin Hermes (>=0.22.7), dan bobot model terpisah; wajib cek headroom memori (/api/memory) sebelum render.",
+      "license": "Apache-2.0 (credit Keys github.com/drowzeys & Sam Wasserman / Wasserman Productions); ships no model weights",
+      "background_model_calls": false
     }
   ]
 }

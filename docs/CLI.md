@@ -130,7 +130,7 @@ msshi optional list
 
 Setelah memilih mode dan menyalin skill target, preset Hermes membuat lima profil native bernama `yukino`, `shizuka`, `val`, `kiki-chii`, `shikaku`; Hermes default tetap netral. `--default-bot keep-hermes` juga memperbaiki label default lama yang duplikat, tanpa menimpa SOUL/model. Plugin lokal memakai native named-profile delegation dan prompt koordinasi; mulai chat baru setelah gateway di-restart. Setup kemudian memandu 4 langkah lanjutan (flag tersedia dari `install.ps1` / `install.sh`):
 
-1. **`[1/4] Skills`**: Menambah paket (`--extra-packs`) atau skill individu (`--extra-skills`) ke target/bot tertentu, serta opt-in REA (`--with-rea`, default OFF).
+1. **`[1/4] Skills`**: Menambah paket (`--extra-packs`) atau skill individu (`--extra-skills`) ke target/bot tertentu, serta wrapper opsional REA khusus Coder (`--with-rea`, default OFF) dan **Imagination Studio** khusus Kiki-Chii/Content Creator (`--with-imagination-studio`, default OFF; bekerja sama dengan Filmmaker bila dipilih — lihat [IMAGINATION_STUDIO.md](IMAGINATION_STUDIO.md)).
 2. **`[2/4] Plugin`**: Memeriksa dan men-stage plugin fail-open `msshi-auto-trim` (`--stage-auto-trim`), wizard endpoint/key `KAT-Coder` opsional khusus Shikaku (`--kat-mode`; tidak mengubah model utama), konsolidasi memori offline `Hermes-Dreaming`, status `OmniVoice`, dan opt-in `Steel Browser Policy` (`--install-steel`).
 3. **`[3/4] Koneksi`**: Memasang konektor MCP `GitLab` / `Tinyfish` (`--connect-services skip|per-profile|share-oauth`, tetap menjaga `BrightData` OFF dan aman bila `config.yaml` Hermes belum dibuat).
 4. **`[4/4] Bot ke CLI-Anything ke Apps`**: Memetakan bot Hermes ke aplikasi lokal/web terdeteksi (`--connect-apps skip|auto-reconnect|select`, `--connect-bots`, `--connect-targets`) dengan mode semua bot, bot pilihan, atau mapping manual per bot (`auto_open_on_boot: false`).
@@ -180,4 +180,6 @@ Untuk menyatukan seluruh repositori, skill, plugin (`MSSHITrim`, `msshi-interact
 msshi system status --json
 msshi system route --task "Prediksi tren 12 bulan dengan backtesting"
 msshi system cycle --domain prediction --goal "Bandingkan TimesFM 2.5 vs seasonal-naive"
+msshi studio status
+msshi studio plan --concept "Video pendek sinematik 60 detik" --format short
 ```

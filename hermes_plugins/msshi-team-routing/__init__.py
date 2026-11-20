@@ -216,7 +216,7 @@ def role_policy(session_info: Mapping[str, Any]) -> str:
         "and before publishing/irreversible external actions. "
         "Core missions: (1) Tutor/Guru—teach step-by-step with Socratic checks, adapted pacing, and active practice; "
         "(2) Tasks/Skripsi/Tesis/Disertasi—val leads evidence, chronological holdout, baselines, and timesfm-forecasting; "
-        "(3) Content creation—kiki-chii leads concept-first visuals/video/slides; "
+        "(3) Content creation—kiki-chii leads concept-first visuals/video/slides (+ optional imagination-studio when enabled); "
         "(4) Coding—shikaku leads TDD, architecture, and authorized grim-prompter/claude-bughunter; "
         "(5) Daily companion/curhat & scheduling—yukino leads warm Main-only empathy, energy pacing, and agenda (0 extra bots). "
         "Cognitive loop: save tokens via Main-only on brief chats, lazy msshi-private/context-sources reads (1 file on demand), "

@@ -283,10 +283,12 @@ with TemporaryDirectory(prefix='msshi-optional-cli-') as temp:
     command = [sys.executable, '-B', '-X', 'utf8', str(repo / 'scripts' / 'msshi_cli.py')]
     listed = subprocess.run([*command, 'optional', 'list'], env=env, check=True, capture_output=True, text=True)
     options = json.loads(listed.stdout)['optional_skills']
-    assert len(options) == 1
-    assert {key: options[0][key] for key in ('id', 'path', 'public_default')} == {
-        'id': 'rea', 'path': 'optional/rea', 'public_default': False}
-    assert options[0]['description'] and options[0]['runtime']
+    by_id = {row['id']: row for row in options}
+    assert {'rea', 'imagination-studio'} <= set(by_id)
+    for opt_id in ('rea', 'imagination-studio'):
+        assert {key: by_id[opt_id][key] for key in ('id', 'path', 'public_default')} == {
+            'id': opt_id, 'path': f'optional/{opt_id}', 'public_default': False}
+        assert by_id[opt_id]['description'] and by_id[opt_id]['runtime']
     assert not (root / 'data').exists() and not (root / 'hermes').exists()
     enabled = subprocess.run([*command, 'optional', 'enable', 'rea', '--target-dir', str(root / 'skills')],
                              env=env, check=True, capture_output=True, text=True)

@@ -288,6 +288,7 @@ class CognitiveSystemTests(unittest.TestCase):
                             "Tutor/Guru",
                             "Skripsi/Tesis/Disertasi",
                             "Content creation",
+                            "imagination-studio",
                             "Coding",
                             "Daily companion/curhat",
                             "MSSHITrim",
@@ -300,6 +301,65 @@ class CognitiveSystemTests(unittest.TestCase):
                             "never auto-promote",
                         ):
                             self.assertIn(token, policy)
+
+    def test_optional_imagination_studio_collaborates_with_filmmaker_and_stays_opt_in(self):
+        import msshi_imagination_studio as studio_mod
+        import msshi_optional as opt_mod
+
+        # Optional wrapper exists, public_default is False, description <= 1024 chars, NOTICE retains attribution
+        opt_dir = ROOT / "optional" / "imagination-studio"
+        self.assertFalse((ROOT / "skills" / "imagination-studio").exists())
+        sm = (opt_dir / "SKILL.md").read_text(encoding="utf-8-sig")
+        desc = sm.split("---")[1].split("description:", 1)[1].strip()
+        self.assertLessEqual(len(desc), 1024)
+        notice = (opt_dir / "NOTICE").read_text(encoding="utf-8-sig")
+        self.assertIn("Keys (drowzeys)", notice)
+        self.assertIn("Sam Wasserman", notice)
+
+        # Filmmaker SKILL.md references Stage E Imagination Studio collaboration
+        fm = (ROOT / "skills" / "filmmaking-videography-photography-s2" / "SKILL.md").read_text(encoding="utf-8-sig")
+        self.assertIn("Stage E: Optional Imagination Studio", fm)
+        self.assertIn("msshi studio status --probe", fm)
+
+        # setup_targets scopes imagination-studio strictly to kiki-chii on presets
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            sels = [root / bot / "skills" for bot in ("yukino", "shizuka", "val", "kiki-chii", "shikaku")]
+            for preset in ("muza-preset", "academic-mahasiswa", "academic-dosen"):
+                targets = opt_mod.setup_targets(preset, sels, name="imagination-studio", source=ROOT)
+                self.assertEqual(targets, [root / "kiki-chii" / "skills"])
+
+            # Offline status check makes 0 network/model calls and detects collaboration readiness
+            home = root / "hermes"
+            (home / "profiles" / "kiki-chii" / "skills" / "filmmaking-videography-photography-s2").mkdir(parents=True)
+            (home / "profiles" / "kiki-chii" / "skills" / "filmmaking-videography-photography-s2" / "SKILL.md").write_text("# fm\n", encoding="utf-8")
+            st_off = studio_mod.studio_status(home, probe=False)
+            self.assertFalse(st_off["kiki_chii"]["optional_wrapper_enabled"])
+            self.assertFalse(st_off["kiki_chii"]["collaboration_ready"])
+            self.assertEqual(st_off["guardrails"]["network_requests"], 0)
+            self.assertEqual(st_off["guardrails"]["model_calls"], 0)
+
+            (home / "profiles" / "kiki-chii" / "skills" / "imagination-studio").mkdir(parents=True)
+            (home / "profiles" / "kiki-chii" / "skills" / "imagination-studio" / "SKILL.md").write_text("# studio\n", encoding="utf-8")
+            st_on = studio_mod.studio_status(home, probe=False)
+            self.assertTrue(st_on["kiki_chii"]["optional_wrapper_enabled"])
+            self.assertTrue(st_on["kiki_chii"]["collaboration_ready"])
+
+        # Non-loopback URL is rejected strictly
+        with self.assertRaises(ValueError):
+            studio_mod.studio_status(url="https://example.com:7870", probe=False)
+
+        # Plan produces 5-phase Filmmaker x Imagination Studio handoff
+        plan = studio_mod.plan_collaboration("Film pendek cyber-noir 60 detik", fmt="short")
+        self.assertEqual(plan["lead_bot"], "kiki-chii")
+        self.assertEqual(plan["aspect_ratio"], "9:16")
+        self.assertEqual(len(plan["phases"]), 5)
+        self.assertEqual(plan["guardrails"]["model_calls"], 0)
+
+        # Router maps Imagination Studio / Slate prompts to Kiki-Chii (Mission 3)
+        routed = sysmod.route_task("Buat Slate shot list dan render klip di Imagination Studio")
+        self.assertEqual(routed["core_mission"], "3_konten_kreasi")
+        self.assertEqual(routed["lead_bot"], "kiki-chii")
 
 
 if __name__ == "__main__":
