@@ -1,16 +1,16 @@
 # Pipeline Riset Mendalam 10 Tahap (Adaptif & Hemat Token)
 
-Alur ini mengadopsi disiplin *multi-phase research pipeline* (rencana terstruktur, *adequacy gate*, kritik mandiri, *devil's advocate*, audit klaim/sitasi, dan *quality gate*) tanpa memerlukan server web, database vektor berat, atau UI eksternal — berjalan penuh di dalam percakapan Hermes bersama Val.
+Mulailah dari keluaran yang diminta. Jika mahasiswa ingin memahami sebuah konsep, satu contoh sering cukup. Jika ia menyerahkan proposal untuk ditinjau, cocokkan setiap klaim penting dengan bukti dan catat pertanyaan yang masih terbuka.
 
 ---
 
 ## Ringkasan 3 Mode Operasi
 
-| Mode | Kapan Dipakai | Tahap yang Dijalankan | Perkiraan Hemat Token |
+| Mode | Kapan dipakai | Tahap yang dijalankan | Yang diterima pengguna |
 | --- | --- | --- | --- |
-| **Quick** | Cek 1 konsep/metode atau 1–3 referensi cepat | Tahap 1 ringkas + 3 singkat + 9 | 1 giliran utama |
-| **Standard** | Makalah kuliah, bab tinjauan pustaka, desain metode | Tahap 1, 3, 4, 5, 8, 9 | Ringkas, tanpa putaran revisi berulang |
-| **Deep** | Skripsi/Tesis/Disertasi, jurnal SINTA/Scopus, systematic review | Tahap 1 s.d. 10 penuh (maks. 2 putaran revisi) | *Token-efficient chaining* (kirim ringkasan terstruktur, bukan tempel ulang teks mentah) |
+| **Quick** | Memahami satu konsep atau memeriksa satu rujukan | 1, lalu 3 dan 9 jika perlu memeriksa sumber | Jawaban singkat dengan contoh atau rujukan yang diperiksa |
+| **Standard** | Membandingkan metode atau menyusun tinjauan pustaka ringkas | 1, 3, 4, 5, 8, 9 | Ringkasan persamaan, perbedaan, dan bukti yang mendasarinya |
+| **Deep** | Menyusun atau meninjau proposal, naskah panjang, atau tinjauan sistematis | 1–10 dengan maksimal dua putaran revisi | Draf, jejak bukti, keterbatasan, dan daftar hal yang masih perlu diperiksa |
 
 ---
 

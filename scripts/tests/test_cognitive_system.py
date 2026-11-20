@@ -504,6 +504,43 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertEqual(routed["core_mission"], "1_belajar_jadi_guru")
         self.assertIn("belajar-pemula", routed["recommended_skills"])
 
+    def test_beginner_research_scope_and_chat_prompts(self):
+        from msshi_learn import route_beginner_topic
+
+        for topic, mode, lead in (
+            ("Riset dari nol", "research_beginner", "shizuka"),
+            ("skripsi tentang algoritma Python", "research_beginner", "shizuka"),
+            ("cara membuat penelitian", "research_beginner", "shizuka"),
+            ("python dari nol untuk skripsi", "coding_beginner", "shikaku"),
+            ("diagram untuk tugas akhir", "visual_concept", "shizuka"),
+            ("menulis deskripsi dari nol", "guided_concept", "shizuka"),
+            ("hipotesis dari nol", "guided_concept", "shizuka"),
+        ):
+            with self.subTest(topic=topic):
+                plan = route_beginner_topic(topic)
+                self.assertEqual((plan["mode"], plan["lead_bot"]), (mode, lead))
+                self.assertIn(topic, plan["try_in_hermes_chat"])
+                self.assertEqual(plan["try_in_hermes_chat"].casefold().count("dari nol"), topic.casefold().count("dari nol"))
+                if mode == "research_beginner":
+                    self.assertTrue(any("Val" in tool for tool in plan["recommended_tools"]))
+        with self.assertRaises(ValueError):
+            route_beginner_topic("   ")
+
+    def test_beginner_tools_match_tutor_profile(self):
+        from unittest.mock import patch
+        import msshi_learn as learn_mod
+
+        enabled = {name: {"enabled_profiles": ["yukino"]} for name in ("chalk", "learnloop", "codecoach")}
+        status = {"plugins": enabled, "codecoach_platform": {"native_supported": True}}
+        with patch.object(learn_mod, "learn_status", return_value=status):
+            visual = learn_mod.route_beginner_topic("gambar alur", ROOT)
+            self.assertIn("diagram teks", visual["try_in_hermes_chat"])
+            self.assertFalse(any("learnloop" in t for t in visual["recommended_tools"]))
+            coding = learn_mod.route_beginner_topic("python", ROOT)
+            self.assertFalse(any("codecoach" in t for t in coding["recommended_tools"]))
+            enabled["chalk"]["enabled_profiles"].append("shizuka")
+            self.assertIn("Chalk", learn_mod.route_beginner_topic("gambar alur", ROOT)["try_in_hermes_chat"])
+
     def test_val_only_indonesian_global_deep_research_skill(self):
         skill_dir = ROOT / "skills" / "riset-mendalam-nusantara-global"
         sm = (skill_dir / "SKILL.md").read_text(encoding="utf-8-sig")

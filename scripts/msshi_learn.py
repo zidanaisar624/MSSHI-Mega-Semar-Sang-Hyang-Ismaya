@@ -18,6 +18,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -58,6 +59,7 @@ _OSSU_KW = (
     "ossu", "computer science", "ilmu komputer", "kurikulum cs", "kuliah cs",
     "sistem operasi", "ostep", "nand2tetris", "struktur data", "algoritma", "kompiler",
 )
+_RESEARCH_TOPIC = re.compile(r"\b(?:skripsi|tesis|disertasi|riset|penelitian|tugas\s+akhir)\b")
 
 
 def _codecoach_platform_check() -> dict[str, Any]:
@@ -138,28 +140,42 @@ def learn_status(home: Path) -> dict[str, Any]:
 
 def route_beginner_topic(topic: str, home: Path | None = None) -> dict[str, Any]:
     """Deterministically pick the simplest beginner path (0 LLM calls)."""
-    low = f" {topic.casefold()} "
+    topic = topic.strip()
+    if not topic:
+        raise ValueError("Masukkan topik yang ingin dipelajari.")
+    low = topic.casefold()
+    subject = re.split(r"\b(?:untuk|buat)\b", low, maxsplit=1)[0]
+    # 'Belajar Python untuk skripsi' is a coding lesson, 'skripsi tentang Python' is research.
+    specific_subject = any(k in subject for k in _OSSU_KW + _CODING_KW + _VISUAL_KW)
     st = learn_status(home) if home and home.is_dir() else None
-    chalk_on = bool(st and st["plugins"]["chalk"]["count"] > 0)
-    ll_on = bool(st and st["plugins"]["learnloop"]["count"] > 0)
-    cc_on = bool(st and st["plugins"]["codecoach"]["count"] > 0 and st["codecoach_platform"]["native_supported"])
+    chalk_profiles = st["plugins"]["chalk"]["enabled_profiles"] if st else []
+    chalk_on = "shizuka" in chalk_profiles
+    ll_on = bool(st and "shizuka" in st["plugins"]["learnloop"]["enabled_profiles"])
+    cc_on = bool(st and "shikaku" in st["plugins"]["codecoach"]["enabled_profiles"] and st["codecoach_platform"]["native_supported"])
 
-    if any(k in low for k in _OSSU_KW):
+    if _RESEARCH_TOPIC.search(subject) or (_RESEARCH_TOPIC.search(low) and not specific_subject):
+        mode = "research_beginner"
+        lead = "shizuka"
+        tools = ["belajar-pemula", "Val saat perlu memeriksa sumber atau membandingkan metode"]
+        first_step = "Sebutkan satu masalah yang pernah kamu lihat. Bersama Shizuka, ubah masalah itu menjadi satu pertanyaan yang bisa diteliti."
+        chat_prompt = f"Halo Shizuka, aku baru mulai. Topikku '{topic}'. Bantu aku merumuskan satu pertanyaan penelitian. Tanyakan satu hal dulu."
+    elif any(k in low for k in _OSSU_KW):
         mode = "ossu_cs_university"
         lead = "shizuka"
         tools = ["msshi ossu open pemula", "msshi ossu open start", "chalk (visualisasi)" if chalk_on else "analogis sederhana"]
         first_step = "Buka kurikulum dasar OSSU lewat `msshi ossu open pemula` (belum pernah coding) atau `msshi ossu open start` (MIT 6.100L Python)."
-        chat_prompt = f"Halo Shizuka, aku pemula dan mau belajar {topic.strip()} mengikuti kurikulum OSSU dari dasar, satu langkah kecil per balasan ya."
+        chat_prompt = f"Halo Shizuka, topikku '{topic}'. Pilihkan satu pelajaran awal dari kurikulum OSSU dan beri satu latihan kecil."
     elif any(k in low for k in _CODING_KW):
         mode = "coding_beginner"
         lead = "shikaku"
+        coding_visual = "chalk (diagram alur)" if lead in chalk_profiles else "contoh kode mini"
         if cc_on:
-            tools = ["codecoach (sandbox step-by-step)", "chalk (diagram alur)" if chalk_on else "contoh kode mini"]
+            tools = ["codecoach (sandbox step-by-step)", coding_visual]
             first_step = "Mulai proyek mini terverifikasi di CodeCoach atau minta Shikaku ajarkan 1 konsep kode kecil lalu langsung dicoba."
         else:
-            tools = ["Shikaku interactive coding tutor (mode Windows native)", "chalk (diagram alur)" if chalk_on else "contoh kode mini"]
+            tools = ["Tutor coding interaktif Shikaku", coding_visual]
             first_step = "Mulai 1 program super kecil (5-10 baris) bersama Shikaku: baca kode -> tebak output -> jalankan -> ubah 1 baris."
-        chat_prompt = f"Halo Shikaku, aku pemula total dan mau belajar {topic.strip()} dari nol. Mulai dari contoh paling kecil dulu, satu langkah per balasan ya."
+        chat_prompt = f"Halo Shikaku, aku baru mulai. Topikku '{topic}'. Tunjukkan satu contoh kecil yang bisa kucoba."
     elif any(k in low for k in _VISUAL_KW):
         mode = "visual_concept"
         lead = "shizuka"
@@ -167,8 +183,9 @@ def route_beginner_topic(topic: str, home: Path | None = None) -> dict[str, Any]
             "chalk (`chalk_teach` papan tulis visual)" if chalk_on else "diagram teks langkah demi langkah",
             "learnloop (cek pemahaman bertahap)" if ll_on else "Socratic check bawaan Shizuka",
         ]
-        first_step = "Minta Shizuka menggambar konsep inti di papan tulis Chalk dalam 5-7 langkah singkat, lalu jawab 1 pertanyaan cek pemahaman."
-        chat_prompt = f"Halo Shizuka, jelaskan {topic.strip()} untuk pemula total pakai papan tulis Chalk biar kebayang, pelan-pelan satu konsep dulu ya."
+        medium = "papan tulis Chalk" if chalk_on else "diagram teks"
+        first_step = f"Minta Shizuka menggambar satu konsep dengan {medium}, lalu coba jelaskan kembali dengan kata-katamu."
+        chat_prompt = f"Halo Shizuka, topikku '{topic}'. Bisa gambarkan satu contoh dengan {medium}?"
     else:
         mode = "guided_concept"
         lead = "shizuka"
@@ -177,10 +194,10 @@ def route_beginner_topic(topic: str, home: Path | None = None) -> dict[str, Any]
             "chalk (`chalk_teach` saat butuh gambar/skema)" if chalk_on else "analogi sehari-hari",
         ]
         first_step = "Shizuka cek dulu pemahaman awal & energimu dalam 2 pertanyaan singkat, lalu ajarkan 1 konsep kecil dengan contoh nyata."
-        chat_prompt = f"Halo Shizuka, aku pemula total dan mau belajar {topic.strip()} dari nol. Cek dulu levelku, lalu ajarkan pelan-pelan satu konsep per balasan ya."
+        chat_prompt = f"Halo Shizuka, aku baru mulai. Topikku '{topic}'. Beri satu contoh sehari-hari, lalu ajak aku mencobanya."
 
     return {
-        "topic": topic.strip(),
+        "topic": topic,
         "mode": mode,
         "lead_bot": lead,
         "recommended_tools": tools,

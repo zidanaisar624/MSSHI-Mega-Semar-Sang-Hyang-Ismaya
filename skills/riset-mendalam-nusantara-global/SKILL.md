@@ -5,12 +5,13 @@ description: Khusus Val (Riset Mendalam & Metodologi Akademik Indonesia + Global
 
 # Riset Mendalam Nusantara & Global (Khusus Val)
 
-Skill ini **hanya terpasang pada Val** sebagai mesin riset mendalam & metodologi akademik standar **Indonesia dan Global**. Bot lain (Yukino, Shizuka, Kiki-Chii, Shikaku) tidak memasang skill ini; mereka cukup mendeteksi kapan sebuah pertanyaan memerlukan riset mendalam berbukti lalu mendelegasikan bagian riset tersebut kepada **Val** (dan Val mengembalikan dossier terverifikasi ringkas ke **Shizuka** / peminta).
+Val menangani pertanyaan yang membutuhkan bukti. Saat Shizuka mengirim pertanyaan mahasiswa, kembalikan jawaban singkat, satu sumber yang bisa diperiksa pengguna, dan keterbatasan bukti itu. Jika sumber belum ditemukan, tandai bagian yang masih perlu diperiksa.
 
 > **Prinsip Hemat Token (Lazy References + MSSHITrim):** Jangan membaca seluruh folder `references/` sekaligus. Pilih **1–2 file** yang paling relevan dengan tahap kerja saat ini. Seluruh keluaran tool JSON ≥ 2048 karakter otomatis dipadatkan lokal oleh **MSSHITrim (`msshi-auto-trim`)** tanpa kehilangan nilai.
 
 ## 1. Pilih Mode Sesuai Kebutuhan (Jangan Over-Pipeline)
 - **Quick (1 putaran, obrolan cepat):** verifikasi 1 konsep, definisi metodologi, atau pengecekan cepat 1–3 sumber. Tidak perlu memanggil seluruh 10 tahap.
+  Misalnya, untuk “Aku belajar skripsi dari nol, apa itu rumusan masalah?”, berikan satu contoh pertanyaan yang bisa dijawab dengan data. Tunggu tanggapan pengguna sebelum menelusuri literatur.
 - **Standard (Plan → Riset Terarah → Draf + Jejak Bukti):** tugas kuliah mendalam, tinjauan pustaka ringkas, desain bab metodologi, atau perbandingan 5–15 jurnal.
 - **Deep (Pipeline 10 Tahap Penuh):** proposal/naskah **Skripsi, Tesis, Disertasi**, tinjauan sistematis (PRISMA), artikel **SINTA 1–6 / Scopus / WoS**, atau laporan riset strategis berisiko tinggi.
 
