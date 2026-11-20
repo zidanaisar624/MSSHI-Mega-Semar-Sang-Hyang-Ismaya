@@ -26,7 +26,8 @@
           "prep-for-meetings",
           "generate-fresh-ideas",
           "get-more-perspectives",
-          "muza-skripsi-template"
+          "muza-skripsi-template",
+          "harness2"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -41,7 +42,8 @@
           "muza-skripsi-template",
           "paper-revision",
           "research-paper-writing",
-          "literature-review"
+          "literature-review",
+          "harness2"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -62,7 +64,10 @@
           "academic-plotting",
           "github-research",
           "muza-skripsi-template",
-          "unslop"
+          "unslop",
+          "symbolic-equation",
+          "timesfm-forecasting",
+          "harness2"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -76,7 +81,8 @@
           "auto-curiousity-for-film-making",
           "match-my-writing-style",
           "unslop",
-          "generate-fresh-ideas"
+          "generate-fresh-ideas",
+          "harness2"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -93,7 +99,8 @@
           "unslop",
           "mattpocock-engineering",
           "grim-prompter",
-          "claude-bughunter"
+          "claude-bughunter",
+          "harness2"
         ]
       },
       "display_names": {
@@ -171,7 +178,8 @@
           "prep-for-meetings",
           "generate-fresh-ideas",
           "get-more-perspectives",
-          "muza-skripsi-template"
+          "muza-skripsi-template",
+          "harness2"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -187,7 +195,8 @@
           "paper-revision",
           "research-paper-writing",
           "literature-review",
-          "get-more-perspectives"
+          "get-more-perspectives",
+          "harness2"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -210,7 +219,10 @@
           "muza-skripsi-template",
           "unslop",
           "rebuttal-writing",
-          "creative-thinking-for-research"
+          "creative-thinking-for-research",
+          "symbolic-equation",
+          "timesfm-forecasting",
+          "harness2"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -224,7 +236,8 @@
           "auto-curiousity-for-film-making",
           "match-my-writing-style",
           "unslop",
-          "generate-fresh-ideas"
+          "generate-fresh-ideas",
+          "harness2"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -241,7 +254,8 @@
           "unslop",
           "mattpocock-engineering",
           "grim-prompter",
-          "claude-bughunter"
+          "claude-bughunter",
+          "harness2"
         ]
       },
       "display_names": {

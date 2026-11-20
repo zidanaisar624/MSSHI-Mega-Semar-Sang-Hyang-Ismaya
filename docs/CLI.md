@@ -171,3 +171,13 @@ msshi desktop --prefer-cli
 - `msshi setup --low-ram` atau `--resource-profile auto|light|normal` menyimpan profil resource secara atomik dengan rollback receipt ke `<HERMES_HOME>/msshi-runtime/resource-profile.json`.
 - `msshi update --light` men-stage rilis ringan tanpa menyalin aset berat, PDF panduan otomatis, atau cache upstream.
 - `msshi doctor --json` menampilkan blok `low_ram_diagnostics` (RAM fisik, ruang kosong drive target, memori proses, ukuran cache, dan uji cepat skill scan `p95`).
+
+## Sistem Interaksi Cerdas 4 Pilar (`msshi system`)
+
+Untuk menyatukan seluruh repositori, skill, plugin (`MSSHITrim`, `msshi-interaction`, `msshi-team-routing`), `Hermes-Dreaming`, **Google Research Harness²**, dan **TimesFM 2.5** menjadi sistem tertutup yang hemat token, makin pintar, serta kuat untuk riset dan prediksi (0 panggilan LLM, 0 request jaringan), gunakan `msshi system`. Lihat arsitektur lengkapnya di [SISTEM_INTERAKSI_CERDAS_MSSHI.md](SISTEM_INTERAKSI_CERDAS_MSSHI.md).
+
+```powershell
+msshi system status --json
+msshi system route --task "Prediksi tren 12 bulan dengan backtesting"
+msshi system cycle --domain prediction --goal "Bandingkan TimesFM 2.5 vs seasonal-naive"
+```

@@ -36,7 +36,8 @@
     "manual",
     "choices",
     "interaction",
-    "light"
+    "light",
+    "system"
   ],
   "release_status": "release",
   "license": "MIT",

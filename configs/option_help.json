@@ -732,6 +732,10 @@
     "light-build": {
       "id": "Mode ringan Windows 10 RAM 4 GB (paket <= 50 MB, indeks skill lazy, batas 1 inferensi/proses aktif, tanpa pengunduhan aset/PDF otomatis, tanpa mengubah model atau API key pengguna).",
       "en": "Windows 10 4 GB RAM Light Build mode (<= 50 MB core bundle, lazy skill index, single active inference/process cap, deferred heavy assets/PDFs, without changing user models or API keys)."
+    },
+    "cognitive-system": {
+      "id": "Sistem Interaksi Cerdas 5 Misi Utama + 4 Pilar (msshi system status|route|cycle): Belajar/Guru, Tugas/Skripsi/Tesis/Disertasi, Konten Kreasi, Coding, dan Teman Curhat & Daily Scheduling; menyatukan MSSHITrim, Caveman, lazy context-sources, msshi-interaction, Hermes-Dreaming, Harness2, dan Val+TimesFM 2.5 secara lokal (0 panggilan LLM, tanpa mengubah model/provider).",
+      "en": "5-Mission + 4-Pillar Closed-Loop Cognitive Operating System (msshi system status|route|cycle): Tutor/Learning, Academic/Thesis, Content Creation, Coding, and Daily Companion/Scheduling; unifies MSSHITrim, Caveman, lazy context-sources, msshi-interaction, Hermes-Dreaming, Harness2, and Val+TimesFM 2.5 locally (0 LLM calls, zero provider/model changes)."
     }
   }
 }

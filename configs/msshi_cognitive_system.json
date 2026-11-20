@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "version": "3.1.2",
+  "name": "MSSHI Closed-Loop Cognitive Operating System",
+  "documentation": "docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md",
+  "principles": {
+    "model_agnostic": true,
+    "user_agnostic": true,
+    "provider_model_mutation": false,
+    "auto_open_on_boot": false,
+    "background_model_calls": false,
+    "human_approval_required_for_promotion": true,
+    "jev_model_routing": false
+  },
+  "core_missions": [
+    {
+      "id": "1_belajar_jadi_guru",
+      "label": "Belajar (Jadi Guru / Personal Tutor & Socratic Mentor)",
+      "lead": "shizuka",
+      "coordinator": "shizuka",
+      "support": [
+        "yukino",
+        "val",
+        "shikaku",
+        "kiki-chii"
+      ],
+      "skills": [
+        "parenting-6d-gad-mdd",
+        "focus-my-energy",
+        "math-reasoning",
+        "deep-research",
+        "notebooklm-thinking-datascience",
+        "harness2"
+      ],
+      "pedagogy": [
+        "Diagnose learner level and energy before lecturing to save tokens.",
+        "Teach one core concept at a time (intuition -> analogy -> worked example -> formalization).",
+        "Use Socratic checkpoints and active-recall exercises before advancing.",
+        "Record mastered concepts and knowledge gaps for offline msshi dream & Harness2 adaptation."
+      ]
+    },
+    {
+      "id": "2_tugas_skripsi_tesis_disertasi",
+      "label": "Tugas, Skripsi, Tesis & Disertasi (Riset + Prediksi Kuantitatif)",
+      "lead": "val",
+      "coordinator": "shizuka",
+      "support": [
+        "yukino",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "skills": [
+        "deep-research",
+        "literature-review",
+        "novelty-assessment",
+        "data-analysis",
+        "timesfm-forecasting",
+        "symbolic-equation",
+        "backward-traceability",
+        "muza-skripsi-template",
+        "rebuttal-writing",
+        "humanizer-indonesia",
+        "humanizer-en"
+      ],
+      "standards": [
+        "Use Lima Lapis Konteks + backward-traceability (doc#page) for every claim.",
+        "Enforce chronological holdout + naive/seasonal-naive baselines for forecasts."
+      ]
+    },
+    {
+      "id": "3_konten_kreasi",
+      "label": "Konten Kreasi (Film, Video, Foto, Desain, Motion & Slide)",
+      "lead": "kiki-chii",
+      "coordinator": "shizuka",
+      "support": [
+        "yukino",
+        "val",
+        "shikaku"
+      ],
+      "skills": [
+        "filmmaking-videography-photography-s2",
+        "motion-graphics-suite",
+        "rea-video",
+        "brag",
+        "unslop",
+        "better-design",
+        "academic-plotting",
+        "slide-generation"
+      ],
+      "standards": [
+        "Always start with Concepting First and require human review before heavy rendering.",
+        "Use lightweight local rea-video (--no-vlm) before opting into VLM/remake."
+      ]
+    },
+    {
+      "id": "4_coding",
+      "label": "Coding, Arsitektur & Keamanan Terotorisasi",
+      "lead": "shikaku",
+      "coordinator": "shizuka",
+      "support": [
+        "val",
+        "kiki-chii"
+      ],
+      "skills": [
+        "analyze-project",
+        "explore-code",
+        "mattpocock-engineering",
+        "superpowers",
+        "grim-prompter",
+        "claude-bughunter",
+        "explore-run",
+        "harness2"
+      ],
+      "standards": [
+        "Map project risks first, implement with TDD, and run regression tests.",
+        "Restrict grim-prompter and claude-bughunter strictly to owned or authorized scope."
+      ]
+    },
+    {
+      "id": "5_teman_curhat_dan_daily_scheduling",
+      "label": "Teman Curhat & Percakapan Daily Basis (Scheduling, Energi & Rutinitas)",
+      "lead": "yukino",
+      "coordinator": "shizuka",
+      "support": [],
+      "interaction_default": "fast_main_only",
+      "skills": [
+        "parenting-6d-gad-mdd",
+        "focus-my-energy",
+        "prep-for-meetings",
+        "prep-for-meetings-2"
+      ],
+      "standards": [
+        "Stay Main-only (0 extra bots) for daily chat, venting, and routine scheduling to minimize token usage.",
+        "Respond with natural, warm persona prose (never Caveman tone to the user); note clearly that supportive guidance does not replace clinical care.",
+        "Adjust daily schedule/to-do pacing to user-reported energy without mutating external calendars or accounts without explicit consent."
+      ]
+    }
+  ],
+  "pillars": {
+    "token_efficiency": {
+      "goal": "Hemat token dan RAM di setiap sesi tanpa menurunkan akurasi data, sitasi, kode, atau persona.",
+      "layers": [
+        {
+          "id": "lazy_skill_and_source_cache",
+          "components": [
+            "scripts/msshi_skill_index.py",
+            "scripts/msshi_context_sources.py"
+          ],
+          "mechanism": "Pustaka besar (grim-prompter, claude-bughunter, mattpocock-skills, career-ops, remote-jobs, rea-video) disimpan di msshi-private/context-sources/ di luar pemindai skills/ dan dibaca 1 file saat diminta."
+        },
+        {
+          "id": "lossless_tool_json_compaction",
+          "components": [
+            "hermes_plugins/msshi-auto-trim"
+          ],
+          "mechanism": "MSSHITrim memadatkan output tool JSON >= 2048 karakter secara lokal (20%-55%, exact canonical JSON equality, 0 panggilan LLM, tanpa TLS proxy/CA/daemon)."
+        },
+        {
+          "id": "compact_internal_handoffs",
+          "components": [
+            "scripts/caveman_context_filter.py",
+            "skills/caveman"
+          ],
+          "mechanism": "Handoff internal antar-bot dan log terstruktur dipadatkan dengan format ringkas sambil menjaga jawaban ke pengguna tetap ramah serta kode dan sitasi 100% utuh."
+        },
+        {
+          "id": "tiered_interaction_gating",
+          "components": [
+            "hermes_plugins/msshi-interaction",
+            "scripts/msshi_light.py"
+          ],
+          "mechanism": "Obrolan singkat dijalankan Main-only (0 agen ekstra). Tipe 1 (Advisor pada Yukino/Shizuka) dan Tipe 2 (Dewan 2 putaran pada Val/Kiki-Chii/Shikaku) hanya aktif untuk proyek terkonfirmasi; mode Low-RAM menonaktifkan paralelisme berat."
+        }
+      ]
+    },
+    "continuous_learning": {
+      "goal": "Makin pintar dari setiap proyek secara auditable tanpa melatih ulang bobot model dan tanpa mengubah SOUL atau konfigurasi model.",
+      "loop": [
+        {
+          "stage": 1,
+          "id": "evidence_capture",
+          "components": [
+            "docs/LIMA_LAPIS_KONTEKS.md",
+            "skills/backward-traceability"
+          ],
+          "action": "Catat keputusan terverifikasi, kegagalan nyata, dan penunjuk bukti (doc#halaman atau file:baris), bukan transkrip mentah."
+        },
+        {
+          "stage": 2,
+          "id": "offline_dreaming_reflection",
+          "components": [
+            "scripts/msshi_integrations.py",
+            "memories/DREAMS.md"
+          ],
+          "action": "msshi dream menyaring pelajaran lokal deterministik ke memories/DREAMS.md (0 panggilan LLM); promosi ke memori aktif tetap menunggu tinjauan pengguna."
+        },
+        {
+          "stage": 3,
+          "id": "harness2_propose_probe_compose",
+          "components": [
+            "skills/harness2",
+            "scripts/msshi_harness2.py"
+          ],
+          "action": "Kelima bot memakai Harness2 (Propose-Probe-Compose) untuk mengubah pola kegagalan nyata menjadi proposal perbaikan prompt/skill/script/tool/memory pada salinan terisolasi dengan baseline vs holdout, diaudit Val (bukti) + Shikaku (diff) + Shizuka (sintesis) + persetujuan manusia."
+        }
+      ]
+    },
+    "research_and_prediction": {
+      "goal": "Meningkatkan ketajaman riset berbasis bukti dan prediksi kuantitatif terkalibrasi.",
+      "pipelines": [
+        {
+          "id": "deep_research_pipeline",
+          "lead": "val",
+          "coordinator": "shizuka",
+          "intake": "yukino",
+          "skills": [
+            "brainstorming-research-ideas",
+            "deep-research",
+            "literature-review",
+            "novelty-assessment",
+            "unlimited-ocr-2",
+            "scrapling",
+            "github-research",
+            "paper-context-resolver",
+            "backward-traceability",
+            "research-paper-writing",
+            "muza-skripsi-template"
+          ]
+        },
+        {
+          "id": "quantitative_prediction_pipeline",
+          "lead": "val",
+          "support": [
+            "shikaku",
+            "kiki-chii"
+          ],
+          "coordinator": "shizuka",
+          "skills": [
+            "data-analysis",
+            "math-reasoning",
+            "symbolic-equation",
+            "timesfm-forecasting",
+            "table-generation",
+            "academic-plotting"
+          ],
+          "standards": [
+            "Chronological holdout split before forecasting (anti-leakage).",
+            "Compare TimesFM 2.5 (Apache-2.0 CPU) against naive and seasonal-naive baselines.",
+            "Report empirical error metrics, quantile uncertainty, and explicit assumptions."
+          ]
+        },
+        {
+          "id": "engineering_and_security_pipeline",
+          "lead": "shikaku",
+          "support": [
+            "val"
+          ],
+          "coordinator": "shizuka",
+          "skills": [
+            "analyze-project",
+            "explore-code",
+            "mattpocock-engineering",
+            "grim-prompter",
+            "claude-bughunter",
+            "explore-run",
+            "harness2"
+          ]
+        },
+        {
+          "id": "creative_and_visual_pipeline",
+          "lead": "kiki-chii",
+          "support": [
+            "val"
+          ],
+          "coordinator": "shizuka",
+          "skills": [
+            "filmmaking-videography-photography-s2",
+            "academic-plotting",
+            "slide-generation",
+            "unslop",
+            "rea-video",
+            "brag"
+          ]
+        }
+      ]
+    },
+    "governance_and_routing": {
+      "goal": "Orkestrasi lintas bot, plugin, dan aplikasi yang hemat, aman, dan tetap di bawah kendali pengguna.",
+      "components": [
+        "hermes_plugins/msshi-team-routing",
+        "hermes_plugins/msshi-interaction",
+        "skills/cli-anything-universal-bridge",
+        "scripts/msshi_runtime.py",
+        "scripts/msshi_doctor.py"
+      ]
+    }
+  }
+}

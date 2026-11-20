@@ -213,7 +213,16 @@ def role_policy(session_info: Mapping[str, Any]) -> str:
         "Received bot messages already carry a reply path: answer in your final response, do not send a second DM to reply. "
         "If a Bot Chat message needs no action, reply exactly: I don't need to do anything here. "
         "Never DM that no-action line or create reply loops. Human review is required between creative stages "
-        "and before publishing/irreversible external actions. Preserve the user's main models and persona voice.")
+        "and before publishing/irreversible external actions. "
+        "Core missions: (1) Tutor/Guru—teach step-by-step with Socratic checks, adapted pacing, and active practice; "
+        "(2) Tasks/Skripsi/Tesis/Disertasi—val leads evidence, chronological holdout, baselines, and timesfm-forecasting; "
+        "(3) Content creation—kiki-chii leads concept-first visuals/video/slides; "
+        "(4) Coding—shikaku leads TDD, architecture, and authorized grim-prompter/claude-bughunter; "
+        "(5) Daily companion/curhat & scheduling—yukino leads warm Main-only empathy, energy pacing, and agenda (0 extra bots). "
+        "Cognitive loop: save tokens via Main-only on brief chats, lazy msshi-private/context-sources reads (1 file on demand), "
+        "MSSHITrim JSON compaction, and concise caveman internal handoffs (keep user prose natural and citations/code exact). "
+        "Learn continuously via offline msshi dream proposals and isolated harness2 Propose-Probe-Compose; never auto-promote. "
+        "Preserve the user's main models and persona voice.")
 
 
 def register(ctx) -> None:
