@@ -145,3 +145,29 @@ Lihat [catatan perbaikan](V3_1_1_REPAIR.md), [KAT Coder](CODER_KAT.md), dan [int
 PDF terbaru otomatis disalin saat bootstrap/setup/update/direct apply ke Downloads/MSSHI_Manuals. `--pdf-dest` atau `MSSHI_PDF_DIR` memilih tujuan lain; `--no-pdf` / `MSSHI_NO_PDF=1` melewati penyalinan. Windows memakai `-PdfDest` / `-NoPdf`. Berkas yang berbeda dicadangkan sebelum penggantian.
 
 `msshi runtime rebaseline --home ROOT` hanya preview; penerapan memerlukan `--apply --expected-snapshot SHA` dan, bila bukti historis tidak cocok, `--accept-current-llm-settings --reason "alasan"`. Ini menerima baseline sekarang dengan catatan, bukan mengklaim riwayat yang tidak terbukti.
+
+## Light Build & Mode Low-RAM (Windows 10 RAM 4 GB)
+
+Untuk perangkat Windows 10 spesifikasi rendah (RAM 4 GB, single-drive `C:`-only, Windows PowerShell 5.1), MSSHI menyediakan mode **Light Build** (`<= 50 MB`) dan profil **Low-RAM** tanpa menyentuh pilihan model, API key, atau `SOUL.md` pengguna. Lihat panduan lengkapnya di [WIN10_4GB_LIGHT_BUILD.md](WIN10_4GB_LIGHT_BUILD.md).
+
+```powershell
+# Instalasi interaktif (tanyakan Mode Standar vs Mode Hemat Win10 RAM 4 GB + lokasi drive/folder bebas C:/D:/E:/...)
+.\install.ps1
+
+# Instalasi ringan + Low-RAM ke drive/folder pilihan (PowerShell 5.1)
+.\install.ps1 -Light -LowRam -InstallDir "E:\MSSHI" -HermesHome "E:\HermesData" -Mode academic-mahasiswa -Platform hermes -Yes
+
+# Subperintah msshi light & fallback CLI
+msshi light status --json
+msshi light mode --set auto --apply --json
+msshi light index --json
+msshi light build --output .\dist\msshi-light.zip --json
+msshi light benchmark --iterations 25 --json
+msshi desktop --prefer-cli
+```
+
+- `install.ps1` (`-InstallDir`, `-HermesHome`, `-TargetDir`) dan `install.sh` (`--install-dir`, `--hermes-home`, `--target-dir`) mendukung direktori tujuan di drive atau folder mana saja (`C:\`, `D:\`, `E:\`, SSD eksternal, maupun folder kustom).
+- `msshi setup` interaktif kini menampilkan tahap `[5/5] Mode Resource Perangkat` sehingga pengguna dapat langsung memilih Mode Standar atau Mode Hemat Windows 10 RAM 4 GB saat instalasi.
+- `msshi setup --low-ram` atau `--resource-profile auto|light|normal` menyimpan profil resource secara atomik dengan rollback receipt ke `<HERMES_HOME>/msshi-runtime/resource-profile.json`.
+- `msshi update --light` men-stage rilis ringan tanpa menyalin aset berat, PDF panduan otomatis, atau cache upstream.
+- `msshi doctor --json` menampilkan blok `low_ram_diagnostics` (RAM fisik, ruang kosong drive target, memori proses, ukuran cache, dan uji cepat skill scan `p95`).

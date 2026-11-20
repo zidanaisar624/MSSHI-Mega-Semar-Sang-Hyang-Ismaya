@@ -35,7 +35,8 @@
     "skripsi",
     "manual",
     "choices",
-    "interaction"
+    "interaction",
+    "light"
   ],
   "release_status": "release",
   "license": "MIT",

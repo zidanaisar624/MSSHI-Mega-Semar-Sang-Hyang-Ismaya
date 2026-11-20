@@ -18,6 +18,7 @@ if _SCRIPTS_DIR not in sys.path:
 
 import msshi_hermes_profiles as hermes_profiles
 import msshi_academic as academic
+import msshi_skill_index as skill_index
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,7 +140,11 @@ def host_roots(home):
     if os.name == "nt":
         local_app = os.environ.get("LOCALAPPDATA")
         local_hermes = Path(local_app) / "hermes" if local_app else home / "AppData/Local/hermes"
-        for candidate in (Path("D:/HermesData"), local_hermes):
+        win_candidates = [local_hermes]
+        if os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/"):
+            d_root = Path(os.environ.get("MSSHI_WINDOWS_D_ROOT") or (Path(os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/")) / "HermesData"))
+            win_candidates.insert(0, d_root)
+        for candidate in win_candidates:
             if (hermes_profiles.is_hermes_dir(candidate) and candidate not in choices):
                 choices.append(candidate)
     openclaw = absolute(os.environ["OPENCLAW_STATE_DIR"]) if os.environ.get("OPENCLAW_STATE_DIR") else home / ".openclaw"
@@ -173,15 +178,18 @@ def detect_host(requested):
 
 
 def indexed_skills(root):
-    """Treat an existing nested or flat skill as occupied by its name."""
+    """Treat an existing nested or flat skill as occupied by its name, skipping heavy dirs."""
     occupied = set()
     if not root.is_dir():
         return occupied
+    excluded = skill_index.excluded_scan_dirs(ROOT)
     for folder, dirs, files in os.walk(root, followlinks=False):
         base = Path(folder)
         dirs[:] = [
             name for name in dirs
-            if not name.startswith((".msshi-backup-", ".msshi-stage-")) and not is_link(base / name)
+            if not name.startswith((".msshi-backup-", ".msshi-stage-"))
+            and name.lower() not in excluded
+            and not is_link(base / name)
         ]
         skill = base / "SKILL.md"
         if "SKILL.md" not in files or is_link(skill):

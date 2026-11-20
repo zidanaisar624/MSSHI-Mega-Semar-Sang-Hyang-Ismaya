@@ -17,13 +17,19 @@ if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from msshi_sources import data_root
+import msshi_hermes_profiles as hp
+import msshi_skill_index as skill_index
+import msshi_light as light_mod
 
 
 def inject_adaptive_pylibs():
     candidates = [
         Path.home() / "HermesData" / "skripsi-pylibs",
-        Path("D:/HermesData/skripsi-pylibs"),
     ]
+    if os.name == "nt" and os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/"):
+        d_drive = os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/")
+        d_root = Path(os.environ.get("MSSHI_WINDOWS_D_ROOT") or (Path(d_drive) / "HermesData"))
+        candidates.append(d_root / "skripsi-pylibs")
     found = []
     for cand in candidates:
         if cand.is_dir():
@@ -268,11 +274,115 @@ def find_soffice() -> str | None:
 
 
 def adaptive_skripsi_output() -> Path:
-    if os.name == "nt" and Path("D:/").exists():
-        d_root = Path("D:/HermesData")
-        if d_root.exists() or os.access("D:/", os.W_OK):
+    env_out = os.environ.get("MSSHI_SKRIPSI_OUTPUT", "").strip()
+    if env_out:
+        return Path(env_out).expanduser()
+    env_home = os.environ.get("HERMES_HOME", "").strip()
+    if env_home:
+        return Path(env_home).expanduser() / "Skripsi_Output"
+    if os.name == "nt" and hp.has_writable_drive_d(probe_write=False):
+        d_drive = os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/")
+        d_root = Path(os.environ.get("MSSHI_WINDOWS_D_ROOT") or (Path(d_drive) / "HermesData"))
+        if d_root.exists() or os.access(d_drive, os.W_OK):
             return d_root / "Skripsi_Output"
     return Path.home() / "Documents" / "MuZA_Skripsi_Output"
+
+
+def _low_ram_diagnostics(issues, native_report: dict) -> dict:
+    """Read-only diagnostics for Low-RAM mode, RAM budget, cache size, and skill scan p95."""
+    is_light = light_mod.is_light_build(ROOT)
+    manifest_source = ROOT if (ROOT / light_mod.MANIFEST_REL).is_file() else light_mod.ROOT
+    try:
+        hw = light_mod.hardware_profile(source=manifest_source)
+    except Exception:
+        hw = {"physical_gib": 0.0, "available_gib": 0.0, "low_ram_detected": False,
+              "ram_threshold_gib": 6.0, "recommended_resource_profile": "normal"}
+
+    mem = light_mod.process_memory_mb()
+    ws_mb = mem.get("working_set_mb")
+    within_ram_budget = (ws_mb is not None and ws_mb <= 150.0) if ws_mb is not None else True
+
+    resource_profile = {"configured": False, "profile": "normal", "source": "default"}
+    cache_files = 0
+    cache_bytes = 0
+    hygiene_warnings: list[str] = []
+    if native_report.get("status") != "NOT_INSTALLED":
+        try:
+            hermes_home = hp.resolve_hermes_home(create_adaptive=False, persist_windows_env=False)
+            resource_profile = light_mod.read_resource_profile(hermes_home)
+            idx_dir = hermes_home / "msshi-runtime" / "skill-index"
+            if idx_dir.is_dir() and not skill_index.is_link(idx_dir):
+                for item in idx_dir.glob("*.json"):
+                    if item.is_file() and not skill_index.is_link(item):
+                        cache_files += 1
+                        cache_bytes += item.stat().st_size
+            scan_live = skill_index.scan_all_profiles(hermes_home, write_cache=False, source=manifest_source)
+            hygiene_warnings = list(scan_live.get("hygiene_warnings") or [])
+            for warn in hygiene_warnings:
+                _issue(
+                    issues,
+                    "SKILL_SCAN_HYGIENE_WARNING",
+                    warn,
+                    "Pindahkan folder berat (.git/node_modules/model/cache/upstreams) keluar dari folder skills.",
+                )
+        except Exception:
+            pass
+
+    skills_root = ROOT / "skills"
+    if skills_root.is_dir():
+        try:
+            scan_quick = light_mod.quick_skill_scan_metrics(skills_root, iterations=20, source=manifest_source)
+        except Exception:
+            scan_quick = {"skill_count": 0, "iterations": 0, "warm_p95_seconds": None, "within_2s_target": True}
+    else:
+        scan_quick = {"skill_count": 0, "iterations": 0, "warm_p95_seconds": None, "within_2s_target": True}
+
+    if scan_quick.get("warm_p95_seconds") is not None and not scan_quick.get("within_2s_target", True):
+        _issue(
+            issues,
+            "SKILL_SCAN_SLOW",
+            f"Skill scan p95 melebihi target 2.0 detik ({scan_quick['warm_p95_seconds']} dtk).",
+            "msshi light index --json",
+        )
+
+    marker_size_mb = None
+    marker_path = ROOT / light_mod.ACTIVE_MARKER_REL
+    if is_light and marker_path.is_file():
+        try:
+            marker_data = json.loads(marker_path.read_text(encoding="utf-8-sig"))
+            if isinstance(marker_data.get("uncompressed_bytes"), int):
+                marker_size_mb = round(marker_data["uncompressed_bytes"] / (1024 * 1024), 3)
+        except (OSError, ValueError):
+            pass
+
+    return {
+        "build_profile": "light" if is_light else "full",
+        "hardware": {
+            "physical_gib": hw.get("physical_gib"),
+            "available_gib": hw.get("available_gib"),
+            "low_ram_detected": hw.get("low_ram_detected"),
+            "ram_threshold_gib": hw.get("ram_threshold_gib", 6.0),
+            "recommended_resource_profile": hw.get("recommended_resource_profile", "normal"),
+        },
+        "resource_profile": {
+            "active": resource_profile.get("profile", "normal"),
+            "configured": bool(resource_profile.get("configured", False)),
+            "source": resource_profile.get("source", "default"),
+        },
+        "process_memory": {
+            **mem,
+            "budget_mb": 150.0,
+            "within_budget": within_ram_budget,
+        },
+        "package_and_cache": {
+            "light_build_uncompressed_mb": marker_size_mb,
+            "light_installer_budget_mb": 50.0,
+            "skill_index_cache_files": cache_files,
+            "skill_index_cache_kb": round(cache_bytes / 1024.0, 2),
+        },
+        "skill_scan_quick": scan_quick,
+        "hygiene_warnings": hygiene_warnings,
+    }
 
 
 def diagnose() -> dict:
@@ -307,7 +417,7 @@ def diagnose() -> dict:
     }
 
     home = data_root()
-    drive_d_exists = Path("D:/").exists() if os.name == "nt" else False
+    drive_d_exists = hp.has_writable_drive_d(probe_write=False) if os.name == "nt" else False
     try:
         disk_free_mb = round(shutil.disk_usage(home if home.exists() else ROOT).free / (1024 * 1024), 1)
     except OSError:
@@ -329,7 +439,12 @@ def diagnose() -> dict:
         len(disk_skills) == version.get("bundled_skills") == len(matrix_bundled)
         and disk_skills == matrix_bundled
     )
-    skripsi_ok = all(skripsi_present.values()) and all(notebooks_present.values()) and (ROOT / "MULAI_SKRIPSI_DRAG_AND_DROP.bat").is_file()
+    light_build_active = light_mod.is_light_build(ROOT)
+    skripsi_ok = (
+        all(skripsi_present.values())
+        and (light_build_active or all(notebooks_present.values()))
+        and (ROOT / "MULAI_SKRIPSI_DRAG_AND_DROP.bat").is_file()
+    )
 
     if not parity_ok:
         _issue(issues, "SKILL_PARITY_FAILED", "Folder skill dan katalog rilis tidak cocok.", "msshi update", severity="error")
@@ -343,12 +458,14 @@ def diagnose() -> dict:
             _issue(issues, "OPTIONAL_DEPENDENCY_MISSING", "Modul untuk fungsi dokumen belum tersedia: " + dep,
                    "python -m pip install " + package)
     native = _native_health(issues)
+    low_ram = _low_ram_diagnostics(issues, native)
     errors = sum(row["severity"] == "error" for row in issues)
     warnings = sum(row["severity"] == "warning" for row in issues)
 
     return {
         "suite": version.get("suite_name"),
         "version": version.get("version"),
+        "build_profile": low_ram["build_profile"],
         "bundled_skills": len(disk_skills),
         "core_skills": version.get("core_skills"),
         "wrappers": version.get("integration_wrappers"),
@@ -366,6 +483,7 @@ def diagnose() -> dict:
         "muza_skripsi_files_count": sum(skripsi_present.values()),
         "notebooks_present": notebooks_present,
         "pdf_guides_present": (ROOT / "docs" / "pdf-guides" / "Panduan_Master_MSSHI_v3.1.0.pdf").is_file(),
+        "low_ram_diagnostics": low_ram,
         "native": native,
         "issues": issues,
         "checks_read_only": True,
@@ -409,6 +527,27 @@ def main(argv=None):
         print(f"Python Modules        : {report['python_modules']}")
         print(f"External Binaries     : git={bool(report['tools']['git'])}, node={bool(report['tools']['node'])}, libreoffice={bool(report['tools']['soffice'])}")
         print(f"PDF Guides Dir        : {report['pdf_guides_present']}")
+        lr = report.get("low_ram_diagnostics") or {}
+        if lr:
+            hw = lr.get("hardware") or {}
+            rp = lr.get("resource_profile") or {}
+            pm = lr.get("process_memory") or {}
+            sq = lr.get("skill_scan_quick") or {}
+            pc = lr.get("package_and_cache") or {}
+            print(
+                f"Low-RAM / Build       : build={lr.get('build_profile', 'full')}, "
+                f"mode={rp.get('active', 'normal')} (RAM {hw.get('physical_gib')} GiB, "
+                f"low_ram_detected={hw.get('low_ram_detected')})"
+            )
+            print(
+                f"Process Memory / Cache: WorkingSet={pm.get('working_set_mb')} MB, "
+                f"Commit={pm.get('commit_charge_mb')} MB (budget <= 150 MB), "
+                f"index_cache={pc.get('skill_index_cache_files', 0)} file ({pc.get('skill_index_cache_kb', 0)} KB)"
+            )
+            print(
+                f"Skill Scan Quick p95  : {sq.get('warm_p95_seconds')} s "
+                f"(cold={sq.get('cold_seconds')} s, {sq.get('skill_count')} skills, {sq.get('iterations')} iters; target <= 2.0 s)"
+            )
         print(f"Native Profiles       : {report['native']['status']} (provider execution not tested)")
         if repair is not None:
             print(f"Scoped Repair         : {repair.get('files_restored', 0)} missing MSSHI-owned files restored; receipt={repair.get('receipt')}")

@@ -139,26 +139,31 @@ def validate_release(source, current):
     return data, catalog, packs
 
 
-def stage_release(source, home):
+def stage_release(source, home, *, build_profile="full"):
     """Publish a separate, verified release directory and keep old baselines."""
     releases = home / "releases"
     installer.reject_links(releases)
     releases.mkdir(exist_ok=True)
+    light_requested = build_profile == "light" or (source / "configs" / "light_build_active.json").is_file()
     with TemporaryDirectory(prefix=".msshi-stage-", dir=releases) as scratch:
         staging = Path(scratch) / "release"
         staging.mkdir()
-        for name in RELEASE_DIRS:
-            directory = source / name
-            installer.reject_links(directory)
-            if directory.is_dir():
-                installer.validate_tree(directory)
-                shutil.copytree(directory, staging / name, symlinks=True,
-                                ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
-        for name in RELEASE_FILES:
-            path = source / name
-            installer.reject_links(path)
-            if path.is_file():
-                shutil.copy2(path, staging / name)
+        if light_requested and (source / "configs" / "light_build_manifest.json").is_file():
+            import msshi_light as light_mod
+            light_mod.stage_light_tree(source, staging)
+        else:
+            for name in RELEASE_DIRS:
+                directory = source / name
+                installer.reject_links(directory)
+                if directory.is_dir():
+                    installer.validate_tree(directory)
+                    shutil.copytree(directory, staging / name, symlinks=True,
+                                    ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
+            for name in RELEASE_FILES:
+                path = source / name
+                installer.reject_links(path)
+                if path.is_file():
+                    shutil.copy2(path, staging / name)
         files = inventory(staging)
         # The shorter key leaves room for deeply nested Windows skill paths.
         release_id = fingerprint(files)[:24]
@@ -285,7 +290,8 @@ def choose_targets(home, platform=None, target_dir=None, team=False, lang='id', 
             target_dir = default
         else:
             kind = "profil Hermes" if (team and platform == "hermes") else ("workspace tim" if team else "skills")
-            target_dir = input(f"Folder {kind} [{default}]: ").strip() or default
+            hint = " (bebas drive C:/D:/E:/folder mana saja)" if os.name == "nt" else " (bebas folder mana saja)"
+            target_dir = input(f"Folder {kind}{hint} [{default}]: ").strip() or default
     target = installer.absolute(target_dir)
     ensure_target(target, home, ROOT)
     return platform, target
@@ -1018,10 +1024,48 @@ def setup(args, home, state):
     plugins_report = _setup_plugins_and_addons(args, mode, platform, target, selections, profile_home, lang, yes)
     services_report = _setup_service_connections(args, platform, profile_home, lang, yes)
     apps_report = _setup_bot_app_connections(args, mode, platform, target, selections, profile_home, home, lang, yes)
+    resource_report = {"profile": "normal", "applied": False}
+    if platform == "hermes" and profile_home is not None:
+        import msshi_light as light_mod
+        import msshi_skill_index as skill_index
+        requested_rp = "light" if getattr(args, "low_ram", False) else getattr(args, "resource_profile", None)
+        current_rp = light_mod.read_resource_profile(profile_home)
+        if requested_rp:
+            resource_report = light_mod.apply_resource_profile(profile_home, requested_rp, apply=True, source=ROOT)
+            print(f"  Mode Resource   : {resource_report['profile']} (provider/model tidak diubah).")
+        elif not yes:
+            hw = light_mod.hardware_profile(source=ROOT)
+            default_pick = "2" if (current_rp.get("profile") == "light" or (not current_rp.get("configured") and hw.get("low_ram_detected"))) else "1"
+            print("\n[5/5] Mode Resource Perangkat (Standar vs Mode Hemat Windows 10 RAM 4 GB):" if lang == "id"
+                  else "\n[5/5] Device Resource Profile (Standard vs Windows 10 4 GB Low-RAM Mode):")
+            print(f"  RAM terdeteksi  : {hw.get('physical_gib')} GiB (rekomendasi: {'Mode Hemat' if hw.get('low_ram_detected') else 'Standar'})")
+            print("  1. Standar (Normal — seluruh fitur & paralelisme aktif)" if lang == "id"
+                  else "  1. Standard (Normal — all features & parallel workflows enabled)")
+            print("  2. Mode Hemat Windows 10 RAM 4 GB (Low-RAM <= 150 MB, single active runtime, hemat memori)" if lang == "id"
+                  else "  2. Windows 10 4 GB Low-RAM Mode (<= 150 MB budget, single active runtime, low memory)")
+            rp_pick = _prompt_choice(f"Pilihan Mode Resource [1/2, Enter={default_pick}]: ", default_pick)
+            if rp_pick not in {"1", "2"}:
+                raise ValueError("Pilihan Mode Resource harus 1 atau 2.")
+            chosen_rp = "light" if rp_pick == "2" else "normal"
+            if chosen_rp == "light" or current_rp.get("configured"):
+                if chosen_rp != current_rp.get("profile") or not current_rp.get("configured"):
+                    resource_report = light_mod.apply_resource_profile(profile_home, chosen_rp, apply=True, source=ROOT)
+                    print(f"  Mode Resource   : {resource_report['profile']} (provider/model tidak diubah).")
+                else:
+                    resource_report = {"profile": chosen_rp, "applied": False, "configured": True}
+            else:
+                resource_report = {"profile": "normal", "applied": False, "configured": False}
+        else:
+            resource_report = {"profile": current_rp.get("profile", "normal"), "applied": False, "configured": current_rp.get("configured", False)}
+        try:
+            skill_index.scan_all_profiles(profile_home, write_cache=True, source=ROOT)
+        except (OSError, ValueError):
+            pass
     _emit_setup_report(
         home, mode, platform, target, profile_home,
         {
             "default_bot": ("yukino" if yukino_is_default else ("keep-hermes" if mode in PRESET_MODES and platform == "hermes" else "default")),
+            "resource_profile": resource_report,
             "skills": {
                 "target_count": len(selections),
                 "targets": {str(folder): sorted(set(items)) for folder, items in selections.items()},
@@ -1109,7 +1153,8 @@ def migrate_runtime(source, hermes_home=None):
 def update(args, home, state, source, commit):
     current = release_version(ROOT)
     _, catalog, _ = validate_release(source, current)
-    release_id = stage_release(source, home)
+    light_mode = bool(getattr(args, "light", False) or (source / "configs" / "light_build_active.json").is_file())
+    release_id = stage_release(source, home, build_profile="light" if light_mode else "full")
     protected_backup(home, state["targets"])
     required = installer.mandatory_skills(catalog)
     for raw, managed in state["targets"].items():
@@ -1144,10 +1189,10 @@ def update(args, home, state, source, commit):
         print("Belum ada target. Jalankan msshi setup untuk memasang dan mendaftarkan skills.")
     has_manual_catalog = (source / "docs" / "manuals" / "pdf_catalog.json").is_file()
     explicit_pdf = bool(getattr(args, "download_pdf", False) or getattr(args, "pdf_version", None))
-    if explicit_pdf or (has_manual_catalog and not getattr(args, "no_pdf", False)):
+    if explicit_pdf or (has_manual_catalog and not light_mode and not getattr(args, "no_pdf", False)):
         from msshi_manuals import prompt_manual_download
         prompt_manual_download(args, source_root=source)
-    if args.skip_upstreams:
+    if args.skip_upstreams or light_mode:
         return 0
     rows = fetch_upstreams(source / UPSTREAMS, home / "upstreams")
     failed = int(any(row["status"] == "failed" for row in rows.values()))
@@ -1186,19 +1231,21 @@ def main(argv=None):
     connections.configure_parser(connect)
     updater = subparsers.add_parser("update", help="Perbarui rilis, skill yang dikelola, dan cache upstream.")
     updater.add_argument("--skip-upstreams", action="store_true", help="Hanya perbarui MSSHI dan skill bundel.")
+    updater.add_argument("--light", action="store_true", help="Stage Light Build ringan (<= 50 MB) tanpa aset berat, PDF otomatis, dan upstream cache.")
     updater.add_argument("--hermes-home", type=Path, help="Folder Hermes untuk migrasi v3.")
     updater.add_argument("--source", type=Path, help="Pakai kandidat lokal yang sudah diperiksa.")
     updater.add_argument("--download-pdf", action="store_true", help="Unduh Buku Panduan PDF lengkap untuk versi ini.")
     updater.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "light", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
             'desktop': 'Status dan peluncur Hermes Desktop.',
             'audit': 'Periksa paket/profil dan bukti tanpa chat LLM.',
             'doctor': 'Cek kesehatan sistem, Drive C:/D:, dependensi skripsi & paritas MSSHI.',
+            'light': 'Light Build Win10 RAM 4 GB: status, mode Low-RAM, indeks skill lazy, paket <= 50 MB, benchmark.',
             'skripsi': 'Rakit template skripsi Word (.docx) drag-and-drop via MuZA Skripsi v1.1.',
             'assets': 'Cari bahan persona pribadi di lokasi yang dipilih.',
             'compact': 'Padatkan data internal sesuai format yang didukung.',
@@ -1250,6 +1297,8 @@ def main(argv=None):
             wizard.add_argument("--connect-bots", help="Daftar bot (dipisah koma atau 'all') untuk langkah [4/4].")
             wizard.add_argument("--connect-targets", help="Daftar app target (dipisah koma atau 'detected') untuk langkah [4/4].")
             wizard.add_argument("--with-rea", action="store_true", help="Opt-in analisis statis JavaScript/arsip: pasang instruksi REA; runtime Node/npm dan engine native terpisah. Default OFF.")
+            wizard.add_argument("--low-ram", action="store_true", help="Aktifkan mode Low-RAM (hemat memori untuk perangkat <= 6 GB RAM) tanpa mengubah provider/model.")
+            wizard.add_argument("--resource-profile", choices=("auto", "light", "normal"), help="Atur profil resource (auto/light/normal) tanpa mengubah provider/model.")
             wizard.add_argument("--download-pdf", action="store_true", help="Sekalian unduh Buku Panduan PDF Lengkap untuk versi ini.")
             wizard.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
             wizard.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
@@ -1258,11 +1307,12 @@ def main(argv=None):
             wizard.add_argument("--local", action="store_true", help="Pilih dari rilis lokal tanpa mengakses GitHub.")
     launcher = subparsers.add_parser("bootstrap", help="Pasang launcher global dari rilis lokal.")
     launcher.add_argument("--no-path", action="store_true", help="Jangan ubah PATH user.")
+    launcher.add_argument("--light", action="store_true", help="Stage Light Build ringan (<= 50 MB) tanpa aset besar atau penyalinan PDF otomatis.")
     launcher.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     launcher.add_argument("--pdf-version", help="Pilih versi panduan; default latest.")
     launcher.add_argument("--pdf-dest", type=Path, help="Folder PDF; default Downloads/MSSHI_Manuals.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "light", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -1283,7 +1333,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "forge": "msshi_forge.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "light": "msshi_light.py", "forge": "msshi_forge.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_preferences.py", "trim": "msshi_llmtrim.py", "interaction": "msshi_interaction.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",
@@ -1318,9 +1368,11 @@ def main(argv=None):
                 migration = migrate_runtime(ROOT)
                 if migration:
                     return migration
-                bootstrap(home, stage_release(ROOT, home), state, args.no_path)
-                from msshi_manuals import prompt_manual_download
-                prompt_manual_download(args, source_root=ROOT)
+                light_boot = bool(getattr(args, "light", False) or (ROOT / "configs" / "light_build_active.json").is_file())
+                bootstrap(home, stage_release(ROOT, home, build_profile="light" if light_boot else "full"), state, args.no_path)
+                if not light_boot or getattr(args, "pdf_version", None):
+                    from msshi_manuals import prompt_manual_download
+                    prompt_manual_download(args, source_root=ROOT)
             elif args.command == "setup":
                 setup(args, home, state)
             elif args.command == "select" and args.local:

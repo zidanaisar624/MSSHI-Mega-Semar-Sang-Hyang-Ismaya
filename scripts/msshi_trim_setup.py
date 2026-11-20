@@ -42,19 +42,28 @@ ASSETS = {
     ('linux','x86_64'): ('llmtrim-x86_64-unknown-linux-musl.tar.gz', '812d092460dbf880910b46b7ebac686ef0bfdae201006391cb8d8b1144731ca8'),
     ('linux','aarch64'): ('llmtrim-aarch64-unknown-linux-gnu.tar.gz', '4f421db37334afd57f0b5b46fddef47a69724ec446de14621b0528a39ae0a713'),
 }
-# Reviewed previous MSSHI 0.1.0 plugin files may be upgraded. Unknown edits stay.
+# Reviewed previous MSSHI 0.1.0 / 0.2.0 plugin files may be upgraded. Unknown edits stay.
 LEGACY_FILES = {
     '__init__.py': '10b3134c2b5bca3251c41390973c640229a86abd0c9bcb4bee96539c1ad84a4c',
     'plugin.yaml': '5ba70ee9c675cb138271261083621647e8a06254321d4768de79456596e31183',
     'README.md': '453552b4911d64ddad630888fc1b3002bbf338d49db2e820c497bf0f25b99471',
     'json-only.toml': '9bc3fc752dea3ec1556695f67c65c607941c7385733361fcd8b4ee7e86af8e64',
+    'desktop_ui.js': '',
 }
 LEGACY_NORMALIZED = {
     '__init__.py': '0b4d82f2447602efb09ee6fc95ad0756a7617094accf61a4c8796f0e3d2ad388',
     'plugin.yaml': 'db77808e64b310ca03c9d0b0def65711bce108c43d53d51ade51b2e5357076f9',
     'README.md': '7a02f9d70eacd67df531625afe99d1e559680b197712952bf54c0c2be2fc7018',
     'json-only.toml': 'ee68a00a21f5f1655bc7223b10ca1d75d107abf662038d7afcab0db8d765af61',
+    'desktop_ui.js': '',
 }
+EXTRA_LEGACY_HASHES = {
+    'plugin.yaml': {
+        'd1278cc87933ccf38ef8662652b53271ecdc85fc4c79cc808861e966b4734728',
+        'ce3460b0f1f06a8f7a0eb2bb464ccb3b8df0d9431ea10b30cb16ce12b86f6b0e',
+    },
+}
+DESKTOP_UI_SOURCE = 'desktop_ui.js'
 WINDOWS_X64_BINARY_SHA256 = 'd7703c7b0710c3c06a8846d1c0ed4009c671a880d699449c803848da3f3c3eab'
 
 
@@ -246,9 +255,10 @@ def enable_config(original, binary, *, force_enable=False):
 
 def managed_plugin_file(current, incoming, filename):
     """Recognize this release or the reviewed predecessor, including Git EOLs."""
-    return (sha(current) in {sha(incoming),LEGACY_FILES[filename]}
+    extra = EXTRA_LEGACY_HASHES.get(filename, set())
+    return (sha(current) in {sha(incoming),LEGACY_FILES[filename],*extra}
             or sha(current.replace(b'\r\n',b'\n')) in {
-                sha(incoming.replace(b'\r\n',b'\n')),LEGACY_NORMALIZED[filename]})
+                sha(incoming.replace(b'\r\n',b'\n')),LEGACY_NORMALIZED[filename],*extra})
 
 
 def install(home, *, source_root=ROOT, selected=None, apply=False, allow_download=False,
@@ -256,6 +266,8 @@ def install(home, *, source_root=ROOT, selected=None, apply=False, allow_downloa
     home=checked(home);source_root=checked(source_root)
     plugin_source=checked(source_root/'hermes_plugins'/PLUGIN)
     incoming={name:checked(plugin_source/name).read_bytes() for name in FILES}
+    desktop_source_file=checked(plugin_source/DESKTOP_UI_SOURCE)
+    desktop_data=desktop_source_file.read_bytes() if desktop_source_file.is_file() else None
     roots=profile_dirs(home,selected)
     binary,binary_changes,binary_result=binary_plan(home,allow_download=allow_download and apply)
     changes=dict(binary_changes)
@@ -286,7 +298,16 @@ def install(home, *, source_root=ROOT, selected=None, apply=False, allow_downloa
         if original is not None and updated!=original:
             changes[config]=updated
         rows.append(row)
+    if desktop_data is not None and any(not r['status'].startswith('preserved_') and r['status']!='pending_native_profile' for r in rows):
+        desktop_target=checked(home/'desktop-plugins'/PLUGIN/'plugin.js')
+        if not desktop_target.is_file():
+            changes[desktop_target]=desktop_data
+        else:
+            current_desktop=desktop_target.read_bytes()
+            if current_desktop!=desktop_data and managed_plugin_file(current_desktop,desktop_data,DESKTOP_UI_SOURCE):
+                changes[desktop_target]=desktop_data
     result={'display_name':DISPLAY_NAME,'plugin_id':PLUGIN,'applied':False,
+        'desktop_plugin_staged':bool(desktop_data is not None and ((home/'desktop-plugins'/PLUGIN/'plugin.js').is_file() or checked(home/'desktop-plugins'/PLUGIN/'plugin.js') in changes)),
         'automatic_scope':'eligible large JSON tool results with exact canonical data equality',
         'binary':binary_result,'profiles':rows,'files_planned':len(changes),'receipt':None,
         'model_calls':0,'proxy_ca_daemon_changes':False,'provider_model_or_key_changes':False,

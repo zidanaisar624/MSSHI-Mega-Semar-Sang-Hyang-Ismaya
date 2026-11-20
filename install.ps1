@@ -28,16 +28,92 @@ param(
     [string]$ConnectApps,
     [string]$ConnectBots,
     [string]$ConnectTargets,
-    [switch]$WithRea
+    [switch]$WithRea,
+    [switch]$Light,
+    [switch]$LowRam,
+    [ValidateSet('auto', 'light', 'normal')]
+    [string]$ResourceProfile,
+    [string]$InstallDir,
+    [string]$HermesHome,
+    [string]$TargetDir
 )
 
 & {
-    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiPdfDest, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiAcademicProject, $MsshiAcademicLevel, $MsshiAcademicTopic, $MsshiAcademicDeadline, $MsshiAcademicCampusGuideline, $MsshiPreferredName, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiInstallSteel, $MsshiConnectServices, $MsshiBrowser, $MsshiBrowserProfileLabel, $MsshiBrowserAccountLabel, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea)
+    param($MsshiSourcePath, $MsshiNoSetup, $MsshiNoPath, $MsshiDownloadPdf, $MsshiNoPdf, $MsshiPdfVersion, $MsshiPdfDest, $MsshiMode, $MsshiPlatform, $MsshiDefaultBot, $MsshiAcademicProject, $MsshiAcademicLevel, $MsshiAcademicTopic, $MsshiAcademicDeadline, $MsshiAcademicCampusGuideline, $MsshiPreferredName, $MsshiYes, $MsshiKatMode, $MsshiStageAutoTrim, $MsshiInstallSteel, $MsshiConnectServices, $MsshiBrowser, $MsshiBrowserProfileLabel, $MsshiBrowserAccountLabel, $MsshiConnectApps, $MsshiConnectBots, $MsshiConnectTargets, $MsshiWithRea, $MsshiLight, $MsshiLowRam, $MsshiResourceProfile, $MsshiInstallDir, $MsshiHermesHome, $MsshiTargetDir)
     $ErrorActionPreference = 'Stop'
     $repository = 'https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya.git'
     $scratch = $null
     $runtime = $null
     $pythonArgs = @()
+
+    # Interactive selection: Light Mode (Win10 RAM 4 GB) & custom install directory (any drive C:/D:/E:/...)
+    $isInteractive = (-not $MsshiYes) -and (-not $MsshiNoSetup) -and (-not [Console]::IsInputRedirected)
+    if ($isInteractive) {
+        if (-not $MsshiLight -and -not $MsshiLowRam -and -not $MsshiResourceProfile) {
+            $ramGib = 0.0
+            try {
+                $cs = Get-CimInstance -ClassName Win32_ComputerSystem -ErrorAction Stop
+                if ($cs -and $cs.TotalPhysicalMemory) {
+                    $ramGib = [Math]::Round(($cs.TotalPhysicalMemory / 1GB), 2)
+                }
+            } catch {
+                $ramGib = 0.0
+            }
+            $defaultEdition = '1'
+            if ($ramGib -gt 0 -and $ramGib -le 6.0) { $defaultEdition = '2' }
+            Write-Host ''
+            Write-Host '=== Pilihan Mode Instalasi MSSHI ==='
+            if ($ramGib -gt 0) { Write-Host ("RAM sistem terdeteksi : $ramGib GiB") }
+            Write-Host '  1. Standar / Lengkap (Full Build - semua fitur & paralelisme)'
+            Write-Host '  2. Mode Hemat Windows 10 RAM 4 GB (Light Build <= 50 MB + Low-RAM <= 150 MB)'
+            $edPick = (Read-Host "Pilih mode instalasi [1/2, Enter=$defaultEdition]").Trim()
+            if (-not $edPick) { $edPick = $defaultEdition }
+            if ($edPick -eq '2') {
+                $MsshiLight = $true
+                $MsshiLowRam = $true
+            } elseif ($edPick -ne '1') {
+                throw 'Pilihan mode instalasi harus 1 atau 2.'
+            }
+        }
+        if (-not $MsshiInstallDir) {
+            $defaultInstall = $env:MSSHI_HOME
+            if (-not $defaultInstall) { $defaultInstall = Join-Path $env:LOCALAPPDATA 'MSSHI' }
+            $driveList = @()
+            try {
+                foreach ($drv in [System.IO.DriveInfo]::GetDrives()) {
+                    if ($drv.IsReady -and ($drv.DriveType -eq 'Fixed' -or $drv.DriveType -eq 'Removable')) {
+                        $freeGb = [Math]::Round(($drv.AvailableFreeSpace / 1GB), 1)
+                        $driveList += ($drv.Name + " (" + $freeGb + " GB bebas)")
+                    }
+                }
+            } catch {
+                $driveList = @()
+            }
+            Write-Host ''
+            if ($driveList.Count -gt 0) {
+                Write-Host ('Drive tersedia        : ' + ($driveList -join ', '))
+            }
+            $pickedDir = (Read-Host "Folder instalasi MSSHI (bebas drive C:/D:/E:/folder mana saja) [$defaultInstall]").Trim()
+            if ($pickedDir) { $MsshiInstallDir = $pickedDir }
+        }
+        if (-not $MsshiHermesHome -and -not $env:HERMES_HOME) {
+            $pickedHermes = (Read-Host 'Folder data Hermes / HERMES_HOME (Enter=otomatis adaptif, atau ketik bebas misal E:\HermesData)').Trim()
+            if ($pickedHermes) { $MsshiHermesHome = $pickedHermes }
+        }
+    }
+
+    if ($MsshiInstallDir) {
+        if ($MsshiInstallDir.StartsWith('\\') -or -not [IO.Path]::IsPathRooted($MsshiInstallDir)) {
+            throw 'InstallDir harus berupa path lokal absolut (misal C:\MSSHI, D:\MSSHI, atau E:\MSSHI).'
+        }
+        $env:MSSHI_HOME = $MsshiInstallDir
+    }
+    if ($MsshiHermesHome) {
+        if ($MsshiHermesHome.StartsWith('\\') -or -not [IO.Path]::IsPathRooted($MsshiHermesHome)) {
+            throw 'HermesHome harus berupa path lokal absolut (misal C:\HermesData, D:\HermesData, atau E:\HermesData).'
+        }
+        $env:HERMES_HOME = $MsshiHermesHome
+    }
     foreach ($candidate in @('py', 'python', 'python3')) {
         $app = Get-Command $candidate -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
         if (-not $app) { continue }
@@ -73,7 +149,23 @@ param(
                     $priorEnv[$key] = [Environment]::GetEnvironmentVariable($key, 'Process')
                     [Environment]::SetEnvironmentVariable($key, $gitEnv[$key], 'Process')
                 }
-                & $git.Source -c core.longpaths=true -c protocol.allow=never -c protocol.https.allow=always -c credential.helper= clone '--template=' --depth 1 --no-tags --branch main -- $repository $source
+                if ($MsshiLight) {
+                    $sparseOk = $false
+                    & $git.Source -c core.longpaths=true -c protocol.allow=never -c protocol.https.allow=always -c credential.helper= clone '--template=' --depth 1 --filter=blob:none --no-tags --no-checkout --sparse --branch main -- $repository $source 2>$null
+                    if ($LASTEXITCODE -eq 0) {
+                        & $git.Source -C $source sparse-checkout set --no-cone '/scripts/' '/configs/' '/skills/' '/hermes_plugins/' '/templates/' '/business-sage/' '/docs/manuals/pdf_catalog.json' '/optional/manifest.json' '/VERSION.json' '/CHANGELOG.md' '/LICENSE' '/CREDITS.md' '/THIRD_PARTY_NOTICES.md' '/SKILL.md' '/INSTALL_FOR_AGENTS.md' '/package.json' '/install.ps1' '/install.sh' '/MULAI_DI_SINI_PEMULA.bat' '/MULAI_SKRIPSI_DRAG_AND_DROP.bat' '/UPDATE_OTOMATIS_KE_V3.bat' 2>$null
+                        if ($LASTEXITCODE -eq 0) {
+                            & $git.Source -C $source checkout --quiet HEAD 2>$null
+                            if ($LASTEXITCODE -eq 0) { $sparseOk = $true }
+                        }
+                    }
+                    if (-not $sparseOk) {
+                        if (Test-Path -LiteralPath $source) { Remove-Item -LiteralPath $source -Recurse -Force }
+                        & $git.Source -c core.longpaths=true -c protocol.allow=never -c protocol.https.allow=always -c credential.helper= clone '--template=' --depth 1 --no-tags --branch main -- $repository $source
+                    }
+                } else {
+                    & $git.Source -c core.longpaths=true -c protocol.allow=never -c protocol.https.allow=always -c credential.helper= clone '--template=' --depth 1 --no-tags --branch main -- $repository $source
+                }
             } finally {
                 foreach ($key in $priorEnv.Keys) {
                     [Environment]::SetEnvironmentVariable($key, $priorEnv[$key], 'Process')
@@ -87,7 +179,8 @@ param(
         }
         $bootArgs = @('bootstrap')
         if ($MsshiNoPath) { $bootArgs += '--no-path' }
-        if ($MsshiNoPdf) { $bootArgs += '--no-pdf' }
+        if ($MsshiLight) { $bootArgs += '--light' }
+        if ($MsshiNoPdf -or ($MsshiLight -and -not $MsshiDownloadPdf)) { $bootArgs += '--no-pdf' }
         if ($MsshiPdfVersion) { $bootArgs += @('--pdf-version', $MsshiPdfVersion) }
         if ($MsshiPdfDest) { $bootArgs += @('--pdf-dest', $MsshiPdfDest) }
         & $runtime @pythonArgs -B -X utf8 $cli @bootArgs
@@ -107,6 +200,7 @@ param(
         if ($MsshiAcademicCampusGuideline) { $setupArgs += @('--academic-campus-guideline', $MsshiAcademicCampusGuideline) }
         if ($MsshiPreferredName) { $setupArgs += @('--preferred-name', $MsshiPreferredName) }
         if ($MsshiPlatform) { $setupArgs += @('--platform', $MsshiPlatform) }
+        if ($MsshiTargetDir) { $setupArgs += @('--target-dir', $MsshiTargetDir) }
         if ($MsshiDefaultBot) { $setupArgs += @('--default-bot', $MsshiDefaultBot) }
         if ($MsshiYes) { $setupArgs += '--yes' }
         if ($MsshiKatMode) { $setupArgs += @('--kat-mode', $MsshiKatMode) }
@@ -120,8 +214,10 @@ param(
         if ($MsshiConnectBots) { $setupArgs += @('--connect-bots', $MsshiConnectBots) }
         if ($MsshiConnectTargets) { $setupArgs += @('--connect-targets', $MsshiConnectTargets) }
         if ($MsshiWithRea) { $setupArgs += '--with-rea' }
+        if ($MsshiLowRam) { $setupArgs += '--low-ram' }
+        if ($MsshiResourceProfile) { $setupArgs += @('--resource-profile', $MsshiResourceProfile) }
         if ($MsshiDownloadPdf) { $setupArgs += '--download-pdf' }
-        if ($MsshiNoPdf) { $setupArgs += '--no-pdf' }
+        if ($MsshiNoPdf -or ($MsshiLight -and -not $MsshiDownloadPdf)) { $setupArgs += '--no-pdf' }
         if ($MsshiPdfVersion) { $setupArgs += @('--pdf-version', $MsshiPdfVersion) }
         if ($MsshiPdfDest) { $setupArgs += @('--pdf-dest', $MsshiPdfDest) }
         if (-not $MsshiNoSetup -and ($MsshiYes -or -not [Console]::IsInputRedirected)) {
@@ -139,4 +235,4 @@ param(
             }
         }
     }
-} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $PdfDest $Mode $Platform $DefaultBot $AcademicProject $AcademicLevel $AcademicTopic $AcademicDeadline $AcademicCampusGuideline $PreferredName $Yes $KatMode $StageAutoTrim $InstallSteel $ConnectServices $Browser $BrowserProfileLabel $BrowserAccountLabel $ConnectApps $ConnectBots $ConnectTargets $WithRea
+} $SourcePath $NoSetup $NoPath $DownloadPdf $NoPdf $PdfVersion $PdfDest $Mode $Platform $DefaultBot $AcademicProject $AcademicLevel $AcademicTopic $AcademicDeadline $AcademicCampusGuideline $PreferredName $Yes $KatMode $StageAutoTrim $InstallSteel $ConnectServices $Browser $BrowserProfileLabel $BrowserAccountLabel $ConnectApps $ConnectBots $ConnectTargets $WithRea $Light $LowRam $ResourceProfile $InstallDir $HermesHome $TargetDir

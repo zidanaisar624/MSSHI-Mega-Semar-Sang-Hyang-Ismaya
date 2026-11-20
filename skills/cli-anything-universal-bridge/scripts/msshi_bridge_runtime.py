@@ -174,7 +174,16 @@ def artcraft_root():
         if not path.is_absolute():
             raise ValueError("MSSHI_ARTCRAFT_ROOT must be an absolute application directory")
         return path
-    return Path("D:/Program/ArtCraft Apps") if os.name == "nt" else Path.home() / "Applications/ArtCraft Apps"
+    if os.name == "nt":
+        d_drive = os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/")
+        if d_drive:
+            d_candidate = Path(d_drive) / "Program" / "ArtCraft Apps"
+            if d_candidate.is_dir() or Path(d_drive).exists():
+                return d_candidate
+        local_app = os.environ.get("LOCALAPPDATA")
+        base = Path(local_app) if local_app else Path.home() / "AppData" / "Local"
+        return base / "ArtCraft Apps"
+    return Path.home() / "Applications/ArtCraft Apps"
 
 
 def artcraft_executable(target):

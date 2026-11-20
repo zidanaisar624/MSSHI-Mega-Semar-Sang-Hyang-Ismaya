@@ -7,6 +7,8 @@ from pathlib import Path
 
 import msshi_hermes_profiles as profiles
 import msshi_trim_setup as trim
+import msshi_skill_index as skill_index
+import msshi_light as light_mod
 
 ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM = 'https://github.com/BkashJEE/hermes-bot-forge'
@@ -17,7 +19,8 @@ def roster(home):
     for identifier, folder in [('default', home), *profiles.live_named_profiles(home).items()]:
         if not folder.is_dir():
             continue
-        result.append({'profile': identifier, 'skills': sorted(p.parent.name for p in (folder / 'skills').glob('*/SKILL.md'))})
+        scan = skill_index.scan_profile_skills(folder / 'skills', write_cache=False, source=ROOT)
+        result.append({'profile': identifier, 'skills': [row['slug'] for row in scan['skills']]})
     return result
 
 
@@ -46,8 +49,16 @@ def provision(home, blueprint, apply=False):
     # offensive security or automatic attack workflows to new autonomous profiles.
     if any(x in {'antigravity-webdev-cybersec', 'rea', 'rea-exploit', 'reverse-engineer-anything'} for x in selected):
         raise ValueError('Use a separate defensive code-review workflow for security tasks.')
+    try:
+        active_rp = light_mod.read_resource_profile(home)
+    except (OSError, ValueError):
+        active_rp = {'profile': 'normal', 'configured': False}
+    low_ram = active_rp.get('profile') == 'light'
     result = {'profile': identifier, 'name': blueprint['name'], 'skills': selected,
               'status': 'PLAN_ONLY', 'provider_model': 'USER_CONFIGURES_IN_HERMES',
+              'resource_profile': active_rp.get('profile', 'normal'),
+              'low_ram_mode': low_ram,
+              'single_active_runtime_advised': low_ram,
               'model_calls': 0, 'gateway_started': False, 'upstream': UPSTREAM}
     if not apply:
         return result
@@ -60,6 +71,12 @@ def provision(home, blueprint, apply=False):
         'Read SOUL.md. Use only the approved skills and native tools for the task.',
         [(catalog[slug], target/slug) for slug in selected], description=blueprint['purpose'])
     result.update(status='CREATED_PENDING_USER_MODEL', profile_receipt=with_profile['receipt'])
+    try:
+        cache_file = home / 'msshi-runtime' / 'skill-index' / f'{identifier}.json'
+        idx = skill_index.scan_profile_skills(target, cache_file, write_cache=True, source=ROOT)
+        result['skill_index'] = {'skill_count': idx['skill_count'], 'cache_path': idx['cache_path']}
+    except (OSError, ValueError):
+        pass
     try:
         staged = trim.install(home, source_root=ROOT, selected=[identifier], apply=True, allow_download=False)
         result['trim'] = {'profiles': staged['profiles'], 'binary': staged['binary']['status'], 'receipt': staged['receipt']}
@@ -84,7 +101,11 @@ def main(argv=None):
                 return 1
             print(json.dumps(provision(home, design, apply=True), ensure_ascii=False, indent=2))
     else:
-        print(json.dumps({'profiles': roster(home), 'upstream': UPSTREAM, 'model_calls':0}, indent=2))
+        try:
+            rp = light_mod.read_resource_profile(home).get('profile', 'normal')
+        except (OSError, ValueError):
+            rp = 'normal'
+        print(json.dumps({'profiles': roster(home), 'resource_profile': rp, 'low_ram_mode': rp == 'light', 'upstream': UPSTREAM, 'model_calls': 0}, indent=2))
     return 0
 
 

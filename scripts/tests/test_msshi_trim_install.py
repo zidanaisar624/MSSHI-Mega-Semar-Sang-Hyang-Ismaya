@@ -99,6 +99,10 @@ class TrimInstall(unittest.TestCase):
             self.assertEqual('user-model',cfg['model']['default'])
             self.assertEqual('DUMMY_NOT_A_SECRET',cfg['providers']['user-choice']['api_key'])
             self.assertTrue((folder/'plugins'/trim.PLUGIN/'json-only.toml').is_file())
+        desktop_ui=self.home/'desktop-plugins'/trim.PLUGIN/'plugin.js'
+        self.assertTrue(desktop_ui.is_file())
+        self.assertIn('MSSHITrim',desktop_ui.read_text(encoding='utf-8'))
+        self.assertIn('registerSettingsPage',desktop_ui.read_text(encoding='utf-8'))
 
     def test_existing_disabled_preserved_unless_explicit_force(self):
         raw=self.original+b'plugins:\r\n  disabled: [msshi-auto-trim]\r\n'

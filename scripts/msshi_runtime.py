@@ -49,6 +49,12 @@ LLM_KEYS = ("provider", "model", "providers", "custom_providers", "fallback_prov
 LEGACY_PROTECTED_KEYS = ("provider", "model", "providers", "fallback_providers", "display_name", "name")
 PROTECTED_KEYS = (*LLM_KEYS, "display_name", "name")
 SLUG = re.compile(r"^[a-z0-9][a-z0-9_-]{0,95}$")
+LIGHT_MODE_BLOCKED_TARGETS = frozenset({
+    "blender", "blender-cli", "obs", "cadcraft", "solidcraft",
+    "materialcraft", "texturecraft", "filmcraft", "effectcraft", "anicraft",
+})
+LOW_RAM_THRESHOLD_GIB = 6.0
+MIN_TICKET_FREE_DISK_BYTES = 16 * 1024 * 1024
 _BRIDGE_POLICY = None
 
 
@@ -269,25 +275,85 @@ def profiles(home):
     return result
 
 
-def hardware():
+def _active_resource_profile(home):
+    """Read active light/normal resource profile without writing anything."""
+    path = Path(home) / "msshi-runtime" / "resource-profile.json"
+    if not path.is_file():
+        return {"configured": False, "profile": "normal", "constraints": {}, "blocked_targets": []}
+    try:
+        safe_path(path)
+        if path.stat().st_size > 65536:
+            return {"configured": False, "profile": "normal", "constraints": {}, "blocked_targets": []}
+        data = read_json(path, {})
+        if isinstance(data, dict) and data.get("profile") in {"light", "normal"}:
+            return {
+                "configured": True,
+                "profile": data["profile"],
+                "constraints": dict(data.get("constraints") or {}),
+                "blocked_targets": list(data.get("blocked_targets") or []),
+            }
+    except (OSError, ValueError):
+        pass
+    return {"configured": False, "profile": "normal", "constraints": {}, "blocked_targets": []}
+
+
+def _check_light_mode_target(home, target):
+    active = _active_resource_profile(home)
+    if active.get("profile") != "light":
+        return
+    blocked = set(LIGHT_MODE_BLOCKED_TARGETS) | {str(item).lower() for item in active.get("blocked_targets", [])}
+    normalized = str(target or "").strip().lower()
+    if normalized in blocked or norm(normalized) in blocked:
+        raise ValueError(
+            f"Target '{target}' is disabled in Low-RAM light resource profile; "
+            "switch profile explicitly on higher-RAM hardware."
+        )
+
+
+def hardware(physical_gib=None, available_gib=None):
     total = 0
     available = 0
-    if os.name == "nt":
-        class Memory(ctypes.Structure):
-            _fields_ = [("length", ctypes.c_ulong), ("load", ctypes.c_ulong),
-                        *[(key, ctypes.c_ulonglong) for key in ("total", "available", "page", "free_page", "virtual", "free_virtual", "extended")]]
-        record = Memory()
-        record.length = ctypes.sizeof(record)
-        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(record)):
-            total, available = record.total, record.available
-    elif hasattr(os, "sysconf"):
-        total = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
-        available = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_AVPHYS_PAGES")
-    gib = total / 2**30
+    if physical_gib is None or available_gib is None:
+        if os.name == "nt":
+            class Memory(ctypes.Structure):
+                _fields_ = [("length", ctypes.c_ulong), ("load", ctypes.c_ulong),
+                            *[(key, ctypes.c_ulonglong) for key in ("total", "available", "page", "free_page", "virtual", "free_virtual", "extended")]]
+            record = Memory()
+            record.length = ctypes.sizeof(record)
+            if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(record)):
+                total, available = record.total, record.available
+        elif hasattr(os, "sysconf"):
+            total = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+            available = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_AVPHYS_PAGES")
+    gib = float(physical_gib) if physical_gib is not None else (total / 2**30)
+    avail_gib = float(available_gib) if available_gib is not None else (available / 2**30)
     tier = 1 if gib < 12 else 2 if gib < 24 else 3
-    return {"tier": tier, "physical_gib": round(gib, 2), "available_gib": round(available / 2**30, 2),
-            "render_workers": 1 if tier <= 2 else 2, "app_concurrency": 1,
-            "browser_timeout_seconds": 90, "idle_unload_seconds": 15 if tier == 1 else 45 if tier == 2 else 60}
+    low_ram = bool(gib > 0 and gib <= LOW_RAM_THRESHOLD_GIB)
+    return {
+        "tier": tier,
+        "physical_gib": round(gib, 2),
+        "available_gib": round(avail_gib, 2),
+        "render_workers": 1 if tier <= 2 else 2,
+        "app_concurrency": 1,
+        "browser_timeout_seconds": 90,
+        "idle_unload_seconds": 15 if tier == 1 else 45 if tier == 2 else 60,
+        "low_ram_detected": low_ram,
+        "low_ram_4gb": low_ram,
+        "ram_threshold_gib": LOW_RAM_THRESHOLD_GIB,
+        "recommended_resource_profile": "light" if low_ram else "normal",
+        "light_mode_constraints": {
+            "max_active_inference": 1,
+            "single_active_bot_runtime": True,
+            "lazy_bot_spawn": True,
+            "max_active_jobs": 1,
+            "max_browser_tabs": 1,
+            "max_writer_or_render_subprocesses": 1,
+            "allow_parallel_moa": False,
+            "allow_parallel_delegation": False,
+            "allow_local_heavy_render": False,
+            "background_file_watcher": False,
+        },
+    }
 
 
 def executable(candidates):
@@ -703,9 +769,16 @@ def profile_name(value):
 
 
 def ticket(home, profile, target, task, source, ttl):
+    _check_light_mode_target(home, target)
     if not bridge_policy().target_allowed(profile, target, home):
         raise ValueError("Target is outside this profile's active preset specialization")
     root = home / "msshi-runtime"
+    try:
+        probe = root if root.exists() else home
+        if shutil.disk_usage(probe).free < MIN_TICKET_FREE_DISK_BYTES:
+            raise ValueError("Insufficient free disk space to create task ticket (< 16 MB free)")
+    except OSError:
+        pass
     routes = read_json(root / "profiles" / profile / "routes.json")
     if not routes or target not in routes["targets"] or routes["targets"][target]["readiness"] != "available":
         raise ValueError("Native CLI route is unavailable or disabled. Run runtime status.")
@@ -762,6 +835,7 @@ class ProcessJob:
 
 
 def run_target(home, profile, identifier, target, arguments, timeout):
+    _check_light_mode_target(home, target)
     if not bridge_policy().target_allowed(profile, target, home):
         raise ValueError("Target is outside this profile's active preset specialization")
     if not re.fullmatch(r"[a-f0-9]{32}", identifier):
@@ -927,7 +1001,8 @@ def guardian(home, once, interval, scan_root=None):
 def status(home):
     root = home / "msshi-runtime"
     policy = read_json(root / "policy.json", {})
-    result = {"version": VERSION, "migrated": bool(policy), "hardware": hardware(), "policy": policy, "profiles": {}}
+    result = {"version": VERSION, "migrated": bool(policy), "hardware": hardware(),
+              "resource_profile": _active_resource_profile(home), "policy": policy, "profiles": {}}
     for file in sorted((root / "profiles").glob("*/routes.json")):
         row = read_json(file)
         result["profiles"][row["profile"]] = {"role": row["role"], "routes": {

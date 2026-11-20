@@ -136,7 +136,11 @@ def prompt_manual_download(args, source_root: Path | None = None, lang: str = "i
         return None
     requested_version = getattr(args, "pdf_version", None)
     explicit = bool(getattr(args, "download_pdf", False) or requested_version)
-    if not explicit and not ((Path(source_root) if source_root else ROOT) / CATALOG_REL).is_file():
+    base = Path(source_root) if source_root else ROOT
+    if not explicit and (base / "configs" / "light_build_active.json").is_file():
+        print("Light Build: panduan PDF ditunda agar hemat disk/unduhan. Unduh kapan saja via: msshi manual download --version latest")
+        return None
+    if not explicit and not (base / CATALOG_REL).is_file():
         # Old/minimal releases and offline fixtures never make an implicit network call.
         return None
 

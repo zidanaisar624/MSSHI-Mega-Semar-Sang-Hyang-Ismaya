@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "build_profile": "light",
+  "base_version": "3.1.2",
+  "target_hardware_class": {
+    "reference_device": "HP 14s-dq3110TU class (Intel Celeron N4500, 4 GB RAM, 256 GB NVMe, Windows 10, C:-only, PowerShell 5.1)",
+    "ram_threshold_gib": 6.0,
+    "certified_on_target_hardware": false,
+    "certification_note": "Acceptance targets below are engineering goals until the full Windows 10 4 GB hardware validation matrix passes."
+  },
+  "acceptance_targets": {
+    "max_initial_download_mb": 50,
+    "max_skill_scan_p95_seconds": 2.0,
+    "max_msshi_startup_overhead_seconds": 5.0,
+    "max_idle_extra_ram_mb": 150,
+    "max_writer_or_render_subprocesses": 1
+  },
+  "include_dirs": [
+    "scripts",
+    "configs",
+    "skills",
+    "hermes_plugins",
+    "templates",
+    "business-sage"
+  ],
+  "include_files": [
+    "VERSION.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "CREDITS.md",
+    "THIRD_PARTY_NOTICES.md",
+    "SKILL.md",
+    "INSTALL_FOR_AGENTS.md",
+    "package.json",
+    "install.ps1",
+    "install.sh",
+    "MULAI_DI_SINI_PEMULA.bat",
+    "MULAI_SKRIPSI_DRAG_AND_DROP.bat",
+    "UPDATE_OTOMATIS_KE_V3.bat",
+    "docs/manuals/pdf_catalog.json",
+    "optional/manifest.json"
+  ],
+  "exclude_dirs": [
+    "assets",
+    "notebooks",
+    "portable",
+    "adapters",
+    "docs/pdf-guides",
+    "docs/reports",
+    "docs/manuals/latest",
+    "docs/manuals/v3.0",
+    "docs/manuals/v3.1.0",
+    "docs/manuals/v3.1.1",
+    "docs/manuals/v3.1.2",
+    "optional/rea"
+  ],
+  "exclude_globs": [
+    "__pycache__",
+    "*.pyc",
+    "*.pyo",
+    "*.pdf",
+    "*.png",
+    "*.jpg",
+    "*.jpeg",
+    "*.webp",
+    "*.mp4",
+    "*.zip",
+    "scripts/tests/*",
+    "scripts/generate_hydrogen_report_pdf.py",
+    "scripts/prepare_github_visuals.py"
+  ],
+  "excluded_skill_scan_dirs": [
+    ".git",
+    "node_modules",
+    "model",
+    "models",
+    "checkpoint",
+    "checkpoints",
+    "video",
+    "videos",
+    "eval",
+    "evals",
+    "cache",
+    ".cache",
+    "venv",
+    ".venv",
+    "__pycache__",
+    "upstreams",
+    "context-sources"
+  ],
+  "light_mode_constraints": {
+    "max_active_inference": 1,
+    "inference_mode": "single_remote_user_selected",
+    "single_active_bot_runtime": true,
+    "lazy_bot_spawn": true,
+    "max_active_jobs": 1,
+    "max_browser_tabs": 1,
+    "max_writer_or_render_subprocesses": 1,
+    "memory_cache_max_mb": 16,
+    "frontmatter_read_limit_bytes": 4096,
+    "background_file_watcher": false,
+    "allow_parallel_moa": false,
+    "allow_parallel_delegation": false,
+    "allow_sequential_handoff_with_user_approval": true,
+    "allow_local_heavy_render": false,
+    "allow_local_timeseries_model": false,
+    "allow_local_ocr_model": false,
+    "auto_open_on_boot": false,
+    "avoid_desktop_launch_on_cli_status": true,
+    "prefer_hermes_cli_when_desktop_heavy": true
+  },
+  "light_mode_blocked_targets": [
+    "blender",
+    "blender-cli",
+    "obs",
+    "cadcraft",
+    "solidcraft",
+    "materialcraft",
+    "texturecraft",
+    "filmcraft",
+    "effectcraft",
+    "anicraft"
+  ],
+  "deferred_optional_packages": [
+    {
+      "id": "upstreams",
+      "description": "External upstream git repositories and model cards; stored in a single cache outside skill directories.",
+      "install_command": "msshi update"
+    },
+    {
+      "id": "pdf-manuals",
+      "description": "Full PDF handbooks (113-page client guide and installation guide); downloaded on demand with SHA-256 verification.",
+      "install_command": "msshi manual download --version latest"
+    },
+    {
+      "id": "visual-assets",
+      "description": "High-resolution hero banners, avatars, showcase artwork, and memes.",
+      "install_command": "Clone full repository when visual assets are needed"
+    },
+    {
+      "id": "media-and-local-models",
+      "description": "Hyperframes/Remotion video render runtimes, TimesFM weights, local OCR checkpoints, and OmniVoice weights.",
+      "install_command": "Install explicitly per tool only on hardware with sufficient RAM/disk"
+    }
+  ]
+}

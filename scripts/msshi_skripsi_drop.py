@@ -23,15 +23,14 @@ for p in (Path(__file__).resolve().parent, SKILL_SCRIPTS):
         sys.path.insert(0, str(p))
 
 
+import msshi_hermes_profiles as hp
+
+
 def adaptive_data_home() -> Path:
     env = os.environ.get("HERMES_HOME", "").strip()
     if env:
         return Path(env)
-    if os.name == "nt" and Path("D:/").exists():
-        d_home = Path("D:/HermesData")
-        if d_home.exists() or os.access("D:/", os.W_OK):
-            return d_home
-    return Path.home() / "HermesData"
+    return hp.resolve_hermes_home(create_adaptive=False, persist_windows_env=False)
 
 
 def adaptive_output_dir(explicit: Path | None = None) -> Path:
@@ -39,8 +38,20 @@ def adaptive_output_dir(explicit: Path | None = None) -> Path:
         out = explicit.expanduser().resolve()
         out.mkdir(parents=True, exist_ok=True)
         return out
-    if os.name == "nt" and Path("D:/").exists():
-        d_out = Path("D:/HermesData/Skripsi_Output")
+    env_out = os.environ.get("MSSHI_SKRIPSI_OUTPUT", "").strip()
+    if env_out:
+        out = Path(env_out).expanduser().resolve()
+        out.mkdir(parents=True, exist_ok=True)
+        return out
+    env_home = os.environ.get("HERMES_HOME", "").strip()
+    if env_home:
+        out = Path(env_home).expanduser().resolve() / "Skripsi_Output"
+        out.mkdir(parents=True, exist_ok=True)
+        return out
+    if os.name == "nt" and hp.has_writable_drive_d(probe_write=False):
+        d_drive = os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/")
+        d_root = Path(os.environ.get("MSSHI_WINDOWS_D_ROOT") or (Path(d_drive) / "HermesData"))
+        d_out = d_root / "Skripsi_Output"
         try:
             d_out.mkdir(parents=True, exist_ok=True)
             return d_out
@@ -56,8 +67,10 @@ def ensure_pylibs(auto_install: bool = False) -> Path | None:
     candidates = [
         home / "skripsi-pylibs",
         Path.home() / "HermesData" / "skripsi-pylibs",
-        Path("D:/HermesData/skripsi-pylibs"),
     ]
+    if os.name == "nt" and os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/"):
+        d_drive = os.environ.get("MSSHI_WINDOWS_D_DRIVE", "D:/")
+        candidates.append(Path(os.environ.get("MSSHI_WINDOWS_D_ROOT") or (Path(d_drive) / "HermesData")) / "skripsi-pylibs")
     for cand in candidates:
         if cand.is_dir() and str(cand) not in sys.path:
             sys.path.insert(0, str(cand))

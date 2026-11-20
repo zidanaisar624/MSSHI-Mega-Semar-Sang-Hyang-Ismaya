@@ -94,10 +94,54 @@ def software_rendering_preference(home: Path) -> bool:
         return False
 
 
+def _resource_profile(home: Path) -> str:
+    path = home / "msshi-runtime" / "resource-profile.json"
+    if not path.is_file():
+        return "normal"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        if isinstance(data, dict) and data.get("profile") in {"light", "normal"}:
+            return data["profile"]
+    except (OSError, ValueError):
+        pass
+    return "normal"
+
+
+def print_cli_fallback(home: Path) -> int:
+    """Display Hermes CLI fallback commands and UI limits without launching Desktop."""
+    resolved = home.expanduser().resolve()
+    try:
+        import msshi_light as light_mod
+        guidance = light_mod.cli_fallback_guidance(resolved)
+    except Exception:
+        guidance = {
+            "mode": "hermes_cli_fallback",
+            "hermes_home": str(resolved),
+            "desktop_launched": False,
+            "core_commands": [
+                f'hermes --home "{resolved}" chat',
+                "msshi doctor --json",
+                f'msshi light status --home "{resolved}" --json',
+            ],
+            "ui_limitations": [
+                "No Electron/Chromium GUI renderer, graphical sidebar, or embedded preview pane.",
+                "Switch profiles explicitly by CLI flag rather than clicking sidebar cards.",
+            ],
+        }
+    print(json.dumps(guidance, ensure_ascii=False, indent=2))
+    return 0
+
+
 def run(home: Path, timeout: int, check_only: bool = False, software_rendering: bool = False) -> int:
     if os.name != "nt":
         raise ValueError("This launcher currently supports the Windows Desktop installation.")
     home = home.expanduser().resolve()
+    if _resource_profile(home) == "light":
+        print(
+            "Low-RAM light profile active: Hermes CLI fallback is available via "
+            f'`hermes --home "{home}" chat` or `msshi desktop --prefer-cli` if Desktop feels heavy.',
+            flush=True,
+        )
     if not check_only and home.is_dir():
         try:
             hermes_profiles.sync_pending_profile_configs(home)
@@ -169,6 +213,8 @@ def main(argv=None) -> int:
     parser.add_argument("--hermes-home", type=Path, default=hermes_profiles.resolve_hermes_home())
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--check-only", action="store_true")
+    parser.add_argument("--prefer-cli", action="store_true",
+                        help="Print Hermes CLI core fallback commands and UI limits for low-RAM devices without opening Desktop")
     parser.add_argument("--software-rendering", action="store_true",
                         help="Use Hermes' supported GPU fallback for this Desktop launch only")
     parser.add_argument("--install-shortcut", action="store_true",
@@ -176,6 +222,8 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     if not 30 <= args.timeout <= 600:
         parser.error("--timeout must be between 30 and 600 seconds")
+    if args.prefer_cli:
+        return print_cli_fallback(args.hermes_home)
     if sys.stdout is None:
         log = args.hermes_home / "logs/msshi-desktop.log"
         log.parent.mkdir(parents=True, exist_ok=True)

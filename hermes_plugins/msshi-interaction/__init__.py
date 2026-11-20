@@ -38,6 +38,15 @@ def _ordinary(path):
 
 def _sha(value):return hashlib.sha256(value.encode('utf-8')).hexdigest()
 
+def _light_mode_active(home):
+    try:
+        path=_ordinary(Path(home)/'msshi-runtime/resource-profile.json')
+        if not path.is_file() or path.stat().st_size>65536:return False
+        data=json.loads(path.read_text(encoding='utf-8-sig'))
+        return isinstance(data,dict) and data.get('profile')=='light'
+    except (OSError,ValueError):
+        return False
+
 def _slot(raw):
     if not isinstance(raw,dict):return None
     model=raw.get('model');provider=raw.get('provider')
@@ -98,6 +107,7 @@ class Controller:
         self.home=_ordinary(home);self.role=role;self.session=session
         self.llm=llm;self.lifecycle=lifecycle;self.options=options or {}
         self.config=config or {};self.config_reader=config_reader;self.tasks=[];self.agg_task=None
+        self.resource_profile='light' if _light_mode_active(self.home) else 'normal'
         self.refs,self.agg,self.readiness,self.shared=council_binding(self.config,bool(self.options.get('use_current_main_for_council')))
         if role in T2 and self.refs and register_task:
             for n,binding in enumerate(self.refs,1):
@@ -148,14 +158,18 @@ class Controller:
         finally:path.unlink(missing_ok=True)
 
     def summary(self,data=None):
+        light=self.resource_profile=='light'
         result={'role':self.role,'interaction_type':1 if self.role in T1 else (2 if self.role in T2 else None),
+                'resource_profile':self.resource_profile,
+                'allow_parallel_moa':not light,
+                'allow_parallel_delegation':not light,
                 'council_readiness':self.readiness if self.role in T2 else 'NOT_USED_TYPE_1',
                 'reference_count':len(self.refs) if self.role in T2 else 0,
                 'same_engine_logical_roles':self.shared if self.role in T2 else False,
                 'advisor_readiness':('CONFIGURED_NOT_PROVIDER_TESTED' if (self.config.get('delegation') or {}).get('model') else 'NEEDS_ADVISOR_CONFIG') if self.role in T1 else 'NOT_USED_TYPE_2',
                 'calls_at_registration_or_status':0,'provider_compatibility_tested':False,
                 'council_source_access':'Main brokers approved tools; auxiliary completions cannot browse',
-                'calls_per_two_round_council':2*(len(self.refs)+1) if self.refs and self.role in T2 else 0}
+                'calls_per_two_round_council':0 if light else (2*(len(self.refs)+1) if self.refs and self.role in T2 else 0)}
         if data:
             result.update({k:data[k] for k in ('job_id','state','rounds_completed','calls_attempted','origin','sender','clarification_hops')})
             if data.get('pending_question'):result['pending_question']=data['pending_question']
@@ -188,6 +202,7 @@ class Controller:
         return _text(getattr(result,'text',None),'Council response',32768)
 
     def _round(self,data):
+        if self.resource_profile=='light':raise ValueError('LIGHT_MODE_MOA_DISABLED: Parallel Council/MoA rounds are disabled in Low-RAM light mode; use sequential single-inference flow.')
         if self.role not in T2:raise ValueError('Council is unavailable for Type 1')
         if self.config_reader:
             now=council_binding(self.config_reader(),bool(self.options.get('use_current_main_for_council')))
@@ -290,6 +305,11 @@ class Controller:
                 if len(data['evidence'])>60:raise ValueError('Too much evidence; provide a bounded dossier')
                 data['state']='MAIN_AUDITED';self._save(data);return self.summary(data)
             if action=='approve':
+                if self.resource_profile=='light' and data['state']=='INITIAL_PLAN':
+                    data['main_approval']=_text(args.get('message'),'Main approval rationale',4000)
+                    data['state']='READY_EXECUTION';self._save(data)
+                    return {**self.summary(data),'user_approval_granted':False,'light_mode_sequential_only':True,
+                            'notice':'Main approval only (Low-RAM sequential mode). Existing file, creative review, cost and publication approvals still apply.'}
                 expected='ADVISOR_COMPLETE' if self.role in T1 else 'ROUND2_COMPLETE'
                 if data['state']!=expected:raise ValueError('Main approval requires the completed review workflow')
                 unresolved=[v for v in data.get('source_requests',[]) if v.get('status')!='RESOLVED_BY_MAIN_INPUT']
@@ -302,6 +322,7 @@ class Controller:
             try:
                 if action=='council_round':return self._round(data)
                 if action=='advisor':
+                    if self.resource_profile=='light':raise ValueError('LIGHT_MODE_PARALLEL_DELEGATION_DISABLED: Parallel Advisor subagent delegation is disabled in Low-RAM light mode; use sequential single-inference flow.')
                     if self.role not in T1 or data['state']!='INITIAL_PLAN':raise ValueError('Advisor is available only for Type 1 initial plans')
                     if self.lifecycle is None:raise ValueError('HOST_ADVISOR_UNAVAILABLE')
                     if not (self.config.get('delegation') or {}).get('model'):raise ValueError('NEEDS_ADVISOR_CONFIG')

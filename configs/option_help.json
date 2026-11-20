@@ -720,6 +720,10 @@
     "interaction": {
       "id": "Tipe 1: Main berkonsultasi ke Advisor untuk proyek yang jelas. Tipe 2: Main memakai Dewan dua putaran dengan audit Main di antaranya, tanpa subagen terpisah. Pertanyaan singkat tidak memicu proses berat. Panggilan model memerlukan konfigurasi dan persetujuan biaya; status/pemasangan tidak memanggil model.",
       "en": "Type 1: Main consults an Advisor for confirmed projects. Type 2: Main uses exactly two Council rounds with its own audit between them, without a separate subagent. Brief questions do not start heavy work. Model calls require configuration and spending approval; status/installation makes no model calls."
+    },
+    "light-build": {
+      "id": "Mode ringan Windows 10 RAM 4 GB (paket <= 50 MB, indeks skill lazy, batas 1 inferensi/proses aktif, tanpa pengunduhan aset/PDF otomatis, tanpa mengubah model atau API key pengguna).",
+      "en": "Windows 10 4 GB RAM Light Build mode (<= 50 MB core bundle, lazy skill index, single active inference/process cap, deferred heavy assets/PDFs, without changing user models or API keys)."
     }
   }
 }

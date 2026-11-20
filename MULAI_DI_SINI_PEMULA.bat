@@ -2,19 +2,38 @@
 setlocal DisableDelayedExpansion
 cd /d "%~dp0"
 echo ======================================================
-echo   MSSHI v3.1.2 - Sovereign Sage & Ultimate Optimizer
+echo   MSSHI v3.1.2 - Sovereign Sage ^& Ultimate Optimizer
 echo ======================================================
-echo 1. Pasang skill dan pilih nama bot (+ opsi unduh PDF)
-echo 2. Migrasi Hermes yang sudah ada
-echo 3. Buka Hermes Desktop
-echo 4. Periksa hasil instalasi (Doctor)
-echo 5. Unduh Buku Panduan PDF Lengkap (v3.1.2 / v3.0)
-choice /c 12345 /n /m "Pilih 1-5: "
-if errorlevel 5 goto pdfmanual
-if errorlevel 4 goto audit
-if errorlevel 3 goto desktop
-if errorlevel 2 goto migrate
+echo 1. Pasang MSSHI Standar (bebas pilih folder: C:/D:/E:/mana saja)
+echo 2. Pasang MSSHI Mode Hemat Windows 10 RAM 4 GB (Light Build + Low-RAM)
+echo 3. Migrasi Hermes yang sudah ada
+echo 4. Buka Hermes Desktop
+echo 5. Periksa hasil instalasi (Doctor)
+echo 6. Unduh Buku Panduan PDF Lengkap (v3.1.2 / v3.0)
+echo 7. Panduan Mode CLI Hemat RAM (tanpa membuka Desktop)
+choice /c 1234567 /n /m "Pilih 1-7: "
+if errorlevel 7 goto clifallback
+if errorlevel 6 goto pdfmanual
+if errorlevel 5 goto audit
+if errorlevel 4 goto desktop
+if errorlevel 3 goto migrate
+if errorlevel 2 goto setup_lite
+echo.
+set "custom_msshi_dir="
+set /p "custom_msshi_dir=Folder instalasi MSSHI (Enter=otomatis, atau ketik bebas misal D:\MSSHI atau E:\MSSHI): "
+if not "%custom_msshi_dir%"=="" set "MSSHI_HOME=%custom_msshi_dir%"
 set "msshi_action=setup"
+goto run
+:setup_lite
+echo.
+echo [Mode Hemat Windows 10 RAM 4 GB: Light Build ^<= 50 MB + Low-RAM ^<= 150 MB]
+set "custom_msshi_dir="
+set /p "custom_msshi_dir=Folder instalasi MSSHI (Enter=otomatis, atau ketik bebas misal C:\MSSHI, D:\MSSHI, E:\MSSHI): "
+if not "%custom_msshi_dir%"=="" set "MSSHI_HOME=%custom_msshi_dir%"
+set "msshi_action=setup --low-ram --no-pdf"
+goto run
+:clifallback
+set "msshi_action=desktop --prefer-cli"
 goto run
 :pdfmanual
 echo.
