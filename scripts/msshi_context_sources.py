@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 sys.dont_write_bytecode = True
@@ -146,12 +147,106 @@ def verify_cached(home, name):
     return state
 
 
+def _required_files(name):
+    required = ['README.md', 'LICENSE']
+    if name == 'career-ops':
+        required += ['AGENTS.md', '.agents/skills/career-ops/SKILL.md', 'package.json',
+                     'modes/_shared.md', 'modes/_writing.md']
+    if name == 'rea-video':
+        required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
+    if name == 'grim-prompter':
+        required += ['runbook.md', 'catalog.md', 'skills/threat-model/SKILL.md']
+    if name == 'claude-bughunter':
+        required += ['LICENSE-CONTENT', 'NOTICE', 'SECURITY.md', 'cbh/data/skill_index.json']
+    if name == 'ossu-computer-science':
+        required += ['CURRICULAR_GUIDELINES.md', 'FAQ.md']
+    return required
+
+
+def _materialize_via_git(home, name, required):
+    """Fallback when api.github.com hits rate limit or raw.githubusercontent.com stalls.
+
+    Clones a bare shallow repository at the reviewed commit, verifies Git blob SHA-1,
+    enforces the same path/size/partial-cache guards, and writes MSSHI_SNAPSHOT.json.
+    """
+    repo, pin = PINNED[name]
+    root = folder(home, name)
+    with tempfile.TemporaryDirectory(prefix='msshi-git-src-') as tmp:
+        clone_dir = Path(tmp) / 'repo'
+        subprocess.run(
+            ['git', '-c', 'http.postBuffer=16m', '-c', 'pack.windowMemory=32m', '-c', 'pack.threads=1',
+             'clone', '--bare', '--depth=1', f'https://github.com/{repo}.git', str(clone_dir)],
+            check=True, capture_output=True, timeout=180,
+        )
+        probe = subprocess.run(['git', '-C', str(clone_dir), 'cat-file', '-e', f'{pin}^{{commit}}'],
+                               capture_output=True, timeout=30)
+        if probe.returncode != 0:
+            subprocess.run(
+                ['git', '-C', str(clone_dir), '-c', 'http.postBuffer=16m', '-c', 'pack.windowMemory=32m',
+                 '-c', 'pack.threads=1', 'fetch', '--depth=1', 'origin', pin],
+                check=True, capture_output=True, timeout=180,
+            )
+        ls = subprocess.run(['git', '-C', str(clone_dir), 'ls-tree', '-r', '-l', '-z', pin],
+                            check=True, capture_output=True, timeout=60)
+        rows = []
+        for entry in ls.stdout.split(b'\x00'):
+            if not entry:
+                continue
+            meta, path_b = entry.split(b'\t', 1)
+            parts = meta.decode('ascii').split()
+            if len(parts) < 4:
+                continue
+            mode, typ, sha, size_raw = parts[0], parts[1], parts[2], parts[3]
+            size = int(size_raw) if size_raw.isdigit() else 0
+            row = {'mode': mode, 'type': typ, 'sha': sha, 'size': size, 'path': path_b.decode('utf-8')}
+            if selected_file(name, row):
+                rows.append(row)
+        if not rows or len(rows) > 3000 or sum(r.get('size', 0) for r in rows) > MAX_TOTAL:
+            raise ValueError('Selected source exceeds file/size budget')
+        selected_paths = {r['path'] for r in rows}
+        missing = [p for p in required if p not in selected_paths]
+        if missing:
+            raise ValueError('Pinned source is missing required workflow/license files: ' + ', '.join(missing))
+        hashes = {}
+        for row in rows:
+            rel = relative(row['path'])
+            target = checked(root / rel)
+            if target.is_file():
+                if target.stat().st_size > MAX_FILE:
+                    raise ValueError(f'Partial cached source exceeds size budget: {name}/{row["path"]}')
+                data = target.read_bytes()
+                if hashlib.sha1(f'blob {len(data)}\0'.encode() + data).hexdigest() != row['sha']:
+                    raise ValueError(f'Partial cached source differs from reviewed pin; preserve and review it: {name}/{row["path"]}')
+                hashes[row['path']] = hashlib.sha256(data).hexdigest()
+                continue
+            blob = subprocess.run(['git', '-C', str(clone_dir), 'cat-file', 'blob', row['sha']],
+                                  check=True, capture_output=True, timeout=60)
+            data = blob.stdout
+            if len(data) > MAX_FILE:
+                raise ValueError('Source file exceeds size budget')
+            if hashlib.sha1(f'blob {len(data)}\0'.encode() + data).hexdigest() != row['sha']:
+                raise ValueError('Upstream Git blob mismatch')
+            atomic(target, data)
+            hashes[row['path']] = hashlib.sha256(data).hexdigest()
+    if any(p not in hashes for p in required):
+        raise ValueError('Pinned source is missing a required workflow/license file')
+    if name == 'career-ops' and not any(p.startswith('modes/') for p in hashes):
+        raise ValueError('CareerOps needs its complete workflow modes')
+    atomic(root / 'MSSHI_SNAPSHOT.json', encode({'repository': repo, 'commit': pin, 'files': hashes,
+        'dependencies_installed': False, 'model_calls': 0, 'auto_start': False}))
+    return root
+
+
 def materialize(home, name):
     previous = verify_cached(home, name)
     if previous:
         return folder(home, name)
     repo, pin = PINNED[name]
-    tree = json.loads(fetch(f'https://api.github.com/repos/{repo}/git/trees/{pin}?recursive=1'))
+    required = _required_files(name)
+    try:
+        tree = json.loads(fetch(f'https://api.github.com/repos/{repo}/git/trees/{pin}?recursive=1'))
+    except (HTTPError, URLError, TimeoutError):
+        return _materialize_via_git(home, name, required)
     if tree.get('sha') != pin or tree.get('truncated'):
         raise ValueError('Incomplete pinned source tree')
     rows = [row for row in tree['tree'] if selected_file(name, row)]
@@ -159,14 +254,6 @@ def materialize(home, name):
         raise ValueError('Selected source exceeds file/size budget')
     # CareerOps deliberately has no root npm lock at this reviewed pin. The
     # web/package-lock.json belongs to a separate web project, not this CLI.
-    required = ['README.md', 'LICENSE']
-    if name == 'career-ops':
-        required += ['AGENTS.md', '.agents/skills/career-ops/SKILL.md', 'package.json',
-                     'modes/_shared.md', 'modes/_writing.md']
-    if name == 'rea-video': required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
-    if name == 'grim-prompter': required += ['runbook.md', 'catalog.md', 'skills/threat-model/SKILL.md']
-    if name == 'claude-bughunter': required += ['LICENSE-CONTENT', 'NOTICE', 'SECURITY.md', 'cbh/data/skill_index.json']
-    if name == 'ossu-computer-science': required += ['CURRICULAR_GUIDELINES.md', 'FAQ.md']
     selected_paths = {row['path'] for row in rows}
     missing = [path for path in required if path not in selected_paths]
     if missing:
@@ -187,8 +274,11 @@ def materialize(home, name):
             raise ValueError('Upstream Git blob mismatch')
         atomic(target, data)
         return row['path'], hashlib.sha256(data).hexdigest()
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        hashes = dict(pool.map(one, rows))
+    try:
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            hashes = dict(pool.map(one, rows))
+    except (HTTPError, URLError, TimeoutError):
+        return _materialize_via_git(home, name, required)
     if any(path not in hashes for path in required):
         raise ValueError('Pinned source is missing a required workflow/license file')
     if name == 'career-ops' and not any(path.startswith('modes/') for path in hashes):

@@ -461,6 +461,123 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertEqual(routed["lead_bot"], "shizuka")
         self.assertTrue(any("msshi ossu" in item for item in routed["plugins_and_tools"]))
 
+    def test_beginner_learning_mode_chalk_learnloop_codecoach_and_routing(self):
+        import msshi_learn as learn_mod
+
+        # belajar-pemula bundled across ALL 5 bots and BOTH Academic presets
+        sm = (ROOT / "skills" / "belajar-pemula" / "SKILL.md").read_text(encoding="utf-8-sig")
+        desc = sm.split("---")[1].split("description:", 1)[1].strip()
+        self.assertLessEqual(len(desc), 1024)
+        matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
+        academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+        for bot in matrix["bots"]:
+            self.assertIn("belajar-pemula", bot["required_skills"])
+        for preset_id in ("academic-mahasiswa", "academic-dosen"):
+            for role, skills in academic["presets"][preset_id]["roles"].items():
+                self.assertIn("belajar-pemula", skills, f"belajar-pemula missing on {role} in {preset_id}")
+
+        # Chalk MIT vendored code-only (no large docs/*.png)
+        chalk_dir = ROOT / "hermes_plugins" / "chalk"
+        for req in ("LICENSE", "plugin.yaml", "__init__.py", "lesson.py", "desktop/plugin.js"):
+            self.assertTrue((chalk_dir / req).is_file(), f"Missing chalk file {req}")
+        self.assertFalse((chalk_dir / "docs").exists())
+        total_bytes = sum(p.stat().st_size for p in chalk_dir.rglob("*") if p.is_file())
+        self.assertLess(total_bytes, 150_000)
+
+        # LearnLoop (AGPL-3.0) and CodeCoach (large 5.1 MB) MUST NOT be vendored in MIT repo
+        self.assertFalse((ROOT / "hermes_plugins" / "learnloop").exists())
+        self.assertFalse((ROOT / "skills" / "learnloop").exists())
+        self.assertFalse((ROOT / "hermes_plugins" / "codecoach").exists())
+
+        # Deterministic beginner routing (0 LLM calls, no slash commands required)
+        for topic, expected_mode in (
+            ("ekonomi dasar", "guided_concept"),
+            ("gambar cara kerja transformer di papan tulis", "visual_concept"),
+            ("python dari nol coding pertama", "coding_beginner"),
+            ("kurikulum ossu ilmu komputer", "ossu_cs_university"),
+        ):
+            r = learn_mod.route_beginner_topic(topic)
+            self.assertEqual(r["mode"], expected_mode)
+            self.assertFalse(r["slash_command_required"])
+
+        routed = sysmod.route_task("Saya pemula total belum paham dari nol mau ajarin python")
+        self.assertEqual(routed["core_mission"], "1_belajar_jadi_guru")
+        self.assertIn("belajar-pemula", routed["recommended_skills"])
+
+    def test_val_only_indonesian_global_deep_research_skill(self):
+        skill_dir = ROOT / "skills" / "riset-mendalam-nusantara-global"
+        sm = (skill_dir / "SKILL.md").read_text(encoding="utf-8-sig")
+        desc = sm.split("---")[1].split("description:", 1)[1].strip()
+        self.assertLessEqual(len(desc), 1024)
+        refs = ("pipeline.md", "metodologi.md", "indonesia.md", "global.md", "glosarium-id-en.md", "checklist.md")
+        combined = sm
+        for ref in refs:
+            p = skill_dir / "references" / ref
+            self.assertTrue(p.is_file(), f"Missing lazy reference {ref}")
+            combined += "\n" + p.read_text(encoding="utf-8-sig")
+        for must_have in ("SINTA", "Garuda", "RAMA", "EYD V", "Scopus", "PRISMA 2020", "Devil's Advocate", "DOI"):
+            self.assertIn(must_have, combined)
+        for excluded in ("Persian", "Farsi", "Iranian", "Tehran"):
+            self.assertNotIn(excluded.lower(), combined.lower())
+
+        # Strictly Val-ONLY across bot matrix and both Academic presets
+        matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
+        academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+        for bot in matrix["bots"]:
+            present = "riset-mendalam-nusantara-global" in bot["required_skills"] + bot.get("optional_skills", [])
+            self.assertEqual(present, bot["id"] == "val", f"Wrong scope on {bot['id']}")
+        for preset_id in ("academic-mahasiswa", "academic-dosen"):
+            for role, skills in academic["presets"][preset_id]["roles"].items():
+                self.assertEqual("riset-mendalam-nusantara-global" in skills, role == "val", f"Wrong scope on {role}/{preset_id}")
+
+        routed = sysmod.route_task("Saya butuh riset mendalam standar SINTA dan Scopus PRISMA untuk tesis")
+        self.assertEqual(routed["core_mission"], "2_tugas_skripsi_tesis_disertasi")
+        self.assertEqual(routed["lead_bot"], "val")
+        self.assertIn("riset-mendalam-nusantara-global", routed["recommended_skills"])
+
+    def test_upstreams_check_non_applying_and_git_fallback_and_doctor_connections(self):
+        import os
+        from unittest.mock import patch
+        from urllib.error import URLError
+        import msshi_context_sources as cs_mod
+        import msshi_doctor as doc_mod
+        import msshi_upstreams as up_mod
+
+        # 1. Read-only non-applying upstream update check (mocked resolver, includes OSSU)
+        fake_heads = {
+            "https://github.com/ossu/computer-science": "f" * 40,
+            "https://github.com/JuliusBrussee/caveman": "3dc497a7f858c774d6e15b25e8c6120ef3a0eda8",
+        }
+        chk = up_mod.check_updates(
+            ids=["ossu-computer-science", "caveman"],
+            workers=1,
+            resolver=lambda url: fake_heads.get(url),
+        )
+        self.assertFalse(chk["auto_update"])
+        self.assertFalse(chk["applied"])
+        self.assertEqual(chk["summary"]["up_to_date"], 1)
+        self.assertEqual(chk["summary"]["update_available"], 1)
+        self.assertEqual(chk["updates_available"][0]["id"], "ossu-computer-science")
+
+        # 2. Context-source git fallback triggers when api.github.com raises URLError
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "hermes-home"
+            home.mkdir()
+            sentinel = home / "msshi-private" / "context-sources" / "ossu-computer-science" / cs_mod.PINNED["ossu-computer-science"][1]
+            with patch.object(cs_mod, "fetch", side_effect=URLError("rate limit")), \
+                 patch.object(cs_mod, "_materialize_via_git", return_value=sentinel) as git_mock:
+                got = cs_mod.materialize(home, "ossu-computer-science")
+                self.assertEqual(got, sentinel)
+                git_mock.assert_called_once()
+
+        # 3. msshi_doctor includes read-only connections summary (6 planes, 0 network)
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.dict(os.environ, {"HERMES_HOME": str(Path(tmp) / "empty-home"), "MSSHI_IGNORE_REGISTRY_HERMES_HOME": "1"}), \
+                 patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
+                rep = doc_mod.diagnose()
+                self.assertIn("connections", rep)
+                self.assertEqual(rep["connections"]["planes_governed"], 6)
+
 
 if __name__ == "__main__":
     unittest.main()

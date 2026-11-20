@@ -483,8 +483,8 @@ def main(argv=None):
                         if args.mode in {"muza-preset", *academic.MODES} and not args.no_team_routing:
                             routing = hermes_profiles.install_team_routing_plugin(hermes_home, ROOT, transaction=transaction)
                             print("Native team routing:", json.dumps(routing, ensure_ascii=False))
-                        wise = hermes_profiles.install_wise_plugins(hermes_home, ROOT, transaction=transaction)
-                        print("Native Spacewise & Sharewise:", json.dumps(wise, ensure_ascii=False))
+                        wise = hermes_profiles.install_wise_plugins(hermes_home, ROOT, plugin_ids=("spacewise", "sharewise", "chalk"), transaction=transaction)
+                        print("Native Spacewise, Sharewise & Chalk:", json.dumps(wise, ensure_ascii=False))
                         academic.record_active(hermes_home, args.mode, ROOT, transaction)
                         receipt = transaction.commit()
                     except Exception:

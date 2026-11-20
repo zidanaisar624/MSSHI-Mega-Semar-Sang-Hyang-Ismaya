@@ -741,6 +741,70 @@
       "license_url": "https://raw.githubusercontent.com/ossu/computer-science/8f8272b1d378d31494240aa1d667aa6b045c6552/LICENSE",
       "license_sha256": "28df0e3ae09545a0a62ad6319c2110e1c6d390acbde0812c379cf9246d5ff061",
       "status": "pinned_license_read; curriculum docs cached outside skills/ on demand"
+    },
+    {
+      "id": "chalk",
+      "source": "https://github.com/Nnadijoshuac/Hermes-chalk",
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/chalk",
+      "revision": "694af892f33ce1c8c19676dbd71ebe7ee448e88f",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 NNADI Joshua"
+      ],
+      "license_url": "https://raw.githubusercontent.com/Nnadijoshuac/Hermes-chalk/694af892f33ce1c8c19676dbd71ebe7ee448e88f/LICENSE",
+      "license_sha256": "009b49ed2fb8e5706e129b5b7669a98f8d63bfe144f311cd11277b6e90cd4100",
+      "status": "pinned_license_and_source_reviewed; MIT license retained in hermes_plugins/chalk (docs/*.png omitted)"
+    },
+    {
+      "id": "codecoach",
+      "source": "https://github.com/heyitstony97-max/codecoach",
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/codecoach",
+      "revision": "68cbfb6a78bc16f3fb60c4a8dac21e4882a8c20d",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Anthony Taylor"
+      ],
+      "license_url": "https://raw.githubusercontent.com/heyitstony97-max/codecoach/68cbfb6a78bc16f3fb60c4a8dac21e4882a8c20d/LICENSE",
+      "license_sha256": "e6f2da087596fd8d9560269019cb0c3b0fec3b713930429c8e47e0b92290ef60",
+      "status": "pinned_license_and_source_reviewed; NOT vendored in repo (installed from pin on Linux/WSL2; Windows fallback)"
+    },
+    {
+      "id": "learnloop",
+      "source": "https://github.com/huss-wrld/learnloop",
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/learnloop",
+      "revision": "fdcf3d1acf95c7d4056dfe746347ca6b97e38c04",
+      "license": "AGPL-3.0-only",
+      "copyright_lines": [
+        "Copyright (C) 2026 Hussein Al-Amodi",
+        "Teaching method adapted from LearnHarness (AGPL-3.0)"
+      ],
+      "license_url": "https://raw.githubusercontent.com/huss-wrld/learnloop/fdcf3d1acf95c7d4056dfe746347ca6b97e38c04/LICENSE",
+      "license_sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "status": "AGPL-3.0-only; NEVER vendored or mixed into MIT repo — opt-in unmodified direct upstream download preserving LICENSE and NOTICE"
+    },
+    {
+      "id": "hermes-researcher",
+      "source": "https://github.com/SnowWarri0r/hermes-researcher",
+      "revision": "e19cb3e20f3483cabaa9518fcbd52d7ce6ff0cd5",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 snow"
+      ],
+      "license_url": "https://raw.githubusercontent.com/SnowWarri0r/hermes-researcher/e19cb3e20f3483cabaa9518fcbd52d7ce6ff0cd5/LICENSE",
+      "license_sha256": "6ab85c731f69e3b1e31e74da6a80b95936c565e4efe5418936706517e6cc9cbc",
+      "status": "pinned_license_reviewed; conceptual 10-stage pipeline pattern adopted into original Val-only skill (server/UI/Discord/DB excluded)"
+    },
+    {
+      "id": "peditx-research-methodology",
+      "source": "https://github.com/peditx/research-methodology-academic-writing",
+      "revision": "c9226f37c10d972c88a191d6f70f17b5cc8b2046",
+      "license": "NOASSERTION (unlicensed; all rights reserved)",
+      "copyright_lines": [
+        "No license file present in upstream repository"
+      ],
+      "license_url": null,
+      "license_sha256": null,
+      "status": "DO NOT COPY OR REDISTRIBUTE: 0 bytes copied; general topic checklist scope only, completely original Indonesian+Global skill authored independently"
     }
   ],
   "additional_runtime_terms": {

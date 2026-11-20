@@ -15,6 +15,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -195,8 +196,11 @@ def _fetch_via_git(home: Path) -> Path:
     return root
 
 
-def fetch_curriculum(home: Path) -> dict[str, Any]:
-    if cs.verify_cached(home, SOURCE_NAME):
+def fetch_curriculum(home: Path, *, refresh: bool = False) -> dict[str, Any]:
+    root = cs.folder(home, SOURCE_NAME)
+    if refresh and root.exists():
+        shutil.rmtree(cs.checked(root))
+    if not refresh and cs.verify_cached(home, SOURCE_NAME):
         return cs.status(home, SOURCE_NAME)
     try:
         cs.materialize(home, SOURCE_NAME)
@@ -502,6 +506,8 @@ def main(argv: list[str] | None = None) -> int:
         p = sub.add_parser(name, help=help_text)
         p.add_argument("--home", type=Path, help="Folder Hermes home.")
         p.add_argument("--json", action="store_true", help="Keluaran JSON.")
+        if name == "fetch":
+            p.add_argument("--refresh", action="store_true", help="Tarik ulang cache OSSU dari commit terpin saat ini setelah pin dinaikkan.")
 
     p_courses = sub.add_parser("courses", help="Lihat daftar mata kuliah OSSU per jalur atau cari berdasarkan kata kunci.")
     p_courses.add_argument("track", nargs="?", default="", help="Filter jalur/tahap (mis. intro-cs, core-programming, core-math, core-systems, advanced).")
@@ -537,7 +543,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         if action == "fetch":
-            data = fetch_curriculum(home)
+            data = fetch_curriculum(home, refresh=bool(getattr(args, "refresh", False)))
             print(json.dumps(data, ensure_ascii=False, indent=2))
             return 0
 

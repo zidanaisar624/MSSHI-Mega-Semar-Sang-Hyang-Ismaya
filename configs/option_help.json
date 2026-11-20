@@ -528,6 +528,14 @@
     "sharewise": {
       "id": "Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi.",
       "en": "Local privacy check before sharing photos/videos (yes/no counts only, never leaking GPS/time/device) plus verified clean redacted copies."
+    },
+    "belajar-pemula": {
+      "id": "Mode belajar ramah pemula total ('tinggal ngobrol' tanpa /command): cek level & energi, ajarkan 1 konsep per balasan, pilih otomatis LearnLoop, Chalk (papan tulis visual), CodeCoach/Shikaku, atau OSSU.",
+      "en": "Total-beginner friendly learning mode (natural chat without /commands): checks level & energy, teaches one concept per turn, and auto-routes to LearnLoop, Chalk, CodeCoach/Shikaku, or OSSU."
+    },
+    "riset-mendalam-nusantara-global": {
+      "id": "Khusus Val: pipeline riset mendalam 10 tahap (Quick/Standard/Deep, adequacy gate, devil's advocate, audit klaim & sitasi) dengan metodologi akademik Indonesia (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) & global (Scopus/WoS, PRISMA 2020).",
+      "en": "Val-only: 10-stage adaptive deep-research pipeline (Quick/Standard/Deep, adequacy gate, devil's advocate, claim & citation audit) with original Indonesian (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) and global (Scopus/WoS, PRISMA 2020) methodology."
     }
   },
   "packs": {
@@ -768,6 +776,14 @@
     "ossu-computer-science": {
       "id": "Koneksi ke Universitas Computer Science Open-Source OSSU (https://cs.ossu.dev | ossu/computer-science, MIT) lewat 'msshi ossu roadmap|courses|open'. Bukan skill bot — mahasiswa dapat langsung membuka kurikulum dasar CS (Intro CS -> Core CS -> Advanced CS -> Final Project) dan belajar bertahap bersama Hermes.",
       "en": "Connection to the Open Source Society University (OSSU) Computer Science curriculum (https://cs.ossu.dev | ossu/computer-science, MIT) via 'msshi ossu roadmap|courses|open'. Not a bot skill — students can directly open CS fundamentals (Intro CS -> Core CS -> Advanced CS -> Final Project) and study interactively through Hermes."
+    },
+    "learn-mode": {
+      "id": "Mode Belajar Pemula ('msshi learn status|start|install') yang memadukan Chalk (MIT, bundel), LearnLoop (AGPL-3.0 opt-in dari upstream), CodeCoach (MIT Linux/WSL2 + fallback Shikaku di Windows), dan OSSU.",
+      "en": "Beginner Learning Mode ('msshi learn status|start|install') unifying bundled Chalk (MIT), opt-in LearnLoop (AGPL-3.0 direct from upstream), CodeCoach (MIT Linux/WSL2 + Shikaku Windows fallback), and OSSU."
+    },
+    "upstreams-check": {
+      "id": "Pemeriksa update GitHub upstream ('msshi upstreams check|integrity') bersifat read-only: hanya memberi tahu jika ada commit baru tanpa memasang otomatis.",
+      "en": "Read-only GitHub upstream update notifier ('msshi upstreams check|integrity'): reports newer commits without auto-applying or mutating pinned revisions."
     }
   }
 }

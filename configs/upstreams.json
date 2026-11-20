@@ -1106,7 +1106,112 @@
       "license": "MIT",
       "background_model_calls": false,
       "portal_url": "https://cs.ossu.dev",
-      "entrypoint": "msshi ossu"
+      "entrypoint": "msshi ossu",
+      "pack": "core"
+    },
+    {
+      "id": "chalk",
+      "source": "https://github.com/Nnadijoshuac/Hermes-chalk",
+      "source_type": "git",
+      "revision": "694af892f33ce1c8c19676dbd71ebe7ee448e88f",
+      "verification": "primary-source/pinned-package/license reviewed 2026-11-20; vendored MIT code-only (no docs/*.png)",
+      "status": "bundled-plugin",
+      "auto_start": false,
+      "domain": "education",
+      "kind": "hermes-plugin",
+      "pack": "core",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/chalk",
+      "use_when": "Mengajar konsep secara visual di papan tulis Hermes Desktop (diagram, flow, grafik, persamaan, sketsa) + narasi TTS pengguna.",
+      "requires": "Python stdlib (tanpa pip eksternal); bekerja di Hermes Desktop & CLI/chat.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "codecoach",
+      "source": "https://github.com/heyitstony97-max/codecoach",
+      "source_type": "git",
+      "revision": "68cbfb6a78bc16f3fb60c4a8dac21e4882a8c20d",
+      "verification": "primary-source/pinned-package/license/windows-compat reviewed 2026-11-20; NOT vendored in repo (5.1 MB, Linux bwrap/resource required)",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "education",
+      "kind": "external-hermes-plugin",
+      "pack": "core",
+      "roles": [
+        "shikaku",
+        "shizuka"
+      ],
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/codecoach",
+      "use_when": "Belajar coding langkah demi langkah (C/C++/Python/JS/Rust/Go/dll.) di sandbox bubblewrap pada Linux/WSL2; pada Windows native fallback otomatis ke tutor coding interaktif Shikaku.",
+      "requires": "Linux/WSL2 + bubblewrap (bwrap) + sympy>=1.12,<1.15; di Windows native ditandai mode terbatas.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "learnloop",
+      "source": "https://github.com/huss-wrld/learnloop",
+      "source_type": "git",
+      "revision": "fdcf3d1acf95c7d4056dfe746347ca6b97e38c04",
+      "verification": "primary-source/pinned-package/AGPL-3.0-license reviewed 2026-11-20; NEVER vendored into MIT MSSHI repo — opt-in direct upstream download",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "education",
+      "kind": "external-hermes-plugin-agpl",
+      "pack": "core",
+      "roles": [
+        "shizuka",
+        "yukino"
+      ],
+      "hermes_marketplace": "https://hermes-agent.nousresearch.com/marketplace/learnloop",
+      "use_when": "Pelajaran terstruktur probe -> plan -> teach -> practice (hint ladder + knowledge graph) di dalam Hermes.",
+      "requires": "Opt-in eksplisit (`msshi learn install --learnloop` / `--with-learnloop`); diunduh utuh tanpa modifikasi dari upstream AGPL-3.0.",
+      "license": "AGPL-3.0-only",
+      "background_model_calls": false
+    },
+    {
+      "id": "hermes-researcher",
+      "source": "https://github.com/SnowWarri0r/hermes-researcher",
+      "source_type": "git",
+      "revision": "e19cb3e20f3483cabaa9518fcbd52d7ce6ff0cd5",
+      "verification": "primary-source/MIT-license reviewed 2026-11-20; multi-phase pipeline pattern adopted into Val-only skill without web server/React/Discord/DB",
+      "status": "architecture-reference",
+      "auto_start": false,
+      "domain": "research",
+      "kind": "pipeline-architecture-reference",
+      "pack": "thesis",
+      "roles": [
+        "val"
+      ],
+      "use_when": "Inspirasi arsitektur pipeline riset 10 tahap (Quick/Standard/Deep, adequacy gate, devil's advocate, audit klaim & sitasi, quality gate) pada skill Val `riset-mendalam-nusantara-global`.",
+      "requires": "Berjalan murni di percakapan Hermes via skill Val tanpa server web, React UI, Discord, atau database embedding.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "peditx-research-methodology",
+      "source": "https://github.com/peditx/research-methodology-academic-writing",
+      "source_type": "git",
+      "revision": "c9226f37c10d972c88a191d6f70f17b5cc8b2046",
+      "verification": "license-checked 2026-11-20: NO LICENSE (all rights reserved); 0 bytes copied — general topic taxonomy reference only, Persian/Iran/arts excluded",
+      "status": "scope-reference-only",
+      "auto_start": false,
+      "domain": "research",
+      "kind": "unlicensed-scope-reference-only",
+      "pack": "thesis",
+      "roles": [
+        "val"
+      ],
+      "use_when": "Referensi taksonomi topik metodologi umum saja (0 teks disalin); skill Val `riset-mendalam-nusantara-global` ditulis 100% orisinal khusus standar Indonesia & global.",
+      "requires": "Tidak diunduh atau didistribusikan ulang karena tidak memiliki berkas lisensi terbuka.",
+      "license": "NOASSERTION (unlicensed; 0 text copied)",
+      "background_model_calls": false
     }
   ]
 }

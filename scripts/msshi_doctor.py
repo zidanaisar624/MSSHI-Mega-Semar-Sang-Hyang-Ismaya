@@ -385,6 +385,58 @@ def _low_ram_diagnostics(issues, native_report: dict) -> dict:
     }
 
 
+def _connections_summary(native_report: dict) -> dict:
+    """Strictly read-only summary of governed connections, OSSU cache, TimesFM runtime, and learning plugins (0 network/subprocess)."""
+    cog_path = ROOT / "configs" / "msshi_cognitive_system.json"
+    planes: list[str] = []
+    if cog_path.is_file():
+        try:
+            cog = json.loads(cog_path.read_text(encoding="utf-8-sig"))
+            planes = sorted((cog.get("connections_and_bridges_registry") or {}).keys())
+        except (OSError, ValueError):
+            planes = []
+    summary: dict = {
+        "planes_governed": len(planes),
+        "planes": planes,
+        "ossu_cached": False,
+        "ossu_files": 0,
+        "ossu_courses": None,
+        "timesfm_runtime_ready": False,
+        "timesfm_note": "Opt-in terpisah (butuh unduh bobot model secara eksplisit via msshi timesfm).",
+        "caveman_profiles": 0,
+        "ponytail_installed": False,
+        "learning_plugins": {"chalk": 0, "learnloop": 0, "codecoach": 0},
+    }
+    if native_report.get("status") == "NOT_INSTALLED":
+        return summary
+    try:
+        hermes_home = hp.resolve_hermes_home(create_adaptive=False, persist_windows_env=False)
+        import msshi_context_sources as cs
+        import msshi_ossu as ossu_mod
+        ossu_st = ossu_mod.status_report(hermes_home)
+        summary["ossu_cached"] = bool(ossu_st.get("source_cached"))
+        summary["ossu_files"] = int(ossu_st.get("source_files") or 0)
+        summary["ossu_courses"] = ossu_st.get("total_courses")
+        tfm_dir = hermes_home / "msshi-private" / "timesfm"
+        summary["timesfm_runtime_ready"] = (tfm_dir / "INSTALLATION.json").is_file() or (tfm_dir / "installed.json").is_file()
+        live = hp.live_named_profiles(hermes_home)
+        summary["caveman_profiles"] = sum(
+            1 for role in ("yukino", "shizuka", "val", "kiki-chii", "shikaku")
+            if role in live and (live[role] / "skills" / "caveman" / "SKILL.md").is_file()
+        )
+        summary["ponytail_installed"] = bool(
+            "shikaku" in live and (live["shikaku"] / "skills" / "ponytail" / "SKILL.md").is_file()
+        )
+        all_homes = [hermes_home, *live.values()]
+        for pid in ("chalk", "learnloop", "codecoach"):
+            summary["learning_plugins"][pid] = sum(
+                1 for folder in all_homes if (folder / "plugins" / pid / "plugin.yaml").is_file()
+            )
+    except Exception:
+        pass
+    return summary
+
+
 def diagnose() -> dict:
     issues = []
     pylibs = inject_adaptive_pylibs()
@@ -459,6 +511,7 @@ def diagnose() -> dict:
                    "python -m pip install " + package)
     native = _native_health(issues)
     low_ram = _low_ram_diagnostics(issues, native)
+    connections = _connections_summary(native)
     errors = sum(row["severity"] == "error" for row in issues)
     warnings = sum(row["severity"] == "warning" for row in issues)
 
@@ -484,6 +537,7 @@ def diagnose() -> dict:
         "notebooks_present": notebooks_present,
         "pdf_guides_present": (ROOT / "docs" / "pdf-guides" / "Panduan_Master_MSSHI_v3.1.0.pdf").is_file(),
         "low_ram_diagnostics": low_ram,
+        "connections": connections,
         "native": native,
         "issues": issues,
         "checks_read_only": True,
@@ -547,6 +601,18 @@ def main(argv=None):
             print(
                 f"Skill Scan Quick p95  : {sq.get('warm_p95_seconds')} s "
                 f"(cold={sq.get('cold_seconds')} s, {sq.get('skill_count')} skills, {sq.get('iterations')} iters; target <= 2.0 s)"
+            )
+        conn = report.get("connections") or {}
+        if conn:
+            lp = conn.get("learning_plugins") or {}
+            print(
+                f"Connections / OSSU    : {conn.get('planes_governed', 0)} jalur | "
+                f"OSSU cached={conn.get('ossu_cached')} ({conn.get('ossu_files', 0)} file, {conn.get('ossu_courses')} matkul) | "
+                f"TimesFM runtime_ready={conn.get('timesfm_runtime_ready')}"
+            )
+            print(
+                f"Learning / Hygiene    : Caveman={conn.get('caveman_profiles', 0)}/5, Ponytail={conn.get('ponytail_installed')}, "
+                f"Plugins(chalk={lp.get('chalk', 0)}, learnloop={lp.get('learnloop', 0)}, codecoach={lp.get('codecoach', 0)})"
             )
         print(f"Native Profiles       : {report['native']['status']} (provider execution not tested)")
         if repair is not None:

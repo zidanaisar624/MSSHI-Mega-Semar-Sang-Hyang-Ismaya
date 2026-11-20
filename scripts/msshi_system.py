@@ -35,8 +35,9 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "domain": "learning",
         "mission": "1_belajar_jadi_guru",
         "keywords": (
-            "belajar", "ajari", "ajarkan", "guru", "tutor", "mentor", "kuliah", "materi",
-            "konsep", "latihan", "soal", "kuis", "quiz", "ujian", "paham", "pahami",
+            "belajar", "ajari", "ajarin", "ajarkan", "guru", "tutor", "mentor", "kuliah", "materi",
+            "konsep", "latihan", "soal", "kuis", "quiz", "ujian", "paham", "pahami", "belum paham",
+            "pemula", "dari nol", "coding pertama", "chalk", "learnloop", "codecoach", "papan tulis",
             "jelaskan", "kurikulum", "socratic", "teach", "learn", "study", "mengajar",
             "ossu", "computer science", "ilmu komputer", "kurikulum cs", "struktur data",
             "algoritma", "sistem operasi", "nand2tetris", "ostep",
@@ -46,6 +47,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "optional_support": ["yukino", "val", "shikaku", "kiki-chii"],
         "interaction_type": "type_1_advisor_if_complex_else_main",
         "skills": [
+            "belajar-pemula",
             "parenting-6d-gad-mdd",
             "focus-my-energy",
             "math-reasoning",
@@ -58,6 +60,8 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         ],
         "plugins_and_tools": [
             "msshi-auto-trim (MSSHITrim JSON compaction)",
+            "chalk (`chalk_teach` papan tulis visual MIT) + learnloop (opt-in AGPL) + codecoach/Shikaku",
+            "msshi learn start <topik> (router pemula total tanpa /command, 0 LLM)",
             "msshi ossu roadmap|courses|open <topik> (Universitas Computer Science Open-Source terhubung — bukan skill bot)",
             "parenting-6d-gad-mdd + focus-my-energy (pacing adaptif & empatik)",
             "msshi dream (simpan celah pemahaman / knowledge gaps untuk sesi belajar berikutnya)",
@@ -104,9 +108,9 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "domain": "research",
         "mission": "2_tugas_skripsi_tesis_disertasi",
         "keywords": (
-            "riset", "research", "tugas", "skripsi", "tesis", "disertasi", "jurnal", "paper",
-            "makalah", "literatur", "literature", "novelty", "kebaruan", "sitasi", "doi",
-            "rebuttal", "metodologi", "bab 1", "bab 2", "bab 3", "survei", "analisis data", "sidang",
+            "riset", "riset mendalam", "research", "tugas", "skripsi", "tesis", "disertasi", "jurnal", "paper",
+            "makalah", "literatur", "literature", "novelty", "kebaruan", "sitasi", "doi", "sinta", "scopus",
+            "prisma", "garuda", "rebuttal", "metodologi", "bab 1", "bab 2", "bab 3", "survei", "analisis data", "sidang",
             "bisnis", "keuangan", "finansial", "karier", "career", "cv", "lamaran", "remote job", "lowongan",
         ),
         "lead": "val",
@@ -114,6 +118,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "optional_support": ["yukino", "kiki-chii"],
         "interaction_type": "type_2_council_if_complex_else_main",
         "skills": [
+            "riset-mendalam-nusantara-global",
             "deep-research",
             "literature-review",
             "novelty-assessment",

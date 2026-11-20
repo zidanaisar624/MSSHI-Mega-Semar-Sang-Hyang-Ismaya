@@ -30,7 +30,8 @@
         "math-reasoning",
         "deep-research",
         "notebooklm-thinking-datascience",
-        "harness2"
+        "harness2",
+        "belajar-pemula"
       ],
       "pedagogy": [
         "Diagnose learner level and energy before lecturing to save tokens.",
@@ -63,7 +64,8 @@
         "muza-skripsi-template",
         "rebuttal-writing",
         "humanizer-indonesia",
-        "humanizer-en"
+        "humanizer-en",
+        "riset-mendalam-nusantara-global"
       ],
       "standards": [
         "Use Lima Lapis Konteks + backward-traceability (doc#page) for every claim.",
@@ -225,7 +227,8 @@
             "paper-context-resolver",
             "backward-traceability",
             "research-paper-writing",
-            "muza-skripsi-template"
+            "muza-skripsi-template",
+            "riset-mendalam-nusantara-global"
           ]
         },
         {
@@ -722,6 +725,18 @@
       "pillar": "governance_and_routing",
       "lead_bot": "shizuka",
       "load_mode": "core_always_light"
+    },
+    "belajar-pemula": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "token_efficiency",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    },
+    "riset-mendalam-nusantara-global": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
     }
   },
   "optional_skill_registry": {
@@ -787,6 +802,13 @@
       "scope": "all_profiles",
       "hook": "pre_tool_call + tools (sharewise_check/review/share/look)",
       "role": "Local-only photo/video privacy check (Wall T1 yes/no counts only), manual/Vision review page, and clean redacted copies (MIT, ardianreffa)."
+    },
+    "chalk": {
+      "status": "active_default",
+      "pillar": "governance_and_routing",
+      "scope": "all_profiles",
+      "hook": "transform_llm_output + tool (chalk_teach)",
+      "role": "Visual chalkboard teaching in Hermes Desktop/CLI using user's configured TTS (MIT, NNADI Joshua); outputs >= 2048 chars compacted by MSSHITrim."
     }
   },
   "connections_and_bridges_registry": {
@@ -847,7 +869,9 @@
         "msshi studio",
         "msshi skripsi",
         "msshi manual",
-        "msshi light"
+        "msshi light",
+        "msshi learn",
+        "msshi upstreams"
       ],
       "rule": "All optional runtimes live isolated under msshi-private/, require explicit user installation, perform 0 background model calls, and never mutate provider/model/SOUL."
     },
@@ -901,7 +925,7 @@
       "privacy": "3_konten_kreasi",
       "education": "1_belajar_jadi_guru"
     },
-    "expected_upstream_count": 57,
+    "expected_upstream_count": 62,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -959,7 +983,12 @@
       "imagination-studio",
       "spacewise",
       "sharewise",
-      "ossu-computer-science"
+      "ossu-computer-science",
+      "chalk",
+      "codecoach",
+      "learnloop",
+      "hermes-researcher",
+      "peditx-research-methodology"
     ]
   }
 }

@@ -28,7 +28,8 @@
           "get-more-perspectives",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -46,7 +47,8 @@
           "literature-review",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -72,7 +74,9 @@
           "timesfm-forecasting",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula",
+          "riset-mendalam-nusantara-global"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -89,7 +93,8 @@
           "generate-fresh-ideas",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -109,7 +114,8 @@
           "claude-bughunter",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ]
       },
       "display_names": {
@@ -206,7 +212,8 @@
           "get-more-perspectives",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -225,7 +232,8 @@
           "get-more-perspectives",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -253,7 +261,9 @@
           "timesfm-forecasting",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula",
+          "riset-mendalam-nusantara-global"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -270,7 +280,8 @@
           "generate-fresh-ideas",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -290,7 +301,8 @@
           "claude-bughunter",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "belajar-pemula"
         ]
       },
       "display_names": {
