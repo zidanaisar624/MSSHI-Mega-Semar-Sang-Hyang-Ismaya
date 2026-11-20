@@ -148,7 +148,7 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertEqual(cov["upstream_sources_governed"], cov["upstream_sources_total"])
         self.assertGreaterEqual(cov["upstream_sources_total"], 53)
         self.assertEqual(cov["unmapped_upstreams"], [])
-        self.assertEqual(cov["connection_planes_governed"], 5)
+        self.assertEqual(cov["connection_planes_governed"], 6)
         self.assertTrue(cov["all_connections_auto_open_false"])
 
     def test_system_status_offline_mock_zero_llm_calls(self):
@@ -407,29 +407,59 @@ class CognitiveSystemTests(unittest.TestCase):
                 self.assertIn("spacewise", cfg["plugins"]["enabled"])
                 self.assertIn("sharewise", cfg["plugins"]["enabled"])
 
-    def test_ossu_computer_science_connected_for_students_across_all_presets(self):
+    def test_ossu_computer_science_connected_as_open_university_not_skill(self):
         import msshi_context_sources as cs_mod
+        import msshi_ossu as ossu_mod
 
         self.assertIn("ossu-computer-science", cs_mod.PINNED)
-        sm = (ROOT / "skills" / "ossu-computer-science" / "SKILL.md").read_text(encoding="utf-8-sig")
-        desc = sm.split("---")[1].split("description:", 1)[1].strip()
-        self.assertLessEqual(len(desc), 1024)
-        self.assertTrue((ROOT / "skills" / "ossu-computer-science" / "LICENSE.upstream").is_file())
+        # OSSU is an open-source CS university curriculum, NOT a bot skill
+        self.assertFalse((ROOT / "skills" / "ossu-computer-science").exists())
 
         matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
         academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
-        self.assertIn("ossu-computer-science", matrix["packs"]["core"])
-        self.assertIn("ossu-computer-science", matrix["packs"]["thesis"])
+        cog = json.loads((ROOT / "configs" / "msshi_cognitive_system.json").read_text(encoding="utf-8-sig"))
+        self.assertNotIn("ossu-computer-science", {row["slug"] for row in matrix["skills"]})
         for bot in matrix["bots"]:
-            self.assertIn("ossu-computer-science", bot["required_skills"])
+            self.assertNotIn("ossu-computer-science", bot["required_skills"])
         for preset_id in ("academic-mahasiswa", "academic-dosen"):
+            self.assertIn("ossu-computer-science", academic["presets"][preset_id].get("connected_curricula", []))
             for role, skills in academic["presets"][preset_id]["roles"].items():
-                self.assertIn("ossu-computer-science", skills, f"ossu-computer-science missing on {role} in {preset_id}")
+                self.assertNotIn("ossu-computer-science", skills, f"ossu must not be a skill on {role} in {preset_id}")
+
+        conn = cog["connections_and_bridges_registry"]["ossu_open_cs_university"]
+        self.assertIs(conn["is_bot_skill"], False)
+        self.assertIs(conn["auto_open_on_boot"], False)
+        self.assertEqual(conn["portal_url"], "https://cs.ossu.dev")
+
+        sample_readme = (
+            "# Curriculum\n"
+            "## Intro CS\n"
+            "`computation`\n"
+            "Courses | Duration | Effort | Prerequisites\n"
+            ":-- | :--: | :--: | :--:\n"
+            "[Intro CS Python](coursepages/intro-cs/README.md) | 14 weeks | 6-10 hours/week | algebra\n"
+            "## Core CS\n"
+            "### Core systems\n"
+            "`operating systems`\n"
+            "Courses | Duration | Effort | Prerequisites\n"
+            ":-- | :--: | :--: | :--:\n"
+            "[Nand to Tetris](https://www.nand2tetris.org/) | 6 weeks | 7-13 hours/week | C\n"
+        )
+        parsed = ossu_mod.parse_curriculum(sample_readme)
+        self.assertEqual(parsed["total_tracks"], 2)
+        self.assertEqual(parsed["total_courses"], 2)
+        self.assertEqual(parsed["courses"][0]["track_slug"], "intro-cs")
+        self.assertTrue(parsed["courses"][0]["is_local_coursepage"])
+        self.assertEqual(parsed["courses"][1]["track_slug"], "core-systems")
+
+        portal = ossu_mod.open_target(ROOT, "portal", launch_browser=False)
+        self.assertEqual(portal["url"], "https://cs.ossu.dev")
+        self.assertFalse(portal["browser_opened"])
 
         routed = sysmod.route_task("Saya mahasiswa mau belajar kurikulum OSSU Computer Science dari nol")
         self.assertEqual(routed["core_mission"], "1_belajar_jadi_guru")
         self.assertEqual(routed["lead_bot"], "shizuka")
-        self.assertIn("ossu-computer-science", routed["recommended_skills"])
+        self.assertTrue(any("msshi ossu" in item for item in routed["plugins_and_tools"]))
 
 
 if __name__ == "__main__":

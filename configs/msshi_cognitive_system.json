@@ -30,14 +30,16 @@
         "math-reasoning",
         "deep-research",
         "notebooklm-thinking-datascience",
-        "harness2",
-        "ossu-computer-science"
+        "harness2"
       ],
       "pedagogy": [
         "Diagnose learner level and energy before lecturing to save tokens.",
         "Teach one core concept at a time (intuition -> analogy -> worked example -> formalization).",
         "Use Socratic checkpoints and active-recall exercises before advancing.",
         "Record mastered concepts and knowledge gaps for offline msshi dream & Harness2 adaptation."
+      ],
+      "connected_curricula": [
+        "ossu_open_cs_university"
       ]
     },
     {
@@ -145,7 +147,7 @@
             "scripts/msshi_skill_index.py",
             "scripts/msshi_context_sources.py"
           ],
-          "mechanism": "Pustaka besar (grim-prompter, claude-bughunter, mattpocock-skills, career-ops, remote-jobs, rea-video) disimpan di msshi-private/context-sources/ di luar pemindai skills/ dan dibaca 1 file saat diminta."
+          "mechanism": "Pustaka & kurikulum besar (grim-prompter, claude-bughunter, mattpocock-skills, career-ops, remote-jobs, rea-video, ossu-computer-science) disimpan di msshi-private/context-sources/ di luar pemindai skills/ dan dibaca 1 file saat diminta."
         },
         {
           "id": "lossless_tool_json_compaction",
@@ -589,12 +591,6 @@
       "lead_bot": "val",
       "load_mode": "on_demand_skill"
     },
-    "ossu-computer-science": {
-      "mission": "1_belajar_jadi_guru",
-      "pillar": "token_efficiency",
-      "lead_bot": "shizuka",
-      "load_mode": "lazy_context_source"
-    },
     "paper-context-resolver": {
       "mission": "2_tugas_skripsi_tesis_disertasi",
       "pillar": "research_and_prediction",
@@ -854,6 +850,25 @@
         "msshi light"
       ],
       "rule": "All optional runtimes live isolated under msshi-private/, require explicit user installation, perform 0 background model calls, and never mutate provider/model/SOUL."
+    },
+    "ossu_open_cs_university": {
+      "status": "connected_on_demand",
+      "kind": "open_source_cs_university",
+      "is_bot_skill": false,
+      "auto_open_on_boot": false,
+      "portal_url": "https://cs.ossu.dev",
+      "repository": "https://github.com/ossu/computer-science",
+      "license": "MIT",
+      "cache_path": "msshi-private/context-sources/ossu-computer-science",
+      "entrypoints": [
+        "msshi ossu status",
+        "msshi ossu roadmap",
+        "msshi ossu courses",
+        "msshi ossu open",
+        "msshi ossu guides",
+        "msshi ossu fetch"
+      ],
+      "rule": "OSSU is an open-source undergraduate Computer Science university curriculum (NOT a bot skill). Students and bots browse/open Intro CS, Core CS, Advanced CS, and Final Project tracks locally on demand; --browser opens an official https URL only when explicitly requested."
     }
   },
   "upstream_governance": {
@@ -883,7 +898,8 @@
       "bridge": "4_coding",
       "voice": "3_konten_kreasi",
       "utility": "5_teman_curhat_dan_daily_scheduling",
-      "privacy": "3_konten_kreasi"
+      "privacy": "3_konten_kreasi",
+      "education": "1_belajar_jadi_guru"
     },
     "expected_upstream_count": 57,
     "governed_upstream_ids": [

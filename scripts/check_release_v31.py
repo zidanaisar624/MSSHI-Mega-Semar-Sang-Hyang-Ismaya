@@ -219,8 +219,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
                 "mattpocock-engineering": ("mattpocock-skills", everyone),
                 "rea-video": ("rea-video", {"kiki-chii"}),
                 "grim-prompter": ("grim-prompter", {"shikaku"}),
-                "claude-bughunter": ("claude-bughunter", {"shikaku"}),
-                "ossu-computer-science": ("ossu-computer-science", everyone)}
+                "claude-bughunter": ("claude-bughunter", {"shikaku"})}
     for slug, (source_id, expected_roles) in contexts.items():
         actual_roles = {role for role, bot in bots.items() if slug in bot.get("required_skills", [])}
         upstream = rows.get(source_id, {})
@@ -244,6 +243,17 @@ def audit(repo, home, package_only=False, baseline_override=None):
                     "copies_match": valid, "missing": sorted(wanted - observed)})
     record("context_source_helper_present", (repo / "scripts/msshi_context_sources.py").is_file(),
            {"entrypoint": "msshi integrations source", "default_action": "local_status"})
+    ossu_upstream = rows.get("ossu-computer-science", {})
+    ossu_cog = read(repo / "configs/msshi_cognitive_system.json").get("connections_and_bridges_registry", {}).get("ossu_open_cs_university", {})
+    record("ossu_open_cs_university_connector",
+           (repo / "scripts/msshi_ossu.py").is_file()
+           and not (repo / "skills/ossu-computer-science").exists()
+           and ossu_upstream.get("kind") == "connected-open-university"
+           and ossu_upstream.get("auto_start") is False
+           and ossu_cog.get("is_bot_skill") is False
+           and ossu_cog.get("auto_open_on_boot") is False,
+           {"entrypoint": "msshi ossu", "portal_url": ossu_cog.get("portal_url"),
+            "is_bot_skill": False, "upstream_revision": ossu_upstream.get("revision")})
     policy_path = repo / "configs/muza_app_policy.json"
     policy = read(policy_path).get("artcraft", {}) if policy_path.is_file() else {}
     app_assignments = {role: {slug.removeprefix("artcraft-") for slug in bot.get("optional_skills", [])

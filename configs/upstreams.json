@@ -1089,12 +1089,11 @@
       "source": "https://github.com/ossu/computer-science",
       "source_type": "git",
       "revision": "8f8272b1d378d31494240aa1d667aa6b045c6552",
-      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-20; curriculum markdown reference only",
+      "verification": "primary-source/pinned-curriculum/license reviewed 2026-11-20; connected open-source CS university (not a bot skill)",
       "status": "external-opt-in",
       "auto_start": false,
-      "domain": "academic",
-      "kind": "contextual-skill-integration",
-      "pack": "thesis",
+      "domain": "education",
+      "kind": "connected-open-university",
       "roles": [
         "yukino",
         "shizuka",
@@ -1102,10 +1101,12 @@
         "kiki-chii",
         "shikaku"
       ],
-      "use_when": "Panduan belajar Ilmu Komputer setara S1 lewat kurikulum OSSU (Intro CS, Core CS, Advanced CS, Final Project) langsung di chat Hermes dengan mode tutor Socratic.",
-      "requires": "Cache markdown kurikulum terpin di msshi-private/context-sources; tidak memerlukan login otomatis, runtime berat, atau kursus berbayar.",
+      "use_when": "Koneksi langsung ke Universitas Computer Science Open-Source OSSU (Intro CS, Core CS, Advanced CS, Final Project) agar mahasiswa dapat membuka materi dasar CS dan belajar bertahap lewat Hermes.",
+      "requires": "Cache markdown kurikulum terpin di msshi-private/context-sources/ossu-computer-science (22 file); bukan skill bot, tanpa login otomatis, tanpa runtime berat.",
       "license": "MIT",
-      "background_model_calls": false
+      "background_model_calls": false,
+      "portal_url": "https://cs.ossu.dev",
+      "entrypoint": "msshi ossu"
     }
   ]
 }

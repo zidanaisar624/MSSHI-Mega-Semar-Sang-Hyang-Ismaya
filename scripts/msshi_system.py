@@ -46,7 +46,6 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "optional_support": ["yukino", "val", "shikaku", "kiki-chii"],
         "interaction_type": "type_1_advisor_if_complex_else_main",
         "skills": [
-            "ossu-computer-science",
             "parenting-6d-gad-mdd",
             "focus-my-energy",
             "math-reasoning",
@@ -54,9 +53,12 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "notebooklm-thinking-datascience",
             "harness2",
         ],
+        "connected_curricula": [
+            "ossu_open_cs_university (https://cs.ossu.dev | msshi ossu roadmap|courses|open)",
+        ],
         "plugins_and_tools": [
             "msshi-auto-trim (MSSHITrim JSON compaction)",
-            "msshi integrations source --name ossu-computer-science (baca 1 file kurikulum CS on-demand)",
+            "msshi ossu roadmap|courses|open <topik> (Universitas Computer Science Open-Source terhubung — bukan skill bot)",
             "parenting-6d-gad-mdd + focus-my-energy (pacing adaptif & empatik)",
             "msshi dream (simpan celah pemahaman / knowledge gaps untuk sesi belajar berikutnya)",
         ],

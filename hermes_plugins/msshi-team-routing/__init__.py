@@ -214,7 +214,7 @@ def role_policy(session_info: Mapping[str, Any]) -> str:
         "If a Bot Chat message needs no action, reply exactly: I don't need to do anything here. "
         "Never DM that no-action line or create reply loops. Human review is required between creative stages "
         "and before publishing/irreversible external actions. "
-        "Core missions: (1) Tutor/Guru—teach step-by-step with Socratic checks, adapted pacing, and active practice; "
+        "Core missions: (1) Tutor/Guru—teach step-by-step with Socratic checks, adapted pacing, and OSSU Open-Source CS University via 'msshi ossu roadmap|courses|open <topic>'; "
         "(2) Tasks/Skripsi/Tesis/Disertasi—val leads evidence, chronological holdout, baselines, and timesfm-forecasting; "
         "(3) Content creation—kiki-chii leads concept-first visuals/video/slides (+ optional imagination-studio when enabled); "
         "(4) Coding—shikaku leads TDD, architecture, and authorized grim-prompter/claude-bughunter; "

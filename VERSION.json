@@ -4,7 +4,7 @@
   "short_code": "MSSHI",
   "version": "3.1.2",
   "release_date": "2026-11-17",
-  "bundled_skills": 72,
+  "bundled_skills": 71,
   "external_sources": 57,
   "update_modes": [
     "check",
@@ -43,7 +43,7 @@
   "release_status": "release",
   "license": "MIT",
   "core_skills": 51,
-  "integration_wrappers": 21,
+  "integration_wrappers": 20,
   "optional_skills": 2,
   "optional_integration_wrappers": 2,
   "public_defaults": {
