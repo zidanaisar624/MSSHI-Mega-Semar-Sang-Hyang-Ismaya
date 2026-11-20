@@ -116,6 +116,14 @@ def folder(home, name):
     return checked(home / 'msshi-private' / 'context-sources' / name / PINNED[name][1])
 
 
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open('rb') as fh:
+        while chunk := fh.read(65536):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def verify_cached(home, name):
     root = folder(home, name); marker = checked(root / 'MSSHI_SNAPSHOT.json')
     if not marker.is_file():
@@ -129,7 +137,7 @@ def verify_cached(home, name):
     for name_, digest in hashes.items():
         path = checked(root / relative(name_))
         if (not isinstance(digest, str) or path.stat().st_size > MAX_FILE
-                or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
+                or _sha256_file(path) != digest):
             raise ValueError(f'Cached source changed: {name}/{name_}')
     return state
 

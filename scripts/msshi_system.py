@@ -23,7 +23,6 @@ _SCRIPTS_DIR = str(Path(__file__).resolve().parent)
 if _SCRIPTS_DIR not in sys.path:
     sys.path.insert(0, _SCRIPTS_DIR)
 
-import msshi_context_sources as context_sources
 import msshi_hermes_profiles as hp
 import msshi_light as light_mod
 
@@ -356,17 +355,21 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
     caveman_profiles = _skill_coverage(profiles, "caveman")
     skill_cache_dir = home / "msshi-runtime" / "skill-index"
     skill_cache_files = sorted(p.name for p in skill_cache_dir.glob("*.json")) if skill_cache_dir.is_dir() else []
+    import msshi_context_sources as context_sources
+
     cached_sources: dict[str, dict[str, Any]] = {}
-    for src_name in context_sources.PINNED:
-        try:
-            st = context_sources.status(home, src_name)
-            cached_sources[src_name] = {
-                "cached": bool(st["source_cached"]),
-                "files": int(st["source_files"]),
-                "commit": st["commit"],
-            }
-        except (OSError, ValueError):
-            cached_sources[src_name] = {"cached": False, "files": 0, "commit": context_sources.PINNED[src_name][1]}
+    for src_name, (repo_id, pin) in context_sources.PINNED.items():
+        marker = home / "msshi-private" / "context-sources" / src_name / pin / "MSSHI_SNAPSHOT.json"
+        if marker.is_file() and not marker.is_symlink():
+            try:
+                snap = _read_json(marker)
+                files_map = snap.get("files") if isinstance(snap.get("files"), dict) else {}
+                ok = snap.get("repository") == repo_id and snap.get("commit") == pin and bool(files_map)
+                cached_sources[src_name] = {"cached": ok, "files": len(files_map) if ok else 0, "commit": pin}
+            except (OSError, ValueError):
+                cached_sources[src_name] = {"cached": False, "files": 0, "commit": pin}
+        else:
+            cached_sources[src_name] = {"cached": False, "files": 0, "commit": pin}
 
     # Pillar 2: Continuous Learning (Dreaming + Harness2)
     harness2_profiles = _skill_coverage(profiles, "harness2")
