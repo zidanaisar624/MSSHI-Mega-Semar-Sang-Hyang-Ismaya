@@ -87,6 +87,20 @@ flowchart TD
 
 ---
 
+## Cakupan Penuh Tanpa Orphan (`0` Orphan Terverifikasi)
+
+Seluruh komponen paket MSSHI terpetakan 100% di [msshi_cognitive_system.json](../configs/msshi_cognitive_system.json) dan diaudit otomatis oleh `msshi system status`:
+
+| Lapisan Komponen | Cakupan Terkelola | Aturan Sistem & Keamanan |
+| --- | --- | --- |
+| **Skill Bundel** | `69/69` (`skill_registry`) | Setiap skill terikat pada misi utama, pilar, `lead_bot`, dan mode muat (`core_always_light`, `on_demand_skill`, `lazy_context_source`, atau `opt_in_runtime`). |
+| **Skill Opsional** | `1/1` (`optional/rea`) | Default `OFF`; dipasang eksplisit dengan `--with-rea`, runtime Node terisolasi khusus Coder. |
+| **Plugin Native Hermes** | `4/4` (`plugin_registry`) | `msshi-auto-trim` (hemat token lossless), `msshi-team-routing` (orkestrasi + 5 Misi + KAT opt-in), `msshi-interaction` (gating Tipe 1/Tipe 2/Main-only), dan `msshi-steel-policy` (status *retired*, tidak dipasang). |
+| **Repositori Upstream** | `53/53` (`upstream_governance`) | Disimpan di luar pemindai `skills/` (`upstreams/` atau `msshi-private/context-sources/`), diaudit lisensi & pin commit, dibaca 1 file on-demand, tanpa eksekusi otomatis. |
+| **Koneksi, Bridge & Runtime** | `5/5` jalur (`connections_and_bridges_registry`) | (1) `CLI-Anything` App Bridge (`tiket tugas`, `auto_open_on_boot: false`), (2) Browser lokal manual (`msshi browser`, tanpa transfer cookie), (3) Layanan eksternal/MCP manual (`BrightData`/`GDrive` OFF), (4) `Coder KAT` opt-in privat, (5) Runtime terisolasi (`harness2`, `timesfm`, `dream`, `brag`, `scrapling`, `voice`, `rea`, `skripsi`, `light`). |
+
+---
+
 ## 4. Perintah CLI Sistem Terpadu (`msshi system`)
 
 Semua perintah `msshi system` berjalan **100% lokal & deterministik (`0` panggilan LLM, `0` request jaringan)**:

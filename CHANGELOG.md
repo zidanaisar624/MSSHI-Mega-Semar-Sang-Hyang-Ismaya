@@ -2,6 +2,7 @@
 
 ## v3.1.2 - 2026-11-17
 
+- Post-tag v3.1.2 enhancements on `main`: added Windows 10 4 GB RAM Light Build & Low-RAM mode (`msshi light`), deferred `MSSHITrim` desktop/runtime activation, Coder-scoped `grim-prompter` (read-only threat modeling) & `claude-bughunter` (authorized triage/validation, 83 skills), full `harness2` + `timesfm-forecasting` parity across Academic presets, and the Zero-Orphan 5-Mission + 4-Pillar Cognitive Operating System (`msshi system status|route|cycle`, covering `69/69` bundled skills + `1` optional `rea`, `4/4` plugins, `53/53` upstreams, and `5/5` connection planes).
 - Post-tag audit correction: initialize role mapping in profile-mode aggregate audit; cover both existing named Yukino and fresh default Yukino without touching models or installed profiles. The immutable v3.1.2 tag remains the packaging milestone; main and release/v3.1.0 include this correction.
 - Fresh installs use actual default Yukino plus four specialists; existing named teams remain unchanged. Role mapping, delayed activation and all-direction handoffs are covered by offline fixtures. Curated upstream, Dreaming and voice selection also follow that mapping.
 - Use controlled JSON-only LLMtrim configuration after real-binary tests exposed TOON type changes in the upstream safe preset. Preserve exact data and fail open; no proxy or provider setting changes.

@@ -105,6 +105,23 @@ class CognitiveSystemTests(unittest.TestCase):
         for pillar in ("token_efficiency", "continuous_learning", "research_and_prediction", "governance_and_routing"):
             self.assertIn(pillar, data["pillars"])
 
+    def test_zero_orphan_coverage_for_all_skills_plugins_upstreams_and_connections(self):
+        cov = sysmod.coverage_audit(ROOT)
+        self.assertTrue(cov["zero_orphan_system"], f"Found orphans in cognitive system: {cov}")
+        self.assertEqual(cov["bundled_skills_mapped"], cov["bundled_skills_total"])
+        self.assertGreaterEqual(cov["bundled_skills_total"], 69)
+        self.assertEqual(cov["unmapped_bundled_skills"], [])
+        self.assertEqual(cov["optional_skills_mapped"], cov["optional_skills_total"])
+        self.assertEqual(cov["unmapped_optional_skills"], [])
+        self.assertEqual(cov["repo_plugins_mapped"], cov["repo_plugins_total"])
+        self.assertGreaterEqual(cov["repo_plugins_total"], 4)
+        self.assertEqual(cov["unmapped_repo_plugins"], [])
+        self.assertEqual(cov["upstream_sources_governed"], cov["upstream_sources_total"])
+        self.assertGreaterEqual(cov["upstream_sources_total"], 53)
+        self.assertEqual(cov["unmapped_upstreams"], [])
+        self.assertEqual(cov["connection_planes_governed"], 5)
+        self.assertTrue(cov["all_connections_auto_open_false"])
+
     def test_system_status_offline_mock_zero_llm_calls(self):
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp) / "hermes-home"

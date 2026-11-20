@@ -101,6 +101,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "riset", "research", "tugas", "skripsi", "tesis", "disertasi", "jurnal", "paper",
             "makalah", "literatur", "literature", "novelty", "kebaruan", "sitasi", "doi",
             "rebuttal", "metodologi", "bab 1", "bab 2", "bab 3", "survei", "analisis data", "sidang",
+            "bisnis", "keuangan", "finansial", "karier", "career", "cv", "lamaran", "remote job", "lowongan",
         ),
         "lead": "val",
         "coordinator": "shizuka",
@@ -343,6 +344,63 @@ def _skill_coverage(profiles: dict[str, Path], slug: str) -> list[str]:
     return [name for name, folder in profiles.items() if (folder / "skills" / slug / "SKILL.md").is_file()]
 
 
+def coverage_audit(source_root: Path = ROOT) -> dict[str, Any]:
+    """Verify zero-orphan coverage across bundled/optional skills, plugins, upstreams, and connections."""
+    manifest = _read_json(source_root / "configs" / "msshi_cognitive_system.json")
+    skills_dir = source_root / "skills"
+    optional_dir = source_root / "optional"
+    plugins_dir = source_root / "hermes_plugins"
+    upstreams_path = source_root / "configs" / "upstreams.json"
+
+    actual_bundled = sorted(p.name for p in skills_dir.iterdir() if (p / "SKILL.md").is_file()) if skills_dir.is_dir() else []
+    actual_optional = (
+        sorted(p.name for p in optional_dir.iterdir() if p.is_dir() and (p / "SKILL.md").is_file())
+        if optional_dir.is_dir() else []
+    )
+    actual_plugins = sorted(p.name for p in plugins_dir.iterdir() if p.is_dir()) if plugins_dir.is_dir() else []
+    actual_upstreams = (
+        [e["id"] for e in _read_json(upstreams_path).get("entries", []) if isinstance(e, dict) and e.get("id")]
+        if upstreams_path.is_file() else []
+    )
+
+    skill_reg = manifest.get("skill_registry", {})
+    opt_reg = manifest.get("optional_skill_registry", {})
+    plugin_reg = manifest.get("plugin_registry", {})
+    conn_reg = manifest.get("connections_and_bridges_registry", {})
+    up_gov = manifest.get("upstream_governance", {})
+    governed_up = set(up_gov.get("governed_upstream_ids", []))
+
+    unmapped_bundled = sorted(set(actual_bundled) - set(skill_reg))
+    unmapped_optional = sorted(set(actual_optional) - set(opt_reg))
+    unmapped_plugins = sorted(set(actual_plugins) - set(plugin_reg))
+    unmapped_upstreams = sorted(set(actual_upstreams) - governed_up)
+    all_conn_no_boot = bool(conn_reg) and all(v.get("auto_open_on_boot") is False for v in conn_reg.values())
+
+    return {
+        "bundled_skills_total": len(actual_bundled),
+        "bundled_skills_mapped": len(actual_bundled) - len(unmapped_bundled),
+        "unmapped_bundled_skills": unmapped_bundled,
+        "optional_skills_total": len(actual_optional),
+        "optional_skills_mapped": len(actual_optional) - len(unmapped_optional),
+        "unmapped_optional_skills": unmapped_optional,
+        "repo_plugins_total": len(actual_plugins),
+        "repo_plugins_mapped": len(actual_plugins) - len(unmapped_plugins),
+        "unmapped_repo_plugins": unmapped_plugins,
+        "upstream_sources_total": len(actual_upstreams),
+        "upstream_sources_governed": len(actual_upstreams) - len(unmapped_upstreams),
+        "unmapped_upstreams": unmapped_upstreams,
+        "connection_planes_governed": len(conn_reg),
+        "all_connections_auto_open_false": all_conn_no_boot,
+        "zero_orphan_system": (
+            not unmapped_bundled
+            and not unmapped_optional
+            and not unmapped_plugins
+            and not unmapped_upstreams
+            and all_conn_no_boot
+        ),
+    }
+
+
 def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
     """Read-only readiness inspection of all 4 MSSHI Cognitive System pillars (0 LLM/network calls)."""
     home = Path(home).expanduser().absolute()
@@ -406,10 +464,12 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
         "academic-dosen": "timesfm-forecasting" in academic["presets"]["academic-dosen"]["roles"].get("val", []),
     }
 
+    cov = coverage_audit(source_root)
     return {
         "system": manifest["name"],
         "version": manifest["version"],
         "core_missions": [m["id"] for m in manifest.get("core_missions", [])],
+        "coverage": cov,
         "hermes_home": str(home),
         "profiles_detected": list(profiles),
         "resource_profile": rp.get("profile", "normal"),
@@ -620,8 +680,15 @@ def main(argv: list[str] | None = None) -> int:
                 p2 = report["pillars"]["2_continuous_learning"]
                 p3 = report["pillars"]["3_research_and_prediction"]
                 p4 = report["pillars"]["4_governance_and_routing"]
+                cov = report["coverage"]
                 print(f"=== {report['system']} (v{report['version']}) ===")
                 print(f"5 Misi Utama      : {', '.join(report['core_missions'])}")
+                print(
+                    f"Cakupan Sistem    : Skills={cov['bundled_skills_mapped']}/{cov['bundled_skills_total']}"
+                    f" (+{cov['optional_skills_mapped']} opsional), Plugins={cov['repo_plugins_mapped']}/{cov['repo_plugins_total']}, "
+                    f"Upstreams={cov['upstream_sources_governed']}/{cov['upstream_sources_total']}, "
+                    f"Koneksi={cov['connection_planes_governed']}, ZeroOrphan={cov['zero_orphan_system']}"
+                )
                 print(f"Hermes Home       : {report['hermes_home']} ({len(report['profiles_detected'])} profil)")
                 print(f"1. Hemat Token    : MSSHITrim={p1['msshi_trim']['enabled_count']}/{p1['msshi_trim']['total_profiles']}, "
                       f"Caveman={len(p1['caveman_profiles'])}, "

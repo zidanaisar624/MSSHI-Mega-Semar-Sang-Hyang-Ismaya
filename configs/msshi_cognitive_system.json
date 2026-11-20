@@ -83,7 +83,6 @@
         "rea-video",
         "brag",
         "unslop",
-        "better-design",
         "academic-plotting",
         "slide-generation"
       ],
@@ -105,7 +104,6 @@
         "analyze-project",
         "explore-code",
         "mattpocock-engineering",
-        "superpowers",
         "grim-prompter",
         "claude-bughunter",
         "explore-run",
@@ -294,5 +292,607 @@
         "scripts/msshi_doctor.py"
       ]
     }
+  },
+  "skill_registry": {
+    "academic-plotting": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "ai-research-explore": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "ai-research-reproduction": {
+      "mission": "4_coding",
+      "pillar": "research_and_prediction",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "analyze-project": {
+      "mission": "4_coding",
+      "pillar": "research_and_prediction",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "antigravity-webdev-cybersec": {
+      "mission": "4_coding",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "auto-curiousity-for-film-making": {
+      "mission": "3_konten_kreasi",
+      "pillar": "continuous_learning",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "autoresearch": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "continuous_learning",
+      "lead_bot": "shizuka",
+      "load_mode": "on_demand_skill"
+    },
+    "backward-traceability": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "continuous_learning",
+      "lead_bot": "val",
+      "load_mode": "core_always_light"
+    },
+    "brag": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "load_mode": "opt_in_runtime"
+    },
+    "brainstorming-research-ideas": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "yukino",
+      "load_mode": "on_demand_skill"
+    },
+    "business-sage": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "career-ops": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "shizuka",
+      "load_mode": "lazy_context_source"
+    },
+    "chatgpt-hermes-portability-kit": {
+      "mission": "4_coding",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "on_demand_skill"
+    },
+    "claude-bughunter": {
+      "mission": "4_coding",
+      "pillar": "token_efficiency",
+      "lead_bot": "shikaku",
+      "load_mode": "lazy_context_source"
+    },
+    "cli-anything-business-sage": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "cli-anything-universal-bridge": {
+      "mission": "4_coding",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    },
+    "creative-thinking-for-research": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "research_and_prediction",
+      "lead_bot": "yukino",
+      "load_mode": "on_demand_skill"
+    },
+    "data-analysis": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "deep-research": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "evaluating-code-models": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "evaluating-llms-harness": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "explore-code": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "explore-run": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "filmmaking-videography-photography-s2": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "firecrawl-competitive-intel": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "firecrawl-dashboard-reporting": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "firecrawl-deep-research": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "firecrawl-knowledge-base": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "firecrawl-research-papers": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "focus-my-energy": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "token_efficiency",
+      "lead_bot": "yukino",
+      "load_mode": "core_always_light"
+    },
+    "generate-fresh-ideas": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "yukino",
+      "load_mode": "on_demand_skill"
+    },
+    "get-more-perspectives": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "on_demand_skill"
+    },
+    "github-research": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "grim-prompter": {
+      "mission": "4_coding",
+      "pillar": "token_efficiency",
+      "lead_bot": "shikaku",
+      "load_mode": "lazy_context_source"
+    },
+    "harness2": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shizuka",
+      "load_mode": "opt_in_runtime"
+    },
+    "higgsfield-skills": {
+      "mission": "3_konten_kreasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "humanizer-en": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "on_demand_skill"
+    },
+    "humanizer-indonesia": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "on_demand_skill"
+    },
+    "idea-generation": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "yukino",
+      "load_mode": "on_demand_skill"
+    },
+    "langsmith-observability": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "literature-review": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "match-my-writing-style": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    },
+    "math-reasoning": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "mattpocock-engineering": {
+      "mission": "4_coding",
+      "pillar": "token_efficiency",
+      "lead_bot": "shikaku",
+      "load_mode": "lazy_context_source"
+    },
+    "motion-graphics-suite": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "muza-skripsi-template": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "shizuka",
+      "load_mode": "on_demand_skill"
+    },
+    "nemo-evaluator-sdk": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "notebooklm-thinking-datascience": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "novelty-assessment": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "paper-context-resolver": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "paper-revision": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "paper-writing-section": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "parenting-6d-gad-mdd": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    },
+    "persona-shizuka-yukino-shikaku": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    },
+    "phoenix-observability": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "prep-for-meetings": {
+      "mission": "5_teman_curhat_dan_daily_scheduling",
+      "pillar": "token_efficiency",
+      "lead_bot": "yukino",
+      "load_mode": "on_demand_skill"
+    },
+    "prep-for-meetings-2": {
+      "mission": "5_teman_curhat_dan_daily_scheduling",
+      "pillar": "token_efficiency",
+      "lead_bot": "yukino",
+      "load_mode": "on_demand_skill"
+    },
+    "rea-video": {
+      "mission": "3_konten_kreasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "kiki-chii",
+      "load_mode": "lazy_context_source"
+    },
+    "rebuttal-writing": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "remote-jobs": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "shizuka",
+      "load_mode": "lazy_context_source"
+    },
+    "research-paper-writing": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "scrapling": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "opt_in_runtime"
+    },
+    "slide-generation": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "symbolic-equation": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "table-generation": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "timesfm-forecasting": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "opt_in_runtime"
+    },
+    "unlimited-ocr-2": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
+    },
+    "unslop": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
+    },
+    "wise-judgment-and-sovereign-orchestrator": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    }
+  },
+  "optional_skill_registry": {
+    "rea": {
+      "mission": "4_coding",
+      "pillar": "research_and_prediction",
+      "lead_bot": "shikaku",
+      "load_mode": "opt_in_runtime",
+      "default_installed": "false",
+      "note": "Opt-in static JavaScript/archive analyzer for Coder via --with-rea; isolated Node runtime separate."
+    }
+  },
+  "plugin_registry": {
+    "msshi-auto-trim": {
+      "status": "active_default",
+      "pillar": "token_efficiency",
+      "scope": "all_profiles",
+      "hook": "transform_tool_result",
+      "role": "Lossless local JSON compaction (MSSHITrim) for eligible >= 2048-char tool results; fail-open, 0 LLM calls."
+    },
+    "msshi-team-routing": {
+      "status": "active_default",
+      "pillar": "governance_and_routing",
+      "scope": "all_profiles",
+      "hook": "delegation_provider + system_prompt_section",
+      "role": "Native named-profile delegation, 5-Mission + 4-Pillar Cognitive Loop prompt, and opt-in Shikaku KAT routing."
+    },
+    "msshi-interaction": {
+      "status": "active_default_named_bots",
+      "pillar": "token_efficiency",
+      "scope": "named_profiles",
+      "hook": "system_prompt_section",
+      "role": "Tiered gating: Main-only on brief/daily chats, Type 1 Advisor (Yukino/Shizuka), Type 2 2-round Council (Val/Kiki-Chii/Shikaku)."
+    },
+    "msshi-steel-policy": {
+      "status": "retired_legacy_not_installed",
+      "pillar": "governance_and_routing",
+      "scope": "none",
+      "hook": "retired",
+      "role": "Retired from installer; replaced by user-selected local browser via msshi browser without cookie extraction or account transfer."
+    }
+  },
+  "connections_and_bridges_registry": {
+    "cli_anything_app_bridge": {
+      "status": "ticket_gated_on_demand",
+      "auto_open_on_boot": false,
+      "entrypoints": [
+        "msshi connect",
+        "msshi runtime ticket",
+        "msshi runtime run"
+      ],
+      "policies": [
+        "configs/muza_app_policy.json",
+        "configs/academic_app_policy.json"
+      ],
+      "skill": "cli-anything-universal-bridge",
+      "rule": "Every desktop/CLI app launches only via an explicit one-use task ticket; heavy targets blocked in Low-RAM mode."
+    },
+    "browser_connection": {
+      "status": "user_manual_browser_only",
+      "auto_open_on_boot": false,
+      "entrypoints": [
+        "msshi browser"
+      ],
+      "policies": [
+        "configs/browser_policy.json"
+      ],
+      "rule": "Store preferred browser (Chrome/Edge/Firefox/none) and profile/account labels only; never auto-open, extract cookies, or transfer accounts."
+    },
+    "external_services_and_mcp": {
+      "status": "manual_user_managed",
+      "auto_open_on_boot": false,
+      "entrypoints": [
+        "msshi services"
+      ],
+      "rule": "Automatic external-service/OAuth provisioning is retired. Users connect MCP/services manually inside Hermes; BrightData and GDrive default OFF."
+    },
+    "coder_kat_optional": {
+      "status": "opt_in_coder_only",
+      "auto_open_on_boot": false,
+      "entrypoints": [
+        "msshi coder",
+        "msshi kat"
+      ],
+      "rule": "Private Shikaku-only custom endpoint/key stored under msshi-private/coder/kat.json with exact model-catalog check; never changes primary models."
+    },
+    "isolated_local_runtimes": {
+      "status": "explicit_opt_in_isolated",
+      "auto_open_on_boot": false,
+      "entrypoints": [
+        "msshi harness2",
+        "msshi timesfm",
+        "msshi dream",
+        "msshi brag",
+        "msshi scrapling",
+        "msshi voice",
+        "msshi rea",
+        "msshi skripsi",
+        "msshi manual",
+        "msshi light"
+      ],
+      "rule": "All optional runtimes live isolated under msshi-private/, require explicit user installation, perform 0 background model calls, and never mutate provider/model/SOUL."
+    }
+  },
+  "upstream_governance": {
+    "manifest": "configs/upstreams.json",
+    "license_audit": "configs/upstream_license_audit.json",
+    "cache_boundary": "Strictly outside skills/ (upstreams/ or msshi-private/context-sources/); zero auto-execution on fetch/update.",
+    "lazy_read_rule": "Read 1 pinned file on demand via msshi integrations source or git show HEAD:<path> to protect token and RAM budgets.",
+    "domain_to_mission_map": {
+      "research": "2_tugas_skripsi_tesis_disertasi",
+      "academic": "2_tugas_skripsi_tesis_disertasi",
+      "forecasting": "2_tugas_skripsi_tesis_disertasi",
+      "career": "2_tugas_skripsi_tesis_disertasi",
+      "writing": "2_tugas_skripsi_tesis_disertasi",
+      "creative": "3_konten_kreasi",
+      "design": "3_konten_kreasi",
+      "video": "3_konten_kreasi",
+      "motion": "3_konten_kreasi",
+      "ui": "3_konten_kreasi",
+      "coding": "4_coding",
+      "engineering": "4_coding",
+      "security": "4_coding",
+      "cybersec": "4_coding",
+      "reverse-engineering": "4_coding",
+      "harness": "4_coding",
+      "token": "1_belajar_jadi_guru",
+      "memory": "1_belajar_jadi_guru",
+      "bridge": "4_coding",
+      "voice": "3_konten_kreasi"
+    },
+    "expected_upstream_count": 53,
+    "governed_upstream_ids": [
+      "higgsfield-skills",
+      "remotion-skills",
+      "barty-motion-graphics",
+      "charlie-motion-graphics",
+      "bang-motion",
+      "humanizer-en",
+      "humanizer-indonesia",
+      "anti-slop",
+      "goose",
+      "superpowers",
+      "ponytail",
+      "addy-agent-skills",
+      "graphify",
+      "mindrally-skills",
+      "playwright-best-practices",
+      "awesome-copilot",
+      "superdesign-skill",
+      "better-design",
+      "design-taste",
+      "paper-shaders",
+      "canvas-ui",
+      "motion-primitives",
+      "cursify",
+      "strix",
+      "cybersecurity-library",
+      "reverse-engineer-anything",
+      "rea",
+      "unlimited-ocr-2",
+      "unlimited-ocr",
+      "tokentracker",
+      "token-monitor",
+      "hermes-jev-skills",
+      "cli-anything",
+      "cli-anything-catalog",
+      "gpt-researcher",
+      "remote-jobs",
+      "caveman",
+      "hyperframes",
+      "ui-ux-pro-max",
+      "anthropic-skills",
+      "hermes-omnivoice",
+      "hermes-dreaming",
+      "kat-coder-v2-5-dev",
+      "timesfm",
+      "unslop",
+      "brag",
+      "scrapling",
+      "harness2",
+      "career-ops",
+      "mattpocock-skills",
+      "rea-video",
+      "grim-prompter",
+      "claude-bughunter"
+    ]
   }
 }
