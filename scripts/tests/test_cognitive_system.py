@@ -407,6 +407,30 @@ class CognitiveSystemTests(unittest.TestCase):
                 self.assertIn("spacewise", cfg["plugins"]["enabled"])
                 self.assertIn("sharewise", cfg["plugins"]["enabled"])
 
+    def test_ossu_computer_science_connected_for_students_across_all_presets(self):
+        import msshi_context_sources as cs_mod
+
+        self.assertIn("ossu-computer-science", cs_mod.PINNED)
+        sm = (ROOT / "skills" / "ossu-computer-science" / "SKILL.md").read_text(encoding="utf-8-sig")
+        desc = sm.split("---")[1].split("description:", 1)[1].strip()
+        self.assertLessEqual(len(desc), 1024)
+        self.assertTrue((ROOT / "skills" / "ossu-computer-science" / "LICENSE.upstream").is_file())
+
+        matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
+        academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+        self.assertIn("ossu-computer-science", matrix["packs"]["core"])
+        self.assertIn("ossu-computer-science", matrix["packs"]["thesis"])
+        for bot in matrix["bots"]:
+            self.assertIn("ossu-computer-science", bot["required_skills"])
+        for preset_id in ("academic-mahasiswa", "academic-dosen"):
+            for role, skills in academic["presets"][preset_id]["roles"].items():
+                self.assertIn("ossu-computer-science", skills, f"ossu-computer-science missing on {role} in {preset_id}")
+
+        routed = sysmod.route_task("Saya mahasiswa mau belajar kurikulum OSSU Computer Science dari nol")
+        self.assertEqual(routed["core_mission"], "1_belajar_jadi_guru")
+        self.assertEqual(routed["lead_bot"], "shizuka")
+        self.assertIn("ossu-computer-science", routed["recommended_skills"])
+
 
 if __name__ == "__main__":
     unittest.main()

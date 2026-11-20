@@ -30,7 +30,8 @@
         "math-reasoning",
         "deep-research",
         "notebooklm-thinking-datascience",
-        "harness2"
+        "harness2",
+        "ossu-computer-science"
       ],
       "pedagogy": [
         "Diagnose learner level and energy before lecturing to save tokens.",
@@ -588,6 +589,12 @@
       "lead_bot": "val",
       "load_mode": "on_demand_skill"
     },
+    "ossu-computer-science": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "token_efficiency",
+      "lead_bot": "shizuka",
+      "load_mode": "lazy_context_source"
+    },
     "paper-context-resolver": {
       "mission": "2_tugas_skripsi_tesis_disertasi",
       "pillar": "research_and_prediction",
@@ -878,7 +885,7 @@
       "utility": "5_teman_curhat_dan_daily_scheduling",
       "privacy": "3_konten_kreasi"
     },
-    "expected_upstream_count": 56,
+    "expected_upstream_count": 57,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -935,7 +942,8 @@
       "claude-bughunter",
       "imagination-studio",
       "spacewise",
-      "sharewise"
+      "sharewise",
+      "ossu-computer-science"
     ]
   }
 }

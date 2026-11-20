@@ -528,6 +528,10 @@
     "sharewise": {
       "id": "Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi.",
       "en": "Local privacy check before sharing photos/videos (yes/no counts only, never leaking GPS/time/device) plus verified clean redacted copies."
+    },
+    "ossu-computer-science": {
+      "id": "Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) untuk belajar bertahap bersama tutor AI.",
+      "en": "Connects students in Hermes to the open-source OSSU Computer Science curriculum (Intro CS, Core CS, Advanced CS, Final Project) for step-by-step guided tutoring."
     }
   },
   "packs": {

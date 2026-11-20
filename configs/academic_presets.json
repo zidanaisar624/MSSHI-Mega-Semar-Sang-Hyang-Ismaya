@@ -28,7 +28,8 @@
           "get-more-perspectives",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -46,7 +47,8 @@
           "literature-review",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -72,7 +74,8 @@
           "timesfm-forecasting",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -89,7 +92,8 @@
           "generate-fresh-ideas",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -109,7 +113,8 @@
           "claude-bughunter",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ]
       },
       "display_names": {
@@ -203,7 +208,8 @@
           "get-more-perspectives",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -222,7 +228,8 @@
           "get-more-perspectives",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -250,7 +257,8 @@
           "timesfm-forecasting",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -267,7 +275,8 @@
           "generate-fresh-ideas",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -287,7 +296,8 @@
           "claude-bughunter",
           "harness2",
           "spacewise",
-          "sharewise"
+          "sharewise",
+          "ossu-computer-science"
         ]
       },
       "display_names": {

@@ -2,15 +2,15 @@
 
 Sumber: [matriks bot](../configs/bot_role_and_skill_matrix.json). Jalankan `python scripts/render_bot_audit.py` setelah mengubah matriks.
 
-Katalog berisi **71 skill bundel** dan **61 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
+Katalog berisi **72 skill bundel** dan **61 rujukan eksternal**. Skill bundel disertakan sebagai file instruksi. Rujukan eksternal menunjukkan kemampuan yang dituju dan perlu disiapkan terpisah sesuai host, izin, dan dependensi.
 
 | Bot | Mandat | Bundel | Rujukan eksternal |
 | --- | --- | ---: | ---: |
-| Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 25 | 9 |
-| Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 29 | 9 |
-| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 40 | 14 |
-| Kiki-Chii | One-Woman Creative Studio | 24 | 44 |
-| Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 28 | 32 |
+| Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 26 | 9 |
+| Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 30 | 9 |
+| Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 41 | 14 |
+| Kiki-Chii | One-Woman Creative Studio | 25 | 44 |
+| Shikaku Nara | Spesialis pemrograman, vibecoding, dan keamanan siber | 29 | 32 |
 
 ## Yukino Yukinoshita
 
@@ -43,6 +43,7 @@ Ide mentah, prioritas, energi, pilihan, dan pertanyaan untuk Shizuka. [Baca pers
 | [`harness2`](../skills/harness2/SKILL.md) | Bundel | Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia. |
 | [`spacewise`](../skills/spacewise/SKILL.md) | Bundel | Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit. |
 | [`sharewise`](../skills/sharewise/SKILL.md) | Bundel | Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi. |
+| [`ossu-computer-science`](../skills/ossu-computer-science/SKILL.md) | Bundel | Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) sebagai tutor interaktif bertahap. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`cli-anything`](https://github.com/HKUDS/CLI-Anything) | Eksternal | Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif. |
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
@@ -88,6 +89,7 @@ Strategi, delegasi, pemilihan alur kerja, dan penjelasan akhir kepada pengguna. 
 | [`harness2`](../skills/harness2/SKILL.md) | Bundel | Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia. |
 | [`spacewise`](../skills/spacewise/SKILL.md) | Bundel | Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit. |
 | [`sharewise`](../skills/sharewise/SKILL.md) | Bundel | Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi. |
+| [`ossu-computer-science`](../skills/ossu-computer-science/SKILL.md) | Bundel | Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) sebagai tutor interaktif bertahap. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`cli-anything`](https://github.com/HKUDS/CLI-Anything) | Eksternal | Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif. |
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
@@ -144,6 +146,7 @@ Bukti, metode, batas kepastian, serta dossier untuk Shizuka. [Baca persona](../c
 | [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md) | Bundel | Disiplin engineering, TDD, debugging dan spesifikasi; orkestrator/publikasi eksplisit. |
 | [`spacewise`](../skills/spacewise/SKILL.md) | Bundel | Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit. |
 | [`sharewise`](../skills/sharewise/SKILL.md) | Bundel | Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi. |
+| [`ossu-computer-science`](../skills/ossu-computer-science/SKILL.md) | Bundel | Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) sebagai tutor interaktif bertahap. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`cli-anything`](https://github.com/HKUDS/CLI-Anything) | Eksternal | Memanggil CLI atau aplikasi melalui adapter yang dipilih untuk tugas aktif. |
 | [`cli-anything-catalog`](https://clianything.cc/) | Eksternal | Direktori untuk menemukan adapter CLI yang relevan dengan tugas. |
@@ -189,6 +192,7 @@ Konsep, produksi kreatif, identitas visual, dan penyerahan aset. [Baca persona](
 | [`rea-video`](../skills/rea-video/SKILL.md) | Bundel | Kiki membedah video referensi per shot ke VIDEO.md; model dan generasi merupakan opt-in terpisah. |
 | [`spacewise`](../skills/spacewise/SKILL.md) | Bundel | Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit. |
 | [`sharewise`](../skills/sharewise/SKILL.md) | Bundel | Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi. |
+| [`ossu-computer-science`](../skills/ossu-computer-science/SKILL.md) | Bundel | Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) sebagai tutor interaktif bertahap. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`bang-motion`](https://github.com/bangtutorial/bang-motion) | Eksternal | Memandu motion graphics berbasis kode sesuai brief. |
 | [`barty-motion-graphics`](https://github.com/Barty-Bart/motion-graphics) | Eksternal | Memandu komposisi grafis gerak dan animasi berbasis kode. |
@@ -268,6 +272,7 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 | [`claude-bughunter`](../skills/claude-bughunter/SKILL.md) | Bundel | Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) untuk Coder. |
 | [`spacewise`](../skills/spacewise/SKILL.md) | Bundel | Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit. |
 | [`sharewise`](../skills/sharewise/SKILL.md) | Bundel | Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi. |
+| [`ossu-computer-science`](../skills/ossu-computer-science/SKILL.md) | Bundel | Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) sebagai tutor interaktif bertahap. |
 | [`addy-agent-skills`](https://github.com/addyosmani/agent-skills) | Eksternal | Menerapkan praktik engineering pada implementasi dan review. |
 | [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop) | Eksternal | Memeriksa klise, struktur antarmuka, dan pola kode yang berulang. |
 | [`awesome-copilot`](https://github.com/github/awesome-copilot) | Eksternal | Memilih contoh instruksi dan praktik pengembangan yang dapat diadaptasi. |
@@ -305,7 +310,7 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 
 ### Semua bot
 
-- **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val, Kiki-Chii, Shikaku Nara** — [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop), [`career-ops`](../skills/career-ops/SKILL.md), [`cli-anything`](https://github.com/HKUDS/CLI-Anything), [`cli-anything-catalog`](https://clianything.cc/), [`cli-anything-universal-bridge`](../skills/cli-anything-universal-bridge/SKILL.md), [`graphify`](https://github.com/Graphify-Labs/graphify), [`harness2`](../skills/harness2/SKILL.md), [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills), [`humanizer-en`](../skills/humanizer-en/SKILL.md), [`humanizer-indonesia`](../skills/humanizer-indonesia/SKILL.md), [`match-my-writing-style`](../skills/match-my-writing-style/SKILL.md), [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md), [`parenting-6d-gad-mdd`](../skills/parenting-6d-gad-mdd/SKILL.md), [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md), [`remote-jobs`](../skills/remote-jobs/SKILL.md), [`sharewise`](../skills/sharewise/SKILL.md), [`spacewise`](../skills/spacewise/SKILL.md), [`token-monitor`](https://github.com/Javis603/token-monitor), `tokenshield`, [`tokentracker`](https://github.com/xiufengsun/TokenTracker), [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR), [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md)
+- **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val, Kiki-Chii, Shikaku Nara** — [`anti-slop`](https://github.com/miqdadbadjuber/anti-slop), [`career-ops`](../skills/career-ops/SKILL.md), [`cli-anything`](https://github.com/HKUDS/CLI-Anything), [`cli-anything-catalog`](https://clianything.cc/), [`cli-anything-universal-bridge`](../skills/cli-anything-universal-bridge/SKILL.md), [`graphify`](https://github.com/Graphify-Labs/graphify), [`harness2`](../skills/harness2/SKILL.md), [`hermes-jev-skills`](https://github.com/kerpopule/hermes-jev-skills), [`humanizer-en`](../skills/humanizer-en/SKILL.md), [`humanizer-indonesia`](../skills/humanizer-indonesia/SKILL.md), [`match-my-writing-style`](../skills/match-my-writing-style/SKILL.md), [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md), [`ossu-computer-science`](../skills/ossu-computer-science/SKILL.md), [`parenting-6d-gad-mdd`](../skills/parenting-6d-gad-mdd/SKILL.md), [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md), [`remote-jobs`](../skills/remote-jobs/SKILL.md), [`sharewise`](../skills/sharewise/SKILL.md), [`spacewise`](../skills/spacewise/SKILL.md), [`token-monitor`](https://github.com/Javis603/token-monitor), `tokenshield`, [`tokentracker`](https://github.com/xiufengsun/TokenTracker), [`unlimited-ocr`](https://github.com/baidu/Unlimited-OCR), [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md)
 
 ### Beberapa bot
 

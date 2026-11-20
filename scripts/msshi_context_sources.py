@@ -27,6 +27,7 @@ PINNED = {
     'rea-video': ('JuneYaooo/rea-video', '820d661e807034e0f0284262b4e93085cfd3da49'),
     'grim-prompter': ('jmanico/grim-prompter', '2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf'),
     'claude-bughunter': ('elementalsouls/Claude-BugHunter', '0e70a021e59d6875004e7a563f8511aca2ba3bc1'),
+    'ossu-computer-science': ('ossu/computer-science', '8f8272b1d378d31494240aa1d667aa6b045c6552'),
 }
 MAX_FILE = 8 * 1024 * 1024
 MAX_TOTAL = 64 * 1024 * 1024
@@ -102,6 +103,9 @@ def selected_file(name, row):
     if name == 'claude-bughunter':
         return (row['path'] in {'LICENSE-CONTENT', 'SECURITY.md', 'USAGE.md', 'ENGAGEMENTS.md', 'INSTALL.md', 'CHANGELOG.md', 'cbh/data/skill_index.json'}
                 or (row['path'].startswith(('skills/', 'commands/', 'docs/')) and path.suffix == '.md'))
+    if name == 'ossu-computer-science':
+        return (row['path'] in {'CURRICULAR_GUIDELINES.md', 'FAQ.md', 'HELP.md', 'CONTRIBUTING.md', 'CHANGELOG.md'}
+                or (row['path'].startswith(('coursepages/', 'extras/')) and path.suffix == '.md'))
     # Preserve the upstream workflow source, scripts, templates and modes. User
     # inputs/output never become part of the public reference checkout.
     if parts[0] in {'data', 'reports', 'output', 'employers', 'docs', 'web', 'dashboard', 'tests', 'batch'}:
@@ -162,6 +166,7 @@ def materialize(home, name):
     if name == 'rea-video': required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
     if name == 'grim-prompter': required += ['runbook.md', 'catalog.md', 'skills/threat-model/SKILL.md']
     if name == 'claude-bughunter': required += ['LICENSE-CONTENT', 'NOTICE', 'SECURITY.md', 'cbh/data/skill_index.json']
+    if name == 'ossu-computer-science': required += ['CURRICULAR_GUIDELINES.md', 'FAQ.md']
     selected_paths = {row['path'] for row in rows}
     missing = [path for path in required if path not in selected_paths]
     if missing:

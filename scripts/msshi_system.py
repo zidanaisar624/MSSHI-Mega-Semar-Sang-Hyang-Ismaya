@@ -38,12 +38,15 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "belajar", "ajari", "ajarkan", "guru", "tutor", "mentor", "kuliah", "materi",
             "konsep", "latihan", "soal", "kuis", "quiz", "ujian", "paham", "pahami",
             "jelaskan", "kurikulum", "socratic", "teach", "learn", "study", "mengajar",
+            "ossu", "computer science", "ilmu komputer", "kurikulum cs", "struktur data",
+            "algoritma", "sistem operasi", "nand2tetris", "ostep",
         ),
         "lead": "shizuka",
         "coordinator": "shizuka",
         "optional_support": ["yukino", "val", "shikaku", "kiki-chii"],
         "interaction_type": "type_1_advisor_if_complex_else_main",
         "skills": [
+            "ossu-computer-science",
             "parenting-6d-gad-mdd",
             "focus-my-energy",
             "math-reasoning",
@@ -53,6 +56,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         ],
         "plugins_and_tools": [
             "msshi-auto-trim (MSSHITrim JSON compaction)",
+            "msshi integrations source --name ossu-computer-science (baca 1 file kurikulum CS on-demand)",
             "parenting-6d-gad-mdd + focus-my-energy (pacing adaptif & empatik)",
             "msshi dream (simpan celah pemahaman / knowledge gaps untuk sesi belajar berikutnya)",
         ],

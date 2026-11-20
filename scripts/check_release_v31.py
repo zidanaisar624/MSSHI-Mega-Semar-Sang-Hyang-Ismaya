@@ -219,7 +219,8 @@ def audit(repo, home, package_only=False, baseline_override=None):
                 "mattpocock-engineering": ("mattpocock-skills", everyone),
                 "rea-video": ("rea-video", {"kiki-chii"}),
                 "grim-prompter": ("grim-prompter", {"shikaku"}),
-                "claude-bughunter": ("claude-bughunter", {"shikaku"})}
+                "claude-bughunter": ("claude-bughunter", {"shikaku"}),
+                "ossu-computer-science": ("ossu-computer-science", everyone)}
     for slug, (source_id, expected_roles) in contexts.items():
         actual_roles = {role for role, bot in bots.items() if slug in bot.get("required_skills", [])}
         upstream = rows.get(source_id, {})

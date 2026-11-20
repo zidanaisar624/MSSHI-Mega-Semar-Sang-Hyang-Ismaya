@@ -38,7 +38,8 @@
         "mattpocock-engineering",
         "harness2",
         "spacewise",
-        "sharewise"
+        "sharewise",
+        "ossu-computer-science"
       ],
       "optional_skills": [
         "anti-slop",
@@ -100,7 +101,8 @@
         "mattpocock-engineering",
         "harness2",
         "spacewise",
-        "sharewise"
+        "sharewise",
+        "ossu-computer-science"
       ],
       "optional_skills": [
         "anti-slop",
@@ -176,7 +178,8 @@
         "remote-jobs",
         "mattpocock-engineering",
         "spacewise",
-        "sharewise"
+        "sharewise",
+        "ossu-computer-science"
       ],
       "optional_skills": [
         "anti-slop",
@@ -240,7 +243,8 @@
         "harness2",
         "rea-video",
         "spacewise",
-        "sharewise"
+        "sharewise",
+        "ossu-computer-science"
       ],
       "optional_skills": [
         "anti-slop",
@@ -334,7 +338,8 @@
         "grim-prompter",
         "claude-bughunter",
         "spacewise",
-        "sharewise"
+        "sharewise",
+        "ossu-computer-science"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -1521,6 +1526,15 @@
       "scope": "all",
       "source": "https://github.com/ardianreffa/sharewise",
       "kind": "integration-wrapper"
+    },
+    {
+      "slug": "ossu-computer-science",
+      "status": "bundled",
+      "path": "skills/ossu-computer-science/SKILL.md",
+      "purpose": "Menghubungkan mahasiswa di Hermes ke kurikulum terbuka OSSU Computer Science (Intro CS, Core CS, Advanced CS, Final Project) sebagai tutor interaktif bertahap.",
+      "scope": "academic",
+      "source": "https://github.com/ossu/computer-science",
+      "kind": "integration-wrapper"
     }
   ],
   "packs": {
@@ -1544,7 +1558,8 @@
       "unlimited-ocr-2",
       "wise-judgment-and-sovereign-orchestrator",
       "spacewise",
-      "sharewise"
+      "sharewise",
+      "ossu-computer-science"
     ],
     "filmmaking": [
       "academic-plotting",
@@ -1603,7 +1618,8 @@
       "unslop",
       "scrapling",
       "harness2",
-      "muza-skripsi-template"
+      "muza-skripsi-template",
+      "ossu-computer-science"
     ],
     "webdev": [
       "analyze-project",
@@ -1810,7 +1826,8 @@
       "mattpocock-engineering",
       "harness2",
       "spacewise",
-      "sharewise"
+      "sharewise",
+      "ossu-computer-science"
     ],
     "background_model_calls": false
   }

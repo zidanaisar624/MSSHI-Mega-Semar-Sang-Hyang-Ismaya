@@ -1083,6 +1083,29 @@
       "requires": "Pillow + numpy (+ pillow-heif untuk HEIC); deteksi otomatis Apple Vision khusus macOS, pada Windows/Linux redaksi manual via halaman review lokal.",
       "license": "MIT",
       "background_model_calls": false
+    },
+    {
+      "id": "ossu-computer-science",
+      "source": "https://github.com/ossu/computer-science",
+      "source_type": "git",
+      "revision": "8f8272b1d378d31494240aa1d667aa6b045c6552",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-20; curriculum markdown reference only",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "academic",
+      "kind": "contextual-skill-integration",
+      "pack": "thesis",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "use_when": "Panduan belajar Ilmu Komputer setara S1 lewat kurikulum OSSU (Intro CS, Core CS, Advanced CS, Final Project) langsung di chat Hermes dengan mode tutor Socratic.",
+      "requires": "Cache markdown kurikulum terpin di msshi-private/context-sources; tidak memerlukan login otomatis, runtime berat, atau kursus berbayar.",
+      "license": "MIT",
+      "background_model_calls": false
     }
   ]
 }

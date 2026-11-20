@@ -729,6 +729,18 @@
       "license_url": "https://raw.githubusercontent.com/ardianreffa/sharewise/dd82698f253a29fe6eb53a8c36d4b51b11a289a9/LICENSE",
       "license_sha256": "b511ee840cf8295dd4335fa426f0ca99ca3ae1fdfbf9659fa8136827994a41e4",
       "status": "pinned_license_and_source_reviewed; MIT license retained in plugin and skill folders"
+    },
+    {
+      "id": "ossu-computer-science",
+      "source": "https://github.com/ossu/computer-science",
+      "revision": "8f8272b1d378d31494240aa1d667aa6b045c6552",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2015-2023 Open Source Society University"
+      ],
+      "license_url": "https://raw.githubusercontent.com/ossu/computer-science/8f8272b1d378d31494240aa1d667aa6b045c6552/LICENSE",
+      "license_sha256": "28df0e3ae09545a0a62ad6319c2110e1c6d390acbde0812c379cf9246d5ff061",
+      "status": "pinned_license_read; curriculum docs cached outside skills/ on demand"
     }
   ],
   "additional_runtime_terms": {
