@@ -13,7 +13,7 @@ class UpstreamPins(unittest.TestCase):
     def test_all_git_sources_have_real_revision_shape(self):
         data=json.loads((ROOT/'configs/upstreams.json').read_text(encoding='utf-8-sig'))
         rows=[row for row in data['entries'] if row['source_type']=='git']
-        self.assertEqual(len(rows),49)
+        self.assertEqual(len(rows),50)
         self.assertTrue(all(sources.COMMIT.fullmatch(row.get('revision','')) for row in rows))
 
     def manifest(self, folder, revision):

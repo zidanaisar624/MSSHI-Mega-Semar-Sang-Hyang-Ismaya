@@ -674,6 +674,21 @@
       "license_url": "https://raw.githubusercontent.com/jmanico/grim-prompter/2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf/LICENSE",
       "license_sha256": "4e34094caee63d43009a2e2c611f59f9b349407f1afe392b82cb0e6908ee9cbc",
       "status": "pinned_license_read; upstream implementation and runtimes not bundled"
+    },
+    {
+      "id": "claude-bughunter",
+      "source": "https://github.com/elementalsouls/Claude-BugHunter",
+      "revision": "0e70a021e59d6875004e7a563f8511aca2ba3bc1",
+      "license": "MIT (code); CC-BY-4.0 (documentation and skill content)",
+      "copyright_lines": [
+        "Copyright (c) 2026 Sachin Sharma"
+      ],
+      "license_url": "https://raw.githubusercontent.com/elementalsouls/Claude-BugHunter/0e70a021e59d6875004e7a563f8511aca2ba3bc1/LICENSE",
+      "license_sha256": "177adb7c8613539a985a98b4c6d51ba09a2d3f435eb396d25cc45f4e0bf8cb45",
+      "content_license_url": "https://raw.githubusercontent.com/elementalsouls/Claude-BugHunter/0e70a021e59d6875004e7a563f8511aca2ba3bc1/LICENSE-CONTENT",
+      "content_license_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "notice_sha256": "547ed8bfa070693c2014bd66329dba258e0010add743fc5830e3b473b70e4eee",
+      "status": "pinned_license_read; upstream implementation and runtimes not bundled"
     }
   ],
   "additional_runtime_terms": {

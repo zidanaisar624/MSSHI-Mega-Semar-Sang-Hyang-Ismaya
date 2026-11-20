@@ -996,6 +996,25 @@
       "requires": "Source cache terpisah di msshi-private/context-sources; analisis bersifat read-only terhadap kode proyek dan menulis laporan ke folder threat-model/.",
       "license": "MIT",
       "background_model_calls": false
+    },
+    {
+      "id": "claude-bughunter",
+      "source": "https://github.com/elementalsouls/Claude-BugHunter",
+      "source_type": "git",
+      "revision": "0e70a021e59d6875004e7a563f8511aca2ba3bc1",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-20; runtime/task not tested by source review",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "cybersec",
+      "kind": "contextual-skill-integration",
+      "pack": "cybersec",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) pada aset milik sendiri, program bug bounty in-scope, atau lab/CTF berizin.",
+      "requires": "Source cache terpisah di msshi-private/context-sources; wajib verifikasi izin/scope tertulis; tidak memasang Burp/HackerOne MCP atau menjalankan pemindaian otomatis.",
+      "license": "MIT (code); CC-BY-4.0 (documentation and skill content)",
+      "background_model_calls": false
     }
   ]
 }

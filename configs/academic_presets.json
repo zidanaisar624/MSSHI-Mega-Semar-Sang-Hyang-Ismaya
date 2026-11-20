@@ -92,7 +92,8 @@
           "scrapling",
           "unslop",
           "mattpocock-engineering",
-          "grim-prompter"
+          "grim-prompter",
+          "claude-bughunter"
         ]
       },
       "display_names": {
@@ -239,7 +240,8 @@
           "scrapling",
           "unslop",
           "mattpocock-engineering",
-          "grim-prompter"
+          "grim-prompter",
+          "claude-bughunter"
         ]
       },
       "display_names": {

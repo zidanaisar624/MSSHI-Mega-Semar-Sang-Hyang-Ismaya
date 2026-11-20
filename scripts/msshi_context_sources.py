@@ -26,6 +26,7 @@ PINNED = {
     'mattpocock-skills': ('mattpocock/skills', '5863806dd4e15c63174bee4e7515a4256792ecfa'),
     'rea-video': ('JuneYaooo/rea-video', '820d661e807034e0f0284262b4e93085cfd3da49'),
     'grim-prompter': ('jmanico/grim-prompter', '2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf'),
+    'claude-bughunter': ('elementalsouls/Claude-BugHunter', '0e70a021e59d6875004e7a563f8511aca2ba3bc1'),
 }
 MAX_FILE = 8 * 1024 * 1024
 MAX_TOTAL = 64 * 1024 * 1024
@@ -98,6 +99,9 @@ def selected_file(name, row):
         return (row['path'] in {'MODELS.md', 'runbook.md', 'start-here.md', 'catalog.md'}
                 or (row['path'].startswith(('skills/threat-model/', 'helpers/', 'methods/', 'quick/', 'deep/', 'privacy/', 'reference/'))
                     and path.suffix == '.md'))
+    if name == 'claude-bughunter':
+        return (row['path'] in {'LICENSE-CONTENT', 'SECURITY.md', 'USAGE.md', 'ENGAGEMENTS.md', 'INSTALL.md', 'CHANGELOG.md', 'cbh/data/skill_index.json'}
+                or (row['path'].startswith(('skills/', 'commands/', 'docs/')) and path.suffix == '.md'))
     # Preserve the upstream workflow source, scripts, templates and modes. User
     # inputs/output never become part of the public reference checkout.
     if parts[0] in {'data', 'reports', 'output', 'employers', 'docs', 'web', 'dashboard', 'tests', 'batch'}:
@@ -149,6 +153,7 @@ def materialize(home, name):
                      'modes/_shared.md', 'modes/_writing.md']
     if name == 'rea-video': required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
     if name == 'grim-prompter': required += ['runbook.md', 'catalog.md', 'skills/threat-model/SKILL.md']
+    if name == 'claude-bughunter': required += ['LICENSE-CONTENT', 'NOTICE', 'SECURITY.md', 'cbh/data/skill_index.json']
     selected_paths = {row['path'] for row in rows}
     missing = [path for path in required if path not in selected_paths]
     if missing:
@@ -327,7 +332,7 @@ def main(argv=None):
         if args.fetch:materialize(home, args.name); result = status(home, args.name)
         elif args.install_runtime:result = install_runtime(home, args.name)
         elif args.list or args.skill:
-            if args.name != 'mattpocock-skills':raise ValueError('--list/--skill apply to mattpocock-skills only')
+            if args.name not in {'mattpocock-skills', 'claude-bughunter'}:raise ValueError('--list/--skill apply to mattpocock-skills or claude-bughunter only')
             entries = skills(home, args.name)
             if args.skill:
                 selected = next((row for row in entries if row['name'] == args.skill), None)

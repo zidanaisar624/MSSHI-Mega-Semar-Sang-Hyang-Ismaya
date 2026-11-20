@@ -12,6 +12,7 @@ tetap dapat memakai konteks host; tidak ada jaminan seluruh tagihan menjadi nol.
 | `harness2` | Kelima bot | Proposal evaluasi dan demo deterministik yang ditinjau |
 | `rea-video` | Kiki-Chii | Breakdown video per shot menjadi VIDEO.md dan rencana remake |
 | `grim-prompter` | Shikaku / Sir. Robot (Coder) | Threat modeling berbasis bukti (36 arsitektur, 29 metode, STRIDE/PASTA/LINDDUN, privasi GDPR/CCPA) |
+| `claude-bughunter` | Shikaku / Sir. Robot (Coder) | Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) |
 
 Berbagi instruksi memungkinkan semua peran memakai pengetahuan yang sama. Diskusi
 lintas bot tetap memerlukan rute delegasi native yang terkonfigurasi dan tugas yang
@@ -96,6 +97,7 @@ Tidak ada perubahan provider/model, SOUL, memori atau harness aktif secara otoma
 | mattpocock/skills | `5863806dd4e15c63174bee4e7515a4256792ecfa` | MIT |
 | JuneYaooo/rea-video | `820d661e807034e0f0284262b4e93085cfd3da49` | Apache-2.0, termasuk NOTICE |
 | jmanico/grim-prompter | `2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf` | MIT, Copyright (c) 2026 Manicode Security |
+| elementalsouls/Claude-BugHunter | `0e70a021e59d6875004e7a563f8511aca2ba3bc1` | MIT (kode) & CC BY 4.0 (dokumentasi/skill) + NOTICE |
 
 Lisensi asli tersedia pada folder skill dan [audit lisensi](../configs/upstream_license_audit.json).
 Wrapper MSSHI adalah instruksi/adaptor asli; runtime dan implementasi upstream tidak

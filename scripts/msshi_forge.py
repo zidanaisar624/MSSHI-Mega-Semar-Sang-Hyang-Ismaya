@@ -47,7 +47,7 @@ def provision(home, blueprint, apply=False):
         raise ValueError('Choose bundled skills only; external programs require separate setup.')
     # Profile creation is a generic planning and productivity feature. Do not attach
     # offensive security or automatic attack workflows to new autonomous profiles.
-    if any(x in {'antigravity-webdev-cybersec', 'rea', 'rea-exploit', 'reverse-engineer-anything'} for x in selected):
+    if any(x in {'antigravity-webdev-cybersec', 'rea', 'rea-exploit', 'reverse-engineer-anything', 'claude-bughunter'} for x in selected):
         raise ValueError('Use a separate defensive code-review workflow for security tasks.')
     try:
         active_rp = light_mod.read_resource_profile(home)

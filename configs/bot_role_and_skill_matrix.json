@@ -330,7 +330,8 @@
         "career-ops",
         "remote-jobs",
         "mattpocock-engineering",
-        "grim-prompter"
+        "grim-prompter",
+        "claude-bughunter"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -1451,6 +1452,18 @@
       ]
     },
     {
+      "slug": "claude-bughunter",
+      "status": "bundled",
+      "path": "skills/claude-bughunter/SKILL.md",
+      "purpose": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) untuk Coder.",
+      "scope": "contextual",
+      "source": "https://github.com/elementalsouls/Claude-BugHunter",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "claude-bughunter"
+      ]
+    },
+    {
       "slug": "artcraft-anicraft",
       "status": "external",
       "path": null,
@@ -1568,7 +1581,8 @@
       "scrapling",
       "harness2",
       "mattpocock-engineering",
-      "grim-prompter"
+      "grim-prompter",
+      "claude-bughunter"
     ],
     "cybersec": [
       "ai-research-reproduction",
@@ -1576,7 +1590,8 @@
       "antigravity-webdev-cybersec",
       "evaluating-code-models",
       "mattpocock-engineering",
-      "grim-prompter"
+      "grim-prompter",
+      "claude-bughunter"
     ]
   },
   "routes": [
@@ -1625,7 +1640,8 @@
       "muza-skripsi-template",
       "mattpocock-engineering",
       "career-ops",
-      "grim-prompter"
+      "grim-prompter",
+      "claude-bughunter"
     ],
     "external_skills": [
       "addy-agent-skills",

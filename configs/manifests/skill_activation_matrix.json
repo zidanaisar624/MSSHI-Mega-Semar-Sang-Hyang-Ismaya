@@ -260,6 +260,22 @@
       ],
       "read_only_code_inspection": true,
       "background_model_calls": false
+    },
+    "claude-bughunter": {
+      "profiles": [
+        "shikaku"
+      ],
+      "trigger": [
+        "bug bounty",
+        "vulnerability audit",
+        "security triage",
+        "evidence hygiene",
+        "authorized security review"
+      ],
+      "requires_written_authorization_or_owned_asset": true,
+      "auto_scan_or_exploit": false,
+      "mcp_registration": false,
+      "background_model_calls": false
     }
   },
   "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee.",
