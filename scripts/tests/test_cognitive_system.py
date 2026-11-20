@@ -121,7 +121,7 @@ class CognitiveSystemTests(unittest.TestCase):
             (home / "tools" / "llmtrim").mkdir(parents=True)
             (home / "tools" / "llmtrim" / "llmtrim.exe").write_bytes(b"stub")
             (home / "msshi-private" / "harness2-runtime").mkdir(parents=True)
-            (home / "msshi-private" / "harness2-runtime" / "installed.json").write_text('{"ready": true}', encoding="utf-8")
+            (home / "msshi-private" / "harness2-runtime" / "INSTALLATION.json").write_text('{"schema": 1}', encoding="utf-8")
 
             for bot in ("yukino", "shizuka", "val", "kiki-chii", "shikaku"):
                 pdir = home / "profiles" / bot

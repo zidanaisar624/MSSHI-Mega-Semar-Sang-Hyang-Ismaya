@@ -374,7 +374,7 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
     # Pillar 2: Continuous Learning (Dreaming + Harness2)
     harness2_profiles = _skill_coverage(profiles, "harness2")
     harness2_runtime = home / "msshi-private" / "harness2-runtime"
-    harness2_ready = (harness2_runtime / "installed.json").is_file()
+    harness2_ready = any((harness2_runtime / m).is_file() for m in ("INSTALLATION.json", "installed.json"))
     dream_dir = home / "msshi-private" / "integrations" / "dream"
     dream_reports = sorted(p.name for p in dream_dir.glob("*-latest.json")) if dream_dir.is_dir() else []
     dream_source_cached = (home / "msshi-private" / "v3-sources" / "hermes-dreaming").is_dir()
@@ -382,7 +382,7 @@ def system_status(home: Path, *, source_root: Path = ROOT) -> dict[str, Any]:
     # Pillar 3: Research & Prediction (Val + TimesFM + Security/Engineering)
     timesfm_profiles = _skill_coverage(profiles, "timesfm-forecasting")
     timesfm_runtime = home / "msshi-private" / "timesfm-runtime"
-    timesfm_ready = (timesfm_runtime / "installed.json").is_file()
+    timesfm_ready = any((timesfm_runtime / m).is_file() for m in ("INSTALLATION.json", "installed.json"))
     grim_profiles = _skill_coverage(profiles, "grim-prompter")
     bughunter_profiles = _skill_coverage(profiles, "claude-bughunter")
     research_profiles = _skill_coverage(profiles, "deep-research")
