@@ -6,7 +6,7 @@ Katalog berisi **69 skill bundel** dan **60 rujukan eksternal**. Skill bundel di
 
 | Bot | Mandat | Bundel | Rujukan eksternal |
 | --- | --- | ---: | ---: |
-| Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 31 | 9 |
+| Yukino Yukinoshita | Partner ideasi awal dan penampung ide | 23 | 9 |
 | Sensei Shizuka Hiratsuka | Mastermind dan penerjemah hasil riset Val | 27 | 9 |
 | Val | Spesialis riset murni, literatur S1–S3, dan intelijen data | 38 | 14 |
 | Kiki-Chii | One-Woman Creative Studio | 22 | 43 |
@@ -25,26 +25,18 @@ Ide mentah, prioritas, energi, pilihan, dan pertanyaan untuk Shizuka. [Baca pers
 | [`cli-anything-business-sage`](../skills/cli-anything-business-sage/SKILL.md) | Bundel | Menjalankan perhitungan bisnis terstruktur melalui harness lokal yang tersedia. |
 | [`cli-anything-universal-bridge`](../skills/cli-anything-universal-bridge/SKILL.md) | Bundel | Daftarkan, periksa, dan jalankan rute aplikasi, browser, harness CLI-Anything, atau MCP Hermes saat tugas membutuhkannya. |
 | [`creative-thinking-for-research`](../skills/creative-thinking-for-research/SKILL.md) | Bundel | Mencoba reframing, analogi, dan kombinasi konsep untuk membuka pilihan. |
-| [`deep-research`](../skills/deep-research/SKILL.md) | Bundel | Menyusun pertanyaan, menelusuri literatur, dan mensintesis bukti yang dapat diperiksa. |
 | [`focus-my-energy`](../skills/focus-my-energy/SKILL.md) | Bundel | Menyesuaikan beban tugas dan langkah awal dengan energi yang dilaporkan pengguna. |
 | [`generate-fresh-ideas`](../skills/generate-fresh-ideas/SKILL.md) | Bundel | Menghasilkan alternatif dari beberapa lensa kreatif untuk disaring pengguna. |
 | [`humanizer-en`](../skills/humanizer-en/SKILL.md) | Bundel | Sunting prosa bahasa Inggris agar terasa alami sambil menjaga makna, suara penulis, dan sitasi. |
 | [`humanizer-indonesia`](../skills/humanizer-indonesia/SKILL.md) | Bundel | Sunting prosa bahasa Indonesia sesuai ragam pembaca sambil menjaga makna, istilah, dan sitasi. |
 | [`idea-generation`](../skills/idea-generation/SKILL.md) | Bundel | Mengembangkan dan menyaring gagasan penelitian dalam beberapa putaran. |
-| [`literature-review`](../skills/literature-review/SKILL.md) | Bundel | Membangun tinjauan pustaka dengan beberapa perspektif dan jejak sumber. |
 | [`match-my-writing-style`](../skills/match-my-writing-style/SKILL.md) | Bundel | Menerapkan Voice Card yang disediakan pengguna sesuai audiens dan jenis tulisan. |
 | [`notebooklm-thinking-datascience`](../skills/notebooklm-thinking-datascience/SKILL.md) | Bundel | Mengadaptasi metode berpikir sistem dan data science dari indeks sumber milik pengguna. |
-| [`novelty-assessment`](../skills/novelty-assessment/SKILL.md) | Bundel | Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian. |
-| [`paper-revision`](../skills/paper-revision/SKILL.md) | Bundel | Memetakan catatan revisi ke perubahan konkret dan bukti perbaikan. |
-| [`paper-writing-section`](../skills/paper-writing-section/SKILL.md) | Bundel | Menyusun dan menyunting bagian naskah akademik dengan dua tahap pemeriksaan. |
 | [`parenting-6d-gad-mdd`](../skills/parenting-6d-gad-mdd/SKILL.md) | Bundel | Memandu percakapan dengan empati, struktur, dan dukungan otonomi. |
 | [`persona-shizuka-yukino-shikaku`](../skills/persona-shizuka-yukino-shikaku/SKILL.md) | Bundel | Menjaga karakter, kontrak serah terima, dan batas kepemilikan tugas lima bot. |
 | [`prep-for-meetings`](../skills/prep-for-meetings/SKILL.md) | Bundel | Menyusun ringkasan pertemuan dari catatan dan tujuan yang tersedia. |
 | [`prep-for-meetings-2`](../skills/prep-for-meetings-2/SKILL.md) | Bundel | Memadatkan bahan pertemuan menjadi pokok bahasan dan kartu pengingat. |
-| [`rebuttal-writing`](../skills/rebuttal-writing/SKILL.md) | Bundel | Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer. |
-| [`research-paper-writing`](../skills/research-paper-writing/SKILL.md) | Bundel | Memeriksa struktur argumen dan hubungan antara klaim, bukti, serta pembahasan. |
 | [`unlimited-ocr-2`](../skills/unlimited-ocr-2/SKILL.md) | Bundel | Rutekan ekstraksi dokumen dan gambar berhalaman ke OCR yang tersedia dengan penunjuk bukti. |
-| [`muza-skripsi-template`](../skills/muza-skripsi-template/SKILL.md) | Bundel | Menyusun template Word (.docx) skripsi/tugas akhir sesuai pedoman kampus, lookup logo & pejabat resmi, ekstrak aturan PDF, serta injeksi hasil MuZA_Search v1.1. |
 | [`career-ops`](../skills/career-ops/SKILL.md) | Bundel | Bantu karier, CV-lowongan skor 1-5, tracker dan wawancara sesuai konteks. |
 | [`remote-jobs`](../skills/remote-jobs/SKILL.md) | Bundel | Saring direktori perusahaan remote, lalu periksa lowongan aktif ketika diminta. |
 | [`mattpocock-engineering`](../skills/mattpocock-engineering/SKILL.md) | Bundel | Disiplin engineering, TDD, debugging dan spesifikasi; orkestrator/publikasi eksplisit. |
@@ -307,8 +299,9 @@ Arsitektur, kode, pengujian, serta pemeriksaan keamanan dalam lingkup yang diizi
 ### Beberapa bot
 
 - **Kiki-Chii, Shikaku Nara** — `artcraft-figcraft`, [`bang-motion`](https://github.com/bangtutorial/bang-motion), [`better-design`](https://github.com/marvkr/better-design), [`canvas-ui`](https://github.com/DavidHDev/canvas-ui), [`cursify`](https://github.com/ui-layouts/cursify), [`design-taste`](https://github.com/madebymustafa/design-taste), [`higgsfield-websites`](https://github.com/higgsfield-ai/skills), [`motion-primitives`](https://github.com/ibelick/motion-primitives), [`paper-shaders`](https://github.com/paper-design/shaders), [`remotion-skills`](https://github.com/remotion-dev/skills), [`superdesign-skill`](https://github.com/superdesigndev/superdesign-skill)
-- **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val** — [`backward-traceability`](../skills/backward-traceability/SKILL.md), [`chatgpt-hermes-portability-kit`](../skills/chatgpt-hermes-portability-kit/SKILL.md), [`deep-research`](../skills/deep-research/SKILL.md), [`literature-review`](../skills/literature-review/SKILL.md), [`muza-skripsi-template`](../skills/muza-skripsi-template/SKILL.md), [`notebooklm-thinking-datascience`](../skills/notebooklm-thinking-datascience/SKILL.md), [`novelty-assessment`](../skills/novelty-assessment/SKILL.md), [`paper-revision`](../skills/paper-revision/SKILL.md), [`paper-writing-section`](../skills/paper-writing-section/SKILL.md), [`rebuttal-writing`](../skills/rebuttal-writing/SKILL.md), [`research-paper-writing`](../skills/research-paper-writing/SKILL.md)
+- **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val** — [`backward-traceability`](../skills/backward-traceability/SKILL.md), [`chatgpt-hermes-portability-kit`](../skills/chatgpt-hermes-portability-kit/SKILL.md), [`notebooklm-thinking-datascience`](../skills/notebooklm-thinking-datascience/SKILL.md)
 - **Yukino Yukinoshita, Sensei Shizuka Hiratsuka, Val, Kiki-Chii** — [`business-sage`](../skills/business-sage/SKILL.md), [`cli-anything-business-sage`](../skills/cli-anything-business-sage/SKILL.md)
+- **Sensei Shizuka Hiratsuka, Val** — [`deep-research`](../skills/deep-research/SKILL.md), [`literature-review`](../skills/literature-review/SKILL.md), [`muza-skripsi-template`](../skills/muza-skripsi-template/SKILL.md), [`novelty-assessment`](../skills/novelty-assessment/SKILL.md), [`paper-revision`](../skills/paper-revision/SKILL.md), [`paper-writing-section`](../skills/paper-writing-section/SKILL.md), [`rebuttal-writing`](../skills/rebuttal-writing/SKILL.md), [`research-paper-writing`](../skills/research-paper-writing/SKILL.md)
 - **Val, Shikaku Nara** — [`scrapling`](../skills/scrapling/SKILL.md)
 - **Val, Kiki-Chii, Shikaku Nara** — [`unslop`](../skills/unslop/SKILL.md)
 

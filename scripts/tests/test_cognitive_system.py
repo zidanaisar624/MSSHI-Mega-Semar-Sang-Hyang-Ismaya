@@ -77,6 +77,35 @@ class CognitiveSystemTests(unittest.TestCase):
             self.assertIn("timesfm-forecasting", roles["val"], f"timesfm-forecasting missing on val in {preset_id}")
             self.assertIn("symbolic-equation", roles["val"], f"symbolic-equation missing on val in {preset_id}")
 
+    def test_skripsi_and_journal_skills_belong_exclusively_to_val_and_shizuka_and_fit_hermes_limit(self):
+        # Hermes enforces MAX_DESCRIPTION_LENGTH = 1024 on SKILL.md frontmatter
+        sm = (ROOT / "skills" / "muza-skripsi-template" / "SKILL.md").read_text(encoding="utf-8-sig")
+        fm = sm.split("---")[1]
+        desc = fm.split("description:", 1)[1].strip()
+        self.assertLessEqual(len(desc), 1024, f"muza-skripsi-template description exceeds 1024 chars: {len(desc)}")
+
+        matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
+        academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+        exclusive = ("muza-skripsi-template", "literature-review", "deep-research")
+
+        muza_roles = {b["id"]: set(b.get("required_skills", [])) for b in matrix["bots"]}
+        for bot_id in ("yukino", "kiki-chii", "shikaku"):
+            for slug in exclusive:
+                self.assertNotIn(slug, muza_roles[bot_id], f"{slug} must not be on {bot_id} in muza-preset")
+        for bot_id in ("val", "shizuka"):
+            for slug in exclusive:
+                self.assertIn(slug, muza_roles[bot_id], f"{slug} must be on {bot_id} in muza-preset")
+
+        for preset_id in ("academic-mahasiswa", "academic-dosen"):
+            roles = {r: set(sk) for r, sk in academic["presets"][preset_id]["roles"].items()}
+            for bot_id in ("yukino", "kiki-chii", "shikaku"):
+                for slug in exclusive:
+                    self.assertNotIn(slug, roles[bot_id], f"{slug} must not be on {bot_id} in {preset_id}")
+            self.assertIn("muza-skripsi-template", roles["val"])
+            self.assertIn("muza-skripsi-template", roles["shizuka"])
+            self.assertIn("literature-review", roles["val"])
+            self.assertIn("literature-review", roles["shizuka"])
+
     def test_cognitive_manifest_has_4_missions_and_is_model_user_agnostic(self):
         manifest_path = ROOT / "configs" / "msshi_cognitive_system.json"
         self.assertTrue(manifest_path.is_file())

@@ -8,8 +8,8 @@
 ### *Asisten AI Terpadu untuk Tugas Kuliah Mahasiswa & Dosen (Skripsi, Tesis, Disertasi), Belajar Bareng Sensei, Content Creation, dan Coding*
 
 [![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-67%20Bundled%20(51%20Core%20%2B%2016%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-51%20Sources%20%7C%2048%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Skills](https://img.shields.io/badge/Skills-69%20Bundled%20(51%20Core%20%2B%2018%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-53%20Sources%20%7C%2050%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -18,7 +18,7 @@
 
 </div>
 
-> **v3.1.2 - Perbaikan instalasi:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, pembagian ArtCraft Val 4 / Shikaku 2 / Kiki 13, endpoint KAT opsional yang benar-benar dikonfigurasi, 67 skill / 51 sumber, dan PDF otomatis ke Downloads. [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
+> **v3.1.2 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, `69` skill bundel (`+1` opsional REA) / `53` sumber upstream (`0` orphan), **Win10 4GB Light Build** (`msshi light`), **Grim Prompter** & **Claude-BugHunter** khusus Coder, **Harness²** pada semua 5 bot di semua preset, serta **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
 
 > **KAT opsional, termasuk preset MuZA:** tidak diunduh atau diaktifkan otomatis. Pengguna lain dapat memilih endpoint atau perangkat yang memadai melalui wizard Coder.
 
