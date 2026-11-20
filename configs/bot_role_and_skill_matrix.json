@@ -329,7 +329,8 @@
         "harness2",
         "career-ops",
         "remote-jobs",
-        "mattpocock-engineering"
+        "mattpocock-engineering",
+        "grim-prompter"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -1438,6 +1439,18 @@
       ]
     },
     {
+      "slug": "grim-prompter",
+      "status": "bundled",
+      "path": "skills/grim-prompter/SKILL.md",
+      "purpose": "Pemodelan ancaman berbasis bukti (36 arsitektur, 29 metode, STRIDE/PASTA/LINDDUN/privasi) untuk Coder secara read-only.",
+      "scope": "contextual",
+      "source": "https://github.com/jmanico/grim-prompter",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "grim-prompter"
+      ]
+    },
+    {
       "slug": "artcraft-anicraft",
       "status": "external",
       "path": null,
@@ -1554,14 +1567,16 @@
       "unslop",
       "scrapling",
       "harness2",
-      "mattpocock-engineering"
+      "mattpocock-engineering",
+      "grim-prompter"
     ],
     "cybersec": [
       "ai-research-reproduction",
       "analyze-project",
       "antigravity-webdev-cybersec",
       "evaluating-code-models",
-      "mattpocock-engineering"
+      "mattpocock-engineering",
+      "grim-prompter"
     ]
   },
   "routes": [
@@ -1609,7 +1624,8 @@
       "unlimited-ocr-2",
       "muza-skripsi-template",
       "mattpocock-engineering",
-      "career-ops"
+      "career-ops",
+      "grim-prompter"
     ],
     "external_skills": [
       "addy-agent-skills",

@@ -977,6 +977,25 @@
       "requires": "Python 3.10+ dan FFmpeg/ffprobe; runtime, OCR/ASR/stems/VLM/model download dan generasi ulang merupakan opt-in terpisah.",
       "license": "Apache-2.0",
       "background_model_calls": false
+    },
+    {
+      "id": "grim-prompter",
+      "source": "https://github.com/jmanico/grim-prompter",
+      "source_type": "git",
+      "revision": "2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-20; runtime/task not tested by source review",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "cybersec",
+      "kind": "contextual-skill-integration",
+      "pack": "cybersec",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Susun threat model berbasis bukti (36 arsitektur, 29 metode, STRIDE/PASTA/LINDDUN, dan privasi GDPR/CCPA) secara read-only pada repositori yang dipilih.",
+      "requires": "Source cache terpisah di msshi-private/context-sources; analisis bersifat read-only terhadap kode proyek dan menulis laporan ke folder threat-model/.",
+      "license": "MIT",
+      "background_model_calls": false
     }
   ]
 }

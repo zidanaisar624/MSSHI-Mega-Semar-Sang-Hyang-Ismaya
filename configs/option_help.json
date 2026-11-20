@@ -508,6 +508,10 @@
     "artcraft-texturecraft": {
       "id": "Penyusunan tekstur melalui CLI lokal sesuai tiket tugas.",
       "en": "Use the local texturecraft CLI only for an explicit task ticket; do not open it on boot."
+    },
+    "grim-prompter": {
+      "id": "Pemodelan ancaman berbasis bukti (36 arsitektur, 29 metode, STRIDE/PASTA/LINDDUN, dan analisis privasi GDPR/CCPA) untuk Coder secara read-only.",
+      "en": "Evidence-traced threat modeling (36 architectures, 29 methods, STRIDE/PASTA/LINDDUN, and GDPR/CCPA privacy reviews) for the Coder in read-only mode."
     }
   },
   "packs": {

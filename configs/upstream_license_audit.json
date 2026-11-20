@@ -662,6 +662,18 @@
       "license_url": "https://raw.githubusercontent.com/JuneYaooo/rea-video/820d661e807034e0f0284262b4e93085cfd3da49/LICENSE",
       "license_sha256": "2beb280b855389587b12dfda5f61a7baf09d1c4a20aac833b1c96f9569c5e458",
       "status": "pinned_license_read; upstream implementation and runtimes not bundled"
+    },
+    {
+      "id": "grim-prompter",
+      "source": "https://github.com/jmanico/grim-prompter",
+      "revision": "2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2026 Manicode Security"
+      ],
+      "license_url": "https://raw.githubusercontent.com/jmanico/grim-prompter/2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf/LICENSE",
+      "license_sha256": "4e34094caee63d43009a2e2c611f59f9b349407f1afe392b82cb0e6908ee9cbc",
+      "status": "pinned_license_read; upstream implementation and runtimes not bundled"
     }
   ],
   "additional_runtime_terms": {

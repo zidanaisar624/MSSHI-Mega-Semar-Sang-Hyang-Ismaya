@@ -25,6 +25,7 @@ PINNED = {
     'remote-jobs': ('remoteintech/remote-jobs', '155939ad935d22afa8edbaaf0770b99f9d0dbf0d'),
     'mattpocock-skills': ('mattpocock/skills', '5863806dd4e15c63174bee4e7515a4256792ecfa'),
     'rea-video': ('JuneYaooo/rea-video', '820d661e807034e0f0284262b4e93085cfd3da49'),
+    'grim-prompter': ('jmanico/grim-prompter', '2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf'),
 }
 MAX_FILE = 8 * 1024 * 1024
 MAX_TOTAL = 64 * 1024 * 1024
@@ -93,6 +94,10 @@ def selected_file(name, row):
     if name == 'rea-video':
         return (row['path'].startswith(('rea_video/', 'skills/rea-video/'))
                 and path.suffix in {'.py', '.md', '.json', '.yaml', '.yml', '.sh'})
+    if name == 'grim-prompter':
+        return (row['path'] in {'MODELS.md', 'runbook.md', 'start-here.md', 'catalog.md'}
+                or (row['path'].startswith(('skills/threat-model/', 'helpers/', 'methods/', 'quick/', 'deep/', 'privacy/', 'reference/'))
+                    and path.suffix == '.md'))
     # Preserve the upstream workflow source, scripts, templates and modes. User
     # inputs/output never become part of the public reference checkout.
     if parts[0] in {'data', 'reports', 'output', 'employers', 'docs', 'web', 'dashboard', 'tests', 'batch'}:
@@ -143,6 +148,7 @@ def materialize(home, name):
         required += ['AGENTS.md', '.agents/skills/career-ops/SKILL.md', 'package.json',
                      'modes/_shared.md', 'modes/_writing.md']
     if name == 'rea-video': required += ['pyproject.toml', 'skills/rea-video/SKILL.md']
+    if name == 'grim-prompter': required += ['runbook.md', 'catalog.md', 'skills/threat-model/SKILL.md']
     selected_paths = {row['path'] for row in rows}
     missing = [path for path in required if path not in selected_paths]
     if missing:

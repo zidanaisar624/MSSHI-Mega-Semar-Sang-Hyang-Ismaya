@@ -43,8 +43,8 @@ class ContextSourcesTests(unittest.TestCase):
         all_roles = {'yukino', 'shizuka', 'val', 'kiki-chii', 'shikaku'}
         for slug, source in [('career-ops','career-ops'), ('remote-jobs','remote-jobs'),
                               ('mattpocock-engineering','mattpocock-skills'), ('harness2','harness2'),
-                              ('rea-video','rea-video')]:
-            expected = {'kiki-chii'} if slug == 'rea-video' else all_roles
+                              ('rea-video','rea-video'), ('grim-prompter','grim-prompter')]:
+            expected = {'kiki-chii'} if slug == 'rea-video' else ({'shikaku'} if slug == 'grim-prompter' else all_roles)
             owners = {b['id'] for b in matrix['bots'] if slug in b['required_skills']}
             self.assertEqual(owners, expected)
             self.assertEqual(set(upstreams[source]['roles']), expected)

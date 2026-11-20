@@ -89,9 +89,11 @@ class TestLightInstallerBundle(unittest.TestCase):
                 extracted = tmp_path / "extracted-light"
                 zf.extractall(extracted)
 
-            # Validate extracted light bundle passes release validation & preserves 67 skills
+            # Validate extracted light bundle passes release validation & preserves bundled skills
+            expected_bundled = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8-sig"))["bundled_skills"]
+            self.assertGreaterEqual(expected_bundled, 67)
             _, catalog, _ = cli.validate_release(extracted, "3.1.2")
-            self.assertEqual(sum(p is not None for p in catalog.values()), 67)
+            self.assertEqual(sum(p is not None for p in catalog.values()), expected_bundled)
 
             # Academic Mahasiswa & Dosen presets remain intact and do not force Obsidian
             presets = json.loads((extracted / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
@@ -133,10 +135,12 @@ class TestLightInstallerBundle(unittest.TestCase):
 
 class TestFastSkillScanner(unittest.TestCase):
     def test_bundled_67_skills_scan_p95_under_2s(self):
+        expected_bundled = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8-sig"))["bundled_skills"]
+        self.assertGreaterEqual(expected_bundled, 67)
         metrics = light.quick_skill_scan_metrics(ROOT / "skills", iterations=25, source=ROOT)
-        self.assertEqual(metrics["skill_count"], 67)
+        self.assertEqual(metrics["skill_count"], expected_bundled)
         self.assertEqual(metrics["iterations"], 25)
-        self.assertEqual(metrics["warm_cache_hits"], 67)
+        self.assertEqual(metrics["warm_cache_hits"], expected_bundled)
         self.assertLessEqual(metrics["cold_seconds"], 2.0)
         self.assertLessEqual(metrics["warm_p95_seconds"], 2.0)
         self.assertTrue(metrics["within_2s_target"])

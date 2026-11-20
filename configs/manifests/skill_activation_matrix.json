@@ -245,6 +245,21 @@
       ],
       "automatic_model_downloads": false,
       "automatic_vlm_calls": false
+    },
+    "grim-prompter": {
+      "profiles": [
+        "shikaku"
+      ],
+      "trigger": [
+        "threat model",
+        "stride",
+        "pasta",
+        "linddun",
+        "trust boundaries",
+        "privacy review"
+      ],
+      "read_only_code_inspection": true,
+      "background_model_calls": false
     }
   },
   "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee.",
