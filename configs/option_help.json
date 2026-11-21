@@ -784,6 +784,10 @@
     "upstreams-check": {
       "id": "Pemeriksa update GitHub upstream ('msshi upstreams check|integrity') bersifat read-only: hanya memberi tahu jika ada commit baru tanpa memasang otomatis.",
       "en": "Read-only GitHub upstream update notifier ('msshi upstreams check|integrity'): reports newer commits without auto-applying or mutating pinned revisions."
+    },
+    "skill-finder": {
+      "id": "Pencari skill otomatis lintas semua bot ('msshi find \"<tugas>\"' dan '--open <slug>'): mencari di skill aktif bot saat ini, bot spesialis lain, sumber terhubung, dan brankas arsip lokal (0 panggilan LLM; baca 1 SKILL.md on-demand).",
+      "en": "Automatic cross-bot lazy skill finder ('msshi find \"<task>\"' and '--open <slug>'): searches active bot skills, specialist teammates, connected sources, and archived skill vaults (0 LLM calls; reads 1 SKILL.md on demand)."
     }
   }
 }

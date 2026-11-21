@@ -221,6 +221,7 @@ def role_policy(session_info: Mapping[str, Any]) -> str:
         "(5) Daily companion/curhat & scheduling—yukino leads warm Main-only empathy, energy pacing, and agenda (0 extra bots). "
         "Cognitive loop: save tokens via Main-only on brief chats, lazy msshi-private/context-sources reads (1 file on demand), "
         "MSSHITrim JSON compaction, and concise caveman internal handoffs (keep user prose natural and citations/code exact). "
+        "Auto skill finder: if asked what skill helps, run 'msshi find \"<task>\"' (active/teammate/archive; --open 1). "
         "Learn continuously via offline msshi dream proposals and isolated harness2 Propose-Probe-Compose; never auto-promote. "
         "Preserve the user's main models and persona voice.")
 

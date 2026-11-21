@@ -147,9 +147,10 @@
           "id": "lazy_skill_and_source_cache",
           "components": [
             "scripts/msshi_skill_index.py",
+            "scripts/msshi_skill_finder.py",
             "scripts/msshi_context_sources.py"
           ],
-          "mechanism": "Pustaka & kurikulum besar (grim-prompter, claude-bughunter, mattpocock-skills, career-ops, remote-jobs, rea-video, ossu-computer-science) disimpan di msshi-private/context-sources/ di luar pemindai skills/ dan dibaca 1 file saat diminta."
+          "mechanism": "Pustaka & kurikulum besar (grim-prompter, claude-bughunter, mattpocock-skills, career-ops, remote-jobs, rea-video, ossu-computer-science) serta arsip skill impor (msshi-private/archived-skill-imports/) disimpan di luar pemindai skills/ dan dicari otomatis lewat 'msshi find' (0 panggilan LLM, baca 1 file on-demand)."
         },
         {
           "id": "lossless_tool_json_compaction",
@@ -871,6 +872,7 @@
         "msshi manual",
         "msshi light",
         "msshi learn",
+        "msshi find",
         "msshi upstreams"
       ],
       "rule": "All optional runtimes live isolated under msshi-private/, require explicit user installation, perform 0 background model calls, and never mutate provider/model/SOUL."

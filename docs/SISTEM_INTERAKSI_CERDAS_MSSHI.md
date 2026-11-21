@@ -50,8 +50,9 @@ flowchart TD
 ---
 
 ## 1. Pilar 1 — Bagaimana Sistem Menghemat Token Setiap Sesi
-1. **Cache Sumber di Luar Pemindai (`msshi-private/context-sources/`)**:
-   - Pustaka besar (`grim-prompter` 357 file, `claude-bughunter` 83 skill / 186 file, `mattpocock-skills`, `career-ops`, `remote-jobs`, `rea-video`) **tidak diletakkan langsung di folder `skills/`**. Bot hanya melihat wrapper `SKILL.md` ringkas, lalu membaca 1 file spesifik saat dibutuhkan lewat `msshi integrations source --name <nama> --skill <slug>`.
+1. **Cache Sumber & Pencari Skill Otomatis Lintas Bot (`msshi-private/context-sources/` + `msshi find`)**:
+   - Pustaka besar (`grim-prompter` 357 file, `claude-bughunter` 83 skill / 186 file, `mattpocock-skills`, `career-ops`, `remote-jobs`, `rea-video`, `ossu-computer-science`) serta arsip skill impor lokal (`msshi-private/archived-skill-imports/`) **tidak diletakkan langsung di folder `skills/`**.
+   - Saat pengguna bertanya di bot mana pun (*"Saya mau mengerjakan X, apakah ada skill yang bisa membantu?"*), bot otomatis menjalankan `msshi find "<tugas>"` (`0` panggilan LLM) untuk mengecek 4 lapis: **(1) skill aktif di bot itu**, **(2) bot spesialis lain** (menjaga batas Val/Shizuka/Shikaku/Kiki-Chii), **(3) sumber/kurikulum terhubung**, dan **(4) brankas arsip** (baca 1 file `SKILL.md` on-demand lewat `msshi find --open <slug>`).
 2. **Kompresi Output Tool Otomatis (`MSSHITrim` / `msshi-auto-trim`)**:
    - Setiap output tool JSON besar (`>= 2048` karakter) dipadatkan lokal `20%–55%` dengan jaminan kesamaan JSON kanonik 100% (*fail-open*, `0` panggilan LLM, tanpa TLS proxy/CA/daemon).
 3. **Handoff Internal Ringkas (`caveman` / `msshi compact`)**:

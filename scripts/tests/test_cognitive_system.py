@@ -293,6 +293,7 @@ class CognitiveSystemTests(unittest.TestCase):
                             "Daily companion/curhat",
                             "MSSHITrim",
                             "caveman",
+                            "msshi find",
                             "timesfm-forecasting",
                             "grim-prompter",
                             "claude-bughunter",
@@ -614,6 +615,88 @@ class CognitiveSystemTests(unittest.TestCase):
                 rep = doc_mod.diagnose()
                 self.assertIn("connections", rep)
                 self.assertEqual(rep["connections"]["planes_governed"], 6)
+
+    def test_cross_bot_lazy_skill_finder_4_layers_boundaries_and_open_confinement(self):
+        import msshi_skill_finder as finder
+
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "hermes-home"
+            home.mkdir()
+            (home / "config.yaml").write_text("model: keep\n", encoding="utf-8")
+            for bot in ("yukino", "shizuka", "val", "kiki-chii", "shikaku"):
+                pdir = home / "profiles" / bot
+                (pdir / "skills").mkdir(parents=True)
+                (pdir / "config.yaml").write_text("model: keep\n", encoding="utf-8")
+
+            # Active skills across different bots
+            (home / "profiles" / "yukino" / "skills" / "focus-my-energy").mkdir(parents=True)
+            (home / "profiles" / "yukino" / "skills" / "focus-my-energy" / "SKILL.md").write_text(
+                "---\nname: focus-my-energy\ndescription: Atur jadwal harian dan energi.\n---\nBody\n",
+                encoding="utf-8",
+            )
+            (home / "profiles" / "val" / "skills" / "riset-mendalam-nusantara-global").mkdir(parents=True)
+            (home / "profiles" / "val" / "skills" / "riset-mendalam-nusantara-global" / "SKILL.md").write_text(
+                "---\nname: riset-mendalam-nusantara-global\ndescription: Riset mendalam SINTA Scopus skripsi tesis.\n---\nBody\n",
+                encoding="utf-8",
+            )
+            (home / "profiles" / "kiki-chii" / "skills" / "slide-generation").mkdir(parents=True)
+            (home / "profiles" / "kiki-chii" / "skills" / "slide-generation" / "SKILL.md").write_text(
+                "---\nname: slide-generation\ndescription: Generate clean presentation slides and decks.\n---\nBody\n",
+                encoding="utf-8",
+            )
+
+            # Archived vault (1 general skill + 1 restricted specialist skill)
+            arch_pptx = home / "msshi-private" / "archived-skill-imports" / "openclaw-imports" / "pptx-pro"
+            arch_pptx.mkdir(parents=True)
+            (arch_pptx / "SKILL.md").write_text(
+                "---\nname: pptx-pro\ndescription: Build PowerPoint presentation decks from markdown outlines.\n---\n# PPTX Pro\nSteps here.\n",
+                encoding="utf-8",
+            )
+            arch_tfm = home / "msshi-private" / "archived-skill-imports" / "default-extras" / "timesfm-forecasting"
+            arch_tfm.mkdir(parents=True)
+            (arch_tfm / "SKILL.md").write_text(
+                "---\nname: timesfm-forecasting\ndescription: Time series forecasting with TimesFM.\n---\nVal only.\n",
+                encoding="utf-8",
+            )
+
+            # Layer 4 index builds and caches under msshi-runtime/skill-index/archive-catalog.json
+            idx = finder.build_or_load_archive_index(home, refresh=True)
+            self.assertEqual(idx["count"], 2)
+            self.assertTrue((home / "msshi-runtime" / "skill-index" / "archive-catalog.json").is_file())
+
+            # Auto-profile detection from env
+            self.assertEqual(finder._detect_profile(None, {"HERMES_PROFILE": "Val"}), "val")
+            self.assertEqual(finder._detect_profile(None, {"HERMES_HOME": str(home / "profiles" / "shikaku")}), "shikaku")
+            self.assertEqual(finder._detect_profile("kiki-chii", {"HERMES_PROFILE": "val"}), "kiki-chii")
+
+            # Query 1: Yukino asks about skripsi SINTA -> delegates to Val, never leaks Val-only archive
+            r_skripsi = finder.find_skills("Saya mau mengerjakan riset skripsi SINTA, apakah ada skill?", home, profile="yukino")
+            self.assertEqual(r_skripsi["llm_calls"], 0)
+            self.assertTrue(any(x["slug"] == "riset-mendalam-nusantara-global" for x in r_skripsi["delegate_to_teammate"]))
+            self.assertIn("val", r_skripsi["recommendation"].lower())
+
+            # Query 2: Yukino asks about forecasting -> timesfm-forecasting NOT leaked from archive to yukino
+            r_fc = finder.find_skills("prediksi forecasting timesfm", home, profile="yukino")
+            self.assertFalse(any(x["slug"] == "timesfm-forecasting" for x in r_fc["archived_vault"]))
+
+            # Query 3: Yukino asks about presentation -> finds Kiki-Chii active AND pptx-pro in archive
+            r_pres = finder.find_skills("Saya mau bikin presentasi powerpoint", home, profile="yukino")
+            self.assertTrue(any(x["slug"] == "slide-generation" for x in r_pres["delegate_to_teammate"]))
+            self.assertTrue(any(x["slug"] == "pptx-pro" for x in r_pres["archived_vault"]))
+
+            # Query 4: Yukino asks about OSSU CS -> finds connected university in Layer 3
+            r_ossu = finder.find_skills("belajar kurikulum ossu ilmu komputer", home, profile="yukino")
+            self.assertTrue(any(x["slug"] == "ossu-computer-science" for x in r_ossu["connected_sources"]))
+
+            # --open reads 1 archived file safely for general skills, blocks specialist-only leak
+            opened = finder.open_archived_skill("pptx-pro", home, profile="yukino")
+            self.assertEqual(opened["slug"], "pptx-pro")
+            self.assertIn("PPTX Pro", opened["content"])
+            with self.assertRaises(ValueError):
+                finder.open_archived_skill("timesfm-forecasting", home, profile="yukino")
+            # Val IS allowed to inspect its own specialist skill if needed
+            opened_val = finder.open_archived_skill("timesfm-forecasting", home, profile="val")
+            self.assertEqual(opened_val["slug"], "timesfm-forecasting")
 
 
 if __name__ == "__main__":
