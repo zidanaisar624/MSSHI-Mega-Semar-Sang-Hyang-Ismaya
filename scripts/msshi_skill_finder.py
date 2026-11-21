@@ -194,6 +194,8 @@ def _scan_skills_tree(root: Path, bucket_label: str) -> list[dict[str, Any]]:
             d for d in dirs
             if d.lower() not in excluded
             and not d.startswith(".")
+            and ".bak-" not in d.lower()
+            and not d.lower().endswith(".bak")
             and not skill_idx.is_link(cur / d)
         )
         if "SKILL.md" in files:

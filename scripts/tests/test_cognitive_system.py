@@ -658,8 +658,14 @@ class CognitiveSystemTests(unittest.TestCase):
                 "---\nname: timesfm-forecasting\ndescription: Time series forecasting with TimesFM.\n---\nVal only.\n",
                 encoding="utf-8",
             )
+            arch_bak = home / "msshi-private" / "archived-skill-imports" / "openclaw-imports" / "literature-review.bak-123"
+            arch_bak.mkdir(parents=True)
+            (arch_bak / "SKILL.md").write_text(
+                "---\nname: literature-review\ndescription: Stale backup copy.\n---\nBackup.\n",
+                encoding="utf-8",
+            )
 
-            # Layer 4 index builds and caches under msshi-runtime/skill-index/archive-catalog.json
+            # Layer 4 index builds and caches under msshi-runtime/skill-index/archive-catalog.json (skips .bak- artifacts)
             idx = finder.build_or_load_archive_index(home, refresh=True)
             self.assertEqual(idx["count"], 2)
             self.assertTrue((home / "msshi-runtime" / "skill-index" / "archive-catalog.json").is_file())
