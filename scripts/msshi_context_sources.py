@@ -113,7 +113,7 @@ def selected_file(name, row):
         return (row['path'] in {'CHANGELOG.md', 'DECISIONS.md', 'SECURITY.md'}
                 or (row['path'].startswith('skills/rust-anything/') and path.suffix in {'.md', '.json'}))
     if name == 'lemo-opuscar':
-        return (row['path'] in {'SKILL.md', 'TECHNIQUE.md', 'REUSE.toml'}
+        return (row['path'] in {'TECHNIQUE.md', 'REUSE.toml', 'plugin/skills/lemo-opuscar/SKILL.md'}
                 or (row['path'].startswith('LICENSES/') and path.suffix == '.txt')
                 or (row['path'].startswith('styles/') and not parts[1].startswith('_')
                     and path.name in {'style.json', 'STYLE.md', 'DEMO.md'}))
@@ -173,7 +173,7 @@ def _required_files(name):
     if name == 'rust-anything':
         required += ['skills/rust-anything/SKILL.md', 'skills/rust-anything/whole-app.md']
     if name == 'lemo-opuscar':
-        required += ['SKILL.md', 'TECHNIQUE.md']
+        required += ['plugin/skills/lemo-opuscar/SKILL.md', 'TECHNIQUE.md']
     return required
 
 
