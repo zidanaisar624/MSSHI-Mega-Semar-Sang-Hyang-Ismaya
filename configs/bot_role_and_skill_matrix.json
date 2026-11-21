@@ -243,6 +243,7 @@
         "mattpocock-engineering",
         "harness2",
         "rea-video",
+        "lemo-opuscar",
         "spacewise",
         "sharewise",
         "belajar-pemula"
@@ -338,6 +339,7 @@
         "mattpocock-engineering",
         "grim-prompter",
         "claude-bughunter",
+        "rust-anything",
         "spacewise",
         "sharewise",
         "belajar-pemula"
@@ -1545,6 +1547,30 @@
       "purpose": "Khusus Val: pipeline riset mendalam 10 tahap (Quick/Standard/Deep) & metodologi akademik standar Indonesia (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) dan global (Scopus/WoS, PRISMA 2020, DOI).",
       "scope": "research",
       "source": "MSSHI v3.1.2 original (pipeline pattern inspired by MIT hermes-researcher)"
+    },
+    {
+      "slug": "rust-anything",
+      "status": "bundled",
+      "path": "skills/rust-anything/SKILL.md",
+      "purpose": "Port dan tulis ulang kode TS/JS/Python/C/Go/Ruby/Java ke Rust secara bertahap dengan rekaman ground-truth, diff, benchmark, shadow, dan gate kelulusan khusus Coder.",
+      "scope": "contextual",
+      "source": "https://github.com/erkamyaman/rust-anything",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "rust-anything"
+      ]
+    },
+    {
+      "slug": "lemo-opuscar",
+      "status": "bundled",
+      "path": "skills/lemo-opuscar/SKILL.md",
+      "purpose": "Katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) untuk Kiki-Chii: baca 1 STYLE.md on-demand dari cache terpin dengan Concepting First dan review manusia.",
+      "scope": "contextual",
+      "source": "https://github.com/lemomo-ai/lemo-opuscar",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "lemo-opuscar"
+      ]
     }
   ],
   "packs": {
@@ -1580,7 +1606,8 @@
       "slide-generation",
       "unslop",
       "brag",
-      "rea-video"
+      "rea-video",
+      "lemo-opuscar"
     ],
     "business": [
       "business-sage",
@@ -1642,7 +1669,8 @@
       "harness2",
       "mattpocock-engineering",
       "grim-prompter",
-      "claude-bughunter"
+      "claude-bughunter",
+      "rust-anything"
     ],
     "cybersec": [
       "ai-research-reproduction",
@@ -1701,7 +1729,8 @@
       "mattpocock-engineering",
       "career-ops",
       "grim-prompter",
-      "claude-bughunter"
+      "claude-bughunter",
+      "rust-anything"
     ],
     "external_skills": [
       "addy-agent-skills",

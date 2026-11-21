@@ -514,8 +514,8 @@
       "en": "Evidence-traced threat modeling (36 architectures, 29 methods, STRIDE/PASTA/LINDDUN, and GDPR/CCPA privacy reviews) for the Coder in read-only mode."
     },
     "claude-bughunter": {
-      "id": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) untuk Coder pada aset/scope berizin.",
-      "en": "Authorized vulnerability assessment, triage validation, evidence hygiene and security reporting (83 skills, 15 commands, 681 disclosed patterns) for the Coder on owned or in-scope targets."
+      "id": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola, 433 laporan terungkap bersitasi terverifikasi) untuk Coder pada aset/scope berizin.",
+      "en": "Authorized vulnerability assessment, triage validation, evidence hygiene and security reporting (83 skills, 15 commands, 681 patterns, 433 content-verified cited disclosures) for the Coder on owned or in-scope targets."
     },
     "imagination-studio": {
       "id": "Opsional khusus Kiki-Chii/Content Creator: jembatan Slate & antrean render lokal Imagination Studio (gambar, klip video+suara, voice, musik, SFX) yang bekerja sama dengan Filmmaker saat dipilih.",
@@ -536,6 +536,14 @@
     "riset-mendalam-nusantara-global": {
       "id": "Khusus Val: pipeline riset mendalam 10 tahap (Quick/Standard/Deep, adequacy gate, devil's advocate, audit klaim & sitasi) dengan metodologi akademik Indonesia (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) & global (Scopus/WoS, PRISMA 2020).",
       "en": "Val-only: 10-stage adaptive deep-research pipeline (Quick/Standard/Deep, adequacy gate, devil's advocate, claim & citation audit) with original Indonesian (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) and global (Scopus/WoS, PRISMA 2020) methodology."
+    },
+    "rust-anything": {
+      "id": "Khusus Coder (Shikaku): migrasi & porting bertahap kode TS/JS/Python/C/Go/Ruby/Java ke Rust dengan rekaman ground-truth, diff, benchmark, shadow, dan gate kelulusan (CLI/MCP rust-anything terpisah).",
+      "en": "Coder-only (Shikaku): incremental verified porting of TS/JS/Python/C/Go/Ruby/Java code or whole apps to Rust via behavioral recording, diff, bench, shadow, and gate (separate rust-anything CLI/MCP)."
+    },
+    "lemo-opuscar": {
+      "id": "Khusus Kiki-Chii (Content Creator/Filmmaker): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) dengan cache teks terpin on-demand (0 aset media berat di folder skills/) dan Concepting First.",
+      "en": "Kiki-Chii only (Content Creator/Filmmaker): catalog of 15 categories and 99 code-driven short-film styles (Lemo-Opuscar) via pinned text-only on-demand cache (zero heavy media in skills/) with Concepting First."
     }
   },
   "packs": {

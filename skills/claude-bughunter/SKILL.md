@@ -1,10 +1,10 @@
 ---
 name: claude-bughunter
-description: Kerangka kerja audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan terungkap) untuk Coder (Shikaku / Sir. Robot) khusus pada aset milik sendiri, program bug bounty in-scope, atau lab/CTF berizin.
+description: Kerangka kerja audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan, 433 laporan terungkap bersitasi terverifikasi) untuk Coder (Shikaku / Sir. Robot) khusus pada aset milik sendiri, program bug bounty in-scope, atau lab/CTF berizin.
 license: MIT
 metadata:
   upstream: https://github.com/elementalsouls/Claude-BugHunter
-  upstream_commit: 0e70a021e59d6875004e7a563f8511aca2ba3bc1
+  upstream_commit: 8258d29726804f5b954a09c625caedc183f7130d
   upstream_license: MIT (code); CC-BY-4.0 (documentation and skill content)
   activation: contextual-authorized-security
 ---
@@ -22,9 +22,10 @@ provider, endpoint, API key, atau SOUL.
 
 ## 1. Lokasi Pustaka & Cache Lokal Terpin
 
-Seluruh 83 skill, 15 panduan command, indeks `cbh/data/skill_index.json`, dan 681 pola laporan
-keamanan disimpan di cache sumber terpin di luar pemindai `skills/` agar pemindaian skill tetap
-cepat dan paket inti tetap ringan:
+Seluruh 83 skill, 15 panduan command, indeks `cbh/data/skill_index.json`, 681 pola laporan, dan
+433 laporan terungkap bersitasi terverifikasi di `docs/disclosed-reports/` (36 berkas pustaka pola)
+disimpan di cache sumber terpin di luar pemindai `skills/` agar pemindaian skill tetap cepat dan paket
+inti tetap ringan:
 
 ```text
 msshi integrations source --home HERMES_ROOT --name claude-bughunter
@@ -35,8 +36,8 @@ msshi integrations source --home HERMES_ROOT --name claude-bughunter --skill tri
 
 - Tanpa `--fetch`, perintah hanya menampilkan status lokal (`0` panggilan model, `0` koneksi jaringan).
 - `--fetch` mengunduh dan memverifikasi hash Git blob serta SHA-256 pada commit terpin
-  `0e70a021e59d6875004e7a563f8511aca2ba3bc1` ke
-  `msshi-private/context-sources/claude-bughunter/0e70a021e59d6875004e7a563f8511aca2ba3bc1`.
+  `8258d29726804f5b954a09c625caedc183f7130d` ke
+  `msshi-private/context-sources/claude-bughunter/8258d29726804f5b954a09c625caedc183f7130d`.
 - Baca hanya 1–2 file skill/referensi relevan dari `source_path` (atau lewat `--skill <nama>`);
   **jangan** memuat seluruh 83 skill atau seluruh arsip laporan ke konteks sekaligus.
 

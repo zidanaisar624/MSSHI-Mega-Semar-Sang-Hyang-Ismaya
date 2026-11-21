@@ -27,8 +27,10 @@ PINNED = {
     'mattpocock-skills': ('mattpocock/skills', '5863806dd4e15c63174bee4e7515a4256792ecfa'),
     'rea-video': ('JuneYaooo/rea-video', '820d661e807034e0f0284262b4e93085cfd3da49'),
     'grim-prompter': ('jmanico/grim-prompter', '2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf'),
-    'claude-bughunter': ('elementalsouls/Claude-BugHunter', '0e70a021e59d6875004e7a563f8511aca2ba3bc1'),
+    'claude-bughunter': ('elementalsouls/Claude-BugHunter', '8258d29726804f5b954a09c625caedc183f7130d'),
     'ossu-computer-science': ('ossu/computer-science', '8f8272b1d378d31494240aa1d667aa6b045c6552'),
+    'rust-anything': ('erkamyaman/rust-anything', '584e63888495a5568b8400a6a4194e43885ae609'),
+    'lemo-opuscar': ('lemomo-ai/lemo-opuscar', 'f9e204293930952b61ba921cd8944d05f121beee'),
 }
 MAX_FILE = 8 * 1024 * 1024
 MAX_TOTAL = 64 * 1024 * 1024
@@ -107,6 +109,14 @@ def selected_file(name, row):
     if name == 'ossu-computer-science':
         return (row['path'] in {'CURRICULAR_GUIDELINES.md', 'FAQ.md', 'HELP.md', 'CONTRIBUTING.md', 'CHANGELOG.md'}
                 or (row['path'].startswith(('coursepages/', 'extras/')) and path.suffix == '.md'))
+    if name == 'rust-anything':
+        return (row['path'] in {'CHANGELOG.md', 'DECISIONS.md', 'SECURITY.md'}
+                or (row['path'].startswith('skills/rust-anything/') and path.suffix in {'.md', '.json'}))
+    if name == 'lemo-opuscar':
+        return (row['path'] in {'SKILL.md', 'TECHNIQUE.md', 'REUSE.toml'}
+                or (row['path'].startswith('LICENSES/') and path.suffix == '.txt')
+                or (row['path'].startswith('styles/') and not parts[1].startswith('_')
+                    and path.name in {'style.json', 'STYLE.md', 'DEMO.md'}))
     # Preserve the upstream workflow source, scripts, templates and modes. User
     # inputs/output never become part of the public reference checkout.
     if parts[0] in {'data', 'reports', 'output', 'employers', 'docs', 'web', 'dashboard', 'tests', 'batch'}:
@@ -160,31 +170,38 @@ def _required_files(name):
         required += ['LICENSE-CONTENT', 'NOTICE', 'SECURITY.md', 'cbh/data/skill_index.json']
     if name == 'ossu-computer-science':
         required += ['CURRICULAR_GUIDELINES.md', 'FAQ.md']
+    if name == 'rust-anything':
+        required += ['skills/rust-anything/SKILL.md', 'skills/rust-anything/whole-app.md']
+    if name == 'lemo-opuscar':
+        required += ['SKILL.md', 'TECHNIQUE.md']
     return required
 
 
 def _materialize_via_git(home, name, required):
     """Fallback when api.github.com hits rate limit or raw.githubusercontent.com stalls.
 
-    Clones a bare shallow repository at the reviewed commit, verifies Git blob SHA-1,
-    enforces the same path/size/partial-cache guards, and writes MSSHI_SNAPSHOT.json.
+    Clones a bare shallow repository at the reviewed commit on the same drive as `home`
+    (filtering out >512 KB binary blobs so large media repos never exhaust C: or bandwidth),
+    verifies Git blob SHA-1, enforces path/size/partial-cache guards, and writes MSSHI_SNAPSHOT.json.
     """
     repo, pin = PINNED[name]
     root = folder(home, name)
-    with tempfile.TemporaryDirectory(prefix='msshi-git-src-') as tmp:
+    root.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='msshi-git-src-', dir=root.parent) as tmp:
         clone_dir = Path(tmp) / 'repo'
+        git_env = {**os.environ, 'TMP': str(tmp), 'TEMP': str(tmp)}
         subprocess.run(
             ['git', '-c', 'http.postBuffer=16m', '-c', 'pack.windowMemory=32m', '-c', 'pack.threads=1',
-             'clone', '--bare', '--depth=1', f'https://github.com/{repo}.git', str(clone_dir)],
-            check=True, capture_output=True, timeout=180,
+             'clone', '--bare', '--depth=1', '--filter=blob:limit=512k', f'https://github.com/{repo}.git', str(clone_dir)],
+            check=True, capture_output=True, timeout=240, env=git_env,
         )
         probe = subprocess.run(['git', '-C', str(clone_dir), 'cat-file', '-e', f'{pin}^{{commit}}'],
-                               capture_output=True, timeout=30)
+                               capture_output=True, timeout=30, env=git_env)
         if probe.returncode != 0:
             subprocess.run(
                 ['git', '-C', str(clone_dir), '-c', 'http.postBuffer=16m', '-c', 'pack.windowMemory=32m',
-                 '-c', 'pack.threads=1', 'fetch', '--depth=1', 'origin', pin],
-                check=True, capture_output=True, timeout=180,
+                 '-c', 'pack.threads=1', 'fetch', '--depth=1', '--filter=blob:limit=512k', 'origin', pin],
+                check=True, capture_output=True, timeout=240, env=git_env,
             )
         ls = subprocess.run(['git', '-C', str(clone_dir), 'ls-tree', '-r', '-l', '-z', pin],
                             check=True, capture_output=True, timeout=60)
@@ -330,6 +347,44 @@ def skills(home, name):
     return rows
 
 
+def lemo_styles(home, query='', limit=20):
+    if not verify_cached(home, 'lemo-opuscar'):
+        raise ValueError('Lemo-Opuscar not cached; explicitly request --fetch first')
+    root = folder(home, 'lemo-opuscar')
+    terms = [t for t in query.casefold().split() if t]
+    rows = []
+    categories: dict[str, int] = {}
+    for sj in sorted((root / 'styles').glob('*/style.json')):
+        slug = sj.parent.name
+        if slug.startswith('_'):
+            continue
+        data = json.loads(sj.read_text(encoding='utf-8-sig'))
+        cat = str(data.get('category_en') or 'Other')
+        categories[cat] = categories.get(cat, 0) + 1
+        haystack = ' '.join([
+            slug, str(data.get('en') or ''), cat, str(data.get('line') or ''),
+            ' '.join(str(u) for u in (data.get('uses') or [])),
+        ]).casefold()
+        if terms and not all(t in haystack for t in terms):
+            continue
+        rows.append({
+            'slug': slug,
+            'num': str(data.get('num') or ''),
+            'name': str(data.get('en') or slug),
+            'category': cat,
+            'line': str(data.get('line') or ''),
+            'uses': list(data.get('uses') or []),
+            'style_md': str(sj.parent / 'STYLE.md'),
+        })
+    return {
+        'total_styles': sum(categories.values()),
+        'total_categories': len(categories),
+        'categories': dict(sorted(categories.items())),
+        'query': query,
+        'matches': rows[:limit] if query else rows,
+    }
+
+
 def query_companies(home, query, limit=10):
     if not query.strip():raise ValueError('Provide a nonempty company/directory query')
     if not verify_cached(home, 'remote-jobs'):raise ValueError('Directory not cached; explicitly request --fetch first')
@@ -435,16 +490,32 @@ def main(argv=None):
         if args.fetch:materialize(home, args.name); result = status(home, args.name)
         elif args.install_runtime:result = install_runtime(home, args.name)
         elif args.list or args.skill:
-            if args.name not in {'mattpocock-skills', 'claude-bughunter'}:raise ValueError('--list/--skill apply to mattpocock-skills or claude-bughunter only')
-            entries = skills(home, args.name)
-            if args.skill:
-                selected = next((row for row in entries if row['name'] == args.skill), None)
-                if selected is None:raise ValueError('Requested cached skill not found')
-                result = {**selected, 'content': Path(selected['path']).read_text(encoding='utf-8-sig')}
-            else:result = {'skills': entries}
+            if args.name == 'lemo-opuscar':
+                catalog = lemo_styles(home)
+                if args.skill:
+                    wanted = args.skill.strip().casefold()
+                    selected = next((row for row in catalog['matches'] if row['slug'].casefold() == wanted), None)
+                    if selected is None:raise ValueError('Requested cached Lemo-Opuscar style not found')
+                    style_path = checked(Path(selected['style_md']))
+                    result = {**selected, 'content': style_path.read_text(encoding='utf-8-sig')}
+                else:
+                    result = catalog
+            elif args.name in {'mattpocock-skills', 'claude-bughunter', 'rust-anything'}:
+                entries = skills(home, args.name)
+                if args.skill:
+                    selected = next((row for row in entries if row['name'] == args.skill), None)
+                    if selected is None:raise ValueError('Requested cached skill not found')
+                    result = {**selected, 'content': Path(selected['path']).read_text(encoding='utf-8-sig')}
+                else:result = {'skills': entries}
+            else:
+                raise ValueError('--list/--skill apply to mattpocock-skills, claude-bughunter, rust-anything, or lemo-opuscar only')
         elif args.query:
-            if args.name != 'remote-jobs':raise ValueError('--query applies to remote-jobs only')
-            result = query_companies(home, args.query, args.limit)
+            if args.name == 'remote-jobs':
+                result = query_companies(home, args.query, args.limit)
+            elif args.name == 'lemo-opuscar':
+                result = lemo_styles(home, args.query, args.limit)
+            else:
+                raise ValueError('--query applies to remote-jobs or lemo-opuscar only')
         else:result = status(home, args.name)
         print(json.dumps(result, ensure_ascii=False, indent=2));return 0
     except (OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:

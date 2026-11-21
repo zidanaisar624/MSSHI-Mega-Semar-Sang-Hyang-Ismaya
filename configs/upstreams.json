@@ -1001,8 +1001,8 @@
       "id": "claude-bughunter",
       "source": "https://github.com/elementalsouls/Claude-BugHunter",
       "source_type": "git",
-      "revision": "0e70a021e59d6875004e7a563f8511aca2ba3bc1",
-      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-20; runtime/task not tested by source review",
+      "revision": "8258d29726804f5b954a09c625caedc183f7130d",
+      "verification": "primary-source/pinned-package/frontmatter/license reviewed 2026-11-21 (433 content-verified cited disclosed reports across 36 pattern libraries); runtime/task not tested by source review",
       "status": "external-opt-in",
       "auto_start": false,
       "domain": "cybersec",
@@ -1011,7 +1011,7 @@
       "roles": [
         "shikaku"
       ],
-      "use_when": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) pada aset milik sendiri, program bug bounty in-scope, atau lab/CTF berizin.",
+      "use_when": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan, 433 laporan terungkap bersitasi terverifikasi) pada aset milik sendiri, program bug bounty in-scope, atau lab/CTF berizin.",
       "requires": "Source cache terpisah di msshi-private/context-sources; wajib verifikasi izin/scope tertulis; tidak memasang Burp/HackerOne MCP atau menjalankan pemindaian otomatis.",
       "license": "MIT (code); CC-BY-4.0 (documentation and skill content)",
       "background_model_calls": false
@@ -1211,6 +1211,44 @@
       "use_when": "Referensi taksonomi topik metodologi umum saja (0 teks disalin); skill Val `riset-mendalam-nusantara-global` ditulis 100% orisinal khusus standar Indonesia & global.",
       "requires": "Tidak diunduh atau didistribusikan ulang karena tidak memiliki berkas lisensi terbuka.",
       "license": "NOASSERTION (unlicensed; 0 text copied)",
+      "background_model_calls": false
+    },
+    {
+      "id": "rust-anything",
+      "source": "https://github.com/erkamyaman/rust-anything",
+      "source_type": "git",
+      "revision": "584e63888495a5568b8400a6a4194e43885ae609",
+      "verification": "primary-source/pinned-package/MIT-license reviewed 2026-11-21; thin contextual wrapper with pinned lazy markdown cache outside skills/",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "contextual-skill-integration",
+      "pack": "webdev",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Migrasi dan porting bertahap kode TS/JS/Python/C/Go/Ruby/Java ke Rust dengan rekaman ground-truth, diff, benchmark, shadow, dan gate kelulusan khusus Shikaku.",
+      "requires": "Source cache terpisah di msshi-private/context-sources; toolchain Rust (cargo/rustc) dan CLI/MCP rust-anything dipasang terpisah secara eksplisit.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "lemo-opuscar",
+      "source": "https://github.com/lemomo-ai/lemo-opuscar",
+      "source_type": "git",
+      "revision": "f9e204293930952b61ba921cd8944d05f121beee",
+      "verification": "primary-source/multi-license reviewed 2026-11-21; 0 bytes of CC-BY-NC docs or media copied into MIT repo — original wrapper + lazy text-only context cache outside skills/",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "video",
+      "kind": "contextual-skill-integration",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Katalog 15 kategori & 99 gaya film pendek berbasis kode untuk Kiki-Chii (baca 1 STYLE.md on-demand dari cache terpin; Concepting First + review manusia).",
+      "requires": "Cache teks/JSON terpisah di msshi-private/context-sources (aset media berat >512 KB dilewati); alat render video/audio (Node/FFmpeg/Chromium) terpisah; ikuti batas CC BY-NC 4.0 untuk dokumentasi.",
+      "license": "MIT (code); CC-BY-NC-4.0 with film-making permission (docs); CC-BY-4.0 (demo films/pictures); third-party marks/Clawd excluded",
       "background_model_calls": false
     }
   ]

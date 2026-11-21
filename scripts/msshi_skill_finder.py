@@ -69,6 +69,9 @@ _SYNONYMS: dict[str, tuple[str, ...]] = {
     "karier": ("career", "job", "cv", "resume", "remote"),
     "lowongan": ("job", "remote", "career", "company"),
     "bahasa": ("humanizer", "writing", "indonesia", "english", "prose"),
+    "rust": ("rust", "port", "rewrite", "migrate", "cargo", "benchmark"),
+    "animasi": ("animation", "motion", "film", "style", "lemo", "opuscar", "video"),
+    "gaya": ("style", "lemo", "opuscar", "film", "visual", "design"),
 }
 
 _CONNECTED_SOURCES_META: tuple[dict[str, Any], ...] = (
@@ -91,7 +94,21 @@ _CONNECTED_SOURCES_META: tuple[dict[str, Any], ...] = (
         "kind": "context_source",
         "lead_bot": "shikaku",
         "command": "msshi integrations source --name claude-bughunter --list",
-        "description": "Audit kerentanan & bug bounty terotorisasi (83 skill keamanan, triage, validasi bukti) khusus Shikaku.",
+        "description": "Audit kerentanan & bug bounty terotorisasi (83 skill keamanan, 15 command, 681 pola, 433 laporan terungkap bersitasi terverifikasi) khusus Shikaku.",
+    },
+    {
+        "slug": "rust-anything",
+        "kind": "context_source",
+        "lead_bot": "shikaku",
+        "command": "msshi integrations source --name rust-anything --list",
+        "description": "Port & tulis ulang kode TS/JS/Python/C/Go/Ruby/Java ke Rust bertahap dengan rekaman ground-truth, diff, bench, dan gate kelulusan khusus Shikaku.",
+    },
+    {
+        "slug": "lemo-opuscar",
+        "kind": "context_source",
+        "lead_bot": "kiki-chii",
+        "command": "msshi integrations source --name lemo-opuscar --list",
+        "description": "Katalog 15 kategori & 99 gaya film pendek berbasis kode (dokumenter, lukisan, sketsa, cetak, tipografi, diagram, kartun, 3D, data/peta) khusus Kiki-Chii.",
     },
     {
         "slug": "mattpocock-skills",
@@ -141,7 +158,9 @@ _SPECIALIST_ONLY: dict[str, tuple[str, ...]] = {
     "rebuttal-writing": ("val", "shizuka"),
     "grim-prompter": ("shikaku",),
     "claude-bughunter": ("shikaku",),
+    "rust-anything": ("shikaku",),
     "ponytail": ("shikaku",),
+    "lemo-opuscar": ("kiki-chii",),
 }
 
 

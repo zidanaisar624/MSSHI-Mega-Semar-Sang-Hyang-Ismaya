@@ -86,6 +86,7 @@
         "filmmaking-videography-photography-s2",
         "motion-graphics-suite",
         "rea-video",
+        "lemo-opuscar",
         "brag",
         "unslop",
         "academic-plotting",
@@ -109,6 +110,7 @@
         "analyze-project",
         "explore-code",
         "mattpocock-engineering",
+        "rust-anything",
         "grim-prompter",
         "claude-bughunter",
         "explore-run",
@@ -738,6 +740,18 @@
       "pillar": "research_and_prediction",
       "lead_bot": "val",
       "load_mode": "on_demand_skill"
+    },
+    "rust-anything": {
+      "mission": "4_coding",
+      "pillar": "token_efficiency",
+      "lead_bot": "shikaku",
+      "load_mode": "lazy_context_source"
+    },
+    "lemo-opuscar": {
+      "mission": "3_konten_kreasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "kiki-chii",
+      "load_mode": "lazy_context_source"
     }
   },
   "optional_skill_registry": {
@@ -927,7 +941,7 @@
       "privacy": "3_konten_kreasi",
       "education": "1_belajar_jadi_guru"
     },
-    "expected_upstream_count": 62,
+    "expected_upstream_count": 64,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -990,7 +1004,9 @@
       "codecoach",
       "learnloop",
       "hermes-researcher",
-      "peditx-research-methodology"
+      "peditx-research-methodology",
+      "rust-anything",
+      "lemo-opuscar"
     ]
   }
 }

@@ -2,6 +2,11 @@
 
 ## v3.1.2 - 2026-11-17
 
+- Added & refreshed 3 contextual upstream integrations (`75` bundled skills = `53` core + `22` wrappers, `64` external sources, `0` orphans):
+  - Added **`rust-anything`** (`erkamyaman/rust-anything`, pin `584e6388`, MIT) scoped strictly to **Shikaku / Coder** (`skills/rust-anything/`, lazy markdown context cache via `msshi integrations source --name rust-anything`, separate Rust CLI/MCP runtime).
+  - Added **`lemo-opuscar`** (`lemomo-ai/lemo-opuscar`, pin `f9e20429`, MIT code / CC BY-NC 4.0 docs with film-making permission / CC BY 4.0 demo media) scoped strictly to **Kiki-Chii** (`skills/lemo-opuscar/` — 100% original thin pointer wrapper, 0 bytes of CC-BY-NC docs or heavy media bundled in MIT repo; lazy text-only cache for all **15 categories / 99 code-driven film styles** with `--list`, `--query`, and on-demand `--skill <slug>`).
+  - Upgraded **`claude-bughunter`** (`elementalsouls/Claude-BugHunter`, MIT code / CC-BY-4.0 content) pin from `0e70a021` → **`8258d297`** (adds 433 content-verified cited disclosed reports across 36 pattern libraries in `docs/disclosed-reports/`).
+  - Hardened `_materialize_via_git()` in `scripts/msshi_context_sources.py` to clone temp bare repos onto the `HERMES_HOME` drive with `--filter=blob:limit=512k` (preventing system-drive exhaustion and skipping heavy media blobs).
 - Upgraded **MSSHI Interaction System** (`hermes_plugins/msshi-interaction/` v0.2.0, `hermes_plugins/msshi-team-routing/` v3.1.2, `scripts/msshi_interaction.py`, `scripts/msshi_skill_finder.py`):
   - Separated dedicated interaction prompt protocol (`msshi.interaction-protocol`, `< 1800` chars) covering Tier 0 (`fast_main_only`), Type 1 Advisor (`yukino`/`shizuka`), Type 2 2-round Council with mandatory Main audit (`val`/`kiki-chii`/`shikaku`), Low-RAM sequential fallback, and both native layouts (`keep-hermes`, `yukino`).
   - Wired zero-LLM native in-process tool **`msshi_find_skill`** (`action=search|open`) across all 6 profiles including `default` via `msshi-team-routing` with strict `_SPECIALIST_ONLY` ownership checks, archive confinement, and mtime-validated in-process caching.

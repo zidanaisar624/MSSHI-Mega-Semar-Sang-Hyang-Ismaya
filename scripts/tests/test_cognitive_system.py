@@ -743,6 +743,72 @@ class CognitiveSystemTests(unittest.TestCase):
                     empty_q = json.loads(handler({"action": "search", "query": "   "}))
                     self.assertFalse(empty_q["ok"])
 
+    def test_rust_anything_lemo_opuscar_and_upgraded_claude_bughunter(self):
+        import hashlib
+        import msshi_context_sources as cs_mod
+
+        # 1. Exact commit pins in msshi_context_sources.PINNED
+        self.assertEqual(cs_mod.PINNED["rust-anything"][1], "584e63888495a5568b8400a6a4194e43885ae609")
+        self.assertEqual(cs_mod.PINNED["lemo-opuscar"][1], "f9e204293930952b61ba921cd8944d05f121beee")
+        self.assertEqual(cs_mod.PINNED["claude-bughunter"][1], "8258d29726804f5b954a09c625caedc183f7130d")
+
+        # 2. Wrapper size, <=1024-char descriptions, LICENSE.upstream retained
+        for slug in ("rust-anything", "lemo-opuscar", "claude-bughunter"):
+            sdir = ROOT / "skills" / slug
+            sm = (sdir / "SKILL.md").read_text(encoding="utf-8-sig")
+            desc = sm.split("---")[1].split("description:", 1)[1].split("\nlicense:", 1)[0].strip()
+            self.assertLessEqual(len(desc), 1024, f"{slug} description too long: {len(desc)}")
+            self.assertTrue((sdir / "LICENSE.upstream").is_file(), f"Missing LICENSE.upstream in {slug}")
+            total_bytes = sum(p.stat().st_size for p in sdir.rglob("*") if p.is_file())
+            self.assertLess(total_bytes, 35_000, f"{slug} wrapper too large: {total_bytes}")
+
+        # 3. Strict role scoping across MuZA matrix & both Academic presets
+        matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
+        academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+        for bot in matrix["bots"]:
+            req = set(bot["required_skills"])
+            self.assertEqual("rust-anything" in req, bot["id"] == "shikaku")
+            self.assertEqual("lemo-opuscar" in req, bot["id"] == "kiki-chii")
+        for preset_id in ("academic-mahasiswa", "academic-dosen"):
+            for role, sk in academic["presets"][preset_id]["roles"].items():
+                self.assertEqual("rust-anything" in sk, role == "shikaku")
+                self.assertEqual("lemo-opuscar" in sk, role == "kiki-chii")
+
+        # 4. File selection filters skip heavy binary media & _template
+        self.assertTrue(cs_mod.selected_file("rust-anything", {"type": "blob", "mode": "100644", "path": "skills/rust-anything/SKILL.md"}))
+        self.assertFalse(cs_mod.selected_file("rust-anything", {"type": "blob", "mode": "100644", "path": "website/index.html"}))
+        self.assertTrue(cs_mod.selected_file("lemo-opuscar", {"type": "blob", "mode": "100644", "path": "styles/blueprint/style.json"}))
+        self.assertFalse(cs_mod.selected_file("lemo-opuscar", {"type": "blob", "mode": "100644", "path": "styles/blueprint/poster.jpg"}))
+        self.assertFalse(cs_mod.selected_file("lemo-opuscar", {"type": "blob", "mode": "100644", "path": "styles/_template/style.json"}))
+
+        # 5. Offline lemo_styles() query over mock verified snapshot
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "hermes"
+            croot = cs_mod.folder(home, "lemo-opuscar")
+            sdir = croot / "styles" / "blueprint"
+            sdir.mkdir(parents=True)
+            sj = sdir / "style.json"
+            sj.write_text(json.dumps({
+                "slug": "blueprint", "num": "44", "en": "Blueprint",
+                "category_en": "Line Diagrams", "line": "An inventor's blueprint draws a machine.",
+                "uses": ["Engineering", "Tech explainers"],
+            }), encoding="utf-8")
+            smd = sdir / "STYLE.md"
+            smd.write_text("# Blueprint Style Guide\n", encoding="utf-8")
+            snap = {
+                "repository": cs_mod.PINNED["lemo-opuscar"][0],
+                "commit": cs_mod.PINNED["lemo-opuscar"][1],
+                "files": {
+                    "styles/blueprint/style.json": hashlib.sha256(sj.read_bytes()).hexdigest(),
+                    "styles/blueprint/STYLE.md": hashlib.sha256(smd.read_bytes()).hexdigest(),
+                },
+            }
+            (croot / "MSSHI_SNAPSHOT.json").write_text(json.dumps(snap), encoding="utf-8")
+            cat = cs_mod.lemo_styles(home, query="engineering")
+            self.assertEqual(cat["total_styles"], 1)
+            self.assertEqual(cat["matches"][0]["slug"], "blueprint")
+            self.assertEqual(cat["matches"][0]["category"], "Line Diagrams")
+
 
 if __name__ == "__main__":
     unittest.main()
