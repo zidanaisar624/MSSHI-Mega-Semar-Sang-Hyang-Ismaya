@@ -746,8 +746,8 @@
       "en": "Install an isolated Python runtime; local analysis can skip OCR/ASR/stems/VLM. Model features, weights and generation are not automatically enabled."
     },
     "interaction": {
-      "id": "Tipe 1: Main berkonsultasi ke Advisor untuk proyek yang jelas. Tipe 2: Main memakai Dewan dua putaran dengan audit Main di antaranya, tanpa subagen terpisah. Pertanyaan singkat tidak memicu proses berat. Panggilan model memerlukan konfigurasi dan persetujuan biaya; status/pemasangan tidak memanggil model.",
-      "en": "Type 1: Main consults an Advisor for confirmed projects. Type 2: Main uses exactly two Council rounds with its own audit between them, without a separate subagent. Brief questions do not start heavy work. Model calls require configuration and spending approval; status/installation makes no model calls."
+      "id": "Protokol interaksi terpisah (msshi.interaction-protocol): Tier 0 Main-only untuk obrolan singkat; Tipe 1 (Advisor pada Yukino/Shizuka); Tipe 2 (Dewan 2 putaran dengan dossier ringkas + audit Main pada Val/Kiki-Chii/Shikaku). Mendukung pemulihan stale lock (recover_lock tanpa retry berbayar), ringkasan job per sesi, dan retensi terminal opt-in (14 hari/simpan 20; auto-prune OFF).",
+      "en": "Dedicated interaction protocol (msshi.interaction-protocol): Tier 0 Main-only for brief chats; Type 1 (Advisor on Yukino/Shizuka); Type 2 (2-round Council with compact dossiers + Main audit on Val/Kiki-Chii/Shikaku). Supports dead-PID stale-lock recovery (recover_lock without paid retry), per-session job summaries, and opt-in terminal retention (14d/keep 20; auto-prune OFF)."
     },
     "light-build": {
       "id": "Mode ringan Windows 10 RAM 4 GB (paket <= 50 MB, indeks skill lazy, batas 1 inferensi/proses aktif, tanpa pengunduhan aset/PDF otomatis, tanpa mengubah model atau API key pengguna).",
@@ -786,8 +786,8 @@
       "en": "Read-only GitHub upstream update notifier ('msshi upstreams check|integrity'): reports newer commits without auto-applying or mutating pinned revisions."
     },
     "skill-finder": {
-      "id": "Pencari skill otomatis lintas semua bot ('msshi find \"<tugas>\"' dan '--open <slug>'): mencari di skill aktif bot saat ini, bot spesialis lain, sumber terhubung, dan brankas arsip lokal (0 panggilan LLM; baca 1 SKILL.md on-demand).",
-      "en": "Automatic cross-bot lazy skill finder ('msshi find \"<task>\"' and '--open <slug>'): searches active bot skills, specialist teammates, connected sources, and archived skill vaults (0 LLM calls; reads 1 SKILL.md on demand)."
+      "id": "Pencari skill otomatis lintas semua 6 bot termasuk default lewat tool in-process 'msshi_find_skill' (search/open) dan CLI 'msshi find': mencari di skill aktif bot saat ini, bot spesialis lain, sumber terhubung, dan brankas arsip lokal (0 panggilan LLM; menjaga batas spesialis & confinement arsip).",
+      "en": "Automatic cross-bot lazy skill finder across all 6 profiles including default via native in-process tool 'msshi_find_skill' (search/open) and CLI 'msshi find': searches active bot skills, specialist teammates, connected sources, and archived skill vaults (0 LLM calls; enforces specialist ownership and archive confinement)."
     }
   }
 }

@@ -216,6 +216,36 @@ def _scan_skills_tree(root: Path, bucket_label: str) -> list[dict[str, Any]]:
     return entries
 
 
+_ARCHIVE_MEM_CACHE: dict[str, tuple[str, dict[str, Any]]] = {}
+_PROFILE_SKILLS_MEM_CACHE: dict[str, tuple[str, list[dict[str, Any]]]] = {}
+
+
+def _dir_sig(root: Path) -> str:
+    if not root.is_dir() or skill_idx.is_link(root):
+        return ""
+    try:
+        st = root.stat()
+        children = [p.name for p in root.iterdir()]
+        return f"{int(st.st_mtime_ns)}:{len(children)}"
+    except OSError:
+        return ""
+
+
+def _scan_skills_tree_cached(root: Path, bucket_label: str, *, refresh: bool = False) -> list[dict[str, Any]]:
+    key = f"{root.resolve() if root.exists() else root}|{bucket_label}"
+    sig = _dir_sig(root)
+    if not sig:
+        _PROFILE_SKILLS_MEM_CACHE.pop(key, None)
+        return []
+    if not refresh:
+        cached = _PROFILE_SKILLS_MEM_CACHE.get(key)
+        if cached and cached[0] == sig:
+            return cached[1]
+    rows = _scan_skills_tree(root, bucket_label)
+    _PROFILE_SKILLS_MEM_CACHE[key] = (sig, rows)
+    return rows
+
+
 def build_or_load_archive_index(home: Path, *, refresh: bool = False) -> dict[str, Any]:
     """Load cached archive skill catalog or rebuild it when archive directories change."""
     home = cs.checked(home)
@@ -234,10 +264,17 @@ def build_or_load_archive_index(home: Path, *, refresh: bool = False) -> dict[st
             sig_parts.append(f"{p.name}:{child_count}:{int(st.st_mtime)}")
     fp = "|".join(sig_parts)
 
+    mem_key = str(archive_root)
+    if not refresh:
+        mem = _ARCHIVE_MEM_CACHE.get(mem_key)
+        if mem and mem[0] == fp:
+            return mem[1]
+
     if not refresh and cache_path.is_file() and not skill_idx.is_link(cache_path):
         try:
             cached = json.loads(cache_path.read_text(encoding="utf-8-sig"))
             if isinstance(cached, dict) and cached.get("fingerprint") == fp and cached.get("archive_root") == str(archive_root):
+                _ARCHIVE_MEM_CACHE[mem_key] = (fp, cached)
                 return cached
         except (OSError, ValueError):
             pass
@@ -258,7 +295,19 @@ def build_or_load_archive_index(home: Path, *, refresh: bool = False) -> dict[st
         skill_idx._atomic_write_json(cache_path, payload)
     except OSError:
         pass
+    _ARCHIVE_MEM_CACHE[mem_key] = (fp, payload)
     return payload
+
+
+def _logical_role(home: Path, active_profile: str) -> str:
+    try:
+        roles = hp.team_role_profiles(home)
+        for role, actual in roles.items():
+            if actual == active_profile:
+                return role
+    except (OSError, ValueError):
+        pass
+    return active_profile
 
 
 def _live_profile_dirs(home: Path) -> dict[str, Path]:
@@ -303,6 +352,7 @@ def find_skills(
     active_profile = profile.strip().lower() if profile else "default"
     if active_profile not in profiles:
         active_profile = "default"
+    active_role = _logical_role(home, active_profile)
 
     # Layer 1 & 2: Active skills on current bot vs specialist teammates
     active_matches: list[dict[str, Any]] = []
@@ -310,7 +360,7 @@ def find_skills(
     own_slugs: set[str] = set()
 
     for pname, pdir in sorted(profiles.items()):
-        rows = _scan_skills_tree(pdir / "skills", pname)
+        rows = _scan_skills_tree_cached(pdir / "skills", pname, refresh=refresh_index)
         for row in rows:
             sc = _score_entry(tokens, raw_tokens, row["slug"], row["name"], row["description"])
             if sc <= 0:
@@ -365,7 +415,7 @@ def find_skills(
     for row in archive.get("entries", []):
         slug = row["slug"]
         # Respect strict specialist-only rules & avoid duplicating live active/teammate skills
-        if slug in _SPECIALIST_ONLY and active_profile not in _SPECIALIST_ONLY[slug]:
+        if slug in _SPECIALIST_ONLY and active_role not in _SPECIALIST_ONLY[slug]:
             continue
         if slug in own_slugs or slug in teammate_best:
             continue
@@ -420,7 +470,8 @@ def open_archived_skill(slug: str, home: Path, *, profile: str | None = None, ma
     if match is None:
         raise ValueError(f"Skill arsip '{slug}' tidak ditemukan di {archive_root}.")
     active_profile = _detect_profile(profile)
-    if match["slug"] in _SPECIALIST_ONLY and active_profile not in _SPECIALIST_ONLY[match["slug"]]:
+    active_role = _logical_role(home, active_profile)
+    if match["slug"] in _SPECIALIST_ONLY and active_role not in _SPECIALIST_ONLY[match["slug"]]:
         owners = "/".join(_SPECIALIST_ONLY[match["slug"]])
         raise ValueError(f"Skill '{match['slug']}' adalah spesialis {owners}; delegasikan ke {owners} daripada membuka arsip.")
     target = cs.checked(Path(match["path"]))
@@ -436,6 +487,36 @@ def open_archived_skill(slug: str, home: Path, *, profile: str | None = None, ma
         "truncated": truncated,
         "content": content[:max_chars],
     }
+
+
+def handle_tool_call(args: dict[str, Any], home: Path, *, profile: str | None = None) -> dict[str, Any]:
+    """In-process dispatcher for native Hermes tool `msshi_find_skill` (0 LLM calls)."""
+    if not isinstance(args, dict):
+        raise ValueError("Arguments must be a JSON object.")
+    action = str(args.get("action") or "").strip().lower()
+    active_profile = _detect_profile(profile)
+    if action == "search":
+        query = str(args.get("query") or "").strip()
+        if not query:
+            raise ValueError("Parameter 'query' wajib diisi untuk action='search'.")
+        if len(query) > 500:
+            raise ValueError("Parameter 'query' terlalu panjang (maksimal 500 karakter).")
+        raw_top = args.get("top", 5)
+        if isinstance(raw_top, bool) or not isinstance(raw_top, int):
+            raise ValueError("Parameter 'top' harus bilangan bulat 1-10.")
+        top = max(1, min(10, raw_top))
+        reindex = bool(args.get("reindex", False))
+        res = find_skills(query, home, profile=active_profile, top=top, refresh_index=reindex)
+        return {"ok": True, "action": "search", **res}
+    if action == "open":
+        slug = str(args.get("slug") or "").strip()
+        if not slug:
+            raise ValueError("Parameter 'slug' wajib diisi untuk action='open'.")
+        if len(slug) > 160 or "/" in slug or "\\" in slug or ".." in slug:
+            raise ValueError("Parameter 'slug' tidak valid; gunakan nama slug skill arsip saja.")
+        data = open_archived_skill(slug, home, profile=active_profile)
+        return {"ok": True, "action": "open", "llm_calls": 0, **data}
+    raise ValueError("Parameter 'action' harus 'search' atau 'open'.")
 
 
 def _print_human(res: dict[str, Any]) -> None:

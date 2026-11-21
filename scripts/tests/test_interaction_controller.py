@@ -200,6 +200,206 @@ class InteractionControllerTests(unittest.TestCase):
             self.assertTrue(second['rule_key'].endswith('round-2'));self.assertNotEqual(first['rule_key'],second['rule_key'])
             self.assertEqual(context.llm.calls,[])
 
+    def test_interaction_prompt_section_both_layouts_low_ram_and_length_budget(self):
+        import msshi_hermes_profiles as hp
+        with TemporaryDirectory() as tmp:
+            home=Path(tmp)
+            # 1. Verify register() wires msshi.interaction-protocol via register_system_prompt_section
+            sections={}
+            context=SimpleNamespace(profile_name='val',llm=Llm(fail=True),subagent_lifecycle=Lifecycle(),
+                get_config=lambda key,default:default,register_auxiliary_task=lambda *a,**k:None,
+                register_tool=lambda **kw:None,register_hook=lambda *a:None,
+                register_system_prompt_section=lambda sid,fn,**kw:sections.update({sid:(fn,kw)}))
+            hc=types.ModuleType('hermes_constants');hc.get_hermes_home=lambda:home/'profiles/val'
+            cfg=types.ModuleType('hermes_cli.config');cfg.read_raw_config=config
+            with patch.dict(sys.modules,{'hermes_constants':hc,'hermes_cli.config':cfg}):
+                mod.register(context)
+            self.assertIn('msshi.interaction-protocol',sections)
+            fn,kw=sections['msshi.interaction-protocol']
+            self.assertEqual(kw['max_chars'],1800)
+            rendered=fn({'profile_name':'val'})
+            self.assertLess(len(rendered),1800)
+            self.assertIn('Tier 0 (fast_main_only)',rendered)
+            self.assertIn('Tier 2 (Type 2 Council)',rendered)
+
+            # 2. Verify all 6 profiles across both layouts (keep-hermes & yukino) and normal vs light modes
+            for layout in ('keep-hermes','yukino'):
+                hp.record_team_layout(home,layout)
+                for res_mode in ('normal','light'):
+                    for prof in ('default','yukino','shizuka','val','kiki-chii','shikaku'):
+                        text=mod.interaction_policy({'profile_name':prof},home=home,resource_profile=res_mode)
+                        self.assertLess(len(text),1800,f'prompt too long for {layout}/{res_mode}/{prof}: {len(text)}')
+                        self.assertIn('Tier 0 (fast_main_only)',text)
+                        self.assertIn('msshi_find_skill',text)
+                        if res_mode=='light':
+                            self.assertIn('Low-RAM light mode',text)
+                        elif prof in ('yukino','shizuka') or (layout=='yukino' and prof=='default'):
+                            self.assertIn('Tier 1 (Type 1 Advisor)',text)
+                        elif prof in ('val','kiki-chii','shikaku'):
+                            self.assertIn('Tier 2 (Type 2 Council)',text)
+                            self.assertIn('Mandatory Main audit',text)
+                        else:
+                            self.assertIn('Neutral default assistant',text)
+
+    def test_stale_lock_recovery_active_process_concurrent_and_interrupted_paid_step(self):
+        import threading
+        with TemporaryDirectory() as tmp:
+            llm=Llm();c=self.controller(tmp,llm=llm);job=self.begin(c)
+            lock=c._lock_path(job)
+
+            # A. Active live PID lock cannot be bypassed or recovered
+            lock.write_text(json.dumps({'pid':424242,'created_at':1000.0,'action':'council_round'}),encoding='utf-8')
+            with patch.object(mod,'_pid_alive',return_value=True):
+                self.assertEqual(c.status_report({'job_id':job})['lock_status'],'active')
+                with self.assertRaisesRegex(ValueError,'JOB_BUSY_ACTIVE'):
+                    c.step({'job_id':job,'action':'audit','message':'Blocked while live'})
+                with self.assertRaisesRegex(ValueError,'JOB_BUSY_ACTIVE'):
+                    c.step({'job_id':job,'action':'recover_lock'})
+                self.assertTrue(lock.exists())
+
+            # B. Dead PID stale lock during non-paid state (ROUND1_COMPLETE) recovers cleanly without repeating round 1
+            lock.unlink()
+            c.step({'job_id':job,'action':'council_round'})
+            self.assertEqual(len(llm.calls),4)
+            lock.write_text(json.dumps({'pid':999991,'created_at':1000.0,'action':'audit'}),encoding='utf-8')
+            with patch.object(mod,'_pid_alive',return_value=False):
+                self.assertEqual(c.status_report({'job_id':job})['lock_status'],'stale')
+                with self.assertRaisesRegex(ValueError,'STALE_LOCK_DETECTED'):
+                    c.step({'job_id':job,'action':'audit','message':'Needs explicit recovery first'})
+                # Cross-session/cross-bot cannot recover someone else's lock
+                other=self.controller(tmp,session='other-session',llm=llm)
+                with self.assertRaises(ValueError):
+                    other.step({'job_id':job,'action':'recover_lock'})
+                self.assertTrue(lock.exists())
+                rec=c.step({'job_id':job,'action':'recover_lock'})
+                self.assertTrue(rec['lock_recovered']);self.assertFalse(rec['paid_retry_blocked'])
+                self.assertEqual(rec['state'],'ROUND1_COMPLETE');self.assertEqual(rec['additional_model_calls'],0)
+                self.assertFalse(lock.exists())
+                audited=c.step({'job_id':job,'action':'audit','message':'Continues cleanly after recovery'})
+                self.assertEqual(audited['state'],'MAIN_AUDITED')
+                self.assertEqual(len(llm.calls),4)
+
+            # C. Dead PID stale lock left mid-paid-step (COUNCIL_RUNNING) marks INTERRUPTED and blocks paid retry
+            job2=self.begin(c)
+            d2=c._load(job2);d2['state']='COUNCIL_RUNNING';d2['calls_attempted']=2;c._save(d2)
+            lock2=c._lock_path(job2)
+            lock2.write_text('888882',encoding='utf-8')  # legacy plain-int PID format
+            with patch.object(mod,'_pid_alive',return_value=False):
+                rec2=c.step({'job_id':job2,'action':'recover_lock'})
+                self.assertTrue(rec2['lock_recovered']);self.assertTrue(rec2['paid_retry_blocked'])
+                self.assertEqual(rec2['state'],'INTERRUPTED');self.assertEqual(rec2['interrupted_from'],'COUNCIL_RUNNING')
+                self.assertEqual(rec2['calls_attempted'],2);self.assertEqual(rec2['additional_model_calls'],0)
+                with self.assertRaisesRegex(ValueError,'terminal'):
+                    c.step({'job_id':job2,'action':'council_round'})
+
+            # D. Two concurrent in-process requests on same job -> second rejected with JOB_BUSY_ACTIVE
+            job3=self.begin(c)
+            entered=threading.Event();release=threading.Event();errors=[]
+            class BlockingLlm(Llm):
+                def complete(self,**kwargs):
+                    entered.set();release.wait(timeout=3)
+                    return super().complete(**kwargs)
+            c_conc=self.controller(tmp,llm=BlockingLlm())
+            t1=threading.Thread(target=lambda:c_conc.step({'job_id':job3,'action':'council_round'}))
+            t1.start()
+            self.assertTrue(entered.wait(timeout=3))
+            try:
+                c_conc.step({'job_id':job3,'action':'audit','message':'Concurrent conflict'})
+            except ValueError as exc:
+                errors.append(str(exc))
+            finally:
+                release.set();t1.join(timeout=3)
+            self.assertTrue(any('JOB_BUSY_ACTIVE' in e for e in errors),f'Expected JOB_BUSY_ACTIVE, got {errors}')
+
+    def test_session_job_summaries_bot_isolation_legacy_compat_and_retention(self):
+        with TemporaryDirectory() as tmp:
+            val_a=self.controller(tmp,role='val',session='sess-A',llm=Llm())
+            val_b=self.controller(tmp,role='val',session='sess-B',llm=Llm())
+            shi_a=self.controller(tmp,role='shikaku',session='sess-A',llm=Llm())
+
+            j_active=self.begin(val_a)
+            j_done=self.begin(val_a);val_a.step({'job_id':j_done,'action':'cancel'})
+            j_other_sess=self.begin(val_b)
+            j_other_bot=self.begin(shi_a)
+
+            # Legacy job file without updated_at or clarification_hops (must still load cleanly)
+            legacy_id='a'*32
+            (val_a.root/f'{legacy_id}.json').write_text(json.dumps({
+                'owner':mod.ID,'job_id':legacy_id,'session_key':val_a.session_key(),'role':'val',
+                'scope':'Legacy thesis review job','initial_plan':'Plan','confirmed':True,
+                'state':'READY_EXECUTION','rounds_completed':2,'calls_attempted':8,'created_at':100.0,
+            }),encoding='utf-8')
+
+            rep=val_a.status_report({})
+            active_ids=[r['job_id'] for r in rep['active_jobs']]
+            comp_ids=[r['job_id'] for r in rep['completed_jobs']]
+            self.assertEqual(active_ids,[j_active])
+            self.assertEqual(set(comp_ids),{j_done,legacy_id})
+            self.assertNotIn(j_other_sess,active_ids+comp_ids)
+            self.assertNotIn(j_other_bot,active_ids+comp_ids)
+            self.assertFalse(rep['retention_policy']['auto_prune_enabled'])
+            self.assertEqual(rep['retention_policy']['terminal_job_max_age_days'],14)
+
+            # Opt-in retention: dry_run leaves files intact; apply removes ONLY old unlocked terminal jobs beyond keep_recent
+            preview=val_a.prune_terminal_jobs(max_age_days=14,keep_recent=1,dry_run=True)
+            self.assertEqual(preview['eligible_job_ids'],[legacy_id])
+            self.assertEqual(preview['pruned_count'],0)
+            self.assertTrue((val_a.root/f'{legacy_id}.json').is_file())
+
+            applied=val_a.prune_terminal_jobs(max_age_days=14,keep_recent=1,dry_run=False)
+            self.assertEqual(applied['pruned_count'],1)
+            self.assertFalse((val_a.root/f'{legacy_id}.json').is_file())
+            self.assertTrue((val_a.root/f'{j_active}.json').is_file())
+            self.assertTrue((val_a.root/f'{j_done}.json').is_file())
+            self.assertTrue((shi_a.root/f'{j_other_bot}.json').is_file())
+
+    def test_compact_council_dossier_preserves_citations_code_and_shrinks_round_two(self):
+        with TemporaryDirectory() as tmp:
+            filler='\n'.join(f'Background explanation paragraph line {i} repeating general framing context.' for i in range(45))
+            code_block='```python\ndef chronological_holdout(series):\n    return series[:-12], series[-12:]\n```'
+            cite_url='https://doi.org/10.1234/msshi-eval'
+            cite_doc='doc#p12:par3'
+            verbose_plan=f'Build forecast pipeline.\nCitation: {cite_url} and {cite_doc}.\n{filler}\n{code_block}'
+            ev_r1=[{'source':cite_url,'summary':f'Primary baseline paper ({cite_doc}).\n{filler}'}]
+            ev_r2=[{'source':'https://example.org/new-r2-check','summary':'Fresh round-2 verification result with p<0.01.'}]
+
+            class VerboseLlm(Llm):
+                def complete(self,**kwargs):
+                    self.calls.append(kwargs)
+                    if kwargs['task'].endswith('aggregator'):
+                        bp=f'Blueprint citing {cite_url} and {cite_doc}.\n{filler}\n{code_block}'
+                        return SimpleNamespace(text=json.dumps({
+                            'blueprint':bp,
+                            'source_requests':[{'query':'Check holdout leak','reason':'Verify split'}],
+                            'limitations':['Dataset spans 24 months only'],
+                        }))
+                    return SimpleNamespace(text=f'Ref review noting {cite_doc} and holdout risks.')
+
+            llm=VerboseLlm();c=self.controller(tmp,role='val',llm=llm)
+            job=c.begin({'scope':'Forecast sales with chronological holdout','initial_plan':verbose_plan,'confirmed':True,'evidence':ev_r1})['job_id']
+            r1=c.step({'job_id':job,'action':'council_round'})
+            self.assertIn('input_telemetry',r1)
+            c.step({'job_id':job,'action':'audit','message':f'Keep {cite_url} and holdout split strictly intact; verify new evidence.','evidence':ev_r2})
+            r2=c.step({'job_id':job,'action':'council_round'})
+
+            # Round 2 input must be demonstrably smaller than naive verbose re-send
+            telem=r2['input_telemetry']
+            self.assertLess(telem['compact_chars'],telem['naive_chars'],f'Expected Round 2 compaction: {telem}')
+            self.assertGreater(telem['chars_saved'],0)
+
+            # Inspect exact Round 2 payload sent to Reference Agent 1 (index 4 in llm.calls)
+            r2_user_msg=llm.calls[4]['messages'][1]['content']
+            r2_payload=json.loads(r2_user_msg)
+            for key in ('goal','constraints','evidence_refs','delta_since_round_1','open_risks'):
+                self.assertIn(key,r2_payload)
+            # Citations, code block, new evidence, and approval boundary preserved verbatim!
+            self.assertIn(cite_url,r2_user_msg)
+            self.assertIn(cite_doc,r2_user_msg)
+            self.assertIn('def chronological_holdout(series):',r2_user_msg)
+            self.assertIn('https://example.org/new-r2-check',r2_user_msg)
+            self.assertIn('Main approval is not user spending',r2_user_msg)
+            self.assertEqual(len(llm.calls),8)
+
 class ProvisionTests(unittest.TestCase):
     def setup_home(self,tmp):
         home=Path(tmp)

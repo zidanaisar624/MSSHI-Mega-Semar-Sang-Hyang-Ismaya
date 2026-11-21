@@ -1,8 +1,8 @@
 manifest_version: 2
 name: msshi-interaction
-version: "0.1.0"
-description: "Model-independent Main/Advisor and two-round Council workflow with explicit Main audit, bounded state and no calls at startup."
-author: "Muhammad Zidan Aisar, assisted by OpenAI ChatGPT"
+version: "0.2.0"
+description: "Model-independent Main/Advisor and two-round Council workflow with dedicated prompt protocol, stale-lock recovery, session job summaries, compact Council dossiers, and no calls at startup."
+author: "Muhammad Zidan Aisar, assisted by OpenAI ChatGPT and Google Gemini"
 license: MIT
 requires_hermes: ">=0.23.1"
 provides_tools:
@@ -25,3 +25,11 @@ config_schema:
     type: int
     default: 90
     description: "Timeout passed to the host LLM facade per Council completion."
+  stale_lock_seconds:
+    type: int
+    default: 300
+    description: "Minimum age in seconds before an unparseable lock file is treated as stale."
+  terminal_job_retention_days:
+    type: int
+    default: 14
+    description: "Documented retention window in days for opt-in pruning of unlocked terminal jobs; auto-pruning stays disabled."

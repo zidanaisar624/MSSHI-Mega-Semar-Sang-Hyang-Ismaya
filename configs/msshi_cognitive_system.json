@@ -773,15 +773,15 @@
       "status": "active_default",
       "pillar": "governance_and_routing",
       "scope": "all_profiles",
-      "hook": "delegation_provider + system_prompt_section",
-      "role": "Native named-profile delegation, 5-Mission + 4-Pillar Cognitive Loop prompt, and opt-in Shikaku KAT routing."
+      "hook": "delegation_provider + system_prompt_section + tool (msshi_find_skill)",
+      "role": "Native named-profile delegation, 5-Mission + 4-Pillar Cognitive Loop prompt, zero-LLM 4-layer skill finder tool (msshi_find_skill) on all 6 profiles including default, and opt-in Shikaku KAT routing."
     },
     "msshi-interaction": {
       "status": "active_default_named_bots",
       "pillar": "token_efficiency",
       "scope": "named_profiles",
-      "hook": "system_prompt_section",
-      "role": "Tiered gating: Main-only on brief/daily chats, Type 1 Advisor (Yukino/Shizuka), Type 2 2-round Council (Val/Kiki-Chii/Shikaku)."
+      "hook": "pre_tool_call + system_prompt_section + tools (msshi_interaction_begin/step/status, msshi_advisor_context)",
+      "role": "Dedicated interaction prompt protocol + controller: Tier 0 Main-only, Type 1 Advisor (Yukino/Shizuka), Type 2 2-round Council with compact dossiers (Val/Kiki-Chii/Shikaku), stale-lock recovery (recover_lock), and session-isolated job summaries with explicit opt-in retention."
     },
     "msshi-steel-policy": {
       "status": "retired_legacy_not_installed",

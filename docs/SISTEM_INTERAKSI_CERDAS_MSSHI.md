@@ -52,13 +52,14 @@ flowchart TD
 ## 1. Pilar 1 — Bagaimana Sistem Menghemat Token Setiap Sesi
 1. **Cache Sumber & Pencari Skill Otomatis Lintas Bot (`msshi-private/context-sources/` + `msshi find`)**:
    - Pustaka besar (`grim-prompter` 357 file, `claude-bughunter` 83 skill / 186 file, `mattpocock-skills`, `career-ops`, `remote-jobs`, `rea-video`, `ossu-computer-science`) serta arsip skill impor lokal (`msshi-private/archived-skill-imports/`) **tidak diletakkan langsung di folder `skills/`**.
-   - Saat pengguna bertanya di bot mana pun (*"Saya mau mengerjakan X, apakah ada skill yang bisa membantu?"*), bot otomatis menjalankan `msshi find "<tugas>"` (`0` panggilan LLM) untuk mengecek 4 lapis: **(1) skill aktif di bot itu**, **(2) bot spesialis lain** (menjaga batas Val/Shizuka/Shikaku/Kiki-Chii), **(3) sumber/kurikulum terhubung**, dan **(4) brankas arsip** (baca 1 file `SKILL.md` on-demand lewat `msshi find --open <slug>`).
+   - Saat pengguna bertanya di bot mana pun (*"Saya mau mengerjakan X, apakah ada skill yang bisa membantu?"*), seluruh 6 profil (termasuk `default`) dapat langsung memanggil tool internal **`msshi_find_skill`** (`action="search"` / `action="open"`) atau CLI `msshi find "<tugas>"` (**0 panggilan LLM**) untuk mengecek 4 lapis: **(1) skill aktif di bot itu**, **(2) bot spesialis lain** (menjaga batas Val/Shizuka/Shikaku/Kiki-Chii), **(3) sumber/kurikulum terhubung**, dan **(4) brankas arsip** (baca 1 file `SKILL.md` on-demand).
 2. **Kompresi Output Tool Otomatis (`MSSHITrim` / `msshi-auto-trim`)**:
    - Setiap output tool JSON besar (`>= 2048` karakter) dipadatkan lokal `20%–55%` dengan jaminan kesamaan JSON kanonik 100% (*fail-open*, `0` panggilan LLM, tanpa TLS proxy/CA/daemon).
-3. **Handoff Internal Ringkas (`caveman` / `msshi compact`)**:
-   - Pesan handoff internal antar-bot (misalnya dossier Val → Shizuka atau laporan Shikaku → Shizuka) memakai format padat (*goal, output, evidence, blockers, next action*) sementara jawaban akhir ke pengguna tetap alami dan seluruh kutipan/kode tetap utuh.
-4. **Gating Interaksi (`msshi-interaction`) & Mode Hemat RAM (`msshi light`)**:
-   - Pertanyaan singkat cukup dijawab **Main Agent saja (`0` sub-agent/Dewan)**; Advisor (Tipe 1) dan Dewan 2 putaran (Tipe 2) hanya menyala untuk proyek terkonfirmasi.
+3. **Handoff Internal Ringkas (`caveman` / `msshi compact`) & Bahan Dewan Ringkas**:
+   - Pesan handoff internal antar-bot serta dossier Dewan Tipe 2 (`goal`, `constraints`, `evidence_refs`, `delta_since_round_1`, `open_risks`) dipadatkan sambil menjaga **100% sitasi, URL/DOI, blok kode, dan aturan persetujuan tetap utuh**; jawaban akhir ke pengguna tetap alami.
+4. **Protokol Interaksi Terpisah (`msshi-interaction`) & Mode Hemat RAM (`msshi light`)**:
+   - `msshi-interaction` memiliki bagian prompt tersendiri (`msshi.interaction-protocol`, terpisah dari `msshi-team-routing`): **Tier 0 (`fast_main_only`)** untuk obrolan singkat (0 bot/panggilan ekstra), **Tipe 1 (Advisor)** pada Yukino/Shizuka, dan **Tipe 2 (Dewan 2 putaran dengan audit Main wajib di antaranya)** pada Val/Kiki-Chii/Shikaku; mode Low-RAM otomatis jatuh ke alur sekuensial.
+   - Dilengkapi **pemulihan stale lock (`recover_lock`)** tanpa pengulangan panggilan berbayar diam-diam, serta **ringkasan pekerjaan per sesi** (`msshi_interaction_status`) terisolasi antarbot dengan retensi terminal opt-in (default 14 hari / simpan 20; `auto_prune_enabled: false`).
 
 ---
 

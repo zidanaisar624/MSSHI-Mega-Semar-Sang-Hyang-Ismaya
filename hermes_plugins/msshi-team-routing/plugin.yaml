@@ -1,5 +1,7 @@
 name: msshi-team-routing
-version: 3.1.1
-description: "Local named-profile handoffs for MSSHI; no calls until a user task delegates."
+version: 3.1.2
+description: "Local named-profile handoffs and zero-LLM 4-layer skill discovery for MSSHI; no calls until a user task delegates."
 author: MuZA
 kind: backend
+provides_tools:
+  - msshi_find_skill

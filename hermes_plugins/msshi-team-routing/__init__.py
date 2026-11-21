@@ -5,10 +5,12 @@ The core owns all child lifecycle, credentials and named-profile scope.
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 from pathlib import Path
 import re
+import sys
 from typing import Any, Mapping
 from urllib.parse import urlparse
 
@@ -22,6 +24,8 @@ PROFILE_ROLES = {
     "shikaku": "coding, debugging, architecture, web development and authorized security",
 }
 _ENV_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+_RELEASE_ID_RE = re.compile(r"^(?:[0-9a-f]{24}|[0-9a-f]{64})$")
+_FINDER_CACHE: dict[str, Any] = {}
 
 
 def _home() -> Path:
@@ -221,12 +225,140 @@ def role_policy(session_info: Mapping[str, Any]) -> str:
         "(5) Daily companion/curhat & scheduling—yukino leads warm Main-only empathy, energy pacing, and agenda (0 extra bots). "
         "Cognitive loop: save tokens via Main-only on brief chats, lazy msshi-private/context-sources reads (1 file on demand), "
         "MSSHITrim JSON compaction, and concise caveman internal handoffs (keep user prose natural and citations/code exact). "
-        "Auto skill finder: if asked what skill helps, run 'msshi find \"<task>\"' (active/teammate/archive; --open 1). "
+        "Skill finder: call msshi_find_skill (or 'msshi find') for active/teammate/archive skills (open 1). "
         "Learn continuously via offline msshi dream proposals and isolated harness2 Propose-Probe-Compose; never auto-promote. "
         "Preserve the user's main models and persona voice.")
+
+
+def _safe_path(path: Path) -> bool:
+    try:
+        resolved = Path(os.path.abspath(path))
+        if str(resolved).startswith(("\\\\", "//")):
+            return False
+        for p in (resolved, *resolved.parents):
+            if os.path.lexists(p) and (p.is_symlink() or (getattr(p.lstat(), "st_file_attributes", 0) & 0x400)):
+                return False
+        return True
+    except OSError:
+        return False
+
+
+def _locate_skill_finder_script(root: Path) -> Path | None:
+    candidates: list[Path] = []
+    here = Path(__file__).resolve()
+    if len(here.parents) >= 3:
+        candidates.append(here.parents[2] / "scripts" / "msshi_skill_finder.py")
+
+    data_roots: list[Path] = []
+    if env_home := (os.environ.get("MSSHI_HOME") or "").strip():
+        data_roots.append(Path(env_home).expanduser())
+    if os.name == "nt":
+        data_roots.append(Path("D:/MSSHI"))
+        if local_app := (os.environ.get("LOCALAPPDATA") or "").strip():
+            data_roots.append(Path(local_app) / "MSSHI")
+    data_roots.extend([Path.home() / ".local" / "share" / "msshi", Path.home() / ".msshi"])
+
+    for dr in data_roots:
+        state_file = dr / "state.json"
+        if _safe_path(state_file) and state_file.is_file():
+            try:
+                state = json.loads(state_file.read_text(encoding="utf-8-sig"))
+                rel_id = str(state.get("current") or "").strip()
+                if _RELEASE_ID_RE.fullmatch(rel_id):
+                    candidates.append(dr / "releases" / rel_id / "scripts" / "msshi_skill_finder.py")
+            except (OSError, ValueError, AttributeError):
+                pass
+
+    candidates.append(root / "msshi-upstream" / "scripts" / "msshi_skill_finder.py")
+    for cand in candidates:
+        if _safe_path(cand) and cand.is_file():
+            return cand
+    return None
+
+
+def _load_skill_finder(root: Path):
+    script = _locate_skill_finder_script(root)
+    if script is None:
+        raise ValueError("MSSHI skill finder script not found in active release or upstream checkout.")
+    key = str(script.resolve())
+    cached = _FINDER_CACHE.get(key)
+    if cached is not None:
+        return cached
+    scripts_dir = str(script.parent)
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    spec = importlib.util.spec_from_file_location("msshi_skill_finder_runtime", script)
+    if not spec or not spec.loader:
+        raise ValueError("Unable to load MSSHI skill finder module.")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    _FINDER_CACHE[key] = mod
+    return mod
+
+
+def _find_skill_handler(args: Any = None, **kwargs: Any) -> str:
+    payload = args if isinstance(args, dict) else kwargs
+    try:
+        root = _root()
+        finder = _load_skill_finder(root)
+        result = finder.handle_tool_call(payload, root, profile=_profile())
+        return json.dumps(result, ensure_ascii=False)
+    except ValueError as exc:
+        return json.dumps({"ok": False, "error_class": "ValueError", "error": str(exc)}, ensure_ascii=False)
+    except Exception as exc:
+        return json.dumps(
+            {"ok": False, "error_class": type(exc).__name__, "error": "Skill finder failed; inspect local logs."},
+            ensure_ascii=False,
+        )
 
 
 def register(ctx) -> None:
     ctx.register_delegation_provider(MSSHITeamRouting())
     ctx.register_system_prompt_section("msshi.team-coordination", role_policy,
                                        position="after_memory", max_chars=2600)
+    if hasattr(ctx, "register_tool"):
+        description = (
+            "Search active bot skills, specialist teammates, connected sources, and archived skill vaults "
+            "(action='search'), or read 1 archived SKILL.md on demand (action='open'). 0 LLM calls; enforces "
+            "specialist role ownership and archive confinement."
+        )
+        ctx.register_tool(
+            name="msshi_find_skill",
+            toolset="msshi-team-routing",
+            description=description,
+            schema={
+                "name": "msshi_find_skill",
+                "description": description,
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "type": "string",
+                            "enum": ["search", "open"],
+                            "description": "search to find matching skills across 4 layers, or open to read 1 archived SKILL.md.",
+                        },
+                        "query": {
+                            "type": "string",
+                            "description": "Task description or keywords (required when action='search').",
+                        },
+                        "slug": {
+                            "type": "string",
+                            "description": "Archived skill slug to read (required when action='open').",
+                        },
+                        "top": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10,
+                            "description": "Maximum matches per layer (default 5).",
+                        },
+                        "reindex": {
+                            "type": "boolean",
+                            "description": "Force rebuild of local archive index before searching (default false).",
+                        },
+                    },
+                    "required": ["action"],
+                    "additionalProperties": False,
+                },
+            },
+            handler=_find_skill_handler,
+        )

@@ -27,7 +27,8 @@ AUDITS = {"unslop": "msshi-private/v3.1-sources/unslop-integration-audit.json",
           "brag": "msshi-private/v3.1-brag-audit.json",
           "scrapling": "msshi-private/v3.1-scrapling-integration-audit.json",
           "harness2": "msshi-private/v3.1-sources/harness2-integration-audit.json",
-          "rea": "msshi-private/v3.1-sources/rea-integration-audit.json"}
+          "rea": "msshi-private/v3.1-sources/rea-integration-audit.json",
+          "imagination-studio": "msshi-private/v3.1-sources/imagination-studio-integration-audit.json"}
 
 
 def read(path):
@@ -344,9 +345,9 @@ def audit(repo, home, package_only=False, baseline_override=None):
                 "missing": missing, "unexpected": extra, "copies": copy_details})
         readiness[slug]["configuration"].update(installed_exact_scope=not missing and not extra and copy_good,
                                                  observed_profiles=sorted(observed))
-        if slug == "rea" and not expected_profiles and not observed:
+        if is_optional and not expected_profiles and not observed:
             readiness[slug]["evidence_status"] = "not_enabled_public_default_off"
-            record("v31_rea_recorded_operations", "NOT_APPLICABLE", {"reason": "Optional capability is not enabled in this Hermes home"})
+            record(f"v31_{slug}_recorded_operations", "NOT_APPLICABLE", {"reason": "Optional capability is not enabled in this Hermes home"})
             continue
         path = home / AUDITS[slug]
         if slug == "rea" and not path.is_file() and (home / "msshi-private/v3.1-rea-audit.json").is_file():

@@ -77,7 +77,8 @@ def install(home,source=ROOT,profiles=None,apply=False):
         if old!=record:fileplans.append((owned_path,old,record))
         plans+=fileplans;rows.append({'profile':profile,'status':'PLUGIN_STAGED_FOR_NATIVE_RELOAD','changed':bool(fileplans)})
     result={'applied':False,'profiles':rows,'files_planned':len(plans),'model_provider_fields_untouched':True,
-            'model_calls':0,'receipt':None,'host_requirement':'>=0.23.1','note':'Reload native plugin schema; provider/Council execution remains untested.'}
+            'model_calls':0,'receipt':None,'rollback_dir':str(home/'msshi-runtime/receipts'),
+            'host_requirement':'>=0.23.1','note':'Reload native plugin schema (start New Chat); provider/Council execution remains untested.'}
     if apply and plans:
         tx=hp.ProfileTransaction(home)
         try:
@@ -88,6 +89,19 @@ def install(home,source=ROOT,profiles=None,apply=False):
         except Exception:
             tx.rollback();raise
     return result
+
+def prune_terminal(home,source=ROOT,profiles=None,*,max_age_days=14,keep_recent=20,apply=False):
+    """Opt-in retention helper across role profiles (dry-run by default; active/locked jobs untouched)."""
+    runtime=_plugin(Path(source));home=runtime._ordinary(home);hp=_helpers(Path(source))
+    rolemap=hp.team_role_profiles(home)
+    selected=list(dict.fromkeys(profiles or rolemap.values()))
+    rows=[]
+    for role,profile in rolemap.items():
+        if profile not in selected:continue
+        folder=home if profile=='default' else home/'profiles'/profile
+        ctrl=runtime.Controller(folder,role,lambda:'cli-maintenance')
+        rows.append({'profile':profile,**ctrl.prune_terminal_jobs(max_age_days=max_age_days,keep_recent=keep_recent,dry_run=not apply)})
+    return {'applied':bool(apply),'profiles':rows,'model_calls':0,'auto_prune_enabled':False}
 
 def status(home,source=ROOT):
     runtime=_plugin(Path(source));home=runtime._ordinary(home);hp=_helpers(Path(source))
@@ -130,13 +144,22 @@ def main(argv=None):
     p.add_argument('--apply',action='store_true')
     p.add_argument('--profiles',nargs='+',choices=['default',*PROFILES])
     p.add_argument('--protocol',action='store_true')
+    p.add_argument('--prune-terminal',action='store_true',help='Preview (or with --apply, prune) unlocked terminal interaction jobs older than --max-age-days.')
+    p.add_argument('--max-age-days',type=int,default=14)
+    p.add_argument('--keep-recent',type=int,default=20)
     args=p.parse_args(argv)
     if args.protocol:
-        result={'type_1':'Main -> Advisor -> Main approval/execution; no Council',
-          'type_2':'Initial plan -> Council round 1 -> Main audit -> Council round 2 -> Main approval/execution; no separate subagent',
-          'ambiguity':'Direct request asks User; forwarded request asks sender, then User only if needed',
+        result={
+          'tier_0_fast_chat':'Main-only (0 extra bots, 0 Advisor/Council calls, 0 approval prompts) for brief/daily/1-concept requests',
+          'type_1':'Main -> Advisor -> Main approval/execution; no Council (Yukino, Shizuka)',
+          'type_2':'Initial plan -> Council round 1 (compact dossier) -> Main audit/resolve_sources -> Council round 2 (delta + open risks) -> Main approval/execution; no separate subagent (Val, Kiki-Chii, Shikaku)',
+          'low_ram':'Parallel Advisor/Council disabled; sequential single-inference with direct Main approve from INITIAL_PLAN',
+          'ambiguity':'Direct request asks Pengguna; forwarded request asks sender, then Pengguna only if needed',
           'sources':'Aggregator requests sources; Main brokers approved tools and evidence',
-          'fast_chat':'No Advisor/Council calls for brief or unconfirmed requests'}
+          'skill_discovery':'All 6 profiles (including default) expose zero-LLM native msshi_find_skill (search/open) plus CLI msshi find',
+          'stale_lock_recovery':'Dead-PID locks are detected and cleared via explicit recover_lock; interrupted paid rounds transition to INTERRUPTED and never auto-retry',
+          'session_jobs_and_retention':'msshi_interaction_status lists active/completed jobs isolated per session & role; terminal retention defaults to 14 days / keep 20 with auto_prune_enabled=false'}
+    elif args.prune_terminal:result=prune_terminal(args.home,args.source,args.profiles,max_age_days=args.max_age_days,keep_recent=args.keep_recent,apply=args.apply)
     elif args.install:result=install(args.home,args.source,args.profiles,args.apply)
     else:result=status(args.home,args.source)
     print(json.dumps(result,ensure_ascii=False,indent=2));return 0

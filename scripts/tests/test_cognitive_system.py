@@ -293,6 +293,7 @@ class CognitiveSystemTests(unittest.TestCase):
                             "Daily companion/curhat",
                             "MSSHITrim",
                             "caveman",
+                            "msshi_find_skill",
                             "msshi find",
                             "timesfm-forecasting",
                             "grim-prompter",
@@ -703,6 +704,44 @@ class CognitiveSystemTests(unittest.TestCase):
             # Val IS allowed to inspect its own specialist skill if needed
             opened_val = finder.open_archived_skill("timesfm-forecasting", home, profile="val")
             self.assertEqual(opened_val["slug"], "timesfm-forecasting")
+
+            # Native in-process tool `msshi_find_skill` registers & works across ALL 6 profiles including default
+            for active_prof in ("default", "yukino", "shizuka", "val", "kiki-chii", "shikaku"):
+                with _team_routing_module(home) as tr_mod:
+                    tr_mod._home = lambda p=active_prof: home if p == "default" else home / "profiles" / p
+                    tr_mod._root = lambda: home
+                    reg_tools = {}
+                    ctx = types.SimpleNamespace(
+                        register_delegation_provider=lambda p: None,
+                        register_system_prompt_section=lambda *a, **k: None,
+                        register_tool=lambda **kw: reg_tools.update({kw["name"]: kw}),
+                    )
+                    tr_mod.register(ctx)
+                    self.assertIn("msshi_find_skill", reg_tools, f"msshi_find_skill missing on {active_prof}")
+                    handler = reg_tools["msshi_find_skill"]["handler"]
+
+                    # Search works with 0 LLM calls
+                    res = json.loads(handler({"action": "search", "query": "bikin presentasi powerpoint"}))
+                    self.assertTrue(res["ok"], f"search failed on {active_prof}: {res}")
+                    self.assertEqual(res["llm_calls"], 0)
+                    self.assertEqual(res["profile"], active_prof)
+
+                    # Open general archived skill works on all 6 profiles
+                    opened_t = json.loads(handler({"action": "open", "slug": "pptx-pro"}))
+                    self.assertTrue(opened_t["ok"], f"open pptx-pro failed on {active_prof}: {opened_t}")
+                    self.assertIn("PPTX Pro", opened_t["content"])
+
+                    # Specialist ownership enforced on open (only val allowed for timesfm-forecasting)
+                    opened_tfm = json.loads(handler({"action": "open", "slug": "timesfm-forecasting"}))
+                    self.assertEqual(opened_tfm["ok"], active_prof == "val")
+
+                    # Path traversal & bad action fail safely
+                    bad_slug = json.loads(handler({"action": "open", "slug": "../config.yaml"}))
+                    self.assertFalse(bad_slug["ok"])
+                    bad_act = json.loads(handler({"action": "delete", "slug": "pptx-pro"}))
+                    self.assertFalse(bad_act["ok"])
+                    empty_q = json.loads(handler({"action": "search", "query": "   "}))
+                    self.assertFalse(empty_q["ok"])
 
 
 if __name__ == "__main__":
