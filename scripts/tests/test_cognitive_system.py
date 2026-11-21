@@ -182,6 +182,10 @@ class CognitiveSystemTests(unittest.TestCase):
             (home / "profiles" / "shikaku" / "skills" / "grim-prompter" / "SKILL.md").write_text("# grim\n", encoding="utf-8")
             (home / "profiles" / "shikaku" / "skills" / "claude-bughunter").mkdir(parents=True)
             (home / "profiles" / "shikaku" / "skills" / "claude-bughunter" / "SKILL.md").write_text("# bughunter\n", encoding="utf-8")
+            (home / "profiles" / "shikaku" / "skills" / "rust-anything").mkdir(parents=True)
+            (home / "profiles" / "shikaku" / "skills" / "rust-anything" / "SKILL.md").write_text("# rust\n", encoding="utf-8")
+            (home / "profiles" / "kiki-chii" / "skills" / "lemo-opuscar").mkdir(parents=True)
+            (home / "profiles" / "kiki-chii" / "skills" / "lemo-opuscar" / "SKILL.md").write_text("# lemo\n", encoding="utf-8")
 
             report = sysmod.system_status(home, source_root=ROOT)
             self.assertEqual(len(report["core_missions"]), 5)
@@ -196,6 +200,8 @@ class CognitiveSystemTests(unittest.TestCase):
             self.assertEqual(report["pillars"]["3_research_and_prediction"]["timesfm_skill_profiles"], ["val"])
             self.assertEqual(report["pillars"]["3_research_and_prediction"]["coder_security_profiles"]["grim_prompter"], ["shikaku"])
             self.assertEqual(report["pillars"]["3_research_and_prediction"]["coder_security_profiles"]["claude_bughunter"], ["shikaku"])
+            self.assertEqual(report["pillars"]["3_research_and_prediction"]["coder_rust_profiles"], ["shikaku"])
+            self.assertEqual(report["pillars"]["3_research_and_prediction"]["creative_lemo_opuscar_profiles"], ["kiki-chii"])
 
     def test_route_task_all_4_core_missions_and_gating(self):
         # Mission 1: Belajar (Jadi Guru)
@@ -228,6 +234,13 @@ class CognitiveSystemTests(unittest.TestCase):
         creative = sysmod.route_task("Buat konsep dan storyboard konten kreasi video YouTube dan slide presentasi")
         self.assertEqual(creative["core_mission"], "3_konten_kreasi")
         self.assertEqual(creative["lead_bot"], "kiki-chii")
+        self.assertIn("lemo-opuscar", creative["recommended_skills"])
+
+        lemo = sysmod.route_task("Saya mau bikin film pendek berbasis kode gaya ukiyoe pakai lemo-opuscar")
+        self.assertEqual(lemo["core_mission"], "3_konten_kreasi")
+        self.assertEqual(lemo["lead_bot"], "kiki-chii")
+        self.assertIn("lemo-opuscar", lemo["recommended_skills"])
+        self.assertTrue(any("15 kategori" in step and "STYLE.md" in step for step in lemo["workflow_steps"]))
 
         # Mission 4: Coding & Security
         sec = sysmod.route_task("Lakukan threat model STRIDE dan audit keamanan OWASP SSRF pada API kami")
@@ -240,6 +253,12 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertEqual(code["core_mission"], "4_coding")
         self.assertEqual(code["lead_bot"], "shikaku")
         self.assertIn("mattpocock-engineering", code["recommended_skills"])
+
+        rust = sysmod.route_task("Port layanan Python ini ke Rust pakai rust-anything dengan verifikasi benchmark")
+        self.assertEqual(rust["core_mission"], "4_coding")
+        self.assertEqual(rust["lead_bot"], "shikaku")
+        self.assertIn("rust-anything", rust["recommended_skills"])
+        self.assertTrue(any("rust-anything" in step for step in rust["workflow_steps"]))
 
         # Mission 5: Teman Curhat & Daily Basis (Scheduling)
         daily = sysmod.route_task("Aku capek hari ini, mau curhat sebentar dan atur jadwal harian besok")
@@ -288,8 +307,10 @@ class CognitiveSystemTests(unittest.TestCase):
                             "Tutor/Guru",
                             "Skripsi/Tesis/Disertasi",
                             "Content creation",
+                            "lemo-opuscar",
                             "imagination-studio",
                             "Coding",
+                            "rust-anything",
                             "Daily companion/curhat",
                             "MSSHITrim",
                             "caveman",
@@ -318,10 +339,17 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertIn("Keys (drowzeys)", notice)
         self.assertIn("Sam Wasserman", notice)
 
-        # Filmmaker SKILL.md references Stage E Imagination Studio collaboration
+        # Filmmaker SKILL.md references Stage E Imagination Studio collaboration and Stage B lemo-opuscar
         fm = (ROOT / "skills" / "filmmaking-videography-photography-s2" / "SKILL.md").read_text(encoding="utf-8-sig")
         self.assertIn("Stage E: Optional Imagination Studio", fm)
         self.assertIn("msshi studio status --probe", fm)
+        self.assertIn("lemo-opuscar", fm)
+
+        # lemo-opuscar wrapper enforces explaining 15 categories & styles before loading 1 STYLE.md
+        lemo_skill = (ROOT / "skills" / "lemo-opuscar" / "SKILL.md").read_text(encoding="utf-8-sig")
+        self.assertIn("0. Wajib Saat Mau Digunakan: Jelaskan Isi Kategori & Style Dulu!", lemo_skill)
+        self.assertIn("15 kategori", lemo_skill)
+        self.assertIn("STYLE.md", lemo_skill)
 
         # setup_targets scopes imagination-studio strictly to kiki-chii on presets
         with tempfile.TemporaryDirectory() as tmp:

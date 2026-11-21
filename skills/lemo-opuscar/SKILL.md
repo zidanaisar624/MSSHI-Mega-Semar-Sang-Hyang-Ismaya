@@ -15,6 +15,15 @@ Gunakan skill ini pada peran Content Creator / Filmmaker (**`kiki-chii`**) saat 
 
 Wrapper MSSHI ini sepenuhnya **model-agnostic**: tetap menggunakan provider dan model pilihan pengguna di Hermes (tidak mengubah `config.yaml`, model, API key, atau `SOUL.md`) dan bekerja selaras dengan `filmmaking-videography-photography-s2` (*Concepting First*), `motion-graphics-suite`, dan `brag`.
 
+## 0. Wajib Saat Mau Digunakan: Jelaskan Isi Kategori & Style Dulu!
+
+Setiap kali pengguna ingin memakai `lemo-opuscar` (atau meminta film pendek/explainer berbasis kode tanpa menyebut 1 slug gaya persis), **JANGAN langsung menulis kode atau memuat `STYLE.md` acak**. Wajib lakukan urutan ini dulu di chat:
+
+1. **Jelaskan ringkas 15 kategori yang tersedia** (supaya pengguna paham ragam estetika yang bisa dipilih — dari dokumenter/berita, lukisan/sketsa, kerajinan tradisi, cetak/poster, tipografi, diagram teknis, kartun/gim, film eksperimental, antarmuka layar, cahaya/garis, miniatur 3D, instrumen ilmiah, hingga data/peta).
+2. **Rekomendasikan 3–5 gaya paling cocok** dengan cerita/tujuan pengguna (sebutkan `slug`, tampilan visual khasnya, dan cocok untuk apa), atau tampilkan seluruh daftar gaya dalam kategori yang diminati pengguna memakai:
+   `msshi integrations source --home HERMES_ROOT --name lemo-opuscar --query "<kata>"` atau `--list` (`0` panggilan LLM).
+3. **Tunggu pilihan/konfirmasi 1 gaya dari pengguna**, baru muat tepat **1 file `STYLE.md`** gaya pilihan tersebut lewat `--skill <slug>`!
+
 ## 1. Cache Ringan Terpin di Luar `skills/` (0 Aset Berat, Baca 1 Gaya On-Demand)
 
 Repositori upstream berukuran ~133 MB karena poster & media demo, sehingga **tidak** dibundel ke folder `skills/`. Cache terpin hanya menyimpan metadata teks/JSON (`style.json`, `STYLE.md`, `DEMO.md`, `TECHNIQUE.md`, `LICENSE`) di luar pemindai `skills/`:

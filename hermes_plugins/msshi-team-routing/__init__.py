@@ -217,17 +217,16 @@ def role_policy(session_info: Mapping[str, Any]) -> str:
         "Received bot messages already carry a reply path: answer in your final response, do not send a second DM to reply. "
         "If a Bot Chat message needs no action, reply exactly: I don't need to do anything here. "
         "Never DM that no-action line or create reply loops. Human review is required between creative stages "
-        "and before publishing/irreversible external actions. "
+        "and before publishing/irreversible actions. "
         "Core missions: (1) Tutor/Guru—use belajar-pemula (1 concept/turn, Socratic/Chalk/LearnLoop/CodeCoach-or-Shikaku) & OSSU CS via 'msshi ossu'; "
         "(2) Tasks/Skripsi/Tesis/Disertasi—delegate deep ID/global research only when needed to val (riset-mendalam-nusantara-global, evidence, holdout, timesfm-forecasting); "
-        "(3) Content creation—kiki-chii leads concept-first visuals/video/slides (+ optional imagination-studio when enabled); "
-        "(4) Coding—shikaku leads TDD, architecture, and authorized grim-prompter/claude-bughunter; "
+        "(3) Content creation—kiki-chii leads concept-first visuals/video/slides (+ lemo-opuscar: explain 15 categories/styles before choosing; optional imagination-studio); "
+        "(4) Coding—shikaku leads TDD, architecture, rust-anything, and authorized grim-prompter/claude-bughunter; "
         "(5) Daily companion/curhat & scheduling—yukino leads warm Main-only empathy, energy pacing, and agenda (0 extra bots). "
-        "Cognitive loop: save tokens via Main-only on brief chats, lazy msshi-private/context-sources reads (1 file on demand), "
-        "MSSHITrim JSON compaction, and concise caveman internal handoffs (keep user prose natural and citations/code exact). "
+        "Cognitive loop: Main-only brief chats, lazy msshi-private/context-sources (1 file on demand), "
+        "MSSHITrim JSON compaction, caveman internal handoffs (natural user prose, exact citations/code). "
         "Skill finder: call msshi_find_skill (or 'msshi find') for active/teammate/archive skills (open 1). "
-        "Learn continuously via offline msshi dream proposals and isolated harness2 Propose-Probe-Compose; never auto-promote. "
-        "Preserve the user's main models and persona voice.")
+        "Learn via offline msshi dream & isolated harness2 Propose-Probe-Compose; never auto-promote. Preserve user models/persona.")
 
 
 def _safe_path(path: Path) -> bool:

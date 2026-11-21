@@ -152,7 +152,7 @@
             "scripts/msshi_skill_finder.py",
             "scripts/msshi_context_sources.py"
           ],
-          "mechanism": "Pustaka & kurikulum besar (grim-prompter, claude-bughunter, mattpocock-skills, career-ops, remote-jobs, rea-video, ossu-computer-science) serta arsip skill impor (msshi-private/archived-skill-imports/) disimpan di luar pemindai skills/ dan dicari otomatis lewat 'msshi find' (0 panggilan LLM, baca 1 file on-demand)."
+          "mechanism": "Pustaka & kurikulum besar (grim-prompter, claude-bughunter, rust-anything, mattpocock-skills, career-ops, remote-jobs, rea-video, lemo-opuscar, ossu-computer-science) serta arsip skill impor (msshi-private/archived-skill-imports/) disimpan di luar pemindai skills/ dan dicari otomatis lewat 'msshi find' / 'msshi_find_skill' (0 panggilan LLM, baca 1 file on-demand)."
         },
         {
           "id": "lossless_tool_json_compaction",
@@ -267,6 +267,7 @@
             "analyze-project",
             "explore-code",
             "mattpocock-engineering",
+            "rust-anything",
             "grim-prompter",
             "claude-bughunter",
             "explore-run",
@@ -282,6 +283,7 @@
           "coordinator": "shizuka",
           "skills": [
             "filmmaking-videography-photography-s2",
+            "lemo-opuscar",
             "academic-plotting",
             "slide-generation",
             "unslop",
