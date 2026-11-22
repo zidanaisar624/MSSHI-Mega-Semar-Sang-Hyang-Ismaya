@@ -112,6 +112,22 @@
       "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/v3.1.2/Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
       "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/v3.1.2/Panduan_Praktis_Instalasi_MSSHI_v3.1.2.pdf",
       "description_id": "Panduan praktis 6 halaman untuk klien Windows: persiapan, pemasangan, preset Academic, pengaturan akses pribadi, Doctor --fix, Bot Forge, batas RAM 4 GB dan serah terima. Tanpa model, provider, endpoint, API key atau akun pembuat."
+    },
+    {
+      "version": "v3.1.2-master-klien",
+      "maps_to": "v3.1.2",
+      "title_id": "Panduan Master Klien: Spesifikasi, Instalasi & Setup Hermes Agent + MSSHI v3.1.2",
+      "title_en": "MSSHI v3.1.2 Master Client Guide: Specifications, Installation & Setup by Use Case",
+      "filename": "Panduan_Spesifikasi_dan_Setup_Hermes_MSSHI_v3.1.2_Klien.pdf",
+      "rel_path": "docs/manuals/v3.1.2/Panduan_Spesifikasi_dan_Setup_Hermes_MSSHI_v3.1.2_Klien.pdf",
+      "pages": 7,
+      "size_bytes": 33169,
+      "sha256": "1bb333eb49cbad0e243cf06767664a5beb3d2771637834842093818a30fac7b0",
+      "edition_date": "2026-11-22",
+      "raw_download_url": "https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/manuals/v3.1.2/Panduan_Spesifikasi_dan_Setup_Hermes_MSSHI_v3.1.2_Klien.pdf",
+      "github_raw_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/raw/main/docs/manuals/v3.1.2/Panduan_Spesifikasi_dan_Setup_Hermes_MSSHI_v3.1.2_Klien.pdf",
+      "view_online_url": "https://github.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/blob/main/docs/manuals/v3.1.2/Panduan_Spesifikasi_dan_Setup_Hermes_MSSHI_v3.1.2_Klien.pdf",
+      "description_id": "Panduan Master Klien 7 halaman: spesifikasi RAM/Disk & prasyarat perangkat, cara pasang Hermes + MSSHI dari nol, serta rekomendasi setup untuk 5 keperluan utama (Belajar, Konten Kreasi, Riset/Skripsi, Coding, dan Kombinasi Preset MuZA 5 Bot) plus checklist serah terima. 100% model-agnostic tanpa akun atau kredensial pribadi."
     }
   ]
 }
