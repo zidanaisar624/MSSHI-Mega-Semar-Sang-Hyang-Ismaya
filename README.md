@@ -13,6 +13,7 @@
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
+[![Dukung via Saweria](https://img.shields.io/badge/Dukung%20via%20Saweria-QRIS%20%7C%20Mulai%20Rp25rb%20%2F%20Pro%20Rp100rb-F59E0B?style=for-the-badge)](https://saweria.co/muzas)
 
 > *"Satu ekosistem berdaulat untuk Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT — menata riset akademik S1–S3, belajar, konten dan coding melalui peran yang bekerja sesuai kebutuhan. Pilih alur ringan untuk perangkat terbatas; kebutuhan RAM, akun dan biaya mengikuti alat yang dipakai."*
 
@@ -355,6 +356,14 @@ msshi desktop --software-rendering
 ```
 
 Perintah ini menyalakan `HERMES_DESKTOP_DISABLE_GPU=1` khusus untuk proses Hermes Desktop tanpa memengaruhi aplikasi Windows lain, serta menyimpan preferensi aman di `<HERMES_HOME>/tools/msshi/desktop-preferences.json`.
+
+---
+
+## ☕ Dukung Pengembangan / Support
+
+[![Dukung via Saweria](https://img.shields.io/badge/Dukung%20via%20Saweria-QRIS%20%7C%20Mulai%20Rp25rb%20%2F%20Pro%20Rp100rb-F59E0B?style=for-the-badge)](https://saweria.co/muzas)
+
+Proyek inti **MSSHI** tetap **open-source** dan bebas digunakan oleh siapa saja. Jika bermanfaat, dukungan sukarela melalui [Saweria (`https://saweria.co/muzas`)](https://saweria.co/muzas) membantu kelanjutan riset, pemeliharaan, serta pembaruan rutin ekosistem ini.
 
 ---
 
