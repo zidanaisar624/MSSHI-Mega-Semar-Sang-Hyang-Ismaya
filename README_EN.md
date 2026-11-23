@@ -8,17 +8,18 @@
 ### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · MuZA Skripsi Drag-and-Drop v1.1*
 
 [![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-73%20Bundled%20(53%20Core%20%2B%2020%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-62%20Sources%20%7C%2059%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Skills](https://img.shields.io/badge/Skills-75%20Bundled%20(53%20Core%20%2B%2022%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-64%20Sources%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
+[![Support via Saweria](https://img.shields.io/badge/Support%20via%20Saweria-QRIS%20%7C%20From%20Rp25k%20%2F%20Pro%20Rp100k-F59E0B?style=for-the-badge)](https://saweria.co/muzas)
 
 > *"A sovereign multi-agent ecosystem for Hermes Agent, Google Antigravity, Claude Code, Codex CLI, OpenClaw & ChatGPT — engineered to run smoothly on 4 GB RAM Windows 10 laptops and `$1` API budgets across S1–S3 academic research, MFA filmmaking, BBA/MBA advisory, and full-stack cybersecurity engineering."*
 
 </div>
 
-> **v3.1.2 Complete Release:** five named native profiles + neutral Hermes default, `69` bundled skills (`+1` optional REA) / `53` upstream sources (`0` orphans), **Win10 4GB Light Build** (`msshi light`), Coder-scoped **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
+> **v3.1.2 Complete Release:** five named native profiles + neutral Hermes default, **`75` bundled skills (`53` core + `22` wrappers, plus `2` optional `rea` & `imagination-studio`) / `64` pinned upstream sources (`0` orphans) / `7` native plugins / `39` CLI families (`109` nodes) / `47` app routes**, **Win10 4GB Light Build** (`msshi light`), **Higgsfield Unified Suite (9 modules)** & **Lemo-Opuscar (99 styles)** for Kiki-Chii, Coder-scoped **Rust-Anything**, **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
 
 > **KAT is optional, including MuZA preset:** no automatic weight download or activation. It stays disabled on MuZA's current laptop. Users with suitable hardware or an authorized endpoint can opt in through the Coder wizard.
 
@@ -38,13 +39,16 @@
 
 <table>
 <tr>
-<td width="245" align="center" valign="middle">
-  <img src="assets/avatars/muza-noir-fullbody.png" width="225" alt="MuZA Sovereign Architect Character">
-  <br><sub><b>Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
+<td width="30%" align="center" valign="middle">
+  <img src="assets/avatars/muza-noir-fullbody.png" width="235" alt="MuZA Sovereign Orchestrator Dual-Tone Cyan Orange">
+  <br><sub><b>MuZA Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
 </td>
-<td valign="top">
+<td width="70%" valign="top">
   <h3>🎭 Turn Plain AI Chat into a 5-Specialist Cyber-Noir Command Suite</h3>
-  <p>Tired of watching a <b>4 GB RAM Windows 10 laptop freeze (Grey Screen)</b> under 22 background local MCP servers — or having scripts break on <b><code>C:</code>-drive-only machines</b>?</p>
+  <p align="center">
+    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="4 GB RAM 22 MCP Panic vs Calm MSSHI v3.1.2 Meme">
+    <br><sub><i>Left: 22 MCPs running on 4 GB RAM &amp; broken C:-drive scripts &rarr; PANIC! · Right: <b>MSSHI v3.1.2</b> brings instant calm with CLI-Anything + Auto-Trim!</i></sub>
+  </p>
   <p><b>MSSHI v3.1.2</b> overhauls agent reliability while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
   <ul>
     <li>⚡ <b>CLI-Anything Universal Bridge</b> — Replaces 22 heavyweight MCP processes with lazy on-demand app tickets (<code>msshi runtime ticket</code> / <code>run</code>).</li>
@@ -55,6 +59,46 @@
 </td>
 </tr>
 </table>
+
+<div align="center">
+
+### 🎥 Animated Video Explainer: How the MSSHI Ecosystem Works in 14 Seconds (Auto-Play)
+
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="MSSHI v3.1.2 Animated Video Visualization — 5 Bots, 9 Higgsfield Modules, Thesis Drag & Drop, and Smart Auto-Update">
+
+<br><sub>🎬 <b>5 Memeable Explainer Scenes:</b> (1) <i>22-MCP Panic vs MSSHI Calm</i> &rarr; (2) <i>5 Specialist Bots &amp; 2-Type Interaction ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Higgsfield AI Modules</i> &rarr; (4) <i>Thesis Drag &amp; Drop + Wait $1 TokenShield</i> &rarr; (5) <i>3-Repo Ecosystem (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Download / Play Full HD MP4 Video (1280&times;720)</b></a></sub>
+
+</div>
+
+---
+
+## 🧭 5 Core Missions, 2-Type Interaction &amp; 4-Layer Skill Finder (`msshi_find_skill`)
+
+<div align="center">
+  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="MSSHI v3.1.2 5 Missions, 2-Type Interaction, and 4-Layer Skill Finder Overview">
+  <br><sub><b>10-Second Overview:</b> 5 Core Missions · 75 Bundled Skills · 64 Pinned Upstreams · 2-Type Interaction (<code>msshi-interaction v0.2.0</code>) · 4-Layer <code>msshi_find_skill</code> · Win10 4 GB Light Build.</sub>
+</div>
+
+---
+
+## 🎬 Creative Studio &amp; 9 Higgsfield AI Modules (Led by Kiki-Chii)
+
+<div align="center">
+  <img src="assets/showcases/showcase-higgsfield-pipeline.png" width="96%" alt="Higgsfield Unified Creative Suite 9 Modules in MSSHI v3.1.2">
+  <br><sub><b>Higgsfield Unified Suite in MSSHI:</b> Every photo, brand, cinema, cover, and web workflow passes through <i>Concepting First</i> + Human Approval before spending credits.</sub>
+</div>
+
+<br>
+
+Under **Kiki-Chii** (*One-Woman Creative Studio*), [`higgsfield-skills`](skills/higgsfield-skills/SKILL.md) and [`higgsfield-ai-cinema-photo-suite.md`](skills/filmmaking-videography-photography-s2/references/higgsfield-ai-cinema-photo-suite.md) organize **9 Higgsfield modules** into 3 structured production lanes integrated with **`lemo-opuscar`** (*15 categories / 99 cinema styles*), **`BRAG`** (*Hyperframes*), **`ArtCraft`**, **`Blender`**, **`Unslop`**, and optional **`Imagination Studio`**:
+
+| Production Cluster | Higgsfield Modules in MSSHI | Scope &amp; Ecosystem Synergy |
+| :--- | :--- | :--- |
+| **1. Core Generation &amp; Cinema** *(2 modules)* | `higgsfield-generate` · `higgsfield-soul-id` | Multi-model generation (image, video, 3D/GLB, audio, Marketing Studio, Virality Predictor) + consistent character/face locking from 5–20 reference photos. |
+| **2. Brand, Photo &amp; E-Commerce** *(3 modules)* | `higgsfield-product-photoshoot` · `higgsfield-brandkit` · `higgsfield-marketplace-cards` | 10 commercial/editorial product photography modes, full visual brand systems (palettes, SVG marks, mockups, PPTX/PDF brandbooks), and compliant listing + A+ modules. |
+| **3. Video, Covers &amp; Web** *(4 modules)* | `higgsfield-faceless-video` · `higgsfield-video-explainer` · `higgsfield-youtube-thumbnail` · `higgsfield-websites` | Narrated explainers/documentaries, high-CTR 4K thumbnails &amp; `9:16` vertical covers, and interactive web hero video loops (**Kiki-Chii &times; Shikaku**). |
+
+> 💡 **Honesty Notice:** The `higgsfield-skills` wrapper in MSSHI manages *Concepting First* planning, module routing, and cost/consent gates. Actual cloud generation requires the **user's own Higgsfield account and credits**; when inactive or at zero balance, Kiki-Chii still produces complete storyboards, prompts, parameters, and local mockups.
 
 ---
 
@@ -103,7 +147,7 @@
 <td width="50%" align="center" valign="top">
   <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Evolution MSSHI v3.1.2 + Skripsi v1.1">
   <br><b>Phase 4 · Mature Release (<code>v3.1.2 + Skripsi v1.1</code>)</b>
-  <br><sub>Now <b>67 bundled skills (51 core + 16 wrappers) + 51 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
+  <br><sub>Now <b>75 bundled skills (53 core + 22 wrappers, +2 optional) + 64 upstreams</b>: featuring <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <b>Higgsfield 9 modules</b>, <code>Lemo-Opuscar</code>, <code>Rust-Anything</code>, <code>Claude-BugHunter</code>, <code>Grim Prompter</code>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; adaptive <code>C:/D:</code> paths.</sub>
 </td>
 </tr>
 </table>
@@ -114,7 +158,7 @@
 flowchart LR
     V1["<b>Phase 0 · v1.0</b><br/>47 Core Skills<br/>S1–S2 MFA Filmmaking, Video &amp; Photo<br/>Auto-Curiosity &amp; Creative DNA"] --> V2["<b>Stages 1–2 · v2.0–v2.2</b><br/>Business Sage + Tax PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
     V2 --> V3["<b>Optimizer Leap · v3.0</b><br/>22 MCPs Replaced by CLI-Anything<br/>OmniVoice + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
-    V3 --> V31["<b>Mature Release · v3.1.2 + Skripsi v1.1</b><br/>67 Bundled Skills (51 Core + 16 Wrappers)<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
+    V3 --> V31["<b>Mature Release · v3.1.2 + Skripsi v1.1</b><br/>75 Bundled Skills (53 Core + 22 Wrappers) + 64 Upstreams<br/>Higgsfield 9 Modules + Lemo-Opuscar + Rust-Anything<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
 ```
 
 ---
@@ -183,7 +227,7 @@ flowchart LR
   <ul>
     <li><b><code>TokenShield</code> `$1.00` Floor Guard:</b> Checks projected balances before paid multi-step operations so quotas never drain silently.</li>
     <li><b>Lossless <code>msshi-auto-trim</code> + <code>caveman</code>:</b> Compresses large JSON tool responses in-place only when exact data equivalence holds.</li>
-    <li><b>Personal Provider &amp; Model Preservation:</b> Never alters your DataByte, YupiAI, Gemini, Claude, DeepSeek, Kimi, Qwen, or GPT settings (<code>jev_model_routing: false</code> locked).</li>
+    <li><b>Personal Provider &amp; Model Preservation:</b> Users choose and control their own LLM provider, model, endpoint, and API key; existing configurations are preserved untouched (<code>jev_model_routing: false</code> locked).</li>
     <li><b>Zero Hardcoded <code>D:\</code> Failures:</b> Automatically selects <code>D:\HermesData</code> when present or falls back cleanly to <code>%USERPROFILE%\HermesData</code> on single-drive <code>C:</code> laptops.</li>
   </ul>
 </td>
@@ -305,7 +349,7 @@ flowchart LR
 - **`docs/pdf-guides/` &amp; `docs/manuals/`**: Release-versioned PDF handbooks (7-page Master Client Guide &amp; 37-page Complete Handbook, Nov 22, 2026 edition), `latest/`, and [`pdf_catalog.json`](docs/manuals/pdf_catalog.json).
 - **`assets/`**: Standardized `avatars/`, `memes/`, `showcases/`, 8 SVG [`diagrams/`](assets/README.md), and [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json).
 - **`scripts/`**: CLI (`msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, and release auditors (`check_release*.py`).
-- **`skills/` &amp; `optional/rea/`**: **63 bundled active skill folders (`51 core + 12 wrappers`)** including 11-file `muza-skripsi-template/`, plus opt-in `rea`.
+- **`skills/` &amp; `optional/`**: **75 bundled active skill folders (`53 core + 22 wrappers`)** including 11-file `muza-skripsi-template/`, `higgsfield-skills`, `lemo-opuscar`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus 2 opt-in wrappers (`rea`, `imagination-studio`).
 
 ---
 

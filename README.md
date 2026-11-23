@@ -8,8 +8,8 @@
 ### *Asisten AI Terpadu untuk Tugas Kuliah Mahasiswa & Dosen (Skripsi, Tesis, Disertasi), Belajar Bareng Sensei, Content Creation, dan Coding*
 
 [![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-73%20Bundled%20(53%20Core%20%2B%2020%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-62%20Sources%20%7C%2059%20Git%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Skills](https://img.shields.io/badge/Skills-75%20Bundled%20(53%20Core%20%2B%2022%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-64%20Sources%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -19,7 +19,7 @@
 
 </div>
 
-> **v3.1.2 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, `69` skill bundel (`+1` opsional REA) / `53` sumber upstream (`0` orphan), **Win10 4GB Light Build** (`msshi light`), **Grim Prompter** & **Claude-BugHunter** khusus Coder, **Harness²** pada semua 5 bot di semua preset, serta **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
+> **v3.1.2 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, **`75` skill bundel (`53` core + `22` wrapper, plus `2` opsional `rea` & `imagination-studio`) / `64` sumber upstream ter-pin (`0` orphan) / `7` plugin inti / `39` keluarga CLI (`109` simpul) / `47` rute aplikasi**, **Win10 4GB Light Build** (`msshi light`), **Higgsfield Unified Suite (9 modul)** & **Lemo-Opuscar (99 gaya)** untuk Kiki-Chii, **Rust-Anything**, **Grim Prompter** & **Claude-BugHunter** khusus Coder, **Harness²** pada semua 5 bot di semua preset, serta **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
 
 > **KAT opsional, termasuk preset MuZA:** tidak diunduh atau diaktifkan otomatis. Pengguna lain dapat memilih endpoint atau perangkat yang memadai melalui wizard Coder.
 
@@ -39,13 +39,16 @@
 
 <table>
 <tr>
-<td width="245" align="center" valign="middle">
-  <img src="assets/avatars/muza-noir-fullbody.png" width="225" alt="MuZA Sovereign Architect Character">
-  <br><sub><b>Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
+<td width="30%" align="center" valign="middle">
+  <img src="assets/avatars/muza-noir-fullbody.png" width="235" alt="MuZA Sovereign Orchestrator Dual-Tone Cyan Orange">
+  <br><sub><b>MuZA Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
 </td>
-<td valign="top">
+<td width="70%" valign="top">
   <h3>🎭 Dari Chat AI Biasa Menjadi Markas Operasi Cyber-Noir 5 Spesialis</h3>
-  <p>Bosan menghadapi laptop <b>Windows 10 RAM 4 GB nge-freeze (Grey Screen)</b> gara-gara 22 MCP lokal nyala barengan? Atau kesal karena skrip otomasi langsung error di laptop yang <b>cuma punya Drive <code>C:</code></b>?</p>
+  <p align="center">
+    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="Meme Kucing Panik 22 MCP RAM 4 GB vs Tenang dengan MSSHI v3.1.2">
+    <br><sub><i>Kiri: 22 MCP nyala barengan di RAM 4 GB &amp; skrip error di Drive <code>C:</code> &rarr; PANIK! · Kanan: <b>MSSHI v3.1.2</b> langsung menenangkan lewat CLI-Anything + Auto-Trim!</i></sub>
+  </p>
   <p><b>MSSHI v3.1.2</b> merombak total fondasi agen AI Anda tanpa menyentuh konfigurasi provider/model pribadi (<code>jev_model_routing: false</code> terkunci penuh):</p>
   <ul>
     <li>⚡ <b>CLI-Anything Universal Bridge</b> — Memutus ketergantungan 22 MCP berat; membuka Blender, ArtCraft &amp; browser hanya lewat tiket tugas on-demand (<code>msshi runtime ticket</code>).</li>
@@ -56,6 +59,46 @@
 </td>
 </tr>
 </table>
+
+<div align="center">
+
+### 🎥 Video Visualisasi Interaktif: Cara Kerja Ekosistem MSSHI dalam 14 Detik (Auto-Play)
+
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Video Visualisasi Alur Kerja Ekosistem MSSHI v3.1.2 — 5 Bot, Higgsfield 9 Modul, Skripsi Drag & Drop, dan Smart Auto-Update">
+
+<br><sub>🎬 <b>5 Adegan Visualisasi Memeable:</b> (1) <i>Panik 22 MCP vs Tenang MSSHI</i> &rarr; (2) <i>5 Bot Spesialis &amp; Interaksi 2 Tipe ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Modul Higgsfield AI</i> &rarr; (4) <i>Skripsi Drag &amp; Drop + Wait $1 TokenShield</i> &rarr; (5) <i>Ekosistem 3 Repo (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Unduh / Putar Versi Video MP4 HD (1280&times;720)</b></a></sub>
+
+</div>
+
+---
+
+## 🧭 Peta 5 Misi Utama, Interaksi 2 Tipe &amp; Pencari Skill 4-Lapis (`msshi_find_skill`)
+
+<div align="center">
+  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="Visualisasi 5 Misi Utama MSSHI v3.1.2, Interaksi 2 Tipe Hemat Token, dan 4-Lapis Pencari Skill">
+  <br><sub><b>Ringkasan 10 Detik:</b> 5 Misi Utama · 75 Skill Bundel · 64 Upstreams · Interaksi 2 Tipe (<code>msshi-interaction v0.2.0</code>) · 4-Lapis <code>msshi_find_skill</code> · Win10 RAM 4 GB Light Build.</sub>
+</div>
+
+---
+
+## 🎬 Studio Kreatif &amp; 9 Modul Higgsfield AI (Di Bawah Kiki-Chii)
+
+<div align="center">
+  <img src="assets/showcases/showcase-higgsfield-pipeline.png" width="96%" alt="Visualisasi Higgsfield Unified Creative Suite 9 Modul dalam Orkestrasi MSSHI v3.1.2">
+  <br><sub><b>Higgsfield Unified Suite di MSSHI:</b> Semua produksi foto, brand, video, cover, dan web melewati gerbang <i>Concepting First</i> + Review Manusia sebelum menyentuh kredit.</sub>
+</div>
+
+<br>
+
+Di bawah **Kiki-Chii** (*One-Woman Creative Studio*), wrapper [`higgsfield-skills`](skills/higgsfield-skills/SKILL.md) dan referensi [`higgsfield-ai-cinema-photo-suite.md`](skills/filmmaking-videography-photography-s2/references/higgsfield-ai-cinema-photo-suite.md) merangkai **9 modul Higgsfield** ke dalam 3 jalur terstruktur yang tersambung rapi dengan **`lemo-opuscar`** (*15 kategori / 99 gaya sinema*), **`BRAG`** (*Hyperframes*), **`ArtCraft`**, **`Blender`**, **`Unslop`**, dan opsional **`Imagination Studio`**:
+
+| Klaster Produksi | Modul Higgsfield di MSSHI | Fungsi &amp; Sinergi Ekosistem |
+| :--- | :--- | :--- |
+| **1. Generasi &amp; Sinema Inti** *(2 modul)* | `higgsfield-generate` · `higgsfield-soul-id` | Generasi multi-model (foto, video, 3D/GLB, audio, Marketing Studio, Virality Predictor) + kunci konsistensi wajah/karakter lintas adegan dari 5–20 referensi. |
+| **2. Brand, Foto &amp; E-Commerce** *(3 modul)* | `higgsfield-product-photoshoot` · `higgsfield-brandkit` · `higgsfield-marketplace-cards` | 10 mode fotografi produk komersial/editorial, identitas visual (palet, logo SVG, mockup, brandbook PPTX/PDF), hingga kartu produk &amp; 7 modul konten A+. |
+| **3. Video, Cover &amp; Web** *(4 modul)* | `higgsfield-faceless-video` · `higgsfield-video-explainer` · `higgsfield-youtube-thumbnail` · `higgsfield-websites` | Dokumenter/explainer sinkron narasi, thumbnail 4K &amp; cover vertikal `9:16` ber-CTR tinggi, serta hero video loop &amp; web interaktif (kolaborasi **Kiki-Chii &times; Shikaku**). |
+
+> 💡 **Catatan Kejujuran Wajib:** Wrapper `higgsfield-skills` di MSSHI mengatur alur *Concepting First*, seleksi modul yang tepat, serta gerbang persetujuan biaya &amp; izin referensi. Eksekusi generasi awan aktual memerlukan **akun dan kredit Higgsfield milik pengguna sendiri**; bila akun belum aktif atau saldo kosong, Kiki-Chii tetap menyusun *storyboard*, prompt, parameter, dan mockup lokal tanpa gagal.
 
 ---
 
@@ -106,7 +149,7 @@ Perjalanan **MSSHI** lahir dari frustrasi nyata menghadapi AI yang boros token, 
 <td width="50%" align="center" valign="top">
   <img src="assets/memes/meme-04-era-v31.png" width="95%" alt="Panel 4 Komik Evolusi MSSHI v3.1.2 + Skripsi v1.1">
   <br><b>Fase 4 · Rilis Matang Saat Ini (<code>v3.1.2 + Skripsi v1.1</code>)</b>
-  <br><sub>Genap <b>67 skill (51 inti + 16 wrapper) + 51 upstreams</b>: hadir <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; path adaptif <code>C:/D:</code>. Santai menikmati kopi sementara sistem bekerja presisi.</sub>
+  <br><sub>Genap <b>75 skill bundel (53 inti + 22 wrapper, +2 opsional) + 64 upstreams</b>: hadir <b>MuZA Skripsi Drag-and-Drop v1.1</b>, <b>Higgsfield 9 modul</b>, <code>Lemo-Opuscar</code>, <code>Rust-Anything</code>, <code>Claude-BugHunter</code>, <code>Grim Prompter</code>, <code>BRAG</code>, <code>Unslop</code>, <code>Scrapling</code>, <code>Harness²</code>, Opt-in <code>REA</code>, <code>msshi doctor</code>, <code>msshi choices</code>, <code>msshi skripsi</code>, <code>msshi manual</code> &amp; path adaptif <code>C:/D:</code>. Santai menikmati kopi sementara sistem bekerja presisi.</sub>
 </td>
 </tr>
 </table>
@@ -117,7 +160,7 @@ Perjalanan **MSSHI** lahir dari frustrasi nyata menghadapi AI yang boros token, 
 flowchart LR
     V1["<b>Fase Awal · v1.0</b><br/>47 Skill Inti<br/>Kurikulum S1–S2 MFA Film &amp; Foto<br/>Auto-Curiosity &amp; Creative DNA"] --> V2["<b>Tahap 1 &amp; 2 · v2.0–v2.2</b><br/>Business Sage + Pajak RI PP 20/2026<br/>5-Bot Hierarchy + TokenShield<br/>Unlimited-OCR-2 &amp; Universal Bridge"]
     V2 --> V3["<b>Lompatan Optimizer · v3.0</b><br/>Migrasi 22 MCP &rarr; CLI-Anything<br/>OmniVoice + Dreaming 21878d3<br/>KAT-Coder-V2.5-Dev + Caveman + TimesFM"]
-    V3 --> V31["<b>Rilis Matang · v3.1.2 + Skripsi v1.1</b><br/>67 Skill (51 Inti + 16 Wrapper) + 51 Upstreams<br/>BRAG + Unslop + Scrapling + Harness²<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
+    V3 --> V31["<b>Rilis Matang · v3.1.2 + Skripsi v1.1</b><br/>75 Skill (53 Inti + 22 Wrapper) + 64 Upstreams<br/>Higgsfield 9 Modul + Lemo-Opuscar + Rust-Anything<br/>MuZA Skripsi Drag-and-Drop + msshi doctor"]
 ```
 
 ---
@@ -330,7 +373,7 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 | **`assets/`** | `avatars/` (Hero banner dual-tone, fullbody Noir &amp; 5 avatar karakter seragam), `memes/` (komik evolusi 2x2 &amp; meme reaksi), `showcases/`, `diagrams/` (8 SVG arsitektur), serta [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json) &amp; [`assets/README.md`](assets/README.md). |
 | **`scripts/`** | Mesin CLI `msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`, `prepare_github_visuals.py`, `secret_scan.py`, &amp; `check_release*.py`. |
 | **`configs/`** | Matriks skill (`bot_role_and_skill_matrix.json`, `upstreams.json`, `skill_activation_matrix.json`), persona 5 bot (`configs/personas/`), &amp; [`configs/github_about.txt`](configs/github_about.txt). |
-| **`skills/` &amp; `optional/rea/`** | **63 folder skill aktif terbundel (`51 inti + 12 wrapper`)** termasuk 11-file `skills/muza-skripsi-template/`, plus 1 wrapper opt-in `rea`. |
+| **`skills/` &amp; `optional/`** | **75 folder skill aktif terbundel (`53 inti + 22 wrapper`)** termasuk 11-file `skills/muza-skripsi-template/`, `higgsfield-skills`, `lemo-opuscar`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus 2 wrapper opt-in (`rea`, `imagination-studio`). |
 
 ---
 

@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "theme": "Cyber-Noir Editorial Comic (Dual-Tone Cyan #2CE8C6 + Orange #FF6B1A on #0B0F17)",
-  "total_standardized_assets": 20,
+  "total_standardized_assets": 23,
   "canvases": {
     "square_avatar": "320x320 rounded 32px, 4px neon character border",
-    "vertical_character": "540x960 rounded 24px, #FF6B1A 4px border on #0B0F17 rim-glow backdrop",
-    "hero_banner": "2752x1536 supplied key art; displayed responsively",
+    "vertical_character": "512x512 rounded 28px dual-tone cyan/orange Sovereign Orchestrator portrait",
+    "hero_banner": "1600x900 optimized cyber-noir key art (< 900 KB); displayed responsively",
     "uniform_meme_panel": "640x400 (16:10) rounded 20px, contain-fit with blurred dark backdrop",
     "widescreen_showcase": "1280x720 (16:9) rounded 22px, 4px accent border"
   },
@@ -14,27 +14,27 @@
       "id": "hero-muza-banner",
       "output": "assets/avatars/hero-muza-banner.png",
       "canvas_type": "hero",
-      "width": 2752,
-      "height": 1536,
+      "width": 1600,
+      "height": 900,
       "border_hex": "#2CE8C6",
-      "source_collection": "user_supplied_generated_art",
-      "source_filename": "supplied_hero_v3.1.2.jpg",
-      "purpose": "Hero utama MSSHI v3.1.2",
-      "size_bytes": 5509024,
-      "sha256": "0cfa471b91c09e7ff1720414c3c9b75b84ee1434c23007e8daa194f094a8c7a3"
+      "source_collection": "user_supplied_curated_cybernoir",
+      "source_filename": "hero_muza_v3.1.2_optimized.png",
+      "purpose": "Hero utama MSSHI v3.1.2+ (teroptimasi ringan < 900 KB)",
+      "size_bytes": 462652,
+      "sha256": "4e55e7787a8e5dcd26aa58fa842991a9be785289ac2208dcf2c89465292ce508"
     },
     {
       "id": "muza-noir-fullbody",
       "output": "assets/avatars/muza-noir-fullbody.png",
       "canvas_type": "vertical",
-      "width": 540,
-      "height": 960,
+      "width": 512,
+      "height": 512,
       "border_hex": "#FF6B1A",
-      "source_collection": "archive_local",
-      "source_filename": "detective_skull_fullbody_clean.png",
-      "purpose": "Karakter Full-Body Noir Sovereign Architect",
-      "size_bytes": 415878,
-      "sha256": "5b54cdff23ecba1bb6589266e423430365470de3fc61dea41f3e78f70bfcf124"
+      "source_collection": "user_supplied_curated_cybernoir",
+      "source_filename": "02_noir_skull_dualtone_cyan_orange.jpg",
+      "purpose": "Portrait Sovereign Orchestrator Dual-Tone Cyan + Electric Orange",
+      "size_bytes": 349195,
+      "sha256": "b4c839a05fd32430538c27f30f3e20b403150ffc96d56774987a01a535ecb68e"
     },
     {
       "id": "bot-01-yukino",
@@ -268,6 +268,45 @@
       "source_filename": "supplied_interaction_v3.1.2.jpg",
       "size_bytes": 2417940,
       "sha256": "658bbdf327b76d1136499f1d1b31ee79d63d57d9e7f9c78594a83ea80030477f"
+    },
+    {
+      "id": "meme-ram4gb-mcp-panik",
+      "output": "assets/memes/meme-ram4gb-mcp-panik.png",
+      "canvas_type": "meme",
+      "width": 640,
+      "height": 400,
+      "border_hex": "#FF6B1A",
+      "source_collection": "user_supplied_meme",
+      "source_filename": "03_meme_cats_code_panik_nerd.jpg",
+      "purpose": "Meme Intro Blok Utama — Panik 22 MCP RAM 4 GB vs Tenang dengan MSSHI v3.1.2",
+      "size_bytes": 284070,
+      "sha256": "18fee9ffdedbaf04af3afdd57d63034b190d767e6cb314addb4611763b6822b1"
+    },
+    {
+      "id": "showcase-higgsfield-pipeline",
+      "output": "assets/showcases/showcase-higgsfield-pipeline.png",
+      "canvas_type": "showcase",
+      "width": 1280,
+      "height": 720,
+      "border_hex": "#FF6B1A",
+      "source_collection": "msshi_deterministic_visual",
+      "source_filename": "showcase_higgsfield_pipeline.png",
+      "purpose": "Visualisasi Higgsfield Unified Creative Suite (9 Modul di Bawah Kiki-Chii)",
+      "size_bytes": 423205,
+      "sha256": "c144dd06dba3c7bc926a2c6da8b9e0c6a9e56efb03d134a03118bf036115e9b6"
+    },
+    {
+      "id": "showcase-5-missions-overview",
+      "output": "assets/showcases/showcase-5-missions-overview.png",
+      "canvas_type": "showcase",
+      "width": 1280,
+      "height": 720,
+      "border_hex": "#2CE8C6",
+      "source_collection": "msshi_deterministic_visual",
+      "source_filename": "showcase_5_missions_overview.png",
+      "purpose": "Visualisasi 5 Misi Utama, Interaksi 2 Tipe Hemat Token & Pencari Skill 4-Lapis",
+      "size_bytes": 329587,
+      "sha256": "7b150beee487debfa3f944863ac93f9c185efa492495d820326615ad77656e8b"
     }
   ]
 }
