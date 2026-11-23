@@ -62,11 +62,11 @@
 
 <div align="center">
 
-### 🎥 Animated Video Explainer: Sang Hyang Ismaya (Semar) &amp; 5 Bots in 14 Seconds (Auto-Play)
+### 🎥 Animated Video Explainer: Sang Hyang Ismaya (Semar) &amp; 5 Bots in 15 Seconds (Auto-Play)
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="MSSHI v3.1.2 Animated Video Visualization — Kyai Semar Dalang of 5 Bots, 9 Higgsfield Modules, Thesis Drag & Drop, and Smart Auto-Update">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="MSSHI v3.1.2 Animated Video Visualization — Kyai Semar Dalang of 5 Bots, 9 Higgsfield Modules, Research S1–S3 (Prioritizing S1 Skripsi), and Smart Auto-Update">
 
-<br><sub>🎬 <b>5 Cyber-Wayang &times; Meme Explainer Scenes (With Real Motion Video Backgrounds):</b> (1) <i>22-MCP Panic vs Kyai Semar Calm</i> &rarr; (2) <i>Dalang Ismaya Strings &amp; 5 Specialist Bots ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Higgsfield AI Modules</i> &rarr; (4) <i>Thesis Drag &amp; Drop + Wait $1 TokenShield</i> &rarr; (5) <i>3-Repo Ecosystem (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Download / Play Full HD MP4 Video (1280&times;720)</b></a></sub>
+<br><sub>🎬 <b>5 Cyber-Wayang &times; Meme Explainer Scenes (Animated Dalang Threads, Cross-Fade &amp; Real Motion Video Backdrops):</b> (1) <i>22-MCP Panic vs Calm Coffee Kyai Semar</i> &rarr; (2) <i>Dalang Ismaya Strings &amp; 5 Specialist Bots ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Higgsfield AI Modules</i> &rarr; (4) <i>Mission 02 Research for S1–S3 (Prioritizing S1 Skripsi) + Wait $1 TokenShield</i> &rarr; (5) <i>3-Repo Ecosystem (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Download / Play Full HD MP4 Video (1280&times;720, 12fps)</b></a></sub>
 
 </div>
 
@@ -76,7 +76,7 @@
 
 <div align="center">
   <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="MSSHI v3.1.2 5 Missions, 2-Type Interaction, and 4-Layer Skill Finder Overview">
-  <br><sub><b>10-Second Overview:</b> 5 Core Missions · 75 Bundled Skills · 64 Pinned Upstreams · 2-Type Interaction (<code>msshi-interaction v0.2.0</code>) · 4-Layer <code>msshi_find_skill</code> · Win10 4 GB Light Build.</sub>
+  <br><sub><b>10-Second Overview:</b> 5 Core Missions (Mission 02: <b>Research for S1–S3 — Prioritizing S1 Skripsi</b>) · 75 Bundled Skills · 64 Pinned Upstreams · 2-Type Interaction (<code>msshi-interaction v0.2.0</code>) · 4-Layer <code>msshi_find_skill</code> · Win10 4 GB Light Build.</sub>
 </div>
 
 ---
@@ -171,7 +171,7 @@ Every bot carries its own [`SOUL.md`](configs/personas/) persona instructions, d
 | :---: | :--- | :--- | :--- |
 | <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Fresh install: Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**31 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
 | <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**27 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 Thesis)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**38 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 — Prioritizing S1 Skripsi)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**38 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
 | <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**22 skills**) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
 | <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (optional KAT-Coder, default OFF), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**24 skills**) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
 

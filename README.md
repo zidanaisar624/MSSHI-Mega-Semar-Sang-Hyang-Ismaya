@@ -62,11 +62,11 @@
 
 <div align="center">
 
-### 🎥 Video Visualisasi Interaktif: Sang Hyang Ismaya (Semar) &amp; 5 Bot dalam 14 Detik (Auto-Play)
+### 🎥 Video Visualisasi Interaktif: Sang Hyang Ismaya (Semar) &amp; 5 Bot dalam 15 Detik (Auto-Play)
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Video Visualisasi Alur Kerja Ekosistem MSSHI v3.1.2 — Kyai Semar Dalang 5 Bot, Higgsfield 9 Modul, Skripsi Drag & Drop, dan Smart Auto-Update">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Video Visualisasi Alur Kerja Ekosistem MSSHI v3.1.2 — Kyai Semar Dalang 5 Bot, Higgsfield 9 Modul, Riset S1–S3 Skripsi Drag & Drop, dan Smart Auto-Update">
 
-<br><sub>🎬 <b>5 Babak Visualisasi Wayang Semar &times; Meme (Dengan Latar Motion Video Aktif):</b> (1) <i>Geger 22 MCP vs Tentrem Kyai Semar</i> &rarr; (2) <i>Tali Dalang Ismaya &amp; 5 Bot ("Let Mi Ting")</i> &rarr; (3) <i>Pusaka Kreatif Kiki-Chii &times; 9 Modul Higgsfield AI</i> &rarr; (4) <i>Ajian Skripsi Drag &amp; Drop + Perisai $1 TokenShield</i> &rarr; (5) <i>Tritunggal 3 Repo (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Unduh / Putar Versi Video MP4 HD (1280&times;720)</b></a></sub>
+<br><sub>🎬 <b>5 Babak Visualisasi Wayang Semar &times; Meme (Animasi Tali Dalang, Cross-Fade &amp; Latar Motion Video Aktif):</b> (1) <i>Geger 22 MCP vs Kyai Semar Ngopi Tenang</i> &rarr; (2) <i>Tali Dalang Ismaya &amp; 5 Bot ("Let Mi Ting")</i> &rarr; (3) <i>Studio Kiki-Chii &times; 9 Modul Higgsfield AI</i> &rarr; (4) <i>Misi 02 Riset Untuk S1–S3 (Diutamakan S1 Skripsi) + Perisai $1 TokenShield</i> &rarr; (5) <i>Tritunggal 3 Repo (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Unduh / Putar Versi Video MP4 HD (1280&times;720, 12fps)</b></a></sub>
 
 </div>
 
