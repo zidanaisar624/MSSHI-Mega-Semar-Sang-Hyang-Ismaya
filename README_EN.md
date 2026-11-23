@@ -40,16 +40,16 @@
 <table>
 <tr>
 <td width="30%" align="center" valign="middle">
-  <img src="assets/avatars/muza-noir-fullbody.png" width="235" alt="MuZA Sovereign Orchestrator Dual-Tone Cyan Orange">
-  <br><sub><b>MuZA Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
+  <img src="assets/avatars/muza-noir-fullbody.png" width="235" alt="Kyai Lurah Semar — Sang Hyang Ismaya Sovereign Orchestrator">
+  <br><sub><b>Kyai Lurah Semar (Sang Hyang Ismaya)</b><br>Sovereign Orchestrator (Dalang of 5 Bots) · Zero Model Override · Adaptive C:/D:</sub>
 </td>
 <td width="70%" valign="top">
-  <h3>🎭 Turn Plain AI Chat into a 5-Specialist Cyber-Noir Command Suite</h3>
+  <h3>🎭 From Plain AI Chat to a 5-Specialist Cyber-Wayang Command Suite (Guided by Semar)</h3>
   <p align="center">
-    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="4 GB RAM 22 MCP Panic vs Calm MSSHI v3.1.2 Meme">
-    <br><sub><i>Left: 22 MCPs running on 4 GB RAM &amp; broken C:-drive scripts &rarr; PANIC! · Right: <b>MSSHI v3.1.2</b> brings instant calm with CLI-Anything + Auto-Trim!</i></sub>
+    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="22 MCP Panic vs Calm Kyai Semar MSSHI v3.1.2 Meme">
+    <br><sub><i>Left: 22 MCPs freezing the laptop &amp; broken C:-drive scripts &rarr; PANIC! · Right: <b>Kyai Semar (MSSHI v3.1.2)</b> restores order with CLI-Anything + Auto-Trim!</i></sub>
   </p>
-  <p><b>MSSHI v3.1.2</b> overhauls agent reliability while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
+  <p>True to its name (<b>Mega Semar Sang Hyang Ismaya</b>), <b>Semar</b> is the <b>Sovereign Orchestrator</b> — the wise Javanese <i>Pamomong &amp; Dalang</i> coordinating 5 specialist bots while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
   <ul>
     <li>⚡ <b>CLI-Anything Universal Bridge</b> — Replaces 22 heavyweight MCP processes with lazy on-demand app tickets (<code>msshi runtime ticket</code> / <code>run</code>).</li>
     <li>🛡️ <b>$1 Zero-Waste Token Shield + Auto-Trim + Caveman</b> — Lossless JSON compression via <code>transform_tool_result</code> plus hard budget stops below a <b>$1.00</b> projected reserve.</li>
@@ -62,11 +62,11 @@
 
 <div align="center">
 
-### 🎥 Animated Video Explainer: How the MSSHI Ecosystem Works in 14 Seconds (Auto-Play)
+### 🎥 Animated Video Explainer: Sang Hyang Ismaya (Semar) &amp; 5 Bots in 14 Seconds (Auto-Play)
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="MSSHI v3.1.2 Animated Video Visualization — 5 Bots, 9 Higgsfield Modules, Thesis Drag & Drop, and Smart Auto-Update">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="MSSHI v3.1.2 Animated Video Visualization — Kyai Semar Dalang of 5 Bots, 9 Higgsfield Modules, Thesis Drag & Drop, and Smart Auto-Update">
 
-<br><sub>🎬 <b>5 Memeable Explainer Scenes:</b> (1) <i>22-MCP Panic vs MSSHI Calm</i> &rarr; (2) <i>5 Specialist Bots &amp; 2-Type Interaction ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Higgsfield AI Modules</i> &rarr; (4) <i>Thesis Drag &amp; Drop + Wait $1 TokenShield</i> &rarr; (5) <i>3-Repo Ecosystem (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Download / Play Full HD MP4 Video (1280&times;720)</b></a></sub>
+<br><sub>🎬 <b>5 Cyber-Wayang &times; Meme Explainer Scenes (With Real Motion Video Backgrounds):</b> (1) <i>22-MCP Panic vs Kyai Semar Calm</i> &rarr; (2) <i>Dalang Ismaya Strings &amp; 5 Specialist Bots ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Higgsfield AI Modules</i> &rarr; (4) <i>Thesis Drag &amp; Drop + Wait $1 TokenShield</i> &rarr; (5) <i>3-Repo Ecosystem (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Download / Play Full HD MP4 Video (1280&times;720)</b></a></sub>
 
 </div>
 

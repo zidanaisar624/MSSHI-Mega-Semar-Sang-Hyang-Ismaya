@@ -17,11 +17,11 @@
       "width": 1600,
       "height": 900,
       "border_hex": "#2CE8C6",
-      "source_collection": "user_supplied_curated_cybernoir",
-      "source_filename": "hero_muza_v3.1.2_optimized.png",
-      "purpose": "Hero utama MSSHI v3.1.2+ (teroptimasi ringan < 900 KB)",
-      "size_bytes": 462652,
-      "sha256": "4e55e7787a8e5dcd26aa58fa842991a9be785289ac2208dcf2c89465292ce508"
+      "source_collection": "tema_utama_wayang",
+      "source_filename": "semar limangatustaun.jpg",
+      "purpose": "Hero Banner Utama MSSHI v3.1.2 — Mega Semar Sang Hyang Ismaya",
+      "size_bytes": 413870,
+      "sha256": "6b2e30cad8f8db4ff2a8bd5bee490603cde28f4f496184bb3165543e3f8717f0"
     },
     {
       "id": "muza-noir-fullbody",
@@ -30,11 +30,11 @@
       "width": 512,
       "height": 512,
       "border_hex": "#FF6B1A",
-      "source_collection": "user_supplied_curated_cybernoir",
-      "source_filename": "02_noir_skull_dualtone_cyan_orange.jpg",
-      "purpose": "Portrait Sovereign Orchestrator Dual-Tone Cyan + Electric Orange",
-      "size_bytes": 349195,
-      "sha256": "b4c839a05fd32430538c27f30f3e20b403150ffc96d56774987a01a535ecb68e"
+      "source_collection": "tema_utama_wayang",
+      "source_filename": "semar limangatustaun.jpg",
+      "purpose": "Kyai Lurah Semar (Sang Hyang Ismaya) — Sovereign Orchestrator Dalang 5 Bot",
+      "size_bytes": 228757,
+      "sha256": "2f15a8b704c337d6da5ecab8c624d5537923e2f6df01e04d054e42b307ec650b"
     },
     {
       "id": "bot-01-yukino",
@@ -279,8 +279,8 @@
       "source_collection": "user_supplied_meme",
       "source_filename": "03_meme_cats_code_panik_nerd.jpg",
       "purpose": "Meme Intro Blok Utama — Panik 22 MCP RAM 4 GB vs Tenang dengan MSSHI v3.1.2",
-      "size_bytes": 284070,
-      "sha256": "18fee9ffdedbaf04af3afdd57d63034b190d767e6cb314addb4611763b6822b1"
+      "size_bytes": 227532,
+      "sha256": "d507cb866f116b32e9d14e8a9dd28db46a6d1b24dd79b63059bd1e563abdc821"
     },
     {
       "id": "showcase-higgsfield-pipeline",
@@ -318,8 +318,8 @@
       "source_collection": "msshi_deterministic_visual",
       "source_filename": "msshi_visual_explainer.gif",
       "purpose": "Video Visualisasi Animasi Auto-Play 5 Adegan Ekosistem MSSHI v3.1.2",
-      "size_bytes": 3714904,
-      "sha256": "54b488bd791a31340d2f4a34f54333a67bfabe4b21557d04dc88fe8083fef982"
+      "size_bytes": 4468800,
+      "sha256": "53d6a388af3c1c8688621c8eb10b306811e2d8377836438e7fb7b77268263489"
     },
     {
       "id": "msshi-visual-explainer-mp4",
@@ -331,8 +331,8 @@
       "source_collection": "msshi_deterministic_visual",
       "source_filename": "msshi_visual_explainer.mp4",
       "purpose": "Video Visualisasi HD MP4 5 Adegan Ekosistem MSSHI v3.1.2",
-      "size_bytes": 901126,
-      "sha256": "863d9d63a7b0aae96b22b37f57f179701ebc40aa04f7aa72631600d1ca5fa5cc"
+      "size_bytes": 1219927,
+      "sha256": "127dc93ecf077bbfd8ab2b36b8de1dd7d602d8c556547c688a206321cab4f162"
     }
   ]
 }

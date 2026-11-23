@@ -40,16 +40,16 @@
 <table>
 <tr>
 <td width="30%" align="center" valign="middle">
-  <img src="assets/avatars/muza-noir-fullbody.png" width="235" alt="MuZA Sovereign Orchestrator Dual-Tone Cyan Orange">
-  <br><sub><b>MuZA Sovereign Orchestrator</b><br>Zero Model Override · Adaptive C:/D:</sub>
+  <img src="assets/avatars/muza-noir-fullbody.png" width="235" alt="Kyai Lurah Semar — Sang Hyang Ismaya Sovereign Orchestrator">
+  <br><sub><b>Kyai Lurah Semar (Sang Hyang Ismaya)</b><br>Sovereign Orchestrator (Dalang 5 Bot) · Zero Model Override · Adaptif C:/D:</sub>
 </td>
 <td width="70%" valign="top">
-  <h3>🎭 Dari Chat AI Biasa Menjadi Markas Operasi Cyber-Noir 5 Spesialis</h3>
+  <h3>🎭 Dari Chat AI Biasa Menjadi Padepokan Cyber-Wayang 5 Spesialis (Pamomong Agung: Semar)</h3>
   <p align="center">
-    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="Meme Kucing Panik 22 MCP RAM 4 GB vs Tenang dengan MSSHI v3.1.2">
-    <br><sub><i>Kiri: 22 MCP nyala barengan di RAM 4 GB &amp; skrip error di Drive <code>C:</code> &rarr; PANIK! · Kanan: <b>MSSHI v3.1.2</b> langsung menenangkan lewat CLI-Anything + Auto-Trim!</i></sub>
+    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="Meme Geger 22 MCP vs Tentrem Bareng Kyai Semar MSSHI v3.1.2">
+    <br><sub><i>Kiri: Geger 22 MCP nyala barengan bikin laptop freeze &amp; skrip error di Drive <code>C:</code> &rarr; PANIK! · Kanan: <b>Kyai Semar (MSSHI v3.1.2)</b> turun tangan menenangkan lewat CLI-Anything + Auto-Trim!</i></sub>
   </p>
-  <p><b>MSSHI v3.1.2</b> merombak total fondasi agen AI Anda tanpa menyentuh konfigurasi provider/model pribadi (<code>jev_model_routing: false</code> terkunci penuh):</p>
+  <p>Sesuai namanya (<b>Mega Semar Sang Hyang Ismaya</b>), <b>Semar</b> adalah <b>Sovereign Orchestrator</b> sejati — pamomong bijak yang menggerakkan 5 bot spesialis tanpa pernah mendikte atau menimpa konfigurasi provider/model pribadi Anda (<code>jev_model_routing: false</code> terkunci penuh):</p>
   <ul>
     <li>⚡ <b>CLI-Anything Universal Bridge</b> — Memutus ketergantungan 22 MCP berat; membuka Blender, ArtCraft &amp; browser hanya lewat tiket tugas on-demand (<code>msshi runtime ticket</code>).</li>
     <li>🛡️ <b>$1 Zero-Waste Token Shield + Auto-Trim + Caveman</b> — Meringkas payload JSON besar secara lossless lewat hook <code>transform_tool_result</code> dan menghentikan langkah berbiaya jika saldo proyeksi &lt; <b>$1.00</b>.</li>
@@ -62,11 +62,11 @@
 
 <div align="center">
 
-### 🎥 Video Visualisasi Interaktif: Cara Kerja Ekosistem MSSHI dalam 14 Detik (Auto-Play)
+### 🎥 Video Visualisasi Interaktif: Sang Hyang Ismaya (Semar) &amp; 5 Bot dalam 14 Detik (Auto-Play)
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Video Visualisasi Alur Kerja Ekosistem MSSHI v3.1.2 — 5 Bot, Higgsfield 9 Modul, Skripsi Drag & Drop, dan Smart Auto-Update">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Video Visualisasi Alur Kerja Ekosistem MSSHI v3.1.2 — Kyai Semar Dalang 5 Bot, Higgsfield 9 Modul, Skripsi Drag & Drop, dan Smart Auto-Update">
 
-<br><sub>🎬 <b>5 Adegan Visualisasi Memeable:</b> (1) <i>Panik 22 MCP vs Tenang MSSHI</i> &rarr; (2) <i>5 Bot Spesialis &amp; Interaksi 2 Tipe ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Modul Higgsfield AI</i> &rarr; (4) <i>Skripsi Drag &amp; Drop + Wait $1 TokenShield</i> &rarr; (5) <i>Ekosistem 3 Repo (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Unduh / Putar Versi Video MP4 HD (1280&times;720)</b></a></sub>
+<br><sub>🎬 <b>5 Babak Visualisasi Wayang Semar &times; Meme (Dengan Latar Motion Video Aktif):</b> (1) <i>Geger 22 MCP vs Tentrem Kyai Semar</i> &rarr; (2) <i>Tali Dalang Ismaya &amp; 5 Bot ("Let Mi Ting")</i> &rarr; (3) <i>Pusaka Kreatif Kiki-Chii &times; 9 Modul Higgsfield AI</i> &rarr; (4) <i>Ajian Skripsi Drag &amp; Drop + Perisai $1 TokenShield</i> &rarr; (5) <i>Tritunggal 3 Repo (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Unduh / Putar Versi Video MP4 HD (1280&times;720)</b></a></sub>
 
 </div>
 
