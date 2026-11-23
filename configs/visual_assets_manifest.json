@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "theme": "Cyber-Noir Editorial Comic (Dual-Tone Cyan #2CE8C6 + Orange #FF6B1A on #0B0F17)",
-  "total_standardized_assets": 23,
+  "total_standardized_assets": 25,
   "canvases": {
     "square_avatar": "320x320 rounded 32px, 4px neon character border",
     "vertical_character": "512x512 rounded 28px dual-tone cyan/orange Sovereign Orchestrator portrait",
@@ -307,6 +307,32 @@
       "purpose": "Visualisasi 5 Misi Utama, Interaksi 2 Tipe Hemat Token & Pencari Skill 4-Lapis",
       "size_bytes": 329587,
       "sha256": "7b150beee487debfa3f944863ac93f9c185efa492495d820326615ad77656e8b"
+    },
+    {
+      "id": "msshi-visual-explainer-gif",
+      "output": "assets/showcases/msshi-visual-explainer.gif",
+      "canvas_type": "animated_video_explainer",
+      "width": 960,
+      "height": 540,
+      "border_hex": "#2CE8C6",
+      "source_collection": "msshi_deterministic_visual",
+      "source_filename": "msshi_visual_explainer.gif",
+      "purpose": "Video Visualisasi Animasi Auto-Play 5 Adegan Ekosistem MSSHI v3.1.2",
+      "size_bytes": 3714904,
+      "sha256": "54b488bd791a31340d2f4a34f54333a67bfabe4b21557d04dc88fe8083fef982"
+    },
+    {
+      "id": "msshi-visual-explainer-mp4",
+      "output": "assets/showcases/msshi-visual-explainer.mp4",
+      "canvas_type": "video_mp4_hd",
+      "width": 1280,
+      "height": 720,
+      "border_hex": "#FF6B1A",
+      "source_collection": "msshi_deterministic_visual",
+      "source_filename": "msshi_visual_explainer.mp4",
+      "purpose": "Video Visualisasi HD MP4 5 Adegan Ekosistem MSSHI v3.1.2",
+      "size_bytes": 901126,
+      "sha256": "863d9d63a7b0aae96b22b37f57f179701ebc40aa04f7aa72631600d1ca5fa5cc"
     }
   ]
 }
