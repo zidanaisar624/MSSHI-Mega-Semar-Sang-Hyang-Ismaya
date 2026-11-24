@@ -29,7 +29,8 @@
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -48,7 +49,8 @@
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -76,7 +78,8 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "riset-mendalam-nusantara-global"
+          "riset-mendalam-nusantara-global",
+          "anti-slop"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -88,14 +91,14 @@
           "academic-plotting",
           "filmmaking-videography-photography-s2",
           "auto-curiousity-for-film-making",
-          "lemo-opuscar",
           "match-my-writing-style",
           "unslop",
           "generate-fresh-ideas",
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -117,7 +120,12 @@
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop",
+          "modern-web-guidance",
+          "open-code-review",
+          "ast-grep",
+          "knip"
         ]
       },
       "display_names": {
@@ -182,6 +190,24 @@
           "requires_hermes": ">=0.22.7",
           "auto_install": false,
           "auto_start": false
+        },
+        {
+          "id": "mcp-for-blender",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "MCP for Blender 3D interaktif dua arah dan ekspor .glb/.gltf on-demand untuk Kiki-Chii."
+        },
+        {
+          "id": "raea",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "RAEA Render Anything Engine (React/TS + Bevy GPU) opsional untuk Kiki-Chii."
+        },
+        {
+          "id": "lemo-opuscar",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "Katalog 15 kategori & 99 gaya film pendek berbasis kode opsional untuk Kiki-Chii."
         }
       ],
       "connected_curricula": [
@@ -215,7 +241,8 @@
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -235,7 +262,8 @@
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -265,7 +293,8 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "riset-mendalam-nusantara-global"
+          "riset-mendalam-nusantara-global",
+          "anti-slop"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -277,14 +306,14 @@
           "academic-plotting",
           "filmmaking-videography-photography-s2",
           "auto-curiousity-for-film-making",
-          "lemo-opuscar",
           "match-my-writing-style",
           "unslop",
           "generate-fresh-ideas",
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -306,7 +335,12 @@
           "harness2",
           "spacewise",
           "sharewise",
-          "belajar-pemula"
+          "belajar-pemula",
+          "anti-slop",
+          "modern-web-guidance",
+          "open-code-review",
+          "ast-grep",
+          "knip"
         ]
       },
       "display_names": {
@@ -371,6 +405,24 @@
           "requires_hermes": ">=0.22.7",
           "auto_install": false,
           "auto_start": false
+        },
+        {
+          "id": "mcp-for-blender",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "MCP for Blender 3D interaktif dua arah dan ekspor .glb/.gltf on-demand untuk Kiki-Chii."
+        },
+        {
+          "id": "raea",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "RAEA Render Anything Engine (React/TS + Bevy GPU) opsional untuk Kiki-Chii."
+        },
+        {
+          "id": "lemo-opuscar",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "Katalog 15 kategori & 99 gaya film pendek berbasis kode opsional untuk Kiki-Chii."
         }
       ],
       "connected_curricula": [

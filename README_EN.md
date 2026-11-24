@@ -2,14 +2,14 @@
 
 <div align="center">
 
-<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.1.2 Mega Semar Sang Hyang Ismaya Banner" width="98%">
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.0 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
-# 🌐 MSSHI v3.1.2 — Mega Semar Sang Hyang Ismaya
+# 🌐 MSSHI v3.2.0 — Mega Semar Sang Hyang Ismaya
 ### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · MuZA Skripsi Drag-and-Drop v1.1*
 
-[![Release](https://img.shields.io/badge/Release-v3.1.2%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-75%20Bundled%20(53%20Core%20%2B%2022%20Wrappers)-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-64%20Sources%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Release](https://img.shields.io/badge/Release-v3.2.0%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
+[![Skills](https://img.shields.io/badge/Skills-79%20Bundled%20%2B%205%20Opt--in-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-70%20Sources%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -19,7 +19,7 @@
 
 </div>
 
-> **v3.1.2 Complete Release:** five named native profiles + neutral Hermes default, **`75` bundled skills (`53` core + `22` wrappers, plus `2` optional `rea` & `imagination-studio`) / `64` pinned upstream sources (`0` orphans) / `7` native plugins / `39` CLI families (`109` nodes) / `47` app routes**, **Win10 4GB Light Build** (`msshi light`), **Higgsfield Unified Suite (9 modules)** & **Lemo-Opuscar (99 styles)** for Kiki-Chii, Coder-scoped **Rust-Anything**, **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
+> **v3.2.0 Complete Release:** five named native profiles + neutral Hermes default, **`79` bundled skills (`53` core + `26` wrappers, plus `5` opt-in modules `rea`, `imagination-studio`, `mcp-for-blender`, `raea` & `lemo-opuscar`) / `70` pinned upstream sources (`0` orphans) / `7` native plugins / `39` CLI families (`109` nodes) / `46` CLI-Anything app routes**, **Win10 4GB Light Build** (`msshi light`), universal **`anti-slop`** across all 5 bots & presets, **Higgsfield Unified Suite (9 modules)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** for Kiki-Chii, Coder-scoped **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
 
 > **KAT is optional, including MuZA preset:** no automatic weight download or activation. It stays disabled on MuZA's current laptop. Users with suitable hardware or an authorized endpoint can opt in through the Coder wizard.
 
@@ -167,13 +167,13 @@ flowchart LR
 
 Every bot carries its own [`SOUL.md`](configs/personas/) persona instructions, domain guardrails, curated bundled skill count, local **`OmniVoice`** prosody, and verified skill allocation audited in [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
-| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.1.2` Stack |
+| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.2.0` Stack |
 | :---: | :--- | :--- | :--- |
-| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Fresh install: Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**31 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `muza-skripsi-template`, `business-sage`. |
-| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**27 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `cli-anything-business-sage`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 — Prioritizing S1 Skripsi)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**38 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `unslop`, `harness2`. |
-| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**22 skills**) · `brag`, `unslop`, `motion-graphics-suite`, `filmmaking-videography-photography-s2`, `higgsfield-skills`. |
-| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (optional KAT-Coder, default OFF), Next.js/Go/Python/Flutter, **`Harness²`** evals, local **`Scrapling`**, defensive security, and **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**24 skills**) · `antigravity-webdev-cybersec`, `harness2`, `scrapling`, `unslop`, `evaluating-code-models`, `rea` (opt-in). |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Fresh install: Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `anti-slop`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**31 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `anti-slop`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 — Prioritizing S1 Skripsi)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**43 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `anti-slop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**26 skills + 4 opt-in**) · `brag`, `anti-slop`, `higgsfield-skills`, opt-in `mcp-for-blender`, `raea`, `lemo-opuscar`, `imagination-studio`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (optional KAT-Coder, default OFF), **`OpenCodeReview`**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust (*Hot-Path Only*)**, defensive security, &amp; **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**35 skills + 1 opt-in**) · `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `rust-anything`, `claude-bughunter`, `rea` (opt-in). |
 
 > 🦀 **Shared Foundation Across All 5 Bots:** Every persona inherits [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, and lossless JSON compression via [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
 
@@ -349,7 +349,7 @@ flowchart LR
 - **`docs/pdf-guides/` &amp; `docs/manuals/`**: Release-versioned PDF handbooks (7-page Master Client Guide &amp; 37-page Complete Handbook, Nov 22, 2026 edition), `latest/`, and [`pdf_catalog.json`](docs/manuals/pdf_catalog.json).
 - **`assets/`**: Standardized `avatars/`, `memes/`, `showcases/`, 8 SVG [`diagrams/`](assets/README.md), and [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json).
 - **`scripts/`**: CLI (`msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, and release auditors (`check_release*.py`).
-- **`skills/` &amp; `optional/`**: **75 bundled active skill folders (`53 core + 22 wrappers`)** including 11-file `muza-skripsi-template/`, `higgsfield-skills`, `lemo-opuscar`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus 2 opt-in wrappers (`rea`, `imagination-studio`).
+- **`skills/` &amp; `optional/`**: **79 bundled active skill folders (`53 core + 26 wrappers`)** including 11-file `muza-skripsi-template/`, `anti-slop`, `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `higgsfield-skills`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus **5 opt-in wrappers (`rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar`)**.
 
 ---
 

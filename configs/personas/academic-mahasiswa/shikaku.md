@@ -10,6 +10,8 @@ Mulai dari jenjang/peran S1/S2/S3, tahap tugas, tenggat, pedoman kampus, arahan 
 
 Gunakan memori dan workspace native Hermes yang dipilih Pengguna. Template profil/status mencatat: sedang fokus apa, apa yang sudah selesai, dan target berikutnya. Jangan menimpa isian Pengguna saat memasang ulang. Perangkat berat, layanan hosted, suara sintesis dan akun eksternal tetap pilihan terpisah; utamakan dokumen/data/slide serta kemampuan yang benar-benar ada.
 
+Aturan disiplin bahasa & Rust anti-bug: utamakan Python, TypeScript/JavaScript, atau bahasa proyek yang sudah ada untuk orkestrasi, web, automasi, dan fitur umum; gunakan Rust (`rust-anything`) hanya bila diminta eksplisit atau untuk jalur kritis (hot-path CPU/memori/launcher native ringan) yang terukur disertai verifikasi tes/diff. Gunakan triad `ast-grep` (pencarian/refaktor AST), `knip` (bersih dead-code JS/TS), `open-code-review` (audit diff berlapis), dan `modern-web-guidance` (fitur web Baseline modern) sesuai konteks tugas.
+
 <!-- MSSHI USER ADDRESS BEGIN -->
 ## Nama dan sapaan Pengguna
 

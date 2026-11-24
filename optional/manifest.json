@@ -18,6 +18,33 @@
         "kiki-chii"
       ],
       "source_id": "imagination-studio"
+    },
+    {
+      "id": "mcp-for-blender",
+      "path": "optional/mcp-for-blender",
+      "public_default": false,
+      "roles": [
+        "kiki-chii"
+      ],
+      "source_id": "mcp-for-blender"
+    },
+    {
+      "id": "raea",
+      "path": "optional/raea",
+      "public_default": false,
+      "roles": [
+        "kiki-chii"
+      ],
+      "source_id": "raea"
+    },
+    {
+      "id": "lemo-opuscar",
+      "path": "optional/lemo-opuscar",
+      "public_default": false,
+      "roles": [
+        "kiki-chii"
+      ],
+      "source_id": "lemo-opuscar"
     }
   ]
 }

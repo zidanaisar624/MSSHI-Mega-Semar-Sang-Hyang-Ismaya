@@ -86,3 +86,22 @@
 
 - Initial Stage 1 release under the MIT License.
 - Included 50 bundled skills, six packs, five persona templates, and 37 external source references.
+
+## [3.2.0] - 2026-11-24
+
+### Added
+- **`anti-slop` Promoted to Bundled Across All 5 Bots (`skills/anti-slop/SKILL.md`)**: Promoted `miqdadbadjuber/anti-slop` (MIT) to a bundled pre-output quality gate across `yukino`, `shizuka`, `val`, `kiki-chii`, and `shikaku` in `muza-preset`, `academic-mahasiswa`, `academic-dosen`, `solo`, and `light` builds while preserving citations and user Voice Cards.
+- **`modern-web-guidance` for Coder (`skills/modern-web-guidance/SKILL.md`)**: Bundled Baseline modern web platform guidance (`GoogleChrome/modern-web-guidance`, Apache-2.0) strictly for Coder (`shikaku` / `Sir. Robot`) across all presets with Coder.
+- **Coder Code-Review & Deterministic AST/Dead-Code Triad (`open-code-review` + `ast-grep` + `knip`)**:
+  - `skills/open-code-review/SKILL.md` (`alibaba/open-code-review`, Apache-2.0, CLI `ocr`): Hybrid deterministic + line-level verified diff/commit/PR review for Coder across all presets with Coder.
+  - `skills/ast-grep/SKILL.md` (`ast-grep/ast-grep`, MIT, CLI `sg`): Zero-token Tree-sitter AST structural search, lint, and safe multi-file codemod companion for Coder.
+  - `skills/knip/SKILL.md` (`webpro-nl/knip`, ISC): Zero-token unused-files, unused-exports/types, and unused-dependencies detector for JS/TS and monorepos on Coder.
+- **Opt-In 3D & GPU Render Modules for Kiki-Chii (`public_default: false`)**:
+  - `optional/mcp-for-blender/SKILL.md` (`ahujasid/mcp-for-blender`, MIT, `--with-blender-mcp` / `msshi optional enable mcp-for-blender`, `auto_open_on_boot: false`).
+  - `optional/raea/SKILL.md` (`shinyobjectz/raea`, FSL-1.1-ALv2, `--with-raea` / `msshi optional enable raea`, 0 upstream bytes vendored in MIT repo; supports both direct React/TS + Bevy GPU rendering and hybrid `.glb`/`.gltf` finishing from `mcp-for-blender`).
+
+### Changed
+- **Disconnected `blender` / `blender-cli` from `CLI-Anything`**: Removed Blender-specific native-CLI harness routes from `cli-anything-universal-bridge` and `DISABLED_MCP` (keeping all other 46 CLI-Anything routes untouched) so opt-in `mcp-for-blender` operates cleanly without migration removal.
+- **`lemo-opuscar` Moved to Opt-In in `MSSHI Core v3.2.0` (`optional/lemo-opuscar/SKILL.md`, `--with-lemo-opuscar`)**: Keeps core installs lean while `hermes-mfa-filmmaking-and-agent-skills` installs `lemo-opuscar` automatically by default.
+- **Rust Anti-Bug Guardrail (Hot-Path Only)**: Added explicit language-selection discipline to `skills/rust-anything/SKILL.md` and all Coder (`shikaku`) personas.
+

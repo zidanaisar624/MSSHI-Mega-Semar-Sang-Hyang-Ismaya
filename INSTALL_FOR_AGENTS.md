@@ -13,7 +13,7 @@ MSSHI is a collection of portable skill instructions, optional runtime adapters 
 
 For ChatGPT Projects/Custom GPTs use the portable Knowledge/Instructions files instead of claiming a terminal plugin was installed. For other hosts use supported discovery/install routes; a README example is not evidence that an unavailable host command exists. Report the actual installed files, pending dependencies and rollback receipt.
 
-## Public preset selection (v3.1.2)
+## Public preset selection (v3.2.0)
 
 For a fresh Hermes installation, `academic-mahasiswa` is the initial choice for Indonesian S1/S2/S3 students. `academic-dosen` is a separate lecturer/campus-leadership option. The existing `muza-preset`, solo, custom-bots, and selective modes remain available. Preserve an existing installation's preset and custom SOUL files unless the user explicitly chooses a change; explain any retained custom persona instead of overwriting it.
 

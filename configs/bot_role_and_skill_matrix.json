@@ -39,10 +39,10 @@
         "harness2",
         "spacewise",
         "sharewise",
-        "belajar-pemula"
+        "belajar-pemula",
+        "anti-slop"
       ],
       "optional_skills": [
-        "anti-slop",
         "cli-anything",
         "cli-anything-catalog",
         "graphify",
@@ -102,10 +102,10 @@
         "harness2",
         "spacewise",
         "sharewise",
-        "belajar-pemula"
+        "belajar-pemula",
+        "anti-slop"
       ],
       "optional_skills": [
-        "anti-slop",
         "cli-anything",
         "cli-anything-catalog",
         "graphify",
@@ -180,10 +180,10 @@
         "spacewise",
         "sharewise",
         "belajar-pemula",
-        "riset-mendalam-nusantara-global"
+        "riset-mendalam-nusantara-global",
+        "anti-slop"
       ],
       "optional_skills": [
-        "anti-slop",
         "cli-anything",
         "cli-anything-catalog",
         "gpt-researcher",
@@ -243,17 +243,16 @@
         "mattpocock-engineering",
         "harness2",
         "rea-video",
-        "lemo-opuscar",
         "spacewise",
         "sharewise",
-        "belajar-pemula"
+        "belajar-pemula",
+        "anti-slop"
       ],
       "optional_skills": [
-        "anti-slop",
         "bang-motion",
         "barty-motion-graphics",
         "better-design",
-        "blender-mcp",
+        "mcp-for-blender",
         "canvas-ui",
         "charlie-motion-graphics",
         "cli-anything",
@@ -292,7 +291,9 @@
         "artcraft-solidcraft",
         "artcraft-materialcraft",
         "artcraft-texturecraft",
-        "imagination-studio"
+        "imagination-studio",
+        "raea",
+        "lemo-opuscar"
       ],
       "academic_engines": [
         "metode-analisis",
@@ -342,11 +343,15 @@
         "rust-anything",
         "spacewise",
         "sharewise",
-        "belajar-pemula"
+        "belajar-pemula",
+        "anti-slop",
+        "modern-web-guidance",
+        "open-code-review",
+        "ast-grep",
+        "knip"
       ],
       "optional_skills": [
         "addy-agent-skills",
-        "anti-slop",
         "awesome-copilot",
         "bang-motion",
         "better-design",
@@ -429,11 +434,15 @@
     },
     {
       "slug": "anti-slop",
-      "status": "external",
-      "path": null,
-      "purpose": "Memeriksa klise, struktur antarmuka, dan pola kode yang berulang.",
+      "status": "bundled",
+      "path": "skills/anti-slop/SKILL.md",
+      "purpose": "Filter kualitas lintas 5 bot untuk mencegah klise AI, basa-basi generik, antarmuka template seragam, dan boilerplate kode berulang.",
       "scope": "all",
-      "source": "https://github.com/miqdadbadjuber/anti-slop"
+      "source": "https://github.com/miqdadbadjuber/anti-slop",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "anti-slop"
+      ]
     },
     {
       "slug": "antigravity-webdev-cybersec",
@@ -639,13 +648,15 @@
       "source": "https://github.com/marvkr/better-design"
     },
     {
-      "slug": "blender-mcp",
+      "slug": "mcp-for-blender",
       "status": "external",
       "path": null,
-      "purpose": "Blender melalui CLI/native harness sesuai tiket tugas; nama katalog historis ini tidak mengaktifkan server MCP.",
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): MCP for Blender dua arah untuk modeling 3D, material, kamera previz, dan ekspor .glb/.gltf on-demand (auto_open_on_boot=false).",
       "scope": "creative",
-      "execution": "task-ticket",
-      "auto_open_on_boot": false
+      "source": "https://github.com/ahujasid/mcp-for-blender",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/mcp-for-blender/SKILL.md",
+      "public_default": false
     },
     {
       "slug": "brainstorming-research-ideas",
@@ -1562,15 +1573,73 @@
     },
     {
       "slug": "lemo-opuscar",
-      "status": "bundled",
-      "path": "skills/lemo-opuscar/SKILL.md",
-      "purpose": "Katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) untuk Kiki-Chii: baca 1 STYLE.md on-demand dari cache terpin dengan Concepting First dan review manusia.",
-      "scope": "contextual",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) via cache teks terpin on-demand.",
+      "scope": "creative",
       "source": "https://github.com/lemomo-ai/lemo-opuscar",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/lemo-opuscar/SKILL.md",
+      "public_default": false
+    },
+    {
+      "slug": "modern-web-guidance",
+      "status": "bundled",
+      "path": "skills/modern-web-guidance/SKILL.md",
+      "purpose": "Panduan platform web modern Baseline (Chrome, Edge, Firefox, MDN) khusus Coder untuk mengutamakan fitur HTML/CSS/JS native modern dan Core Web Vitals.",
+      "scope": "engineering",
+      "source": "https://github.com/GoogleChrome/modern-web-guidance",
       "kind": "integration-wrapper",
       "integration_ids": [
-        "lemo-opuscar"
+        "modern-web-guidance"
       ]
+    },
+    {
+      "slug": "open-code-review",
+      "status": "bundled",
+      "path": "skills/open-code-review/SKILL.md",
+      "purpose": "Pipeline review kode hibrida deterministik + agen baris-per-baris (Alibaba OpenCodeReview / CLI ocr) khusus Coder untuk audit git diff, commit, dan PR.",
+      "scope": "engineering",
+      "source": "https://github.com/alibaba/open-code-review",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "open-code-review"
+      ]
+    },
+    {
+      "slug": "ast-grep",
+      "status": "bundled",
+      "path": "skills/ast-grep/SKILL.md",
+      "purpose": "Pencarian kode struktural, linting aturan kustom, dan refaktor codemod lintas berkas berbasis Tree-sitter AST (ast-grep / sg) khusus Coder.",
+      "scope": "engineering",
+      "source": "https://github.com/ast-grep/ast-grep",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "ast-grep"
+      ]
+    },
+    {
+      "slug": "knip",
+      "status": "bundled",
+      "path": "skills/knip/SKILL.md",
+      "purpose": "Pendeteksi deterministik berkas mati, ekspor/tipe tak terpakai, dan dependensi yatim pada proyek JS/TS & monorepo (webpro-nl/knip) khusus Coder.",
+      "scope": "engineering",
+      "source": "https://github.com/webpro-nl/knip",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "knip"
+      ]
+    },
+    {
+      "slug": "raea",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): RAEA Render Anything Engine (React/TS + Bevy GPU) untuk render langsung maupun hibrida aset .glb/.gltf dari mcp-for-blender.",
+      "scope": "creative",
+      "source": "https://github.com/shinyobjectz/raea",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/raea/SKILL.md",
+      "public_default": false
     }
   ],
   "packs": {
@@ -1595,7 +1664,8 @@
       "wise-judgment-and-sovereign-orchestrator",
       "spacewise",
       "sharewise",
-      "belajar-pemula"
+      "belajar-pemula",
+      "anti-slop"
     ],
     "filmmaking": [
       "academic-plotting",
@@ -1606,8 +1676,7 @@
       "slide-generation",
       "unslop",
       "brag",
-      "rea-video",
-      "lemo-opuscar"
+      "rea-video"
     ],
     "business": [
       "business-sage",
@@ -1670,7 +1739,11 @@
       "mattpocock-engineering",
       "grim-prompter",
       "claude-bughunter",
-      "rust-anything"
+      "rust-anything",
+      "modern-web-guidance",
+      "open-code-review",
+      "ast-grep",
+      "knip"
     ],
     "cybersec": [
       "ai-research-reproduction",
@@ -1679,7 +1752,9 @@
       "evaluating-code-models",
       "mattpocock-engineering",
       "grim-prompter",
-      "claude-bughunter"
+      "claude-bughunter",
+      "open-code-review",
+      "ast-grep"
     ]
   },
   "routes": [
@@ -1730,11 +1805,15 @@
       "career-ops",
       "grim-prompter",
       "claude-bughunter",
-      "rust-anything"
+      "rust-anything",
+      "anti-slop",
+      "modern-web-guidance",
+      "open-code-review",
+      "ast-grep",
+      "knip"
     ],
     "external_skills": [
       "addy-agent-skills",
-      "anti-slop",
       "awesome-copilot",
       "bang-motion",
       "better-design",
@@ -1838,10 +1917,10 @@
       "humanizer-indonesia",
       "unlimited-ocr-2",
       "persona-shizuka-yukino-shikaku",
-      "cli-anything-universal-bridge"
+      "cli-anything-universal-bridge",
+      "anti-slop"
     ],
     "external": [
-      "anti-slop",
       "graphify",
       "hermes-jev-skills",
       "cli-anything"

@@ -143,18 +143,23 @@
       "source": "https://github.com/miqdadbadjuber/anti-slop",
       "source_type": "git",
       "verification": "upstream-documentation-read; not runtime-tested",
-      "status": "external-opt-in",
+      "status": "bundled-wrapper",
       "auto_start": false,
       "domain": "writing",
       "kind": "skill_pack",
       "pack": "core",
       "roles": [
-        "all"
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
       ],
       "use_when": "Tinjau kebiasaan generik pada prose, UI atau kode sesuai output yang diminta.",
       "requires": "Pilih aturan untuk target proyek, bukan seluruh aturan lintas domain.",
       "license": "MIT",
-      "revision": "3b75daa1fb6bb4c2b8a3807f82eed50914dee6b2"
+      "revision": "7f6a03df2931c12cb244dc4ab14ee4866b0ac2ba",
+      "background_model_calls": false
     },
     {
       "id": "goose",
@@ -1249,6 +1254,126 @@
       "use_when": "Katalog 15 kategori & 99 gaya film pendek berbasis kode untuk Kiki-Chii (baca 1 STYLE.md on-demand dari cache terpin; Concepting First + review manusia).",
       "requires": "Cache teks/JSON terpisah di msshi-private/context-sources (aset media berat >512 KB dilewati); alat render video/audio (Node/FFmpeg/Chromium) terpisah; ikuti batas CC BY-NC 4.0 untuk dokumentasi.",
       "license": "MIT (code); CC-BY-NC-4.0 with film-making permission (docs); CC-BY-4.0 (demo films/pictures); third-party marks/Clawd excluded",
+      "background_model_calls": false,
+      "public_default_enabled": false,
+      "optional_skill_path": "optional/lemo-opuscar/SKILL.md"
+    },
+    {
+      "id": "modern-web-guidance",
+      "source": "https://github.com/GoogleChrome/modern-web-guidance",
+      "source_type": "git",
+      "revision": "2b4aa13a72dd47cd135b06ce5abfccd92e19b24f",
+      "verification": "primary-source/Apache-2.0-license reviewed 2026-11-24; original MIT wrapper scoped strictly to Coder",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "integration-wrapper",
+      "pack": "webdev",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Coder builds or modernizes web UI/CSS/DOM/JS using Baseline modern web platform features and Core Web Vitals.",
+      "requires": "Browser compatibility targets of the user's project; zero extra runtime required.",
+      "license": "Apache-2.0",
+      "background_model_calls": false
+    },
+    {
+      "id": "open-code-review",
+      "source": "https://github.com/alibaba/open-code-review",
+      "source_type": "git",
+      "revision": "f6379f71edba1e59dbc056e8f455df1f84396498",
+      "verification": "primary-source/Apache-2.0-license reviewed 2026-11-24; original MIT wrapper scoped strictly to Coder",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "integration-wrapper",
+      "pack": "webdev",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Coder reviews staged diffs, commits, branches, or PRs with deterministic Git diff rules and verify-before-report discipline.",
+      "requires": "Optional external CLI (@alibaba-group/open-code-review / ocr) installed separately by user if CLI execution is requested.",
+      "license": "Apache-2.0",
+      "background_model_calls": false
+    },
+    {
+      "id": "ast-grep",
+      "source": "https://github.com/ast-grep/ast-grep",
+      "source_type": "git",
+      "revision": "9065b02439d9b80aaa726ab41fcaa2f3854c66b3",
+      "verification": "primary-source/MIT-license reviewed 2026-11-24; deterministic Tree-sitter AST companion for Coder",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "integration-wrapper",
+      "pack": "webdev",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Coder performs deterministic AST structural code search, custom lint rules, and multi-file codemods before open-code-review.",
+      "requires": "Optional external ast-grep (sg) CLI installed separately by user when executing AST CLI commands.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "knip",
+      "source": "https://github.com/webpro-nl/knip",
+      "source_type": "git",
+      "revision": "74c07a6361e720ee31ac2e428c6b6648f5598210",
+      "verification": "primary-source/ISC-license reviewed 2026-11-24; deterministic JS/TS dead-code companion for Coder",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "engineering",
+      "kind": "integration-wrapper",
+      "pack": "webdev",
+      "roles": [
+        "shikaku"
+      ],
+      "use_when": "Coder audits unused files, unused exports/types, and unused dependencies in JS/TS projects and monorepos.",
+      "requires": "Node.js project with local/global knip installed separately by user.",
+      "license": "ISC",
+      "background_model_calls": false
+    },
+    {
+      "id": "mcp-for-blender",
+      "source": "https://github.com/ahujasid/mcp-for-blender",
+      "source_type": "git",
+      "revision": "a5a8acf2c6ae44a73670e0caf34663f16456d645",
+      "verification": "primary-source/MIT-license reviewed 2026-11-24; opt-in Kiki-Chii Blender MCP replacing CLI-Anything blender route",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "optional-integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "public_default_enabled": false,
+      "optional_skill_path": "optional/mcp-for-blender/SKILL.md",
+      "use_when": "Opt-in interactive 3D modeling, materials, camera previz, and .glb/.gltf export in Blender for Kiki-Chii.",
+      "requires": "Explicit opt-in (public_default=false); Blender 3.0+, addon.py, and uvx mcp-for-blender configured by user; auto_open_on_boot=false.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "raea",
+      "source": "https://github.com/shinyobjectz/raea",
+      "source_type": "git",
+      "revision": "66eb15448f69ab29a801fe1bde75d3889d34d04e",
+      "verification": "primary-source/FSL-1.1-ALv2-license reviewed 2026-11-24; 0 upstream bytes vendored in MIT repo — original opt-in wrapper for Kiki-Chii",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "video",
+      "kind": "optional-integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "public_default_enabled": false,
+      "optional_skill_path": "optional/raea/SKILL.md",
+      "use_when": "Opt-in Render Anything Engine (React/TS + Bevy GPU) for Kiki-Chii direct code-to-GPU renders or hybrid finishing of .glb/.gltf assets from mcp-for-blender.",
+      "requires": "Explicit opt-in (public_default=false); separate user-installed RAEA runtime + compatible GPU under FSL-1.1-ALv2 terms.",
+      "license": "FSL-1.1-ALv2 (upstream runtime not bundled; MSSHI wrapper is 100% original MIT)",
       "background_model_calls": false
     }
   ]

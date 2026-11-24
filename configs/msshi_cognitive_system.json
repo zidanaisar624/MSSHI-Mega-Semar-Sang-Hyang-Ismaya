@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "3.1.2",
+  "version": "3.2.0",
   "name": "MSSHI Closed-Loop Cognitive Operating System",
   "documentation": "docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md",
   "principles": {
@@ -31,7 +31,8 @@
         "deep-research",
         "notebooklm-thinking-datascience",
         "harness2",
-        "belajar-pemula"
+        "belajar-pemula",
+        "anti-slop"
       ],
       "pedagogy": [
         "Diagnose learner level and energy before lecturing to save tokens.",
@@ -65,7 +66,8 @@
         "rebuttal-writing",
         "humanizer-indonesia",
         "humanizer-en",
-        "riset-mendalam-nusantara-global"
+        "riset-mendalam-nusantara-global",
+        "anti-slop"
       ],
       "standards": [
         "Use Lima Lapis Konteks + backward-traceability (doc#page) for every claim.",
@@ -86,11 +88,11 @@
         "filmmaking-videography-photography-s2",
         "motion-graphics-suite",
         "rea-video",
-        "lemo-opuscar",
         "brag",
         "unslop",
         "academic-plotting",
-        "slide-generation"
+        "slide-generation",
+        "anti-slop"
       ],
       "standards": [
         "Always start with Concepting First and require human review before heavy rendering.",
@@ -114,7 +116,12 @@
         "grim-prompter",
         "claude-bughunter",
         "explore-run",
-        "harness2"
+        "harness2",
+        "anti-slop",
+        "modern-web-guidance",
+        "open-code-review",
+        "ast-grep",
+        "knip"
       ],
       "standards": [
         "Map project risks first, implement with TDD, and run regression tests.",
@@ -132,7 +139,8 @@
         "parenting-6d-gad-mdd",
         "focus-my-energy",
         "prep-for-meetings",
-        "prep-for-meetings-2"
+        "prep-for-meetings-2",
+        "anti-slop"
       ],
       "standards": [
         "Stay Main-only (0 extra bots) for daily chat, venting, and routine scheduling to minimize token usage.",
@@ -271,7 +279,11 @@
             "grim-prompter",
             "claude-bughunter",
             "explore-run",
-            "harness2"
+            "harness2",
+            "modern-web-guidance",
+            "open-code-review",
+            "ast-grep",
+            "knip"
           ]
         },
         {
@@ -283,7 +295,6 @@
           "coordinator": "shizuka",
           "skills": [
             "filmmaking-videography-photography-s2",
-            "lemo-opuscar",
             "academic-plotting",
             "slide-generation",
             "unslop",
@@ -749,11 +760,35 @@
       "lead_bot": "shikaku",
       "load_mode": "lazy_context_source"
     },
-    "lemo-opuscar": {
-      "mission": "3_konten_kreasi",
+    "anti-slop": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
+    },
+    "modern-web-guidance": {
+      "mission": "4_coding",
+      "pillar": "research_and_prediction",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "open-code-review": {
+      "mission": "4_coding",
+      "pillar": "continuous_learning",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "ast-grep": {
+      "mission": "4_coding",
       "pillar": "token_efficiency",
-      "lead_bot": "kiki-chii",
-      "load_mode": "lazy_context_source"
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
+    },
+    "knip": {
+      "mission": "4_coding",
+      "pillar": "token_efficiency",
+      "lead_bot": "shikaku",
+      "load_mode": "on_demand_skill"
     }
   },
   "optional_skill_registry": {
@@ -775,6 +810,41 @@
       "load_mode": "opt_in_runtime",
       "default_installed": "false",
       "note": "Opt-in Imagination Studio (Keys & Sam Wasserman / TensorFold) Slate & local render queue bridge for Kiki-Chii via --with-imagination-studio or msshi optional enable imagination-studio; collaborates with filmmaking-videography-photography-s2 when installed."
+    },
+    "mcp-for-blender": {
+      "mission": "3_konten_kreasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "kiki-chii",
+      "collaborates_with": [
+        "filmmaking-videography-photography-s2",
+        "raea"
+      ],
+      "load_mode": "opt_in_runtime",
+      "default_installed": "false",
+      "note": "Opt-in MCP for Blender (ahujasid/mcp-for-blender) for Kiki-Chii via --with-blender-mcp or msshi optional enable mcp-for-blender; replaces CLI-Anything blender route with auto_open_on_boot=false."
+    },
+    "raea": {
+      "mission": "3_konten_kreasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "kiki-chii",
+      "collaborates_with": [
+        "filmmaking-videography-photography-s2",
+        "mcp-for-blender"
+      ],
+      "load_mode": "opt_in_runtime",
+      "default_installed": "false",
+      "note": "Opt-in RAEA Render Anything Engine (shinyobjectz/raea, FSL-1.1-ALv2, 0 upstream bytes bundled) for Kiki-Chii via --with-raea or msshi optional enable raea; supports direct React/TS+Bevy GPU render and hybrid .glb/.gltf finishing."
+    },
+    "lemo-opuscar": {
+      "mission": "3_konten_kreasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "kiki-chii",
+      "collaborates_with": [
+        "filmmaking-videography-photography-s2"
+      ],
+      "load_mode": "opt_in_lazy_context_source",
+      "default_installed": "false",
+      "note": "Opt-in in MSSHI Core v3.2.0 (--with-lemo-opuscar or msshi optional enable lemo-opuscar; automatic in hermes-mfa-filmmaking-and-agent-skills): 15 categories & 99 code-driven short-film styles."
     }
   },
   "plugin_registry": {
@@ -943,7 +1013,7 @@
       "privacy": "3_konten_kreasi",
       "education": "1_belajar_jadi_guru"
     },
-    "expected_upstream_count": 64,
+    "expected_upstream_count": 70,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -1008,7 +1078,13 @@
       "hermes-researcher",
       "peditx-research-methodology",
       "rust-anything",
-      "lemo-opuscar"
+      "lemo-opuscar",
+      "modern-web-guidance",
+      "open-code-review",
+      "ast-grep",
+      "knip",
+      "mcp-for-blender",
+      "raea"
     ]
   }
 }

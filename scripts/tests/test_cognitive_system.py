@@ -234,12 +234,12 @@ class CognitiveSystemTests(unittest.TestCase):
         creative = sysmod.route_task("Buat konsep dan storyboard konten kreasi video YouTube dan slide presentasi")
         self.assertEqual(creative["core_mission"], "3_konten_kreasi")
         self.assertEqual(creative["lead_bot"], "kiki-chii")
-        self.assertIn("lemo-opuscar", creative["recommended_skills"])
+        self.assertIn("filmmaking-videography-photography-s2", creative["recommended_skills"])
 
         lemo = sysmod.route_task("Saya mau bikin film pendek berbasis kode gaya ukiyoe pakai lemo-opuscar")
         self.assertEqual(lemo["core_mission"], "3_konten_kreasi")
         self.assertEqual(lemo["lead_bot"], "kiki-chii")
-        self.assertIn("lemo-opuscar", lemo["recommended_skills"])
+        self.assertTrue(any("msshi optional enable lemo-opuscar" in step for step in lemo["workflow_steps"]))
         self.assertTrue(any("15 kategori" in step and "STYLE.md" in step for step in lemo["workflow_steps"]))
 
         # Mission 4: Coding & Security
@@ -346,7 +346,7 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertIn("lemo-opuscar", fm)
 
         # lemo-opuscar wrapper enforces explaining 15 categories & styles before loading 1 STYLE.md
-        lemo_skill = (ROOT / "skills" / "lemo-opuscar" / "SKILL.md").read_text(encoding="utf-8-sig")
+        lemo_skill = (ROOT / "optional" / "lemo-opuscar" / "SKILL.md").read_text(encoding="utf-8-sig")
         self.assertIn("0. Wajib Saat Mau Digunakan: Jelaskan Isi Kategori & Style Dulu!", lemo_skill)
         self.assertIn("15 kategori", lemo_skill)
         self.assertIn("STYLE.md", lemo_skill)
@@ -780,27 +780,50 @@ class CognitiveSystemTests(unittest.TestCase):
         self.assertEqual(cs_mod.PINNED["lemo-opuscar"][1], "f9e204293930952b61ba921cd8944d05f121beee")
         self.assertEqual(cs_mod.PINNED["claude-bughunter"][1], "8258d29726804f5b954a09c625caedc183f7130d")
 
-        # 2. Wrapper size, <=1024-char descriptions, LICENSE.upstream retained
-        for slug in ("rust-anything", "lemo-opuscar", "claude-bughunter"):
-            sdir = ROOT / "skills" / slug
+        # 2. Wrapper size, <=1024-char descriptions, LICENSE.upstream retained (v3.2.0 bundled + opt-in)
+        for base_dir, slug, has_lic in (
+            ("skills", "rust-anything", True),
+            ("skills", "claude-bughunter", True),
+            ("skills", "anti-slop", True),
+            ("skills", "modern-web-guidance", True),
+            ("skills", "open-code-review", True),
+            ("skills", "ast-grep", True),
+            ("skills", "knip", True),
+            ("optional", "lemo-opuscar", True),
+            ("optional", "mcp-for-blender", True),
+            ("optional", "raea", False),
+        ):
+            sdir = ROOT / base_dir / slug
             sm = (sdir / "SKILL.md").read_text(encoding="utf-8-sig")
             desc = sm.split("---")[1].split("description:", 1)[1].split("\nlicense:", 1)[0].strip()
             self.assertLessEqual(len(desc), 1024, f"{slug} description too long: {len(desc)}")
-            self.assertTrue((sdir / "LICENSE.upstream").is_file(), f"Missing LICENSE.upstream in {slug}")
+            if has_lic:
+                self.assertTrue((sdir / "LICENSE.upstream").is_file(), f"Missing LICENSE.upstream in {slug}")
+            else:
+                self.assertFalse((sdir / "LICENSE.upstream").exists(), f"FSL-1.1-ALv2 {slug} must vendor 0 upstream files")
             total_bytes = sum(p.stat().st_size for p in sdir.rglob("*") if p.is_file())
             self.assertLess(total_bytes, 35_000, f"{slug} wrapper too large: {total_bytes}")
 
-        # 3. Strict role scoping across MuZA matrix & both Academic presets
+        # 3. Strict v3.2.0 role scoping across MuZA matrix & both Academic presets
         matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))
         academic = json.loads((ROOT / "configs" / "academic_presets.json").read_text(encoding="utf-8-sig"))
+        coder_only_v32 = ("rust-anything", "modern-web-guidance", "open-code-review", "ast-grep", "knip")
+        kiki_opt_v32 = ("lemo-opuscar", "mcp-for-blender", "raea", "imagination-studio")
         for bot in matrix["bots"]:
             req = set(bot["required_skills"])
-            self.assertEqual("rust-anything" in req, bot["id"] == "shikaku")
-            self.assertEqual("lemo-opuscar" in req, bot["id"] == "kiki-chii")
+            opt = set(bot["optional_skills"])
+            self.assertIn("anti-slop", req, f"anti-slop must be bundled on {bot['id']}")
+            for cslug in coder_only_v32:
+                self.assertEqual(cslug in req, bot["id"] == "shikaku", f"{cslug} wrong scope on {bot['id']}")
+            for kslug in kiki_opt_v32:
+                self.assertNotIn(kslug, req, f"{kslug} must stay opt-in on {bot['id']}")
+                self.assertEqual(kslug in opt, bot["id"] == "kiki-chii", f"{kslug} opt-in wrong scope on {bot['id']}")
         for preset_id in ("academic-mahasiswa", "academic-dosen"):
             for role, sk in academic["presets"][preset_id]["roles"].items():
-                self.assertEqual("rust-anything" in sk, role == "shikaku")
-                self.assertEqual("lemo-opuscar" in sk, role == "kiki-chii")
+                self.assertIn("anti-slop", sk, f"anti-slop missing on {role} in {preset_id}")
+                for cslug in coder_only_v32:
+                    self.assertEqual(cslug in sk, role == "shikaku", f"{cslug} wrong scope on {role}/{preset_id}")
+                self.assertNotIn("lemo-opuscar", sk, f"lemo-opuscar must stay opt-in in {preset_id}")
 
         # 4. File selection filters skip heavy binary media & _template
         self.assertTrue(cs_mod.selected_file("rust-anything", {"type": "blob", "mode": "100644", "path": "skills/rust-anything/SKILL.md"}))

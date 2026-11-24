@@ -34,10 +34,10 @@ MUZA_ARTCRAFT = {
 MUZA_NON_ART = {
     "val": ("perplexity", "python", "whatsapp-web", "youtube-chrome"),
     "shikaku": ("antigravity", "git", "node", "perplexity", "python", "youtube-chrome"),
-    "kiki-chii": ("blender", "ffmpeg", "node", "obs", "perplexity", "python", "tiktok", "youtube-chrome"),
+    "kiki-chii": ("ffmpeg", "node", "obs", "perplexity", "python", "tiktok", "youtube-chrome"),
 }
 SHARED_UTILITIES = {"hersona", "llmtrim", "graphify"}
-DISALLOWED_TARGETS = {"gdrive", "gdrive-web", "googledrive", "google-drive", "gimp", "libreoffice", "solvecraft"}
+DISALLOWED_TARGETS = {"gdrive", "gdrive-web", "googledrive", "google-drive", "gimp", "libreoffice", "solvecraft", "blender", "blender-cli"}
 GENERIC_CLI = re.compile(r"cli:[a-z0-9][a-z0-9-]{0,63}")
 CATALOG_URL = "https://clianything.cc/"
 PROJECT_URL = "https://github.com/HKUDS/CLI-Anything"
@@ -49,7 +49,6 @@ WEB_TARGETS = {
     "whatsapp-web": ("https://web.whatsapp.com/", "https://web.whatsapp.com/", "q"),
 }
 HARNESS = {
-    "blender-cli": "cli-anything-blender",
     "libreoffice": "cli-anything-libreoffice",
     "gimp": "cli-anything-gimp",
     "obs": "cli-anything-obs-studio",
@@ -66,8 +65,6 @@ WINDOWS_STORE_APPS = {
 }
 MCP_ALIASES = {
     "craft-anything": "craftanything",
-    "blender-mcp": "blender",
-    "blender-mcp-server": "blender",
     **{f"artcraft-{name}": name for name in ARTCRAFT},
     "artcraft-craft-anything": "craftanything",
 }
@@ -112,8 +109,6 @@ def academic_role(profile, hermes_home):
 def optional_executable(target, hermes_home):
     if target in ARTCRAFT:
         return artcraft_executable(target)
-    if target == 'blender':
-        return app_executable('blender') or shutil.which('blender') or harness_executable('blender-cli', hermes_home)
     return harness_executable(target, hermes_home)
 
 
@@ -209,7 +204,7 @@ def normalized(value):
 def mcp_id(name):
     key = normalized(name)
     key = MCP_ALIASES.get(key, key)
-    return key if key in (*ARTCRAFT, "blender") else f"mcp:{name.lower()}"
+    return key if key in ARTCRAFT else f"mcp:{name.lower()}"
 
 
 def executable(names, windows=(), mac=()):
@@ -435,12 +430,11 @@ def capabilities(connectors, hermes_home=None):
     for target in ARTCRAFT:
         rows[target] = {"route": "native-cli", "readiness": "requires_migration" if artcraft_executable(target) else "needs_install",
                         "require_task_ticket": True}
-    rows["blender"] = {"route": "native-cli", "readiness": "requires_migration", "require_task_ticket": True}
     for name, enabled in connectors.items():
         target = mcp_id(name)
         prior = rows.get(target, {})
         if prior.get("readiness") != "configured":
-            if target not in ARTCRAFT and target != "blender":
+            if target not in ARTCRAFT:
                 rows[target] = {"route": "hermes-mcp", "readiness": "configured" if enabled else "disabled",
                                 "connector": name}
     for target in (*HARNESS, *NATIVE, *installed_extension_ids()):

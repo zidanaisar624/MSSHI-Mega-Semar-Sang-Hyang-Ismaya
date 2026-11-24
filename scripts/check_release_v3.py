@@ -32,7 +32,7 @@ def resolve_role_map(home: Path) -> dict[str, str]:
                 break
         resolved[role] = chosen
     return resolved
-BLOCKED = {"blender", "wordcraft", "lightcraft", "cadcraft", "craftanything", "deckcraft",
+BLOCKED = {"wordcraft", "lightcraft", "cadcraft", "craftanything", "deckcraft",
            "designcraft", "effectcraft", "figcraft", "filmcraft", "gridcraft",
            "materialcraft", "pdfcraft", "photocraft", "solidcraft",
            "soundcraft", "texturecraft", "vectorcraft", "anicraft"}

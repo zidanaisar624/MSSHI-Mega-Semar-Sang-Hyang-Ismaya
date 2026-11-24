@@ -7,7 +7,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 ROLES = {"yukino", "shizuka", "val", "kiki-chii", "shikaku"}
-HEAVY = {"cadcraft", "solidcraft", "materialcraft", "texturecraft", "blender", "obs", "strix", "rea-forensics"}
+HEAVY = {"cadcraft", "solidcraft", "materialcraft", "texturecraft", "obs", "strix", "rea-forensics"}
 
 
 class AcademicPresetManifestTests(unittest.TestCase):

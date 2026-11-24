@@ -1,5 +1,5 @@
 {
-  "reviewed_at": "2026-11-16",
+  "reviewed_at": "2026-11-24",
   "entries": [
     {
       "id": "higgsfield-skills",
@@ -95,16 +95,16 @@
     {
       "id": "anti-slop",
       "source": "https://github.com/miqdadbadjuber/anti-slop",
-      "revision": "3b75daa1fb6bb4c2b8a3807f82eed50914dee6b2",
+      "revision": "7f6a03df2931c12cb244dc4ab14ee4866b0ac2ba",
       "license": "MIT",
       "copyright_lines": [
         "Copyright (c) 2026 Miqdad Badjuber (antislop)",
         "The above copyright notice and this permission notice shall be included in all",
         "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
       ],
-      "license_url": "https://raw.githubusercontent.com/miqdadbadjuber/anti-slop/3b75daa1fb6bb4c2b8a3807f82eed50914dee6b2/LICENSE",
+      "license_url": "https://raw.githubusercontent.com/miqdadbadjuber/anti-slop/7f6a03df2931c12cb244dc4ab14ee4866b0ac2ba/LICENSE",
       "license_sha256": "9fd83fb1fda52ca0094b96e2ed5a3d6c42a81b95a6c6326553f5bbe570f443de",
-      "status": "license_read"
+      "status": "pinned_license_read; original MIT wrapper bundled in skills/anti-slop with LICENSE.upstream"
     },
     {
       "id": "goose",
@@ -830,6 +830,78 @@
       "license_url": "https://raw.githubusercontent.com/lemomo-ai/lemo-opuscar/f9e204293930952b61ba921cd8944d05f121beee/LICENSE",
       "license_sha256": "6a7cee0bc246be344416d339aa777823c481c779eb72774a9f75666ef59a1914",
       "status": "pinned_multi_license_reviewed; 0 bytes of CC-BY-NC docs or media copied into MIT repo; original pointer wrapper + lazy text-only cache on user opt-in"
+    },
+    {
+      "id": "modern-web-guidance",
+      "source": "https://github.com/GoogleChrome/modern-web-guidance",
+      "revision": "2b4aa13a72dd47cd135b06ce5abfccd92e19b24f",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "Stewarded by the Google Chrome, Microsoft Edge, Mozilla Firefox, and MDN teams"
+      ],
+      "license_url": "https://raw.githubusercontent.com/GoogleChrome/modern-web-guidance/2b4aa13a72dd47cd135b06ce5abfccd92e19b24f/LICENSE",
+      "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "status": "pinned_license_read; original MIT wrapper bundled in skills/modern-web-guidance with LICENSE.upstream"
+    },
+    {
+      "id": "open-code-review",
+      "source": "https://github.com/alibaba/open-code-review",
+      "revision": "f6379f71edba1e59dbc056e8f455df1f84396498",
+      "license": "Apache-2.0",
+      "copyright_lines": [
+        "Alibaba Group — OpenCodeReview (ocr)"
+      ],
+      "license_url": "https://raw.githubusercontent.com/alibaba/open-code-review/f6379f71edba1e59dbc056e8f455df1f84396498/LICENSE",
+      "license_sha256": "1945665fdb6968a66ea29438ddee0aee23035365c862e5c4a75b62b303340acf",
+      "status": "pinned_license_read; original MIT wrapper bundled in skills/open-code-review with LICENSE.upstream"
+    },
+    {
+      "id": "ast-grep",
+      "source": "https://github.com/ast-grep/ast-grep",
+      "revision": "9065b02439d9b80aaa726ab41fcaa2f3854c66b3",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2022 Herrington Darkholme"
+      ],
+      "license_url": "https://raw.githubusercontent.com/ast-grep/ast-grep/9065b02439d9b80aaa726ab41fcaa2f3854c66b3/LICENSE",
+      "license_sha256": "81471889c77b2161a3e4dcdb1b2e6ca382e485766132d92d5fe1d7497e7dd2d9",
+      "status": "pinned_license_read; original MIT wrapper bundled in skills/ast-grep with LICENSE.upstream"
+    },
+    {
+      "id": "knip",
+      "source": "https://github.com/webpro-nl/knip",
+      "revision": "74c07a6361e720ee31ac2e428c6b6648f5598210",
+      "license": "ISC",
+      "copyright_lines": [
+        "Copyright 2022-2026 Lars Kappert"
+      ],
+      "license_url": "https://raw.githubusercontent.com/webpro-nl/knip/74c07a6361e720ee31ac2e428c6b6648f5598210/LICENSE",
+      "license_sha256": "2f654153561e7d8b90fdbf448a7de09725f936533fc9c7b485190c036d089341",
+      "status": "pinned_license_read; original MIT wrapper bundled in skills/knip with LICENSE.upstream"
+    },
+    {
+      "id": "mcp-for-blender",
+      "source": "https://github.com/ahujasid/mcp-for-blender",
+      "revision": "a5a8acf2c6ae44a73670e0caf34663f16456d645",
+      "license": "MIT",
+      "copyright_lines": [
+        "Copyright (c) 2025 Siddharth Ahuja"
+      ],
+      "license_url": "https://raw.githubusercontent.com/ahujasid/mcp-for-blender/a5a8acf2c6ae44a73670e0caf34663f16456d645/LICENSE",
+      "license_sha256": "049501fd54d27852507853a5b88094ca1c6ff97404418a5032f3310eecc9cde6",
+      "status": "pinned_license_read; opt-in wrapper in optional/mcp-for-blender with LICENSE.upstream (public_default=false)"
+    },
+    {
+      "id": "raea",
+      "source": "https://github.com/shinyobjectz/raea",
+      "revision": "66eb15448f69ab29a801fe1bde75d3889d34d04e",
+      "license": "FSL-1.1-ALv2",
+      "copyright_lines": [
+        "Copyright 2026 Shane Murphy"
+      ],
+      "license_url": "https://raw.githubusercontent.com/shinyobjectz/raea/66eb15448f69ab29a801fe1bde75d3889d34d04e/LICENSE",
+      "license_sha256": "fe3ce8198545420f93b83a2fd02e6fff4a4414ffcb2309df50878adf39d1c392",
+      "status": "FSL-1.1-ALv2; NEVER vendored into MIT repo — 100% original MIT opt-in wrapper in optional/raea (public_default=false)"
     }
   ],
   "additional_runtime_terms": {

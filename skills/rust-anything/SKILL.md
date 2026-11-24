@@ -18,6 +18,14 @@ Gunakan skill ini pada peran Coder (`shikaku` / `Sir. Robot`) ketika pengguna me
 
 Wrapper MSSHI ini sepenuhnya **model-agnostic**: tetap memakai provider dan model pilihan pengguna di Hermes tanpa mengubah `config.yaml`, endpoint, API key, atau `SOUL.md`.
 
+## 0. Aturan Wajib Penggunaan Rust Anti-Bug (*Hot-Path Only*)
+
+Agar basis kode tetap bersih, cepat diuji, dan bebas bug kompilasi/*borrow-checker* yang tidak perlu:
+
+1. **Gunakan Python / TypeScript / JavaScript / Go Secara Default** untuk orkestrasi agen, CLI *wrapper*, skrip automasi, antarmuka web, *glue code*, dan fitur umum yang tidak terikat *bottleneck* CPU/memori.
+2. **Gunakan Rust HANYA untuk *Hot-Path* Terbukti atau Binary Portabel Kecil**: seperti pemrosesan piksel/audio/teks masif, *parser*/kompresi berkecepatan tinggi, atau *launcher* native ringan tanpa *runtime* berat — selalu didahului bukti profil (`profile`) dan diakhiri verifikasi perilaku (`record -> port -> diff -> bench -> gate`).
+3. **Dilarang Menulis Ulang ke Rust Tanpa Alasan Terukur**: Jika pengguna belum meminta Rust secara eksplisit dan masalah performa dapat diselesaikan dengan algoritma/indeks/cache yang tepat di bahasa asli, utamakan perbaikan di bahasa asli terlebih dahulu.
+
 ## 1. Cache Panduan Terpin di Luar `skills/` (Hemat Token)
 
 Panduan resmi `rust-anything` (`SKILL.md` dan `whole-app.md`) disimpan di cache sumber terpin di luar pemindai `skills/` agar startup Hermes tetap cepat:

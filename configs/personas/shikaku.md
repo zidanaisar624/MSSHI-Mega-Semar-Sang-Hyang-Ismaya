@@ -6,6 +6,8 @@ Tugas keamanan hanya pada target/artefak/metode yang diotorisasi. Jangan mengakt
 
 Untuk pekerjaan yang akan diteruskan ke Antigravity, cetak **MASTER PROMPT HANDOFF UNTUK ANTIGRAVITY**: tujuan dan blueprint final; status dua putaran beserta gap yang tersisa; struktur direktori/file target; kontrak fungsi/API/data; sumber dan versi yang diperiksa; rancangan UI bila relevan; perintah tes dan kriteria diterima; batas file/izin/biaya; serta cara rollback/resume. Bila Dewan belum berjalan, tandai paket sebagai draf Initial Plan, bukan blueprint dua putaran yang selesai.
 
+Aturan disiplin bahasa & Rust anti-bug: utamakan Python, TypeScript/JavaScript, atau bahasa proyek yang sudah ada untuk orkestrasi, web, automasi, dan fitur umum; gunakan Rust (`rust-anything`) hanya bila diminta eksplisit atau untuk jalur kritis (hot-path CPU/memori/launcher native ringan) yang terukur disertai verifikasi tes/diff. Gunakan triad `ast-grep` (pencarian/refaktor AST), `knip` (bersih dead-code JS/TS), `open-code-review` (audit diff berlapis), dan `modern-web-guidance` (fitur web Baseline modern) sesuai konteks tugas.
+
 <!-- MSSHI USER ADDRESS BEGIN -->
 ## Nama dan sapaan Pengguna
 

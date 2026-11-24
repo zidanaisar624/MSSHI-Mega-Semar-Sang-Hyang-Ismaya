@@ -22,8 +22,8 @@
       "en": "Map project structure, configuration, entry points and change risks."
     },
     "anti-slop": {
-      "id": "Memeriksa klise, struktur antarmuka, dan pola kode yang berulang.",
-      "en": "Check repetitive cliches, interface patterns and code structures."
+      "id": "Filter kualitas lintas 5 bot untuk mencegah klise AI, basa-basi generik, antarmuka template seragam, dan boilerplate kode berulang.",
+      "en": "Cross-bot quality gate across all 5 roles preventing AI cliches, generic filler, cookie-cutter UI templates, and repetitive code boilerplate."
     },
     "antigravity-webdev-cybersec": {
       "id": "Hubungkan pengerjaan web dan evaluasi keamanan terotorisasi dengan Antigravity, Goose, dan alat lokal.",
@@ -116,10 +116,6 @@
     "better-design": {
       "id": "Membantu tinjauan kualitas dan hierarki desain.",
       "en": "Review design quality, hierarchy and visual consistency."
-    },
-    "blender-mcp": {
-      "id": "Koordinasikan adegan 3D dan render melalui adapter Blender yang tersedia; setup desktop memakai CLI native.",
-      "en": "Coordinate 3D scenes and rendering through an available Blender adapter; desktop setup uses native CLI."
     },
     "brainstorming-research-ideas": {
       "id": "Memakai kerangka ideasi terstruktur untuk menemukan pertanyaan layak.",
@@ -542,8 +538,32 @@
       "en": "Coder-only (Shikaku): incremental verified porting of TS/JS/Python/C/Go/Ruby/Java code or whole apps to Rust via behavioral recording, diff, bench, shadow, and gate (separate rust-anything CLI/MCP)."
     },
     "lemo-opuscar": {
-      "id": "Khusus Kiki-Chii (Content Creator/Filmmaker): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) dengan cache teks terpin on-demand (0 aset media berat di folder skills/) dan Concepting First.",
-      "en": "Kiki-Chii only (Content Creator/Filmmaker): catalog of 15 categories and 99 code-driven short-film styles (Lemo-Opuscar) via pinned text-only on-demand cache (zero heavy media in skills/) with Concepting First."
+      "id": "Opsional khusus Kiki-Chii di MSSHI Core v3.2.0 (default OFF): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) dengan cache teks terpin on-demand.",
+      "en": "Optional Kiki-Chii integration in MSSHI Core v3.2.0 (default OFF): catalog of 15 categories and 99 code-driven short-film styles (Lemo-Opuscar) via pinned text-only cache."
+    },
+    "modern-web-guidance": {
+      "id": "Khusus Coder (Shikaku): panduan fitur web modern Baseline (Chrome/Edge/Firefox/MDN), elemen native HTML/CSS/JS, aksesibilitas, dan Core Web Vitals.",
+      "en": "Coder-only (Shikaku): Baseline modern web platform guidance (Chrome/Edge/Firefox/MDN), native HTML/CSS/JS features, accessibility, and Core Web Vitals."
+    },
+    "open-code-review": {
+      "id": "Khusus Coder (Shikaku): review kode hibrida deterministik + verifikasi baris-per-baris (Alibaba OpenCodeReview / CLI ocr) untuk git diff, commit, dan PR.",
+      "en": "Coder-only (Shikaku): hybrid deterministic + line-level verified code review (Alibaba OpenCodeReview / ocr CLI) for git diffs, commits, and PRs."
+    },
+    "ast-grep": {
+      "id": "Khusus Coder (Shikaku): pencarian struktural Tree-sitter AST, aturan lint YAML, dan refaktor codemod deterministik lintas berkas (ast-grep / sg).",
+      "en": "Coder-only (Shikaku): deterministic Tree-sitter AST structural search, YAML linting, and multi-file codemod refactoring (ast-grep / sg)."
+    },
+    "knip": {
+      "id": "Khusus Coder (Shikaku): audit deterministik berkas mati, ekspor/tipe tak terpakai, dan dependensi yatim pada proyek JS/TS & monorepo (webpro-nl/knip).",
+      "en": "Coder-only (Shikaku): deterministic detection of unused files, exports/types, and dependencies in JS/TS projects and monorepos (webpro-nl/knip)."
+    },
+    "mcp-for-blender": {
+      "id": "Opsional khusus Kiki-Chii (default OFF): MCP for Blender dua arah untuk modeling 3D, material, kamera previz, dan ekspor .glb/.gltf on-demand.",
+      "en": "Optional Kiki-Chii integration (default OFF): two-way MCP for Blender supporting 3D modeling, materials, camera previz, and on-demand .glb/.gltf export."
+    },
+    "raea": {
+      "id": "Opsional khusus Kiki-Chii (default OFF): RAEA Render Anything Engine (React/TS + Bevy GPU) untuk render langsung berbasis kode atau finishing hibrida .glb/.gltf dari mcp-for-blender.",
+      "en": "Optional Kiki-Chii integration (default OFF): RAEA Render Anything Engine (React/TS + Bevy GPU) for direct code-to-GPU renders or hybrid finishing of .glb/.gltf assets from mcp-for-blender."
     }
   },
   "packs": {
@@ -796,6 +816,30 @@
     "skill-finder": {
       "id": "Pencari skill otomatis lintas semua 6 bot termasuk default lewat tool in-process 'msshi_find_skill' (search/open) dan CLI 'msshi find': mencari di skill aktif bot saat ini, bot spesialis lain, sumber terhubung, dan brankas arsip lokal (0 panggilan LLM; menjaga batas spesialis & confinement arsip).",
       "en": "Automatic cross-bot lazy skill finder across all 6 profiles including default via native in-process tool 'msshi_find_skill' (search/open) and CLI 'msshi find': searches active bot skills, specialist teammates, connected sources, and archived skill vaults (0 LLM calls; enforces specialist ownership and archive confinement)."
+    },
+    "mcp-for-blender": {
+      "id": "Opsional khusus Kiki-Chii (default OFF, auto_open_on_boot=false): pasang wrapper MCP for Blender (ahujasid/mcp-for-blender) setelah rute Blender diputus dari CLI-Anything.",
+      "en": "Optional Kiki-Chii wrapper (default OFF, auto_open_on_boot=false): installs MCP for Blender instructions (ahujasid/mcp-for-blender) replacing the disconnected CLI-Anything Blender route."
+    },
+    "mcp-for-blender-runtime": {
+      "id": "Blender 3.0+, addon.py resmi, dan server stdio uvx mcp-for-blender (atau uvx blender-mcp) dipasang serta dihubungkan sendiri oleh pengguna hanya saat sesi 3D aktif.",
+      "en": "Blender 3.0+, official addon.py, and the uvx mcp-for-blender (or uvx blender-mcp) stdio server are installed and connected separately by the user only during active 3D tasks."
+    },
+    "raea": {
+      "id": "Opsional khusus Kiki-Chii (default OFF): pasang wrapper RAEA — Render Anything Engine (shinyobjectz/raea) untuk render langsung React/TS + Bevy GPU atau hibrida bersama .glb/.gltf dari mcp-for-blender. Berbeda dari optional/rea milik Coder.",
+      "en": "Optional Kiki-Chii wrapper (default OFF): installs RAEA — Render Anything Engine instructions (shinyobjectz/raea) for direct React/TS + Bevy GPU rendering or hybrid .glb/.gltf workflows with mcp-for-blender. Separate from Coder's optional/rea."
+    },
+    "raea-runtime": {
+      "id": "Engine RAEA (FSL-1.1-ALv2, 0 byte kode upstream dipaketkan di MSSHI), GPU Vulkan/Metal/DX12, dan Rust/Node dipasang terpisah oleh pengguna; perangkat Low-RAM otomatis diarahkan ke BRAG/Hyperframes.",
+      "en": "The RAEA engine (FSL-1.1-ALv2, zero upstream bytes bundled in MSSHI), compatible Vulkan/Metal/DX12 GPU, and Rust/Node toolchains are installed separately by the user; Low-RAM hosts fall back cleanly to BRAG/Hyperframes."
+    },
+    "lemo-opuscar": {
+      "id": "Opsional khusus Kiki-Chii pada MSSHI Core v3.2.0 (default OFF): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) dengan penjelasan kategori wajib sebelum memilih 1 STYLE.md.",
+      "en": "Optional Kiki-Chii wrapper in MSSHI Core v3.2.0 (default OFF): 15-category / 99-style code-driven short-film catalog (Lemo-Opuscar) explaining categories first before loading 1 STYLE.md."
+    },
+    "lemo-opuscar-runtime": {
+      "id": "Metadata teks/JSON Lemo-Opuscar diunduh on-demand ke cache privat msshi-private/context-sources (0 aset video/gambar berat di skills/); alat render Node/FFmpeg/Chromium terpisah.",
+      "en": "Lemo-Opuscar text/JSON style guides are fetched on demand into msshi-private/context-sources (zero heavy media in skills/); Node/FFmpeg/Chromium renderers are installed separately."
     }
   }
 }

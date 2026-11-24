@@ -30,12 +30,12 @@
       "en": "Use Antigravity IDE for the selected coding workspace; the IDE must be installed and opens only for a task."
     },
     "blender": {
-      "id": "Pengerjaan scene, model, animasi, dan render 3D di Blender melalui rute yang terdaftar; perlu Blender dan adapter yang sesuai.",
-      "en": "Work on Blender scenes, models, animation, and 3D renders through the registered route; requires Blender and a compatible adapter."
+      "id": "Diputus dari CLI-Anything sejak v3.2.0; gunakan modul opsional mcp-for-blender (msshi optional enable mcp-for-blender) untuk Kiki-Chii.",
+      "en": "Disconnected from CLI-Anything in v3.2.0; use the opt-in mcp-for-blender module (msshi optional enable mcp-for-blender) for Kiki-Chii."
     },
     "blender-cli": {
-      "id": "Kendalikan Blender lewat harness CLI-Anything untuk tugas 3D/render; perlu Blender dan executable cli-anything-blender.",
-      "en": "Control Blender through the CLI-Anything harness for 3D/render tasks; requires Blender and cli-anything-blender."
+      "id": "Diputus dari CLI-Anything sejak v3.2.0; gunakan modul opsional mcp-for-blender (msshi optional enable mcp-for-blender) untuk Kiki-Chii.",
+      "en": "Disconnected from CLI-Anything in v3.2.0; use the opt-in mcp-for-blender module (msshi optional enable mcp-for-blender) for Kiki-Chii."
     },
     "ffmpeg": {
       "id": "Konversi, potong, gabungkan, atau periksa media audio/video lewat CLI lokal; perlu executable FFmpeg.",

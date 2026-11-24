@@ -159,8 +159,14 @@ _SPECIALIST_ONLY: dict[str, tuple[str, ...]] = {
     "grim-prompter": ("shikaku",),
     "claude-bughunter": ("shikaku",),
     "rust-anything": ("shikaku",),
+    "modern-web-guidance": ("shikaku",),
+    "open-code-review": ("shikaku",),
+    "ast-grep": ("shikaku",),
+    "knip": ("shikaku",),
     "ponytail": ("shikaku",),
     "lemo-opuscar": ("kiki-chii",),
+    "mcp-for-blender": ("kiki-chii",),
+    "raea": ("kiki-chii",),
 }
 
 

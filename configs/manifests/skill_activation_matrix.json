@@ -166,6 +166,33 @@
       "mcp_registration": false,
       "preferred_over_legacy_generic_rea_setup": true,
       "provider_model_mutation": false
+    },
+    "mcp-for-blender": {
+      "roles": [
+        "kiki-chii"
+      ],
+      "activation": "on_3d_task_after_explicit_enable",
+      "public_default": false,
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false
+    },
+    "raea": {
+      "roles": [
+        "kiki-chii"
+      ],
+      "activation": "on_gpu_render_task_after_explicit_enable",
+      "public_default": false,
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false
+    },
+    "lemo-opuscar": {
+      "roles": [
+        "kiki-chii"
+      ],
+      "activation": "on_code_film_task_after_explicit_enable",
+      "public_default": false,
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false
     }
   },
   "contextual_integrations": {
@@ -280,7 +307,7 @@
   },
   "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee.",
   "interaction_policy": {
-    "version": "3.1.2",
+    "version": "3.2.0",
     "type_1": [
       "yukino",
       "shizuka"

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "build_profile": "light",
-  "base_version": "3.1.2",
+  "base_version": "3.2.0",
   "target_hardware_class": {
     "reference_device": "HP 14s-dq3110TU class (Intel Celeron N4500, 4 GB RAM, 256 GB NVMe, Windows 10, C:-only, PowerShell 5.1)",
     "ram_threshold_gib": 6.0,
@@ -53,7 +53,10 @@
     "docs/manuals/v3.1.1",
     "docs/manuals/v3.1.2",
     "optional/rea",
-    "optional/imagination-studio"
+    "optional/imagination-studio",
+    "optional/mcp-for-blender",
+    "optional/raea",
+    "optional/lemo-opuscar"
   ],
   "exclude_globs": [
     "__pycache__",

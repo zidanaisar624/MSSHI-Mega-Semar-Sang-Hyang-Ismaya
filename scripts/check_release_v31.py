@@ -200,7 +200,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
     rows = {row["id"]: row for row in entries}
     bundled = [row for row in matrix["skills"] if row.get("status") == "bundled"]
     observed_skills = [file.parent for file in (repo / "skills").rglob("SKILL.md") if file.is_file()]
-    record("v31_version_inventory", str(version.get("version", "")).startswith("3.1.")
+    record("v31_version_inventory", str(version.get("version", "")).startswith(("3.1.", "3.2."))
            and version.get("bundled_skills") == len(bundled) == len(observed_skills)
            and version.get("external_sources") == len(entries),
            {"version": version.get("version"), "declared_skills": version.get("bundled_skills"),
@@ -219,7 +219,6 @@ def audit(repo, home, package_only=False, baseline_override=None):
                 "remote-jobs": ("remote-jobs", everyone),
                 "mattpocock-engineering": ("mattpocock-skills", everyone),
                 "rea-video": ("rea-video", {"kiki-chii"}),
-                "lemo-opuscar": ("lemo-opuscar", {"kiki-chii"}),
                 "grim-prompter": ("grim-prompter", {"shikaku"}),
                 "claude-bughunter": ("claude-bughunter", {"shikaku"}),
                 "rust-anything": ("rust-anything", {"shikaku"})}
@@ -270,10 +269,15 @@ def audit(repo, home, package_only=False, baseline_override=None):
 
     scopes = {slug: set(roles) for slug, roles in SCOPES.items()}
     catalog = {row["slug"]: row for row in matrix["skills"]}
-    if (repo / "optional/rea").exists() or catalog.get("rea", {}).get("optional_path"):
-        scopes["rea"] = {"shikaku"}
-    if (repo / "optional/imagination-studio").exists() or catalog.get("imagination-studio", {}).get("optional_path"):
-        scopes["imagination-studio"] = {"kiki-chii"}
+    for opt_slug, opt_roles in (
+        ("rea", {"shikaku"}),
+        ("imagination-studio", {"kiki-chii"}),
+        ("mcp-for-blender", {"kiki-chii"}),
+        ("raea", {"kiki-chii"}),
+        ("lemo-opuscar", {"kiki-chii"}),
+    ):
+        if (repo / "optional" / opt_slug).exists() or catalog.get(opt_slug, {}).get("optional_path"):
+            scopes[opt_slug] = opt_roles
     for slug, expected_roles in scopes.items():
         configured = {role for role, row in bots.items() if slug in row.get("required_skills", []) + row.get("optional_skills", [])}
         source_row = rows.get(slug, {})
@@ -281,7 +285,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
                and source_row.get("auto_start") is False,
                {"expected": sorted(expected_roles), "matrix": sorted(configured), "upstream_roles": source_row.get("roles"),
                 "auto_start": source_row.get("auto_start"), "revision": source_row.get("revision")})
-        is_optional = slug in {"rea", "imagination-studio"}
+        is_optional = slug in {"rea", "imagination-studio", "mcp-for-blender", "raea", "lemo-opuscar"}
         folder = (repo / "optional" / slug) if is_optional else (repo / "skills" / slug)
         if is_optional:
             row = catalog.get(slug, {})

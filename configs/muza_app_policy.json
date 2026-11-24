@@ -51,7 +51,6 @@
       "youtube-chrome"
     ],
     "kiki-chii": [
-      "blender",
       "ffmpeg",
       "node",
       "obs",
@@ -67,6 +66,8 @@
     "llmtrim"
   ],
   "disabled_targets": [
+    "blender",
+    "blender-cli",
     "gdrive",
     "gdrive-web",
     "gimp",

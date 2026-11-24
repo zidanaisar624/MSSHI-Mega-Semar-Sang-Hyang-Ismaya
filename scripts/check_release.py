@@ -113,7 +113,7 @@ def static_checks():
     app_help = read_json(ROOT / f'skills/{UNIVERSAL_BRIDGE}/scripts/connection_help.json')
     hub = msshi_cli.connections._bridge['hub']
     known_apps = {*hub.ARTCRAFT, *hub.HARNESS, *hub.NATIVE, *hub.WEB_TARGETS,
-                  'existing', 'artcraft', 'antigravity', 'blender'}
+                  'existing', 'artcraft', 'antigravity'}
     require(known_apps <= app_help['targets'].keys(), 'A known app choice lacks a function description')
     groups = [option_help[name] for name in ('skills', 'packs', 'modes', 'platforms', 'features')]
     groups += [app_help[name] for name in ('targets', 'modes', 'fallbacks', 'notes')]
@@ -355,7 +355,7 @@ def bridge_smoke(work):
             f"  lightcraft:\n    enabled: false\n    url: 'https://example.invalid/{marker}'\n"
         ).encode(),
         selected_home / "mcp_config.json": json.dumps({
-            "mcpServers": {"blender": {"command": marker}},
+            "mcpServers": {"photocraft": {"command": marker}},
         }).encode(),
     }
     for file, contents in settings.items():
@@ -382,8 +382,8 @@ def bridge_smoke(work):
     require(all(catalog[name]["route"] == "native-cli"
                 and catalog[name]["readiness"] in {"requires_migration", "needs_install"}
                 and catalog[name]["require_task_ticket"] is True
-                for name in ("anicraft", "filmcraft", "blender"))
-            and not ({"anicraft", "filmcraft", "blender"} & rows.keys()),
+                for name in ("anicraft", "filmcraft", "photocraft"))
+            and not ({"anicraft", "filmcraft", "photocraft"} & rows.keys()),
             "Legacy desktop MCP declarations were mistaken for ready native CLI routes")
     require(status.get("auto_open_on_boot") is False,
             "Auto-reconnect enabled application startup")

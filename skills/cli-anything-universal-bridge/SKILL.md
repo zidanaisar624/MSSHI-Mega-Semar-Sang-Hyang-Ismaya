@@ -26,7 +26,7 @@ Tiket terikat pada satu profil, satu aplikasi, satu kali eksekusi, dan batas wak
 
 Dispatcher menyalakan executable CLI lokal dalam proses yang dikelola. Proses turunannya ditutup saat tugas selesai atau mencapai batas waktu. Aplikasi yang dibuka pengguna sendiri tetap di luar kepemilikan dispatcher. Hormati batas biaya, hak file, dan izin pengiriman data sebelum tindakan berbayar atau pengiriman ke layanan luar.
 
-ArtCraft, LightCraft, dan Blender memakai rute native CLI yang terdaftar. Jangan menyalakan server MCP Desktop atau flag koneksi permanen sebagai jalan alternatif. Jika rute belum tersedia, laporkan prasyaratnya dan pilih alat yang sudah siap sesuai tugas pengguna.
+ArtCraft dan LightCraft memakai rute native CLI yang terdaftar (rute Blender diputus dari CLI-Anything sejak v3.2.0 dan dialihkan ke modul opsional `mcp-for-blender` untuk Kiki-Chii). Jangan menyalakan server MCP Desktop atau flag koneksi permanen sebagai jalan alternatif. Jika rute belum tersedia, laporkan prasyaratnya dan pilih alat yang sudah siap sesuai tugas pengguna.
 
 ## Koneksi lain
 

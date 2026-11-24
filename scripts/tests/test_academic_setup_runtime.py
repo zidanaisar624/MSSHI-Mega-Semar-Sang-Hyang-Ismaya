@@ -104,11 +104,12 @@ class AcademicRouteTests(unittest.TestCase):
     def test_heavy_optional_requires_installed_binary_and_explicit_selection(self):
         with TemporaryDirectory() as tmp:
             home = self.make_home(tmp)
+            self.assertFalse(bridge.target_allowed('kiki-chii', 'blender', home, allow_installed_optional=True))
             with patch.object(bridge, 'optional_executable', return_value=None):
-                self.assertFalse(bridge.target_allowed('kiki-chii', 'blender', home, allow_installed_optional=True))
+                self.assertFalse(bridge.target_allowed('kiki-chii', 'obs', home, allow_installed_optional=True))
             with patch.object(bridge, 'optional_executable', return_value='test-binary'):
-                self.assertTrue(bridge.target_allowed('kiki-chii', 'blender', home, allow_installed_optional=True))
-                self.assertFalse(bridge.target_allowed('kiki-chii', 'blender', home))
+                self.assertTrue(bridge.target_allowed('kiki-chii', 'obs', home, allow_installed_optional=True))
+                self.assertFalse(bridge.target_allowed('kiki-chii', 'obs', home))
 
     def test_auto_reconnect_does_not_register_available_heavy_apps(self):
         with TemporaryDirectory() as tmp:
@@ -116,6 +117,7 @@ class AcademicRouteTests(unittest.TestCase):
             profile = home / 'profiles/kiki-chii'
             dest = profile / 'msshi-bridge/connections.json'
             candidates = {'deckcraft': {'route': 'native-cli', 'readiness': 'available'},
+                          'obs': {'route': 'native-cli', 'readiness': 'available'},
                           'blender': {'route': 'native-cli', 'readiness': 'available'}}
             with patch.object(bridge, 'optional_executable', return_value='test-binary'):
                 _, data, _ = connect.planned_registration(dest, candidates, [], 'auto-reconnect', None, profile_home=profile)
@@ -130,20 +132,20 @@ class AcademicRouteTests(unittest.TestCase):
             route.parent.mkdir(parents=True)
             route.write_text(json.dumps({'schema': 3, 'targets': {}}))
             (state / 'policy.json').write_text('{}')
-            binary = home / 'blender.exe'
+            binary = home / 'cli-anything-obs-studio.exe'
             binary.write_bytes(b'fixture; never executed')
             dest = profile / 'msshi-bridge/connections.json'
             dest.parent.mkdir(parents=True)
-            candidates = {'blender': {'route': 'native-cli', 'readiness': 'blocked_by_specialization'}}
+            candidates = {'obs': {'route': 'native-cli', 'readiness': 'blocked_by_specialization'}}
             with patch.object(connect.hub, 'optional_executable', return_value=str(binary)):
-                _, data, result = connect.planned_registration(dest, candidates, [], 'select', ['blender'], profile_home=profile)
-                self.assertEqual(result['academic_optional_opt_ins'], ['blender'])
-                self.assertFalse(bridge.target_allowed('kiki-chii', 'blender', home))
+                _, data, result = connect.planned_registration(dest, candidates, [], 'select', ['obs'], profile_home=profile)
+                self.assertEqual(result['academic_optional_opt_ins'], ['obs'])
+                self.assertFalse(bridge.target_allowed('kiki-chii', 'obs', home))
                 connect.write_synchronized_registry(dest, data, profile)
             with patch.object(bridge, 'optional_executable', return_value=str(binary)):
-                self.assertTrue(bridge.target_allowed('kiki-chii', 'blender', home))
+                self.assertTrue(bridge.target_allowed('kiki-chii', 'obs', home))
             with patch.object(bridge, 'optional_executable', return_value=None):
-                self.assertFalse(bridge.target_allowed('kiki-chii', 'blender', home))
+                self.assertFalse(bridge.target_allowed('kiki-chii', 'obs', home))
 
     def test_runtime_route_inventory_obeys_academic_and_preserves_provider(self):
         with TemporaryDirectory() as tmp:

@@ -61,7 +61,7 @@ for profile in expected:
     assert not any(hub.target_allowed(profile,name) for name in ('gimp','libreoffice','solvecraft','gdrive','gdrive-web'))
     assert not any(hub.target_allowed(profile,'cli:'+name) for name in ('gimp','libreoffice','solvecraft','gdrive-web'))
     assert {name for name in hub.ARTCRAFT if hub.target_allowed(profile,'cli:'+name)} == expected[profile]
-assert hub.target_allowed('kiki-chii','blender-cli') and not hub.target_allowed('val','cli:blender')
+assert not hub.target_allowed('kiki-chii','blender-cli') and not hub.target_allowed('val','cli:blender')
 assert bridge.allowed_id('anicraft')
 assert read(ROOT/'configs/muza_app_policy.json')['artcraft'] == {key:list(value) for key,value in hub.MUZA_ARTCRAFT.items()}
 passed.append('strict ArtCraft 4/2/13; figcraft only shared; coordinators and forbidden tools excluded')

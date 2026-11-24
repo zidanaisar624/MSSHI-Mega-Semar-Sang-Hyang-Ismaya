@@ -497,6 +497,9 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
     cli_skills = getattr(args, 'extra_skills', None) or []
     with_rea = bool(getattr(args, 'with_rea', False))
     with_studio = bool(getattr(args, 'with_imagination_studio', False))
+    with_blender_mcp = bool(getattr(args, 'with_blender_mcp', False))
+    with_raea = bool(getattr(args, 'with_raea', False))
+    with_lemo_opuscar = bool(getattr(args, 'with_lemo_opuscar', False))
     pick = "1"
     seed_slugs = []
     for pack in cli_packs:
@@ -508,7 +511,7 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
             raise ValueError(f"Skill tidak dikenal: {slug}")
         seed_slugs.append(slug)
 
-    if not yes and not (cli_packs or cli_skills or with_rea or with_studio):
+    if not yes and not (cli_packs or cli_skills or with_rea or with_studio or with_blender_mcp or with_raea or with_lemo_opuscar):
         print("\n[1/4] Skills Tambahan & Opsional (REA & Imagination Studio default OFF):" if lang == "id"
               else "\n[1/4] Extra Skills & Optional Wrappers (REA & Imagination Studio default OFF):")
         print("  1. Pertahankan skill bawaan saat ini (Rekomendasi)" if lang == "id"
@@ -574,6 +577,27 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
             result = enable('imagination-studio', folder, source=ROOT, home=home)
             studio_results.append(result)
             print(json.dumps(result, ensure_ascii=False, indent=2))
+    blender_mcp_results = []
+    if with_blender_mcp:
+        from msshi_optional import enable, setup_targets
+        for folder in setup_targets(mode, selections, name='mcp-for-blender', source=ROOT):
+            result = enable('mcp-for-blender', folder, source=ROOT, home=home)
+            blender_mcp_results.append(result)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+    raea_results = []
+    if with_raea:
+        from msshi_optional import enable, setup_targets
+        for folder in setup_targets(mode, selections, name='raea', source=ROOT):
+            result = enable('raea', folder, source=ROOT, home=home)
+            raea_results.append(result)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+    lemo_opuscar_results = []
+    if with_lemo_opuscar:
+        from msshi_optional import enable, setup_targets
+        for folder in setup_targets(mode, selections, name='lemo-opuscar', source=ROOT):
+            result = enable('lemo-opuscar', folder, source=ROOT, home=home)
+            lemo_opuscar_results.append(result)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
     return {
         "choice": pick,
         "extra_packs": list(cli_packs),
@@ -583,6 +607,12 @@ def _setup_extra_skills_and_optional(args, mode, platform, target, catalog, pack
         "rea_results": rea_results,
         "imagination_studio_enabled": with_studio,
         "imagination_studio_results": studio_results,
+        "mcp_for_blender_enabled": with_blender_mcp,
+        "mcp_for_blender_results": blender_mcp_results,
+        "raea_enabled": with_raea,
+        "raea_results": raea_results,
+        "lemo_opuscar_enabled": with_lemo_opuscar,
+        "lemo_opuscar_results": lemo_opuscar_results,
     }
 
 
@@ -1338,6 +1368,9 @@ def main(argv=None):
             wizard.add_argument("--connect-targets", help="Daftar app target (dipisah koma atau 'detected') untuk langkah [4/4].")
             wizard.add_argument("--with-rea", action="store_true", help="Opt-in analisis statis JavaScript/arsip: pasang instruksi REA; runtime Node/npm dan engine native terpisah. Default OFF.")
             wizard.add_argument("--with-imagination-studio", action="store_true", help="Opt-in Imagination Studio untuk Kiki-Chii / Content Creator: pasang wrapper kolaborasi Filmmaker + Slate/Studio queue; aplikasi Studio & plugin Hermes terpisah. Default OFF.")
+            wizard.add_argument("--with-blender-mcp", action="store_true", help="Opt-in MCP for Blender (ahujasid/mcp-for-blender) untuk Kiki-Chii: pasang wrapper 3D dua arah & ekspor .glb/.gltf on-demand (auto_open_on_boot=false). Default OFF.")
+            wizard.add_argument("--with-raea", action="store_true", help="Opt-in RAEA Render Anything Engine (shinyobjectz/raea) untuk Kiki-Chii: pasang wrapper render langsung React/TS+Bevy GPU atau hibrida bersama mcp-for-blender. Default OFF.")
+            wizard.add_argument("--with-lemo-opuscar", action="store_true", help="Opt-in Lemo-Opuscar (15 kategori / 99 gaya film pendek berbasis kode) untuk Kiki-Chii pada MSSHI Core v3.2.0. Default OFF.")
             wizard.add_argument("--with-learnloop", action="store_true", help="Opt-in LearnLoop (AGPL-3.0, diunduh langsung dari upstream tanpa vendoring di repo MIT) untuk Shizuka & Yukino. Default OFF di installer publik.")
             wizard.add_argument("--with-codecoach", action="store_true", help="Opt-in CodeCoach (MIT, pin upstream) untuk Shikaku & Shizuka (sandbox penuh di Linux/WSL2; laporan fallback jujur di Windows). Default OFF.")
             wizard.add_argument("--low-ram", action="store_true", help="Aktifkan mode Low-RAM (hemat memori untuk perangkat <= 6 GB RAM) tanpa mengubah provider/model.")

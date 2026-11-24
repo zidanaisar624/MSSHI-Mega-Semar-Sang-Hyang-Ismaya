@@ -115,3 +115,10 @@ General web uses the native Steel guard only after endpoint/key setup and task a
 Read the corresponding skill only when relevant: `muza-skripsi-template` (Val/Shizuka/Yukino/Solo/Antigravity) when generating campus-compliant Word thesis templates, `unslop` for UI cleanup (Kiki/Val/Shikaku), `brag` for launch videos (Kiki), `scrapling` for local HTML extraction (Val/Shikaku), `harness2` for deterministic harness evaluation/proposals (Val/Shikaku). Preserve personas/models and human review. No automatic live-harness promotion, paid benchmark calls, browser startup, or personal-session transfer. Dependencies are separate from portable knowledge files; ChatGPT web Knowledge upload does not install Python/Node runtimes. See docs/V3_1_UPDATE.md.
 
 REA is an optional local reverse-engineering integration. It is not activated by this knowledge file or by ordinary MSSHI installation. Explicit selection and a separate local runtime are required.
+
+## v3.2 quality filter, Coder review stack, and opt-in creative tools
+
+- **`anti-slop` (semua 5 bot & preset):** Mencegah klise AI pada prosa, antarmuka web generik, dan boilerplate kode berlebih.
+- **Paket Verifikasi Coder (`shikaku` / `Sir. Robot`):** `modern-web-guidance` (standar Baseline Chrome & Core Web Vitals), `open-code-review` (`alibaba/open-code-review` untuk audit diff terstruktur), `ast-grep` (pencarian & refaktor AST struktural 0-token), `knip` (deteksi dead-code, ekspor tak terpakai, dan dependensi yatim JS/TS), serta aturan wajib **Rust Hot-Path Only** pada `rust-anything` (hanya untuk jalur komputasi CPU/memori terukur, dilarang memigrasikan CRUD/UI penuh ke Rust).
+- **Modul Kreatif Opt-In (`optional/`, `public_default: false`):** `mcp-for-blender` (`--with-blender-mcp`, menggantikan rute `blender` lama di CLI-Anything), `raea` (`--with-raea`, React/TS + Bevy GPU untuk motion/VFX/3D `.glb` tanpa memaketkan kode sumber FSL-1.1-ALv2), `imagination-studio` (`--with-imagination-studio`), dan `lemo-opuscar` (`--with-lemo-opuscar` di MSSHI Core; aktif otomatis di repo `hermes-mfa-filmmaking-and-agent-skills`).
+

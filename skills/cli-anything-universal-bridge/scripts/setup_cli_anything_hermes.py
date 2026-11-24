@@ -472,7 +472,7 @@ def emit(result, as_json):
 
 def select_menu(candidates):
     options = ["existing", "gdrive-web", "perplexity", "youtube-chrome", "tiktok", "antigravity", "artcraft",
-               "blender", "blender-cli", "ffmpeg", "cli-hub"]
+               "ffmpeg", "cli-hub"]
     options.extend(key for key in candidates if key not in options)
     for index, key in enumerate(options, 1):
         print(f" {index:>2}. {key} - {description(key)}")

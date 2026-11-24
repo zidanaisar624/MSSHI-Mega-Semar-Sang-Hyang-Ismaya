@@ -28,17 +28,17 @@ import tempfile
 import time
 import uuid
 
-VERSION = "3.1.2"
+VERSION = "3.2.0"
 DISABLED_MCP = {
-    "blender", "wordcraft", "lightcraft", "cadcraft", "craftanything",
+    "wordcraft", "lightcraft", "cadcraft", "craftanything",
     "deckcraft", "designcraft", "effectcraft", "figcraft", "filmcraft",
     "gridcraft", "materialcraft", "pdfcraft", "photocraft", "solidcraft",
     "soundcraft", "texturecraft", "vectorcraft", "anicraft",
 }
 UTILITY_MCP = {"hersona", "llmtrim"}
 MIGRATED_MCP = DISABLED_MCP | UTILITY_MCP | {"gimp", "libreoffice", "solvecraft"}
-RETAINED_MCP = {"gitlab", "tinyfish"}
-ARTCRAFT = DISABLED_MCP - {"blender"}
+RETAINED_MCP = {"gitlab", "tinyfish", "blender", "blender-mcp", "mcp-for-blender"}
+ARTCRAFT = set(DISABLED_MCP)
 ROLES = {
     "default": "default", "yukino": "yukino", "shizuka-hiratsuka": "shizuka",
     "shizuka": "shizuka", "val": "val", "kiki-chii": "kiki-chii",
@@ -417,10 +417,9 @@ def native_routes(home, profile, cfg):
                         "readiness": "available" if cli else "optional_missing",
                         "env": {key: str(value) for key, value in {**old_env, **prior_env}.items()
                                 if key in {"APPDATA", "LOCALAPPDATA", "XDG_CONFIG_HOME", "XDG_CACHE_HOME", "TEMP", "TMP"}}}
-    blender = executable(["blender", r"D:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe",
-                          r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"])
-    routes["blender"] = {"kind": "native-cli", "executable": blender,
-                          "readiness": "available" if blender else "optional_missing", "prefix": ["--background"]}
+    # Blender is disconnected from CLI-Anything in v3.2.0 (moved to opt-in optional/mcp-for-blender).
+    routes.pop("blender", None)
+    routes.pop("blender-cli", None)
     for slug, names in {
         "ffmpeg": [home / "tools/ffmpeg-9.0.1-win32-x64/bin/ffmpeg.exe", "ffmpeg"],
         "git": ["git", home / "tools/git-2.53.0+3-win32-x64/cmd/git.exe"],
@@ -746,7 +745,7 @@ def migrate(home):
                      "domains": {"content_creation": [], "academic": [], "internet": [], "ai_coding": []}}
         for name,detail in report["profiles"].items():
             for target in detail["native_cli_available"]:
-                domain = ("content_creation" if target in ARTCRAFT or target in {"blender","ffmpeg"} else
+                domain = ("content_creation" if target in ARTCRAFT or target == "ffmpeg" else
                           "internet" if target in {"youtube-chrome","tiktok","perplexity","whatsapp-web"} else "ai_coding")
                 inventory["domains"][domain].append({"profile": name,"target": target})
         changes[root / "curiosity_ledger/inventory.json"] = encoded(inventory)

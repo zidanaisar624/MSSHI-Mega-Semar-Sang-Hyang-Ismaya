@@ -228,7 +228,7 @@ def apply_resource_profile(
         "schema_version": 1,
         "profile": resolved,
         "requested": requested,
-        "base_version": load_manifest(source).get("base_version", "3.1.2"),
+        "base_version": load_manifest(source).get("base_version", "3.2.0"),
         "detected_physical_gib": hw["physical_gib"],
         "low_ram_4gb_detected": hw["low_ram_4gb"],
         "constraints": hw["light_mode_constraints"] if resolved == "light" else {
@@ -367,7 +367,7 @@ def stage_light_tree(source: Path, destination: Path) -> dict:
     marker = {
         "schema_version": 1,
         "build_profile": "light",
-        "base_version": manifest.get("base_version", "3.1.2"),
+        "base_version": manifest.get("base_version", "3.2.0"),
         "file_count": len(file_hashes),
         "uncompressed_bytes": total_bytes,
         "max_initial_download_mb": max_mb,
@@ -414,7 +414,7 @@ def build_light_bundle(
             marker = {
                 "schema_version": 1,
                 "build_profile": "light",
-                "base_version": manifest.get("base_version", "3.1.2"),
+                "base_version": manifest.get("base_version", "3.2.0"),
                 "file_count": len(file_hashes),
                 "uncompressed_bytes": uncompressed_bytes,
                 "max_initial_download_mb": max_mb,
@@ -440,7 +440,7 @@ def build_light_bundle(
     report = {
         "schema_version": 1,
         "build_profile": "light",
-        "base_version": manifest.get("base_version", "3.1.2"),
+        "base_version": manifest.get("base_version", "3.2.0"),
         "output_zip": str(out_zip),
         "zip_bytes": len(zip_bytes),
         "zip_mb": zip_mb,
@@ -685,7 +685,7 @@ def status_report(home: Path, source: Path | None = None) -> dict:
     disk = check_disk_space(hermes_root)
     return {
         "build_profile": "light" if is_light_build(base) else "full",
-        "base_version": load_manifest(base).get("base_version", "3.1.2"),
+        "base_version": load_manifest(base).get("base_version", "3.2.0"),
         "hermes_home": str(hermes_root),
         "hardware": hw,
         "active_resource_profile": active,
@@ -722,7 +722,7 @@ def main(argv: list[str] | None = None) -> int:
     p_index.add_argument("--no-write", action="store_true", help="Read-only scan without updating cache files.")
     p_index.add_argument("--json", action="store_true", help="Emit JSON output.")
 
-    p_build = sub.add_parser("build", help="Build a deterministic <= 50 MB light bootstrap ZIP from MSSHI 3.1.2.")
+    p_build = sub.add_parser("build", help="Build a deterministic <= 50 MB light bootstrap ZIP from MSSHI 3.2.0.")
     p_build.add_argument("--output", type=Path, required=True, help="Destination path for light bootstrap .zip.")
     p_build.add_argument("--manifest", type=Path, help="Optional destination path for SHA-256 build manifest JSON.")
     p_build.add_argument("--source", type=Path, default=ROOT, help="Source MSSHI repository root.")

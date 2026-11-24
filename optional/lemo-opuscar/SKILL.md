@@ -11,7 +11,7 @@ metadata:
 
 # Gaya Film Pendek Berbasis Kode (`Lemo-Opuscar` — 15 Kategori, 99 Gaya)
 
-Gunakan skill ini pada peran Content Creator / Filmmaker (**`kiki-chii`**) saat pengguna ingin membuat film pendek, video explainer, trailer produk, dokumenter data, animasi tipografi, atau visualisasi cerita berbasis kode dengan gaya sinematik yang terkurasi.
+Integrasi **opsional** (`public_default: false`, diaktifkan via `--with-lemo-opuscar` atau `msshi optional enable lemo-opuscar --target-dir PATH_TO_SKILLS`) pada peran Content Creator / Filmmaker (**`kiki-chii`**) saat pengguna ingin membuat film pendek, video explainer, trailer produk, dokumenter data, animasi tipografi, atau visualisasi cerita berbasis kode dengan gaya sinematik yang terkurasi.
 
 Wrapper MSSHI ini sepenuhnya **model-agnostic**: tetap menggunakan provider dan model pilihan pengguna di Hermes (tidak mengubah `config.yaml`, model, API key, atau `SOUL.md`) dan bekerja selaras dengan `filmmaking-videography-photography-s2` (*Concepting First*), `motion-graphics-suite`, dan `brag`.
 

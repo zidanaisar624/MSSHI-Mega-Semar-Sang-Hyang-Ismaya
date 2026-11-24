@@ -19,11 +19,50 @@ ROOT = Path(__file__).resolve().parents[1]
 OPTIONAL_PATHS = {
     'rea': 'optional/rea',
     'imagination-studio': 'optional/imagination-studio',
+    'mcp-for-blender': 'optional/mcp-for-blender',
+    'raea': 'optional/raea',
+    'lemo-opuscar': 'optional/lemo-opuscar',
+}
+OPTIONAL_ALIASES = {
+    'blender-mcp': 'mcp-for-blender',
 }
 OPTIONAL_ROLE_LABELS = {
     'rea': 'Coder / Shikaku',
     'imagination-studio': 'Content Creator / Kiki-Chii',
+    'mcp-for-blender': 'Content Creator / Kiki-Chii',
+    'raea': 'Content Creator / Kiki-Chii',
+    'lemo-opuscar': 'Content Creator / Kiki-Chii',
 }
+OPTIONAL_DISPLAY_LABELS = {
+    'rea': 'REA',
+    'imagination-studio': 'Imagination Studio',
+    'mcp-for-blender': 'MCP for Blender',
+    'raea': 'RAEA (Render Anything Engine)',
+    'lemo-opuscar': 'Lemo-Opuscar',
+}
+RUNTIME_NOTES = {
+    'imagination-studio': (
+        'Imagination Studio app & Hermes plugin are installed separately by the user '
+        '(hermes plugins install imagination-studio); MSSHI never auto-downloads studio weights.'
+    ),
+    'mcp-for-blender': (
+        'Install Blender 3.0+, enable official addon.py from ahujasid/mcp-for-blender, '
+        'and configure uvx mcp-for-blender on kiki-chii on demand (auto_open_on_boot=false).'
+    ),
+    'raea': (
+        'RAEA (shinyobjectz/raea, FSL-1.1-ALv2) runtime and compatible GPU/Rust/Node toolchains '
+        'are installed separately by the user; MSSHI bundles zero upstream bytes.'
+    ),
+    'lemo-opuscar': (
+        'Fetch pinned text-only Lemo-Opuscar style guides on demand via: '
+        'msshi integrations source --home HERMES_ROOT --name lemo-opuscar --fetch'
+    ),
+}
+
+
+def canonical_optional_name(value: str) -> str:
+    cleaned = str(value or '').strip().lower()
+    return OPTIONAL_ALIASES.get(cleaned, cleaned)
 
 
 def optional_sources(source):
@@ -71,7 +110,7 @@ def binding_source(source, binding):
 
 def setup_targets(mode, selections, *, name='rea', source=ROOT):
     """Choose only the setup destinations explicitly covered by this opt-in."""
-    name = installer.safe_slug(name, 'optional skill')
+    name = installer.safe_slug(canonical_optional_name(name), 'optional skill')
     if mode in {'solo', 'selective'}:
         return list(selections)
     if mode in {'muza-preset', 'academic-mahasiswa', 'academic-dosen'}:
@@ -79,9 +118,7 @@ def setup_targets(mode, selections, *, name='rea', source=ROOT):
         entry = next(row for row in manifest['entries'] if row['id'] == name)
         roles = installer.names(entry.get('roles', []), 'optional role')
         return [folder for folder in selections if folder.parent.name in roles]
-    # A custom team has no implied role mapping. A separate explicit selection
-    # is required, and piped wizard input must retain its existing prompt order.
-    label = 'REA' if name == 'rea' else 'Imagination Studio'
+    label = OPTIONAL_DISPLAY_LABELS.get(name, name)
     message = f'Pilih folder bot: msshi optional enable {name} --target-dir PATH_TO_SKILLS'
     if not sys.stdin.isatty():
         print(message)
@@ -100,7 +137,7 @@ def setup_targets(mode, selections, *, name='rea', source=ROOT):
 def enable(name, target_dir, *, source=ROOT, home=None, install_runtime=False,
            hermes_home=None):
     """An explicit call authorizes this wrapper only; existing custom skills win."""
-    name = installer.safe_slug(name, 'optional skill')
+    name = installer.safe_slug(canonical_optional_name(name), 'optional skill')
     source = installer.absolute(source)
     target = installer.absolute(target_dir)
     home = installer.absolute(home or data_root())
@@ -133,7 +170,6 @@ def enable(name, target_dir, *, source=ROOT, home=None, install_runtime=False,
         copied = True
     from msshi_managed import load, register
     registration = register(home, source, [target], apply=True, include_optional=(name,), only_names={name})
-    # A source-identical preexisting wrapper is safe to enroll without a baseline.
     registered = any(binding['skill'] == name and binding['logical'] == str(destination)
                      for binding in load(home).get('managed_bindings', []))
     result = {'id': name, 'target': str(destination),
@@ -152,10 +188,7 @@ def enable(name, target_dir, *, source=ROOT, home=None, install_runtime=False,
                             '--hermes-home', str(runtime_home), 'install'], check=True)
             result['runtime_installed'] = True
         else:
-            result['runtime_note'] = (
-                'Imagination Studio app & Hermes plugin are installed separately by the user '
-                '(hermes plugins install imagination-studio); MSSHI never auto-downloads studio weights.'
-            )
+            result['runtime_note'] = RUNTIME_NOTES.get(name, 'External runtime is installed separately by the user.')
     return result
 
 
@@ -166,11 +199,11 @@ def main(argv=None):
     listing = sub.add_parser('list', help='Lihat fungsi, peran, dan prasyarat opsi; semua default publik OFF.')
     listing.add_argument('--lang', choices=('id', 'en'), default='id', help='Bahasa penjelasan.')
     activate = sub.add_parser('enable', help='Pasang instruksi opsi yang dipilih secara eksplisit; runtime terpisah.',
-        description='Pasang wrapper opsional (rea untuk Coder, imagination-studio untuk Kiki-Chii/Content Creator). '
+        description='Pasang wrapper opsional (rea untuk Coder; imagination-studio, mcp-for-blender, raea, dan lemo-opuscar untuk Kiki-Chii). '
                     'Semua default publik OFF; runtime & aplikasi eksternal dipasang terpisah.')
-    activate.add_argument('name', choices=tuple(OPTIONAL_PATHS))
+    activate.add_argument('name', choices=(*OPTIONAL_PATHS, *OPTIONAL_ALIASES))
     activate.add_argument('--target-dir', type=Path, required=True, help='Chosen host/profile skills directory.')
-    activate.add_argument('--install-runtime', action='store_true', help='Untuk REA: unduh dependency npm ke runtime terisolasi. Untuk Imagination Studio: hanya tampilkan langkah setup terpisah tanpa mengunduh bobot.')
+    activate.add_argument('--install-runtime', action='store_true', help='Untuk REA: unduh dependency npm ke runtime terisolasi. Untuk opsi lain: tampilkan langkah setup runtime terpisah.')
     activate.add_argument('--hermes-home', type=Path, help='Hermes root/profile for the explicitly requested runtime.')
     args = parser.parse_args(argv)
     try:
