@@ -30,7 +30,8 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -50,7 +51,8 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -79,7 +81,8 @@
           "sharewise",
           "belajar-pemula",
           "riset-mendalam-nusantara-global",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -98,7 +101,9 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan",
+          "higgsfield-skills"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -125,7 +130,8 @@
           "modern-web-guidance",
           "open-code-review",
           "ast-grep",
-          "knip"
+          "knip",
+          "cindy-grand-plan"
         ]
       },
       "display_names": {
@@ -208,6 +214,12 @@
           "status": "optional-kiki-chii",
           "auto_install": false,
           "purpose": "Katalog 15 kategori & 99 gaya film pendek berbasis kode opsional untuk Kiki-Chii."
+        },
+        {
+          "id": "meshy-3d-generation",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "Generasi aset 3D teks/gambar (GLB/FBX/OBJ/USDZ) dan persiapan cetak 3D via Meshy CLI opsional untuk Kiki-Chii."
         }
       ],
       "connected_curricula": [
@@ -242,7 +254,8 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan"
         ],
         "shizuka": [
           "cli-anything-universal-bridge",
@@ -263,7 +276,8 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan"
         ],
         "val": [
           "cli-anything-universal-bridge",
@@ -294,7 +308,8 @@
           "sharewise",
           "belajar-pemula",
           "riset-mendalam-nusantara-global",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan"
         ],
         "kiki-chii": [
           "cli-anything-universal-bridge",
@@ -313,7 +328,9 @@
           "spacewise",
           "sharewise",
           "belajar-pemula",
-          "anti-slop"
+          "anti-slop",
+          "cindy-grand-plan",
+          "higgsfield-skills"
         ],
         "shikaku": [
           "cli-anything-universal-bridge",
@@ -340,7 +357,8 @@
           "modern-web-guidance",
           "open-code-review",
           "ast-grep",
-          "knip"
+          "knip",
+          "cindy-grand-plan"
         ]
       },
       "display_names": {
@@ -423,6 +441,12 @@
           "status": "optional-kiki-chii",
           "auto_install": false,
           "purpose": "Katalog 15 kategori & 99 gaya film pendek berbasis kode opsional untuk Kiki-Chii."
+        },
+        {
+          "id": "meshy-3d-generation",
+          "status": "optional-kiki-chii",
+          "auto_install": false,
+          "purpose": "Generasi aset 3D teks/gambar (GLB/FBX/OBJ/USDZ) dan persiapan cetak 3D via Meshy CLI opsional untuk Kiki-Chii."
         }
       ],
       "connected_curricula": [

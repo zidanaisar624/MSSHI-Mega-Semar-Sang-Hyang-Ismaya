@@ -143,6 +143,16 @@ def _compact_preserve_code_and_citations(text:str,max_chars:int)->str:
     cleaned=(text or '').strip()
     if len(cleaned)<=max_chars:
         return cleaned
+    if len(cleaned)>=12000 and os.environ.get('MSSHI_DISABLE_RUST_ACCEL')!='1':
+        import shutil as _sh, subprocess as _sp
+        accel=os.environ.get('MSSHI_ACCEL_BIN') or _sh.which('msshi-accel')
+        if accel and os.path.isfile(accel):
+            try:
+                p=_sp.run([accel,'compact-text',str(max_chars)],input=cleaned,capture_output=True,text=True,encoding='utf-8',timeout=10)
+                if p.returncode==0 and p.stdout.strip():
+                    return p.stdout.rstrip('\r\n')
+            except Exception:
+                pass
     parts=_FENCE_RE.split(cleaned)
     kept_blocks:list[str]=[]
     prose_lines:list[str]=[]
@@ -276,10 +286,14 @@ def interaction_policy(session_info:dict|None=None,*,home:Path|None=None,resourc
     else:
         mode_rule=("Neutral default assistant: Keep quick work Main-only and delegate confirmed specialist projects to live teammates "
                    "rather than starting local Advisor/Council jobs. ")
+    grand_plan=("Grand-Plan Gate (cindy-grand-plan, contextual only): When the user requests a large multi-stage roadmap, "
+                "cross-bot workflow, or major build/research/creative campaign, first present a concise interactive Grand Execution Blueprint "
+                "(goal, stage-by-stage bot routing across Yukino/Shizuka/Val/Kiki-Chii/Shikaku, active skills & required auth gates such as "
+                "Higgsfield/Meshy when content creation is needed, assumptions, and checkpoints) so the user can edit/approve it before heavy execution. ")
     ops=("Natural triggers (no /commands): call msshi_find_skill when asked what skill helps; "
          "call msshi_interaction_status to inspect active/completed jobs in this session; "
          "if a crashed process left a stale lock, inspect status and call recover_lock (never auto-retry interrupted paid calls).")
-    return header+tier0+mode_rule+ops
+    return header+tier0+grand_plan+mode_rule+ops
 
 class Controller:
     def __init__(self,home,role,session,llm=None,lifecycle=None,config=None,options=None,register_task=None,config_reader=None):

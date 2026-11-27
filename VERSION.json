@@ -2,10 +2,10 @@
   "suite_name": "MSSHI — Hermes Ultimate Optimizer & Sovereign Sage Suite",
   "technical_name": "Multi-Agent Sovereign Sage & Hermes Intelligence",
   "short_code": "MSSHI",
-  "version": "3.2.0",
-  "release_date": "2026-11-24",
-  "bundled_skills": 79,
-  "external_sources": 70,
+  "version": "3.2.1",
+  "release_date": "2026-11-27",
+  "bundled_skills": 80,
+  "external_sources": 72,
   "update_modes": [
     "check",
     "update",
@@ -43,16 +43,17 @@
   "release_status": "release",
   "license": "MIT",
   "core_skills": 53,
-  "integration_wrappers": 26,
-  "optional_skills": 5,
-  "optional_integration_wrappers": 5,
+  "integration_wrappers": 27,
+  "optional_skills": 6,
+  "optional_integration_wrappers": 6,
   "public_defaults": {
     "rea": false,
     "kat": false,
     "imagination-studio": false,
     "mcp-for-blender": false,
     "raea": false,
-    "lemo-opuscar": false
+    "lemo-opuscar": false,
+    "meshy-3d-generation": false
   },
   "visual_assets": 8
 }

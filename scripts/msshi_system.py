@@ -226,6 +226,8 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "interaction_type": "type_2_council_if_complex_else_main",
         "skills": [
             "filmmaking-videography-photography-s2",
+            "higgsfield-skills",
+            "cindy-grand-plan",
             "motion-graphics-suite",
             "academic-plotting",
             "slide-generation",
@@ -295,6 +297,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "skills": [
             "brainstorming-research-ideas",
             "idea-generation",
+            "cindy-grand-plan",
             "wise-judgment-and-sovereign-orchestrator",
             "autoresearch",
             "harness2",

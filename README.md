@@ -2,14 +2,14 @@
 
 <div align="center">
 
-<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.0 Mega Semar Sang Hyang Ismaya Banner" width="98%">
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.1 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
-# 🌐 MSSHI v3.2.0 — Mega Semar Sang Hyang Ismaya
+# 🌐 MSSHI v3.2.1 — Mega Semar Sang Hyang Ismaya
 ### *Asisten AI Terpadu untuk Tugas Kuliah Mahasiswa & Dosen (Skripsi, Tesis, Disertasi), Belajar Bareng Sensei, Content Creation, dan Coding*
 
-[![Release](https://img.shields.io/badge/Release-v3.2.0%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
-[![Skills](https://img.shields.io/badge/Skills-79%20Bundled%20%2B%205%20Opt--in-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
-[![Upstreams](https://img.shields.io/badge/Upstreams-70%20Sources%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
+[![Release](https://img.shields.io/badge/Release-v3.2.1%20Stable-2CE8C6?style=for-the-badge&logo=github&logoColor=black)](VERSION.json)
+[![Skills](https://img.shields.io/badge/Skills-80%20Bundled%20%2B%206%20Opt--in-FF6B1A?style=for-the-badge)](configs/bot_role_and_skill_matrix.json)
+[![Upstreams](https://img.shields.io/badge/Upstreams-72%20Sources%20Pinned-10B981?style=for-the-badge)](configs/upstreams.json)
 [![Skripsi](https://img.shields.io/badge/New-MuZA%20Skripsi%20v1.1%20Drag%20%26%20Drop-8B5CF6?style=for-the-badge)](skills/muza-skripsi-template/SKILL.md)
 [![Colab](https://img.shields.io/badge/Colab-MuZA__Search%20%2B%20Skripsi%20Builder-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/15ckekQcGu4ssHQMQgXyK1gMMgobVZMFv)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -19,7 +19,7 @@
 
 </div>
 
-> **v3.2.0 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, **`79` skill bundel (`53` core + `26` wrapper, plus `5` modul opt-in `rea`, `imagination-studio`, `mcp-for-blender`, `raea` & `lemo-opuscar`) / `70` sumber upstream ter-pin (`0` orphan) / `7` plugin inti / `39` keluarga CLI (`109` simpul) / `46` rute aplikasi CLI-Anything**, **Win10 4GB Light Build** (`msshi light`), **`anti-slop`** lintas seluruh 5 bot & preset, **Higgsfield Unified Suite (9 modul)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** untuk Kiki-Chii, serta **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter** khusus Coder, ditambah **Harness²** dan **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
+> **v3.2.1 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, **`80` skill bundel (`53` core + `27` wrapper termasuk `cindy-grand-plan`, plus `6` modul opt-in `rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar` & `meshy-3d-generation`) / `72` sumber upstream ter-pin (`0` orphan) / `7` plugin inti / `39` keluarga CLI (`109` simpul) / `46` rute aplikasi CLI-Anything**, **Win10 4GB Light Build** (`msshi light`), **`anti-slop`** lintas seluruh 5 bot & preset, **Higgsfield Unified Suite (9 modul)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** untuk Kiki-Chii, serta **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter** khusus Coder, ditambah **Harness²** dan **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
 
 > **KAT opsional, termasuk preset MuZA:** tidak diunduh atau diaktifkan otomatis. Pengguna lain dapat memilih endpoint atau perangkat yang memadai melalui wizard Coder.
 
@@ -169,7 +169,7 @@ flowchart LR
 
 Setiap bot punya berkas [`SOUL.md`](configs/personas/) khusus, batasan otoritas, alokasi skill bundel terukur, profil prosodi **`OmniVoice`**, serta audit otomatis di [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
-| Avatar | Bot &amp; Gelar | Peran &amp; Mandat Eksekusi | Skill &amp; Fitur Andalan `v3.2.0` |
+| Avatar | Bot &amp; Gelar | Peran &amp; Mandat Eksekusi | Skill &amp; Fitur Andalan `v3.2.1` |
 | :---: | :--- | :--- | :--- |
 | <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Instalasi baru: bot <code>default</code> Hermes</sub> | Menguji ide mentah pengguna agar tajam sebelum masuk produksi; mengatur ritme energi kerja &amp; mengekstrak *brief* jernih untuk Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skill**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `anti-slop`, `business-sage`. |
 | <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Pemimpin orkestrasi tim: merancang strategi Bisnis/BBA/MBA/Pajak RI, menjaga guardrail `TokenShield` (`$1.00`), mendelegasikan tugas, &amp; merangkum hasil akhir untuk manusia. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**31 skill**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `anti-slop`, `muza-skripsi-template`. |

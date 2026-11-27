@@ -1222,7 +1222,7 @@
       "id": "rust-anything",
       "source": "https://github.com/erkamyaman/rust-anything",
       "source_type": "git",
-      "revision": "584e63888495a5568b8400a6a4194e43885ae609",
+      "revision": "5913c163fbfd0737185de330a6fb822aa576d311",
       "verification": "primary-source/pinned-package/MIT-license reviewed 2026-11-21; thin contextual wrapper with pinned lazy markdown cache outside skills/",
       "status": "external-opt-in",
       "auto_start": false,
@@ -1374,6 +1374,48 @@
       "use_when": "Opt-in Render Anything Engine (React/TS + Bevy GPU) for Kiki-Chii direct code-to-GPU renders or hybrid finishing of .glb/.gltf assets from mcp-for-blender.",
       "requires": "Explicit opt-in (public_default=false); separate user-installed RAEA runtime + compatible GPU under FSL-1.1-ALv2 terms.",
       "license": "FSL-1.1-ALv2 (upstream runtime not bundled; MSSHI wrapper is 100% original MIT)",
+      "background_model_calls": false
+    },
+    {
+      "id": "cindy-grand-plan",
+      "source": "https://github.com/makecindy/cindy",
+      "source_type": "git",
+      "revision": "263720b6c14feef0e8a6fc90b0d428acf38b4376",
+      "verification": "primary-source/pinned-package/Apache-2.0-license reviewed 2026-11-27; original MIT contextual grand-plan preview wrapper",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "utility",
+      "kind": "integration-wrapper",
+      "pack": "core",
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "use_when": "Tampilkan Peta Perencanaan Besar interaktif lintas-bot dan skill khusus saat pengguna meminta perencanaan besar agar pengguna dapat mengoreksi sendiri sebelum eksekusi berat.",
+      "requires": "Berjalan murni di percakapan pada semua bot & preset (0 proses latar); plugin MCP Cindy di Antigravity/host opsional terpisah.",
+      "license": "Apache-2.0 (upstream inspiration); original MSSHI wrapper MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "meshy-3d-generation",
+      "source": "https://github.com/meshy-dev/meshy-3d-agent",
+      "source_type": "git",
+      "revision": "7f8e33196db4e9e26cbaa0da4fcc14104ccda81d",
+      "verification": "primary-source/pinned-package/MIT-license reviewed 2026-11-27; opt-in Kiki-Chii 3D wrapper",
+      "status": "external-opt-in",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "optional-integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Opsional untuk Kiki-Chii: generasi model 3D dari teks/gambar (GLB, FBX, OBJ, USDZ) dan persiapan 3D printing via meshy-cli@0.8 dengan sign-in device code.",
+      "requires": "Opt-in eksplisit (public_default=false), Node.js >= 22.12, meshy-cli@0.8, sign-in device code, serta paket Meshy Pro+ untuk membuat tugas 3D.",
+      "license": "MIT",
       "background_model_calls": false
     }
   ]

@@ -1,0 +1,42 @@
+name: Rust Hot-Path Accelerator
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "crates/msshi-rust-accel/**"
+      - "scripts/msshi_rust_accel.py"
+      - ".github/workflows/rust-accel.yml"
+  pull_request:
+    paths:
+      - "crates/msshi-rust-accel/**"
+      - "scripts/msshi_rust_accel.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-rust-accel:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates/msshi-rust-accel
+      - name: Run Cargo unit tests and release build
+        working-directory: crates/msshi-rust-accel
+        run: |
+          cargo test --locked || cargo test
+          cargo build --release
+      - name: Verify Python-to-Rust differential parity
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run MSSHI Rust accelerator parity suite
+        run: python -B -X utf8 -m unittest scripts/tests/test_rust_accel_parity.py -v

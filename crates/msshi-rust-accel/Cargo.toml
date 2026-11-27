@@ -1,0 +1,22 @@
+[package]
+name = "msshi-rust-accel"
+version = "3.2.1"
+edition = "2021"
+license = "MIT"
+description = "MSSHI native Rust hot-path accelerator (secret-scan, SHA-256 tree inventory, SKILL.md frontmatter indexer, and citation-preserving dossier compactor)"
+
+[[bin]]
+name = "msshi-accel"
+path = "src/main.rs"
+
+[dependencies]
+regex = "1.11"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+walkdir = "2.5"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true

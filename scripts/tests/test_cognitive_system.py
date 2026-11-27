@@ -776,21 +776,24 @@ class CognitiveSystemTests(unittest.TestCase):
         import msshi_context_sources as cs_mod
 
         # 1. Exact commit pins in msshi_context_sources.PINNED
-        self.assertEqual(cs_mod.PINNED["rust-anything"][1], "584e63888495a5568b8400a6a4194e43885ae609")
+        self.assertEqual(cs_mod.PINNED["rust-anything"][1], "5913c163fbfd0737185de330a6fb822aa576d311")
         self.assertEqual(cs_mod.PINNED["lemo-opuscar"][1], "f9e204293930952b61ba921cd8944d05f121beee")
         self.assertEqual(cs_mod.PINNED["claude-bughunter"][1], "8258d29726804f5b954a09c625caedc183f7130d")
 
-        # 2. Wrapper size, <=1024-char descriptions, LICENSE.upstream retained (v3.2.0 bundled + opt-in)
+        # 2. Wrapper size, <=1024-char descriptions, LICENSE.upstream retained (v3.2.1 bundled + opt-in)
         for base_dir, slug, has_lic in (
             ("skills", "rust-anything", True),
             ("skills", "claude-bughunter", True),
             ("skills", "anti-slop", True),
+            ("skills", "cindy-grand-plan", True),
+            ("skills", "higgsfield-skills", True),
             ("skills", "modern-web-guidance", True),
             ("skills", "open-code-review", True),
             ("skills", "ast-grep", True),
             ("skills", "knip", True),
             ("optional", "lemo-opuscar", True),
             ("optional", "mcp-for-blender", True),
+            ("optional", "meshy-3d-generation", True),
             ("optional", "raea", False),
         ):
             sdir = ROOT / base_dir / slug

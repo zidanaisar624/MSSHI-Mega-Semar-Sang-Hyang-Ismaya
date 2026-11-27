@@ -22,9 +22,12 @@ OPTIONAL_PATHS = {
     'mcp-for-blender': 'optional/mcp-for-blender',
     'raea': 'optional/raea',
     'lemo-opuscar': 'optional/lemo-opuscar',
+    'meshy-3d-generation': 'optional/meshy-3d-generation',
 }
 OPTIONAL_ALIASES = {
     'blender-mcp': 'mcp-for-blender',
+    'meshy-3d': 'meshy-3d-generation',
+    'meshy': 'meshy-3d-generation',
 }
 OPTIONAL_ROLE_LABELS = {
     'rea': 'Coder / Shikaku',
@@ -32,6 +35,7 @@ OPTIONAL_ROLE_LABELS = {
     'mcp-for-blender': 'Content Creator / Kiki-Chii',
     'raea': 'Content Creator / Kiki-Chii',
     'lemo-opuscar': 'Content Creator / Kiki-Chii',
+    'meshy-3d-generation': 'Content Creator / Kiki-Chii',
 }
 OPTIONAL_DISPLAY_LABELS = {
     'rea': 'REA',
@@ -39,6 +43,7 @@ OPTIONAL_DISPLAY_LABELS = {
     'mcp-for-blender': 'MCP for Blender',
     'raea': 'RAEA (Render Anything Engine)',
     'lemo-opuscar': 'Lemo-Opuscar',
+    'meshy-3d-generation': 'Meshy 3D Agent',
 }
 RUNTIME_NOTES = {
     'imagination-studio': (
@@ -56,6 +61,10 @@ RUNTIME_NOTES = {
     'lemo-opuscar': (
         'Fetch pinned text-only Lemo-Opuscar style guides on demand via: '
         'msshi integrations source --home HERMES_ROOT --name lemo-opuscar --fetch'
+    ),
+    'meshy-3d-generation': (
+        'Requires Node.js >= 22.12 and meshy-cli@0.8 (npm install -g meshy-cli@0.8) plus '
+        'device-code sign-in (meshy auth login --device --format json --no-update-check; Pro+ plan needed to create tasks).'
     ),
 }
 

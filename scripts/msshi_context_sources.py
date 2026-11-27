@@ -29,7 +29,7 @@ PINNED = {
     'grim-prompter': ('jmanico/grim-prompter', '2a94457c7bc63ffbc4a44ea50ae645ab8cee26bf'),
     'claude-bughunter': ('elementalsouls/Claude-BugHunter', '8258d29726804f5b954a09c625caedc183f7130d'),
     'ossu-computer-science': ('ossu/computer-science', '8f8272b1d378d31494240aa1d667aa6b045c6552'),
-    'rust-anything': ('erkamyaman/rust-anything', '584e63888495a5568b8400a6a4194e43885ae609'),
+    'rust-anything': ('erkamyaman/rust-anything', '5913c163fbfd0737185de330a6fb822aa576d311'),
     'lemo-opuscar': ('lemomo-ai/lemo-opuscar', 'f9e204293930952b61ba921cd8944d05f121beee'),
 }
 MAX_FILE = 8 * 1024 * 1024

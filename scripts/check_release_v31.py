@@ -221,7 +221,8 @@ def audit(repo, home, package_only=False, baseline_override=None):
                 "rea-video": ("rea-video", {"kiki-chii"}),
                 "grim-prompter": ("grim-prompter", {"shikaku"}),
                 "claude-bughunter": ("claude-bughunter", {"shikaku"}),
-                "rust-anything": ("rust-anything", {"shikaku"})}
+                "rust-anything": ("rust-anything", {"shikaku"}),
+                "cindy-grand-plan": ("cindy-grand-plan", everyone)}
     for slug, (source_id, expected_roles) in contexts.items():
         actual_roles = {role for role, bot in bots.items() if slug in bot.get("required_skills", [])}
         upstream = rows.get(source_id, {})
@@ -275,6 +276,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
         ("mcp-for-blender", {"kiki-chii"}),
         ("raea", {"kiki-chii"}),
         ("lemo-opuscar", {"kiki-chii"}),
+        ("meshy-3d-generation", {"kiki-chii"}),
     ):
         if (repo / "optional" / opt_slug).exists() or catalog.get(opt_slug, {}).get("optional_path"):
             scopes[opt_slug] = opt_roles
@@ -285,7 +287,7 @@ def audit(repo, home, package_only=False, baseline_override=None):
                and source_row.get("auto_start") is False,
                {"expected": sorted(expected_roles), "matrix": sorted(configured), "upstream_roles": source_row.get("roles"),
                 "auto_start": source_row.get("auto_start"), "revision": source_row.get("revision")})
-        is_optional = slug in {"rea", "imagination-studio", "mcp-for-blender", "raea", "lemo-opuscar"}
+        is_optional = slug in {"rea", "imagination-studio", "mcp-for-blender", "raea", "lemo-opuscar", "meshy-3d-generation"}
         folder = (repo / "optional" / slug) if is_optional else (repo / "skills" / slug)
         if is_optional:
             row = catalog.get(slug, {})

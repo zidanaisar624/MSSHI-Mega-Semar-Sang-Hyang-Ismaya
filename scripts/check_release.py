@@ -52,7 +52,7 @@ def read_json(path):
 
 
 def release_files():
-    excluded = {".git", ".pytest_cache", "__pycache__"}
+    excluded = {".git", ".pytest_cache", "__pycache__", "target"}
     for folder, dirs, files in os.walk(ROOT):
         parent = Path(folder)
         dirs[:] = [name for name in dirs if name not in excluded

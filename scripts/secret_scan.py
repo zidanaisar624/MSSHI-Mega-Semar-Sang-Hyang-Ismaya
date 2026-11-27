@@ -12,7 +12,7 @@ import sys
 sys.dont_write_bytecode = True
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_DIRS = {".git", "__pycache__", ".pytest_cache", "node_modules", ".venv", "venv"}
+EXCLUDED_DIRS = {".git", "__pycache__", ".pytest_cache", "node_modules", ".venv", "venv", "target"}
 SENSITIVE_FILENAMES = re.compile(
     r"(?:^|/)(?:\.env(?:\.[^/]+)?|[^/]+\.(?:pem|key|p12)|auth\.json|credentials\.json)$",
     re.I,
@@ -31,7 +31,14 @@ TEXT_EXTENSIONS = {
 }
 
 
-def scan_repository(repo_root: Path) -> dict:
+def scan_repository(repo_root: Path, *, allow_rust: bool = True) -> dict:
+    if allow_rust:
+        try:
+            from msshi_rust_accel import try_secret_scan
+            if (fast := try_secret_scan(repo_root)) is not None:
+                return fast
+        except ImportError:
+            pass
     findings: list[dict] = []
     files_scanned = 0
     for folder, dirs, files in os.walk(repo_root):

@@ -37,6 +37,12 @@ def inventory(path: Path) -> dict[str, str]:
     validate_path(path)
     if not path.is_dir():
         raise ValueError(f"Folder skill tidak ada: {path}")
+    try:
+        from msshi_rust_accel import try_inventory
+        if (fast := try_inventory(path)) is not None:
+            return fast
+    except ImportError:
+        pass
     result = {}
     for entry in sorted(path.rglob("*")):
         validate_path(entry)

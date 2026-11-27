@@ -564,6 +564,14 @@
     "raea": {
       "id": "Opsional khusus Kiki-Chii (default OFF): RAEA Render Anything Engine (React/TS + Bevy GPU) untuk render langsung berbasis kode atau finishing hibrida .glb/.gltf dari mcp-for-blender.",
       "en": "Optional Kiki-Chii integration (default OFF): RAEA Render Anything Engine (React/TS + Bevy GPU) for direct code-to-GPU renders or hybrid finishing of .glb/.gltf assets from mcp-for-blender."
+    },
+    "cindy-grand-plan": {
+      "id": "Tampilkan peta perencanaan besar interaktif lintas-bot dan skill khusus saat diminta proyek besar agar pengguna dapat mengoreksi rencana sendiri sebelum eksekusi berat.",
+      "en": "Display an interactive cross-bot and skill Grand Execution Blueprint on big-plan requests so the user can review and revise the plan before heavy execution."
+    },
+    "meshy-3d-generation": {
+      "id": "Opsional khusus Kiki-Chii: generasi model 3D dari teks/gambar (GLB/FBX/OBJ/USDZ) dan 3D printing lewat Meshy CLI dengan sign-in device code.",
+      "en": "Optional for Kiki-Chii: generate 3D assets from text or images (GLB/FBX/OBJ/USDZ) and prepare 3D prints via Meshy CLI with device-code sign-in."
     }
   },
   "packs": {
@@ -840,6 +848,18 @@
     "lemo-opuscar-runtime": {
       "id": "Metadata teks/JSON Lemo-Opuscar diunduh on-demand ke cache privat msshi-private/context-sources (0 aset video/gambar berat di skills/); alat render Node/FFmpeg/Chromium terpisah.",
       "en": "Lemo-Opuscar text/JSON style guides are fetched on demand into msshi-private/context-sources (zero heavy media in skills/); Node/FFmpeg/Chromium renderers are installed separately."
+    },
+    "cindy-grand-plan": {
+      "id": "Gerbang perencanaan besar kontekstual lintas 5 bot pada semua preset: hanya aktif pada rencana besar untuk menampilkan tahapan, bot, skill, dan titik cek agar dikoreksi pengguna lebih dulu.",
+      "en": "Contextual Grand-Plan preview gate across all 5 bots in all presets: triggers only on big plans to show stages, bot handoffs, skills, and checkpoints for user correction first."
+    },
+    "meshy-3d-generation": {
+      "id": "Opsional khusus Kiki-Chii (default OFF): pasang wrapper Meshy 3D Agent (meshy-dev/meshy-3d-agent) untuk generasi model 3D GLB/FBX/OBJ/USDZ & 3D printing.",
+      "en": "Optional Kiki-Chii wrapper (default OFF): installs Meshy 3D Agent instructions (meshy-dev/meshy-3d-agent) for GLB/FBX/OBJ/USDZ 3D generation and 3D printing."
+    },
+    "meshy-3d-generation-runtime": {
+      "id": "Memerlukan Node.js >= 22.12, meshy-cli@0.8, sign-in kode perangkat (https://www.meshy.ai/device), serta paket Meshy Pro+ saat membuat tugas generasi 3D.",
+      "en": "Requires Node.js >= 22.12, meshy-cli@0.8, one-time device-code sign-in (https://www.meshy.ai/device), and a Meshy Pro+ plan when creating 3D generation tasks."
     }
   }
 }

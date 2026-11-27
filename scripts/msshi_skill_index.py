@@ -168,6 +168,53 @@ def scan_profile_skills(
     invalidated: list[str] = []
     added: list[str] = []
 
+    if skills_root.is_dir() and not prior_entries:
+        try:
+            from msshi_rust_accel import try_skill_scan
+            fast = try_skill_scan(skills_root, excluded)
+        except ImportError:
+            fast = None
+        if isinstance(fast, dict) and isinstance(fast.get("entries"), dict):
+            entries = fast["entries"]
+            excluded_skipped = list(fast.get("excluded_skipped") or [])
+            hygiene_warnings = list(fast.get("hygiene_warnings") or [])
+            cache_misses = len(entries)
+            added = sorted(entries)
+            duration_ms = round((time.perf_counter() - started) * 1000.0, 3)
+            cache_payload = {
+                "schema_version": 1,
+                "skills_dir": str(skills_root),
+                "skill_count": len(entries),
+                "excluded_scan_dirs": sorted(excluded),
+                "entries": entries,
+            }
+            if write_cache and cache_path is not None and (cache_misses > 0 or not cache_path.is_file()):
+                _atomic_write_json(cache_path, cache_payload)
+            return {
+                "skills_dir": str(skills_root),
+                "cache_path": str(cache_path) if cache_path else None,
+                "skill_count": len(entries),
+                "cache_hits": 0,
+                "cache_misses": cache_misses,
+                "added": added,
+                "invalidated": [],
+                "removed": [],
+                "excluded_dirs_skipped": sorted(excluded_skipped),
+                "hygiene_warnings": hygiene_warnings,
+                "duration_ms": duration_ms,
+                "body_loaded": False,
+                "skills": [
+                    {
+                        "slug": row["slug"],
+                        "name": row["name"],
+                        "description": row["description"],
+                        "has_references": row["has_references"],
+                        "has_scripts": row["has_scripts"],
+                    }
+                    for row in entries.values()
+                ],
+            }
+
     if skills_root.is_dir():
         try:
             with os.scandir(skills_root) as it:

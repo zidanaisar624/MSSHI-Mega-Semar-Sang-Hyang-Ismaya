@@ -43,3 +43,8 @@ references/voice-*-id.md
 # Local application route registries
 msshi-bridge/
 bridge-profiles/
+
+# Native Rust accelerator build artifacts
+crates/**/target/
+scripts/bin/
+

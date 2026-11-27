@@ -45,6 +45,15 @@
         "kiki-chii"
       ],
       "source_id": "lemo-opuscar"
+    },
+    {
+      "id": "meshy-3d-generation",
+      "path": "optional/meshy-3d-generation",
+      "public_default": false,
+      "roles": [
+        "kiki-chii"
+      ],
+      "source_id": "meshy-3d-generation"
     }
   ]
 }

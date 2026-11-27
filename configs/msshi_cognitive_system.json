@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "3.2.0",
+  "version": "3.2.1",
   "name": "MSSHI Closed-Loop Cognitive Operating System",
   "documentation": "docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md",
   "principles": {
@@ -32,7 +32,8 @@
         "notebooklm-thinking-datascience",
         "harness2",
         "belajar-pemula",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan"
       ],
       "pedagogy": [
         "Diagnose learner level and energy before lecturing to save tokens.",
@@ -67,7 +68,8 @@
         "humanizer-indonesia",
         "humanizer-en",
         "riset-mendalam-nusantara-global",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan"
       ],
       "standards": [
         "Use Lima Lapis Konteks + backward-traceability (doc#page) for every claim.",
@@ -92,7 +94,9 @@
         "unslop",
         "academic-plotting",
         "slide-generation",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan",
+        "higgsfield-skills"
       ],
       "standards": [
         "Always start with Concepting First and require human review before heavy rendering.",
@@ -121,7 +125,8 @@
         "modern-web-guidance",
         "open-code-review",
         "ast-grep",
-        "knip"
+        "knip",
+        "cindy-grand-plan"
       ],
       "standards": [
         "Map project risks first, implement with TDD, and run regression tests.",
@@ -789,6 +794,12 @@
       "pillar": "token_efficiency",
       "lead_bot": "shikaku",
       "load_mode": "on_demand_skill"
+    },
+    "cindy-grand-plan": {
+      "mission": "1_belajar_jadi_guru",
+      "pillar": "governance_and_routing",
+      "lead_bot": "shizuka",
+      "load_mode": "core_always_light"
     }
   },
   "optional_skill_registry": {
@@ -845,6 +856,19 @@
       "load_mode": "opt_in_lazy_context_source",
       "default_installed": "false",
       "note": "Opt-in in MSSHI Core v3.2.0 (--with-lemo-opuscar or msshi optional enable lemo-opuscar; automatic in hermes-mfa-filmmaking-and-agent-skills): 15 categories & 99 code-driven short-film styles."
+    },
+    "meshy-3d-generation": {
+      "mission": "3_konten_kreasi",
+      "pillar": "governance_and_routing",
+      "lead_bot": "kiki-chii",
+      "collaborates_with": [
+        "filmmaking-videography-photography-s2",
+        "mcp-for-blender",
+        "raea"
+      ],
+      "load_mode": "opt_in_runtime",
+      "default_installed": "false",
+      "note": "Opt-in Meshy 3D Agent (meshy-dev/meshy-3d-agent) for Kiki-Chii via --with-meshy-3d or msshi optional enable meshy-3d-generation; requires Node >= 22.12, meshy-cli@0.8, device-code login, and Meshy Pro+ for 3D task creation."
     }
   },
   "plugin_registry": {
@@ -1013,7 +1037,7 @@
       "privacy": "3_konten_kreasi",
       "education": "1_belajar_jadi_guru"
     },
-    "expected_upstream_count": 70,
+    "expected_upstream_count": 72,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -1084,7 +1108,9 @@
       "ast-grep",
       "knip",
       "mcp-for-blender",
-      "raea"
+      "raea",
+      "cindy-grand-plan",
+      "meshy-3d-generation"
     ]
   }
 }

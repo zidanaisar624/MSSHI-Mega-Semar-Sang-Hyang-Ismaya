@@ -40,7 +40,8 @@
         "spacewise",
         "sharewise",
         "belajar-pemula",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan"
       ],
       "optional_skills": [
         "cli-anything",
@@ -103,7 +104,8 @@
         "spacewise",
         "sharewise",
         "belajar-pemula",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan"
       ],
       "optional_skills": [
         "cli-anything",
@@ -181,7 +183,8 @@
         "sharewise",
         "belajar-pemula",
         "riset-mendalam-nusantara-global",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan"
       ],
       "optional_skills": [
         "cli-anything",
@@ -246,7 +249,8 @@
         "spacewise",
         "sharewise",
         "belajar-pemula",
-        "anti-slop"
+        "anti-slop",
+        "cindy-grand-plan"
       ],
       "optional_skills": [
         "bang-motion",
@@ -293,7 +297,8 @@
         "artcraft-texturecraft",
         "imagination-studio",
         "raea",
-        "lemo-opuscar"
+        "lemo-opuscar",
+        "meshy-3d-generation"
       ],
       "academic_engines": [
         "metode-analisis",
@@ -348,7 +353,8 @@
         "modern-web-guidance",
         "open-code-review",
         "ast-grep",
-        "knip"
+        "knip",
+        "cindy-grand-plan"
       ],
       "optional_skills": [
         "addy-agent-skills",
@@ -1640,6 +1646,29 @@
       "kind": "optional-integration-wrapper",
       "optional_path": "optional/raea/SKILL.md",
       "public_default": false
+    },
+    {
+      "slug": "cindy-grand-plan",
+      "status": "bundled",
+      "path": "skills/cindy-grand-plan/SKILL.md",
+      "purpose": "Tampilkan Peta Perencanaan Besar interaktif lintas-bot dan skill khusus saat pengguna meminta perencanaan besar agar pengguna dapat mengoreksi rencana sendiri sebelum eksekusi berat.",
+      "scope": "all",
+      "source": "https://github.com/makecindy/cindy",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "cindy-grand-plan"
+      ]
+    },
+    {
+      "slug": "meshy-3d-generation",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): generasi model 3D dari teks/gambar (GLB/FBX/OBJ/USDZ) dan cetak 3D via Meshy CLI (meshy-cli@0.8) dengan sign-in device code.",
+      "scope": "creative",
+      "source": "https://github.com/meshy-dev/meshy-3d-agent",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/meshy-3d-generation/SKILL.md",
+      "public_default": false
     }
   ],
   "packs": {
@@ -1665,7 +1694,8 @@
       "spacewise",
       "sharewise",
       "belajar-pemula",
-      "anti-slop"
+      "anti-slop",
+      "cindy-grand-plan"
     ],
     "filmmaking": [
       "academic-plotting",
@@ -1725,7 +1755,8 @@
       "scrapling",
       "harness2",
       "muza-skripsi-template",
-      "riset-mendalam-nusantara-global"
+      "riset-mendalam-nusantara-global",
+      "cindy-grand-plan"
     ],
     "webdev": [
       "analyze-project",
@@ -1810,7 +1841,8 @@
       "modern-web-guidance",
       "open-code-review",
       "ast-grep",
-      "knip"
+      "knip",
+      "cindy-grand-plan"
     ],
     "external_skills": [
       "addy-agent-skills",
@@ -1841,7 +1873,8 @@
       "token-monitor",
       "tokenshield",
       "tokentracker",
-      "unlimited-ocr"
+      "unlimited-ocr",
+      "meshy-3d-generation"
     ]
   },
   "academic_engines": [
@@ -1918,7 +1951,8 @@
       "unlimited-ocr-2",
       "persona-shizuka-yukino-shikaku",
       "cli-anything-universal-bridge",
-      "anti-slop"
+      "anti-slop",
+      "cindy-grand-plan"
     ],
     "external": [
       "graphify",
@@ -1945,7 +1979,8 @@
       "harness2",
       "spacewise",
       "sharewise",
-      "belajar-pemula"
+      "belajar-pemula",
+      "cindy-grand-plan"
     ],
     "background_model_calls": false
   }

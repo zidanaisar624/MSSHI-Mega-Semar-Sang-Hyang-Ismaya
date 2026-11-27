@@ -193,6 +193,28 @@
       "public_default": false,
       "auto_open_on_boot": false,
       "provider_model_mutation": false
+    },
+    "cindy-grand-plan": {
+      "roles": [
+        "yukino",
+        "shizuka",
+        "val",
+        "kiki-chii",
+        "shikaku"
+      ],
+      "activation": "on_big_plan_or_multi_stage_project_only",
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Tampilkan Peta Perencanaan Besar lintas-bot, skill, dan titik cek untuk dikoreksi pengguna sendiri sebelum eksekusi berat."
+    },
+    "meshy-3d-generation": {
+      "roles": [
+        "kiki-chii"
+      ],
+      "activation": "on_3d_generation_task_after_explicit_enable_and_device_login",
+      "public_default": false,
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false
     }
   },
   "contextual_integrations": {
@@ -307,7 +329,7 @@
   },
   "contextual_loading_note": "Full skill/source loaded only when relevant. Host skill index/metadata may still consume context; no zero-billing guarantee.",
   "interaction_policy": {
-    "version": "3.2.0",
+    "version": "3.2.1",
     "type_1": [
       "yukino",
       "shizuka"
