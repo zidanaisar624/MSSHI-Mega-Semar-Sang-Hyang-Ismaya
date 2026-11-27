@@ -928,6 +928,58 @@
       "license_url": "https://raw.githubusercontent.com/meshy-dev/meshy-3d-agent/7f8e33196db4e9e26cbaa0da4fcc14104ccda81d/LICENSE",
       "license_sha256": "ee7c22e402d96201d4abcc2caf95ed20c5ea2a485ee13a6d4c17b4d2590fafdd",
       "status": "pinned_license_read; original MIT opt-in wrapper in optional/meshy-3d-generation with LICENSE.upstream"
+    },
+    {
+      "id": "makememe",
+      "source": "https://github.com/dhruvmehra/makememe",
+      "revision": "3086c70dc3ffa3f0793e8d2f0d66ff2c986fa646",
+      "license": "MIT",
+      "copyright_lines": [
+        "MIT License",
+        "Copyright (c) 2026 Dhruv Mehra"
+      ],
+      "license_url": "https://raw.githubusercontent.com/dhruvmehra/makememe/3086c70dc3ffa3f0793e8d2f0d66ff2c986fa646/LICENSE",
+      "license_sha256": "9e5f46fabb5671e239c760657198eb249ac8c98049535317d1d33a561ce1a3d1",
+      "status": "pinned_license_read; MIT notice retained in skills/meme-studio-suite/LICENSE.upstream (paid services excluded)"
+    },
+    {
+      "id": "awesome-meme",
+      "source": "https://github.com/edwinjhlee/awesome-meme",
+      "revision": "7ab16401a6c0eb63d1cd330eb77b8f03ff69d21b",
+      "license": "MIT",
+      "copyright_lines": [
+        "MIT License",
+        "Copyright (c) 2026 edwinjhlee"
+      ],
+      "license_url": "https://raw.githubusercontent.com/edwinjhlee/awesome-meme/7ab16401a6c0eb63d1cd330eb77b8f03ff69d21b/LICENSE",
+      "license_sha256": "556a069003b278e3a72f5993d28fe0520da7bca41f09cb77e131e9571b16eecc",
+      "status": "pinned_license_read; MIT notice retained in skills/meme-studio-suite/LICENSE.upstream (paid services excluded)"
+    },
+    {
+      "id": "meme-lord",
+      "source": "https://github.com/csmoove530/meme-lord",
+      "revision": "f2cc49471cc72eb21eb8570d6a28df070ce18392",
+      "license": "MIT",
+      "copyright_lines": [
+        "MIT License",
+        "Copyright (c) 2026 Cuy Sheffield"
+      ],
+      "license_url": "https://raw.githubusercontent.com/csmoove530/meme-lord/f2cc49471cc72eb21eb8570d6a28df070ce18392/LICENSE",
+      "license_sha256": "5ab2f85fba02df0192259f1f38dd0cde1ed7f18a4b4bf1bb4e1ba30f8670aea0",
+      "status": "pinned_license_read; MIT notice retained in skills/meme-studio-suite/LICENSE.upstream (paid services excluded)"
+    },
+    {
+      "id": "createa-meme-skill",
+      "source": "https://github.com/RiskAverseTech/createa-meme-skill",
+      "revision": "a670040c5e78584d628178afc7d658ccb31e23c9",
+      "license": "MIT",
+      "copyright_lines": [
+        "MIT License",
+        "Copyright (c) 2026 Create a Meme"
+      ],
+      "license_url": "https://raw.githubusercontent.com/RiskAverseTech/createa-meme-skill/a670040c5e78584d628178afc7d658ccb31e23c9/LICENSE",
+      "license_sha256": "5e33fefd36144421ad273e05243f7ad1c1ee5bebdeffb652a8216dbeead190d3",
+      "status": "pinned_license_read; MIT notice retained in skills/meme-studio-suite/LICENSE.upstream (paid services excluded)"
     }
   ],
   "additional_runtime_terms": {

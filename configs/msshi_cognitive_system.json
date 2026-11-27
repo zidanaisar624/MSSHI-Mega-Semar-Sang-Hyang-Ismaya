@@ -96,7 +96,8 @@
         "slide-generation",
         "anti-slop",
         "cindy-grand-plan",
-        "higgsfield-skills"
+        "higgsfield-skills",
+        "meme-studio-suite"
       ],
       "standards": [
         "Always start with Concepting First and require human review before heavy rendering.",
@@ -800,6 +801,12 @@
       "pillar": "governance_and_routing",
       "lead_bot": "shizuka",
       "load_mode": "core_always_light"
+    },
+    "meme-studio-suite": {
+      "mission": "3_konten_kreasi",
+      "pillar": "token_efficiency",
+      "lead_bot": "kiki-chii",
+      "load_mode": "on_demand_skill"
     }
   },
   "optional_skill_registry": {
@@ -1037,7 +1044,7 @@
       "privacy": "3_konten_kreasi",
       "education": "1_belajar_jadi_guru"
     },
-    "expected_upstream_count": 72,
+    "expected_upstream_count": 76,
     "governed_upstream_ids": [
       "higgsfield-skills",
       "remotion-skills",
@@ -1110,7 +1117,11 @@
       "mcp-for-blender",
       "raea",
       "cindy-grand-plan",
-      "meshy-3d-generation"
+      "meshy-3d-generation",
+      "makememe",
+      "awesome-meme",
+      "meme-lord",
+      "createa-meme-skill"
     ]
   }
 }

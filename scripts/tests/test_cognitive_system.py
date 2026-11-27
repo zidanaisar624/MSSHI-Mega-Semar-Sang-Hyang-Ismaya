@@ -787,6 +787,7 @@ class CognitiveSystemTests(unittest.TestCase):
             ("skills", "anti-slop", True),
             ("skills", "cindy-grand-plan", True),
             ("skills", "higgsfield-skills", True),
+            ("skills", "meme-studio-suite", True),
             ("skills", "modern-web-guidance", True),
             ("skills", "open-code-review", True),
             ("skills", "ast-grep", True),

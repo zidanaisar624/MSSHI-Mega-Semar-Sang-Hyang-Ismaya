@@ -1417,6 +1417,82 @@
       "requires": "Opt-in eksplisit (public_default=false), Node.js >= 22.12, meshy-cli@0.8, sign-in device code, serta paket Meshy Pro+ untuk membuat tugas 3D.",
       "license": "MIT",
       "background_model_calls": false
+    },
+    {
+      "id": "makememe",
+      "source": "https://github.com/dhruvmehra/makememe",
+      "source_type": "git",
+      "revision": "3086c70dc3ffa3f0793e8d2f0d66ff2c986fa646",
+      "verification": "primary-source/pinned-package/frontmatter/MIT-license reviewed 2026-11-27; deterministic URL escaping adopted in skills/meme-studio-suite",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Buat URL/PNG meme klasik instan 100% gratis tanpa API key lewat api.memegen.link.",
+      "requires": "Python stdlib murni (0 pip eksternal); unduhan PNG hanya saat pengguna meminta file lokal.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "awesome-meme",
+      "source": "https://github.com/edwinjhlee/awesome-meme",
+      "source_type": "git",
+      "revision": "7ab16401a6c0eb63d1cd330eb77b8f03ff69d21b",
+      "verification": "primary-source/pinned-package/frontmatter/MIT-license reviewed 2026-11-27; programmer template index & Pillow/CJK stroke pattern adopted in skills/meme-studio-suite",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Render 27+ template meme programmer & klasik secara lokal memakai Pillow + YAML dengan dukungan font Impact dan CJK.",
+      "requires": "Pillow lokal untuk render teks di atas gambar/kanvas; 0 API key.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "meme-lord",
+      "source": "https://github.com/csmoove530/meme-lord",
+      "source_type": "git",
+      "revision": "f2cc49471cc72eb21eb8570d6a28df070ce18392",
+      "verification": "primary-source/MIT-license reviewed 2026-11-27; ONLY viral patterns, Two-Step overlay & local 6-dimension A/B rubric adopted; Visa CLI, paid Exa, StableUpload & fal.ai strictly excluded",
+      "status": "architecture-reference",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Gunakan 8 pola humor viral, aturan Two-Step Clean-Scene + Impact Overlay, dan papan evaluasi A/B lokal 6 dimensi.",
+      "requires": "Berjalan 100% lokal di skills/meme-studio-suite; TIDAK pernah memasang Visa CLI, Exa berbayar, StableUpload, atau fal.ai.",
+      "license": "MIT",
+      "background_model_calls": false
+    },
+    {
+      "id": "createa-meme-skill",
+      "source": "https://github.com/RiskAverseTech/createa-meme-skill",
+      "source_type": "git",
+      "revision": "a670040c5e78584d628178afc7d658ccb31e23c9",
+      "verification": "primary-source/MIT-license reviewed 2026-11-27; caption-craft rules adopted in skills/meme-studio-suite; @createa/meme-mcp kept strictly optional BYOK",
+      "status": "bundled-wrapper",
+      "auto_start": false,
+      "domain": "creative",
+      "kind": "integration-wrapper",
+      "pack": "filmmaking",
+      "roles": [
+        "kiki-chii"
+      ],
+      "use_when": "Terapkan disiplin caption-craft ('find the turn', 2-6 kata per baris, 1 ide per meme) sebelum merender meme.",
+      "requires": "Aturan caption-craft berjalan 100% gratis lokal; MCP @createa/meme-mcp opsional hanya jika pengguna memiliki CAM_API_KEY sendiri (kuota gratis 20/bulan tanpa kartu).",
+      "license": "MIT",
+      "background_model_calls": false
     }
   ]
 }

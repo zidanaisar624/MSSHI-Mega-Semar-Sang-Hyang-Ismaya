@@ -250,7 +250,8 @@
         "sharewise",
         "belajar-pemula",
         "anti-slop",
-        "cindy-grand-plan"
+        "cindy-grand-plan",
+        "meme-studio-suite"
       ],
       "optional_skills": [
         "bang-motion",
@@ -298,7 +299,11 @@
         "imagination-studio",
         "raea",
         "lemo-opuscar",
-        "meshy-3d-generation"
+        "meshy-3d-generation",
+        "makememe",
+        "awesome-meme",
+        "meme-lord",
+        "createa-meme-skill"
       ],
       "academic_engines": [
         "metode-analisis",
@@ -466,6 +471,15 @@
       ]
     },
     {
+      "slug": "artcraft-anicraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Animasi dan komposisi bergerak melalui CLI aplikasi lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
+    },
+    {
       "slug": "artcraft-cadcraft",
       "status": "external",
       "path": null,
@@ -547,6 +561,15 @@
       "auto_open_on_boot": false
     },
     {
+      "slug": "artcraft-materialcraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Penyusunan material melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
+    },
+    {
       "slug": "artcraft-pdfcraft",
       "status": "external",
       "path": null,
@@ -583,6 +606,15 @@
       "auto_open_on_boot": false
     },
     {
+      "slug": "artcraft-texturecraft",
+      "status": "external",
+      "path": null,
+      "purpose": "Penyusunan tekstur melalui CLI lokal sesuai tiket tugas.",
+      "scope": "native-cli",
+      "execution": "task-ticket",
+      "auto_open_on_boot": false
+    },
+    {
       "slug": "artcraft-vectorcraft",
       "status": "external",
       "path": null,
@@ -599,6 +631,18 @@
       "scope": "native-cli",
       "execution": "task-ticket",
       "auto_open_on_boot": false
+    },
+    {
+      "slug": "ast-grep",
+      "status": "bundled",
+      "path": "skills/ast-grep/SKILL.md",
+      "purpose": "Pencarian kode struktural, linting aturan kustom, dan refaktor codemod lintas berkas berbasis Tree-sitter AST (ast-grep / sg) khusus Coder.",
+      "scope": "engineering",
+      "source": "https://github.com/ast-grep/ast-grep",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "ast-grep"
+      ]
     },
     {
       "slug": "auto-curiousity-for-film-making",
@@ -621,6 +665,14 @@
       "purpose": "Memilih contoh instruksi dan praktik pengembangan yang dapat diadaptasi.",
       "scope": "engineering",
       "source": "https://github.com/github/awesome-copilot"
+    },
+    {
+      "slug": "awesome-meme",
+      "status": "external",
+      "path": null,
+      "purpose": "Katalog 27+ template meme programmer & klasik dengan perender teks Pillow/YAML lokal.",
+      "scope": "creative",
+      "source": "https://github.com/edwinjhlee/awesome-meme"
     },
     {
       "slug": "backward-traceability",
@@ -646,6 +698,15 @@
       "source": "https://github.com/Barty-Bart/motion-graphics"
     },
     {
+      "slug": "belajar-pemula",
+      "status": "bundled",
+      "kind": "core",
+      "path": "skills/belajar-pemula/SKILL.md",
+      "purpose": "Mode belajar pemula total tanpa /command: 1 konsep per balasan, pilih otomatis LearnLoop/Chalk/CodeCoach-atau-Shikaku/OSSU + fallback Socratic.",
+      "scope": "education",
+      "source": "MSSHI v3.1.2 built-in"
+    },
+    {
       "slug": "better-design",
       "status": "external",
       "path": null,
@@ -654,15 +715,16 @@
       "source": "https://github.com/marvkr/better-design"
     },
     {
-      "slug": "mcp-for-blender",
-      "status": "external",
-      "path": null,
-      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): MCP for Blender dua arah untuk modeling 3D, material, kamera previz, dan ekspor .glb/.gltf on-demand (auto_open_on_boot=false).",
-      "scope": "creative",
-      "source": "https://github.com/ahujasid/mcp-for-blender",
-      "kind": "optional-integration-wrapper",
-      "optional_path": "optional/mcp-for-blender/SKILL.md",
-      "public_default": false
+      "slug": "brag",
+      "status": "bundled",
+      "path": "skills/brag/SKILL.md",
+      "purpose": "Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia.",
+      "scope": "contextual",
+      "source": "https://github.com/latent-spaces/brag",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "brag"
+      ]
     },
     {
       "slug": "brainstorming-research-ideas",
@@ -687,6 +749,18 @@
       "source": "https://github.com/DavidHDev/canvas-ui"
     },
     {
+      "slug": "career-ops",
+      "status": "bundled",
+      "path": "skills/career-ops/SKILL.md",
+      "purpose": "Bantu karier, CV-lowongan skor 1-5, tracker dan wawancara sesuai konteks.",
+      "scope": "contextual",
+      "source": "https://github.com/career-ops-hq/career-ops",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "career-ops"
+      ]
+    },
+    {
       "slug": "charlie-motion-graphics",
       "status": "external",
       "path": null,
@@ -700,6 +774,30 @@
       "path": "skills/chatgpt-hermes-portability-kit/SKILL.md",
       "purpose": "Memandu adaptasi metode dan profil ke platform lain menggunakan sumber yang sah.",
       "scope": "strategy"
+    },
+    {
+      "slug": "cindy-grand-plan",
+      "status": "bundled",
+      "path": "skills/cindy-grand-plan/SKILL.md",
+      "purpose": "Tampilkan Peta Perencanaan Besar interaktif lintas-bot dan skill khusus saat pengguna meminta perencanaan besar agar pengguna dapat mengoreksi rencana sendiri sebelum eksekusi berat.",
+      "scope": "all",
+      "source": "https://github.com/makecindy/cindy",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "cindy-grand-plan"
+      ]
+    },
+    {
+      "slug": "claude-bughunter",
+      "status": "bundled",
+      "path": "skills/claude-bughunter/SKILL.md",
+      "purpose": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) untuk Coder.",
+      "scope": "contextual",
+      "source": "https://github.com/elementalsouls/Claude-BugHunter",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "claude-bughunter"
+      ]
     },
     {
       "slug": "cli-anything",
@@ -735,6 +833,14 @@
         "cli-anything",
         "cli-anything-catalog"
       ]
+    },
+    {
+      "slug": "createa-meme-skill",
+      "status": "external",
+      "path": null,
+      "purpose": "Panduan caption-craft ('find the turn', 2-6 kata/baris) serta MCP opsional BYOK CAM_API_KEY (kuota gratis 20/bulan tanpa kartu).",
+      "scope": "creative",
+      "source": "https://github.com/RiskAverseTech/createa-meme-skill"
     },
     {
       "slug": "creative-thinking-for-research",
@@ -904,6 +1010,30 @@
       "source": "https://github.com/Graphify-Labs/graphify"
     },
     {
+      "slug": "grim-prompter",
+      "status": "bundled",
+      "path": "skills/grim-prompter/SKILL.md",
+      "purpose": "Pemodelan ancaman berbasis bukti (36 arsitektur, 29 metode, STRIDE/PASTA/LINDDUN/privasi) untuk Coder secara read-only.",
+      "scope": "contextual",
+      "source": "https://github.com/jmanico/grim-prompter",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "grim-prompter"
+      ]
+    },
+    {
+      "slug": "harness2",
+      "status": "bundled",
+      "path": "skills/harness2/SKILL.md",
+      "purpose": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
+      "scope": "contextual",
+      "source": "https://github.com/google-research/harness2",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "harness2"
+      ]
+    },
+    {
       "slug": "hermes-jev-skills",
       "status": "external",
       "path": null,
@@ -1054,6 +1184,29 @@
       "scope": "ideation"
     },
     {
+      "slug": "imagination-studio",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): kolaborasi Slate & antrean render lokal Imagination Studio (gambar, klip+suara, voice, musik, SFX) via plugin Hermes atau stdio MCP (127.0.0.1:7870).",
+      "scope": "creative",
+      "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/imagination-studio/SKILL.md",
+      "public_default": false
+    },
+    {
+      "slug": "knip",
+      "status": "bundled",
+      "path": "skills/knip/SKILL.md",
+      "purpose": "Pendeteksi deterministik berkas mati, ekspor/tipe tak terpakai, dan dependensi yatim pada proyek JS/TS & monorepo (webpro-nl/knip) khusus Coder.",
+      "scope": "engineering",
+      "source": "https://github.com/webpro-nl/knip",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "knip"
+      ]
+    },
+    {
       "slug": "langsmith-observability",
       "status": "bundled",
       "path": "skills/langsmith-observability/SKILL.md",
@@ -1061,11 +1214,30 @@
       "scope": "engineering"
     },
     {
+      "slug": "lemo-opuscar",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) via cache teks terpin on-demand.",
+      "scope": "creative",
+      "source": "https://github.com/lemomo-ai/lemo-opuscar",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/lemo-opuscar/SKILL.md",
+      "public_default": false
+    },
+    {
       "slug": "literature-review",
       "status": "bundled",
       "path": "skills/literature-review/SKILL.md",
       "purpose": "Membangun tinjauan pustaka dengan beberapa perspektif dan jejak sumber.",
       "scope": "academic"
+    },
+    {
+      "slug": "makememe",
+      "status": "external",
+      "path": null,
+      "purpose": "Generator URL & PNG meme klasik gratis tanpa API key melalui api.memegen.link.",
+      "scope": "creative",
+      "source": "https://github.com/dhruvmehra/makememe"
     },
     {
       "slug": "match-my-writing-style",
@@ -1082,12 +1254,80 @@
       "scope": "evidence"
     },
     {
+      "slug": "mattpocock-engineering",
+      "status": "bundled",
+      "path": "skills/mattpocock-engineering/SKILL.md",
+      "purpose": "Disiplin engineering, TDD, debugging dan spesifikasi; orkestrator/publikasi eksplisit.",
+      "scope": "contextual",
+      "source": "https://github.com/mattpocock/skills",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "mattpocock-skills"
+      ]
+    },
+    {
+      "slug": "mcp-for-blender",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): MCP for Blender dua arah untuk modeling 3D, material, kamera previz, dan ekspor .glb/.gltf on-demand (auto_open_on_boot=false).",
+      "scope": "creative",
+      "source": "https://github.com/ahujasid/mcp-for-blender",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/mcp-for-blender/SKILL.md",
+      "public_default": false
+    },
+    {
+      "slug": "meme-lord",
+      "status": "external",
+      "path": null,
+      "purpose": "Referensi pola viral Hall of Fame, ironic contrast, dan rubrik A/B testing meme 6 dimensi lokal (tanpa Visa CLI, Exa, atau fal.ai).",
+      "scope": "creative",
+      "source": "https://github.com/csmoove530/meme-lord"
+    },
+    {
+      "slug": "meme-studio-suite",
+      "status": "bundled",
+      "path": "skills/meme-studio-suite/SKILL.md",
+      "purpose": "Studio pembuatan meme Rp0 khusus Kiki-Chii (memegen.link tanpa API key, 27+ template programmer Pillow/YAML, pola viral + A/B 6 dimensi lokal tanpa layanan berbayar, serta caption-craft).",
+      "scope": "creative",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "makememe",
+        "awesome-meme",
+        "meme-lord",
+        "createa-meme-skill"
+      ]
+    },
+    {
+      "slug": "meshy-3d-generation",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): generasi model 3D dari teks/gambar (GLB/FBX/OBJ/USDZ) dan cetak 3D via Meshy CLI (meshy-cli@0.8) dengan sign-in device code.",
+      "scope": "creative",
+      "source": "https://github.com/meshy-dev/meshy-3d-agent",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/meshy-3d-generation/SKILL.md",
+      "public_default": false
+    },
+    {
       "slug": "mindrally-skills",
       "status": "external",
       "path": null,
       "purpose": "Menemukan panduan implementasi relevan di katalog eksternal.",
       "scope": "engineering",
       "source": "https://github.com/mindrally/skills"
+    },
+    {
+      "slug": "modern-web-guidance",
+      "status": "bundled",
+      "path": "skills/modern-web-guidance/SKILL.md",
+      "purpose": "Panduan platform web modern Baseline (Chrome, Edge, Firefox, MDN) khusus Coder untuk mengutamakan fitur HTML/CSS/JS native modern dan Core Web Vitals.",
+      "scope": "engineering",
+      "source": "https://github.com/GoogleChrome/modern-web-guidance",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "modern-web-guidance"
+      ]
     },
     {
       "slug": "motion-graphics-suite",
@@ -1138,6 +1378,18 @@
       "path": "skills/novelty-assessment/SKILL.md",
       "purpose": "Menguji klaim kebaruan terhadap studi terdekat dan batas pencarian.",
       "scope": "academic"
+    },
+    {
+      "slug": "open-code-review",
+      "status": "bundled",
+      "path": "skills/open-code-review/SKILL.md",
+      "purpose": "Pipeline review kode hibrida deterministik + agen baris-per-baris (Alibaba OpenCodeReview / CLI ocr) khusus Coder untuk audit git diff, commit, dan PR.",
+      "scope": "engineering",
+      "source": "https://github.com/alibaba/open-code-review",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "open-code-review"
+      ]
     },
     {
       "slug": "paper-context-resolver",
@@ -1220,6 +1472,17 @@
       "scope": "ideation"
     },
     {
+      "slug": "raea",
+      "status": "external",
+      "path": null,
+      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): RAEA Render Anything Engine (React/TS + Bevy GPU) untuk render langsung maupun hibrida aset .glb/.gltf dari mcp-for-blender.",
+      "scope": "creative",
+      "source": "https://github.com/shinyobjectz/raea",
+      "kind": "optional-integration-wrapper",
+      "optional_path": "optional/raea/SKILL.md",
+      "public_default": false
+    },
+    {
       "slug": "rea",
       "status": "external",
       "path": null,
@@ -1231,15 +1494,16 @@
       "public_default": false
     },
     {
-      "slug": "imagination-studio",
-      "status": "external",
-      "path": null,
-      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): kolaborasi Slate & antrean render lokal Imagination Studio (gambar, klip+suara, voice, musik, SFX) via plugin Hermes atau stdio MCP (127.0.0.1:7870).",
-      "scope": "creative",
-      "source": "https://github.com/Keys-Wasserman/Imagination-Studio-by-keys-Wasserman",
-      "kind": "optional-integration-wrapper",
-      "optional_path": "optional/imagination-studio/SKILL.md",
-      "public_default": false
+      "slug": "rea-video",
+      "status": "bundled",
+      "path": "skills/rea-video/SKILL.md",
+      "purpose": "Kiki membedah video referensi per shot ke VIDEO.md; model dan generasi merupakan opt-in terpisah.",
+      "scope": "contextual",
+      "source": "https://github.com/JuneYaooo/rea-video",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "rea-video"
+      ]
     },
     {
       "slug": "rebuttal-writing",
@@ -1247,6 +1511,18 @@
       "path": "skills/rebuttal-writing/SKILL.md",
       "purpose": "Menyusun jawaban poin demi poin untuk masukan pembimbing atau reviewer.",
       "scope": "academic"
+    },
+    {
+      "slug": "remote-jobs",
+      "status": "bundled",
+      "path": "skills/remote-jobs/SKILL.md",
+      "purpose": "Saring direktori perusahaan remote, lalu periksa lowongan aktif ketika diminta.",
+      "scope": "contextual",
+      "source": "https://github.com/remoteintech/remote-jobs",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "remote-jobs"
+      ]
     },
     {
       "slug": "remotion-skills",
@@ -1272,11 +1548,62 @@
       "source": "https://github.com/NabilRFG12/Reverse-Engineer-anything"
     },
     {
+      "slug": "riset-mendalam-nusantara-global",
+      "status": "bundled",
+      "kind": "core",
+      "path": "skills/riset-mendalam-nusantara-global/SKILL.md",
+      "purpose": "Khusus Val: pipeline riset mendalam 10 tahap (Quick/Standard/Deep) & metodologi akademik standar Indonesia (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) dan global (Scopus/WoS, PRISMA 2020, DOI).",
+      "scope": "research",
+      "source": "MSSHI v3.1.2 original (pipeline pattern inspired by MIT hermes-researcher)"
+    },
+    {
+      "slug": "rust-anything",
+      "status": "bundled",
+      "path": "skills/rust-anything/SKILL.md",
+      "purpose": "Port dan tulis ulang kode TS/JS/Python/C/Go/Ruby/Java ke Rust secara bertahap dengan rekaman ground-truth, diff, benchmark, shadow, dan gate kelulusan khusus Coder.",
+      "scope": "contextual",
+      "source": "https://github.com/erkamyaman/rust-anything",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "rust-anything"
+      ]
+    },
+    {
+      "slug": "scrapling",
+      "status": "bundled",
+      "path": "skills/scrapling/SKILL.md",
+      "purpose": "Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi.",
+      "scope": "contextual",
+      "source": "https://github.com/D4Vinci/Scrapling",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "scrapling"
+      ]
+    },
+    {
+      "slug": "sharewise",
+      "status": "bundled",
+      "path": "skills/sharewise/SKILL.md",
+      "purpose": "Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi.",
+      "scope": "all",
+      "source": "https://github.com/ardianreffa/sharewise",
+      "kind": "integration-wrapper"
+    },
+    {
       "slug": "slide-generation",
       "status": "bundled",
       "path": "skills/slide-generation/SKILL.md",
       "purpose": "Menyusun presentasi dari argumen, hasil, dan visual yang dapat diverifikasi.",
       "scope": "creative"
+    },
+    {
+      "slug": "spacewise",
+      "status": "bundled",
+      "path": "skills/spacewise/SKILL.md",
+      "purpose": "Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit.",
+      "scope": "all",
+      "source": "https://github.com/ardianreffa/spacewise",
+      "kind": "integration-wrapper"
     },
     {
       "slug": "strix",
@@ -1315,6 +1642,18 @@
       "path": "skills/table-generation/SKILL.md",
       "purpose": "Membangun tabel akademik dari hasil terverifikasi beserta satuan dan catatan.",
       "scope": "evidence"
+    },
+    {
+      "slug": "timesfm-forecasting",
+      "status": "bundled",
+      "path": "skills/timesfm-forecasting/SKILL.md",
+      "purpose": "Prediksi deret waktu numerik lokal dengan TimesFM 2.5, validasi data dan evaluasi terpisah.",
+      "scope": "research",
+      "source": "https://github.com/google-research/timesfm",
+      "kind": "integration-wrapper",
+      "integration_ids": [
+        "timesfm"
+      ]
     },
     {
       "slug": "token-monitor",
@@ -1364,25 +1703,6 @@
       ]
     },
     {
-      "slug": "wise-judgment-and-sovereign-orchestrator",
-      "status": "bundled",
-      "path": "skills/wise-judgment-and-sovereign-orchestrator/SKILL.md",
-      "purpose": "Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val.",
-      "scope": "orchestration"
-    },
-    {
-      "slug": "timesfm-forecasting",
-      "status": "bundled",
-      "path": "skills/timesfm-forecasting/SKILL.md",
-      "purpose": "Prediksi deret waktu numerik lokal dengan TimesFM 2.5, validasi data dan evaluasi terpisah.",
-      "scope": "research",
-      "source": "https://github.com/google-research/timesfm",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "timesfm"
-      ]
-    },
-    {
       "slug": "unslop",
       "status": "bundled",
       "path": "skills/unslop/SKILL.md",
@@ -1395,280 +1715,11 @@
       ]
     },
     {
-      "slug": "brag",
+      "slug": "wise-judgment-and-sovereign-orchestrator",
       "status": "bundled",
-      "path": "skills/brag/SKILL.md",
-      "purpose": "Video peluncuran produk berbasis Hyperframes dengan Concepting First dan review manusia.",
-      "scope": "contextual",
-      "source": "https://github.com/latent-spaces/brag",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "brag"
-      ]
-    },
-    {
-      "slug": "scrapling",
-      "status": "bundled",
-      "path": "skills/scrapling/SKILL.md",
-      "purpose": "Ekstraksi CSS/XPath dari HTML lokal dalam runtime parser terisolasi.",
-      "scope": "contextual",
-      "source": "https://github.com/D4Vinci/Scrapling",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "scrapling"
-      ]
-    },
-    {
-      "slug": "harness2",
-      "status": "bundled",
-      "path": "skills/harness2/SKILL.md",
-      "purpose": "Evaluasi harness Propose-Probe-Compose menggunakan demo deterministik dan proposal yang ditinjau manusia.",
-      "scope": "contextual",
-      "source": "https://github.com/google-research/harness2",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "harness2"
-      ]
-    },
-    {
-      "slug": "career-ops",
-      "status": "bundled",
-      "path": "skills/career-ops/SKILL.md",
-      "purpose": "Bantu karier, CV-lowongan skor 1-5, tracker dan wawancara sesuai konteks.",
-      "scope": "contextual",
-      "source": "https://github.com/career-ops-hq/career-ops",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "career-ops"
-      ]
-    },
-    {
-      "slug": "remote-jobs",
-      "status": "bundled",
-      "path": "skills/remote-jobs/SKILL.md",
-      "purpose": "Saring direktori perusahaan remote, lalu periksa lowongan aktif ketika diminta.",
-      "scope": "contextual",
-      "source": "https://github.com/remoteintech/remote-jobs",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "remote-jobs"
-      ]
-    },
-    {
-      "slug": "mattpocock-engineering",
-      "status": "bundled",
-      "path": "skills/mattpocock-engineering/SKILL.md",
-      "purpose": "Disiplin engineering, TDD, debugging dan spesifikasi; orkestrator/publikasi eksplisit.",
-      "scope": "contextual",
-      "source": "https://github.com/mattpocock/skills",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "mattpocock-skills"
-      ]
-    },
-    {
-      "slug": "rea-video",
-      "status": "bundled",
-      "path": "skills/rea-video/SKILL.md",
-      "purpose": "Kiki membedah video referensi per shot ke VIDEO.md; model dan generasi merupakan opt-in terpisah.",
-      "scope": "contextual",
-      "source": "https://github.com/JuneYaooo/rea-video",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "rea-video"
-      ]
-    },
-    {
-      "slug": "grim-prompter",
-      "status": "bundled",
-      "path": "skills/grim-prompter/SKILL.md",
-      "purpose": "Pemodelan ancaman berbasis bukti (36 arsitektur, 29 metode, STRIDE/PASTA/LINDDUN/privasi) untuk Coder secara read-only.",
-      "scope": "contextual",
-      "source": "https://github.com/jmanico/grim-prompter",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "grim-prompter"
-      ]
-    },
-    {
-      "slug": "claude-bughunter",
-      "status": "bundled",
-      "path": "skills/claude-bughunter/SKILL.md",
-      "purpose": "Audit kerentanan, triage, validasi bukti, dan pelaporan keamanan terotorisasi (83 skill, 15 command, 681 pola laporan) untuk Coder.",
-      "scope": "contextual",
-      "source": "https://github.com/elementalsouls/Claude-BugHunter",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "claude-bughunter"
-      ]
-    },
-    {
-      "slug": "artcraft-anicraft",
-      "status": "external",
-      "path": null,
-      "purpose": "Animasi dan komposisi bergerak melalui CLI aplikasi lokal sesuai tiket tugas.",
-      "scope": "native-cli",
-      "execution": "task-ticket",
-      "auto_open_on_boot": false
-    },
-    {
-      "slug": "artcraft-materialcraft",
-      "status": "external",
-      "path": null,
-      "purpose": "Penyusunan material melalui CLI lokal sesuai tiket tugas.",
-      "scope": "native-cli",
-      "execution": "task-ticket",
-      "auto_open_on_boot": false
-    },
-    {
-      "slug": "artcraft-texturecraft",
-      "status": "external",
-      "path": null,
-      "purpose": "Penyusunan tekstur melalui CLI lokal sesuai tiket tugas.",
-      "scope": "native-cli",
-      "execution": "task-ticket",
-      "auto_open_on_boot": false
-    },
-    {
-      "slug": "spacewise",
-      "status": "bundled",
-      "path": "skills/spacewise/SKILL.md",
-      "purpose": "Pembersihan ruang penyimpanan lokal aman (duplikat, installer sisa, foto mirip/buram, laporan file besar) dengan pratinjau lokal dan persetujuan eksplisit.",
-      "scope": "all",
-      "source": "https://github.com/ardianreffa/spacewise",
-      "kind": "integration-wrapper"
-    },
-    {
-      "slug": "sharewise",
-      "status": "bundled",
-      "path": "skills/sharewise/SKILL.md",
-      "purpose": "Pemeriksaan privasi foto & video lokal sebelum dibagikan (laporan ya/tidak saja, tanpa membocorkan GPS/waktu/perangkat) plus salinan bersih terverifikasi.",
-      "scope": "all",
-      "source": "https://github.com/ardianreffa/sharewise",
-      "kind": "integration-wrapper"
-    },
-    {
-      "slug": "belajar-pemula",
-      "status": "bundled",
-      "kind": "core",
-      "path": "skills/belajar-pemula/SKILL.md",
-      "purpose": "Mode belajar pemula total tanpa /command: 1 konsep per balasan, pilih otomatis LearnLoop/Chalk/CodeCoach-atau-Shikaku/OSSU + fallback Socratic.",
-      "scope": "education",
-      "source": "MSSHI v3.1.2 built-in"
-    },
-    {
-      "slug": "riset-mendalam-nusantara-global",
-      "status": "bundled",
-      "kind": "core",
-      "path": "skills/riset-mendalam-nusantara-global/SKILL.md",
-      "purpose": "Khusus Val: pipeline riset mendalam 10 tahap (Quick/Standard/Deep) & metodologi akademik standar Indonesia (Bab I-V, SINTA 1-6, Garuda, RAMA, EYD V) dan global (Scopus/WoS, PRISMA 2020, DOI).",
-      "scope": "research",
-      "source": "MSSHI v3.1.2 original (pipeline pattern inspired by MIT hermes-researcher)"
-    },
-    {
-      "slug": "rust-anything",
-      "status": "bundled",
-      "path": "skills/rust-anything/SKILL.md",
-      "purpose": "Port dan tulis ulang kode TS/JS/Python/C/Go/Ruby/Java ke Rust secara bertahap dengan rekaman ground-truth, diff, benchmark, shadow, dan gate kelulusan khusus Coder.",
-      "scope": "contextual",
-      "source": "https://github.com/erkamyaman/rust-anything",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "rust-anything"
-      ]
-    },
-    {
-      "slug": "lemo-opuscar",
-      "status": "external",
-      "path": null,
-      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): katalog 15 kategori & 99 gaya film pendek berbasis kode (Lemo-Opuscar) via cache teks terpin on-demand.",
-      "scope": "creative",
-      "source": "https://github.com/lemomo-ai/lemo-opuscar",
-      "kind": "optional-integration-wrapper",
-      "optional_path": "optional/lemo-opuscar/SKILL.md",
-      "public_default": false
-    },
-    {
-      "slug": "modern-web-guidance",
-      "status": "bundled",
-      "path": "skills/modern-web-guidance/SKILL.md",
-      "purpose": "Panduan platform web modern Baseline (Chrome, Edge, Firefox, MDN) khusus Coder untuk mengutamakan fitur HTML/CSS/JS native modern dan Core Web Vitals.",
-      "scope": "engineering",
-      "source": "https://github.com/GoogleChrome/modern-web-guidance",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "modern-web-guidance"
-      ]
-    },
-    {
-      "slug": "open-code-review",
-      "status": "bundled",
-      "path": "skills/open-code-review/SKILL.md",
-      "purpose": "Pipeline review kode hibrida deterministik + agen baris-per-baris (Alibaba OpenCodeReview / CLI ocr) khusus Coder untuk audit git diff, commit, dan PR.",
-      "scope": "engineering",
-      "source": "https://github.com/alibaba/open-code-review",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "open-code-review"
-      ]
-    },
-    {
-      "slug": "ast-grep",
-      "status": "bundled",
-      "path": "skills/ast-grep/SKILL.md",
-      "purpose": "Pencarian kode struktural, linting aturan kustom, dan refaktor codemod lintas berkas berbasis Tree-sitter AST (ast-grep / sg) khusus Coder.",
-      "scope": "engineering",
-      "source": "https://github.com/ast-grep/ast-grep",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "ast-grep"
-      ]
-    },
-    {
-      "slug": "knip",
-      "status": "bundled",
-      "path": "skills/knip/SKILL.md",
-      "purpose": "Pendeteksi deterministik berkas mati, ekspor/tipe tak terpakai, dan dependensi yatim pada proyek JS/TS & monorepo (webpro-nl/knip) khusus Coder.",
-      "scope": "engineering",
-      "source": "https://github.com/webpro-nl/knip",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "knip"
-      ]
-    },
-    {
-      "slug": "raea",
-      "status": "external",
-      "path": null,
-      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): RAEA Render Anything Engine (React/TS + Bevy GPU) untuk render langsung maupun hibrida aset .glb/.gltf dari mcp-for-blender.",
-      "scope": "creative",
-      "source": "https://github.com/shinyobjectz/raea",
-      "kind": "optional-integration-wrapper",
-      "optional_path": "optional/raea/SKILL.md",
-      "public_default": false
-    },
-    {
-      "slug": "cindy-grand-plan",
-      "status": "bundled",
-      "path": "skills/cindy-grand-plan/SKILL.md",
-      "purpose": "Tampilkan Peta Perencanaan Besar interaktif lintas-bot dan skill khusus saat pengguna meminta perencanaan besar agar pengguna dapat mengoreksi rencana sendiri sebelum eksekusi berat.",
-      "scope": "all",
-      "source": "https://github.com/makecindy/cindy",
-      "kind": "integration-wrapper",
-      "integration_ids": [
-        "cindy-grand-plan"
-      ]
-    },
-    {
-      "slug": "meshy-3d-generation",
-      "status": "external",
-      "path": null,
-      "purpose": "Opsional untuk Kiki-Chii (Content Creator / Filmmaker): generasi model 3D dari teks/gambar (GLB/FBX/OBJ/USDZ) dan cetak 3D via Meshy CLI (meshy-cli@0.8) dengan sign-in device code.",
-      "scope": "creative",
-      "source": "https://github.com/meshy-dev/meshy-3d-agent",
-      "kind": "optional-integration-wrapper",
-      "optional_path": "optional/meshy-3d-generation/SKILL.md",
-      "public_default": false
+      "path": "skills/wise-judgment-and-sovereign-orchestrator/SKILL.md",
+      "purpose": "Mengatur pilihan alur, anggaran, persetujuan, delegasi, dan sintesis hasil Val.",
+      "scope": "orchestration"
     }
   ],
   "packs": {
@@ -1706,7 +1757,8 @@
       "slide-generation",
       "unslop",
       "brag",
-      "rea-video"
+      "rea-video",
+      "meme-studio-suite"
     ],
     "business": [
       "business-sage",
@@ -1873,8 +1925,7 @@
       "token-monitor",
       "tokenshield",
       "tokentracker",
-      "unlimited-ocr",
-      "meshy-3d-generation"
+      "unlimited-ocr"
     ]
   },
   "academic_engines": [

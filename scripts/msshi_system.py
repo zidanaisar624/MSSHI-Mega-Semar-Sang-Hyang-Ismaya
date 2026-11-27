@@ -218,7 +218,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
             "blueprint", "risograph", "cel anime", "tilt-shift", "isometric", "ink wash",
             "imagination studio", "slate", "tensorfold", "studio_clip", "studio_picture", "studio_voice",
             "studio_song", "studio_sound", "sharewise", "exif", "gps foto", "sensor wajah", "blur wajah",
-            "hapus metadata",
+            "hapus metadata", "meme", "makememe", "awesome-meme", "caption meme", "meme-studio-suite",
         ),
         "lead": "kiki-chii",
         "coordinator": "shizuka",
@@ -227,6 +227,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "skills": [
             "filmmaking-videography-photography-s2",
             "higgsfield-skills",
+            "meme-studio-suite",
             "cindy-grand-plan",
             "motion-graphics-suite",
             "academic-plotting",

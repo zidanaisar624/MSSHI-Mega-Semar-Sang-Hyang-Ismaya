@@ -572,6 +572,26 @@
     "meshy-3d-generation": {
       "id": "Opsional khusus Kiki-Chii: generasi model 3D dari teks/gambar (GLB/FBX/OBJ/USDZ) dan 3D printing lewat Meshy CLI dengan sign-in device code.",
       "en": "Optional for Kiki-Chii: generate 3D assets from text or images (GLB/FBX/OBJ/USDZ) and prepare 3D prints via Meshy CLI with device-code sign-in."
+    },
+    "meme-studio-suite": {
+      "id": "Khusus Kiki-Chii (Rp0, tanpa API key wajib): studio meme terpadu yang menyatukan makememe (memegen.link), awesome-meme (27+ template programmer Pillow/YAML), meme-lord (pola viral + A/B 6 dimensi lokal tanpa Visa/Exa/fal.ai), dan createa-meme-skill (caption-craft).",
+      "en": "Kiki-Chii Rp0 Meme Studio Suite unifying makememe (zero-key memegen.link), awesome-meme (27+ local Pillow/YAML programmer templates), meme-lord (viral patterns + local 6-dimension A/B rating without Visa/Exa/fal.ai), and createa-meme-skill (caption-craft)."
+    },
+    "makememe": {
+      "id": "Generator URL & PNG meme klasik 100% gratis tanpa API key via api.memegen.link.",
+      "en": "100% free zero-API-key classic meme URL & PNG generator via api.memegen.link."
+    },
+    "awesome-meme": {
+      "id": "Katalog 27+ template meme programmer & klasik lokal dengan perender Pillow + YAML.",
+      "en": "27+ local programmer & classic meme templates with Pillow + YAML text rendering."
+    },
+    "meme-lord": {
+      "id": "Konsep viral, ironic contrast, Two-Step Impact overlay, dan evaluasi A/B lokal 6 dimensi (tanpa Visa CLI, Exa berbayar, atau fal.ai).",
+      "en": "Viral meme concepts, ironic contrast, Two-Step Impact overlay, and local 6-dimension A/B rating (excluding Visa CLI, paid Exa, and fal.ai)."
+    },
+    "createa-meme-skill": {
+      "id": "Panduan caption-craft ('find the turn', 2-6 kata/baris); MCP @createa/meme-mcp opsional hanya jika pengguna memiliki CAM_API_KEY sendiri.",
+      "en": "Caption-craft guide ('find the turn', 2-6 words/line); @createa/meme-mcp optional only if the user brings their own CAM_API_KEY."
     }
   },
   "packs": {
