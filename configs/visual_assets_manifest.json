@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "theme": "Cyber-Noir Editorial Comic (Dual-Tone Cyan #2CE8C6 + Orange #FF6B1A on #0B0F17)",
-  "total_standardized_assets": 25,
+  "total_standardized_assets": 26,
   "canvases": {
     "square_avatar": "320x320 rounded 32px, 4px neon character border",
     "vertical_character": "512x512 rounded 28px dual-tone cyan/orange Sovereign Orchestrator portrait",
@@ -19,9 +19,9 @@
       "border_hex": "#2CE8C6",
       "source_collection": "msshi_public_artwork_semar_v2",
       "source_filename": "scripts/visuals/render_semar.py",
-      "purpose": "Semar V2 · pengantar ekosistem · v3.2.1",
-      "size_bytes": 280789,
-      "sha256": "8450bbb57a45edcb3ae48cc96ed6f65542e09e55dc8637cbdc7589ea50cedfb0"
+      "purpose": "Semar V2 · pengantar ekosistem · v3.2.2",
+      "size_bytes": 281411,
+      "sha256": "1a5ac09bee0e11d97177b0d2351723ca4e604e171d36a743c78f2776f931a026"
     },
     {
       "id": "muza-noir-fullbody",
@@ -278,9 +278,9 @@
       "border_hex": "#FF6B1A",
       "source_collection": "msshi_public_artwork_semar_v2",
       "source_filename": "scripts/visuals/render_semar.py",
-      "purpose": "Semar dan alat sesuai kebutuhan · v3.2.1",
-      "size_bytes": 61078,
-      "sha256": "ffd3765dc953d632cded342d3eea8d678bfe3d95ada4eea525a09eab10504456"
+      "purpose": "Semar dan alat sesuai kebutuhan · v3.2.2",
+      "size_bytes": 61073,
+      "sha256": "60544c55fdb5d99b432fd384185807351a94c147e243d800208e58bba3c1f1d2"
     },
     {
       "id": "showcase-higgsfield-pipeline",
@@ -291,9 +291,9 @@
       "border_hex": "#FF6B1A",
       "source_collection": "msshi_public_artwork_semar_v2",
       "source_filename": "scripts/visuals/render_semar.py",
-      "purpose": "Meme Studio Rp0 dan sembilan modul Higgsfield · v3.2.1",
+      "purpose": "Meme Studio Rp0 dan sembilan modul Higgsfield · v3.2.2",
       "size_bytes": 33184,
-      "sha256": "c9851a086f78db5515c45f2134f6140d0700788c5375f06ba02231bbd295f0c9"
+      "sha256": "d4355ca2b970645620d7cab1945e10ef23e470176165423b859ce71ab017c1f7"
     },
     {
       "id": "showcase-5-missions-overview",
@@ -304,9 +304,22 @@
       "border_hex": "#2CE8C6",
       "source_collection": "msshi_public_artwork_semar_v2",
       "source_filename": "scripts/visuals/render_semar.py",
-      "purpose": "Lima misi dan prioritas riset S1–S3 · v3.2.1",
-      "size_bytes": 82893,
-      "sha256": "9e27c4c5e5558b2d4e11db4a979c641563295b4962522b91ee029ca4888085ea"
+      "purpose": "Lima misi dan prioritas riset S1–S3 · v3.2.2",
+      "size_bytes": 83692,
+      "sha256": "8cf9eb5ebf5db80ec8668444e7cfeb5c4bc42ca955685bd586f3a51e1ae38deb"
+    },
+    {
+      "id": "showcase-val-doi-engine",
+      "output": "assets/showcases/showcase-val-doi-engine.png",
+      "canvas_type": "showcase",
+      "width": 1280,
+      "height": 720,
+      "border_hex": "#2CE8C6",
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Alur Engine DOI 2-Lapis legal, pilihan BYOK, dan Auto-Template Skripsi v1.2 · v3.2.2",
+      "size_bytes": 98900,
+      "sha256": "0e71fe6b153f019c93f591262af23bdf98f5a68137c727d05088c468b085c80b"
     },
     {
       "id": "msshi-visual-explainer-gif",
@@ -317,9 +330,9 @@
       "border_hex": "#2CE8C6",
       "source_collection": "msshi_public_artwork_semar_v2",
       "source_filename": "scripts/visuals/render_semar.py",
-      "purpose": "Lima babak MSSHI untuk README · v3.2.1",
-      "size_bytes": 1241900,
-      "sha256": "aeaf607f95ac68da93145a5318ef24a5723b9047ba7b6be67691a0fd76d96b58"
+      "purpose": "Lima babak MSSHI untuk README · v3.2.2",
+      "size_bytes": 1233394,
+      "sha256": "db1f99f3d7de263d939f90f2fedd19bedde97cdc1cd0231cb8a959993668e5db"
     },
     {
       "id": "msshi-visual-explainer-mp4",
@@ -330,9 +343,9 @@
       "border_hex": "#FF6B1A",
       "source_collection": "msshi_public_artwork_semar_v2",
       "source_filename": "scripts/visuals/render_semar.py",
-      "purpose": "Lima babak MSSHI dalam HD · v3.2.1",
-      "size_bytes": 789474,
-      "sha256": "6b918713572fc1a52b78e6a3a4861bd3238f24d79213e78895d9d7a6d864a2cf"
+      "purpose": "Lima babak MSSHI dalam HD · v3.2.2",
+      "size_bytes": 789827,
+      "sha256": "4f2c0179dda0c4d433c4b8e995869410caa6563252b2a205b42ce923f7c57187"
     }
   ]
 }

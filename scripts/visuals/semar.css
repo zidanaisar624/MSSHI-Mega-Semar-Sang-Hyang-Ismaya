@@ -49,6 +49,34 @@ em { color:var(--gold);font-weight:400 }
 .lane.remote b { color:var(--mint) }
 .studio .foot { font-size:20px;line-height:1.34;color:#d5dbd0 }
 .studio .foot b { color:var(--gold) }
+.valdoi { padding:26px 46px 22px;background:radial-gradient(circle at 14% 16%,#2ce8c61f,transparent 38%),radial-gradient(circle at 86% 84%,#ff6b1a24,transparent 42%),#090e14 }
+.valdoi .folio { margin:0 0 16px;padding-bottom:10px }
+.valdoi-head { display:flex;justify-content:space-between;align-items:center;margin:0 0 14px }
+.valdoi-brand { display:flex;gap:16px;align-items:center }
+.valdoi-emblem { width:62px;height:62px;flex:none }
+.valdoi h2 { font-size:40px;line-height:1.06;margin:0 0 4px }
+.valdoi .hl-cyan { color:#2ce8c6 }
+.valdoi .hl-amber { color:#ff6b1a }
+.valdoi .intro { color:#94a3b8;font-size:15.5px;line-height:1.32;max-width:780px }
+.valdoi-stats { display:flex;gap:10px }
+.valdoi-stat { background:#111827;border:1px solid #263244;padding:8px 14px;text-align:center;min-width:104px }
+.valdoi-stat strong { display:block;font:700 25px/1.05 var(--sans);color:#2ce8c6 }
+.valdoi-stat small { font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8 }
+.valdoi-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:0 0 12px }
+.valdoi-card { background:#111827;border:1px solid #263244;border-top:4px solid #2ce8c6;padding:14px 16px;display:flex;flex-direction:column }
+.valdoi-card.byok { border-top-color:#8b5cf6 }
+.valdoi-card.docx { border-top-color:#ff6b1a }
+.valdoi-tag { font:700 11px/1.2 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:#2ce8c6;margin-bottom:6px }
+.valdoi-card.byok .valdoi-tag { color:#a78bfa }
+.valdoi-card.docx .valdoi-tag { color:#fb923c }
+.valdoi-card h3 { font:normal 24px/1.12 var(--serif);margin:0 0 6px;color:#f8fafc }
+.valdoi-card > p { font-size:13.5px;line-height:1.32;color:#94a3b8;margin-bottom:9px }
+.valdoi-item { background:#0b121c;border:1px solid #1e293b;padding:7px 10px;margin-bottom:6px;font-size:13px;line-height:1.28;color:#cbd5e1 }
+.valdoi-item b { color:#f8fafc }
+.valdoi-path { margin-top:auto;padding-top:6px;font:600 11.5px/1.2 Consolas,monospace;color:#2ce8c6 }
+.valdoi-foot { background:#111827;border:1px solid #263244;padding:9px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#cbd5e1 }
+.valdoi-foot b { color:#2ce8c6 }
+.valdoi-pill { background:#ff6b1a;color:#090e14;font-weight:700;font-size:13px;padding:4px 12px }
 .meme { width:640px;height:400px;padding:20px 22px;background:#19201c }
 .meme::after { inset:6px }
 .meme .folio { font-size:11px;padding-bottom:8px;margin-bottom:12px }

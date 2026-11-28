@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.1 Mega Semar Sang Hyang Ismaya Banner" width="98%">
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.2 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
 # 🌐 MSSHI v3.2.2 — Mega Semar Sang Hyang Ismaya
 ### *Asisten AI Terpadu untuk Tugas Kuliah Mahasiswa & Dosen (Skripsi, Tesis, Disertasi), Belajar Bareng Sensei, Content Creation, dan Coding*
@@ -21,7 +21,7 @@
 
 **Windows x64.** Buka Connect untuk memasang MSSHI atau Doctor untuk memeriksa instalasi yang sudah ada.
 
-[![Unduh Connect untuk Windows](https://img.shields.io/badge/Unduh-Connect_EXE-19614B)](https://github.com/zidanaisar624/MSSHI-CONNECT/releases/download/v1.0.0/MSSHI-Connect-Portable-win-x64.exe) &nbsp; [![Unduh Doctor untuk Windows](https://img.shields.io/badge/Unduh-Doctor_EXE-775415)](https://github.com/zidanaisar624/MSSHI-DOCTOR/releases/download/v1.2.0/MSSHI-Doctor-Portable-win-x64.exe)
+[![Unduh Connect untuk Windows](https://img.shields.io/badge/Unduh-Connect_EXE-19614B)](https://github.com/zidanaisar624/MSSHI-CONNECT/releases/download/v1.0.1/MSSHI-Connect-Portable-win-x64.exe) &nbsp; [![Unduh Doctor untuk Windows](https://img.shields.io/badge/Unduh-Doctor_EXE-775415)](https://github.com/zidanaisar624/MSSHI-DOCTOR/releases/download/v1.2.1/MSSHI-Doctor-Portable-win-x64.exe)
 
 > **v3.2.2 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, **`82` skill bundel (`54` core termasuk `val-doi-research` & `muza-skripsi-template` v1.2 + `28` wrapper termasuk `cindy-grand-plan` & `meme-studio-suite`, plus `6` modul opt-in `rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar` & `meshy-3d-generation`) / `76` sumber upstream ter-pin (`0` orphan) / `7` plugin inti / `40` keluarga CLI (`msshi doi`, `msshi skripsi`) / `46` rute aplikasi CLI-Anything**, **Engine Riset DOI 2-Lapis & Searching Paper milik Val (`val-doi-research` + `msshi doi`: 7 API Open Access gratis + Green-OA Preprint + Elsevier BYOK opsional) yang terhubung ke Auto-Template Skripsi v1.2**, **Win10 4GB Light Build** (`msshi light`), **`anti-slop`** lintas seluruh 5 bot & preset, **Higgsfield Unified Suite (9 modul)** + **Rp0 Meme Studio Suite (`makememe` + `awesome-meme` + `meme-lord` lokal + `caption-craft`)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** untuk Kiki-Chii, serta **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter** khusus Coder, ditambah **Harness²** dan **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Engine DOI 2-Lapis](docs/ELSEVIER_BYOK_AND_2LAYER_ARCHITECTURE.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
 
@@ -68,7 +68,7 @@
 
 ### 🎥 Cara lima bot bekerja bersama
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Lima babak Semar, pembagian peran, studio kreatif, riset, dan pemulihan di MSSHI v3.2.1">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Lima babak Semar, pembagian peran, studio kreatif, riset, dan pemulihan di MSSHI v3.2.2">
 
   <br><sub>Semar dan alat sesuai kebutuhan → pembagian tugas lima bot → studio meme Kiki-Chii dan Higgsfield → riset bersama Val → instalasi dan pemulihan. <a href="assets/showcases/msshi-visual-explainer.mp4"><b>Buka video HD (MP4, 1280×720)</b></a></sub>
 
@@ -79,9 +79,22 @@
 ## 🧭 Lima misi dan gerbang perencanaan Cindy
 
 <div align="center">
-  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="Lima misi MSSHI v3.2.1 dan gerbang peninjauan rencana Cindy">
-  <br><sub>81 skill bundel + 6 opt-in · 76 sumber upstream ter-pin. Misi 02 berfokus pada <b>Riset Untuk S1–S3</b> dengan penekanan <b>Diutamakan S1 Skripsi</b>. Kelima bot dapat menggunakan Cindy Grand-Plan Gate.</sub>
+  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="Lima misi MSSHI v3.2.2 dan gerbang peninjauan rencana Cindy">
+  <br><sub>82 skill bundel + 6 opt-in · 76 sumber upstream ter-pin. Misi 02 berfokus pada <b>Riset Untuk S1–S3</b> dengan penekanan <b>Diutamakan S1 Skripsi</b>. Kelima bot dapat menggunakan Cindy Grand-Plan Gate.</sub>
 </div>
+
+---
+
+## 🔬 Engine Riset DOI 2-Lapis Legal Val &amp; Auto-Template Skripsi v1.2
+
+<div align="center">
+  <img src="assets/showcases/showcase-val-doi-engine.png" width="96%" alt="Alur Engine DOI 2-Lapis legal Val, pilihan BYOK, dan Auto-Template Skripsi v1.2">
+  <br><sub><b>Lapisan 1 Gratis:</b> 7 indeks Open Access legal + pelacak preprint aktif tanpa daftar akun · <b>Lapisan 2 BYOK Opsional:</b> kunci kampus/pribadi bila tersedia, atau lewati sepenuhnya · <b>Hilir:</b> injeksi langsung ke Tabel Bab 2 &amp; Daftar Pustaka Word (<code>.docx</code>).</sub>
+</div>
+
+<br>
+
+Bot **Val** menggabungkan [`val-doi-research`](skills/val-doi-research/SKILL.md), perintah CLI `msshi doi`, serta [arsitektur 2-lapis legal](docs/ELSEVIER_BYOK_AND_2LAYER_ARCHITECTURE.md) dengan [`muza-skripsi-template` v1.2](skills/muza-skripsi-template/SKILL.md). Tanpa kunci API apa pun, Lapisan 1 menelusuri OpenAlex, Unpaywall v2, Crossref, Semantic Scholar, arXiv, PubMed/Europe PMC, dan Internet Archive Scholar; pemilik kunci kampus dapat menambahkan BYOK secara lokal di luar Git, atau melewatinya kapan saja.
 
 ---
 
@@ -173,13 +186,13 @@ flowchart LR
 
 Setiap bot punya berkas [`SOUL.md`](configs/personas/) khusus, batasan otoritas, alokasi skill bundel terukur, profil prosodi **`OmniVoice`**, serta audit otomatis di [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
-| Avatar | Bot &amp; Gelar | Peran &amp; Mandat Eksekusi | Skill &amp; Fitur Andalan `v3.2.1` |
+| Avatar | Bot &amp; Gelar | Peran &amp; Mandat Eksekusi | Skill &amp; Fitur Andalan `v3.2.2` |
 | :---: | :--- | :--- | :--- |
-| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Instalasi baru: bot <code>default</code> Hermes</sub> | Menguji ide mentah pengguna agar tajam sebelum masuk produksi; mengatur ritme energi kerja &amp; mengekstrak *brief* jernih untuk Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skill**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `anti-slop`, `business-sage`. |
-| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Pemimpin orkestrasi tim: merancang strategi Bisnis/BBA/MBA/Pajak RI, menjaga guardrail `TokenShield` (`$1.00`), mendelegasikan tugas, &amp; merangkum hasil akhir untuk manusia. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**31 skill**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `anti-slop`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; Riset Untuk S1–S3 (Diutamakan S1 Skripsi))* | Mesin kecerdasan akademik: memetakan *research gap*, mencari paper primer, merakit template skripsi Word otomatis, meramal deret waktu **`TimesFM`**, &amp; `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**43 skill**) · **Mesin Skripsi #8 (`muza-skripsi-template`)**, `timesfm-forecasting`, `scrapling`, `anti-slop`, `harness2`. |
-| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Sutradara kreatif **Concepting First**: merancang storyboard, produksi film/dokumenter 10–40 menit per bab, video peluncuran **`BRAG`** (**Hyperframes**), &amp; **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**26 skill + 4 opt-in**) · `brag`, `anti-slop`, `higgsfield-skills`, opt-in `mcp-for-blender`, `raea`, `lemo-opuscar`, `imagination-studio`. |
-| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Architect, Coder &amp; Cybersec)* | Arsitek full-stack (KAT-Coder opsional, default OFF), audit kode **`OpenCodeReview`**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust (*Hot-Path Only*)**, defensive cybersecurity, &amp; **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**35 skill + 1 opt-in**) · `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `rust-anything`, `claude-bughunter`, `rea` (opt-in). |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Instalasi baru: bot <code>default</code> Hermes</sub> | Menguji ide mentah pengguna agar tajam sebelum masuk produksi; mengatur ritme energi kerja &amp; mengekstrak *brief* jernih untuk Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**28 skill**) · `brainstorming-research-ideas`, `focus-my-energy`, `cindy-grand-plan`, `anti-slop`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Pemimpin orkestrasi tim: merancang strategi Bisnis/BBA/MBA/Pajak RI, menjaga guardrail `TokenShield` (`$1.00`), mendelegasikan tugas, &amp; merangkum hasil akhir untuk manusia. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**32 skill**) · `wise-judgment-and-sovereign-orchestrator`, `cindy-grand-plan`, `business-sage`, `anti-slop`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; Riset Untuk S1–S3 (Diutamakan S1 Skripsi))* | Mesin kecerdasan akademik: Engine DOI 2-Lapis legal + pencarian paper, merakit template skripsi Word v1.2, meramal deret waktu **`TimesFM`**, &amp; `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**45 skill**) · **`val-doi-research` (`msshi doi`) + `muza-skripsi-template` v1.2**, `timesfm-forecasting`, `scrapling`, `anti-slop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Sutradara kreatif **Concepting First**: merancang storyboard, meme lokal Rp0, produksi film/dokumenter 10–40 menit per bab, video peluncuran **`BRAG`**, &amp; **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**28 skill + 5 opt-in**) · `meme-studio-suite`, `brag`, `anti-slop`, `higgsfield-skills`, opt-in `mcp-for-blender`, `raea`, `lemo-opuscar`, `imagination-studio`, `meshy-3d-generation`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Architect, Coder &amp; Cybersec)* | Arsitek full-stack (KAT-Coder opsional, default OFF), audit kode **`OpenCodeReview`**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust (*Hot-Path Only*)**, defensive cybersecurity, &amp; **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**36 skill + 1 opt-in**) · `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `rust-anything`, `claude-bughunter`, `rea` (opt-in). |
 
 > 🦀 **Shared Foundation Across All 5 Bots:** Seluruh 5 persona memakai [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md) (pengganti 22 MCP lokal berat — aplikasi dibuka **hanya** saat ada tiket `msshi runtime ticket`), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, dan proteksi hook lossless [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
 
@@ -287,7 +300,7 @@ flowchart LR
 ### Cara Paling Santai (Cukup Copy-Paste ke Chat Agen AI Anda)
 Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya akses terminal &amp; web, lalu kirim pesan ini:
 
-> `Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI v3.2.1 untukku tanpa mengubah provider/model asliku!`
+> `Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI v3.2.2 untukku tanpa mengubah provider/model asliku!`
 
 ### Atau Pasang Langsung via Terminal &amp; Peluncur 1-Klik
 
@@ -377,7 +390,7 @@ Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya
 | **`assets/`** | `avatars/` (Hero banner dual-tone, fullbody Noir &amp; 5 avatar karakter seragam), `memes/` (komik evolusi 2x2 &amp; meme reaksi), `showcases/`, `diagrams/` (8 SVG arsitektur), serta [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json) &amp; [`assets/README.md`](assets/README.md). |
 | **`scripts/`** | Mesin CLI `msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`, `prepare_github_visuals.py`, `secret_scan.py`, &amp; `check_release*.py`. |
 | **`configs/`** | Matriks skill (`bot_role_and_skill_matrix.json`, `upstreams.json`, `skill_activation_matrix.json`), persona 5 bot (`configs/personas/`), &amp; [`configs/github_about.txt`](configs/github_about.txt). |
-| **`skills/` &amp; `optional/`** | **79 folder skill aktif terbundel (`53 inti + 26 wrapper`)** termasuk 11-file `skills/muza-skripsi-template/`, `anti-slop`, `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `higgsfield-skills`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus **5 wrapper opt-in (`rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar`)**. |
+| **`skills/` &amp; `optional/`** | **82 folder skill aktif terbundel (`54 inti + 28 wrapper`)** termasuk `val-doi-research`, `muza-skripsi-template` v1.2, `cindy-grand-plan`, `meme-studio-suite`, `anti-slop`, `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `higgsfield-skills`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus **6 wrapper opt-in (`rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar`, `meshy-3d-generation`)**. |
 
 ---
 

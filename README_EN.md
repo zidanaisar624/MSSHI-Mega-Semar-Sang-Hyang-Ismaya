@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.1 Mega Semar Sang Hyang Ismaya Banner" width="98%">
+<img src="assets/avatars/hero-muza-banner.png" alt="MSSHI v3.2.2 Mega Semar Sang Hyang Ismaya Banner" width="98%">
 
 # 🌐 MSSHI v3.2.2 — Mega Semar Sang Hyang Ismaya
 ### *Hermes Ultimate Optimizer · 5-Bot Sovereign Sage Suite · Val 2-Layer DOI Engine + MuZA Skripsi v1.2*
@@ -21,7 +21,7 @@
 
 **Windows x64.** Open Connect to install MSSHI, or Doctor to inspect an existing installation.
 
-[![Download Connect for Windows](https://img.shields.io/badge/Download-Connect_EXE-19614B)](https://github.com/zidanaisar624/MSSHI-CONNECT/releases/download/v1.0.0/MSSHI-Connect-Portable-win-x64.exe) &nbsp; [![Download Doctor for Windows](https://img.shields.io/badge/Download-Doctor_EXE-775415)](https://github.com/zidanaisar624/MSSHI-DOCTOR/releases/download/v1.2.0/MSSHI-Doctor-Portable-win-x64.exe)
+[![Download Connect for Windows](https://img.shields.io/badge/Download-Connect_EXE-19614B)](https://github.com/zidanaisar624/MSSHI-CONNECT/releases/download/v1.0.1/MSSHI-Connect-Portable-win-x64.exe) &nbsp; [![Download Doctor for Windows](https://img.shields.io/badge/Download-Doctor_EXE-775415)](https://github.com/zidanaisar624/MSSHI-DOCTOR/releases/download/v1.2.1/MSSHI-Doctor-Portable-win-x64.exe)
 
 > **v3.2.2 Complete Release:** fresh installations assign Yukino to the default profile alongside four specialists. Existing profile layouts are preserved. The package includes **`82` bundled skills (`54` core including `val-doi-research` & `muza-skripsi-template` v1.2 + `28` wrappers including `cindy-grand-plan` & `meme-studio-suite`, plus `6` opt-in modules `rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar` & `meshy-3d-generation`) / `76` pinned upstream sources (`0` orphans) / `7` native plugins / `40` CLI families (`msshi doi`, `msshi skripsi`) / `46` CLI-Anything app routes**, **Val's 2-Layer Legal DOI & Paper Search Engine (`val-doi-research` + `msshi doi`: 7 free Open Access APIs + Green-OA Preprint Resolver + optional Elsevier BYOK) wired directly into Auto-Template Skripsi v1.2**, **Win10 4GB Light Build** (`msshi light`), universal **`anti-slop`** across all 5 bots & presets, **Higgsfield Unified Suite (9 modules)** + **Rp0 Meme Studio Suite (`makememe` + `awesome-meme` + local `meme-lord` A/B + `caption-craft`)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** for Kiki-Chii, Coder-scoped **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [2-Layer DOI Engine](docs/ELSEVIER_BYOK_AND_2LAYER_ARCHITECTURE.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
 
@@ -68,7 +68,7 @@
 
 ### 🎥 How the five bots work together
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Five scenes showing on-demand tools, team roles, Kiki-Chii’s studio, Val’s research, and recovery in MSSHI v3.2.1">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Five scenes showing on-demand tools, team roles, Kiki-Chii’s studio, Val’s research, and recovery in MSSHI v3.2.2">
 
 <br><sub>Follow a task through the team, from choosing tools to reviewing creative work and research. The last scene shows where Connect and Doctor fit. <a href="assets/showcases/msshi-visual-explainer.mp4"><b>Watch the HD video (MP4, 1280×720)</b></a></sub>
 
@@ -79,9 +79,22 @@
 ## 🧭 The five missions and Cindy’s planning review
 
 <div align="center">
-  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="MSSHI v3.2.1 missions and the Cindy planning review">
-  <br><sub>81 bundled skills, 6 optional skills and 76 pinned upstreams. Mission 02 supports undergraduate through doctoral research, with priority for the Indonesian undergraduate thesis. Each bot can use the Cindy Grand-Plan Gate to review a large project before execution.</sub>
+  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="MSSHI v3.2.2 missions and the Cindy planning review">
+  <br><sub>82 bundled skills, 6 optional skills and 76 pinned upstreams. Mission 02 supports undergraduate through doctoral research, with priority for the Indonesian undergraduate thesis. Each bot can use the Cindy Grand-Plan Gate to review a large project before execution.</sub>
 </div>
+
+---
+
+## 🔬 Val’s Legal 2-Layer DOI Engine &amp; Auto-Template Skripsi v1.2
+
+<div align="center">
+  <img src="assets/showcases/showcase-val-doi-engine.png" width="96%" alt="Val’s legal 2-layer DOI engine, optional BYOK path, and Auto-Template Skripsi v1.2">
+  <br><sub><b>Layer 1 Free:</b> 7 legal Open Access indices + Green-OA preprint resolver active out of the box · <b>Layer 2 Optional BYOK:</b> bring your own campus/personal keys or skip freely · <b>Downstream:</b> direct Word (<code>.docx</code>) Chapter 2 &amp; Bibliography injection.</sub>
+</div>
+
+<br>
+
+**Val** connects [`val-doi-research`](skills/val-doi-research/SKILL.md), the `msshi doi` CLI, and the [2-layer legal architecture](docs/ELSEVIER_BYOK_AND_2LAYER_ARCHITECTURE.md) directly into [`muza-skripsi-template` v1.2](skills/muza-skripsi-template/SKILL.md). Layer 1 queries OpenAlex, Unpaywall v2, Crossref, Semantic Scholar, arXiv, PubMed/Europe PMC, and Internet Archive Scholar without requiring API keys; users with institutional keys may opt into local BYOK outside Git or skip it anytime.
 
 ---
 
@@ -171,13 +184,13 @@ flowchart LR
 
 Every bot carries its own [`SOUL.md`](configs/personas/) persona instructions, domain guardrails, curated bundled skill count, local **`OmniVoice`** prosody, and verified skill allocation audited in [`docs/AUDIT_SKILLS_PER_BOT.md`](docs/AUDIT_SKILLS_PER_BOT.md):
 
-| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.2.1` Stack |
+| Avatar | Bot &amp; Title | Core Mandate | Signature `v3.2.2` Stack |
 | :---: | :--- | :--- | :--- |
-| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Fresh install: Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**27 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `idea-generation`, `anti-slop`, `business-sage`. |
-| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**31 skills**) · `wise-judgment-and-sovereign-orchestrator`, `business-sage`, `anti-slop`, `muza-skripsi-template`. |
-| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 — Prioritizing S1 Skripsi)* | Drives literature discovery, 8 academic thesis engines, automatic Word template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**43 skills**) · **`muza-skripsi-template` (Engine #8)**, `timesfm-forecasting`, `scrapling`, `anti-slop`, `harness2`. |
-| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, 10–40 min chaptered film timelines, **`BRAG`** (**Hyperframes**) launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**26 skills + 4 opt-in**) · `brag`, `anti-slop`, `higgsfield-skills`, opt-in `mcp-for-blender`, `raea`, `lemo-opuscar`, `imagination-studio`. |
-| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (optional KAT-Coder, default OFF), **`OpenCodeReview`**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust (*Hot-Path Only*)**, defensive security, &amp; **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**35 skills + 1 opt-in**) · `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `rust-anything`, `claude-bughunter`, `rea` (opt-in). |
+| <img src="assets/avatars/bot-01-yukino.png" width="84" alt="Yukino Yukinoshita"> | **1. Yukino Yukinoshita**<br>*(Idea Sparring Partner)*<br><sub>Fresh install: Hermes <code>default</code> bot</sub> | Stress-tests raw user prompts, structures energy budgets, and crystallizes actionable briefs for Shizuka. | [`configs/personas/yukino.md`](configs/personas/yukino.md) (**28 skills**) · `brainstorming-research-ideas`, `focus-my-energy`, `cindy-grand-plan`, `anti-slop`, `business-sage`. |
+| <img src="assets/avatars/bot-02-shizuka.png" width="84" alt="Sensei Shizuka Hiratsuka"> | **2. Sensei Shizuka Hiratsuka**<br>*(Mastermind Orchestrator)* | Leads execution strategy, Business/MBA/Tax advisory, enforces `TokenShield` (`$1.00`), routes tasks, and synthesizes final client decisions. | [`configs/personas/shizuka.md`](configs/personas/shizuka.md) (**32 skills**) · `wise-judgment-and-sovereign-orchestrator`, `cindy-grand-plan`, `business-sage`, `anti-slop`, `muza-skripsi-template`. |
+| <img src="assets/avatars/bot-03-val.png" width="84" alt="Val Deep Research"> | **3. Val**<br>*(Deep Research &amp; S1–S3 — Prioritizing S1 Skripsi)* | Drives legal 2-layer DOI &amp; paper discovery, 8 academic thesis engines, automatic Word v1.2 template assembly, CPU **`TimesFM`** forecasting, and `hermes-dreaming`. | [`configs/personas/val.md`](configs/personas/val.md) (**45 skills**) · **`val-doi-research` (`msshi doi`) + `muza-skripsi-template` v1.2**, `timesfm-forecasting`, `scrapling`, `anti-slop`, `harness2`. |
+| <img src="assets/avatars/bot-04-kikichii.png" width="84" alt="Kiki-Chii Creative Lead"> | **4. Kiki-Chii**<br>*(One-Woman Creative Studio)* | Directs **Concepting First** workflows, Rp0 local meme A/B studio, 10–40 min chaptered film timelines, **`BRAG`** launch videos, and **`UI/UX Pro Max`**. | [`configs/personas/kiki-chii.md`](configs/personas/kiki-chii.md) (**28 skills + 5 opt-in**) · `meme-studio-suite`, `brag`, `anti-slop`, `higgsfield-skills`, opt-in `mcp-for-blender`, `raea`, `lemo-opuscar`, `imagination-studio`, `meshy-3d-generation`. |
+| <img src="assets/avatars/bot-05-shikaku.png" width="84" alt="Shikaku Nara Architect"> | **5. Shikaku Nara**<br>*(Principal Architect &amp; Cybersec)* | Full-stack vibecoding (optional KAT-Coder, default OFF), **`OpenCodeReview`**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust (*Hot-Path Only*)**, defensive security, &amp; **Opt-in `REA`**. | [`configs/personas/shikaku.md`](configs/personas/shikaku.md) (**36 skills + 1 opt-in**) · `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `rust-anything`, `claude-bughunter`, `rea` (opt-in). |
 
 > 🦀 **Shared Foundation Across All 5 Bots:** Every persona inherits [`cli-anything-universal-bridge`](skills/cli-anything-universal-bridge/SKILL.md), `humanizer-indonesia`, `humanizer-en`, `unlimited-ocr-2`, and lossless JSON compression via [`msshi-auto-trim`](hermes_plugins/msshi-auto-trim/README.md).
 
@@ -277,7 +290,7 @@ flowchart LR
 
 **Fastest Option (Paste into Agent Chat):**
 
-> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.2.1 for me without overriding my existing LLM provider/model!`
+> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.2.2 for me without overriding my existing LLM provider/model!`
 
 - **Windows Beginners:** Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 for versioned PDF manuals), or drag `.zip`/`.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat).
 - **v2.x Upgrade:** Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once (backs up `SOUL.md` &amp; `Creative DNA` automatically).
@@ -353,7 +366,7 @@ flowchart LR
 - **`docs/pdf-guides/` &amp; `docs/manuals/`**: Release-versioned PDF handbooks (7-page Master Client Guide &amp; 37-page Complete Handbook, Nov 22, 2026 edition), `latest/`, and [`pdf_catalog.json`](docs/manuals/pdf_catalog.json).
 - **`assets/`**: Standardized `avatars/`, `memes/`, `showcases/`, 8 SVG [`diagrams/`](assets/README.md), and [`configs/visual_assets_manifest.json`](configs/visual_assets_manifest.json).
 - **`scripts/`**: CLI (`msshi_cli.py`, `msshi_hermes_profiles.py`, `msshi_runtime.py`, `msshi_integrations.py`, `msshi_service_connections.py`, `msshi_doctor.py`, `msshi_skripsi_drop.py`), visual builder (`prepare_github_visuals.py`), `secret_scan.py`, and release auditors (`check_release*.py`).
-- **`skills/` &amp; `optional/`**: **79 bundled active skill folders (`53 core + 26 wrappers`)** including 11-file `muza-skripsi-template/`, `anti-slop`, `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `higgsfield-skills`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus **5 opt-in wrappers (`rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar`)**.
+- **`skills/` &amp; `optional/`**: **82 bundled active skill folders (`54 core + 28 wrappers`)** including `val-doi-research`, `muza-skripsi-template` v1.2, `cindy-grand-plan`, `meme-studio-suite`, `anti-slop`, `open-code-review`, `ast-grep`, `knip`, `modern-web-guidance`, `higgsfield-skills`, `rust-anything`, `claude-bughunter`, `grim-prompter`, plus **6 opt-in wrappers (`rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar`, `meshy-3d-generation`)**.
 
 ---
 
