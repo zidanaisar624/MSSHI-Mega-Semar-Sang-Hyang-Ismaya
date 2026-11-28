@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import importlib.util
 import json
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
 import tempfile
 import unittest
@@ -43,6 +45,36 @@ class MemeStudioSuiteTests(unittest.TestCase):
             text = out_html.read_text(encoding="utf-8")
             self.assertIn("Rubrik 6 Dimensi", text)
             self.assertIn("Ironic Contrast", text)
+
+    def test_template_count_unicode_url_and_caption_lint(self):
+        mod = _load_helper()
+        self.assertEqual(len({row["id"] for row in mod.search_templates()}), 28)
+        self.assertTrue(mod.search_templates("table-unflip"))
+        self.assertIn("caf%C3%A9", mod.build_memegen_url("drake", ["café"]))
+        self.assertTrue(mod.caption_lint(["satu dua tiga empat lima enam tujuh"]))
+        self.assertFalse(mod.caption_lint(["Revisi selesai"]))
+
+    def test_local_board_paths_and_human_scores(self):
+        mod = _load_helper()
+        legacy = mod.parse_candidate(r"A:D:\contoh\a.png:Kontras")
+        self.assertEqual(legacy["image"], r"D:\contoh\a.png")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            image = root / "gambar #1.png"
+            image.touch()
+            board = root / "hasil" / "pilih.html"
+            with redirect_stdout(StringIO()):
+                self.assertEqual(mod.main(["ab-rate-html", "--entry", "A:1", str(image), "A & B",
+                                           "--output", str(board)]), 0)
+            text = board.read_text(encoding="utf-8")
+            self.assertIn('src="../gambar%20%231.png"', text)
+            self.assertIn("A &amp; B", text)
+            self.assertIn("Belum dinilai", text)
+            self.assertEqual(text.count("value=''"), 6)
+            with self.assertRaises(ValueError):
+                mod.local_image_link("https://example.org/meme.png", board)
+            with self.assertRaises(ValueError):
+                mod.composite_score({"cost": 10})
 
     def test_kiki_chii_meme_suite_and_antigravity_no_meshy_policy(self):
         matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))

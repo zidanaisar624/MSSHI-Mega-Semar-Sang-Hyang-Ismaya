@@ -1,6 +1,6 @@
 ---
 name: meme-studio-suite
-description: Studio pembuatan meme Rp0 khusus Kiki-Chii yang menyatukan 4 alur open-source MIT: (1) makememe (URL/PNG instan tanpa API key lewat memegen.link), (2) awesome-meme (27+ template programmer & klasik via Pillow + YAML lokal dengan dukungan Impact/CJK), (3) meme-lord (pola viral Hall of Fame, ironic contrast, Two-Step Clean-Scene + Impact Overlay, serta evaluasi A/B lokal 6 dimensi — TANPA Visa CLI, Exa berbayar, StableUpload, atau fal.ai), dan (4) createa-meme-skill (caption-craft 'find the turn' 2-6 kata per baris + MCP opsional @createa/meme-mcp hanya jika Pengguna membawa CAM_API_KEY kuota gratis 20/bulan tanpa kartu).
+description: Studio meme Kiki-Chii untuk mencari 28 konsep template, merender gambar dengan Pillow, membuat URL memegen, dan membandingkan caption lewat papan penilaian A/B lokal. Empat sumber MIT dan integrasi Create a Meme opsional.
 license: MIT
 ---
 
@@ -8,10 +8,10 @@ license: MIT
 
 Skill khusus **Kiki-Chii** yang menggabungkan empat mesin meme open-source berlisensi **MIT** menjadi alur kerja **Rp0 (tanpa API key berbayar wajib)**:
 
-1. **`dhruvmehra/makememe`** — URL & PNG meme instan via `api.memegen.link` (200+ template klasik, Python stdlib murni, 0 API key).
-2. **`edwinjhlee/awesome-meme`** — 27+ template programmer & klasik dengan render lokal presisi (`Pillow` + `YAML`, deteksi font `Impact` Windows/macOS + fallback CJK otomatis).
+1. **`dhruvmehra/makememe`** — Susun URL memegen dengan Python. Saat tautan dibuka atau `--download` digunakan, layanan memegen menerima teks caption. Pilih render lokal untuk naskah pribadi.
+2. **`edwinjhlee/awesome-meme`** — Katalog MSSHI berisi 28 konsep programmer dan klasik. Perintah `templates` menampilkan ID, jumlah slot, dan makna. Untuk memakai foto atau ilustrasi tertentu, berikan gambar lokal dengan `--image`. `render-local` memakai Pillow dan font yang terpasang. Aset gambar dan definisi YAML upstream dikelola terpisah.
 3. **`csmoove530/meme-lord` (Edisi Bersih Rp0)** — HANYA mengadopsi *Hall of Fame*, 8 Pola Sukses Universal, *Two-Step Clean-Scene + Impact Overlay*, dan papan evaluasi A/B lokal 6 dimensi (`meme-rating/`). **SKIP TOTAL:** Visa CLI, pencarian Exa berbayar, StableUpload, dan `fal.ai`.
-4. **`RiskAverseTech/createa-meme-skill`** — Disiplin *Caption Craft* (*"The one rule: find the turn"*, 2–6 kata per baris, 1 ide tunggal per meme); server `@createa/meme-mcp` bersifat **100% opsional BYOK** hanya bila Pengguna sudah memiliki `CAM_API_KEY` (kuota gratis 20 meme/bulan tanpa kartu kredit).
+4. **`RiskAverseTech/createa-meme-skill`** — Tulis satu gagasan dan cari titik baliknya dalam 2–6 kata per baris. Pengguna yang memilih integrasi `@createa/meme-mcp` menyediakan kunci miliknya sendiri.
 
 ---
 
@@ -23,7 +23,7 @@ Sebelum menyentuh template atau merender gambar, Kiki-Chii **WAJIB** menguji kon
    - Meme bekerja dari **kontras tajam** antara dua sisi: *ekspektasi vs realita*, *apa yang diucapkan vs apa yang dirasakan*, *percaya diri di awal vs panik di akhir*, atau *solusi over-engineered vs masalah sepele*.
    - Jika belum ada kontras (*turn*), itu baru pernyataan biasa — bukan meme.
 2. **2–6 Kata per Baris & Satu Ide per Meme:**
-   - Baris pendek terbaca dalam `< 1.5` detik saat audiens *scrolling*.
+   - Baca kedua baris pada ukuran layar ponsel. Pangkas kata yang sekadar mengulang ekspresi di gambar.
    - Buang kata pengisi (*"ketika kamu sedang mencoba untuk..."* -> langsung *"Deploy Jumat 17:55"*).
 3. **Spesifik Mengalahkan Umum (*Specificity Wins*):**
    - Buruk: *"Ketika kodenya banyak bug."*
@@ -55,13 +55,13 @@ python skills/meme-studio-suite/scripts/msshi_meme_studio.py url fine "RAM tingg
 Aturan escape `memegen.link` ditangani otomatis (`_` -> `__`, `-` -> `--`, spasi -> `_`, `?` -> `~q`, `%` -> `~p`, `#` -> `~h`, `/` -> `~s`, `"` -> `''`, `\n` -> `~n`).
 
 ### Jalur B — Template Programmer & Render Lokal Pillow (`awesome-meme`, Rp0)
-Cocok untuk meme developer (`vim-exit`, `it-works-why`, `wtf-per-minute`, `code-review-guy`, `monday-deploy`, `stackoverflow-copy`, `bug-feature`, `lgtm`, `programmer-drink`, `distracted-boyfriend`, `chill-guy`) atau menempel teks di atas gambar lokal milik Pengguna:
+Cari gagasan lewat `templates --query programmer`. Untuk merender teks, siapkan Pillow (`python -m pip install Pillow` jika belum tersedia), lalu gunakan gambar yang boleh dipakai atau pilih kanvas kosong. Untuk URL eksternal, lihat ID yang tersedia di [katalog memegen](https://api.memegen.link/templates/).
 
 ```bash
 # Render teks Impact putih ber-stroke hitam di atas gambar lokal (mendukung Latin & CJK otomatis)
 python skills/meme-studio-suite/scripts/msshi_meme_studio.py render-local --image base.png --top "KATANYA CUMA HOTFIX" --bottom "3 REPO IKUT REBUILD" --output out_meme.png
 
-# Atau buat kartu meme 2-panel / kanvas lokal cepat tanpa gambar eksternal
+# Buat kartu meme dengan caption atas dan bawah pada kanvas kosong
 python skills/meme-studio-suite/scripts/msshi_meme_studio.py render-local --canvas 900x600 --top "RENCANA: TIDUR JAM 10" --bottom "REALITA: DEBUG SAMPAI SUBUH" --output card_meme.png
 ```
 
@@ -72,13 +72,13 @@ Jika Pengguna ingin visual orisinal (bukan template stok):
 3. **Langkah 3 (A/B Testing Lokal 2–3 Kandidat):** Hasilkan 2–3 variasi caption/visual lalu buat lembar review HTML interaktif lokal:
 
 ```bash
-python skills/meme-studio-suite/scripts/msshi_meme_studio.py ab-rate-html --title "Uji A/B Meme Rilis" --candidate "Varian A:meme_a.png:Kontras Ironis" --candidate "Varian B:meme_b.png:Deadpan Developer" --output ab_meme_review.html
+python skills/meme-studio-suite/scripts/msshi_meme_studio.py ab-rate-html --title "Uji A/B Meme Rilis" --entry "Varian A" "meme_a.png" "Kontras ironis" --entry "Varian B" "meme_b.png" "Reaksi datar" --output ab_meme_review.html
 ```
 
-Bobot evaluasi 6 dimensi: **Concept (`30%`) + Visual Quality (`25%`) + Meme Fit (`20%`) + Consistency (`15%`) + Speed (`5%`) + Cost (`5%`)**.
+Buka `ab_meme_review.html` di browser, lalu isi keenam angka 1–10 pada tiap gambar. Nilai konsep (30%), kualitas visual (25%), kecocokan format meme (20%), konsistensi (15%), kecepatan (5%), dan biaya (5%) menghasilkan skor gabungan. Angka awal dibiarkan kosong agar pilihanmu menentukan hasil. Pilih **Cetak hasil** untuk menyimpan PDF sebelum menutup halaman. Papan membaca gambar dari disk. Jika dibagikan, sertakan file gambarnya bersama HTML dengan susunan folder yang sama.
 
 ### Jalur D — Opsional BYOK `@createa/meme-mcp` (`createa-meme-skill`)
-- **HANYA digunakan jika Pengguna secara sukarela sudah memasang `CAM_API_KEY`** (kuota gratis 20 meme/bulan tanpa kartu kredit dari `https://createameme.org`).
+- Aktifkan ketika pengguna memilih layanan tersebut dan sudah memasang `CAM_API_KEY` miliknya. Kuota layanan mengikuti ketentuan penyedia.
 - Jika `CAM_API_KEY` belum ada, **jangan memaksa pendaftaran** — langsung layani lewat Jalur A, B, atau C yang 100% gratis tanpa akun.
 
 ---

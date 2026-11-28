@@ -16,7 +16,9 @@ import html
 import json
 import os
 from pathlib import Path
+import re
 import sys
+from urllib.parse import quote
 import urllib.request
 
 sys.dont_write_bytecode = True
@@ -47,6 +49,12 @@ OFFLINE_TEMPLATES: tuple[dict[str, object], ...] = (
     {"id": "stackoverflow-copy", "awesome_id": "stackoverflow-copy", "slots": 2, "tags": "programmer copy-paste", "meaning": "Shipping copy-pasted snippets"},
     {"id": "bug-feature", "awesome_id": "bug-feature", "slots": 2, "tags": "programmer product", "meaning": "It is not a bug, it is a feature"},
     {"id": "chill-guy", "awesome_id": "chill-guy", "slots": 2, "tags": "calm pressure deadline", "meaning": "Unbothered chill guy under pressure"},
+    {"id": "code-review-guy", "awesome_id": "code-review-guy", "slots": 2, "tags": "programmer review pull request", "meaning": "A tiny review request reveals a much larger change"},
+    {"id": "lgtm", "awesome_id": "lgtm", "slots": 2, "tags": "programmer review tests", "meaning": "Approval meets the evidence the reviewer missed"},
+    {"id": "programmer-drink", "awesome_id": "programmer-drink", "slots": 2, "tags": "programmer caffeine deadline", "meaning": "Compare the planned work with the coffee it took"},
+    {"id": "panda-head-work", "awesome_id": "panda-head-work", "slots": 2, "tags": "reaction thesis work", "meaning": "A calm face masks an unexpected assignment"},
+    {"id": "table-flip", "awesome_id": "table-flip", "slots": 1, "tags": "reaction frustration bug", "meaning": "One last surprise after many failed attempts"},
+    {"id": "table-unflip", "awesome_id": "table-unflip", "slots": 1, "tags": "reaction relief bug", "meaning": "Calm returns when a difficult fix finally works"},
 )
 
 WEIGHTS = {
@@ -98,8 +106,12 @@ def escape_memegen(text: str) -> str:
 
 def build_memegen_url(template: str, lines: list[str], ext: str = "png") -> str:
     slug = template.strip().strip("/")
-    escaped = "/".join(escape_memegen(line) for line in (lines or ["_"]))
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", slug):
+        raise ValueError("Gunakan ID template memegen seperti drake atau fine.")
+    escaped = "/".join(quote(escape_memegen(line), safe="~'") for line in (lines or [""]))
     clean_ext = ext.lstrip(".").lower() or "png"
+    if clean_ext not in {"png", "jpg", "jpeg", "webp", "gif"}:
+        raise ValueError("Pilih format PNG, JPG, WebP, atau GIF.")
     return f"{MEMEGEN_BASE}/images/{slug}/{escaped}.{clean_ext}"
 
 
@@ -107,8 +119,8 @@ def caption_lint(lines: list[str]) -> list[str]:
     warnings: list[str] = []
     for idx, line in enumerate(lines, start=1):
         words = [w for w in line.strip().split() if w]
-        if len(words) > 10:
-            warnings.append(f"Line {idx} has {len(words)} words (caption-craft target is 2-6 words, max 10).")
+        if words and not 2 <= len(words) <= 6:
+            warnings.append(f"Baris {idx} memuat {len(words)} kata. Sasaran 2–6 kata; pertahankan jika ritme lelucon membutuhkannya.")
     return warnings
 
 
@@ -185,43 +197,84 @@ def render_local_meme(
 
 
 def composite_score(scores: dict[str, float]) -> float:
-    return round(sum(float(scores.get(k, 8.0)) * w for k, w in WEIGHTS.items()), 2)
+    if any(k not in scores or not 1 <= float(scores[k]) <= 10 for k in WEIGHTS):
+        raise ValueError("Isi keenam nilai dari 1 sampai 10 sebelum menghitung skor.")
+    return round(sum(float(scores[k]) * weight for k, weight in WEIGHTS.items()), 2)
+
+
+def parse_candidate(raw: str) -> dict[str, str]:
+    # Retain the original Label:image:Pattern form, including Windows drive letters.
+    label, _, rest = raw.partition(":")
+    match = re.fullmatch(r"((?:[A-Za-z]:[\\/])?[^:]*)(?::(.*))?", rest)
+    if not match:
+        raise ValueError("Pisahkan label, gambar, dan pola dengan opsi --entry.")
+    return {"label": label or "Kandidat", "image": match[1], "pattern": match[2] or "Kontras ironis"}
+
+
+def local_image_link(image: str, output_path: Path) -> str:
+    if not image:
+        return ""
+    if image.startswith(("\\\\", "//")) or (
+        re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", image) and not re.match(r"^[A-Za-z]:[\\/]", image)
+    ):
+        raise ValueError("Untuk papan offline, pilih berkas gambar dari disk lokal.")
+    path = Path(image).expanduser().resolve()
+    try:
+        relative = os.path.relpath(path, output_path.resolve().parent)
+    except ValueError:  # HTML and image are on different Windows drives.
+        return path.as_uri()
+    return quote(Path(relative).as_posix(), safe="/")
 
 
 def generate_ab_html(title: str, candidates: list[dict[str, object]], output_path: Path) -> Path:
+    if not candidates:
+        raise ValueError("Tambahkan sedikitnya satu kandidat melalui --entry.")
     cards = []
     for idx, item in enumerate(candidates, start=1):
-        label = html.escape(str(item.get("label", f"Candidate {idx}")))
-        src = html.escape(str(item.get("image", "")))
-        pattern = html.escape(str(item.get("pattern", "Ironic Contrast")))
-        sc = item.get("scores") if isinstance(item.get("scores"), dict) else {}
-        default_scores = {
-            "concept": float(sc.get("concept", 8.5)),
-            "quality": float(sc.get("quality", 8.5)),
-            "meme_fit": float(sc.get("meme_fit", 8.5)),
-            "consistency": float(sc.get("consistency", 8.5)),
-            "speed": float(sc.get("speed", 9.5)),
-            "cost": float(sc.get("cost", 10.0)),
-        }
-        total = composite_score(default_scores)
-        cards.append(
-            f"<section class='card'><h2>#{idx} {label}</h2>"
-            f"<p class='meta'>Pattern: <strong>{pattern}</strong> | Composite: <strong>{total}/10</strong> (Rp0)</p>"
-            f"{f'<img src=\"{src}\" alt=\"{label}\">' if src else ''}"
-            f"<ul>"
-            + "".join(f"<li><code>{k}</code> ({int(WEIGHTS[k]*100)}%): {v}</li>" for k, v in default_scores.items())
-            + "</ul></section>"
-        )
+        label = html.escape(str(item.get("label", f"Kandidat {idx}")))
+        src = html.escape(local_image_link(str(item.get("image", "")), output_path))
+        pattern = html.escape(str(item.get("pattern", "Kontras ironis")))
+        scores = item.get("scores", {})
+        if not isinstance(scores, dict):
+            raise ValueError("Skor harus berupa nilai per dimensi.")
+        inputs = []
+        for criterion, weight in WEIGHTS.items():
+            score = ""
+            if criterion in scores:
+                value = float(scores[criterion])
+                if not 1 <= value <= 10:
+                    raise ValueError(f"Nilai {criterion} harus berada dalam rentang 1–10.")
+                score = str(value)
+            inputs.append(
+                f"<label>{criterion.replace('_', ' ').title()} ({weight:.0%})"
+                f"<input type='number' min='1' max='10' step='any' data-weight='{weight}' value='{score}'></label>"
+            )
+        initial = "Belum dinilai"
+        if all(k in scores for k in WEIGHTS):
+            initial = f"{composite_score(scores):.2f}/10"
+        image = f'<img src="{src}" alt="{label}">' if src else ""
+        cards.append(f"<section><h2>{label}</h2><p>{pattern}</p>{image}{''.join(inputs)}"
+                     f"<p>Skor gabungan <output aria-live='polite'>{initial}</output></p></section>")
     doc = (
-        "<!doctype html><html lang='id'><head><meta charset='utf-8'>"
+        "<!doctype html><html lang='id'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<meta http-equiv='Content-Security-Policy' content=\"default-src 'none'; img-src 'self' file:; "
+        "style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'\">"
         f"<title>{html.escape(title)}</title>"
-        "<style>body{font-family:system-ui,sans-serif;background:#0f172a;color:#f8fafc;margin:24px}"
-        ".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}"
-        ".card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px}"
-        "img{max-width:100%;border-radius:8px;margin:8px 0}.meta{color:#38bdf8;font-size:.9rem}</style>"
+        "<style>body{font:1rem/1.5 system-ui,sans-serif;background:#f7f6f0;color:#172f36;max-width:68rem;margin:2rem auto;padding:0 1rem}"
+        "main{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem}"
+        "section{border:1px solid #a8b8b6;border-radius:.7rem;padding:1rem;background:white;break-inside:avoid}"
+        "label{display:flex;align-items:center;justify-content:space-between;margin:.45rem 0}input{width:4.5rem;font:inherit}"
+        "img{max-width:100%;max-height:18rem}output{font-weight:bold}button{font:inherit;padding:.4rem .8rem}@media print{button{display:none}}</style>"
         f"</head><body><h1>{html.escape(title)}</h1>"
-        "<p>Rubrik 6 Dimensi (30% Concept, 25% Quality, 20% Meme Fit, 15% Consistency, 5% Speed, 5% Cost).</p>"
-        f"<div class='grid'>{''.join(cards)}</div></body></html>"
+        "<p>Rubrik 6 Dimensi. Beri nilai 1–10 untuk setiap pilihan. Skor gabungan muncul setelah enam nilai terisi. "
+        "Semakin rendah biaya produksi, semakin tinggi nilai Cost. Cetak atau simpan sebagai PDF sebelum menutup halaman.</p>"
+        f"<main>{''.join(cards)}</main><p><button id='print' type='button'>Cetak hasil</button></p>"
+        "<script>document.querySelector('#print').onclick=()=>window.print();"
+        "document.querySelectorAll('section').forEach(card=>{const fields=[...card.querySelectorAll('input')];"
+        "card.addEventListener('input',()=>{const complete=fields.every(f=>f.value!==''&&f.validity.valid);"
+        "card.querySelector('output').textContent=complete?"
+        "fields.reduce((sum,f)=>sum+f.valueAsNumber*Number(f.dataset.weight),0).toFixed(2)+'/10':'Belum dinilai';});});"
+        "</script></body></html>"
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(doc, encoding="utf-8")
@@ -268,6 +321,8 @@ def main(argv: list[str] | None = None) -> int:
     p_ab = sub.add_parser("ab-rate-html", help="Generate offline 6-dimension A/B meme comparison HTML")
     p_ab.add_argument("--title", default="Kiki-Chii Meme A/B Evaluation")
     p_ab.add_argument("--candidate", action="append", default=[], help="Format: Label:image_path:Pattern")
+    p_ab.add_argument("--entry", nargs=3, action="append", default=[], metavar=("LABEL", "IMAGE", "PATTERN"),
+                      help="Ulangi untuk setiap gambar lokal, termasuk path drive Windows.")
     p_ab.add_argument("--output", required=True)
 
     args = parser.parse_args(argv)
@@ -279,7 +334,10 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"count": len(rows), "templates": rows}, ensure_ascii=False, indent=2))
         return 0
     if args.cmd == "url":
-        url = build_memegen_url(args.template, args.lines, args.ext)
+        try:
+            url = build_memegen_url(args.template, args.lines, args.ext)
+        except ValueError as e:
+            parser.error(str(e))
         payload: dict[str, object] = {"url": url, "warnings": caption_lint(args.lines)}
         if args.download:
             dest = Path(args.download)
@@ -296,11 +354,13 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(res, ensure_ascii=False, indent=2))
         return 0
     if args.cmd == "ab-rate-html":
-        parsed = []
-        for raw in args.candidate:
-            parts = (raw.split(":", 2) + ["", ""])[:3]
-            parsed.append({"label": parts[0] or "Candidate", "image": parts[1], "pattern": parts[2] or "Ironic Contrast"})
-        out = generate_ab_html(args.title, parsed, Path(args.output))
+        try:
+            parsed = [parse_candidate(raw) for raw in args.candidate]
+            parsed.extend({"label": label, "image": image, "pattern": pattern}
+                          for label, image, pattern in args.entry)
+            out = generate_ab_html(args.title, parsed, Path(args.output))
+        except (OSError, ValueError) as e:
+            parser.error(str(e))
         print(json.dumps({"ok": True, "output": str(out), "candidates": len(parsed)}, ensure_ascii=False, indent=2))
         return 0
     return 1

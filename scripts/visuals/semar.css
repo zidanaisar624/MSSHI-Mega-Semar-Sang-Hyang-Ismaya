@@ -1,0 +1,65 @@
+/* Batik-inspired colors follow the existing Semar illustrations. Layouts use
+   physical pixels for reproducible README plates and movie frames. */
+* { box-sizing: border-box }
+:root { --ink:#101815; --paper:#f4efdf; --gold:#f4c568; --mint:#85ddc2; --muted:#bbc9bd; --line:#45554c; --sans:"Segoe UI",Arial,sans-serif; --serif:Georgia,"Times New Roman",serif }
+body { margin:0; color:var(--paper); font-family:var(--sans); background:#101815 }
+h1,h2,h3,p,figure { margin:0 }
+.plate { width:1280px;height:720px;position:relative;overflow:hidden;background:linear-gradient(107deg,#0d1918,#19251e) }
+.plate::after { content:"";position:absolute;inset:15px;border:1px solid #a6a38460;pointer-events:none }
+.eyebrow,.folio,.role,.eyeline { font:700 16px/1.3 var(--sans);letter-spacing:.13em;text-transform:uppercase }
+.eyebrow,.eyeline { color:var(--gold) }
+.folio { margin:0 0 32px;display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:13px;color:var(--muted) }
+h1,h2 { font:normal 64px/1.02 var(--serif);letter-spacing:-.045em }
+em { color:var(--gold);font-weight:400 }
+.hero { width:1600px;height:900px }
+.hero-art { position:absolute;inset:0;width:100%;height:100%;object-fit:cover }
+.hero-shade { position:absolute;inset:0;background:linear-gradient(90deg,#0a1412 3%,#0a1412 46%,#0a1412d9 50%,transparent 68%) }
+.hero-copy { position:absolute;inset:69px auto 40px 76px;width:745px }
+.hero h1 { margin:24px 0 5px;font:normal 156px/.93 var(--serif);letter-spacing:-.075em }
+.hero .longname { color:var(--gold);font:32px/1.25 var(--serif);letter-spacing:-.02em }
+.hero .dek { font-size:25px;line-height:1.4;margin:24px 0 33px;max-width:666px }
+.numbers { display:flex;gap:45px;padding:19px 0 22px;border-block:1px solid var(--line) }
+.metric strong { color:var(--mint);font:normal 56px/1 var(--serif) }
+.metric small { display:block;font-size:16px;margin-top:4px }
+.hero .ribbon { display:flex;gap:23px;margin:28px 0 21px }
+.portrait { text-align:center;min-width:72px }
+.portrait img { width:64px;height:64px;border-radius:12px;display:block;margin:auto;object-fit:cover }
+.portrait figcaption { font-size:15px;margin-top:6px;color:var(--paper) }
+.hero .summary { font-size:19px;color:var(--muted);line-height:1.5 }
+.art-credit { position:absolute;right:55px;bottom:54px;padding:9px 17px;background:#101916df;color:var(--gold);font:21px var(--serif);border:1px solid #695a37 }
+.board,.studio { padding:43px 55px 38px }
+.board h2,.studio h2 { margin:6px 0 14px }
+.board .intro,.studio .intro { color:var(--muted);font-size:21px;line-height:1.35 }
+.missions { display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:0;margin:46px 0 27px;border-block:1px solid var(--line) }
+.mission { padding:22px 18px 20px 0;min-height:234px }
+.mission+.mission { border-left:1px solid var(--line);padding-left:18px }
+.role { color:var(--mint);font-size:14px;letter-spacing:.08em }
+.mission h3 { font:normal 31px/1.08 var(--serif);margin:12px 0 }
+.mission p { font-size:18px;line-height:1.36;color:#d2d9d0 }
+.mission .priority { font-size:15px;font-weight:700;color:var(--gold);line-height:1.2;margin:0 0 6px }
+.board .note { font-size:20px;line-height:1.45;max-width:1120px }
+.board .note b { color:var(--gold) }
+.studio { background:#172022 }
+.studio .branched { display:grid;grid-template-columns:.78fr 1.22fr;gap:28px;margin:28px 0 19px }
+.lane { background:#f2ebdb;color:#19271f;padding:22px 26px;min-height:260px }
+.lane.remote { color:#f4efdf;background:#253731;border:1px solid #617267 }
+.lane h3 { font:normal 37px/1.08 var(--serif);margin:0 0 13px }
+.lane p { margin-bottom:10px;font-size:19px;line-height:1.34 }
+.lane p:last-child { margin:0 }
+.lane.remote b { color:var(--mint) }
+.studio .foot { font-size:20px;line-height:1.34;color:#d5dbd0 }
+.studio .foot b { color:var(--gold) }
+.meme { width:640px;height:400px;padding:20px 22px;background:#19201c }
+.meme::after { inset:6px }
+.meme .folio { font-size:11px;padding-bottom:8px;margin-bottom:12px }
+.twins { display:grid;grid-template-columns:1fr 1fr;gap:12px }
+.twins img { width:100%;height:211px;object-fit:cover;background:#0b1412;border:1px solid #46534a }
+.twins h3 { font:normal 21px/1.08 var(--serif);margin:7px 0 0 }
+.meme .caption { position:absolute;bottom:18px;font-size:13px;color:var(--gold) }
+.scene { display:grid;grid-template-columns:61% 39%;background:#101b17 }
+.scene .art { height:720px;width:100%;object-fit:cover }
+.scene .copy { padding:58px 44px 58px 63px }
+.scene .eyebrow { display:block;margin-bottom:35px }
+.scene h2 { font-size:80px;line-height:1.03;margin:0 0 24px }
+.scene p { font-size:28px;line-height:1.4;max-width:655px }
+.scene .key { position:absolute;left:63px;bottom:58px;font-size:20px;color:var(--mint);font-weight:600;padding-top:13px;border-top:1px solid #4b6051 }

@@ -19,7 +19,11 @@
 
 </div>
 
-> **v3.2.1 Complete Release:** five named native profiles + neutral Hermes default, **`81` bundled skills (`53` core + `28` wrappers including `cindy-grand-plan` & `meme-studio-suite`, plus `6` opt-in modules `rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar` & `meshy-3d-generation`) / `76` pinned upstream sources (`0` orphans) / `7` native plugins / `39` CLI families (`109` nodes) / `46` CLI-Anything app routes**, **Win10 4GB Light Build** (`msshi light`), universal **`anti-slop`** across all 5 bots & presets, **Higgsfield Unified Suite (9 modules)** + **Rp0 Meme Studio Suite (`makememe` + `awesome-meme` + local `meme-lord` A/B + `caption-craft`)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** for Kiki-Chii, Coder-scoped **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
+**Windows x64.** Open Connect to install MSSHI, or Doctor to inspect an existing installation.
+
+[![Download Connect for Windows](https://img.shields.io/badge/Download-Connect_EXE-19614B)](https://github.com/zidanaisar624/MSSHI-CONNECT/releases/download/v1.0.0/MSSHI-Connect-Portable-win-x64.exe) &nbsp; [![Download Doctor for Windows](https://img.shields.io/badge/Download-Doctor_EXE-775415)](https://github.com/zidanaisar624/MSSHI-DOCTOR/releases/download/v1.2.0/MSSHI-Doctor-Portable-win-x64.exe)
+
+> **v3.2.1 Complete Release:** fresh installations assign Yukino to the default profile alongside four specialists. Existing profile layouts are preserved. The package includes **`81` bundled skills (`53` core + `28` wrappers including `cindy-grand-plan` & `meme-studio-suite`, plus `6` opt-in modules `rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar` & `meshy-3d-generation`) / `76` pinned upstream sources (`0` orphans) / `7` native plugins / `39` CLI families (`109` nodes) / `46` CLI-Anything app routes**, **Win10 4GB Light Build** (`msshi light`), universal **`anti-slop`** across all 5 bots & presets, **Higgsfield Unified Suite (9 modules)** + **Rp0 Meme Studio Suite (`makememe` + `awesome-meme` + local `meme-lord` A/B + `caption-craft`)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** for Kiki-Chii, Coder-scoped **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter**, **Harness²** across all 5 bots in all presets, and the **5-Mission + 4-Pillar Cognitive OS** (`msshi system`). [Cognitive System](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Repair notes](docs/V3_1_2_REPAIR.md) · [Coder KAT](docs/CODER_KAT.md) · [Agent installer guide](INSTALL_FOR_AGENTS.md).
 
 > **KAT is optional, including MuZA preset:** no automatic weight download or activation. It stays disabled on MuZA's current laptop. Users with suitable hardware or an authorized endpoint can opt in through the Coder wizard.
 
@@ -46,8 +50,8 @@
 <td width="70%" valign="top">
   <h3>🎭 From Plain AI Chat to a 5-Specialist Cyber-Wayang Command Suite (Guided by Semar)</h3>
   <p align="center">
-    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="22 MCP Panic vs Calm Kyai Semar MSSHI v3.1.2 Meme">
-    <br><sub><i>Left: 22 MCPs freezing the laptop &amp; broken C:-drive scripts &rarr; PANIC! · Right: <b>Kyai Semar (MSSHI v3.1.2)</b> restores order with CLI-Anything + Auto-Trim!</i></sub>
+    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="Semar opens tools when there is work to do">
+    <br><sub>Semar opens an app when a task needs it. All five bots use the $1 TokenShield budget rule.</sub>
   </p>
   <p>True to its name (<b>Mega Semar Sang Hyang Ismaya</b>), <b>Semar</b> is the <b>Sovereign Orchestrator</b> — the wise Javanese <i>Pamomong &amp; Dalang</i> coordinating 5 specialist bots while keeping your personal LLM providers and models untouched (<code>jev_model_routing: false</code> locked):</p>
   <ul>
@@ -62,35 +66,35 @@
 
 <div align="center">
 
-### 🎥 Animated Video Explainer: Sang Hyang Ismaya (Semar) &amp; 5 Bots in 15 Seconds (Auto-Play)
+### 🎥 How the five bots work together
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="MSSHI v3.1.2 Animated Video Visualization — Kyai Semar Dalang of 5 Bots, 9 Higgsfield Modules, Research S1–S3 (Prioritizing S1 Skripsi), and Smart Auto-Update">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Five scenes showing on-demand tools, team roles, Kiki-Chii’s studio, Val’s research, and recovery in MSSHI v3.2.1">
 
-<br><sub>🎬 <b>5 Cyber-Wayang &times; Meme Explainer Scenes (Animated Dalang Threads, Cross-Fade &amp; Real Motion Video Backdrops):</b> (1) <i>22-MCP Panic vs Calm Coffee Kyai Semar</i> &rarr; (2) <i>Dalang Ismaya Strings &amp; 5 Specialist Bots ("Let Mi Ting")</i> &rarr; (3) <i>Kiki-Chii &times; 9 Higgsfield AI Modules</i> &rarr; (4) <i>Mission 02 Research for S1–S3 (Prioritizing S1 Skripsi) + Wait $1 TokenShield</i> &rarr; (5) <i>3-Repo Ecosystem (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Download / Play Full HD MP4 Video (1280&times;720, 12fps)</b></a></sub>
+<br><sub>Follow a task through the team, from choosing tools to reviewing creative work and research. The last scene shows where Connect and Doctor fit. <a href="assets/showcases/msshi-visual-explainer.mp4"><b>Watch the HD video (MP4, 1280×720)</b></a></sub>
 
 </div>
 
 ---
 
-## 🧭 5 Core Missions, 2-Type Interaction &amp; 4-Layer Skill Finder (`msshi_find_skill`)
+## 🧭 The five missions and Cindy’s planning review
 
 <div align="center">
-  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="MSSHI v3.1.2 5 Missions, 2-Type Interaction, and 4-Layer Skill Finder Overview">
-  <br><sub><b>10-Second Overview:</b> 5 Core Missions (Mission 02: <b>Research for S1–S3 — Prioritizing S1 Skripsi</b>) · 75 Bundled Skills · 64 Pinned Upstreams · 2-Type Interaction (<code>msshi-interaction v0.2.0</code>) · 4-Layer <code>msshi_find_skill</code> · Win10 4 GB Light Build.</sub>
+  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="MSSHI v3.2.1 missions and the Cindy planning review">
+  <br><sub>81 bundled skills, 6 optional skills and 76 pinned upstreams. Mission 02 supports undergraduate through doctoral research, with priority for the Indonesian undergraduate thesis. Each bot can use the Cindy Grand-Plan Gate to review a large project before execution.</sub>
 </div>
 
 ---
 
-## 🎬 Creative Studio &amp; 9 Higgsfield AI Modules (Led by Kiki-Chii)
+## 🎬 Kiki-Chii’s Rp0 Meme Studio and nine Higgsfield modules
 
 <div align="center">
-  <img src="assets/showcases/showcase-higgsfield-pipeline.png" width="96%" alt="Higgsfield Unified Creative Suite 9 Modules in MSSHI v3.1.2">
-  <br><sub><b>Higgsfield Unified Suite in MSSHI:</b> Every photo, brand, cinema, cover, and web workflow passes through <i>Concepting First</i> + Human Approval before spending credits.</sub>
+  <img src="assets/showcases/showcase-higgsfield-pipeline.png" width="96%" alt="Kiki-Chii’s local meme workflow, nine Higgsfield modules, and optional creative tools">
+  <br><sub>Draft two captions and compare them locally. Cloud generation requires the user’s Higgsfield login and cost approval.</sub>
 </div>
 
 <br>
 
-Under **Kiki-Chii** (*One-Woman Creative Studio*), [`higgsfield-skills`](skills/higgsfield-skills/SKILL.md) and [`higgsfield-ai-cinema-photo-suite.md`](skills/filmmaking-videography-photography-s2/references/higgsfield-ai-cinema-photo-suite.md) organize **9 Higgsfield modules** into 3 structured production lanes integrated with **`lemo-opuscar`** (*15 categories / 99 cinema styles*), **`BRAG`** (*Hyperframes*), **`ArtCraft`**, **`Blender`**, **`Unslop`**, and optional **`Imagination Studio`**:
+Kiki-Chii starts with the concept and audience. The [Rp0 Meme Studio](skills/meme-studio-suite/SKILL.md) draws on four MIT projects to generate meme URLs, render your own images locally, and compare captions. For cloud work, the [Higgsfield guide](skills/higgsfield-skills/SKILL.md) and [creative reference](skills/filmmaking-videography-photography-s2/references/higgsfield-ai-cinema-photo-suite.md) cover nine modules. MCP for Blender, RAEA, and Lemo-Opuscar are separate opt-ins in this Core release.
 
 | Production Cluster | Higgsfield Modules in MSSHI | Scope &amp; Ecosystem Synergy |
 | :--- | :--- | :--- |
@@ -273,7 +277,7 @@ flowchart LR
 
 **Fastest Option (Paste into Agent Chat):**
 
-> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.1.2 for me without overriding my existing LLM provider/model!`
+> `Read https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md, then install and configure MSSHI v3.2.1 for me without overriding my existing LLM provider/model!`
 
 - **Windows Beginners:** Double-click [`MULAI_DI_SINI_PEMULA.bat`](MULAI_DI_SINI_PEMULA.bat) (includes Option 5 for versioned PDF manuals), or drag `.zip`/`.pdf` onto [`MULAI_SKRIPSI_DRAG_AND_DROP.bat`](MULAI_SKRIPSI_DRAG_AND_DROP.bat).
 - **v2.x Upgrade:** Run [`UPDATE_OTOMATIS_KE_V3.bat`](UPDATE_OTOMATIS_KE_V3.bat) once (backs up `SOUL.md` &amp; `Creative DNA` automatically).
@@ -377,6 +381,10 @@ msshi desktop --software-rendering
 This sets `HERMES_DESKTOP_DISABLE_GPU=1` exclusively for the Hermes Desktop process and saves `{"software_rendering": true}` in `<HERMES_HOME>/tools/msshi/desktop-preferences.json`.
 
 ---
+
+> **Coming Soon & Need Donation**
+>
+> [Support testing, documentation, and maintenance for the next release through Saweria.](https://saweria.co/muzas)
 
 ## 🤝 Credits &amp; License
 

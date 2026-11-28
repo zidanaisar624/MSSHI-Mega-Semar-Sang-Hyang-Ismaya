@@ -17,11 +17,11 @@
       "width": 1600,
       "height": 900,
       "border_hex": "#2CE8C6",
-      "source_collection": "msshi_wayang_semar_original_v2",
-      "source_filename": "semar_hero_backdrop_v2_original.png",
-      "purpose": "Hero Banner Utama MSSHI v3.1.2 — Mega Semar Sang Hyang Ismaya",
-      "size_bytes": 203335,
-      "sha256": "270cb3562d87392d97d1f47b65c68953393777f0f6cd980ecff51221acaa2991"
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Semar V2 · pengantar ekosistem · v3.2.1",
+      "size_bytes": 280789,
+      "sha256": "8450bbb57a45edcb3ae48cc96ed6f65542e09e55dc8637cbdc7589ea50cedfb0"
     },
     {
       "id": "muza-noir-fullbody",
@@ -276,11 +276,11 @@
       "width": 640,
       "height": 400,
       "border_hex": "#FF6B1A",
-      "source_collection": "msshi_wayang_semar_original_v2",
-      "source_filename": "semar_calm_meme_v2_original.png",
-      "purpose": "Meme Intro Blok Utama — Panik 22 MCP RAM 4 GB vs Tenang dengan MSSHI v3.1.2",
-      "size_bytes": 303037,
-      "sha256": "8a4bc710d337d055b32e5726d17e1155197d7410a0f1412c0f4c9271fa8e3e53"
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Semar dan alat sesuai kebutuhan · v3.2.1",
+      "size_bytes": 61078,
+      "sha256": "ffd3765dc953d632cded342d3eea8d678bfe3d95ada4eea525a09eab10504456"
     },
     {
       "id": "showcase-higgsfield-pipeline",
@@ -289,11 +289,11 @@
       "width": 1280,
       "height": 720,
       "border_hex": "#FF6B1A",
-      "source_collection": "msshi_deterministic_visual",
-      "source_filename": "showcase_higgsfield_pipeline.png",
-      "purpose": "Visualisasi Higgsfield Unified Creative Suite (9 Modul di Bawah Kiki-Chii)",
-      "size_bytes": 423205,
-      "sha256": "c144dd06dba3c7bc926a2c6da8b9e0c6a9e56efb03d134a03118bf036115e9b6"
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Meme Studio Rp0 dan sembilan modul Higgsfield · v3.2.1",
+      "size_bytes": 33184,
+      "sha256": "c9851a086f78db5515c45f2134f6140d0700788c5375f06ba02231bbd295f0c9"
     },
     {
       "id": "showcase-5-missions-overview",
@@ -302,24 +302,24 @@
       "width": 1280,
       "height": 720,
       "border_hex": "#2CE8C6",
-      "source_collection": "msshi_deterministic_visual",
-      "source_filename": "showcase_5_missions_overview.png",
-      "purpose": "Visualisasi 5 Misi Utama, Interaksi 2 Tipe Hemat Token & Pencari Skill 4-Lapis",
-      "size_bytes": 338591,
-      "sha256": "1e708a7f3070a191698e054b72755ee85c04cf6fdcb602c48b051921d48eca9b"
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Lima misi dan prioritas riset S1–S3 · v3.2.1",
+      "size_bytes": 82893,
+      "sha256": "9e27c4c5e5558b2d4e11db4a979c641563295b4962522b91ee029ca4888085ea"
     },
     {
       "id": "msshi-visual-explainer-gif",
       "output": "assets/showcases/msshi-visual-explainer.gif",
       "canvas_type": "animated_video_explainer",
-      "width": 640,
-      "height": 360,
+      "width": 800,
+      "height": 450,
       "border_hex": "#2CE8C6",
-      "source_collection": "msshi_wayang_semar_original_v2",
-      "source_filename": "msshi_wayang_semar_explainer_v2.gif",
-      "purpose": "Video Visualisasi Animasi Auto-Play 5 Adegan Ekosistem MSSHI v3.1.2",
-      "size_bytes": 4969625,
-      "sha256": "743b95cd8da63b9659182e412a0d1360abec63a1e566282392bf42d2ba8e77f2"
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Lima babak MSSHI untuk README · v3.2.1",
+      "size_bytes": 1241900,
+      "sha256": "aeaf607f95ac68da93145a5318ef24a5723b9047ba7b6be67691a0fd76d96b58"
     },
     {
       "id": "msshi-visual-explainer-mp4",
@@ -328,11 +328,11 @@
       "width": 1280,
       "height": 720,
       "border_hex": "#FF6B1A",
-      "source_collection": "msshi_wayang_semar_original_v2",
-      "source_filename": "msshi_wayang_semar_explainer_v2.mp4",
-      "purpose": "Video Visualisasi HD MP4 5 Adegan Ekosistem MSSHI v3.1.2",
-      "size_bytes": 2185893,
-      "sha256": "b6b13b34dc08be00c888d64e8f750f26cf5b2502b8bd80a025918e3919f14c57"
+      "source_collection": "msshi_public_artwork_semar_v2",
+      "source_filename": "scripts/visuals/render_semar.py",
+      "purpose": "Lima babak MSSHI dalam HD · v3.2.1",
+      "size_bytes": 789474,
+      "sha256": "6b918713572fc1a52b78e6a3a4861bd3238f24d79213e78895d9d7a6d864a2cf"
     }
   ]
 }

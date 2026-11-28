@@ -19,6 +19,10 @@
 
 </div>
 
+**Windows x64.** Buka Connect untuk memasang MSSHI atau Doctor untuk memeriksa instalasi yang sudah ada.
+
+[![Unduh Connect untuk Windows](https://img.shields.io/badge/Unduh-Connect_EXE-19614B)](https://github.com/zidanaisar624/MSSHI-CONNECT/releases/download/v1.0.0/MSSHI-Connect-Portable-win-x64.exe) &nbsp; [![Unduh Doctor untuk Windows](https://img.shields.io/badge/Unduh-Doctor_EXE-775415)](https://github.com/zidanaisar624/MSSHI-DOCTOR/releases/download/v1.2.0/MSSHI-Doctor-Portable-win-x64.exe)
+
 > **v3.2.1 - Paket Lengkap & Sistem Cerdas 5 Misi + 4 Pilar:** instalasi baru memakai default Yukino + 4 spesialis; susunan pengguna lama tetap dipertahankan, **`81` skill bundel (`53` core + `28` wrapper termasuk `cindy-grand-plan` & `meme-studio-suite`, plus `6` modul opt-in `rea`, `imagination-studio`, `mcp-for-blender`, `raea`, `lemo-opuscar` & `meshy-3d-generation`) / `76` sumber upstream ter-pin (`0` orphan) / `7` plugin inti / `39` keluarga CLI (`109` simpul) / `46` rute aplikasi CLI-Anything**, **Win10 4GB Light Build** (`msshi light`), **`anti-slop`** lintas seluruh 5 bot & preset, **Higgsfield Unified Suite (9 modul)** + **Rp0 Meme Studio Suite (`makememe` + `awesome-meme` + `meme-lord` lokal + `caption-craft`)** + opt-in **MCP for Blender**, **RAEA** & **Lemo-Opuscar** untuk Kiki-Chii, serta **OpenCodeReview (`alibaba/open-code-review`)**, **`ast-grep`**, **`knip`**, **`modern-web-guidance`**, **Rust-Anything (*Hot-Path Only*)**, **Grim Prompter** & **Claude-BugHunter** khusus Coder, ditambah **Harness²** dan **Sistem Interaksi Cerdas** (`msshi system status|route|cycle`). [Sistem Cerdas](docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md) · [Win10 Light Build](docs/WIN10_4GB_LIGHT_BUILD.md) · [Catatan perbaikan](docs/V3_1_2_REPAIR.md) · [KAT Coder](docs/CODER_KAT.md) · [Instal lewat agen](INSTALL_FOR_AGENTS.md).
 
 > **KAT opsional, termasuk preset MuZA:** tidak diunduh atau diaktifkan otomatis. Pengguna lain dapat memilih endpoint atau perangkat yang memadai melalui wizard Coder.
@@ -46,8 +50,8 @@
 <td width="70%" valign="top">
   <h3>🎭 Dari Chat AI Biasa Menjadi Padepokan Cyber-Wayang 5 Spesialis (Pamomong Agung: Semar)</h3>
   <p align="center">
-    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="Meme Geger 22 MCP vs Tentrem Bareng Kyai Semar MSSHI v3.1.2">
-    <br><sub><i>Kiri: Geger 22 MCP nyala barengan bikin laptop freeze &amp; skrip error di Drive <code>C:</code> &rarr; PANIK! · Kanan: <b>Kyai Semar (MSSHI v3.1.2)</b> turun tangan menenangkan lewat CLI-Anything + Auto-Trim!</i></sub>
+    <img src="assets/memes/meme-ram4gb-mcp-panik.png" width="96%" alt="Semar membuka alat sesuai kebutuhan">
+  <br><sub>Kyai Semar memanggil alat saat ada tugas. Kelima bot menggunakan kebijakan $1 TokenShield.</sub>
   </p>
   <p>Sesuai namanya (<b>Mega Semar Sang Hyang Ismaya</b>), <b>Semar</b> adalah <b>Sovereign Orchestrator</b> sejati — pamomong bijak yang menggerakkan 5 bot spesialis tanpa pernah mendikte atau menimpa konfigurasi provider/model pribadi Anda (<code>jev_model_routing: false</code> terkunci penuh):</p>
   <ul>
@@ -62,35 +66,35 @@
 
 <div align="center">
 
-### 🎥 Video Visualisasi Interaktif: Sang Hyang Ismaya (Semar) &amp; 5 Bot dalam 15 Detik (Auto-Play)
+### 🎥 Cara lima bot bekerja bersama
 
-<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Video Visualisasi Alur Kerja Ekosistem MSSHI v3.1.2 — Kyai Semar Dalang 5 Bot, Higgsfield 9 Modul, Riset S1–S3 Skripsi Drag & Drop, dan Smart Auto-Update">
+<img src="assets/showcases/msshi-visual-explainer.gif" width="96%" alt="Lima babak Semar, pembagian peran, studio kreatif, riset, dan pemulihan di MSSHI v3.2.1">
 
-<br><sub>🎬 <b>5 Babak Visualisasi Wayang Semar &times; Meme (Animasi Tali Dalang, Cross-Fade &amp; Latar Motion Video Aktif):</b> (1) <i>Geger 22 MCP vs Kyai Semar Ngopi Tenang</i> &rarr; (2) <i>Tali Dalang Ismaya &amp; 5 Bot ("Let Mi Ting")</i> &rarr; (3) <i>Studio Kiki-Chii &times; 9 Modul Higgsfield AI</i> &rarr; (4) <i>Misi 02 Riset Untuk S1–S3 (Diutamakan S1 Skripsi) + Perisai $1 TokenShield</i> &rarr; (5) <i>Tritunggal 3 Repo (Core + Connect + Doctor)</i> · <a href="assets/showcases/msshi-visual-explainer.mp4"><b>▶️ Unduh / Putar Versi Video MP4 HD (1280&times;720, 12fps)</b></a></sub>
+  <br><sub>Semar dan alat sesuai kebutuhan → pembagian tugas lima bot → studio meme Kiki-Chii dan Higgsfield → riset bersama Val → instalasi dan pemulihan. <a href="assets/showcases/msshi-visual-explainer.mp4"><b>Buka video HD (MP4, 1280×720)</b></a></sub>
 
 </div>
 
 ---
 
-## 🧭 Peta 5 Misi Utama, Interaksi 2 Tipe &amp; Pencari Skill 4-Lapis (`msshi_find_skill`)
+## 🧭 Lima misi dan gerbang perencanaan Cindy
 
 <div align="center">
-  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="Visualisasi 5 Misi Utama MSSHI v3.1.2, Interaksi 2 Tipe Hemat Token, dan 4-Lapis Pencari Skill">
-  <br><sub><b>Ringkasan 10 Detik:</b> 5 Misi Utama (Misi 02: <b>Riset Untuk S1–S3 (Diutamakan S1 Skripsi)</b>) · 75 Skill Bundel · 64 Upstreams · Interaksi 2 Tipe (<code>msshi-interaction v0.2.0</code>) · 4-Lapis <code>msshi_find_skill</code> · Win10 RAM 4 GB Light Build.</sub>
+  <img src="assets/showcases/showcase-5-missions-overview.png" width="96%" alt="Lima misi MSSHI v3.2.1 dan gerbang peninjauan rencana Cindy">
+  <br><sub>81 skill bundel + 6 opt-in · 76 sumber upstream ter-pin. Misi 02 berfokus pada <b>Riset Untuk S1–S3</b> dengan penekanan <b>Diutamakan S1 Skripsi</b>. Kelima bot dapat menggunakan Cindy Grand-Plan Gate.</sub>
 </div>
 
 ---
 
-## 🎬 Studio Kreatif &amp; 9 Modul Higgsfield AI (Di Bawah Kiki-Chii)
+## 🎬 Studio Meme Rp0 Kiki-Chii dan sembilan modul Higgsfield
 
 <div align="center">
-  <img src="assets/showcases/showcase-higgsfield-pipeline.png" width="96%" alt="Visualisasi Higgsfield Unified Creative Suite 9 Modul dalam Orkestrasi MSSHI v3.1.2">
-  <br><sub><b>Higgsfield Unified Suite di MSSHI:</b> Semua produksi foto, brand, video, cover, dan web melewati gerbang <i>Concepting First</i> + Review Manusia sebelum menyentuh kredit.</sub>
+  <img src="assets/showcases/showcase-higgsfield-pipeline.png" width="96%" alt="Studio meme lokal Kiki-Chii, sembilan modul Higgsfield dengan login, dan pilihan alat tambahan">
+  <br><sub>Buat dan bandingkan dua draf meme lokal. Generasi awan memerlukan login Higgsfield milik pengguna dan konfirmasi biaya.</sub>
 </div>
 
 <br>
 
-Di bawah **Kiki-Chii** (*One-Woman Creative Studio*), wrapper [`higgsfield-skills`](skills/higgsfield-skills/SKILL.md) dan referensi [`higgsfield-ai-cinema-photo-suite.md`](skills/filmmaking-videography-photography-s2/references/higgsfield-ai-cinema-photo-suite.md) merangkai **9 modul Higgsfield** ke dalam 3 jalur terstruktur yang tersambung rapi dengan **`lemo-opuscar`** (*15 kategori / 99 gaya sinema*), **`BRAG`** (*Hyperframes*), **`ArtCraft`**, **`Blender`**, **`Unslop`**, dan opsional **`Imagination Studio`**:
+Kiki-Chii menyepakati konsep dan audiens terlebih dulu. [Meme Studio Rp0](skills/meme-studio-suite/SKILL.md) merujuk ke empat proyek MIT untuk membuat URL meme, merender gambar milik pengguna secara lokal, dan membandingkan caption. Untuk pekerjaan awan, [panduan Higgsfield](skills/higgsfield-skills/SKILL.md) dan [referensi kreatif](skills/filmmaking-videography-photography-s2/references/higgsfield-ai-cinema-photo-suite.md) mencakup sembilan modul. MCP for Blender, RAEA, dan Lemo-Opuscar merupakan pilihan opt-in terpisah dalam rilis Core ini.
 
 | Klaster Produksi | Modul Higgsfield di MSSHI | Fungsi &amp; Sinergi Ekosistem |
 | :--- | :--- | :--- |
@@ -283,7 +287,7 @@ flowchart LR
 ### Cara Paling Santai (Cukup Copy-Paste ke Chat Agen AI Anda)
 Buka **Hermes Agent, OpenClaw, Claude Code, atau Google Antigravity** yang punya akses terminal &amp; web, lalu kirim pesan ini:
 
-> `Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI v3.1.2 untukku tanpa mengubah provider/model asliku!`
+> `Tolong baca https://raw.githubusercontent.com/zidanaisar624/MSSHI-Mega-Semar-Sang-Hyang-Ismaya/main/docs/guides/INSTALL_FOR_AGENTS.md lalu instal dan konfigurasikan MSSHI v3.2.1 untukku tanpa mengubah provider/model asliku!`
 
 ### Atau Pasang Langsung via Terminal &amp; Peluncur 1-Klik
 
@@ -403,6 +407,10 @@ Perintah ini menyalakan `HERMES_DESKTOP_DISABLE_GPU=1` khusus untuk proses Herme
 ---
 
 ## ☕ Dukung Pengembangan / Support
+
+> **Coming Soon & Need Donation**
+>
+> [Dukung pengujian, dokumentasi, dan perawatan rilis berikutnya melalui Saweria.](https://saweria.co/muzas)
 
 [![Dukung via Saweria](https://img.shields.io/badge/Dukung%20via%20Saweria-QRIS%20%7C%20Mulai%20Rp25rb%20%2F%20Pro%20Rp100rb-F59E0B?style=for-the-badge)](https://saweria.co/muzas)
 

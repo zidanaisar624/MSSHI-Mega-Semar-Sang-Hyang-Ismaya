@@ -63,4 +63,4 @@ Saat Kiki-Chii menyiapkan proyek konten penting, buat **2–3 kandidat meme** la
 
 `Skor Akhir = 0.30*Concept + 0.25*Visual_Quality + 0.20*Meme_Fit + 0.15*Consistency + 0.05*Speed + 0.05*Cost`
 
-- Pada alur **Rp0 lokal**, dimensi `Cost` otomatis bernilai maksimal (`10/10`) karena tidak membakar kredit API berbayar.
+- Nilai `Cost` 10 bila kamu mengonfirmasi produksi tanpa biaya API. Semua nilai diisi penilai. Gunakan perbedaan skor untuk memilih satu revisi spesifik, misalnya memotong pembuka yang mengulang adegan.
