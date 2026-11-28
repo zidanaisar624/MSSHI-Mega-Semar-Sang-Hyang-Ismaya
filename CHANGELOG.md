@@ -1,5 +1,13 @@
 # Changelog MSSHI
 
+## v3.2.2 - 2026-11-28
+
+- Added **Bot Val 2-Layer Legal DOI & Academic Paper Search Engine (`skills/val-doi-research/` + CLI `msshi doi`)** across `muza-preset`, `academic-mahasiswa`, `academic-dosen`, `solo`, `thesis`, and `antigravity` (`82` bundled skills = `54` core + `28` wrappers, `76` pinned upstreams, `0` orphans, pure Python stdlib `<= 35 MB` RAM):
+  - **Layer 1 Free (Zero Mandatory API Keys):** Unifies OpenAlex (`?api_key=` ready, `$0` singleton DOI lookup), Unpaywall v2, Crossref, Semantic Scholar, arXiv, NCBI PubMed E-utilities + Europe PMC, Internet Archive Scholar (`Fatcat`), and a **Green-OA Preprint Resolver** plus anti-piracy `sci-hub.*` DOI extraction & legal open-access alternatives (`docs/ELSEVIER_BYOK_AND_2LAYER_ARCHITECTURE.md`).
+  - **Layer 2 Optional BYOK (`dev.elsevier.com`):** One-time polite onboarding prompt with a clear **"Lewati" (`msshi doi skip-onboarding`)** option; stores user-supplied `ELSEVIER_API_KEY` / `ELSEVIER_INSTTOKEN` strictly outside the repository (`HermesData/val-research/keys.json`).
+  - **Topic Paper Search (`search_paper_engine.py` / `msshi doi topic`):** Indonesian KPTS light stemmer + BM25 ranking across national & international scholarly indexes, exporting Zotero `.ris`, Chapter II synthesis `.csv`, BibTeX `.bib`, and `Val_DOI_Bundle_Skripsi.zip`.
+- Upgraded **`muza-skripsi-template` to v1.2** (`skills/muza-skripsi-template/`, `scripts/msshi_skripsi_drop.py`, `notebooks/skripsi/MuZA_Search.ipynb` v2.0, `notebooks/skripsi/MuZA_Skripsi_Builder.ipynb` v1.2): adds direct `--doi` / `--doi-file` and `Val_DOI_Bundle_Skripsi.zip` injection into Chapter II (`Penelitian Terdahulu` narrative + 3-line booktabs table) and `Daftar Pustaka` (`APA 7th`, `IEEE`, `Harvard`, `Vancouver`) with zero `"Anonim"`/`"Untitled"` placeholders.
+
 ## v3.2.1 - 2026-11-27
 
 - Added **Contextual Grand-Plan Interactive Gate (`cindy-grand-plan`)** inspired by `makecindy/cindy` (`263720b6`, Apache-2.0) across **all 5 bots in all presets** (`muza-preset`, `academic-mahasiswa`, `academic-dosen`, `solo`, `light`, `custom-bots`, `antigravity`, `81` bundled skills = `53` core + `28` wrappers, `76` pinned upstreams, `0` orphans): triggers strictly when the user requests a Big Plan / Multi-Stage Cross-Bot Project so users can inspect and revise the cross-bot/skill blueprint themselves before heavy execution.

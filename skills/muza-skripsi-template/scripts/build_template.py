@@ -36,7 +36,26 @@ for _pylibs_cand in (
     r"D:\HermesData\skripsi-pylibs",
 ):
     if os.path.isdir(_pylibs_cand) and _pylibs_cand not in sys.path:
-        sys.path.insert(0, _pylibs_cand)
+        sys.path.append(_pylibs_cand)
+
+try:
+    from lxml import etree as _lxml_probe  # noqa: F401
+except ImportError:
+    for _mod_k in [k for k in list(sys.modules) if k == "lxml" or k.startswith("lxml.")]:
+        sys.modules.pop(_mod_k, None)
+    for _alt_libs in (
+        os.environ.get("MSSHI_EXTRA_PYLIBS", "").strip(),
+    ):
+        if _alt_libs and os.path.isdir(_alt_libs):
+            if _alt_libs in sys.path:
+                sys.path.remove(_alt_libs)
+            sys.path.insert(0, _alt_libs)
+            try:
+                from lxml import etree as _lxml_probe  # noqa: F401
+                break
+            except ImportError:
+                for _mod_k in [k for k in list(sys.modules) if k == "lxml" or k.startswith("lxml.")]:
+                    sys.modules.pop(_mod_k, None)
 
 from docx import Document
 from docx.enum.section import WD_SECTION
@@ -512,10 +531,10 @@ def parse_ris_text(ris_text):
 def _fmt_author_apa(raw_name):
     raw_name = _strip_tags_clean(raw_name)
     if not raw_name:
-        return "Anonim"
+        return ""
     if "," in raw_name:
         last, rest = [x.strip() for x in raw_name.split(",", 1)]
-        initials = " ".join(f"{w[0].upper()}." for w in rest.split() if w)
+        initials = " ".join(f"{w[0].upper()}." for w in re.split(r"[\s.\-]+", rest) if w)
         return f"{last}, {initials}".strip() if initials else last
     parts = raw_name.split()
     if len(parts) == 1:
@@ -527,10 +546,10 @@ def _fmt_author_apa(raw_name):
 def _fmt_author_ieee(raw_name):
     raw_name = _strip_tags_clean(raw_name)
     if not raw_name:
-        return "Anonim"
+        return ""
     if "," in raw_name:
         last, rest = [x.strip() for x in raw_name.split(",", 1)]
-        initials = " ".join(f"{w[0].upper()}." for w in rest.split() if w)
+        initials = " ".join(f"{w[0].upper()}." for w in re.split(r"[\s.\-]+", rest) if w)
         return f"{initials} {last}".strip()
     parts = raw_name.split()
     if len(parts) == 1:
@@ -539,40 +558,52 @@ def _fmt_author_ieee(raw_name):
     return f"{initials} {parts[-1]}"
 
 
+def _fmt_author_vancouver(raw_name):
+    raw_name = _strip_tags_clean(raw_name)
+    if not raw_name:
+        return ""
+    if "," in raw_name:
+        last, rest = [x.strip() for x in raw_name.split(",", 1)]
+        initials = "".join(w[0].upper() for w in re.split(r"[\s.\-]+", rest) if w)
+        return f"{last} {initials}".strip()
+    parts = raw_name.split()
+    if len(parts) == 1:
+        return parts[0]
+    initials = "".join(w[0].upper() for w in parts[:-1] if w)
+    return f"{parts[-1]} {initials}"
+
+
 def _citation_sort_key(rec):
-    first = rec["authors"][0] if rec.get("authors") else rec.get("title", "zzz")
+    first = rec["authors"][0] if rec.get("authors") else (rec.get("title") or rec.get("journal") or "zzz")
     return (_strip_tags_clean(first).lower(), str(rec.get("year") or "9999"), str(rec.get("title") or "").lower())
 
 
 def format_reference_segments(rec, style_name="APA 7th", index=1):
-    """Return list of (text, italic_bool) segments for a bibliographic entry."""
-    style_low = (style_name or "APA").lower()
-    authors = rec.get("authors") or []
-    year = rec.get("year") or "n.d."
-    title = _strip_tags_clean(rec.get("title") or "Untitled")
-    if title and not title.endswith((".", "?", "!")):
-        title_dot = title + "."
-    else:
-        title_dot = title
+    """Return list of (text, italic_bool) segments for a clean, placeholder-free bibliographic entry."""
+    style_low = (style_name or "APA 7th").lower()
+    raw_authors = [a for a in (rec.get("authors") or []) if _strip_tags_clean(a)]
+    year = _strip_tags_clean(rec.get("year")) or "n.d."
     journal = _strip_tags_clean(rec.get("journal") or rec.get("publisher") or "")
+    doi = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", _strip_tags_clean(rec.get("doi")), flags=re.I)
+    title = _strip_tags_clean(rec.get("title")) or journal or (f"DOI {doi}" if doi else "Dokumen Ilmiah")
+    title_dot = title if title.endswith((".", "?", "!")) else (title + ".")
     vol = _strip_tags_clean(rec.get("volume"))
     issue = _strip_tags_clean(rec.get("issue"))
     sp, ep = _strip_tags_clean(rec.get("sp")), _strip_tags_clean(rec.get("ep"))
     pages = f"{sp}–{ep}" if (sp and ep and sp != ep) else (sp or ep)
-    doi = _strip_tags_clean(rec.get("doi"))
     link = f"https://doi.org/{doi}" if doi else _strip_tags_clean(rec.get("url"))
 
     if "ieee" in style_low:
-        if not authors:
-            au_str = "Anonim"
-        elif len(authors) == 1:
-            au_str = _fmt_author_ieee(authors[0])
-        elif len(authors) <= 6:
-            f_a = [_fmt_author_ieee(a) for a in authors]
-            au_str = ", ".join(f_a[:-1]) + ", and " + f_a[-1]
+        f_a = [x for x in (_fmt_author_ieee(a) for a in raw_authors) if x]
+        if not f_a:
+            au_prefix = f"[{index}] "
+        elif len(f_a) == 1:
+            au_prefix = f"[{index}] {f_a[0]}, "
+        elif len(f_a) <= 6:
+            au_prefix = f"[{index}] {', '.join(f_a[:-1])}, and {f_a[-1]}, "
         else:
-            au_str = f"{_fmt_author_ieee(authors[0])} et al."
-        segs = [(f"[{index}] {au_str}, \"{title},\" ", False)]
+            au_prefix = f"[{index}] {f_a[0]} et al., "
+        segs = [(f"{au_prefix}\"{title.rstrip('.')},\" ", False)]
         if journal:
             segs.append((journal, True))
         tail = []
@@ -581,10 +612,11 @@ def format_reference_segments(rec, style_name="APA 7th", index=1):
         if issue:
             tail.append(f"no. {issue}")
         if pages:
-            tail.append(f"pp. {pages}")
-        tail.append(year)
+            tail.append(("pp. " if "–" in pages else "p. ") + pages)
+        if year != "n.d.":
+            tail.append(year)
         if tail:
-            segs.append((", " + ", ".join(tail) + ".", False))
+            segs.append((( ", " if journal else "") + ", ".join(tail) + ".", False))
         else:
             segs.append((".", False))
         if doi:
@@ -593,16 +625,36 @@ def format_reference_segments(rec, style_name="APA 7th", index=1):
             segs.append((f" [Online]. Available: {link}", False))
         return segs
 
-    if "harvard" in style_low:
-        if not authors:
-            au_str = "Anonim"
-        elif len(authors) == 1:
-            au_str = _fmt_author_apa(authors[0])
-        elif len(authors) == 2:
-            au_str = f"{_fmt_author_apa(authors[0])} and {_fmt_author_apa(authors[1])}"
+    if "vancouver" in style_low:
+        v_a = [x for x in (_fmt_author_vancouver(a) for a in raw_authors) if x]
+        if len(v_a) > 6:
+            au_str = ", ".join(v_a[:6]) + ", et al"
         else:
-            au_str = f"{_fmt_author_apa(authors[0])} et al."
-        segs = [(f"{au_str} ({year}) '{title}', ", False)]
+            au_str = ", ".join(v_a)
+        lead = f"{index}. {au_str.rstrip('.')}. {title_dot} " if au_str else f"{index}. {title_dot} "
+        segs = [(lead, False)]
+        if journal:
+            segs.append((f"{journal}. ", False))
+        loc = year
+        if vol:
+            loc += f";{vol}" + (f"({issue})" if issue else "")
+        if pages:
+            loc += f":{pages}"
+        segs.append((f"{loc}.", False))
+        if doi:
+            segs.append((f" doi:{doi}.", False))
+        return segs
+
+    if "harvard" in style_low:
+        h_a = [x for x in (_fmt_author_apa(a) for a in raw_authors) if x]
+        if not h_a:
+            segs = [(f"'{title.rstrip('.')}' ({year}), ", False)]
+        elif len(h_a) == 1:
+            segs = [(f"{h_a[0]} ({year}) '{title.rstrip('.')}', ", False)]
+        elif len(h_a) == 2:
+            segs = [(f"{h_a[0]} and {h_a[1]} ({year}) '{title.rstrip('.')}', ", False)]
+        else:
+            segs = [(f"{h_a[0]} et al. ({year}) '{title.rstrip('.')}', ", False)]
         if journal:
             segs.append((journal, True))
         extra = ""
@@ -613,23 +665,26 @@ def format_reference_segments(rec, style_name="APA 7th", index=1):
         if pages:
             extra += f", pp. {pages}"
         segs.append((extra + ".", False))
-        if link:
+        if doi:
+            segs.append((f" doi:{doi}.", False))
+        elif link:
             segs.append((f" Available at: {link}.", False))
         return segs
 
-    # Default: APA 7th Edition
-    apa_authors = [_fmt_author_apa(a) for a in authors[:20]]
-    if not apa_authors:
-        au_str = "Anonim"
-    elif len(apa_authors) == 1:
-        au_str = apa_authors[0]
-    elif len(apa_authors) <= 20:
-        au_str = ", ".join(apa_authors[:-1]) + ", & " + apa_authors[-1]
+    # Default: APA 7th Edition (full 21+ author ellipsis + title-first rule when no author)
+    all_apa = [x for x in (_fmt_author_apa(a) for a in raw_authors) if x]
+    if not all_apa:
+        segs = [(f"{title_dot} ({year}). ", False)]
     else:
-        au_str = ", ".join(apa_authors[:19]) + ", … " + _fmt_author_apa(authors[-1])
-    if not au_str.endswith("."):
-        au_str += "."
-    segs = [(f"{au_str} ({year}). {title_dot} ", False)]
+        if len(all_apa) == 1:
+            au_str = all_apa[0]
+        elif len(all_apa) <= 20:
+            au_str = ", ".join(all_apa[:-1]) + ", & " + all_apa[-1]
+        else:
+            au_str = ", ".join(all_apa[:19]) + ", . . . " + all_apa[-1]
+        if not au_str.endswith("."):
+            au_str += "."
+        segs = [(f"{au_str} ({year}). {title_dot} ", False)]
     if journal:
         segs.append((journal, True))
         if vol:
@@ -718,10 +773,90 @@ def _normalize_bab2_table_rows(raw_rows):
     return out
 
 
-def load_muza_search_data(zip_path=None, bab2_path=None, ris_path=None):
-    """Load Bab 2 synthesis rows and RIS bibliographic entries from MuZA_Search v1.1 outputs."""
+def _dedup_ris_records(records):
+    seen = set()
+    out = []
+    for r in records or []:
+        doi_k = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", str(r.get("doi") or ""), flags=re.I).strip().lower()
+        t_k = re.sub(r"[^a-z0-9]+", "", str(r.get("title") or "").lower())
+        key = doi_k or t_k
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        out.append(r)
+    return out
+
+
+def _doi_dict_to_ris_and_bab2(item):
+    """Convert a metadata_doi.json dict (from doi_engine.py) to (ris_dict, bab2_row_dict)."""
+    authors = []
+    for a in item.get("authors") or []:
+        if isinstance(a, dict):
+            fam, giv, full = a.get("family", ""), a.get("given", ""), a.get("full", "")
+            authors.append(f"{fam}, {giv}".strip(", ") if (fam or giv) else full)
+        elif str(a).strip():
+            authors.append(str(a).strip())
+    ris_d = {
+        "type": "JOUR",
+        "authors": [x for x in authors if x],
+        "keywords": list(item.get("keywords") or []),
+        "title": item.get("title") or "",
+        "year": str(item.get("year") or ""),
+        "journal": item.get("venue") or item.get("journal") or "",
+        "publisher": item.get("publisher") or "",
+        "volume": str(item.get("volume") or ""),
+        "issue": str(item.get("issue") or ""),
+        "sp": str(item.get("first_page") or item.get("article_number") or ""),
+        "ep": str(item.get("last_page") or ""),
+        "doi": item.get("doi") or "",
+        "url": item.get("doi_url") or item.get("best_pdf_url") or item.get("landing_url") or "",
+    }
+    syn = item.get("bab2_synthesis") or {}
+    bab2_d = {
+        "Penulis & Tahun": syn.get("penulis_tahun") or (f"{authors[0].split(',')[0]} ({ris_d['year'] or 'n.d.'})" if authors else ris_d["title"][:40]),
+        "Judul & Jurnal": syn.get("judul_jurnal") or (f"{ris_d['title']} — {ris_d['journal']}" if ris_d["journal"] else ris_d["title"]),
+        "Metode / Algoritma / Pendekatan": syn.get("metode") or "Studi literatur / empiris terverifikasi DOI",
+        "Dataset / Objek / Sampel": syn.get("dataset_sampel") or (ris_d["journal"] or "Publikasi ilmiah"),
+        "Hasil Utama & Metrik Evaluasi": syn.get("hasil_metrik") or (item.get("abstract") or "")[:175],
+        "Sitasi In-Text": syn.get("sitasi_intext") or "",
+    }
+    return ris_d, bab2_d
+
+
+def _build_synthesis_narrative(bab2_raw):
+    if not bab2_raw:
+        return ""
+    cites = []
+    for r in bab2_raw[:6]:
+        pt = (r.get("Penulis & Tahun") or "").strip()
+        mt = (r.get("Metode / Algoritma / Pendekatan") or "").strip()
+        if pt:
+            cites.append(f"{pt}" + (f" melalui pendekatan {mt}" if mt and mt != "-" else ""))
+    if not cites:
+        return ""
+    joined = "; ".join(cites[:4])
+    return (
+        f"Kajian penelitian terdahulu yang relevan pada sub-bab ini merujuk pada literatur ilmiah "
+        f"terverifikasi DOI, antara lain penelitian oleh {joined}. Ringkasan komparatif metode, "
+        f"objek/dataset, serta temuan metrik evaluasi disajikan pada tabel berikut."
+    )
+
+
+def load_muza_search_data(
+    zip_path=None,
+    bab2_path=None,
+    ris_path=None,
+    doi_json_path=None,
+    dois=None,
+    elsevier_api_key="",
+    elsevier_insttoken="",
+    email="",
+):
+    """Load Bab 2 synthesis rows, RIS entries, and live 2-Layer DOI records without placeholders."""
     bab2_raw = []
     ris_records = []
+    draft_narasi = ""
+    doi_items = []
 
     if zip_path and os.path.exists(zip_path):
         with zipfile.ZipFile(zip_path, "r") as zf:
@@ -739,6 +874,8 @@ def load_muza_search_data(zip_path=None, bab2_path=None, ris_path=None):
                 next((n for n in names if n.endswith("01_IMPOR_KE_ZOTERO.ris")), None)
                 or next((n for n in names if n.lower().endswith(".ris")), None)
             )
+            doi_json_name = next((n for n in names if os.path.basename(n) == "metadata_doi.json"), None)
+            meta_name = next((n for n in names if n.endswith("03_METADATA_MUZA_SKRIPSI.json")), None)
             if csv_name:
                 bab2_raw = _read_bab2_csv_bytes(zf.read(csv_name))
             elif xlsx_name:
@@ -747,7 +884,18 @@ def load_muza_search_data(zip_path=None, bab2_path=None, ris_path=None):
                 except Exception as e:
                     warn("Could not read Bab 2 xlsx from ZIP: %s" % e)
             if ris_name:
-                ris_records = parse_ris_text(zf.read(ris_name).decode("utf-8-sig", errors="replace"))
+                ris_records.extend(parse_ris_text(zf.read(ris_name).decode("utf-8-sig", errors="replace")))
+            if doi_json_name:
+                try:
+                    doi_items.extend(json.loads(zf.read(doi_json_name).decode("utf-8-sig", errors="replace")))
+                except Exception:
+                    pass
+            if meta_name:
+                try:
+                    m_obj = json.loads(zf.read(meta_name).decode("utf-8-sig", errors="replace"))
+                    draft_narasi = str(m_obj.get("draft_narasi_bab2") or "").strip()
+                except Exception:
+                    pass
 
     if bab2_path and os.path.exists(bab2_path):
         with open(bab2_path, "rb") as f:
@@ -759,11 +907,63 @@ def load_muza_search_data(zip_path=None, bab2_path=None, ris_path=None):
 
     if ris_path and os.path.exists(ris_path):
         with open(ris_path, "r", encoding="utf-8-sig", errors="replace") as f:
-            ris_records = parse_ris_text(f.read())
+            ris_records.extend(parse_ris_text(f.read()))
+
+    if doi_json_path and os.path.exists(doi_json_path):
+        with open(doi_json_path, "r", encoding="utf-8-sig", errors="replace") as f:
+            loaded = json.load(f)
+            if isinstance(loaded, list):
+                doi_items.extend(loaded)
+
+    # Resolve live DOIs via 2-Layer doi_engine if passed directly
+    if dois:
+        raw_list = [dois] if isinstance(dois, str) else list(dois)
+        if any(str(x).strip() for x in raw_list):
+            try:
+                fn_res_many = globals().get("resolve_many")
+                cls_eng = globals().get("ResearchEngine")
+                fn_cfg = globals().get("load_doi_engine_config") or globals().get("load_config")
+                if fn_res_many is None or cls_eng is None:
+                    if "__file__" in globals():
+                        sdir = os.path.dirname(os.path.abspath(__file__))
+                        if sdir not in sys.path:
+                            sys.path.insert(0, sdir)
+                    import doi_engine as _de
+                    fn_res_many = _de.resolve_many
+                    cls_eng = _de.ResearchEngine
+                    fn_cfg = _de.load_config
+                cfg = fn_cfg(
+                    email=email or None,
+                    elsevier_api_key=elsevier_api_key or None,
+                    elsevier_insttoken=elsevier_insttoken or None,
+                )
+                resolved = fn_res_many(raw_list, engine=cls_eng(cfg))
+                for pr in resolved:
+                    if getattr(pr, "found", False):
+                        doi_items.append(pr.to_dict())
+            except Exception as e:
+                warn(f"Live DOI engine resolution skipped: {e}")
+
+    if doi_items:
+        doi_bab2 = []
+        for it in doi_items:
+            if not isinstance(it, dict):
+                continue
+            r_rec, b_rec = _doi_dict_to_ris_and_bab2(it)
+            if r_rec.get("title") or r_rec.get("doi"):
+                ris_records.append(r_rec)
+                doi_bab2.append(b_rec)
+        if not bab2_raw and doi_bab2:
+            bab2_raw = doi_bab2
+
+    ris_records = _dedup_ris_records(ris_records)
+    if not draft_narasi and bab2_raw:
+        draft_narasi = _build_synthesis_narrative(bab2_raw)
 
     return {
         "bab2_table": _normalize_bab2_table_rows(bab2_raw),
         "ris_records": ris_records,
+        "draft_narasi_bab2": draft_narasi,
     }
 
 
@@ -1694,25 +1894,29 @@ class Builder:
             self.blocks(pg.get("blocks"), "front")
 
     def _inject_muza_bab2(self, p_section, ch_num):
-        """Inject MuZA_Search v1.1 Bab 2 synthesis table right into Bab 2 Penelitian Terdahulu."""
+        """Inject MuZA_Search / Val DOI Engine Bab 2 synthesis narrative & table into Bab 2."""
         rows = self.muza_data.get("bab2_table")
         if not rows or len(rows) < 2:
             return
-        self.para(
-            f"Tabel {ch_num}.1 merangkum matriks penelitian terdahulu yang relevan hasil pencarian dan ekstraksi "
-            "otomatis menggunakan mesin MuZA_Search v1.1 untuk memetakan metode, dataset/sampel, dan capaian metrik evaluasi.",
-            style="Isi Paragraf",
-        )
-        tcap_str = f"Tabel {ch_num}.1 Ringkasan Penelitian Terdahulu (Sintesis MuZA_Search v1.1)"
+        narasi = str(self.muza_data.get("draft_narasi_bab2") or "").strip()
+        if narasi:
+            self.para(narasi, style="Isi Paragraf")
+        else:
+            self.para(
+                f"Tabel {ch_num}.1 merangkum matriks penelitian terdahulu yang relevan hasil ekstraksi "
+                "metadata dan abstrak terverifikasi DOI untuk memetakan metode, dataset/sampel, dan capaian metrik evaluasi.",
+                style="Isi Paragraf",
+            )
+        tcap_str = f"Tabel {ch_num}.1 Ringkasan Penelitian Terdahulu Terverifikasi DOI"
         cp, runs, resolved = self.add_caption_with_seq(tcap_str, style="Judul Tabel", chapter_num=ch_num)
         self.record("caption", "Judul Tabel", resolved, region="body", para_obj=cp)
-        self.comment(runs, "Tabel ini diimpor otomatis dari file hasil MuZA_Search v1.1 (02_TABEL_PENELITIAN_TERDAHULU_BAB2.csv).", "Judul Tabel")
+        self.comment(runs, "Tabel ini diimpor otomatis dari bundel MuZA_Search v2.0 / Val DOI Engine.", "Judul Tabel")
 
         w = self.lay.text_width
         widths = [round(w * r, 2) for r in (0.06, 0.16, 0.23, 0.18, 0.16, 0.21)]
         self.data_table(rows, header=True, table_style=self.table_style, widths_cm=widths, font_size=9.5)
         yr = self.placeholders.get("year", {}).get("sample", "2026")
-        self.para(f"Sumber: Sintesis literatur otomatis MuZA_Search v1.1 ({yr}).", style="Keterangan Sumber")
+        self.para(f"Sumber: Sintesis literatur terverifikasi DOI ({yr}).", style="Keterangan Sumber")
 
     def chapters(self):
         bd = self.spec.get("body", {})
@@ -1767,7 +1971,7 @@ class Builder:
                     topic = re.sub(r"^\s*([A-Za-z]|\d+(\.\d+)*)[\.\)]?\s+", "", raw_title)
                     self.para(SAMPLE_SENTENCES.format(topic=topic), style="Isi Paragraf")
 
-            if ch.get("sample_captions"):
+            if ch.get("sample_captions") and not (ch_num == 2 and bab2_injected):
                 self.sample_captions(ch)
 
     def sample_captions(self, ch):
@@ -2227,10 +2431,25 @@ def _refresh_campus_labels_in_spec(spec):
                 blk["items"] = new_items
 
 
-def build_from_spec(spec, out_path, muza_zip=None, muza_bab2=None, muza_ris=None,
-                    preset=None, logo_path=None, table_style=None,
-                    auto_online=False, find_pedoman=False, campus_overrides=None):
-    """Build .docx file from a spec dict (with optional online campus/logo lookup) and return summary dict."""
+def build_from_spec(
+    spec,
+    out_path,
+    muza_zip=None,
+    muza_bab2=None,
+    muza_ris=None,
+    doi_json=None,
+    dois=None,
+    elsevier_api_key="",
+    elsevier_insttoken="",
+    email="",
+    preset=None,
+    logo_path=None,
+    table_style=None,
+    auto_online=False,
+    find_pedoman=False,
+    campus_overrides=None,
+):
+    """Build .docx file from a spec dict (with optional online campus/logo + 2-Layer DOI lookup) and return summary dict."""
     if preset or spec.get("preset"):
         spec = apply_preset_to_spec(spec, preset or spec.get("preset"))
 
@@ -2271,10 +2490,16 @@ def build_from_spec(spec, out_path, muza_zip=None, muza_bab2=None, muza_ris=None
     validate(spec)
 
     integ = spec.get("muza_search_integration") or {}
+    combined_dois = list(dois or []) + list(integ.get("dois") or []) + list(spec.get("dois") or [])
     muza_data = load_muza_search_data(
         zip_path=muza_zip or integ.get("zip_path"),
         bab2_path=muza_bab2 or integ.get("bab2_path"),
         ris_path=muza_ris or integ.get("ris_path"),
+        doi_json_path=doi_json or integ.get("doi_json_path"),
+        dois=combined_dois or None,
+        elsevier_api_key=elsevier_api_key,
+        elsevier_insttoken=elsevier_insttoken,
+        email=email,
     )
 
     cache = None
@@ -2309,20 +2534,32 @@ def build_from_spec(spec, out_path, muza_zip=None, muza_bab2=None, muza_ris=None
 
 
 def main():
-    parser = argparse.ArgumentParser(description="MuZA_Skripsi_Template v1.1 (.docx Builder)")
+    parser = argparse.ArgumentParser(description="MuZA_Skripsi_Template v1.2 (.docx Builder + 2-Layer DOI Integration)")
     parser.add_argument("spec_json", help="Path to spec.json")
     parser.add_argument("out_docx", help="Output .docx path")
-    parser.add_argument("--muza-zip", default=None, help="MuZA_Search v1.1 output .zip for auto Bab 2 & References")
+    parser.add_argument("--muza-zip", default=None, help="MuZA_Search v2.0 / Val DOI Bundle .zip for auto Bab 2 & References")
     parser.add_argument("--muza-bab2", default=None, help="MuZA_Search 02_TABEL_PENELITIAN_TERDAHULU_BAB2 (.csv/.xlsx)")
     parser.add_argument("--muza-ris", default=None, help="MuZA_Search 01_IMPOR_KE_ZOTERO.ris")
+    parser.add_argument("--doi-json", default=None, help="metadata_doi.json from Val DOI Engine")
+    parser.add_argument("--doi", action="append", default=[], help="DOI atau daftar DOI langsung (dapat diulang)")
+    parser.add_argument("--doi-file", default=None, help="File teks berisi daftar DOI satu per baris")
+    parser.add_argument("--elsevier-key", default="", help="Opsional: Elsevier API Key (Lapisan 2 BYOK)")
+    parser.add_argument("--insttoken", default="", help="Opsional: Elsevier InstToken kampus")
+    parser.add_argument("--email", default="", help="Opsional: Email Unpaywall v2")
     parser.add_argument("--preset", default=None, help="Methodology preset: kuantitatif|kualitatif|rnd|informatika_ilkom|ptk")
     parser.add_argument("--logo", default=None, help="Path to campus logo PNG/JPG")
     parser.add_argument("--table-style", default=None, choices=["three_line", "grid", "none"], help="Data table border mode")
+    parser.add_argument("--citation-style", default=None, help="Override citation style: 'APA 7th'|'IEEE'|'Harvard'|'Vancouver'")
     parser.add_argument("--auto-online", action="store_true", help="Cari & pasang logo serta identitas resmi kampus via internet")
     parser.add_argument("--find-pedoman", action="store_true", help="Cari juga tautan PDF pedoman skripsi kampus")
     parser.add_argument("--universitas", default=None, help="Override nama universitas")
     parser.add_argument("--fakultas", default=None, help="Override nama fakultas")
     parser.add_argument("--prodi", default=None, help="Override nama program studi")
+    parser.add_argument("--judul", default=None, help="Opsional: isi judul skripsi langsung tanpa placeholder")
+    parser.add_argument("--nama", default=None, help="Opsional: isi nama mahasiswa langsung")
+    parser.add_argument("--nim", default=None, help="Opsional: isi NIM mahasiswa langsung")
+    parser.add_argument("--pembimbing1", default=None, help="Opsional: isi nama Pembimbing I langsung")
+    parser.add_argument("--pembimbing2", default=None, help="Opsional: isi nama Pembimbing II langsung")
     args = parser.parse_args()
 
     with open(args.spec_json, encoding="utf-8") as f:
@@ -2333,6 +2570,27 @@ def main():
         spec.setdefault("campus", {})["faculty"] = args.fakultas
     if args.prodi:
         spec.setdefault("campus", {})["program"] = args.prodi
+    if args.citation_style:
+        spec["citation_style"] = args.citation_style
+
+    ph_overrides = {
+        "title": args.judul,
+        "name": args.nama,
+        "nim": args.nim,
+        "supervisor1": args.pembimbing1,
+        "supervisor2": args.pembimbing2,
+    }
+    for ph in spec.get("placeholders", []):
+        k = ph.get("key")
+        if k in ph_overrides and ph_overrides[k]:
+            ph["sample"] = ph_overrides[k]
+            ph["self_edit"] = False
+
+    doi_list = list(args.doi or [])
+    if args.doi_file and os.path.isfile(args.doi_file):
+        with open(args.doi_file, "r", encoding="utf-8-sig") as df:
+            doi_list.extend(ln.strip() for ln in df if ln.strip())
+
     src_t = spec.get("source_document", {}).get("title", "")
     if (args.universitas or args.fakultas or args.prodi) and (
         "Universitas Contoh" in src_t or "Fakultas Ilmu Komputer" in src_t
@@ -2350,6 +2608,11 @@ def main():
         muza_zip=args.muza_zip,
         muza_bab2=args.muza_bab2,
         muza_ris=args.muza_ris,
+        doi_json=args.doi_json,
+        dois=doi_list or None,
+        elsevier_api_key=args.elsevier_key,
+        elsevier_insttoken=args.insttoken,
+        email=args.email,
         preset=args.preset,
         logo_path=args.logo,
         table_style=args.table_style,

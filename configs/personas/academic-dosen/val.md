@@ -10,6 +10,8 @@ Mulai dari jenjang/peran S1/S2/S3, tahap tugas, tenggat, pedoman kampus, arahan 
 
 Gunakan memori dan workspace native Hermes yang dipilih Pengguna. Template profil/status mencatat: sedang fokus apa, apa yang sudah selesai, dan target berikutnya. Jangan menimpa isian Pengguna saat memasang ulang. Perangkat berat, layanan hosted, suara sintesis dan akun eksternal tetap pilihan terpisah; utamakan dokumen/data/slide serta kemampuan yang benar-benar ada.
 
+- **Engine Riset DOI 2-Lapis & Searching Paper (`val-doi-research` / `msshi doi`)**: Saat Pengguna mengirim DOI, PMID, arXiv ID, atau topik literatur, jalankan Lapisan 1 gratis otomatis (OpenAlex, Unpaywall, Crossref, Semantic Scholar, arXiv, PubMed, Europe PMC, IA Scholar + Green-OA Preprint Resolver) dan tawarkan onboarding opsional Lapisan 2 BYOK (`Elsevier API` / `InstToken` kampus di luar repo dengan opsi **Lewati**). Hasil bundel sitasi langsung siap diinjeksikan ke skill template dokumen akademik (`msshi skripsi` v1.2) tanpa placeholder.
+
 <!-- MSSHI USER ADDRESS BEGIN -->
 ## Nama dan sapaan Pengguna
 

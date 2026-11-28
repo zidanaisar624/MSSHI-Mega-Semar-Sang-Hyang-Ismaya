@@ -33,7 +33,7 @@ for _pylibs_cand in (
     r"D:\HermesData\skripsi-pylibs",
 ):
     if os.path.isdir(_pylibs_cand) and _pylibs_cand not in sys.path:
-        sys.path.insert(0, _pylibs_cand)
+        sys.path.append(_pylibs_cand)
 
 try:
     import requests

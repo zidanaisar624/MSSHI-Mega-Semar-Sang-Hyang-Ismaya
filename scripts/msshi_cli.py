@@ -1312,7 +1312,7 @@ def main(argv=None):
     updater.add_argument("--no-pdf", action="store_true", help="Lewati penyalinan otomatis panduan PDF.")
     updater.add_argument("--pdf-version", help="Versi PDF panduan yang diunduh (latest, v3.1.0, v3.0).")
     updater.add_argument("--pdf-dest", type=Path, help="Folder tujuan simpan PDF panduan.")
-    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "find", "ossu", "learn", "upstreams", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "studio", "choices", "manual"):
+    for verb in ("runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "find", "ossu", "learn", "upstreams", "doi", "skripsi", "assets", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "studio", "choices", "manual"):
         descriptions = {
             'runtime': 'Migrasi profil dan jalankan alat sesuai tiket tugas.',
             'integrations': 'Siapkan integrasi opsional dengan prasyarat terpisah.',
@@ -1325,7 +1325,8 @@ def main(argv=None):
             'ossu': 'Koneksi Universitas Computer Science Open-Source OSSU (roadmap, daftar kuliah, buka materi dasar CS).',
             'learn': 'Mode Belajar Pemula Total: status, rekomendasi topik tanpa /command, dan pasang plugin belajar (Chalk/LearnLoop/CodeCoach).',
             'upstreams': 'Cek update GitHub upstream tanpa pasang otomatis (read-only), audit Caveman/Ponytail, dan pasang Ponytail.',
-            'skripsi': 'Rakit template skripsi Word (.docx) drag-and-drop via MuZA Skripsi v1.1.',
+            'doi': 'Engine Riset Akademik DOI 2-Lapis & Searching Paper milik Val (Open Access + Elsevier BYOK opsional).',
+            'skripsi': 'Rakit template skripsi Word (.docx) + injeksi DOI otomatis via MuZA Skripsi v1.2.',
             'assets': 'Cari bahan persona pribadi di lokasi yang dipilih.',
             'compact': 'Padatkan data internal sesuai format yang didukung.',
             'browser': 'Simpan pilihan browser dan label akun; login manual, tanpa transfer cookie.',
@@ -1399,7 +1400,7 @@ def main(argv=None):
     launcher.add_argument("--pdf-version", help="Pilih versi panduan; default latest.")
     launcher.add_argument("--pdf-dest", type=Path, help="Folder PDF; default Downloads/MSSHI_Manuals.")
     effective = list(sys.argv[1:] if argv is None else argv)
-    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "find", "ossu", "learn", "upstreams", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "studio", "choices", "manual"}
+    passthrough = {"runtime", "integrations", "desktop", "audit", "doctor", "light", "system", "find", "ossu", "learn", "upstreams", "doi", "skripsi", "assets", "dream", "voice", "kat", "coder", "compact", "browser", "trim", "interaction", "forge", "managed", "services", "timesfm", "brag", "scrapling", "harness2", "optional", "rea", "studio", "choices", "manual"}
     if effective and effective[0] in passthrough:
         args = parser.parse_args([effective[0], "--", *effective[1:]])
         args.arguments = args.arguments[1:]
@@ -1420,7 +1421,7 @@ def main(argv=None):
             return 0
         if args.command == "connect":
             return connections.run(args, default_state_dir=home)
-        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "light": "msshi_light.py", "system": "msshi_system.py", "find": "msshi_skill_finder.py", "ossu": "msshi_ossu.py", "learn": "msshi_learn.py", "upstreams": "msshi_upstreams.py", "forge": "msshi_forge.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "studio": "msshi_imagination_studio.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
+        entrypoints = {"choices": "msshi_choices.py", "manual": "msshi_manuals.py", "doctor": "msshi_doctor.py", "light": "msshi_light.py", "system": "msshi_system.py", "find": "msshi_skill_finder.py", "ossu": "msshi_ossu.py", "learn": "msshi_learn.py", "upstreams": "msshi_upstreams.py", "forge": "msshi_forge.py", "doi": "msshi_doi.py", "skripsi": "msshi_skripsi_drop.py", "rea": "msshi_rea.py", "studio": "msshi_imagination_studio.py", "runtime": "msshi_runtime.py", "integrations": "msshi_integrations.py",
                        "desktop": "msshi_desktop.py", "audit": "check_release_v31.py", "assets": "find_muza_assets.py",
                        "compact": "caveman_context_filter.py", "browser": "msshi_browser_preferences.py", "trim": "msshi_llmtrim.py", "interaction": "msshi_interaction.py",
                        "managed": "msshi_managed.py", "optional": "msshi_optional.py", "services": "msshi_service_connections.py", "timesfm": "msshi_timesfm.py",

@@ -330,8 +330,8 @@
       "en": "Design interface motion with reusable animation components."
     },
     "muza-skripsi-template": {
-      "id": "Menyusun template Word (.docx) skripsi/tugas akhir sesuai aturan pedoman kampus, mencari logo & pejabat resmi otomatis, dan menyuntikkan hasil MuZA_Search.",
-      "en": "Build a campus-compliant thesis/skripsi Word (.docx) template with automated official logo/leadership lookup, PDF guideline extraction, and MuZA_Search integration."
+      "id": "Rakit template Word (.docx) skripsi/tesis sesuai pedoman kampus, logo resmi, pejabat, serta injeksi DOI/sitasi otomatis (APA 7th, IEEE, Harvard, Vancouver) tanpa placeholder.",
+      "en": "Build campus-compliant Word (.docx) thesis templates with verified logos, officials, and zero-placeholder DOI/citation injection (APA 7th, IEEE, Harvard, Vancouver)."
     },
     "nemo-evaluator-sdk": {
       "id": "Memandu evaluasi dengan NeMo Evaluator SDK jika dependensinya tersedia.",
@@ -592,6 +592,10 @@
     "createa-meme-skill": {
       "id": "Panduan caption-craft ('find the turn', 2-6 kata/baris); MCP @createa/meme-mcp opsional hanya jika pengguna memiliki CAM_API_KEY sendiri.",
       "en": "Caption-craft guide ('find the turn', 2-6 words/line); @createa/meme-mcp optional only if the user brings their own CAM_API_KEY."
+    },
+    "val-doi-research": {
+      "id": "Engine Riset Akademik 2-Lapis berbasis DOI & Searching Paper untuk Val (Lapisan 1 gratis 7 API + Green-OA Preprint + Lapisan 2 Elsevier BYOK opsional) yang terhubung ke muza-skripsi-template.",
+      "en": "Val's 2-Layer Legal DOI & Academic Paper Search Engine (Layer 1 free 7 APIs + Green-OA Preprint Resolver + optional Layer 2 Elsevier BYOK) wired into muza-skripsi-template."
     }
   },
   "packs": {
@@ -880,6 +884,10 @@
     "meshy-3d-generation-runtime": {
       "id": "Memerlukan Node.js >= 22.12, meshy-cli@0.8, sign-in kode perangkat (https://www.meshy.ai/device), serta paket Meshy Pro+ saat membuat tugas generasi 3D.",
       "en": "Requires Node.js >= 22.12, meshy-cli@0.8, one-time device-code sign-in (https://www.meshy.ai/device), and a Meshy Pro+ plan when creating 3D generation tasks."
+    },
+    "val-doi-research": {
+      "id": "Engine DOI 2-Lapis ('msshi doi'): ambil metadata, abstrak, graf sitasi, PDF Open Access legal, alternatif Green-OA, dan bundel sitasi Bab II dari DOI atau topik riset (mendukung BYOK Elsevier opsional di luar repo).",
+      "en": "2-Layer DOI Engine ('msshi doi'): fetch metadata, abstracts, citation graphs, legal Open Access PDFs, Green-OA preprints, and Chapter II synthesis bundles from DOIs or topics (optional out-of-repo Elsevier BYOK)."
     }
   }
 }

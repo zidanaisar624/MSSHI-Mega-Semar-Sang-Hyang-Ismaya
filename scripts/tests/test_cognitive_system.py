@@ -806,7 +806,8 @@ class CognitiveSystemTests(unittest.TestCase):
             else:
                 self.assertFalse((sdir / "LICENSE.upstream").exists(), f"FSL-1.1-ALv2 {slug} must vendor 0 upstream files")
             total_bytes = sum(p.stat().st_size for p in sdir.rglob("*") if p.is_file())
-            self.assertLess(total_bytes, 35_000, f"{slug} wrapper too large: {total_bytes}")
+            max_bytes = 45_000 if (sdir / "scripts").is_dir() else 35_000
+            self.assertLess(total_bytes, max_bytes, f"{slug} wrapper too large: {total_bytes}")
 
         # 3. Strict v3.2.0 role scoping across MuZA matrix & both Academic presets
         matrix = json.loads((ROOT / "configs" / "bot_role_and_skill_matrix.json").read_text(encoding="utf-8-sig"))

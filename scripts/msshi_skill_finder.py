@@ -143,6 +143,7 @@ _CONNECTED_SOURCES_META: tuple[dict[str, Any], ...] = (
 # Strict specialist ownership so non-owner bots delegate rather than copy restricted skills
 _SPECIALIST_ONLY: dict[str, tuple[str, ...]] = {
     "riset-mendalam-nusantara-global": ("val",),
+    "val-doi-research": ("val",),
     "timesfm-forecasting": ("val",),
     "paper-context-resolver": ("val",),
     "firecrawl-research-papers": ("val",),

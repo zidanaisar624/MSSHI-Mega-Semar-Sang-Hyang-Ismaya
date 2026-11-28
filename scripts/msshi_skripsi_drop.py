@@ -196,6 +196,7 @@ def run_pipeline(
     universitas: str = "",
     fakultas: str = "",
     prodi: str = "",
+    dois: list[str] | None = None,
     preset: str = "informatika_ilkom",
     out_dir: Path | None = None,
     out_file: Path | None = None,
@@ -207,6 +208,7 @@ def run_pipeline(
 ) -> Path:
     ensure_pylibs(auto_install=install_deps)
     inputs = classify_inputs(paths)
+    dois_extra = [d.strip() for d in (dois or []) if d and d.strip()]
 
     if interactive and not any(inputs[k] for k in ("muza_zip", "guideline", "spec_json")) and not universitas:
         print("\n========================================================")
@@ -290,6 +292,8 @@ def run_pipeline(
             cmd += ["--muza-bab2", str(inputs["muza_bab2"])]
         if inputs["muza_ris"]:
             cmd += ["--muza-ris", str(inputs["muza_ris"])]
+        for d_item in dois_extra:
+            cmd += ["--doi", d_item]
         if inputs["logo"]:
             cmd += ["--logo", str(inputs["logo"])]
         if universitas:
@@ -331,6 +335,7 @@ def main(argv=None):
     parser.add_argument("--universitas", default="", help="Nama universitas (mis. Universitas Negeri Semarang).")
     parser.add_argument("--fakultas", default="", help="Nama fakultas.")
     parser.add_argument("--prodi", default="", help="Nama program studi.")
+    parser.add_argument("--doi", action="append", default=[], help="Copy-paste DOI referensi agar Bab 2 & Daftar Pustaka langsung terisi bersih.")
     parser.add_argument("--preset", default="informatika_ilkom", choices=("informatika_ilkom", "kuantitatif", "kualitatif", "rnd", "ptk"))
     parser.add_argument("--out-dir", type=Path, help="Folder output kustom (default: D:\\HermesData\\Skripsi_Output atau ~/Documents/MuZA_Skripsi_Output).")
     parser.add_argument("--out", type=Path, help="Path file .docx output lengkap.")
@@ -346,6 +351,7 @@ def main(argv=None):
             universitas=args.universitas,
             fakultas=args.fakultas,
             prodi=args.prodi,
+            dois=args.doi,
             preset=args.preset,
             out_dir=args.out_dir,
             out_file=args.out,

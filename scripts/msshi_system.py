@@ -119,6 +119,7 @@ _ROUTE_RULES: tuple[dict[str, Any], ...] = (
         "interaction_type": "type_2_council_if_complex_else_main",
         "skills": [
             "riset-mendalam-nusantara-global",
+            "val-doi-research",
             "deep-research",
             "literature-review",
             "novelty-assessment",

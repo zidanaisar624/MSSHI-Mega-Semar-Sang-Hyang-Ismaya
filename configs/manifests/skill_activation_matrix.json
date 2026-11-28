@@ -154,7 +154,7 @@
       ],
       "auto_open_on_boot": false,
       "provider_model_mutation": false,
-      "purpose": "Merakit template Word (.docx) skripsi/tesis sesuai pedoman kampus, lookup logo & pejabat resmi, serta injeksi MuZA_Search v1.1."
+      "purpose": "Merakit template Word (.docx) skripsi/tesis sesuai pedoman kampus, lookup logo & pejabat resmi, serta injeksi langsung Engine DOI Val / MuZA_Search v2.0 tanpa placeholder."
     },
     "rea": {
       "roles": [
@@ -215,6 +215,23 @@
       "public_default": false,
       "auto_open_on_boot": false,
       "provider_model_mutation": false
+    },
+    "val-doi-research": {
+      "roles": [
+        "val"
+      ],
+      "pack": "thesis",
+      "activation": "contextual_or_explicit_doi_or_paper_search",
+      "trigger_examples": [
+        "10.1038/nature14539",
+        "cari paper jurnal",
+        "cari literatur DOI",
+        "msshi doi",
+        "/val-doi-research"
+      ],
+      "auto_open_on_boot": false,
+      "provider_model_mutation": false,
+      "purpose": "Engine Riset DOI 2-Lapis (OpenAlex, Unpaywall, Crossref, S2, arXiv, PubMed, Europe PMC, IA Scholar + Elsevier BYOK opsional) & Searching Paper hemat RAM untuk Val."
     }
   },
   "contextual_integrations": {

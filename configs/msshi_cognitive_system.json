@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "3.2.1",
+  "version": "3.2.2",
   "name": "MSSHI Closed-Loop Cognitive Operating System",
   "documentation": "docs/SISTEM_INTERAKSI_CERDAS_MSSHI.md",
   "principles": {
@@ -69,7 +69,8 @@
         "humanizer-en",
         "riset-mendalam-nusantara-global",
         "anti-slop",
-        "cindy-grand-plan"
+        "cindy-grand-plan",
+        "val-doi-research"
       ],
       "standards": [
         "Use Lima Lapis Konteks + backward-traceability (doc#page) for every claim.",
@@ -245,7 +246,8 @@
             "backward-traceability",
             "research-paper-writing",
             "muza-skripsi-template",
-            "riset-mendalam-nusantara-global"
+            "riset-mendalam-nusantara-global",
+            "val-doi-research"
           ]
         },
         {
@@ -807,6 +809,12 @@
       "pillar": "token_efficiency",
       "lead_bot": "kiki-chii",
       "load_mode": "on_demand_skill"
+    },
+    "val-doi-research": {
+      "mission": "2_tugas_skripsi_tesis_disertasi",
+      "pillar": "research_and_prediction",
+      "lead_bot": "val",
+      "load_mode": "on_demand_skill"
     }
   },
   "optional_skill_registry": {
@@ -990,7 +998,8 @@
         "msshi light",
         "msshi learn",
         "msshi find",
-        "msshi upstreams"
+        "msshi upstreams",
+        "msshi doi"
       ],
       "rule": "All optional runtimes live isolated under msshi-private/, require explicit user installation, perform 0 background model calls, and never mutate provider/model/SOUL."
     },

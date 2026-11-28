@@ -128,3 +128,8 @@ REA is an optional local reverse-engineering integration. It is not activated by
 - **`meme-studio-suite` (Kiki-Chii across MuZA & Academic presets):** Rp0 meme production combining zero-key `makememe` (`memegen.link`), `awesome-meme` (27+ programmer & classic Pillow/YAML templates), clean local `meme-lord` viral patterns + 6-dimension A/B HTML evaluation (excluding Visa CLI, paid Exa, StableUpload, and `fal.ai`), and `createa-meme-skill` caption-craft (`@createa/meme-mcp` strictly optional BYOK `CAM_API_KEY`).
 - **`higgsfield-skills` & Hermes-only opt-in `meshy-3d-generation` (`--with-meshy-3d`):** Require `higgsfield auth login` before Higgsfield generation when unauthenticated; keep Meshy 3D excluded from Antigravity and opt-in for Hermes (`meshy-cli@0.8`, device-code login, Pro+ required for task creation).
 - **Rust Hot-Path Accelerator (`crates/msshi-rust-accel`):** Selective `< 40%` Rust acceleration for secret scanning, release hashing, skill frontmatter indexing, and text compaction with full Python fallback.
+
+## v3.2.2 Val 2-Layer legal DOI engine & MuZA Skripsi v1.2
+
+- **`val-doi-research` (`msshi doi`, Bot `Val` across MuZA & Academic presets):** 2-Layer legal academic DOI & topic paper search engine (Layer 1 free: OpenAlex, Unpaywall, Crossref, Semantic Scholar, arXiv, PubMed/Europe PMC, Internet Archive Scholar + Green-OA Preprint Resolver; Layer 2 optional out-of-repo Elsevier BYOK with an explicit `Lewati` option; never contacts piracy domains).
+- **`muza-skripsi-template` v1.2 (`msshi skripsi --doi`):** Direct zero-placeholder DOI & `MuZA_Search v2.0` injection into campus-compliant Word (`.docx`) Chapter II literature tables and `APA 7th` / `IEEE` / `Harvard` / `Vancouver` bibliographies.

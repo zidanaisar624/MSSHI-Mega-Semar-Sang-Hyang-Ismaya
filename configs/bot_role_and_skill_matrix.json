@@ -184,7 +184,8 @@
         "belajar-pemula",
         "riset-mendalam-nusantara-global",
         "anti-slop",
-        "cindy-grand-plan"
+        "cindy-grand-plan",
+        "val-doi-research"
       ],
       "optional_skills": [
         "cli-anything",
@@ -1355,7 +1356,7 @@
       "slug": "muza-skripsi-template",
       "status": "bundled",
       "path": "skills/muza-skripsi-template/SKILL.md",
-      "purpose": "Menyusun template Word (.docx) skripsi/tugas akhir sesuai pedoman kampus, lookup logo & pejabat resmi, ekstrak aturan PDF, serta injeksi hasil MuZA_Search v1.1.",
+      "purpose": "Merakit template Word (.docx) skripsi/tesis sesuai pedoman kampus, lookup logo 300 DPI & pejabat resmi, serta injeksi otomatis DOI / MuZA_Search v2.0 (4 gaya sitasi tanpa placeholder).",
       "scope": "evidence"
     },
     {
@@ -1715,6 +1716,15 @@
       ]
     },
     {
+      "slug": "val-doi-research",
+      "status": "bundled",
+      "kind": "core",
+      "path": "skills/val-doi-research/SKILL.md",
+      "purpose": "Khusus Val: Engine Riset Akademik 2-Lapis berbasis DOI & Searching Paper (OpenAlex, Unpaywall, Crossref, Semantic Scholar, arXiv, PubMed, Europe PMC, IA Scholar + Green-OA Preprint Resolver + Elsevier Scopus/ScienceDirect BYOK opsional) yang terhubung langsung ke muza-skripsi-template v1.2.",
+      "scope": "research",
+      "source": "MSSHI v3.2.2 built-in"
+    },
+    {
       "slug": "wise-judgment-and-sovereign-orchestrator",
       "status": "bundled",
       "path": "skills/wise-judgment-and-sovereign-orchestrator/SKILL.md",
@@ -1808,7 +1818,8 @@
       "harness2",
       "muza-skripsi-template",
       "riset-mendalam-nusantara-global",
-      "cindy-grand-plan"
+      "cindy-grand-plan",
+      "val-doi-research"
     ],
     "webdev": [
       "analyze-project",
@@ -1894,7 +1905,8 @@
       "open-code-review",
       "ast-grep",
       "knip",
-      "cindy-grand-plan"
+      "cindy-grand-plan",
+      "val-doi-research"
     ],
     "external_skills": [
       "addy-agent-skills",
